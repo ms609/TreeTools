@@ -131,3 +131,49 @@ LnRooted.int <- function (tips) {
 #' 
 #' @export
 N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
+
+
+
+#' @describeIn N1Spr Information content of trees 0 or 1 SPR step from tree
+#'  with n tips.
+#' @export
+IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n)) 
+
+#' @describeIn NRooted Log number of unrooted trees
+#' @export
+LnUnrootedSplits <- function (splits) {
+  if ((nSplits <- length(splits)) < 2) return (LnUnrooted(splits));
+  if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
+  return (LnUnrootedMult(splits))
+}
+#' @describeIn NRooted Number of unrooted trees
+#' @export
+NUnrootedSplits  <- function (splits) {
+  if ((nSplits <- length(splits)) < 2) return (NUnrooted(splits));
+  if (nSplits == 2) return (NRooted(splits[1]) * NRooted(splits[2]))
+  return (NUnrootedMult(splits))
+}
+#' @describeIn NRooted Log unrooted mult
+#' @references 
+#'  \insertRef{Carter1990}{TreeSearch}
+#' @export
+LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
+  splits <- splits[splits > 0]
+  totalTips <- sum(splits)
+  
+  # Return:
+  LogDoubleFactorial(totalTips +  totalTips - 5L) -
+    LogDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
+    sum(LogDoubleFactorial(splits + splits - 3L))
+}
+#' @describeIn NRooted Number of unrooted trees (mult)
+#' @export
+NUnrootedMult  <- function (splits) {  # Carter et al. 1990, Theorem 2
+  splits <- splits[splits > 0]
+  totalTips <- sum(splits)
+  
+  # Return:
+  round(DoubleFactorial(totalTips + totalTips - 5L) /
+          DoubleFactorial(2L * (totalTips - length(splits)) - 1L)
+        * prod(DoubleFactorial(splits + splits - 3L)))
+}
