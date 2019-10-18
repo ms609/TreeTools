@@ -480,6 +480,117 @@ PhyDat <- function (dataset) {
   MatrixToPhyDat(mat)
 }
 
+#' String to phyDat
+#'
+#' Converts a character string to a PhyDat object.
+#'
+#' @param string a string of tokens, optionally containing whitespace, with no
+#'   terminating semi-colon.
+#' @param tips, a character vector corresponding to the names (in order) 
+#' of each taxon in the matrix
+#' @param byTaxon = TRUE, string is one TAXON's coding at a time; FALSE: one
+#'  CHARACTER's coding at a time
+#' 
+#' @examples
+#' morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon=TRUE)
+#' # encodes the following matrix:
+#' # Lion     -?0123
+#' # Gazelle  1230?-
+#' 
+#' @template returnPhydat
+#' @seealso \code{\link{phyDat}}
+#' 
+#' @author Martin R. Smith
+#' @aliases StringToPhydat
+#' @importFrom phangorn phyDat
+#' @export
+StringToPhyDat <- 
+  function (string, tips, byTaxon = TRUE) {
+    tokens <- matrix(NexusTokens(string), nrow = length(tips), byrow = byTaxon)
+    rownames(tokens) <- tips
+    MatrixToPhyDat(tokens)
+  }
+#' @rdname StringToPhyDat
+StringToPhydat <- StringToPhyDat
+
+#' Extract character data from a phyDat object as a string
+#' 
+#' @param phy An object of class \code{\link{phyDat}}
+#' @param parentheses Character specifying format of parentheses with which
+#' to surround ambiguous tokens.  Choose from: `\{` (default), `[`, `(`, `<`.
+#' @param collapse Character specifying text, perhaps `,`, with which to 
+#' separate multiple tokens within parentheses
+#' @param ps Character specifying text, perhaps `;`, to append to the end of the string
+#' @param useIndex (default: TRUE) Print duplicate characters multiple 
+#'        times, as they appeared in the original matrix
+#' @param byTaxon If TRUE, write one taxon followed by the next.
+#'                If FALSE, write one character followed by the next.
+#' @param concatenate Logical specifying whether to concatenate all characters/taxa
+#'                    into a single string, or to return a separate string
+#'                    for each entry.
+#' 
+#' @author Martin R. Smith
+#' @importFrom phangorn phyDat
+#' @export
+PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '', 
+                         useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
+  at <- attributes(phy)
+  phyLevels <- at$allLevels
+  if (sum(phyLevels == '-') > 1) {
+    stop("More than one inapplicable level identified.  Is phy$levels malformed?")
+  }
+  phyChars <- at$nr
+  phyContrast <- at$contrast == 1
+  phyIndex <- if (useIndex) at$index else seq_len(phyChars)
+  outLevels <- at$levels
+  inappLevel <- outLevels == '-'
+  
+  levelLengths <- vapply(outLevels, nchar, integer(1))
+  longLevels <- levelLengths > 1
+  if (any(longLevels)) {
+    if ('10' %in% outLevels && !(0 %in% outLevels)) {
+      outLevels[outLevels == '10'] <- '0'
+      longLevels['10'] <- FALSE
+    }
+    outLevels[longLevels] <- LETTERS[seq_len(sum(longLevels))]
+  }
+  
+  switch(parentheses,
+         '(' = {openBracket <- '('; closeBracket = ')'},
+         ')' = {openBracket <- '('; closeBracket = ')'},
+         '<' = {openBracket <- '<'; closeBracket = '>'},
+         '>' = {openBracket <- '<'; closeBracket = '>'},
+         '[' = {openBracket <- '['; closeBracket = ']'},
+         ']' = {openBracket <- '['; closeBracket = ']'},
+         {openBracket <- '{'; closeBracket = '}'})
+  
+  levelTranslation <- apply(phyContrast, 1, function (x)
+    ifelse(sum(x) == 1, as.character(outLevels[x]),
+           paste0(c(openBracket, paste0(outLevels[x], collapse=collapse), 
+                    closeBracket), collapse=''))
+  )
+  if (any(ambigToken <- apply(phyContrast, 1, all))) {
+    levelTranslation[ambigToken] <- '?'
+  }
+  ret <- vapply(phy, 
+                function (x) levelTranslation[x[phyIndex]],
+                character(length(phyIndex)))
+  ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
+    if (!byTaxon) ret <- t(ret)
+    paste0(c(ret, ps), collapse='')
+  } else {		
+    if (byTaxon) ret <- t(ret)
+    paste0(apply(ret, 1, paste0, collapse=''), ps)
+  }
+  # Return:
+  ret
+}
+#' @rdname PhyToString
+PhyDatToString <- PhyToString
+#' @rdname PhyToString
+PhydatToString <- PhyToString
+
+
 #' Rightmost character of string
 #'
 #' @author Martin R. Smith
