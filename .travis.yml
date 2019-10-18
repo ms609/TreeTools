@@ -33,9 +33,13 @@ matrix:
         on: 
           branch: master
     - r: devel
+      branches:
+        only: master
       after_success:
         - Rscript -e "covr::codecov()"
     - os: osx
+      branches:
+        only: master
       r: release
       r_packages:
         - ape
