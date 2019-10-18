@@ -87,7 +87,8 @@ extern void ape_neworder_phylo(int *n_tips, int *parent, int *child, int *n_edge
    n_nodes: nb of nodes
    n_edges: nb of edges */
 {
-	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1, max_node = *n_tips - n_nodes + 1;
+	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1, 
+	  max_node = *n_tips - n_nodes + 1;
 
 /* max_node is the largest value that a node degree can be */
 
