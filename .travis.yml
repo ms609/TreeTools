@@ -11,6 +11,8 @@ r_binary_packages:
  - ape
  - covr
  - devtools
+ - phangorn
+ - Rcpp
  - roxygen2
  - testthat
 
@@ -38,6 +40,8 @@ matrix:
       r_packages:
         - ape
         - devtools
+        - phangorn
+        - Rcpp
         - roxygen2
         - testthat
       before_install:
