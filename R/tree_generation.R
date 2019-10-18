@@ -71,3 +71,43 @@ EnforceOutgroup <- function (tree, outgroup) {
   result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1), outgroup, resolve.root=TRUE)
   RenumberTips(Renumber(result), taxa)
 }
+
+#' Generate a Pectinate Tree
+#' 
+#' Generates a pectinate (caterpillar) tree with the specified tips
+#' 
+#' @param tips An integer specifying the number of tips, or a character vector
+#' naming the tips, or a dataset phylogenetic dataset whose names will be used
+#' to name the tips.
+#' 
+#' @return A tree of class `phylo`.
+#' @family tree generation functions
+#' @author Martin R. Smith
+#' @export
+PectinateTree <- function (tips) {
+  if (length(tips) == 1L && mode(tips) == 'numeric') {
+    nTips <- tips
+    tips <- paste0('t', seq_len(nTips))
+  } else if (class(tips) == 'phyDat') {
+    nTips <- length(tips)
+    tips <- names(tips)
+  } else {
+    nTips <- length(tips)
+  }
+  
+  nEdge <- nTips + nTips - 2L
+  tipSeq <- seq_len(nTips - 1L)
+  
+  parent <- rep(seq_len(nTips - 1L) + nTips, each = 2L)
+  
+  child <- integer(nEdge)
+  child[tipSeq + tipSeq - 1L] <- tipSeq
+  child[tipSeq + tipSeq] <- tipSeq + nTips + 1L
+  child[nEdge] <- nTips
+  
+  structure(list(
+    edge = matrix(c(parent, child), ncol = 2L),
+    Nnode = nTips - 1L,
+    tip.label = tips
+    ), order = 'cladewise', class='phylo')
+}
