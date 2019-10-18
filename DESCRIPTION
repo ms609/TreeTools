@@ -26,6 +26,7 @@ Imports:
 Suggests:
     knitr,
     Rcpp,
+    Rdpack,
     rmarkdown,
     testthat
 RdMacros: Rdpack

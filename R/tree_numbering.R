@@ -2,7 +2,7 @@
 #' Wrapper for the ape function
 #' @family C wrappers
 #' @keywords internal
-#' @useDynLib TreeTrunk
+#' @useDynLib TreeTrunk, .registration = TRUE
 #' @export
 NeworderPhylo <- function (nTaxa, parent, child, nb.edge, whichwise) {
   .C('ape_neworder_phylo', as.integer(nTaxa), as.integer(parent),

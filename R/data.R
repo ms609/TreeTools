@@ -13,7 +13,7 @@
 #' }
 #'
 #' @examples 
-#' data("brewer", package="TreeSearch")
+#' data("brewer", package="TreeTrunk")
 #' plot(0, type='n', xlim=c(1, 12), ylim=c(12, 1), 
 #'      xlab = 'Colour', ylab='Palette')
 #' for (i in seq_along(brewer)) text(seq_len(i), i, col=brewer[[i]])

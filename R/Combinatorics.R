@@ -1,4 +1,4 @@
-globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeSearch')
+globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTrunk')
 
 #' Double Factorial
 #' 
@@ -90,7 +90,7 @@ LogDoubleFactorial.int <- function (n) {
 #' @author Martin R. Smith
 #' 
 #' @references 
-#'  \insertRef{Carter1990}{TreeSearch}
+#'  \insertRef{Carter1990}{TreeTrunk}
 #'  
 #' @examples
 #'   NRooted(10)
@@ -127,7 +127,7 @@ LnRooted.int <- function (tips) {
 #'
 #' @param n Number of tips in tree.
 #' @references 
-#'  \insertRef{Allen2001}{TreeSearch}
+#'  \insertRef{Allen2001}{TreeTrunk}
 #' 
 #' @export
 N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
