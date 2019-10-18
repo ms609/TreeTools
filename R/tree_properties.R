@@ -100,6 +100,40 @@ MRCA <- function(tip1, tip2, ancestors) {
   max(intersect(anc1, anc2))
 }
 
+#' Distance between edges
+#' 
+#' Number of nodes that must be traversed to navigate from each edge to 
+#' each other edge within a tree
+#' 
+#' @template treeParam
+#' 
+#' @author Martin R. Smith
+#' @export
+EdgeDistance <- function (tree) {
+  edge <- tree$edge
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  nEdge <- dim(edge)[1]
+  ancs <- AllAncestors(parent, child)
+  ret <- matrix(0L, ncol = nEdge, nrow = nEdge)
+  for (i in seq_len(nEdge - 1L)) {
+    ancI <- ancs[[child[i]]]
+    for (j in seq(from = i + 1L, to = nEdge)) {
+      ancJ <- ancs[[child[j]]]
+      mrca <- max(intersect(ancI, ancJ))
+      expect_equal(
+      length(union(ancI[ancI >= mrca], ancJ[ancJ >= mrca])),
+      {u <- union(ancI, ancJ); sum(u >= mrca)},
+      {u <- union(ancI, ancJ); sum(u > mrca, 1L)})
+      ret[i, j] <- sum(u > mrca, 1L)
+    }
+  }
+  ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
+  # Return:
+  
+  ret
+}
+
 #' Non-duplicate root
 #' 
 #' Identify, for each edge, whether it is not a duplicate of the root edge

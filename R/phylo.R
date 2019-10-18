@@ -276,7 +276,6 @@ CladeSizes <- function (tree, nodes) {
   vapply(allDescendants(tree)[nodes], length, integer(1))
 }
 
-
 #' Node depth
 #' Wrapper for the ape function
 #'
@@ -284,6 +283,5 @@ CladeSizes <- function (tree, nodes) {
 #' @export
 C_node_depth <- function (nTip, nNode, parent, child, nEdge) {
   .C("ape_node_depth", as.integer(nTip), as.integer(nNode), as.integer(parent), 
-     as.integer(child), as.integer(nEdge), double(nTip + nNode), 1L, 
-     PACKAGE='TreeTrunk')[[6]]
+     as.integer(child), as.integer(nEdge), double(nTip + nNode), 1L)[[6]]
 }
