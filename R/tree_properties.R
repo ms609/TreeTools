@@ -107,6 +107,7 @@ MRCA <- function(tip1, tip2, ancestors) {
 #' 
 #' @template treeParam
 #' 
+#' @family tree navigation
 #' @author Martin R. Smith
 #' @export
 EdgeDistances <- function (tree) {

@@ -36,8 +36,8 @@ Note that the tree's edges must be listed in an order whereby each entry in
 \seealso{
 Other tree navigation: \code{\link{AncestorEdge}},
   \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{MRCA}},
-  \code{\link{NonDuplicateRoot}}
+  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
+  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}}
 }
 \author{
 Martin R. Smith

@@ -4,14 +4,14 @@
 \alias{RandomTree}
 \title{Generate random tree topology}
 \usage{
-RandomTree(dataset, root = FALSE)
+RandomTree(tips, root = FALSE)
 }
 \arguments{
-\item{root}{Taxon to use as root (if desired; FALSE otherwise)}
-
 \item{tips}{An integer specifying the number of tips, or a character vector
 naming the tips, or a tree of class phylo, or a phylogenetic dataset whose
 names will be used to name the tips.}
+
+\item{root}{Taxon to use as root (if desired; FALSE otherwise)}
 }
 \description{
 Generate random tree topology

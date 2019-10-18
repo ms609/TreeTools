@@ -26,7 +26,8 @@ Quickly identifies edges that are 'ancestral' to a particular edge in a tree
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{AncestorEdge}},
-  \code{\link{DescendantEdges}}, \code{\link{MRCA}},
+  \code{\link{DescendantEdges}},
+  \code{\link{EdgeDistances}}, \code{\link{MRCA}},
   \code{\link{NonDuplicateRoot}}
 }
 \author{

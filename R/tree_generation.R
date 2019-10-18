@@ -29,7 +29,7 @@ GetTipNames <- function (tips) {
 #' @importFrom ape root
 #' @family tree generation functions
 #' @export
-RandomTree <- function (dataset, root = FALSE) {
+RandomTree <- function (tips, root = FALSE) {
   tips <- GetTipNames(tips)
   nTips <- length(tips)
   tree <- rtree(nTips, tip.label=tips, br=NULL)

@@ -19,7 +19,7 @@ Most Recent Common Ancestor
 Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{AncestorEdge}},
   \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}},
+  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
   \code{\link{NonDuplicateRoot}}
 }
 \author{

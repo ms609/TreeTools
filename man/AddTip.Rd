@@ -5,7 +5,8 @@
 \alias{AddTipEverywhere}
 \title{Add a tip to a phylogenetic tree}
 \usage{
-AddTip(tree, where, label)
+AddTip(tree, where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
+  label = "New tip")
 
 AddTipEverywhere(tree, label = "New tip")
 }
@@ -13,7 +14,8 @@ AddTipEverywhere(tree, label = "New tip")
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{where}{The node or tip that should form the sister taxon to the new
-node.  To add a new tip at the root, use \code{where = 0}.}
+node.  To add a new tip at the root, use \code{where = 0}.  By default, the
+new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
 }

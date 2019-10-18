@@ -23,7 +23,8 @@ Identify, for each edge, whether it is not a duplicate of the root edge
 Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{AncestorEdge}},
   \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{MRCA}}
+  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
+  \code{\link{MRCA}}
 }
 \author{
 Martin R. Smith
