@@ -1,6 +1,6 @@
-#' Generate random tree topology from dataset
+#' Generate random tree topology
 #' 
-#' @param dataset A dataset in \code{\link[phangorn]{phyDat}} format
+#' @template tipsForTreeGeneration
 #' @param root Taxon to use as root (if desired; FALSE otherwise)
 #' 
 #' @author Martin R. Smith 
@@ -9,7 +9,9 @@
 #' @family tree generation functions
 #' @export
 RandomTree <- function (dataset, root = FALSE) {
-  tree <- rtree(length(dataset), tip.label=names(dataset), br=NULL)
+  tips <- GetTipNames(tips)
+  nTips <- length(tips)
+  tree <- rtree(nTips, tip.label=tips, br=NULL)
   return (if (root != FALSE) root(tree, root, resolve.root=TRUE) else tree)
 }
 
@@ -76,24 +78,15 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' 
 #' Generates a pectinate (caterpillar) tree with the specified tips
 #' 
-#' @param tips An integer specifying the number of tips, or a character vector
-#' naming the tips, or a dataset phylogenetic dataset whose names will be used
-#' to name the tips.
+#' @template tipsForTreeGeneration
 #' 
 #' @return A tree of class `phylo`.
 #' @family tree generation functions
 #' @author Martin R. Smith
 #' @export
 PectinateTree <- function (tips) {
-  if (length(tips) == 1L && mode(tips) == 'numeric') {
-    nTips <- tips
-    tips <- paste0('t', seq_len(nTips))
-  } else if (class(tips) == 'phyDat') {
-    nTips <- length(tips)
-    tips <- names(tips)
-  } else {
-    nTips <- length(tips)
-  }
+  tips <- GetTipNames(tips)
+  nTips <- length(tips)
   
   nEdge <- nTips + nTips - 2L
   tipSeq <- seq_len(nTips - 1L)
@@ -110,4 +103,23 @@ PectinateTree <- function (tips) {
     Nnode = nTips - 1L,
     tip.label = tips
     ), order = 'cladewise', class='phylo')
+}
+
+#' Extract tip names from a dataset of unknown class
+#' 
+#' @template tipsForTreeGeneration
+#' 
+#' @return Character vector listing tip names.
+#' 
+#' @author Martin R. Smith
+#' @keywords internal
+GetTipNames <- function (tips) {
+  if (length(tips) == 1L && mode(tips) == 'numeric') {
+    tips <- paste0('t', seq_len(nTips))
+  } else if (class(tips) == 'phyDat') {
+    tips <- names(tips)
+  } else if (class(tips) == 'phylo') {
+    tips <- tips$tip.label
+  } 
+  tips
 }
