@@ -50,7 +50,7 @@ rownames(raw_data) <- taxon_names
 
 ## From a Nexus file
 
-`TreeSearch` contains an inbuilt Nexus parser:
+`TreeTrunk` contains an inbuilt Nexus parser:
 
 ```R
 raw_data <- ReadCharacters(filename)
