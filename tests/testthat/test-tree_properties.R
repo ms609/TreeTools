@@ -23,8 +23,8 @@ test_that('Rooting and partition counting',{
 
 test_that('Edge distances are calculated correctly', {
   tree <- ape::read.tree(text = '(((a, b), (c, d)), (e, (f, (g, (h, i)))));')
-  plot(tree); edgelabels()
   ed <- EdgeDistances(tree)
+  
   expect_equal(ed, t(ed)) # Symmetry
   expect_equal(c(4, 5, 6, 6,
                  5, 6, 6, 4,
