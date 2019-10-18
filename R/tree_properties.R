@@ -109,28 +109,40 @@ MRCA <- function(tip1, tip2, ancestors) {
 #' 
 #' @author Martin R. Smith
 #' @export
-EdgeDistance <- function (tree) {
+EdgeDistances <- function (tree) {
   edge <- tree$edge
-  parent <- edge[, 1]
-  child <- edge[, 2]
   nEdge <- dim(edge)[1]
+  edge <- RenumberEdges(edge[, 1], edge[, 2], nEdge = nEdge)
+  parent <- edge[[1]]
+  child <- edge[[2]]
   ancs <- AllAncestors(parent, child)
   ret <- matrix(0L, ncol = nEdge, nrow = nEdge)
   for (i in seq_len(nEdge - 1L)) {
     ancI <- ancs[[child[i]]]
+    nAncI <- length(ancI)
     for (j in seq(from = i + 1L, to = nEdge)) {
       ancJ <- ancs[[child[j]]]
-      mrca <- max(intersect(ancI, ancJ))
-      expect_equal(
-      length(union(ancI[ancI >= mrca], ancJ[ancJ >= mrca])),
-      {u <- union(ancI, ancJ); sum(u >= mrca)},
-      {u <- union(ancI, ancJ); sum(u > mrca, 1L)})
-      ret[i, j] <- sum(u > mrca, 1L)
+      intersection <- intersect(ancI, ancJ)
+      if (length(intersection) > 1L) {
+        # On same side of root
+        mrca <- max(intersection)
+        if (child[i] %in% ancJ || child[j] %in% ancI) {
+          addOne <- 0L
+        } else {
+          addOne <- 1L
+        }
+      } else {
+        # On opposite sides of root
+        mrca <- intersection
+        addOne <- 0L
+      }
+      u <- union(ancI, ancJ)
+      ret[i, j] <- sum(u > mrca, addOne)
     }
   }
   ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
-  # Return:
   
+  # Return:
   ret
 }
 
