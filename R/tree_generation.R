@@ -12,7 +12,12 @@ RandomTree <- function (dataset, root = FALSE) {
   tips <- GetTipNames(tips)
   nTips <- length(tips)
   tree <- rtree(nTips, tip.label=tips, br=NULL)
-  return (if (root != FALSE) root(tree, root, resolve.root=TRUE) else tree)
+  if (root != FALSE) {
+    tree <- root(tree, root, resolve.root=TRUE)
+  } 
+  
+  # Return:
+  tree
 }
 
 #' Neighbour Joining Tree
