@@ -31,3 +31,9 @@ test_that("Matrix converts to phyDat", {
   rownames(mat) <- LETTERS[1:3]
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
+
+test_that('PhyToString works', {
+  longLevels <- phyDat(rbind(x = c('-', '?', 0:12), y = c(12:0, '-', '?')), 
+                       type='USER', levels=c(0:6, '-', 7:12))
+  expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
+})
