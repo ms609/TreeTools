@@ -1,0 +1,24 @@
+Meta
+doc
+docs
+src-*
+src/*.o
+src/*.so
+src/*.dll
+.Rdata
+.Rprofile
+*.gcno
+*.out
+*.Rhistory
+*.log
+/* *.Rd */
+inst/ape
+inst/doc
+revdep/
+vignettes/*.html
+vignettes/*.pdf
+vignettes/*_files
+vignettes/*_cache*
+*.Rproj*
+.Rproj.user
+*.site
