@@ -8,6 +8,7 @@ git:
   depth: 1
 
 r_binary_packages:
+ - ape
  - covr
  - devtools
  - testthat
@@ -17,7 +18,7 @@ before_script:
 
 matrix:
   include:
-    - r: 3.5.0
+    - r: 3.4.0
     - r: release
       before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
       deploy:
