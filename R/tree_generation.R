@@ -1,3 +1,24 @@
+#' Extract tip names from a dataset of unknown class
+#' 
+#' @template tipsForTreeGeneration
+#' 
+#' @return Character vector listing tip names.
+#' 
+#' @author Martin R. Smith
+#' @keywords internal
+GetTipNames <- function (tips) {
+  if (length(tips) == 1L && mode(tips) == 'numeric') {
+    tips <- paste0('t', seq_len(tips))
+  } else if (class(tips) == 'phyDat') {
+    tips <- names(tips)
+  } else if (class(tips) == 'phylo') {
+    tips <- tips$tip.label
+  }
+  
+  # Return:
+  tips
+}
+
 #' Generate random tree topology
 #' 
 #' @template tipsForTreeGeneration
@@ -18,6 +39,71 @@ RandomTree <- function (dataset, root = FALSE) {
   
   # Return:
   tree
+}
+
+#' Generate a Pectinate Tree
+#' 
+#' Generates a pectinate (caterpillar) tree with the specified tip labels.
+#' 
+#' @template tipsForTreeGeneration
+#' 
+#' @return A tree of class `phylo`.
+#' @family tree generation functions
+#' @author Martin R. Smith
+#' @export
+PectinateTree <- function (tips) {
+  tips <- GetTipNames(tips)
+  nTips <- length(tips)
+  
+  nEdge <- nTips + nTips - 2L
+  tipSeq <- seq_len(nTips - 1L)
+  
+  parent <- rep(seq_len(nTips - 1L) + nTips, each = 2L)
+  
+  child <- integer(nEdge)
+  child[tipSeq + tipSeq - 1L] <- tipSeq
+  child[tipSeq + tipSeq] <- tipSeq + nTips + 1L
+  child[nEdge] <- nTips
+  
+  structure(list(
+    edge = matrix(c(parent, child), ncol = 2L),
+    Nnode = nTips - 1L,
+    tip.label = tips
+  ), order = 'cladewise', class='phylo')
+}
+
+#' Generate a Balanced Tree
+#' 
+#' Generates a balanced (symmetrical) tree with the specified tip labels.
+#' 
+#' @template tipsForTreeGeneration
+#' 
+#' @return A tree of class `phylo`.
+#' @family tree generation functions
+#' @author Martin R. Smith
+#' @importFrom ape read.tree
+#' @export
+BalancedTree <- function (tips) {
+  tips <- GetTipNames(tips)
+  
+  read.tree(text=paste0(BalancedBit(tips), ';'))
+}
+
+BalancedBit <- function (tips, nTips = length(tips)) {
+  if (nTips < 4L) {
+    if (nTips == 2L) {
+      paste0('(', tips[1L], ',', tips[2L], ')')
+    } else if (nTips == 3L) {
+      paste0('(', tips[1L], ',(', tips[2L], ',', tips[3L], '))')
+    } else {
+      tips
+    }
+  } else {
+    # Recurse
+    firstHalf <- seq_len(length(tips) / 2L)
+    paste0('(', BalancedBit(tips[firstHalf]), ',',
+           BalancedBit(tips[seq_along(tips)[-firstHalf]]), ')')
+  }
 }
 
 #' Neighbour Joining Tree
@@ -77,54 +163,4 @@ EnforceOutgroup <- function (tree, outgroup) {
   
   result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1), outgroup, resolve.root=TRUE)
   RenumberTips(Renumber(result), taxa)
-}
-
-#' Generate a Pectinate Tree
-#' 
-#' Generates a pectinate (caterpillar) tree with the specified tips
-#' 
-#' @template tipsForTreeGeneration
-#' 
-#' @return A tree of class `phylo`.
-#' @family tree generation functions
-#' @author Martin R. Smith
-#' @export
-PectinateTree <- function (tips) {
-  tips <- GetTipNames(tips)
-  nTips <- length(tips)
-  
-  nEdge <- nTips + nTips - 2L
-  tipSeq <- seq_len(nTips - 1L)
-  
-  parent <- rep(seq_len(nTips - 1L) + nTips, each = 2L)
-  
-  child <- integer(nEdge)
-  child[tipSeq + tipSeq - 1L] <- tipSeq
-  child[tipSeq + tipSeq] <- tipSeq + nTips + 1L
-  child[nEdge] <- nTips
-  
-  structure(list(
-    edge = matrix(c(parent, child), ncol = 2L),
-    Nnode = nTips - 1L,
-    tip.label = tips
-    ), order = 'cladewise', class='phylo')
-}
-
-#' Extract tip names from a dataset of unknown class
-#' 
-#' @template tipsForTreeGeneration
-#' 
-#' @return Character vector listing tip names.
-#' 
-#' @author Martin R. Smith
-#' @keywords internal
-GetTipNames <- function (tips) {
-  if (length(tips) == 1L && mode(tips) == 'numeric') {
-    tips <- paste0('t', seq_len(nTips))
-  } else if (class(tips) == 'phyDat') {
-    tips <- names(tips)
-  } else if (class(tips) == 'phylo') {
-    tips <- tips$tip.label
-  } 
-  tips
 }
