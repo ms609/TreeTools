@@ -25,6 +25,7 @@ Imports:
     stats
 Suggests:
     knitr,
+    Rcpp,
     rmarkdown,
     testthat
 RdMacros: Rdpack
@@ -32,6 +33,7 @@ LazyData: true
 ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
+LinkingTo: Rcpp
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
