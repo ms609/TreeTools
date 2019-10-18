@@ -26,7 +26,7 @@ specified multi-partition split, using the formula of Carter \emph{et al}. (1990
 
 }
 \references{
-\insertRef{Carter1990}{TreeSearch}, Theorem 2.
+\insertRef{Carter1990}{TreeTrunk}, Theorem 2.
 }
 \seealso{
 Other split information functions: \code{\link{CharacterInformation}},

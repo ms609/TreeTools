@@ -106,7 +106,7 @@ MultiSplitInformation <- function (partitionSizes) {
 #'  UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
 #' 
 #' @references 
-#' \insertRef{Carter1990}{TreeSearch}, Theorem 2.
+#' \insertRef{Carter1990}{TreeTrunk}, Theorem 2.
 #'
 #' @author Martin R. Smith
 #' @family split information functions

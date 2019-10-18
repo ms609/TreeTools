@@ -155,7 +155,7 @@ NUnrootedSplits  <- function (splits) {
 }
 #' @describeIn NRooted Log unrooted mult
 #' @references 
-#'  \insertRef{Carter1990}{TreeSearch}
+#'  \insertRef{Carter1990}{TreeTrunk}
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]

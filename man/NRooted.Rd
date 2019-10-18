@@ -77,7 +77,7 @@ provide the log of this number.  Calculations follow Carter et al. 1990, Theorem
 \references{
 \insertRef{Carter1990}{TreeTrunk}
 
-\insertRef{Carter1990}{TreeSearch}
+\insertRef{Carter1990}{TreeTrunk}
 }
 \author{
 Martin R. Smith

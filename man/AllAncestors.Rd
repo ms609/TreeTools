@@ -33,6 +33,12 @@ Note that the tree's edges must be listed in an order whereby each entry in
   AllAncestors(edge[, 1], edge[, 2])
 
 }
+\seealso{
+Other tree navigation: \code{\link{AncestorEdge}},
+  \code{\link{DescendantEdges}},
+  \code{\link{EdgeAncestry}}, \code{\link{MRCA}},
+  \code{\link{NonDuplicateRoot}}
+}
 \author{
 Martin R. Smith
 }
