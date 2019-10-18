@@ -86,6 +86,7 @@ PectinateTree <- function (tips) {
 BalancedTree <- function (tips) {
   tips <- GetTipNames(tips)
   
+  # Return:
   read.tree(text=paste0(BalancedBit(tips), ';'))
 }
 
@@ -99,8 +100,8 @@ BalancedBit <- function (tips, nTips = length(tips)) {
       tips
     }
   } else {
-    # Recurse
-    firstHalf <- seq_len(length(tips) / 2L)
+    # Recurse:
+    firstHalf <- seq_len(nTips / 2L)
     paste0('(', BalancedBit(tips[firstHalf]), ',',
            BalancedBit(tips[seq_along(tips)[-firstHalf]]), ')')
   }
