@@ -1,16 +1,10 @@
 #define USE_RINTERNALS
 
-#include <Rmath.h>
-#include <math.h>
 #include <Rinternals.h>
 #include <stdlib.h> /* for NULL */
-#include <R_ext/Rdynload.h>
 
 #include "ape_reorder.h"
 #include "renumber_tree.h"
-
-#include "build_postorder.h"
-
 
 extern SEXP _TreeTrunk_phangorn_bipCPP(SEXP, SEXP);
 
