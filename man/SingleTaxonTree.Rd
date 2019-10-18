@@ -25,8 +25,9 @@ SingleTaxonTree('Homo_sapiens')
 Other tree manipulation: \code{\link{AddTip}},
   \code{\link{Renumber}}, \code{\link{Subtree}}
 
-Other tree generation functions: \code{\link{NJTree}},
-  \code{\link{PectinateTree}}, \code{\link{RandomTree}}
+Other tree generation functions: \code{\link{BalancedTree}},
+  \code{\link{NJTree}}, \code{\link{PectinateTree}},
+  \code{\link{RandomTree}}
 }
 \concept{tree generation functions}
 \concept{tree manipulation}

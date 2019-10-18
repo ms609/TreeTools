@@ -2,26 +2,40 @@
 % Please edit documentation in R/phylo.R
 \name{AddTip}
 \alias{AddTip}
+\alias{AddTipEverywhere}
 \title{Add a tip to a phylogenetic tree}
 \usage{
 AddTip(tree, where, label)
+
+AddTipEverywhere(tree, label = "New tip")
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
-\item{where}{The node or tip that should form the sister taxon to the new node.  To add a new tip at the root, use "where = 0";}
+\item{where}{The node or tip that should form the sister taxon to the new
+node.  To add a new tip at the root, use \code{where = 0}.}
 
-\item{label}{A character string providing the label the new tip.}
+\item{label}{Character string providing the label to apply to the new tip.}
 }
 \value{
-This function returns a tree of class \code{phylo} with an additional tip at the desired location.
+\code{AddTip} returns a tree of class \code{phylo} with an additional tip
+at the desired location.
+
+\code{AddTipEverywhere} returns a list of class \code{multiPhylo} containing
+the trees produced by adding \code{label} to each edge of \code{tree} in turn.
 }
 \description{
 \code{AddTip} adds a tip to a phylogenetic tree at a specified location.
 }
 \details{
-\code{AddTip} extends \code{\link{bind.tree}}, which cannot handle single-taxon trees.
+\code{AddTip} extends \code{\link{bind.tree}}, which cannot handle
+single-taxon trees.
 }
+\section{Functions}{
+\itemize{
+\item \code{AddTipEverywhere}: AddTipEverywhere Add a tip to each edge in turn
+}}
+
 \examples{
 {
   library('ape')

@@ -132,17 +132,19 @@ Subtree <- function (tree, node) {
 
 #' Add a tip to a phylogenetic tree
 #' 
-#' \code{AddTip} adds a tip to a phylogenetic tree at a specified location.
+#' `AddTip` adds a tip to a phylogenetic tree at a specified location.
 #'
-#' \code{AddTip} extends \code{\link{bind.tree}}, which cannot handle single-taxon trees.
+#'`AddTip` extends \code{\link{bind.tree}}, which cannot handle 
+#'   single-taxon trees.
 #'
-#' @usage AddTip(tree, where, label)
-#' 
 #' @template treeParam 
-#' @param where The node or tip that should form the sister taxon to the new node.  To add a new tip at the root, use "where = 0";
-#' @param label A character string providing the label the new tip.
+#' @param where The node or tip that should form the sister taxon to the new 
+#' node.  To add a new tip at the root, use `where = 0`.  By default, the 
+#' new tip is added to a random edge.
+#' @param label Character string providing the label to apply to the new tip.
 #' 
-#' @return This function returns a tree of class \code{phylo} with an additional tip at the desired location.
+#' @return `AddTip` returns a tree of class \code{phylo} with an additional tip
+#' at the desired location.
 #' 
 #' @author Martin R. Smith
 #' 
@@ -158,7 +160,9 @@ Subtree <- function (tree, node) {
 #' @family tree manipulation
 #' 
 #' @export
-AddTip <- function (tree, where, label) {
+AddTip <- function (tree, 
+                    where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
+                    label = "New tip") {
   nTip <- length(tree$tip.label)
   nNode <- tree$Nnode
   ROOT <- nTip + 1L
@@ -167,9 +171,9 @@ AddTip <- function (tree, where, label) {
   tree.edge <- tree$edge
   
   ## find the row of 'where' before renumbering
-  if (where == ROOT) case <- 1 else {
+  if (where == ROOT) case <- 1L else {
       insertion.edge <- which(tree.edge[, 2] == where)
-      case <- if (where <= nTip) 2 else 3
+      case <- if (where <= nTip) 2L else 3L
   }
   ## case = 1 -> y is bound on the root of x
   ## case = 2 -> y is bound on a tip of x
@@ -202,14 +206,23 @@ AddTip <- function (tree, where, label) {
   ## renumber nodes:
   new.numbering <- integer(nNode)
   new.numbering[-ROOT] <- new.tip.number + 1L
-  second.col.nodes <- tree.edge[, 2] < 0
+  second.col.nodes <- tree.edge[, 2] < 0L
   ## executed from right to left, so newNb is modified before x$edge:
   tree.edge[second.col.nodes, 2] <- new.numbering[-tree.edge[second.col.nodes, 2]] <- new.tip.number + 2:nNode
   tree.edge[, 1] <- new.numbering[-tree.edge[, 1]]
 
   tree$edge <- tree.edge
-  tree
   
+  # Return:
+  tree
+}
+
+#' @describeIn AddTip AddTipEverywhere Add a tip to each edge in turn
+#' @return `AddTipEverywhere` returns a list of class `multiPhylo` containing
+#' the trees produced by adding `label` to each edge of `tree` in turn.
+#' @export
+AddTipEverywhere <- function (tree, label = 'New tip') {
+  lapply(seq_len(tree$Nnode * 2 + 2L) - 1L, AddTip, tree = tree, label = label)
 }
 
 #' List all ancestral nodes

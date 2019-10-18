@@ -8,18 +8,19 @@ PectinateTree(tips)
 }
 \arguments{
 \item{tips}{An integer specifying the number of tips, or a character vector
-naming the tips, or a dataset phylogenetic dataset whose names will be used
-to name the tips.}
+naming the tips, or a tree of class phylo, or a phylogenetic dataset whose
+names will be used to name the tips.}
 }
 \value{
 A tree of class \code{phylo}.
 }
 \description{
-Generates a pectinate (caterpillar) tree with the specified tips
+Generates a pectinate (caterpillar) tree with the specified tip labels.
 }
 \seealso{
-Other tree generation functions: \code{\link{NJTree}},
-  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
+Other tree generation functions: \code{\link{BalancedTree}},
+  \code{\link{NJTree}}, \code{\link{RandomTree}},
+  \code{\link{SingleTaxonTree}}
 }
 \author{
 Martin R. Smith
