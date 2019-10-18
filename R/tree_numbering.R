@@ -7,7 +7,7 @@
 NeworderPhylo <- function (nTaxa, parent, child, nb.edge, whichwise) {
   .C('ape_neworder_phylo', as.integer(nTaxa), as.integer(parent),
      as.integer(child), as.integer(nb.edge), integer(nb.edge),
-     as.integer(whichwise), NAOK = TRUE, PACKAGE='TreeTrunk')[[5]]
+     as.integer(whichwise), NAOK = TRUE)[[5]]
 }
 
 #' neworder_pruningwise
@@ -18,7 +18,7 @@ NeworderPhylo <- function (nTaxa, parent, child, nb.edge, whichwise) {
 NeworderPruningwise <- function (nTaxa, nb.node, parent, child, nb.edge) {
   .C('ape_neworder_pruningwise', as.integer(nTaxa), as.integer(nb.node),
      as.integer(parent), as.integer(child), as.integer(nb.edge),
-     integer(nb.edge), PACKAGE='TreeTrunk')[[6]]
+     integer(nb.edge))[[6]]
 }
 
 #' Order edges and number nodes
@@ -31,8 +31,7 @@ NeworderPruningwise <- function (nTaxa, nb.node, parent, child, nb.edge) {
 OrderEdgesNumberNodes <- function (parent, child, nTips,
                                    nEdge = length(parent)) {
   matrix(unlist(.C('order_edges_number_nodes', as.integer(parent),
-                   as.integer(child), as.integer(nEdge), 
-                   PACKAGE='TreeTrunk')[1:2]), ncol=2)
+                   as.integer(child), as.integer(nEdge))[1:2]), ncol=2)
 }
 
 #' Renumber a tree
@@ -45,7 +44,7 @@ OrderEdgesNumberNodes <- function (parent, child, nTips,
 #' @export
 RenumberTree <- function (parent, child, nEdge = length(parent)) {
   matrix(.Call('RENUMBER_TREE', as.integer(parent), as.integer(child),
-               as.integer(nEdge), PACKAGE='TreeTrunk'), ncol=2)
+               as.integer(nEdge)), ncol=2)
 }
 
 #' @describeIn RenumberTree Instead returns a list containing two items
@@ -55,7 +54,7 @@ RenumberTree <- function (parent, child, nEdge = length(parent)) {
 #' @export
 RenumberEdges <- function (parent, child, nEdge = length(parent)) {
   .Call('RENUMBER_EDGES', as.integer(parent), as.integer(child),
-        as.integer(nEdge), PACKAGE='TreeTrunk')
+        as.integer(nEdge))
 }
 
 #' Reorder tree Cladewise

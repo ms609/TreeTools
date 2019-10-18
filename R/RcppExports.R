@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 phangorn_bipCPP <- function(orig, nTips) {
-    .Call('_TreeTrunk_phangorn_bipCPP', PACKAGE = 'TreeTrunk', orig, nTips)
+    .Call(`_TreeTrunk_phangorn_bipCPP`, orig, nTips)
 }
 
