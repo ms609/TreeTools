@@ -586,8 +586,10 @@ PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
   ret
 }
 #' @rdname PhyToString
+#' @export
 PhyDatToString <- PhyToString
 #' @rdname PhyToString
+#' @export
 PhydatToString <- PhyToString
 
 
