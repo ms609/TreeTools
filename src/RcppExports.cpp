@@ -20,6 +20,7 @@ END_RCPP
 
 RcppExport void ape_neworder_phylo(void *, void *, void *, void *, void *, void *);
 RcppExport void ape_neworder_pruningwise(void *, void *, void *, void *, void *, void *);
+RcppExport void ape_node_depth(void *, void *, void *, void *, void *, void *, void *);
 RcppExport void order_edges_number_nodes(void *, void *, void *);
 RcppExport SEXP RENUMBER_EDGES(SEXP, SEXP, SEXP);
 RcppExport SEXP RENUMBER_TREE(SEXP, SEXP, SEXP);
@@ -28,6 +29,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTrunk_phangorn_bipCPP", (DL_FUNC) &_TreeTrunk_phangorn_bipCPP, 2},
     {"ape_neworder_phylo",       (DL_FUNC) &ape_neworder_phylo,       6},
     {"ape_neworder_pruningwise", (DL_FUNC) &ape_neworder_pruningwise, 6},
+    {"ape_node_depth",           (DL_FUNC) &ape_node_depth,           7},
     {"order_edges_number_nodes", (DL_FUNC) &order_edges_number_nodes, 3},
     {"RENUMBER_EDGES", (DL_FUNC) &RENUMBER_EDGES, 3},
     {"RENUMBER_TREE",  (DL_FUNC) &RENUMBER_TREE,  3},
