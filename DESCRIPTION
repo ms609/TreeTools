@@ -28,7 +28,6 @@ Suggests:
     Rcpp,
     rmarkdown,
     testthat
-RdMacros: Rdpack
 LazyData: true
 ByteCompile: true
 Encoding: UTF-8
