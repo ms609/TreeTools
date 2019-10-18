@@ -11,6 +11,7 @@ r_binary_packages:
  - ape
  - covr
  - devtools
+ - roxygen2
  - testthat
 
 before_script:
@@ -37,6 +38,7 @@ matrix:
       r_packages:
         - ape
         - devtools
+        - roxygen2
         - testthat
       before_install:
       - brew install cairo
