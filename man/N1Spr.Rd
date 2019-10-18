@@ -2,10 +2,13 @@
 % Please edit documentation in R/Combinatorics.R
 \name{N1Spr}
 \alias{N1Spr}
+\alias{IC1Spr}
 \title{Number of trees one SPR step away
 Formula given by Allen and Steel (2001).}
 \usage{
 N1Spr(n)
+
+IC1Spr(n)
 }
 \arguments{
 \item{n}{Number of tips in tree.}
@@ -14,6 +17,12 @@ N1Spr(n)
 Number of trees one SPR step away
 Formula given by Allen and Steel (2001).
 }
+\section{Functions}{
+\itemize{
+\item \code{IC1Spr}: Information content of trees 0 or 1 SPR step from tree
+with n tips.
+}}
+
 \references{
 \insertRef{Allen2001}{TreeTrunk}
 }

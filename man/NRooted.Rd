@@ -7,6 +7,10 @@
 \alias{LnUnrooted.int}
 \alias{LnRooted}
 \alias{LnRooted.int}
+\alias{LnUnrootedSplits}
+\alias{NUnrootedSplits}
+\alias{LnUnrootedMult}
+\alias{NUnrootedMult}
 \title{Number of rooted/unrooted trees
 These functions return the number of rooted or unrooted trees consistent with a given pattern
 of splits.}
@@ -22,6 +26,14 @@ LnUnrooted.int(tips)
 LnRooted(tips)
 
 LnRooted.int(tips)
+
+LnUnrootedSplits(splits)
+
+NUnrootedSplits(splits)
+
+LnUnrootedMult(splits)
+
+NUnrootedMult(splits)
 }
 \arguments{
 \item{tips}{The number of tips.}
@@ -43,6 +55,14 @@ provide the log of this number.  Calculations follow Carter et al. 1990, Theorem
 \item \code{LnRooted}: Log Number of rooted trees
 
 \item \code{LnRooted.int}: Log Number of rooted trees (as integer)
+
+\item \code{LnUnrootedSplits}: Log number of unrooted trees
+
+\item \code{NUnrootedSplits}: Number of unrooted trees
+
+\item \code{LnUnrootedMult}: Log unrooted mult
+
+\item \code{NUnrootedMult}: Number of unrooted trees (mult)
 }}
 
 \examples{
@@ -56,6 +76,8 @@ provide the log of this number.  Calculations follow Carter et al. 1990, Theorem
 }
 \references{
 \insertRef{Carter1990}{TreeTrunk}
+
+\insertRef{Carter1990}{TreeSearch}
 }
 \author{
 Martin R. Smith
