@@ -1,4 +1,3 @@
-
 #' Brewer palettes
 #'
 #' A list of eleven Brewer palettes containing one to eleven colours that
@@ -44,3 +43,23 @@
 #' @name logDoubleFactorials
 #' @export
 "logDoubleFactorials"
+
+#' Raw data from Zhang et al. 2016
+#'
+#' @template LoboMods
+#'
+#' @source 
+#'  \insertRef{Zhang2016}{TreeTrunk}
+#' 
+#' @keywords datasets
+"Lobo.data"
+
+#' Data from Zhang et al. 2016 in phyDat format
+#'
+#' @template LoboMods
+#'
+#' @source
+#'  \insertRef{Zhang2016}{TreeTrunk}
+#' 
+#' @keywords datasets
+"Lobo.phy"
