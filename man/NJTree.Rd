@@ -17,8 +17,8 @@ an object of class \code{phylo}
 Generates a rooted neighbour joining tree, with no edge lengths
 }
 \seealso{
-Other tree generation functions: \code{\link{RandomTree}},
-  \code{\link{SingleTaxonTree}}
+Other tree generation functions: \code{\link{PectinateTree}},
+  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
 }
 \author{
 Martin R. Smith

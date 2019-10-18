@@ -26,7 +26,7 @@ Other tree manipulation: \code{\link{AddTip}},
   \code{\link{Renumber}}, \code{\link{Subtree}}
 
 Other tree generation functions: \code{\link{NJTree}},
-  \code{\link{RandomTree}}
+  \code{\link{PectinateTree}}, \code{\link{RandomTree}}
 }
 \concept{tree generation functions}
 \concept{tree manipulation}

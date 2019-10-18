@@ -44,7 +44,7 @@ Parses Nexus file, reading character states and names
 Tested with nexus files downloaded from MorphoBank with the "no notes"
 option, but should also work more generally.
 
-Do \href{https://github.com/ms609/TreeSearch/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
+Do \href{https://github.com/ms609/TreeTrunk/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incorrectly parsed files.
 }
 \section{Functions}{

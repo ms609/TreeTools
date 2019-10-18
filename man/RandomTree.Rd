@@ -16,6 +16,7 @@ Generate random tree topology from dataset
 }
 \seealso{
 Other tree generation functions: \code{\link{NJTree}},
+  \code{\link{PectinateTree}},
   \code{\link{SingleTaxonTree}}
 }
 \author{
