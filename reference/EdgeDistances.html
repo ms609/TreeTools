@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • TreeTrunk</title>
+<title>Distance between edges — EdgeDistances • TreeTrunk</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,10 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Distance between edges — EdgeDistances" />
+<meta property="og:description" content="Number of nodes that must be traversed to navigate from each edge to
+each other edge within a tree" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +63,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -136,28 +139,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/ms609/TreeTrunk/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Distance between edges</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTrunk/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
+    <div class="hidden name"><code>EdgeDistances.Rd</code></div>
     </div>
 
-    <div id="treetrunk-1-0-0" class="section level1">
-<h1 class="page-header">
-<a href="#treetrunk-1-0-0" class="anchor"></a>TreeTrunk 1.0.0</h1>
-<ul>
-<li>Spun out of <a href="https://ms609.github.io/TreeSearch">TreeSearch</a> package</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Number of nodes that must be traversed to navigate from each edge to
+each other edge within a tree</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>EdgeDistances</span>(<span class='no'>tree</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>tree</th>
+      <td><p>A tree of class <code>phylo</code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other tree navigation: <code><a href='AllAncestors.html'>AllAncestors</a></code>,
+  <code><a href='AncestorEdge.html'>AncestorEdge</a></code>,
+  <code><a href='DescendantEdges.html'>DescendantEdges</a></code>,
+  <code><a href='EdgeAncestry.html'>EdgeAncestry</a></code>, <code><a href='MRCA.html'>MRCA</a></code>,
+  <code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a></code></p></div>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#treetrunk-1-0-0">1.0.0</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#see-also">See also</a></li>
+    </ul>
 
+    <h2>Author</h2>
+    <p>Martin R. Smith</p>
+  </div>
 </div>
 
 

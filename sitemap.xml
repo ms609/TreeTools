@@ -16,6 +16,9 @@
     <loc>https://ms609.github.io/TreeTrunk/reference/ApeTime.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTrunk/reference/BalancedTree.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTrunk/reference/C_node_depth.html</loc>
   </url>
   <url>
@@ -46,10 +49,16 @@
     <loc>https://ms609.github.io/TreeTrunk/reference/EdgeAncestry.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTrunk/reference/EdgeDistances.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTrunk/reference/EnforceOutgroup.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTrunk/reference/ExtractTaxa.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTrunk/reference/GetTipNames.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTrunk/reference/ListToMatrix.html</loc>

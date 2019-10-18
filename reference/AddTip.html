@@ -147,7 +147,10 @@
     <p><code>AddTip</code> adds a tip to a phylogenetic tree at a specified location.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='no'>where</span>, <span class='no'>label</span>)</pre>
+    <pre class="usage"><span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='no'>tree</span>$<span class='no'>Nnode</span> * <span class='fl'>2</span> + <span class='fl'>2L</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) - <span class='fl'>1L</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"New tip"</span>)
+
+<span class='fu'>AddTipEverywhere</span>(<span class='no'>tree</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"New tip"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,20 +161,32 @@
     </tr>
     <tr>
       <th>where</th>
-      <td><p>The node or tip that should form the sister taxon to the new node.  To add a new tip at the root, use "where = 0";</p></td>
+      <td><p>The node or tip that should form the sister taxon to the new
+node.  To add a new tip at the root, use <code>where = 0</code>.  By default, the
+new tip is added to a random edge.</p></td>
     </tr>
     <tr>
       <th>label</th>
-      <td><p>A character string providing the label the new tip.</p></td>
+      <td><p>Character string providing the label to apply to the new tip.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function returns a tree of class <code>phylo</code> with an additional tip at the desired location.</p>
+    <p><code>AddTip</code> returns a tree of class <code>phylo</code> with an additional tip
+at the desired location.</p>
+<p><code>AddTipEverywhere</code> returns a list of class <code>multiPhylo</code> containing
+the trees produced by adding <code>label</code> to each edge of <code>tree</code> in turn.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>AddTip</code> extends <code><a href='https://rdrr.io/pkg/ape/man/bind.tree.html'>bind.tree</a></code>, which cannot handle single-taxon trees.</p>
+    <p><code>AddTip</code> extends <code><a href='https://rdrr.io/pkg/ape/man/bind.tree.html'>bind.tree</a></code>, which cannot handle
+single-taxon trees.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>AddTipEverywhere</code>: AddTipEverywhere Add a tip to each edge in turn</p></li>
+</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/ape/man/bind.tree.html'>bind.tree</a></code></p>
@@ -184,7 +199,7 @@
   <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'ape'</span>)
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>10</span>, <span class='kw'>br</span><span class='kw'>=</span><span class='kw'>NULL</span>)); <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(); <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>15</span>, <span class='fl'>15</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'green'</span>); <span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.new</a></span>()
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='fl'>15</span>, <span class='st'>'NEW_TIP'</span>))
-}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots20.pdf")</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots40.pdf")</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -192,6 +207,7 @@
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#functions">Functions</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
