@@ -213,8 +213,8 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
   
   nChar <- length(matches[[1]])
   
-  if (!is.null(session)) {
-    shiny::updateNumericInput(session, 'character_num', max=nChar)
+  if (!is.null(session) && requireNamespace('shiny', quietly = TRUE)) {
+    shiny::updateNumericInput(session, 'character_num', max = nChar)
   }
   
   if (!exists("character_num") || is.null(character_num)) {

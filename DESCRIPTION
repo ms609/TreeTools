@@ -29,6 +29,7 @@ Suggests:
     Rcpp,
     Rdpack,
     rmarkdown,
+    shiny,
     testthat
 RdMacros: Rdpack
 LazyData: true
