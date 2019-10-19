@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading phylogenetic data into R • TreeTrunk</title>
+<title>Loading phylogenetic data into R • TreeTools</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
@@ -32,7 +32,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">TreeTrunk</a>
+        <a class="navbar-link" href="../index.html">TreeTools</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
@@ -72,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ms609/TreeTrunk">
+  <a href="https://github.com/ms609/TreeTools">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -99,9 +99,9 @@
       <h1>Loading phylogenetic data into R</h1>
                         <h4 class="author">Martin R. Smith</h4>
             
-            <h4 class="date">2019-10-18</h4>
+            <h4 class="date">2019-10-19</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTrunk/blob/master/vignettes/load-data.Rmd"><code>vignettes/load-data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-data.Rmd"><code>vignettes/load-data.Rmd</code></a></small>
       <div class="hidden name"><code>load-data.Rmd</code></div>
 
     </div>
@@ -135,11 +135,11 @@
 <div id="from-a-nexus-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#from-a-nexus-file" class="anchor"></a>From a Nexus file</h2>
-<p><code>TreeTrunk</code> contains an inbuilt Nexus parser:</p>
+<p><code>TreeTools</code> contains an inbuilt Nexus parser:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">raw_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadCharacters.html">ReadCharacters</a></span>(filename)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># Or, to go straight to PhyDat format:</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">as_phydat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadCharacters.html">ReadAsPhyDat</a></span>(filename)</a></code></pre></div>
-<p>This will extract character names and codings from a dataset. It’s been written to work with datasets downloaded from <a href="https://morphobank.org/">MorphoBank</a>, but my aim is for this function to handle most valid (and many invalid) NEXUS files. If you find a file that this function can’t handle, please <a href="https://github.com/ms609/TreeTrunk/issues/new?title=Unsupported+NEXUS+file&amp;body=Please%20attach%20the%20problematic%20NEXUS%20file%20and%20describe%20the%20issue&amp;labels=enhancement">let me know</a> and I’ll try to fix it.</p>
+<p>This will extract character names and codings from a dataset. It’s been written to work with datasets downloaded from <a href="https://morphobank.org/">MorphoBank</a>, but my aim is for this function to handle most valid (and many invalid) NEXUS files. If you find a file that this function can’t handle, please <a href="https://github.com/ms609/TreeTools/issues/new?title=Unsupported+NEXUS+file&amp;body=Please%20attach%20the%20problematic%20NEXUS%20file%20and%20describe%20the%20issue&amp;labels=enhancement">let me know</a> and I’ll try to fix it.</p>
 <p>In the meantime, alternative Nexus parsers are available: try</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">raw_data &lt;-<span class="st"> </span>ape<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ape/man/read.nexus.data.html">read.nexus.data</a></span>(filename)</a></code></pre></div>
 <p>Non-standard elements of a Nexus file might be beyond the capabilities of ape’s parser. In particular, you will need to replace spaces in taxon names with an underscore, and to arrange all data into a single block starting <code>BEGIN DATA</code>. You’ll need to strip out comments, character definitions and separate taxon blocks.</p>
@@ -148,7 +148,7 @@
 <div id="from-a-tnt-file" class="section level2">
 <h2 class="hasAnchor">
 <a href="#from-a-tnt-file" class="anchor"></a>From a TNT file</h2>
-<p>A TNT format dataset downloaded from <a href="https://morphobank.org">MorphoBank</a> can be parsed with <code>ReadTntCharacters</code>, which might also handle other TNT-compatible files. If there’s a file that’s not being read correctly, please <a href="https://github.com/ms609/TreeTrunk/issues/new?title=Unsupported+TNT+file&amp;body=Please%20attach%20the%20problematic%20TNT%20file%20and%20describe%20the%20issue&amp;labels=enhancement">let me know</a> and I’ll try to fix it.</p>
+<p>A TNT format dataset downloaded from <a href="https://morphobank.org">MorphoBank</a> can be parsed with <code>ReadTntCharacters</code>, which might also handle other TNT-compatible files. If there’s a file that’s not being read correctly, please <a href="https://github.com/ms609/TreeTools/issues/new?title=Unsupported+TNT+file&amp;body=Please%20attach%20the%20problematic%20TNT%20file%20and%20describe%20the%20issue&amp;labels=enhancement">let me know</a> and I’ll try to fix it.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">raw_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadCharacters.html">ReadTntCharacters</a></span>(filename)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># Or, to go straight to PhyDat format:</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">my_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadCharacters.html">ReadTntAsPhyDat</a></span>(filename)</a></code></pre></div>
@@ -161,8 +161,8 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">my_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ReadCharacters.html">PhyDat</a></span>(raw_data)</a></code></pre></div>
 <p>or if that doesn’t work,</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">my_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/MatrixToPhyDat.html">MatrixToPhyDat</a></span>(raw_data)</a></code></pre></div>
-<p>These functions are pretty robust, but might return an error when they encounter an unexpected dataset format – if they don’t work on your dataset, please<br><a href="https://github.com/ms609/TreeTrunk/issues/new?title=data+to+PhyDat+conversion+issue&amp;body=Please%20describe+the+problem+here:&amp;labels=bug">let me know</a>.</p>
-<p>Failing that, you can enlist the help of the <code>phangorn</code> package, which was installed when you installed <code>TreeTrunk</code>:</p>
+<p>These functions are pretty robust, but might return an error when they encounter an unexpected dataset format – if they don’t work on your dataset, please<br><a href="https://github.com/ms609/TreeTools/issues/new?title=data+to+PhyDat+conversion+issue&amp;body=Please%20describe+the+problem+here:&amp;labels=bug">let me know</a>.</p>
+<p>Failing that, you can enlist the help of the <code>phangorn</code> package, which was installed when you installed <code>TreeTools</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'phangorn'</span>)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">my_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/phangorn/man/phyDat.html">phyDat</a></span>(raw_data, <span class="dt">type=</span><span class="st">'USER'</span>, <span class="dt">levels=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span><span class="op">:</span><span class="dv">9</span>, <span class="st">'-'</span>))</a></code></pre></div>
 <p><code>type='USER'</code> tells the parser to expect morphological data.</p>
@@ -257,7 +257,7 @@
     
     
     apiKey: '',
-    indexName: 'treetrunk',
+    indexName: 'TreeTools',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading phylogenetic trees into R • TreeTrunk</title>
+<title>Loading phylogenetic trees into R • TreeTools</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
@@ -32,7 +32,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">TreeTrunk</a>
+        <a class="navbar-link" href="../index.html">TreeTools</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
@@ -72,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ms609/TreeTrunk">
+  <a href="https://github.com/ms609/TreeTools">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -99,9 +99,9 @@
       <h1>Loading phylogenetic trees into R</h1>
                         <h4 class="author">Martin R. Smith</h4>
             
-            <h4 class="date">2019-10-18</h4>
+            <h4 class="date">2019-10-19</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTrunk/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
 
     </div>
@@ -152,7 +152,7 @@
 <div id="trees-from-tnt" class="section level3">
 <h3 class="hasAnchor">
 <a href="#trees-from-tnt" class="anchor"></a>Trees from TNT</h3>
-<p>Trees saved using <a href="http://www.lillo.org.ar/phylogeny/tnt/">TNT</a> can be opened in R using <code><a href="../reference/ReadTntTree.html">TreeTrunk::ReadTntTree</a></code>.</p>
+<p>Trees saved using <a href="http://www.lillo.org.ar/phylogeny/tnt/">TNT</a> can be opened in R using <code><a href="../reference/ReadTntTree.html">TreeTools::ReadTntTree</a></code>.</p>
 <p>Trees should be saved in parenthetical format (TNT command <code>tsav*</code>), rather than TNT’s compressed format (TNT command <code>tsav</code>).</p>
 <p>The TNT command <code>taxname=</code> will write taxon names to file, which results in larger but easier to read files. Trees in such a file will be read using the terminal names saved within the file. The TNT command <code>taxname-</code> saves just the numbers of the terminals. In order for the trees to be reunited with the names of their tips, terminal labels will be read from the linked matrix file listed in the first line of the .tre file. Ensure that this file exists in the expected location – if it does not, use <code><a href="../reference/ReadTntTree.html">ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')</a></code>, or <code>tipLabels</code> to manually specify the names of the tips (e.g. <code>ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])</code>).</p>
 </div>
@@ -208,7 +208,7 @@
     
     
     apiKey: '',
-    indexName: 'treetrunk',
+    indexName: 'TreeTools',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {

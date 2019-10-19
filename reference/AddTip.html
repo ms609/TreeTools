@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a tip to a phylogenetic tree — AddTip • TreeTrunk</title>
+<title>Add a tip to a phylogenetic tree — AddTip • TreeTools</title>
 
 
 <!-- jquery -->
@@ -74,7 +74,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">TreeTrunk</a>
+        <a class="navbar-link" href="../index.html">TreeTools</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
@@ -114,7 +114,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ms609/TreeTrunk">
+  <a href="https://github.com/ms609/TreeTools">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -139,7 +139,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add a tip to a phylogenetic tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTrunk/blob/master/R/phylo.R'><code>R/phylo.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/phylo.R'><code>R/phylo.R</code></a></small>
     <div class="hidden name"><code>AddTip.Rd</code></div>
     </div>
 
@@ -199,7 +199,7 @@ single-taxon trees.</p>
   <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'ape'</span>)
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>10</span>, <span class='kw'>br</span><span class='kw'>=</span><span class='kw'>NULL</span>)); <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(); <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>15</span>, <span class='fl'>15</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'green'</span>); <span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.new</a></span>()
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='fl'>15</span>, <span class='st'>'NEW_TIP'</span>))
-}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots40.pdf")</span></div></pre>
+}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots60.pdf")</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -237,7 +237,7 @@ single-taxon trees.</p>
     
     
     apiKey: '',
-    indexName: 'treetrunk',
+    indexName: 'TreeTools',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {
