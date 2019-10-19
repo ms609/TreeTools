@@ -6,7 +6,7 @@
 \title{Data from Zhang et al. 2016 in phyDat format}
 \format{An object of class \code{phyDat} of length 48.}
 \source{
-\insertRef{Zhang2016}{TreeTrunk}
+\insertRef{Zhang2016}{TreeTools}
 }
 \usage{
 Lobo.phy

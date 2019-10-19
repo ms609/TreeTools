@@ -1,4 +1,4 @@
 library('testthat')
-library('TreeTrunk')
+library('TreeTools')
 
-test_check("TreeTrunk")
+test_check("TreeTools")

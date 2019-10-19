@@ -1,6 +1,6 @@
 context("tree_properties.R")
 
-test_that('Rooting and partition counting',{
+test_that('Rooting and partition counting', {
   set.seed(0)
   
   expect_false(TreeIsRooted(ape::read.tree(text='(a, b, c);')))

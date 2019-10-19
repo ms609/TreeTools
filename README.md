@@ -1,9 +1,9 @@
-# TreeTrunk
+# TreeTools
 
-[![Build Status](https://travis-ci.org/ms609/TreeTrunk.svg?branch=master)](https://travis-ci.org/ms609/TreeTrunk)
-[![codecov](https://codecov.io/gh/ms609/TreeTrunk/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTrunk)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeTrunk)](https://cran.r-project.org/package=TreeTrunk)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTrunk)](https://cran.r-project.org/package=TreeTrunk)
+[![Build Status](https://travis-ci.org/ms609/TreeTools.svg?branch=master)](https://travis-ci.org/ms609/TreeTools)
+[![codecov](https://codecov.io/gh/ms609/TreeTools/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTools)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeTools)](https://cran.r-project.org/package=TreeTools)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTools)](https://cran.r-project.org/package=TreeTools)
 [![DOI](https://zenodo.org/badge/98171642.svg)](https://zenodo.org/badge/latestdoi/98171642)<!--[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
 -->
 [![Project Status: Active – – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -20,16 +20,16 @@ applied to unweighted trees (i.e. those without edge lengths).
 
 Install and load the library from CRAN as follows:
 ```
-install.packages('TreeTrunk')
-library('TreeTrunk')
+install.packages('TreeTools')
+library('TreeTools')
 ```
 
 If you're feeling brave, you can install the development version thus:
 ```r
 if(!require(devtools)) install.packages("devtools")
-devtools::install_github('ms609/TreeTrunk')
+devtools::install_github('ms609/TreeTools')
 ```
 
-Please note that the 'TreeTrunk' project is released with a
+Please note that the 'TreeTools' project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
 By contributing to this project, you agree to abide by its terms.

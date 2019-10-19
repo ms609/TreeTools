@@ -126,7 +126,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
           warning("Could not read taxon names from linked TNT file:\n  ",
                   taxonFile, 
                   "\nIs the file in TNT or Nexus format? If failing inexplicably, please report:",
-                  "\n  https://github.com/ms609/TreeTrunk/issues/new")
+                  "\n  https://github.com/ms609/TreeTools/issues/new")
         }
       }
     }
@@ -245,7 +245,7 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #' Tested with nexus files downloaded from MorphoBank with the "no notes"
 #' option, but should also work more generally.
 #'
-#' Do [report](https://github.com/ms609/TreeTrunk/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
+#' Do [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incorrectly parsed files.
 #'
 #' @param filepath character string specifying location of file

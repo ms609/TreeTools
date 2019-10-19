@@ -1,4 +1,4 @@
-url: https://ms609.github.io/TreeTrunk
+url: https://ms609.github.io/TreeTools
 
 authors:
   Martin R. Smith: 
@@ -94,4 +94,4 @@ template:
   params:
     docsearch:
       api_key: #TODO
-      index_name: treetrunk
+      index_name: TreeTools

@@ -6,7 +6,7 @@
 \title{Raw data from Zhang et al. 2016}
 \format{An object of class \code{list} of length 48.}
 \source{
-\insertRef{Zhang2016}{TreeTrunk}
+\insertRef{Zhang2016}{TreeTools}
 }
 \usage{
 Lobo.data

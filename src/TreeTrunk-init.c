@@ -6,7 +6,7 @@
 #include "ape_reorder.h"
 #include "renumber_tree.h"
 
-extern SEXP _TreeTrunk_phangorn_bipCPP(SEXP, SEXP);
+extern SEXP _TreeTools_phangorn_bipCPP(SEXP, SEXP);
 
 static const R_CMethodDef cMethods[] = {
   {"order_edges_number_nodes", (DL_FUNC) &order_edges_number_nodes, 3, order_edges_number_nodes_t},
@@ -17,13 +17,13 @@ static const R_CMethodDef cMethods[] = {
 };
 
 static const R_CallMethodDef callMethods[] = {
-  {"_TreeTrunk_phangorn_bipCPP",   (DL_FUNC) &_TreeTrunk_phangorn_bipCPP, 2},
+  {"_TreeTools_phangorn_bipCPP",   (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
   {"RENUMBER_TREE",  (DL_FUNC) &RENUMBER_TREE,  3},
   {"RENUMBER_EDGES", (DL_FUNC) &RENUMBER_EDGES, 3},
   {NULL, NULL, 0}
 };
 
-void R_init_TreeTrunk(DllInfo *dll) {
+void R_init_TreeTools(DllInfo *dll) {
   R_registerRoutines(dll, cMethods, callMethods, NULL, NULL);
   R_useDynamicSymbols(dll, FALSE);
   R_forceSymbols(dll, TRUE);

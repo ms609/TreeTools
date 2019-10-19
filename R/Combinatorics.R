@@ -1,4 +1,4 @@
-globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTrunk')
+globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
 
 #' Double Factorial
 #' 
@@ -90,7 +90,7 @@ LogDoubleFactorial.int <- function (n) {
 #' @author Martin R. Smith
 #' 
 #' @references 
-#'  \insertRef{Carter1990}{TreeTrunk}
+#'  \insertRef{Carter1990}{TreeTools}
 #'  
 #' @examples
 #'   NRooted(10)
@@ -127,7 +127,7 @@ LnRooted.int <- function (tips) {
 #'
 #' @param n Number of tips in tree.
 #' @references 
-#'  \insertRef{Allen2001}{TreeTrunk}
+#'  \insertRef{Allen2001}{TreeTools}
 #' 
 #' @export
 N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
@@ -155,7 +155,7 @@ NUnrootedSplits  <- function (splits) {
 }
 #' @describeIn NRooted Log unrooted mult
 #' @references 
-#'  \insertRef{Carter1990}{TreeTrunk}
+#'  \insertRef{Carter1990}{TreeTools}
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]

@@ -1,4 +1,4 @@
-Package: TreeTrunk
+Package: TreeTools
 Title: Create, modify and analyse phylogenetic trees
 Version: 1.0.0
 Authors@R: c(person("Martin R.", 'Smith',
@@ -16,8 +16,8 @@ Copyright: Incorporates C/C++ code from:
    phangorn by Klaus Scheip <doi:10.1093/bioinformatics/btq706>
 Description: Core functions for the creation, modification and analysis of 
   phylogenetic trees.
-URL: https://ms609.github.io/TreeTrunk, https://github.com/ms609/TreeTrunk
-BugReports: https://github.com/ms609/TreeTrunk/issues
+URL: https://ms609.github.io/TreeTools, https://github.com/ms609/TreeTools
+BugReports: https://github.com/ms609/TreeTools/issues
 Depends: R (>= 3.4.0)
 Imports: 
     ape (>= 5.0),

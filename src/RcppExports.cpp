@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // phangorn_bipCPP
 List phangorn_bipCPP(IntegerMatrix orig, int nTips);
-RcppExport SEXP _TreeTrunk_phangorn_bipCPP(SEXP origSEXP, SEXP nTipsSEXP) {
+RcppExport SEXP _TreeTools_phangorn_bipCPP(SEXP origSEXP, SEXP nTipsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
