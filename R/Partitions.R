@@ -195,28 +195,3 @@ in.Splits <- function (x, table, incomparables = NULL, ...) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x), ]
 }
-
-
-#' Drop Single Splits
-#'
-#' Removes splits that pertain only to a single taxon from a splits object.
-#'
-#' Bipartition splits are divisions, implied by each edge or node of an unrooted
-#' tree topology, that divide the taxa into two groups (one of which is a clade).
-#'
-#' By default, a list of splits will include those that separate a single taxon
-#' (a leaf) from all others.  Such splits are, by definition, present in all
-#' trees that contain that taxon; they are not of interest when comparing trees.
-#' This function removes such splits from a list of bipartitions.
-#'
-#' @param split A matrix in which each column corresponds to a bipartition split
-#'
-#' @return The input matrix, with any columns that separate only a single pendant
-#'  tip removed.
-#'
-#' @author Martin R. Smith
-#'
-#' @export
-DropSingleSplits <- function (split) {
-  split[, colSums(split) > 1 & colSums(!split) > 1, drop=FALSE]
-}
