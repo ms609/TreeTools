@@ -13,7 +13,7 @@ test_that("Node supports calculated correctly", {
 
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
-  expect_equal(c('n9'=4, 'n10'=4, 'n11'=4, 'n13'=3),
+  expect_equal(c('n10'=4, 'n11'=4, 'n12'=4, 'n13'=3),
                SplitFrequency(balanced, treeSample))
 
 })
