@@ -16,11 +16,10 @@ ForestSplits(forest, powersOf2)
 TreeSplits(tree)
 }
 \arguments{
-\item{reference}{A tree of class phylo, or a character vector specifying its splits
-(as obtained through \link{Tree2Splits})}
+\item{reference}{A tree of class \code{phylo}, a \code{Splits} object.}
 
-\item{forest}{a list of trees of class phylo, or a multiPhylo object; or a
-list of their constituent splits (as obtained through \link{Tree2Splits})}
+\item{forest}{a list of trees of class \code{phylo}, or a \code{multiPhylo} object; or a
+\code{Splits} object.}
 
 \item{tips}{Integer vector specifying the tips of the tree within the chosen split}
 
@@ -64,11 +63,11 @@ Use Tree2Splits instead.
   tree2 <- rtree(7)
   tree3 <- rtree(7)
   forest <- list(tree1, tree2, tree2, tree3, rtree(7))
-  
+
   # Simple, but means counting each split in the forest twice:
   tree1Freqs <- SplitFrequency(tree1, forest)
   SplitFrequency(tree2, forest)
-  
+
   plot(tree1)
   nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
 }
