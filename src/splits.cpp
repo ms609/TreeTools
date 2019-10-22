@@ -50,7 +50,7 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   NumericMatrix ret(n_edge - n_tip, n_bin);
   for (int i = 0; i < n_edge - n_tip; i++) {
     for (int j = 0; j < n_bin; j++) {
-      ret(i, j) = splits[n_tip + i + 1][j];
+      ret(i, j) = splits[n_tip + i + 1][n_bin - j - 1];
     }
   }
 
