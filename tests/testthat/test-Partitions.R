@@ -9,7 +9,15 @@ test_that("Split combination", {
   tree4 <- ape::read.tree(text='(a, (b, (c, (d, f))));')
   tree5 <- ape::read.tree(text='(a, (b, (c, (d, (e, f)))));')
 
+  A <- FALSE
+  B <- TRUE
   expect_equal(c(n8 = 'c d e | a b', n9 = 'd e | a b c'), as.character(splits1))
+  logicalSplits <- as.Splits(matrix(c(A, A, B, B, B,  A, A, A, B, B),
+                                    nrow=2, byrow = TRUE),
+                             tipLabels = letters[1:5])
+  rownames(logicalSplits) <- rownames(splits1)
+  expect_equal(splits1, logicalSplits)
+
   expect_equal(4L, length(splits12))
   expect_equal(c(FALSE, FALSE, TRUE, TRUE), as.logical(duplicated(splits12)))
   expect_error(c(splits1, as.Splits(tree3)))

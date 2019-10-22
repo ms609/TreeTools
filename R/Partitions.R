@@ -22,6 +22,7 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
+#' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
@@ -43,6 +44,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
   }
 }
 
+#' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (attr(x, 'tip.label') != tipLabels) {
     stop("Order of tip labels does not match")
@@ -52,16 +54,35 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
 #' @export
 as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE) {
   if (class(x[[1]]) == 'phylo') {
-    lapply(x, as.Splits, tipLabels = tipLabels)
+    lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
     stop("Unsupported list type.")
   }
 }
 
 #' @export
+as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
+  powersOf2 <- 2L^(0:31)
+  dimX <- dim(x)
+  nTip <- dimX[2]
+  chunks <- (nTip %/% 32L) + 1L
+  remainder <- nTip %% 32L
+
+  structure(vapply(seq_len(chunks) - 1L, function (i) {
+    chunk <- i * 32L + seq_len(
+      if (i + 1L == chunks && remainder != 0L) remainder else 32L
+    )
+    apply(x[, chunk], 1, function (twos) sum(powersOf2[chunk][twos]))
+  }, double(dimX[1])),
+    nTip = nTip,
+    tip.label = tipLabels,
+    class = 'Splits')
+}
+
+#' @export
 as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
                                   asSplits = TRUE) {
-  lapply(x, as.Splits, tipLabels = tipLabels)
+  lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
 }
 
 #' @export
@@ -130,6 +151,9 @@ as.character.Splits <- function (x, ...) {
   })
 }
 
+#' @importFrom ape Ntip
+#' @export
+Ntip.Splits <- function (x, ...) attr(x, 'nTip')
 
 #' @export
 IdentifySplits <- function (splits, taxonNames = rownames(splits)) {
