@@ -33,17 +33,8 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   }
 
   for (int i = n_edge - 1; i > 0; i--) { /* edge 0 is second root edge */
-    int child = edge(i, 1) - 1;
-    /*Rcout << "Edge r" << (i + 1) << ": parent = r" << (edge(i, 0)) << "."
-          << splits[(int) (edge(i, 0) - 1)][0]
-          << "; child = r" << (child + 1)
-          << "." << splits[child][0] << "\n";*/
     for (int j = 0; j < n_bin; j++) {
-      /*Rcout << "  Edge " << i << ", bin " << j
-            << ": " << splits[(int) edge(i, 0) - 1][j] << " |= "
-            << splits[child][j] << " = "
-            << (splits[(int) edge(i, 0) - 1][j] | splits[child][j]) << ".\n";*/
-      splits[(int) edge(i, 0) - 1][j] |= splits[child][j];
+      splits[(int) edge(i, 0) - 1][j] |= splits[(int) edge(i, 1) - 1][j];
     }
   }
 
