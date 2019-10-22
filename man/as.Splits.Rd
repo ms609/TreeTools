@@ -4,9 +4,13 @@
 \alias{as.Splits}
 \title{As splits}
 \usage{
-as.Splits(x, ...)
+as.Splits(x, tipLabels = NULL, ...)
 }
 \arguments{
+\item{tipLabels}{Character vector specifying sequence in which to order
+tip labels.  Label order must (currently) match to combine or compare separate
+\code{Splits} objects.}
+
 \item{tr}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{asSplits}{Logical specifying whether to return a \code{Splits} object,
@@ -23,7 +27,7 @@ that defines them.
 Converts a phylogenetic tree to an array of bipartition splits.
 }
 \examples{
-Tree2Splits(ape::rtree(6, tip.label=1:6, br=NULL))
+as.Splits(ape::rtree(6, tip.label=1:6, br=NULL))
 
 }
 \author{

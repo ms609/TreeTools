@@ -52,7 +52,7 @@ constituent functions (see examples)
 \item \code{ForestSplits}: Frequency of splits in a given forest of trees
 
 \item \code{TreeSplits}: Deprecated. Listed the splits in a given tree.
-Use Tree2Splits instead.
+Use as.Splits instead.
 }}
 
 \examples{

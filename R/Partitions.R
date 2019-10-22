@@ -3,6 +3,9 @@
 #' Converts a phylogenetic tree to an array of bipartition splits.
 #'
 #' @param tr A tree of class \code{\link[ape:read.tree]{phylo}}.
+#' @param tipLabels Character vector specifying sequence in which to order
+#' tip labels.  Label order must (currently) match to combine or compare separate
+#' `Splits` objects.
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
@@ -13,7 +16,7 @@
 #'
 #' @author Martin R. Smith
 #'
-#' @examples Tree2Splits(ape::rtree(6, tip.label=1:6, br=NULL))
+#' @examples as.Splits(ape::rtree(6, tip.label=1:6, br=NULL))
 #'
 #' @importFrom ape reorder.phylo
 #' @export
