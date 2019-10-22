@@ -5,3 +5,7 @@ phangorn_bipCPP <- function(orig, nTips) {
     .Call(`_TreeTools_phangorn_bipCPP`, orig, nTips)
 }
 
+cpp_edge_to_splits <- function(edge) {
+    .Call(`_TreeTools_cpp_edge_to_splits`, edge)
+}
+

@@ -7,6 +7,7 @@
 #include "renumber_tree.h"
 
 extern SEXP _TreeTools_phangorn_bipCPP(SEXP, SEXP);
+extern SEXP _TreeTools_cpp_edge_to_splits(SEXP);
 
 static const R_CMethodDef cMethods[] = {
   {"order_edges_number_nodes", (DL_FUNC) &order_edges_number_nodes, 3, order_edges_number_nodes_t},
@@ -17,7 +18,8 @@ static const R_CMethodDef cMethods[] = {
 };
 
 static const R_CallMethodDef callMethods[] = {
-  {"_TreeTools_phangorn_bipCPP",   (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
+  {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 1},
+  {"_TreeTools_phangorn_bipCPP", (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
   {"RENUMBER_TREE",  (DL_FUNC) &RENUMBER_TREE,  3},
   {"RENUMBER_EDGES", (DL_FUNC) &RENUMBER_EDGES, 3},
   {NULL, NULL, 0}
