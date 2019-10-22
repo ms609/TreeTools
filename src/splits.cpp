@@ -34,23 +34,25 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
 
   for (int i = n_edge - 1; i > 0; i--) { /* edge 0 is second root edge */
     int child = edge(i, 1) - 1;
-    Rcout << "Edge " << i << ": parent = " << (edge(i, 0) - 1) << "."
+    /*Rcout << "Edge r" << (i + 1) << ": parent = r" << (edge(i, 0)) << "."
           << splits[(int) (edge(i, 0) - 1)][0]
-          << "; child = " << child
-          << "." << splits[child][0] << "\n";
+          << "; child = r" << (child + 1)
+          << "." << splits[child][0] << "\n";*/
     for (int j = 0; j < n_bin; j++) {
-      Rcout << "  Edge " << i << ", bin " << j
+      /*Rcout << "  Edge " << i << ", bin " << j
             << ": " << splits[(int) edge(i, 0) - 1][j] << " |= "
             << splits[child][j] << " = "
-            << (splits[(int) edge(i, 0) - 1][j] | splits[child][j]) << ".\n";
+            << (splits[(int) edge(i, 0) - 1][j] | splits[child][j]) << ".\n";*/
       splits[(int) edge(i, 0) - 1][j] |= splits[child][j];
     }
   }
 
-  NumericMatrix ret(n_edge - n_tip, n_bin);
-  for (int i = 0; i < n_edge - n_tip; i++) {
+  NumericMatrix ret(n_edge - n_tip - 1, n_bin);
+  for (int i = 0; i < n_edge - n_tip - 1; i++) {
     for (int j = 0; j < n_bin; j++) {
-      ret(i, j) = splits[n_tip + i + 1][n_bin - j - 1];
+      /* Node n_tip = root node; split = ~0. */
+      /* Node n_tip + 1 == (right_root_node) == ~(left_root_node) */
+      ret(i, j) = splits[n_tip + i + 2][j];
     }
   }
 
