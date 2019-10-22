@@ -105,9 +105,7 @@ print.Splits <- function (x, details = FALSE, ...) {
     for (i in seq_len(dim(x)[1])) {
       split <- x[i, , drop = FALSE]
       cat("\n", names[i], ' ')
-      lapply(split[-length(split)], .DecodeBinary32)
-      .DecodeBinary32(split[length(split)],
-                      stopAt = ifelse(nTip %% 32, nTip %% 32, 32))
+      .DecodeBinary(split, nTip, print = TRUE)
     }
   }
 }
@@ -119,18 +117,57 @@ summary.Splits <- function (x, ...) {
                    "\t", c(rep('', 4), '\n')))
 }
 
+#' @export
+as.character.Splits <- function (x, ...) {
+  tipLabels <- attr(x, 'tip.label')
+  nTip <- attr(x, 'nTip')
+
+  apply(x, 1, function (split) {
+    inSplit <- unlist(.DecodeBinary(split, nTip))
+    paste0(paste(tipLabels[inSplit], collapse=' '), ' | ',
+           paste(tipLabels[!inSplit], collapse=' '))
+
+  })
+}
+
+
+#' @export
+IdentifySplits <- function (splits, taxonNames = rownames(splits)) {
+  apply(splits, 2, function (x) paste0(
+    paste(taxonNames[x], collapse=' '), ' : ',
+    paste(taxonNames[!x], collapse=' ')))
+}
+
 
 #' @export
 names.Splits <- function (x) rownames(x)
 
 #' @keywords internal
 #' @export
-.DecodeBinary32 <- function (n, stopAt = 32L, appendLF = FALSE) {
+.DecodeBinary32 <- function (n, stopAt = 32L, print = FALSE, appendLF = FALSE) {
+  ret <- logical(stopAt)
   for (i in seq_len(stopAt)) {
-    cat(ifelse(n %% 2, '*', '.'))
+    ret[i] = as.logical(n %% 2)
+    if (print) cat(ifelse(ret[i], '*', '.'))
     n <- n %/% 2
   }
-  if (appendLF) cat("\n")
+  if (print && appendLF) cat("\n")
+  ret
+}
+
+#' @keywords internal
+#' @export
+.DecodeBinary32Last <- function (n, nTip, ...) {
+  remainder32 <- nTip %% 32L
+  .DecodeBinary32(n, stopAt = ifelse(remainder32, remainder32, 32L), ...)
+}
+
+#' @keywords internal
+#' @export
+.DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
+  nN <- length(n)
+  c(lapply(n[-nN], .DecodeBinary32, print, appendLF),
+    .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
 }
 
 #' @export
