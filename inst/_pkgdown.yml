@@ -1,21 +1,21 @@
 url: https://ms609.github.io/TreeTools
 
 authors:
-  Martin R. Smith: 
+  Martin R. Smith:
     href: https://community.dur.ac.uk/martin.smith/
-    
+
 development:
   mode: auto
 
 reference:
   - title: "Node support"
     desc: "Functions that describe support for nodes in trees."
-    contents: 
+    contents:
       - SplitFrequency
       - SupportColour
-  
+
   - title: "Tree manipulation"
-    desc: > 
+    desc: >
       Functions for editing phylogenetic trees.
     contents:
       - AddTip
@@ -39,7 +39,7 @@ reference:
       - Subtree
       - RenumberTips
       - TreeIsRooted
-      
+
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
     contents:
@@ -47,22 +47,22 @@ reference:
       - PhyDatToMatrix
       - PhyToString
       - StringToPhyDat
-      
+
   - title: "Parsers"
     desc: "Functions to parse files."
-    contents: 
+    contents:
       - ApeTime
       - ExtractTaxa
       - NewickTree
       - ReadCharacters
       - ReadTntTree
       - TNTText2Tree
-      
+
   - title: "Partitions"
     desc: "Functions that manipulate bipartition splits."
     contents:
       - matches('Split')
-      
+
   - title: "Information and combinatorics"
     desc: "Functions to calculate factorial quantities."
     contents:
@@ -71,17 +71,17 @@ reference:
     - N1Spr
     - DoubleFactorial
     - has_concept("split information functions")
-    
+
   - title: "Datasets"
     desc: "Data that accompanies the package."
-    contents: 
+    contents:
       - brewer
       - doubleFactorials
       - Lobo.data
       - Lobo.phy
       - logDoubleFactorials
      #- has_concept('datasets') # Not yet implemented by pkgdown
-    
+
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
@@ -89,9 +89,9 @@ reference:
       - MatrixToList
       - RightmostCharacter
       - SampleOne
-  
+
 template:
   params:
     docsearch:
-      api_key: #TODO
-      index_name: TreeTools
+      api_key: 6078115fdeb422f23fe2f8c478c70150
+      index_name: treetools
