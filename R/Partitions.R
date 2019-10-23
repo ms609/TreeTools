@@ -64,19 +64,44 @@ as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE) {
 as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
   powersOf2 <- 2L^(0:31)
   dimX <- dim(x)
-  nTip <- dimX[2]
-  chunks <- (nTip %/% 32L) + 1L
-  remainder <- nTip %% 32L
+  if (is.null(dimX)) {
+    nTip <- length(x)
+    chunks <- (nTip %/% 32L) + 1L
+    remainder <- nTip %% 32L
 
-  structure(vapply(seq_len(chunks) - 1L, function (i) {
-    chunk <- i * 32L + seq_len(
-      if (i + 1L == chunks && remainder != 0L) remainder else 32L
-    )
-    apply(x[, chunk], 1, function (twos) sum(powersOf2[chunk][twos]))
-  }, double(dimX[1])),
+    if (is.null(tipLabels)) {
+      tipLabels <- names(x)
+      if (is.null(tipLabels)) {
+        tipLabels <- paste0('t', seq_len(nTip))
+      }
+    }
+
+    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
+      chunk <- seq_len(
+        if (i + 1L == chunks && remainder != 0L) remainder else 32L
+      )
+      sum(powersOf2[chunk][x[i * 32L + chunk]])
+    }, double(1)), nrow = 1L),
     nTip = nTip,
     tip.label = tipLabels,
     class = 'Splits')
+  } else {
+    nTip <- dimX[2]
+    chunks <- (nTip %/% 32L) + 1L
+    remainder <- nTip %% 32L
+
+    structure(vapply(seq_len(chunks) - 1L, function (i) {
+      chunkSeq <- seq_len(
+        if (i + 1L == chunks && remainder != 0L) remainder else 32L
+      )
+      chunk <- i * 32L + chunkSeq
+      apply(x[, chunk, drop = FALSE], 1L,
+            function (twos) sum(powersOf2[chunkSeq][twos]))
+    }, double(dimX[1])),
+      nTip = nTip,
+      tip.label = tipLabels,
+      class = 'Splits')
+  }
 }
 
 #' @export
@@ -100,7 +125,8 @@ as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x))) {
 #' @export
 print.Splits <- function (x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
-  cat(dim(x)[1], "bipartition splits dividing", nTip, "tips.")
+  cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] > 1, "splits", "split"),
+      "dividing", nTip, "tips.")
   if (details) {
     #cat(paste0("\n  Tip ", seq_len(nTip), ': ', attr(x, 'tip.label')))
     #for (i in rev(seq_len(log10(nTip) + 1L)) - 1L) {
@@ -134,8 +160,9 @@ print.Splits <- function (x, details = FALSE, ...) {
 #' @export
 summary.Splits <- function (x, ...) {
   print(x, details = TRUE, ...)
-  cat("\n\n", paste0("Tip ", seq_len(attr(x, 'nTip')), ": ", attr(x, 'tip.label'),
-                   "\t", c(rep('', 4), '\n')))
+  nTip <- attr(x, 'nTip')
+  cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(x, 'tip.label'),
+                   "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
 }
 
 #' @export
@@ -190,7 +217,7 @@ names.Splits <- function (x) rownames(x)
 #' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
   nN <- length(n)
-  c(lapply(n[-nN], .DecodeBinary32, print, appendLF),
+  c(lapply(n[-nN], .DecodeBinary32, print = print, appendLF = appendLF),
     .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
 }
 

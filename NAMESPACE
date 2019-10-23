@@ -3,6 +3,7 @@
 S3method(Ntip,Splits)
 S3method(as.Splits,Splits)
 S3method(as.Splits,list)
+S3method(as.Splits,logical)
 S3method(as.Splits,multiPhylo)
 S3method(as.Splits,numeric)
 S3method(as.Splits,phylo)
