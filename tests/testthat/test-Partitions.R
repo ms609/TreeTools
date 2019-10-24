@@ -13,6 +13,9 @@ test_that("as.Split", {
     paste0(c('   ', ifelse(logical80, '*', '.')), collapse=''),
     strsplit(capture_output(print(as.Splits(logical80), detail = TRUE)), '\n')[[1]][3]
   )
+  expect_equal(as.logical(as.logical(as.Splits(logical80))), logical80)
+  expect_equal(t(matrix(c(A, A, B, B), dimnames=list(paste0('t', 1:4)))),
+               as.logical(as.Splits(c(A, A, B, B))))
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
   expect_equal(c(n8 = 'c d e | a b', n9 = 'd e | a b c'), as.character(splits1))
@@ -21,6 +24,7 @@ test_that("as.Split", {
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
+  expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 })
 
 test_that("Split combination", {
