@@ -17,8 +17,13 @@
 #' @export
 SplitMatchProbability <- function (split1, split2) {
 
-  if (length(split1) != length(split2)) stop("Split lengths differ")
-
+  if (Ntip(split1) != Ntip(split2)) stop("Splits pertain to different tips")
+  if (!identical(attr(split1, 'tip.label'), attr(split2, 'tip.label'))) {
+    stop("Sequence of tip labels must match")
+  }
+  
+  split1 <- as.logical(split1)
+  split2 <- as.logical(split2)
   partitions <- matrix(c(sum(split1 & split2),
                          sum(split1 & !split2),
                          sum(!split1 & split2),
