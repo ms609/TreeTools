@@ -1,4 +1,4 @@
-context("Partitions.R")
+context("Splits.R")
 
 test_that("as.Split", {
   A <- FALSE
