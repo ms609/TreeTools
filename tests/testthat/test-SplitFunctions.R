@@ -1,22 +1,22 @@
 context('SplitFunctions.R')
 
 test_that("SplitMatchProbability returns expected probabilities", {
-  splitAB   <- c(rep(TRUE, 2), rep(FALSE, 7))
-  splitABC  <- c(rep(TRUE, 3), rep(FALSE, 6))
-  splitABI  <- c(rep(TRUE, 2), rep(FALSE, 6), TRUE)
-  splitBCD  <- c(FALSE, rep(TRUE, 3), rep(FALSE, 5))
-  splitAEF  <- c(TRUE, rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 3))
-  splitABCD <- c(rep(TRUE, 4), rep(FALSE, 5))
-  splitABCE <- c(rep(TRUE, 3), FALSE, TRUE, rep(FALSE, 4))
-  splitCDEF <- c(rep(FALSE, 2), rep(TRUE, 4), rep(FALSE, 3))
-  splitABEF <- c(rep(TRUE, 2), rep(FALSE, 2), rep(TRUE, 2), rep(FALSE, 3))
-  splitABCDE<- c(rep(TRUE, 5), rep(FALSE, 4))
+  splitAB   <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 7)))
+  splitABC  <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 6)))
+  splitABI  <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 6), TRUE))
+  splitBCD  <- as.Splits(c(FALSE, rep(TRUE, 3), rep(FALSE, 5)))
+  splitAEF  <- as.Splits(c(TRUE, rep(FALSE, 3), rep(TRUE, 2), rep(FALSE, 3)))
+  splitABCD <- as.Splits(c(rep(TRUE, 4), rep(FALSE, 5)))
+  splitABCE <- as.Splits(c(rep(TRUE, 3), FALSE, TRUE, rep(FALSE, 4)))
+  splitCDEF <- as.Splits(c(rep(FALSE, 2), rep(TRUE, 4), rep(FALSE, 3)))
+  splitABEF <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 2), rep(TRUE, 2), rep(FALSE, 3)))
+  splitABCDE<- as.Splits(c(rep(TRUE, 5), rep(FALSE, 4)))
 
-  splitAI <- c(TRUE, rep(FALSE, 7), TRUE)
-  splitBC <- c(FALSE, TRUE, TRUE, rep(FALSE, 6))
-  splitCD <- c(FALSE, FALSE, TRUE, TRUE, rep(FALSE, 5))
+  splitAI <- as.Splits(c(TRUE, rep(FALSE, 7), TRUE))
+  splitBC <- as.Splits(c(FALSE, TRUE, TRUE, rep(FALSE, 6)))
+  splitCD <- as.Splits(c(FALSE, FALSE, TRUE, TRUE, rep(FALSE, 5)))
 
-  expect_error(SplitMatchProbability(TRUE, splitAB))
+  expect_error(SplitMatchProbability(as.Splits(TRUE), splitAB))
 
   # Possible matches to ABCD:....
   expect_true(SplitMatchProbability(splitABC, splitABCD) <
