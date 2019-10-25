@@ -265,7 +265,7 @@ c.Splits <- function (...) {
 
 #' @export
 `!.Splits` <- function (x) {
-  t(2L ^ .BinSizes(Ntip(x)) - t(x))
+  t((2L ^ .BinSizes(Ntip(x)) - 1) - t(x))
 }
 
 
