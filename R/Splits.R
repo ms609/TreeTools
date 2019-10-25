@@ -251,6 +251,24 @@ c.Splits <- function (...) {
             class='Splits')
 }
 
+#' @export
+`+.Splits` <- function (...) c(...)
+
+#' @keywords internal
+#' @export
+.LastBin <- function (n) if (n %% 32L) n %% 32L else 32L
+
+#' @keywords internal
+#' @export
+.BinSizes <- function (n) c(rep(32L, (n - 1L) %/% 32L), if (n %% 32L) n %% 32L else 32L)
+
+
+#' @export
+`!.Splits` <- function (x) {
+  t(2L ^ .BinSizes(Ntip(x)) - t(x))
+}
+
+
 
 #' @export
 length.Splits <- function (x) nrow(x)

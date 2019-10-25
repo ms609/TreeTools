@@ -27,6 +27,14 @@ test_that("as.Split", {
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 })
 
+test_that("Split operations", {
+  split1 <- as.Splits(c(rep(TRUE, 30), rep(FALSE, 70), rep(TRUE, 20)))
+  notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
+  expect_equal(split1,!notSplit1)
+  expect_equal(notSplit1[1, ], (split1 + notSplit1)[2, ])
+  expect_equal(split1 + notSplit1, !(notSplit1 + split1))
+})
+
 test_that("Split combination", {
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
