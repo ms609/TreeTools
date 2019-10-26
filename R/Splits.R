@@ -22,10 +22,18 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
+.TipLabels <- function (x) {
+  if (class(x) == 'phylo') {
+    x$tip.label
+  } else {
+    x
+  }
+}
+
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
   if (!is.null(tipLabels)) {
-    x <- RenumberTips(x, tipLabels)
+    x <- RenumberTips(x, .TipLabels(tipLabels))
   }
   x <- Cladewise(x)
   splits <- cpp_edge_to_splits(x$edge)

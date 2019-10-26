@@ -25,13 +25,18 @@ test_that("as.Split", {
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
+  
+  tree1 <- PectinateTree(1:8)
+  tree2 <- BalancedTree(8:1)
+  expect_equal(as.Splits(tree1, tipLabel = as.character(8:1)),
+               as.Splits(tree1, tipLabel = tree2))
 })
 
 test_that("Split operations", {
   split1 <- as.Splits(c(rep(TRUE, 30), rep(FALSE, 70), rep(TRUE, 20)))
   notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
-  expect_equal(!split1,notSplit1)
-  expect_equal(split1,!notSplit1)
+  expect_equal(!split1, notSplit1)
+  expect_equal(split1, !notSplit1)
   
   expect_equal(notSplit1[1, ], (split1 + notSplit1)[2, ])
   expect_equal(split1 + notSplit1, !(notSplit1 + split1))
