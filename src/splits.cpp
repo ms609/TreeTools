@@ -19,7 +19,11 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
     n_node = n_edge + 1,
     n_tip = edge(0, 0) - 1,
     n_bin = n_tip / 32 + 1;
-
+  
+  if (n_edge == n_tip) { /* No internal nodes resolved */
+    return NumericMatrix (0, n_bin);
+  }
+  
   uint32_t** splits = new uint32_t*[n_node];
   for (int i = 0; i < n_node; i++) {
     splits[i] = new uint32_t[n_bin];

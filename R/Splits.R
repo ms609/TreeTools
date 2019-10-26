@@ -37,11 +37,12 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
   }
   x <- Cladewise(x)
   splits <- cpp_edge_to_splits(x$edge)
+  nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
     nEdge <- dim(x$edge)[1]
     nTip <- length(x$tip.label)
-    rownames(splits) <- paste0('n', (nTip + 3L):(nEdge + 1L))
+    if (nSplits > 0) rownames(splits) <- paste0('n', nTip + 2L + seq_len(nSplits))
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
@@ -144,7 +145,7 @@ as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x))) {
 #' @export
 print.Splits <- function (x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
-  cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] > 1, "splits", "split"),
+  cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
       "dividing", nTip, "tips.")
   if (details) {
     #cat(paste0("\n  Tip ", seq_len(nTip), ': ', attr(x, 'tip.label')))

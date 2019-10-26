@@ -26,8 +26,9 @@ test_that("as.Split", {
   expect_equal(splits1, logicalSplits)
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
   
-  polytomy <- ape::read.tree(text='(a, b, c, d);')
-  expect_equal(0, as.Splits(polytomy))
+  polytomy <- ape::read.tree(text='(a, b, c, d, e);')
+  expect_equal("0 bipartition splits dividing 5 tips.",
+               capture_output(print(as.Splits(polytomy))))
   
   tree1 <- PectinateTree(1:8)
   tree2 <- BalancedTree(8:1)
