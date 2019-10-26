@@ -32,8 +32,11 @@ test_that("Split operations", {
   notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
   expect_equal(!split1,notSplit1)
   expect_equal(split1,!notSplit1)
+  
   expect_equal(notSplit1[1, ], (split1 + notSplit1)[2, ])
   expect_equal(split1 + notSplit1, !(notSplit1 + split1))
+  
+  expect_equal(notSplit1, (split1 + notSplit1)[[2]])
   
   split2 <- as.Splits(c(rep(TRUE, 4), FALSE, FALSE))
   notSplit2 <- as.Splits(c(rep(FALSE, 4), TRUE, TRUE))

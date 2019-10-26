@@ -254,6 +254,22 @@ c.Splits <- function (...) {
 #' @export
 `+.Splits` <- function (...) c(...)
 
+#' @export
+`[[.Splits` <- function (x, ..., drop = TRUE) {
+  elements <- list(...)
+  if (length(elements) == 0L) {
+    x[]
+  } else if (length(elements) == 1L) {
+    ret <- x[elements[[1]], , drop = FALSE]
+    at <- attributes(x)
+    at$dim<- dim(ret)
+    attributes(ret) <- at
+    ret
+  } else {
+    stop ("Too many dimensions specified")
+  }
+}
+
 #' @keywords internal
 #' @export
 .LastBin <- function (n) if (n %% 32L) n %% 32L else 32L
