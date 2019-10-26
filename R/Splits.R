@@ -200,7 +200,7 @@ as.character.Splits <- function (x, ...) {
 
 #' @importFrom ape Ntip
 #' @export
-Ntip.Splits <- function (x, ...) attr(x, 'nTip')
+Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
 
 #' @export
 IdentifySplits <- function (splits, taxonNames = rownames(splits)) {
