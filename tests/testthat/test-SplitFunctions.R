@@ -13,6 +13,7 @@ test_that("SplitMatchProbability returns expected probabilities", {
   splitABCDE<- as.Splits(c(rep(TRUE, 5), rep(FALSE, 4)))
 
   splitAI <- as.Splits(c(TRUE, rep(FALSE, 7), TRUE))
+  splitHI   <- as.Splits(c(rep(FALSE, 7), rep(TRUE, 2)))
   splitBC <- as.Splits(c(FALSE, TRUE, TRUE, rep(FALSE, 6)))
   splitCD <- as.Splits(c(FALSE, FALSE, TRUE, TRUE, rep(FALSE, 5)))
 
@@ -70,11 +71,12 @@ test_that("SplitMatchProbability returns expected probabilities", {
     score
   }
 
-  Test(1, splitAB, splitAI)
-  Test(1, splitAB, splitBC)
-  Test(1, splitBC, splitCD)
-  Test(1, rev(splitAB), splitAI)
-  Test(1L, splitABCD[-9], splitABEF[-9]) # Test even splits
+  Test(1L, splitAB, splitAI)
+  Test(1L, splitAB, splitBC)
+  Test(1L, splitBC, splitCD)
+  Test(1L, splitHI, splitAI)
+  Test(1L, as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))), # Test even splits
+       as.Splits(c(rep(TRUE, 2), rep(FALSE, 2), rep(TRUE, 2), rep(FALSE, 2))))
 
   Test(1/36, splitAB, splitAB)
   Test(1/36, splitBC, splitBC)
@@ -94,14 +96,4 @@ test_that("SplitMatchProbability returns expected probabilities", {
 
   Test(4/84, splitABC, splitABCD)
   Test(4/84, splitBCD, splitABCD)
-
-
-  expect_equal(2L, MatchingSplitDistanceSplits(as.Splits(splitAB), as.Splits(splitAI)))
-  expect_equal(2L, MatchingSplitDistanceSplits(splitAB, splitABCD))
-  expect_equal(3L, MatchingSplitDistanceSplits(splitAB, splitABCDE))
-  expect_equal(4L, MatchingSplitDistanceSplits(splitABC, splitAEF))
-  expect_equal(MatchingSplitDistanceSplits(cbind(splitABC), cbind(splitAEF)),
-               MatchingSplitDistanceSplits(cbind(splitAEF), cbind(splitABC)))
-  expect_error(MatchingSplitDistanceSplits(cbind(splitAB), cbind(splitAB)[-9, ]))
-  expect_error(NyeSplitSimilarity(cbind(splitAB), cbind(splitAB)[-9, ]))
 })
