@@ -263,6 +263,7 @@ c.Splits <- function (...) {
     ret <- x[elements[[1]], , drop = FALSE]
     at <- attributes(x)
     at$dim<- dim(ret)
+    at$dimnames[[1]] <- rownames(x)[elements[[1]]]
     attributes(ret) <- at
     ret
   } else {

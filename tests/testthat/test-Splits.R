@@ -49,7 +49,8 @@ test_that("Split operations", {
   
   expect_error(split1 + split2)
   
-  
+  namedSplits <- as.Splits(BalancedTree(8))
+  expect_equal(c('n12', 'n14'), rownames(namedSplits[[c(2, 4)]]))
   
 })
 
