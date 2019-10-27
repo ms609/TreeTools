@@ -84,6 +84,7 @@ test_that("Split combination", {
   expect_equal(2L, length(unique(c(splits1,
                                    as.Splits(c(3, 7), tipLabels=letters[1:5])))))
 
-
+  expect_equal(c(n8 = 3, n9 = 2), TipsInSplits(splits1))
+  
   # TODO: Fully test splits with large (>32 tip) trees
 })

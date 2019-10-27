@@ -209,6 +209,10 @@ IdentifySplits <- function (splits, taxonNames = rownames(splits)) {
     paste(taxonNames[!x], collapse=' ')))
 }
 
+#' @export
+TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+  apply(splits, 1, function (split) sum(unlist(.DecodeBinary(split, nTip = nTip))))
+}
 
 #' @export
 names.Splits <- function (x) rownames(x)
