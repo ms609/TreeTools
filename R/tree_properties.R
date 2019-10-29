@@ -184,9 +184,9 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #' or in a rooted tree with `n` tips.
 #'
 #' @examples {
-#' NPartitions(8)
-#' NPartitions(PectinateTree(8))
-#' NPartitions(as.Splits(BalancedTree(8)))
+#' NSplits(8)
+#' NSplits(PectinateTree(8))
+#' NSplits(as.Splits(BalancedTree(8)))
 #' }
 #' @author Martin R. Smith
 #' @importFrom ape collapse.singles

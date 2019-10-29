@@ -38,7 +38,21 @@ Converts a phylogenetic tree to an array of bipartition splits.
 }}
 
 \examples{
-as.Splits(ape::rtree(6, tip.label=1:6, br=NULL))
+splits <- as.Splits(BalancedTree(letters[1:6]))
+summary(splits)
+TipsInSplits(splits)
+summary(!splits)
+TipsInSplits(!splits)
+
+length(splits + !splits)
+length(unique(splits + !splits))
+
+summary(c(splits[[2:3]], !splits[[1:2]]))
+
+moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
+print(moreSplits, details = TRUE)
+match.Splits(splits, moreSplits)
+in.Splits(moreSplits, splits)
 
 }
 \seealso{
