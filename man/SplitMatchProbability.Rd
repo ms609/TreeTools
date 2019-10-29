@@ -29,8 +29,8 @@ will be at least as similar as the two specified.
 }}
 
 \examples{
-SplitMatchProbability(split1 = c(rep(TRUE, 4), rep(FALSE, 4)),
-                      split2 = c(rep(TRUE, 3), rep(FALSE, 5)))
+SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
+                      split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
 
 }
 \author{
