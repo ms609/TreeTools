@@ -16,7 +16,7 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
   if (edgeSister >= edge) {
     # edgeSister is really 1 higher than you think, because we knocked out edge 'edge' in the match
     ret[edge:edgeSister] <- TRUE
-    
+
     # Return:
     ret
   } else {
@@ -27,8 +27,8 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
         nextEdge <- 1 + nEdge - revDescendant
       } else break;
     }
-    ret[edge:nextEdge] <- TRUE 
-    
+    ret[edge:nextEdge] <- TRUE
+
     # Return:
     ret
   }
@@ -49,7 +49,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
     ret[edge, ] <- apply(ret[parent == child[edge], ], 2, any)
     ret[edge, edge] <- TRUE
   }
-  
+
   # Return:
   ret
 }
@@ -82,15 +82,15 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
   ret <- edge <- AncestorEdge(edge, parent, child)
   repeat {
     if (any(ret[stopAt])) return(ret)
-    ret[edge <- AncestorEdge(edge, parent, child)] <- TRUE    
+    ret[edge <- AncestorEdge(edge, parent, child)] <- TRUE
   }
 }
 
 #' Most Recent Common Ancestor
-#' @param tip1,tip2 Integer specifying index of tips whose most recent common 
+#' @param tip1,tip2 Integer specifying index of tips whose most recent common
 #' ancestor should be found.
 #' @param ancestors Output of [`AllAncestors`] for the tree in question
-#' 
+#'
 #' @family tree navigation
 #' @author Martin R. Smith
 #' @export
@@ -101,12 +101,12 @@ MRCA <- function(tip1, tip2, ancestors) {
 }
 
 #' Distance between edges
-#' 
-#' Number of nodes that must be traversed to navigate from each edge to 
+#'
+#' Number of nodes that must be traversed to navigate from each edge to
 #' each other edge within a tree
-#' 
+#'
 #' @template treeParam
-#' 
+#'
 #' @family tree navigation
 #' @author Martin R. Smith
 #' @export
@@ -142,23 +142,23 @@ EdgeDistances <- function (tree) {
     }
   }
   ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
-  
+
   # Return:
   ret
 }
 
 #' Non-duplicate root
-#' 
+#'
 #' Identify, for each edge, whether it is not a duplicate of the root edge
-#' 
+#'
 #' @template treeParent
 #' @template treeChild
 #' @template treeNEdgeOptional
-#' 
+#'
 #' @author Martin R. Smith
 #' @export
 #' @family tree navigation
-#'  
+#'
 #' @keywords internal
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot <- !logical(nEdge)
@@ -174,43 +174,49 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot
 }
 
-#' Number of partitions in a tree
-#' 
-#' @param tree A phylogenetic tree of class `phylo`, or a list of such trees
-#' (of class `list` or `multiPhylo`), or a vector of integers.
-#' 
+#' Number of distinct partitions in a tree
+#'
+#' @param x A phylogenetic tree of class `phylo`, or a list of such trees
+#' (of class `list` or `multiPhylo`), or a `Splits` object,
+#' or a vector of integers.
+#'
 #' @return Integer specifying the number of partitions in the specified trees,
 #' or in a rooted tree with `n` tips.
-#' 
+#'
 #' @examples {
 #' NPartitions(8)
-#' NPartitions(ape::rtree(8))
+#' NPartitions(PectinateTree(8))
+#' NPartitions(as.Splits(BalancedTree(8)))
 #' }
 #' @author Martin R. Smith
 #' @importFrom ape collapse.singles
 #' @export
-NPartitions <- function (tree) {
-  if (class(tree) == 'phylo') {
-    collapse.singles(tree)$Nnode - 1L - TreeIsRooted(tree)
-  } else if (mode(tree) == 'list') {
-    vapply(tree, NPartitions, 1L)
-  } else if (mode(tree) == 'numeric') {
-    tree - 3L
-  } else {
-    stop("tree in unsupported format.")
-  }
-}
-#' @rdname NPartitions
+NSplits <- function (x) UseMethod('NSplits')
+
+#' @rdname NSplits
 #' @export
-NSplits <- NPartitions
+NPartitions <- NSplits
+
+#' @export
+NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
+
+#' @export
+NSplits.multiPhylo <- NSplits.list <- function (x) vapply(x, NSplits, integer(1))
+
+#' @export
+NSplits.Splits <- function (x) nrow(x)
+
+#' @export
+NSplits.integer <- NSplits.numeric <- function (x) x - 3L
+
 
 #' Is tree rooted?
-#' 
+#'
 #' Faster alternative to of `ape::is.rooted`.
-#' 
+#'
 #' @param tree A phylogenetic tree of class phylo.
 #' @return Logical specifying whether a root node is resolved.
-#' 
+#'
 #' @author Martin R. Smith
 #' @export
 TreeIsRooted <- function (tree) {
