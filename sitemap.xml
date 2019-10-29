@@ -43,9 +43,6 @@
     <loc>https://ms609.github.io/TreeTools/reference/DoubleFactorial.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/DropSingleSplits.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc>
   </url>
   <url>
@@ -85,10 +82,13 @@
     <loc>https://ms609.github.io/TreeTools/reference/NJTree.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NPartitions.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/NPartitionPairs.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NRooted.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NSplits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NewickTree.html</loc>
@@ -151,7 +151,7 @@
     <loc>https://ms609.github.io/TreeTools/reference/SplitInformation.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SplitsRepeated.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/StringToPhyDat.html</loc>
@@ -163,7 +163,7 @@
     <loc>https://ms609.github.io/TreeTools/reference/SupportColour.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Tree2Splits.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreeIsRooted.html</loc>
@@ -175,10 +175,10 @@
     <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/UniqueSplits.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/as.Splits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/brewer.html</loc>
@@ -187,7 +187,13 @@
     <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/in.Splits.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/match.Splits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>

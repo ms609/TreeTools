@@ -237,9 +237,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="NPartitions.html">NPartitions()</a></code> <code><a href="NPartitions.html">NSplits()</a></code> </p>
+          <p><code><a href="NSplits.html">NSplits()</a></code> <code><a href="NSplits.html">NPartitions()</a></code> </p>
         </td>
-        <td><p>Number of partitions in a tree</p></td>
+        <td><p>Number of distinct partitions in a tree</p></td>
       </tr><tr>
         
         <td>
@@ -393,23 +393,17 @@
       <tr>
         
         <td>
-          <p><code><a href="DropSingleSplits.html">DropSingleSplits()</a></code> </p>
-        </td>
-        <td><p>Drop Single Splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NPartitions.html">NPartitions()</a></code> <code><a href="NPartitions.html">NSplits()</a></code> </p>
-        </td>
-        <td><p>Number of partitions in a tree</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="NRooted.html">NRooted()</a></code> <code><a href="NRooted.html">NUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted.int()</a></code> <code><a href="NRooted.html">LnRooted()</a></code> <code><a href="NRooted.html">LnRooted.int()</a></code> <code><a href="NRooted.html">LnUnrootedSplits()</a></code> <code><a href="NRooted.html">NUnrootedSplits()</a></code> <code><a href="NRooted.html">LnUnrootedMult()</a></code> <code><a href="NRooted.html">NUnrootedMult()</a></code> </p>
         </td>
         <td><p>Number of rooted/unrooted trees
 These functions return the number of rooted or unrooted trees consistent with a given pattern
 of splits.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="NSplits.html">NSplits()</a></code> <code><a href="NSplits.html">NPartitions()</a></code> </p>
+        </td>
+        <td><p>Number of distinct partitions in a tree</p></td>
       </tr><tr>
         
         <td>
@@ -425,21 +419,45 @@ of splits.</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="SplitMatchProbability.html">SplitMatchProbability()</a></code> <code><a href="SplitMatchProbability.html">LnSplitMatchProbability()</a></code> </p>
+        </td>
+        <td><p>Probability of matching this well</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="TipsInSplits.html">TipsInSplits()</a></code> </p>
+        </td>
+        <td><p>Tips contained within splits</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="TreesMatchingSplit.html">TreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">LogTreesMatchingSplit()</a></code> </p>
         </td>
         <td><p>Number of trees matching a bipartition split</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="UniqueSplits.html">UniqueSplits()</a></code> </p>
-        </td>
-        <td><p>Unique Splits</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="UnrootedTreesMatchingSplit.html">UnrootedTreesMatchingSplit()</a></code> </p>
         </td>
         <td><p>Number of trees consistent with split</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.Splits.html">as.Splits()</a></code> </p>
+        </td>
+        <td><p>As splits</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="in.Splits.html">in.Splits()</a></code> </p>
+        </td>
+        <td><p>Splits in Splits object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="match.Splits.html">match.Splits()</a></code> </p>
+        </td>
+        <td><p>Match splits</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -602,8 +620,8 @@ of splits.</p></td>
   docsearch({
     
     
-    apiKey: '',
-    indexName: 'TreeTools',
+    apiKey: '6078115fdeb422f23fe2f8c478c70150',
+    indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {

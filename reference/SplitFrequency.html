@@ -162,13 +162,12 @@ bipartition splits, as defined by a reference tree, occur in a forest of trees.<
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>reference</th>
-      <td><p>A tree of class phylo, or a character vector specifying its splits
-(as obtained through <a href='Tree2Splits.html'>Tree2Splits</a>)</p></td>
+      <td><p>A tree of class <code>phylo</code>, a <code>Splits</code> object.</p></td>
     </tr>
     <tr>
       <th>forest</th>
-      <td><p>a list of trees of class phylo, or a multiPhylo object; or a
-list of their constituent splits (as obtained through <a href='Tree2Splits.html'>Tree2Splits</a>)</p></td>
+      <td><p>a list of trees of class <code>phylo</code>, or a <code>multiPhylo</code> object; or a
+<code>Splits</code> object.</p></td>
     </tr>
     <tr>
       <th>tips</th>
@@ -207,7 +206,7 @@ constituent functions (see examples)</p>
 <li><p><code>SplitNumber</code>: Assign a unique integer to each split</p></li>
 <li><p><code>ForestSplits</code>: Frequency of splits in a given forest of trees</p></li>
 <li><p><code>TreeSplits</code>: Deprecated. Listed the splits in a given tree.
-Use Tree2Splits instead.</p></li>
+Use as.Splits instead.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,7 +224,7 @@ Use Tree2Splits instead.</p></li>
 
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree1</span>)
   <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='no'>tree1Freqs</span>, <span class='kw'>node</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>tree1Freqs</span>)))
-}</div><div class='img'><img src='SplitFrequency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+}</div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='img'><img src='SplitFrequency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -262,8 +261,8 @@ Use Tree2Splits instead.</p></li>
   docsearch({
     
     
-    apiKey: '',
-    indexName: 'TreeTools',
+    apiKey: '6078115fdeb422f23fe2f8c478c70150',
+    indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
       return hits.map(function (hit) {
