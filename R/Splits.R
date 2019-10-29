@@ -2,13 +2,12 @@
 #'
 #' Converts a phylogenetic tree to an array of bipartition splits.
 #'
-#' @param tr A tree of class \code{\link[ape:read.tree]{phylo}}.
+#' @param x Object to convert into splits: perhaps a tree of class
+#'  \code{\link[ape:read.tree]{phylo}}.
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
-#' @param asSplits Logical specifying whether to return a `Splits` object,
-#'   or an unannotated two-dimensional array (useful where performance is
-#'   paramount).
+#' @param \dots Presently unused.
 #' @return Returns an object of class `Splits`, or (if `asSplits = FALSE`) a
 #'  two-dimensional array of 32-bit integers, which each bit specifying whether
 #'  a tip is a member of the split.  Splits are named according to the node
@@ -18,6 +17,7 @@
 #'
 #' @examples as.Splits(ape::rtree(6, tip.label=1:6, br=NULL))
 #'
+#' @family Splits operations
 #' @importFrom ape reorder.phylo
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
@@ -30,6 +30,10 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
   }
 }
 
+#' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
+#' @param asSplits Logical specifying whether to return a `Splits` object,
+#'   or an unannotated two-dimensional array (useful where performance is
+#'   paramount).
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
@@ -162,6 +166,7 @@ as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
 #' @exportClass Splits
 #
 
+#' @family Splits operations
 #' @export
 print.Splits <- function (x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
@@ -197,14 +202,18 @@ print.Splits <- function (x, details = FALSE, ...) {
   }
 }
 
+
+#' @family Splits operations
 #' @export
-summary.Splits <- function (x, ...) {
-  print(x, details = TRUE, ...)
-  nTip <- attr(x, 'nTip')
-  cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(x, 'tip.label'),
+summary.Splits <- function (object, ...) {
+  print(object, details = TRUE, ...)
+  nTip <- attr(object, 'nTip')
+  cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
                    "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
 }
 
+
+#' @family Splits operations
 #' @export
 as.character.Splits <- function (x, ...) {
   tipLabels <- attr(x, 'tip.label')
@@ -219,16 +228,26 @@ as.character.Splits <- function (x, ...) {
 }
 
 #' @importFrom ape Ntip
+#' @family Splits operations
 #' @export
 Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
 
-#' @export
-IdentifySplits <- function (splits, taxonNames = rownames(splits)) {
-  apply(splits, 2, function (x) paste0(
-    paste(taxonNames[x], collapse=' '), ' : ',
-    paste(taxonNames[!x], collapse=' ')))
-}
-
+#' Tips contained within splits
+#'
+#' `TipsInSplits` specifies the number of tips that occur within each
+#' bipartition split in a `Splits` object.
+#'
+#' @param splits Object of class `Splits`.
+#' @param nTip Number of tips in `Splits` object (inferred if not specified).
+#'
+#' @return A named vector of integers, specifying the number of tips contained
+#' within each split in `splits`.
+#'
+#' @examples
+#' splits <- as.Splits(PectinateTree(8))
+#' TipsInSplits(splits)
+#'
+#' @family Splits operations
 #' @export
 TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   apply(splits, 1, function (split) sum(unlist(.DecodeBinary(split, nTip = nTip))))
@@ -266,6 +285,7 @@ names.Splits <- function (x) rownames(x)
     .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
 }
 
+#' @family Splits operations
 #' @export
 c.Splits <- function (...) {
   splits <- list(...)
@@ -285,9 +305,11 @@ c.Splits <- function (...) {
             class='Splits')
 }
 
+#' @family Splits operations
 #' @export
 `+.Splits` <- function (...) c(...)
 
+#' @family Splits operations
 #' @export
 `[[.Splits` <- function (x, ..., drop = TRUE) {
   elements <- list(...)
@@ -314,6 +336,7 @@ c.Splits <- function (...) {
 .BinSizes <- function (n) c(rep(32L, (n - 1L) %/% 32L), if (n %% 32L) n %% 32L else 32L)
 
 
+#' @family Splits operations
 #' @export
 `!.Splits` <- function (x) {
   dimX <- dim(x)
@@ -322,9 +345,11 @@ c.Splits <- function (...) {
 
 
 
+#' @family Splits operations
 #' @export
 length.Splits <- function (x) nrow(x)
 
+#' @family Splits operations
 #' @export
 duplicated.Splits <- function (x, incomparables = FALSE, ...) {
   nTip <- attr(x, 'nTip')
@@ -340,6 +365,7 @@ duplicated.Splits <- function (x, incomparables = FALSE, ...) {
   duplicated.array(dupX, MARGIN = 1, ...)
 }
 
+#' @family Splits operations
 #' @export
 unique.Splits <- function (x, incomparables = FALSE, ...) {
   at <- attributes(x)
@@ -351,16 +377,60 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
   x
 }
 
+#' Match splits
+#'
+#' Equivalent of `match` for `Splits` objects.
+#'
+#' @param x,table Object of class `Splits`.
+#' @param nomatch The value to be returned in the case where no match is found.
+#' @param incomparables A vector of values that cannot be matched. Any value in
+#' `x` matching a value in this vector is assigned the `nomatch` value.
+#' For historical reasons, `FALSE` is equivalent to `NULL`.
+#'
+#' @return An integer vector specifying the position in `table` that matches
+#' each element in `x`, or `nomatch` if no match is found.
+#'
+#' @examples
+#' splits1 <- as.Splits(BalancedTree(7))
+#' splits2 <- as.Splits(PectinateTree(7))
+#'
+#' match.Splits(splits1, splits2)
+#'
+#' @family Splits operations
 #' @export
 match.Splits <- function (x, table, nomatch = NA_integer_,
                           incomparables = NULL) {
-  ret <- which(in.Splits(x, table, incomparables))
-  ret[is.na(ret)] <- nomatch
-  ret
+  vapply(seq_along(x), function (i) {
+    ret <- which(in.Splits(table, x[[i]], incomparables))
+    if (length(ret) == 0) ret <- nomatch
+    ret
+  }, integer(1))
 }
 
+#' Splits in Splits object
+#'
+#' `in.Splits` is an equivalent to `%in%` that can be applied to objects
+#' of class `Splits`.
+#'
+#' @param x,table Object of class `Splits`.
+#' @param incomparables A vector of values that cannot be matched. Any value in
+#' `x` matching a value in this vector is assigned the `nomatch` value.
+#' For historical reasons, `FALSE` is equivalent to `NULL`.
+#'
+#' @return A logical vector specifing which of the splits in `x` are present
+#' in `table`.
+#'
+#' @author Martin R. Smith
+#'
+#' @examples
+#' splits1 <- as.Splits(BalancedTree(7))
+#' splits2 <- as.Splits(PectinateTree(7))
+#'
+#' in.Splits(splits1, splits2)
+#'
+#' @family Splits operations
 #' @export
-in.Splits <- function (x, table, incomparables = NULL, ...) {
+in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x), ]
 }

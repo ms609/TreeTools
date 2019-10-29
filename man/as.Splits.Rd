@@ -2,16 +2,22 @@
 % Please edit documentation in R/Splits.R
 \name{as.Splits}
 \alias{as.Splits}
+\alias{as.Splits.phylo}
 \title{As splits}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
+
+\method{as.Splits}{phylo}(x, tipLabels = NULL, asSplits = TRUE, ...)
 }
 \arguments{
+\item{x}{Object to convert into splits: perhaps a tree of class
+\code{\link[ape:read.tree]{phylo}}.}
+
 \item{tipLabels}{Character vector specifying sequence in which to order
 tip labels.  Label order must (currently) match to combine or compare separate
 \code{Splits} objects.}
 
-\item{tr}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
+\item{\dots}{Presently unused.}
 
 \item{asSplits}{Logical specifying whether to return a \code{Splits} object,
 or an unannotated two-dimensional array (useful where performance is
@@ -26,10 +32,20 @@ that defines them.
 \description{
 Converts a phylogenetic tree to an array of bipartition splits.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{phylo}: Convert object of class \code{phylo} to \code{Splits}.
+}}
+
 \examples{
 as.Splits(ape::rtree(6, tip.label=1:6, br=NULL))
 
 }
+\seealso{
+Other Splits operations: \code{\link{TipsInSplits}},
+  \code{\link{in.Splits}}, \code{\link{match.Splits}}
+}
 \author{
 Martin R. Smith
 }
+\concept{Splits operations}

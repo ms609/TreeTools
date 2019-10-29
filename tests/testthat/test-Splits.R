@@ -55,6 +55,16 @@ test_that('Renaming splits', {
 
 })
 
+test_that('match.Splits', {
+  tree1 <- BalancedTree(1:8)
+  tree2 <- BalancedTree(8:1)
+  col2 <- as.Splits(CollapseNode(tree2, 13))
+
+  expect_equal(5:1, match.Splits(as.Splits(tree1), as.Splits(tree2, tree1)))
+  expect_equal(c(4, 3, NA, 2, 1), match.Splits(as.Splits(tree1, tree2), col2))
+  expect_equal(c(5, 4, 2, 1), match.Splits(col2, as.Splits(tree1, tree2)))
+})
+
 test_that("Split operations", {
   split1 <- as.Splits(c(rep(TRUE, 30), rep(FALSE, 70), rep(TRUE, 20)))
   notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
