@@ -184,11 +184,13 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #' or in a rooted tree with `n` tips.
 #'
 #' @examples {
-#' NSplits(8)
-#' NSplits(PectinateTree(8))
-#' NSplits(as.Splits(BalancedTree(8)))
+#'   NSplits(8L)
+#'   NSplits(PectinateTree(8))
+#'   NSplits(as.Splits(BalancedTree(8)))
 #' }
+#' 
 #' @author Martin R. Smith
+#' 
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
@@ -208,7 +210,7 @@ NSplits.multiPhylo <- NSplits.list <- function (x) vapply(x, NSplits, integer(1)
 NSplits.Splits <- function (x) nrow(x)
 
 #' @export
-NSplits.integer <- NSplits.numeric <- NSplits.double <- function (x) x - 3L
+NSplits.numeric <- function (x) x - 3L
 
 
 #' Is tree rooted?
