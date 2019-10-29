@@ -204,7 +204,10 @@ NPartitions <- NSplits
 NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @export
-NSplits.multiPhylo <- NSplits.list <- function (x) vapply(x, NSplits, integer(1))
+NSplits.multiPhylo <- function (x) vapply(x, NSplits, integer(1))
+
+#' @export
+NSplits.list <- NSplits.multiPhylo
 
 #' @export
 NSplits.Splits <- function (x) nrow(x)
