@@ -23,11 +23,17 @@ Number of distinct partitions in a tree
 }
 \examples{
 {
-NPartitions(8)
-NPartitions(PectinateTree(8))
-NPartitions(as.Splits(BalancedTree(8)))
+NSplits(8)
+NSplits(PectinateTree(8))
+NSplits(as.Splits(BalancedTree(8)))
 }
+}
+\seealso{
+Other Splits operations: \code{\link{TipsInSplits}},
+  \code{\link{as.Splits}}, \code{\link{in.Splits}},
+  \code{\link{match.Splits}}
 }
 \author{
 Martin R. Smith
 }
+\concept{Splits operations}

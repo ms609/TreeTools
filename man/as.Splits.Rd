@@ -56,8 +56,9 @@ in.Splits(moreSplits, splits)
 
 }
 \seealso{
-Other Splits operations: \code{\link{TipsInSplits}},
-  \code{\link{in.Splits}}, \code{\link{match.Splits}}
+Other Splits operations: \code{\link{NSplits}},
+  \code{\link{TipsInSplits}}, \code{\link{in.Splits}},
+  \code{\link{match.Splits}}
 }
 \author{
 Martin R. Smith

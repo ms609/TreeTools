@@ -189,6 +189,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #' NSplits(as.Splits(BalancedTree(8)))
 #' }
 #' @author Martin R. Smith
+#' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
 NSplits <- function (x) UseMethod('NSplits')

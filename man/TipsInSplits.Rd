@@ -25,7 +25,8 @@ TipsInSplits(splits)
 
 }
 \seealso{
-Other Splits operations: \code{\link{as.Splits}},
-  \code{\link{in.Splits}}, \code{\link{match.Splits}}
+Other Splits operations: \code{\link{NSplits}},
+  \code{\link{as.Splits}}, \code{\link{in.Splits}},
+  \code{\link{match.Splits}}
 }
 \concept{Splits operations}
