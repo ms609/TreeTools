@@ -207,7 +207,7 @@ NSplits.multiPhylo <- NSplits.list <- function (x) vapply(x, NSplits, integer(1)
 NSplits.Splits <- function (x) nrow(x)
 
 #' @export
-NSplits.integer <- NSplits.numeric <- function (x) x - 3L
+NSplits.integer <- NSplits.numeric <- NSplits.double <- function (x) x - 3L
 
 
 #' Is tree rooted?

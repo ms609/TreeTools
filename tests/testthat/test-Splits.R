@@ -25,15 +25,34 @@ test_that("as.Split", {
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
-  
+
   polytomy <- ape::read.tree(text='(a, b, c, d, e);')
   expect_equal("0 bipartition splits dividing 5 tips.",
                capture_output(print(as.Splits(polytomy))))
-  
+
   tree1 <- PectinateTree(1:8)
   tree2 <- BalancedTree(8:1)
+
+})
+
+test_that('Renaming splits', {
+  tree1 <- PectinateTree(1:8)
+  tree2 <- BalancedTree(8:1)
+  splits1 <- as.Splits(tree1)
+  splits2 <- as.Splits(tree2)
+
+  expect_error(as.Splits(splits1, tipLabel = 1:4))
+  expect_error(as.Splits(splits1, tipLabel = LETTERS[1:8]))
+
   expect_equal(as.Splits(tree1, tipLabel = as.character(8:1)),
                as.Splits(tree1, tipLabel = tree2))
+
+  expect_equal(as.Splits(tree1, tipLabel = tree2),
+               as.Splits(as.Splits(tree1), tipLabel = tree2))
+
+  as.Splits(tree1, tipLabel = tree2)[]
+  as.Splits(as.Splits(tree1), tipLabel = tree2)[]
+
 })
 
 test_that("Split operations", {
@@ -41,26 +60,26 @@ test_that("Split operations", {
   notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
   expect_equal(!split1, notSplit1)
   expect_equal(split1, !notSplit1)
-  
+
   expect_equal(notSplit1[1, ], (split1 + notSplit1)[2, ])
   expect_equal(split1 + notSplit1, !(notSplit1 + split1))
-  
+
   expect_equal(notSplit1, (split1 + notSplit1)[[2]])
   expect_equal(notSplit1 + split1 + split1, (split1 + notSplit1)[[c(2, 1, 1)]])
-  
+
   split2 <- as.Splits(c(rep(TRUE, 4), FALSE, FALSE))
   notSplit2 <- as.Splits(c(rep(FALSE, 4), TRUE, TRUE))
-  
+
   expect_equal(split2, !notSplit2)
   expect_equal(!split2, notSplit2)
   expect_equal(notSplit2[1, ], (split2 + notSplit2)[2, ])
   expect_equal(split2 + notSplit2, !(notSplit2 + split2))
-  
+
   expect_error(split1 + split2)
-  
+
   namedSplits <- as.Splits(BalancedTree(8))
   expect_equal(c('n12', 'n14'), rownames(namedSplits[[c(2, 4)]]))
-  
+
 })
 
 test_that("Split combination", {
@@ -85,6 +104,6 @@ test_that("Split combination", {
                                    as.Splits(c(3, 7), tipLabels=letters[1:5])))))
 
   expect_equal(c(n8 = 3, n9 = 2), TipsInSplits(splits1))
-  
+
   # TODO: Fully test splits with large (>32 tip) trees
 })

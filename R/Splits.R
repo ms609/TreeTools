@@ -31,7 +31,7 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 }
 
 #' @export
-as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
+as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, .TipLabels(tipLabels))
   }
@@ -55,13 +55,33 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE) {
 
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
-  if (attr(x, 'tip.label') != tipLabels) {
-    stop("Order of tip labels does not match")
+  tipLabels <- .TipLabels(tipLabels)
+  oldLabels <- attr(x, 'tip.label')
+  nTip <- attr(x, 'nTip')
+  if (is.null(oldLabels)) {
+    if (length(tipLabels) == nTip) {
+      attr(x, 'tip.label') <- tipLabels
+      x
+    } else {
+      stop (length(tipLabels), " labels provided; expecting ", nTip)
+    }
+  }
+  if (!identical(oldLabels, tipLabels)) {
+    if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
+      ret <- as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                         [match(tipLabels, oldLabels), ]))
+      attr(ret, 'tip.label') <- tipLabels
+      ret
+    } else {
+      stop ("Old and new labels must match")
+    }
+  } else {
+    x
   }
 }
 
 #' @export
-as.logical.Splits <- function (x) {
+as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   nTip = attr(x, 'nTip')
   ret <- t(apply(x, 1, function (split) {
     unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
@@ -72,7 +92,7 @@ as.logical.Splits <- function (x) {
 }
 
 #' @export
-as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE) {
+as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ...) {
   if (class(x[[1]]) == 'phylo') {
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
@@ -126,12 +146,12 @@ as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
 
 #' @export
 as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
-                                  asSplits = TRUE) {
+                                  asSplits = TRUE, ...) {
   lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
 }
 
 #' @export
-as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x))) {
+as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
   if (any(x >= 2^32)) stop ("Input out of range")
   structure(matrix(x, ncol = 1),
             nTip = length(tipLabels),
@@ -241,7 +261,8 @@ names.Splits <- function (x) rownames(x)
 #' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
   nN <- length(n)
-  c(lapply(n[-nN], .DecodeBinary32, print = print, appendLF = appendLF),
+  c(vapply(n[-nN], .DecodeBinary32, print = print, appendLF = appendLF,
+           FUN.VALUE = logical(32L)),
     .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
 }
 
