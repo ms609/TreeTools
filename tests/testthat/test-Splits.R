@@ -30,8 +30,11 @@ test_that("as.Split", {
   expect_equal("0 bipartition splits dividing 5 tips.",
                capture_output(print(as.Splits(polytomy))))
 
-  tree1 <- PectinateTree(1:8)
-  tree2 <- BalancedTree(8:1)
+  notPreOrder <- structure(list(edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L,
+                                            6L, 9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L),
+                                          .Dim = c(8L, 2L)), Nnode = 4L,
+                         tip.label = 1:5), class = "phylo", order = "cladewise")
+  expect_equal(c(n8 = 22, n9 = 6), as.Splits(notPreOrder)[, 1])
 
 })
 
@@ -103,7 +106,7 @@ test_that("Split combination", {
 
   expect_equal(4L, length(splits12))
   expect_equal(c(FALSE, FALSE, TRUE, TRUE), as.logical(duplicated(splits12)))
-  expect_error(c(splits1, as.Splits(tree3)))
+  expect_equal(2L, length(unique(c(splits1, as.Splits(tree3)))))
   expect_error(c(splits1, as.Splits(tree4)))
   expect_error(c(splits1, as.Splits(tree5)))
   expect_equal(c(28L, 24L, 28L, 24L),

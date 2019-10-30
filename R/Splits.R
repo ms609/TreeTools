@@ -37,43 +37,6 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-#' @keywords internal
-#' @export
-.TipLabels <- function (x) UseMethod('.TipLabels')
-
-#' @keywords internal
-#' @export
-.TipLabels.phylo <- function (x) x$tip.label
-
-#' @keywords internal
-#' @export
-.TipLabels.list <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.matrix <- function (x) colnames(x)
-
-#' @keywords internal
-#' @export
-.TipLabels.multiPhylo <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.Splits <- function (x) attr(x, 'tip.label')
-
-#' @keywords internal
-#' @export
-.TipLabels.default <- function (x) x
-
-#' @keywords internal
-#' @export
-.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
-
-
 #' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
@@ -83,7 +46,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, .TipLabels(tipLabels))
   }
-  x <- Cladewise(x)
+  x <- Preorder(x)
   splits <- cpp_edge_to_splits(x$edge)
   nSplits <- dim(splits)[1]
   # Return:
@@ -336,18 +299,20 @@ names.Splits <- function (x) rownames(x)
 c.Splits <- function (...) {
   splits <- list(...)
   nTip <- unique(vapply(splits, attr, 1, 'nTip'))
-  if (length(nTip) > 1) {
+  if (length(nTip) > 1L) {
     stop("Splits must relate to identical tips.")
   }
-  tips <- vapply(splits, attr, character(nTip), 'tip.label')
-  if (dim(unique(tips, MARGIN = 2))[2] != 1) {
-    stop("Order of tip labels must be identical.")
+  tips <- lapply(splits, attr, 'tip.label')
+  if (length(unique(lapply(tips, sort))) > 1L) {
+    stop("All splits must bear identical tips")
   }
+  tipLabels <- tips[[1]]
+  splits <- c(splits[1], lapply(splits[seq_along(splits)[-1]], as.Splits,
+                                  tipLabels = tipLabels))
 
-  x <- rbind(...)
-  structure(x,
+  structure(do.call(rbind, splits),
             nTip = nTip,
-            tip.label = tips[, 1],
+            tip.label = tipLabels,
             class='Splits')
 }
 
@@ -480,3 +445,51 @@ in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x), ]
 }
+
+
+#' @keywords internal
+#' @export
+.TipLabels <- function (x) UseMethod('.TipLabels')
+
+#' @keywords internal
+#' @export
+.TipLabels.default <- function (x) {
+  if (is.null(names(x))) {
+    if (any(duplicated(x))) {
+      NULL
+    } else {
+      x
+    }
+  } else {
+    names(x)
+  }
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.phylo <- function (x) x$tip.label
+
+#' @keywords internal
+#' @export
+.TipLabels.list <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.matrix <- function (x) colnames(x)
+
+#' @keywords internal
+#' @export
+.TipLabels.multiPhylo <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.Splits <- function (x) attr(x, 'tip.label')
+
+
+#' @keywords internal
+#' @export
+.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
