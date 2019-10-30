@@ -37,15 +37,38 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-.TipLabels <- function (x) {
-  if (class(x) == 'phylo') {
-    x$tip.label
-  } else if (class(x) == 'Splits') {
-    attr(x, 'tip.label')
-  } else {
-    x
-  }
+#' @keywords internal
+#' @export
+.TipLabels <- function (x) UseMethod('.TipLabels')
+
+#' @keywords internal
+#' @export
+.TipLabels.phylo <- function (x) x$tip.label
+
+#' @keywords internal
+#' @export
+.TipLabels.list <- function (x) {
+  .TipLabels(x[[1]])
 }
+
+#' @keywords internal
+#' @export
+.TipLabels.multiPhylo <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.Splits <- function (x) attr(x, 'tip.label')
+
+#' @keywords internal
+#' @export
+.TipLabels.default <- function (x) x
+
+#' @keywords internal
+#' @export
+.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
+
 
 #' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
 #' @param asSplits Logical specifying whether to return a `Splits` object,
