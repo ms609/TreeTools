@@ -3,11 +3,26 @@
 \name{NSplits}
 \alias{NSplits}
 \alias{NPartitions}
+\alias{NSplits.phylo}
+\alias{NSplits.multiPhylo}
+\alias{NSplits.list}
+\alias{NSplits.Splits}
+\alias{NSplits.numeric}
 \title{Number of distinct partitions in a tree}
 \usage{
 NSplits(x)
 
 NPartitions(x)
+
+\method{NSplits}{phylo}(x)
+
+\method{NSplits}{multiPhylo}(x)
+
+\method{NSplits}{list}(x)
+
+\method{NSplits}{Splits}(x)
+
+\method{NSplits}{numeric}(x)
 }
 \arguments{
 \item{x}{A phylogenetic tree of class \code{phylo}, or a list of such trees
