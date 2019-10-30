@@ -160,6 +160,13 @@ each other edge within a tree</p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A symmetrical matrix listing the number of edges that must be
+traversed to travel from each numbered edge to each other.
+The two edges straddling the root of a rooted tree
+are counted as a single edge.  Add a 'root' tip using <code><a href='AddTip.html'>AddTip</a></code> if the
+position of the root is significant.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: <code><a href='AllAncestors.html'>AllAncestors</a></code>,
@@ -168,12 +175,28 @@ each other edge within a tree</p>
   <code><a href='EdgeAncestry.html'>EdgeAncestry</a></code>, <code><a href='MRCA.html'>MRCA</a></code>,
   <code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>5</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='EdgeDistances-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>EdgeDistances</span>(<span class='no'>tree</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+#&gt; [1,]    0    1    1    0    1    1    2    2
+#&gt; [2,]    1    0    1    1    2    2    3    3
+#&gt; [3,]    1    1    0    1    2    2    3    3
+#&gt; [4,]    0    1    1    0    1    1    2    2
+#&gt; [5,]    1    2    2    1    0    1    2    2
+#&gt; [6,]    1    2    2    1    1    0    1    1
+#&gt; [7,]    2    3    3    2    2    1    0    1
+#&gt; [8,]    2    3    3    2    2    1    1    0</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
