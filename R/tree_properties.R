@@ -188,9 +188,9 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #'   NSplits(PectinateTree(8))
 #'   NSplits(as.Splits(BalancedTree(8)))
 #' }
-#' 
+#'
 #' @author Martin R. Smith
-#' 
+#'
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
@@ -200,18 +200,23 @@ NSplits <- function (x) UseMethod('NSplits')
 #' @export
 NPartitions <- NSplits
 
+#' @rdname NSplits
 #' @export
 NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
+#' @rdname NSplits
 #' @export
 NSplits.multiPhylo <- function (x) vapply(x, NSplits, integer(1))
 
+#' @rdname NSplits
 #' @export
 NSplits.list <- NSplits.multiPhylo
 
+#' @rdname NSplits
 #' @export
 NSplits.Splits <- function (x) nrow(x)
 
+#' @rdname NSplits
 #' @export
 NSplits.numeric <- function (x) x - 3L
 
