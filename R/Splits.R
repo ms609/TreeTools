@@ -336,16 +336,17 @@ names.Splits <- function (x) rownames(x)
 c.Splits <- function (...) {
   splits <- list(...)
   nTip <- unique(vapply(splits, attr, 1, 'nTip'))
-  if (length(nTip) > 1) {
+  if (length(nTip) > 1L) {
     stop("Splits must relate to identical tips.")
   }
-  tips <- vapply(splits, attr, character(nTip), 'tip.label')
-  if (dim(unique(tips, MARGIN = 2))[2] != 1) {
-    stop("Order of tip labels must be identical.")
+  tips <- lapply(splits, attr, 'tip.label')
+  if (length(unique(lapply(tips, sort))) > 1L) {
+    stop("All splits must bear identical tips")
   }
+  splits <- c(splits[1], lapply(splits[seq_along(splits)[-1]], as.Splits,
+                                  tipLabels = tips[[1]]))
 
-  x <- rbind(...)
-  structure(x,
+  structure(do.call(rbind, splits),
             nTip = nTip,
             tip.label = tips[, 1],
             class='Splits')
