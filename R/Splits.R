@@ -46,7 +46,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, .TipLabels(tipLabels))
   }
-  x <- Cladewise(x)
+  x <- Preorder(x)
   splits <- cpp_edge_to_splits(x$edge)
   nSplits <- dim(splits)[1]
   # Return:
