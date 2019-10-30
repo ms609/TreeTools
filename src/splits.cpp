@@ -24,7 +24,7 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   if (n_edge == n_tip) { /* No internal nodes resolved */
     return NumericMatrix (0, n_bin);
   }
-  
+
   uint32_t** splits = new uint32_t*[n_node];
   for (int i = 0; i != n_node; i++) {
     splits[i] = new uint32_t[n_bin];
@@ -44,8 +44,8 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   }
 
   NumericMatrix ret(n_edge - n_tip - 1, n_bin);
-  for (int i = 0; i < n_edge - n_tip - 1; i++) {
-    for (int j = 0; j < n_bin; j++) {
+  for (int i = 0; i != n_edge - n_tip - 1; i++) {
+    for (int j = 0; j != n_bin; j++) {
       /* Node n_tip = root node; split = ~0. */
       /* Node n_tip + 1 == (right_root_node) == ~(left_root_node) */
       ret(i, j) = splits[n_tip + i + 2][j];
