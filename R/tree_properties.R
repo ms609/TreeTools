@@ -157,8 +157,10 @@ EdgeDistances <- function (tree) {
   }
   ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
 
+  origOrder <- match(tree$edge[, 2], edge[[2]])
+
   # Return:
-  ret
+  ret[origOrder, origOrder]
 }
 
 #' Non-duplicate root
