@@ -37,54 +37,6 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-#' @keywords internal
-#' @export
-.TipLabels <- function (x) UseMethod('.TipLabels')
-
-#' @keywords internal
-#' @export
-.TipLabels.default <- function (x) {
-  if (is.null(names(x))) {
-    if (any(duplicated(x))) {
-      NULL
-    } else {
-      x
-    }
-  } else {
-    names(x)
-  }
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.phylo <- function (x) x$tip.label
-
-#' @keywords internal
-#' @export
-.TipLabels.list <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.matrix <- function (x) colnames(x)
-
-#' @keywords internal
-#' @export
-.TipLabels.multiPhylo <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.Splits <- function (x) attr(x, 'tip.label')
-
-
-#' @keywords internal
-#' @export
-.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
-
-
 #' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
@@ -493,3 +445,51 @@ in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x), ]
 }
+
+
+#' @keywords internal
+#' @export
+.TipLabels <- function (x) UseMethod('.TipLabels')
+
+#' @keywords internal
+#' @export
+.TipLabels.default <- function (x) {
+  if (is.null(names(x))) {
+    if (any(duplicated(x))) {
+      NULL
+    } else {
+      x
+    }
+  } else {
+    names(x)
+  }
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.phylo <- function (x) x$tip.label
+
+#' @keywords internal
+#' @export
+.TipLabels.list <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.matrix <- function (x) colnames(x)
+
+#' @keywords internal
+#' @export
+.TipLabels.multiPhylo <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.Splits <- function (x) attr(x, 'tip.label')
+
+
+#' @keywords internal
+#' @export
+.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
