@@ -223,7 +223,7 @@ AddTip <- function (tree,
 #' @return `AddTipEverywhere` returns a list of class `multiPhylo` containing
 #' the trees produced by adding `label` to each edge of `tree` in turn.
 #'
-#' @example
+#' @examples
 #' backbone <- BalancedTree(4)
 #' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 #' par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)

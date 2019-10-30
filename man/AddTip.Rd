@@ -8,7 +8,7 @@
 AddTip(tree, where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
   label = "New tip")
 
-AddTipEverywhere(tree, label = "New tip")
+AddTipEverywhere(tree, label = "New tip", includeRoot = FALSE)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
@@ -18,6 +18,9 @@ node.  To add a new tip at the root, use \code{where = 0}.  By default, the
 new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
+
+\item{includeRoot}{Logical; if \code{TRUE}, the three positions adjacent
+to the root edge are considered to represent distinct edges.}
 }
 \value{
 \code{AddTip} returns a tree of class \code{phylo} with an additional tip
@@ -44,6 +47,15 @@ single-taxon trees.
   plot(tree <- rtree(10, br=NULL)); nodelabels(); nodelabels(15, 15, bg='green'); dev.new()
   plot(AddTip(tree, 15, 'NEW_TIP'))
 }
+backbone <- BalancedTree(4)
+additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
+par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
+lapply(additions, plot)
+
+additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
+par(mfrow=c(2, 3))
+lapply(additions, plot)
+
 }
 \seealso{
 \code{\link{bind.tree}}
