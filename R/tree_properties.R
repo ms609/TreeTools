@@ -107,6 +107,20 @@ MRCA <- function(tip1, tip2, ancestors) {
 #'
 #' @template treeParam
 #'
+#' @return A symmetrical matrix listing the number of edges that must be
+#' traversed to travel from each numbered edge to each other.
+#' The two edges straddling the root of a rooted tree
+#' are counted as a single edge.  Add a 'root' tip using [`AddTip`] if the
+#' position of the root is significant.
+#'
+#' @examples
+#'
+#' tree <- BalancedTree(5)
+#' plot(tree)
+#' ape::edgelabels()
+#'
+#' EdgeDistances(tree)
+#'
 #' @family tree navigation
 #' @author Martin R. Smith
 #' @export
