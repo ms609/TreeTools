@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/ms609/TreeTools/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTools)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeTools)](https://cran.r-project.org/package=TreeTools)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTools)](https://cran.r-project.org/package=TreeTools)
-[![DOI](https://zenodo.org/badge/98171642.svg)](https://zenodo.org/badge/latestdoi/98171642)<!--[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
+[![DOI](https://zenodo.org/badge/98171642.svg)](https://zenodo.org/badge/latestdoi/TODO)<!--[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
 -->
 [![Project Status: Active – – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
