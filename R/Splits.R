@@ -43,6 +43,20 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
 #' @keywords internal
 #' @export
+.TipLabels.default <- function (x) {
+  if (is.null(names(x))) {
+    if (any(duplicated(x))) {
+      NULL
+    } else {
+      x
+    }
+  } else {
+    names(x)
+  }
+}
+
+#' @keywords internal
+#' @export
 .TipLabels.phylo <- function (x) x$tip.label
 
 #' @keywords internal
@@ -65,9 +79,6 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 #' @export
 .TipLabels.Splits <- function (x) attr(x, 'tip.label')
 
-#' @keywords internal
-#' @export
-.TipLabels.default <- function (x) x
 
 #' @keywords internal
 #' @export
@@ -343,12 +354,13 @@ c.Splits <- function (...) {
   if (length(unique(lapply(tips, sort))) > 1L) {
     stop("All splits must bear identical tips")
   }
+  tipLabels <- tips[[1]]
   splits <- c(splits[1], lapply(splits[seq_along(splits)[-1]], as.Splits,
-                                  tipLabels = tips[[1]]))
+                                  tipLabels = tipLabels))
 
   structure(do.call(rbind, splits),
             nTip = nTip,
-            tip.label = tips[, 1],
+            tip.label = tipLabels,
             class='Splits')
 }
 
