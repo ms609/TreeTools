@@ -53,6 +53,10 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
 #' @keywords internal
 #' @export
+.TipLabels.matrix <- function (x) colnames(x)
+
+#' @keywords internal
+#' @export
 .TipLabels.multiPhylo <- function (x) {
   .TipLabels(x[[1]])
 }
@@ -145,7 +149,7 @@ as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ..
 }
 
 #' @export
-as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
+as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- 2L^(0:31)
   dimX <- dim(x)
   if (is.null(dimX)) {
@@ -154,10 +158,12 @@ as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
     remainder <- nTip %% 32L
 
     if (is.null(tipLabels)) {
-      tipLabels <- names(x)
+      tipLabels <- .TipLabels(x)
       if (is.null(tipLabels)) {
         tipLabels <- paste0('t', seq_len(nTip))
       }
+    } else {
+      tipLabels <- .TipLabels(tipLabels)
     }
 
     structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
