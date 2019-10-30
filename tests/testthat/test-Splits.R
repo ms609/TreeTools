@@ -103,7 +103,7 @@ test_that("Split combination", {
 
   expect_equal(4L, length(splits12))
   expect_equal(c(FALSE, FALSE, TRUE, TRUE), as.logical(duplicated(splits12)))
-  expect_error(c(splits1, as.Splits(tree3)))
+  expect_equal(2L, length(unique(c(splits1, as.Splits(tree3)))))
   expect_error(c(splits1, as.Splits(tree4)))
   expect_error(c(splits1, as.Splits(tree5)))
   expect_equal(c(28L, 24L, 28L, 24L),
