@@ -26,19 +26,19 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   }
   
   uint32_t** splits = new uint32_t*[n_node];
-  for (int i = 0; i < n_node; i++) {
+  for (int i = 0; i != n_node; i++) {
     splits[i] = new uint32_t[n_bin];
-    for (int j = 0; j < n_bin; j++) {
+    for (int j = 0; j != n_bin; j++) {
       splits[i][j] = 0;
     }
   }
 
-  for (int i = 0; i < n_tip; i++) {
+  for (int i = 0; i != n_tip; i++) {
     splits[i][(int) i / 32] = powers_of_two[i % 32];
   }
 
-  for (int i = n_edge - 1; i > 0; i--) { /* edge 0 is second root edge */
-    for (int j = 0; j < n_bin; j++) {
+  for (int i = n_edge - 1; i != 0; i--) { /* edge 0 is second root edge */
+    for (int j = 0; j != n_bin; j++) {
       splits[(int) edge(i, 0) - 1][j] |= splits[(int) edge(i, 1) - 1][j];
     }
   }
