@@ -37,15 +37,42 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-.TipLabels <- function (x) {
-  if (class(x) == 'phylo') {
-    x$tip.label
-  } else if (class(x) == 'Splits') {
-    attr(x, 'tip.label')
-  } else {
-    x
-  }
+#' @keywords internal
+#' @export
+.TipLabels <- function (x) UseMethod('.TipLabels')
+
+#' @keywords internal
+#' @export
+.TipLabels.phylo <- function (x) x$tip.label
+
+#' @keywords internal
+#' @export
+.TipLabels.list <- function (x) {
+  .TipLabels(x[[1]])
 }
+
+#' @keywords internal
+#' @export
+.TipLabels.matrix <- function (x) colnames(x)
+
+#' @keywords internal
+#' @export
+.TipLabels.multiPhylo <- function (x) {
+  .TipLabels(x[[1]])
+}
+
+#' @keywords internal
+#' @export
+.TipLabels.Splits <- function (x) attr(x, 'tip.label')
+
+#' @keywords internal
+#' @export
+.TipLabels.default <- function (x) x
+
+#' @keywords internal
+#' @export
+.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
+
 
 #' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
 #' @param asSplits Logical specifying whether to return a `Splits` object,
@@ -122,7 +149,7 @@ as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ..
 }
 
 #' @export
-as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
+as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- 2L^(0:31)
   dimX <- dim(x)
   if (is.null(dimX)) {
@@ -131,10 +158,12 @@ as.Splits.logical <- function (x, tipLabels = colnames(x), ...) {
     remainder <- nTip %% 32L
 
     if (is.null(tipLabels)) {
-      tipLabels <- names(x)
+      tipLabels <- .TipLabels(x)
       if (is.null(tipLabels)) {
         tipLabels <- paste0('t', seq_len(nTip))
       }
+    } else {
+      tipLabels <- .TipLabels(tipLabels)
     }
 
     structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
