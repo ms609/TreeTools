@@ -266,13 +266,26 @@ as.character.Splits <- function (x, ...) {
   })
 }
 
+
+#' Number of tips in a phylogenetic tree
+#'
+#' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
+#' class `Splits` and `list`.
+#'
+#' @param phy Object to count.
+#'
+#' @return Single integer specifying the number of tips in each object in `phy`.
+#'
 #' @importFrom ape Ntip
+#' @export
+NTip <- function (phy) UseMethod('Ntip')
+
 #' @family Splits operations
 #' @export
-Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
+Ntip.Splits <- function (phy) attr(phy, 'nTip')
 
 #' @export
-Ntip.list <- function (phy, ...) attr(phy[[1]], 'nTip')
+Ntip.list <- function (phy) Ntip(phy[[1]])
 
 #' Tips contained within splits
 #'
