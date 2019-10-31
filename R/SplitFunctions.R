@@ -19,7 +19,7 @@
 #' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
 #'
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @family split manipulation functions
 #' @export
@@ -52,7 +52,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #' @return Logical vector specifying whether each split in `splits` is trivial,
 #' i.e. includes or excludes only a single tip or no tips at all.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family split manipulation functions
 #' @examples
 #'
@@ -92,7 +92,7 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #'
 #' CompatibleSplits(splits, splits2)
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 CompatibleSplits <- function (splits, splits2) {
   splits <- as.Splits(splits)
@@ -147,7 +147,7 @@ CompatibleSplits <- function (splits, splits2) {
 #' SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
 #'                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 SplitMatchProbability <- function (split1, split2) {
 
@@ -247,7 +247,7 @@ SplitMatchProbability <- function (split1, split2) {
 #' @examples
 #' NPartitionPairs(c(2, 1, 1, 3))
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 NPartitionPairs <- function (configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *

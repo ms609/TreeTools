@@ -34,7 +34,7 @@ content.
 \examples{
   # Eight tips can be split evenly:
   SplitInformation (4, 4)
-  
+
   # or unevenly, which is less informative:
   SplitInformation (2, 6)
 
@@ -45,6 +45,6 @@ Other split information functions: \code{\link{CharacterInformation}},
   \code{\link{UnrootedTreesMatchingSplit}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

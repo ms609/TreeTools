@@ -22,6 +22,8 @@ Preorder(tree)
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
+\item{nTip}{Intger specifying number of tips (leaves).}
+
 \item{edge}{(optional) the value of tree$edge}
 
 \item{parent}{the first column of the edge matrix of a tree of class
@@ -30,9 +32,7 @@ Preorder(tree)
 \item{child}{the second column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
 
-\item{nTaxa}{Number of terminal taxa in tree.}
-
-\item{nTaxa}{Number of terminal taxa in tree.}
+\item{nTip}{Intger specifying number of tips (leaves).}
 }
 \value{
 A tree with nodes numbered in postorder

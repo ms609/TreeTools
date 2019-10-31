@@ -191,7 +191,7 @@ Preorder <- function (tree) {
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 RenumberTips <- function (tree, tipOrder) {
   startOrder <- tree$tip.label

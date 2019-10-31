@@ -12,7 +12,7 @@ WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 \arguments{
 \item{splits}{An object of class \link{as.Splits}{`Splits`}.}
 
-\item{nTaxa}{Number of terminal taxa in tree.}
+\item{nTip}{Intger specifying number of tips (leaves).}
 }
 \value{
 Logical vector specifying whether each split in \code{splits} is trivial,
@@ -39,6 +39,6 @@ TrivialSplits(efgh)
 Other split manipulation functions: \code{\link{Subsplit}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split manipulation functions}

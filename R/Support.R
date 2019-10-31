@@ -34,7 +34,7 @@
 #'   nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
 #' }
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)

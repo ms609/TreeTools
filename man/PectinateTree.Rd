@@ -23,6 +23,6 @@ Other tree generation functions: \code{\link{BalancedTree}},
   \code{\link{SingleTaxonTree}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}

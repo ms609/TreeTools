@@ -80,5 +80,5 @@ provide the log of this number.  Calculations follow Carter et al. 1990, Theorem
 \insertRef{Carter1990}{TreeTools}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

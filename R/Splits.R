@@ -13,7 +13,7 @@
 #'  a tip is a member of the split.  Splits are named according to the node
 #'  that defines them.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @examples
 #' splits <- as.Splits(BalancedTree(letters[1:6]))
@@ -274,9 +274,6 @@ Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
 #' @export
 Ntip.list <- function (phy, ...) attr(phy[[1]], 'nTip')
 
-#' @export
-Ntip.multiPhylo <- function (phy, ...) attr(phy[[1]], 'nTip')
-
 #' Tips contained within splits
 #'
 #' `TipsInSplits` specifies the number of tips that occur within each
@@ -467,7 +464,7 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' @return A logical vector specifing which of the splits in `x` are present
 #' in `table`.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(7))

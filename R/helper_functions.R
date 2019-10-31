@@ -39,7 +39,7 @@ MatrixToList <- function (edge) list(edge[, 1], edge[, 2])
 #' original class of \code{treeList}), whose first element is the tree specified
 #' as \code{add}.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @export
 UnshiftTree <- function(add, treeList) {

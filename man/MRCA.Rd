@@ -23,6 +23,6 @@ Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{NonDuplicateRoot}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

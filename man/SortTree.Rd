@@ -16,5 +16,5 @@ A tree of class phylo, with each node sorted such that the larger clade is first
 Sorts each node into a consistent order, so similar trees look visually similar.
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

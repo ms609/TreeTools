@@ -38,6 +38,6 @@ Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
 Other split manipulation functions: \code{\link{TrivialSplits}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split manipulation functions}

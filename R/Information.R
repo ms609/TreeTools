@@ -1,12 +1,12 @@
 #' Number of trees matching a bipartition split
-#' 
+#'
 #' Calculates the number of unrooted bifurcated trees that are consistent with
 #' a bipartition split that divides taxa into groups of size `A` and `B`.
-#' 
+#'
 #' @param A,B Number of taxa in each partition.
-#' 
-#' @author Martin R. Smith
-#' 
+#'
+#' @template MRS
+#'
 #' @family split information functions
 #' @export
 TreesMatchingSplit <- function (A, B) {
@@ -24,26 +24,26 @@ LogTreesMatchingSplit <- function (A, B) {
 }
 
 #' Character information content
-#' 
+#'
 #' Calculates the phylogenetic information content of a given character.
-#' 
-#' @param tokens Character vector specifying the tokens assigned to each taxon for 
+#'
+#' @param tokens Character vector specifying the tokens assigned to each taxon for
 #' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
-#' 
+#'
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.`
-#' 
+#'
 #' @return Phylogenetic information content of the character, in bits.
-#' 
+#'
 #' @family split information functions
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 CharacterInformation <- function (tokens) {
   tokenCounts <- table(tokens)
   # Our character splits our taxa into groups with the same token
   # ?s and -s are best ignored
   splits <- tokenCounts[!(names(tokenCounts) %in% c('?', '-'))]
-  
+
   # Information content = -log2(probability)
   # Probability of a tree being consistent with our character is
   # n trees consistent with character / n trees with that many tips
@@ -52,14 +52,14 @@ CharacterInformation <- function (tokens) {
   lnP <- LnUnrootedMult(splits) - LnUnrooted(sum(splits))
   log2P <- lnP / log(2)
   information <- -log2P
-  
-  # Return: 
+
+  # Return:
   information
 }
 
 #' Information content of a split
-#' 
-#' `SplitInformation` calculates the information content of a split, based on 
+#'
+#' `SplitInformation` calculates the information content of a split, based on
 #' the entropy of the subset of trees consistent with the split; a split that
 #' is consistent with a smaller number of trees will have a higher information
 #' content.
@@ -67,15 +67,15 @@ CharacterInformation <- function (tokens) {
 #' @inheritParams TreesMatchingSplit
 #'
 #' @return Information content of the split, in bits.
-#' 
-#' @examples 
+#'
+#' @examples
 #'   # Eight tips can be split evenly:
 #'   SplitInformation (4, 4)
-#'   
+#'
 #'   # or unevenly, which is less informative:
 #'   SplitInformation (2, 6)
-#' 
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @family split information functions
 #' @export
 SplitInformation <- function (A, B) {
@@ -83,7 +83,7 @@ SplitInformation <- function (A, B) {
 }
 
 #' @describeIn SplitInformation Information content of a multi-partition split.
-#' @param partitionSizes Integer vector specifying the number of taxa in each 
+#' @param partitionSizes Integer vector specifying the number of taxa in each
 #' partition of a multi-partition split.
 #' @export
 MultiSplitInformation <- function (partitionSizes) {
@@ -91,24 +91,24 @@ MultiSplitInformation <- function (partitionSizes) {
 }
 
 #' Number of trees consistent with split
-#' 
-#' Calculates the number of unrooted bifurcating trees consistent with the 
+#'
+#' Calculates the number of unrooted bifurcating trees consistent with the
 #' specified multi-partition split, using the formula of Carter _et al_. (1990).
-#' 
+#'
 #' @template splitsParam
-#' 
+#'
 #' @return `UnrootedTreesMatchingSplit` returns an integer specifying the
 #'  number of unrooted bifurcating trees consistent with the specified split.
-#' 
 #'
-#' @examples 
+#'
+#' @examples
 #'  UnrootedTreesMatchingSplit(c(3, 5))
 #'  UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
-#' 
-#' @references 
+#'
+#' @references
 #' \insertRef{Carter1990}{TreeTools}, Theorem 2.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family split information functions
 #' @export
 UnrootedTreesMatchingSplit <- function (splits) {

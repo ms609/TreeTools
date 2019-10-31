@@ -54,7 +54,7 @@ Other tree manipulation: \code{\link{Renumber}},
   \code{\link{SingleTaxonTree}}, \code{\link{Subtree}}
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}
 \keyword{tree}

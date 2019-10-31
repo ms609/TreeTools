@@ -19,5 +19,5 @@ The time that the specified file was created by ape.
 Reads the time that an ape tree was modified from the comment in the nexus file
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

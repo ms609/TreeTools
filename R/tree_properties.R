@@ -75,7 +75,7 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
 #' @return a logical vector stating whether each edge in turn is a descendant of the specified edge
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family tree navigation
 #' @export
 EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
@@ -92,7 +92,7 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
 #' @param ancestors Output of [`AllAncestors`] for the tree in question
 #'
 #' @family tree navigation
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 MRCA <- function(tip1, tip2, ancestors) {
   anc1 <- ancestors[[tip1]]
@@ -108,7 +108,7 @@ MRCA <- function(tip1, tip2, ancestors) {
 #' @template treeParam
 #'
 #' @family tree navigation
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 EdgeDistances <- function (tree) {
   edge <- tree$edge
@@ -155,7 +155,7 @@ EdgeDistances <- function (tree) {
 #' @template treeChild
 #' @template treeNEdgeOptional
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 #' @family tree navigation
 #'
@@ -189,7 +189,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #'   NSplits(as.Splits(BalancedTree(8)))
 #' }
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @family Splits operations
 #' @importFrom ape collapse.singles
@@ -228,7 +228,7 @@ NSplits.numeric <- function (x) x - 3L
 #' @param tree A phylogenetic tree of class phylo.
 #' @return Logical specifying whether a root node is resolved.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 TreeIsRooted <- function (tree) {
   edge <- tree$edge

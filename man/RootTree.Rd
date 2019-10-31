@@ -19,5 +19,5 @@ A tree of class phylo, rooted on the smallest clade that contains the specified 
 Roots a tree on the smallest clade containing the specified tips.
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

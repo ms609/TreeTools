@@ -1,18 +1,18 @@
 #' Renumber a tree's nodes and tips
 #'
-#' \code{Renumber} numbers the nodes and tips in a tree to conform with the 
+#' \code{Renumber} numbers the nodes and tips in a tree to conform with the
 #' phylo standards.
 #'
-#' @template treeParam 
-#' 
+#' @template treeParam
+#'
 #' @examples
 #' library('ape')
 #' tree <- rtree(10)
 #' Renumber (tree)
-#' 
+#'
 #' @return This function returns a tree of class \code{phylo}
-#'   
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @family tree manipulation
 #' @export
 Renumber <- function (tree) {
@@ -24,13 +24,13 @@ Renumber <- function (tree) {
   NODES  <- child > nTip
   TIPS   <- !NODES
   nNode  <- sum(NODES) + 1 # Root node has no edge leading to it, so add 1
-  
+
   tip <- child[TIPS]
   name <- vector("character", length(tip))
   name[1:nTip] <- tree$tip.label[tip]
   tree$tip.label <- name
   child[TIPS] <- 1:nTip
-  
+
   old.node.number <- unique(parent)
   new.node.number <- rev(nTip + seq_along(old.node.number))
   renumbering.schema <- integer(nNode)
@@ -38,7 +38,7 @@ Renumber <- function (tree) {
   child[NODES] <- renumbering.schema[child[NODES] - nTip]
   nodeseq <- (1L:nNode) * 2L
   parent <- renumbering.schema[parent - nTip]
-  
+
   tree$edge[,1] <- parent
   tree$edge[,2] <- child
   Cladewise(tree)
@@ -54,7 +54,7 @@ Renumber <- function (tree) {
 #' @param  label a character vector specifying the label of the tip.
 #' @return This function returns a \code{phylo} object containing a single tip with the specified label.
 #' @examples SingleTaxonTree('Homo_sapiens')
-#' @keywords  tree 
+#' @keywords  tree
 #' @family tree manipulation
 #' @family tree generation functions
 #' @export
@@ -67,16 +67,16 @@ SingleTaxonTree <- function (label) {
 #'
 #' @description Safely extracts a clade from a phylogenetic tree.
 #' @usage Subtree(tree, node)
-#' 
-#' 
+#'
+#'
 #' @template preorderTreeParam
 #' @param node The number of the node at the base of the clade to be extracted.
-#' 
+#'
 #' @details
-#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometimes behaves erratically.  
+#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometimes behaves erratically.
 #' Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.
-#' 
-#' @return This function returns a tree of class \code{phylo} that represents a clade 
+#'
+#' @return This function returns a tree of class \code{phylo} that represents a clade
 #'         extracted from the original tree.
 #'
 #' @examples{
@@ -84,8 +84,8 @@ SingleTaxonTree <- function (label) {
 #' plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
 #' plot(Subtree(tree, 33))
 #' }
-#' 
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @family tree manipulation
 #' @export
 Subtree <- function (tree, node) {
@@ -103,25 +103,25 @@ Subtree <- function (tree, node) {
   subtreeParentEdge <- match(node, child)
   keepEdge <- DescendantEdges(subtreeParentEdge, parent, child)
   keepEdge[subtreeParentEdge] <- FALSE
-  
+
   edge <- edge[keepEdge, ]
   edge1 <- edge[, 1]
   edge2 <- edge[, 2]
-  
+
   isTip <- edge2 <= nTip
   tips  <- edge2[isTip]
   new.nTip <- length(tips)
   name <- character(new.nTip)
   tipOrder <- order(tips, method='radix') # method='radix' typically a few % faster than 'auto'
-  name[tipOrder] <- tipLabel[tips] 
+  name[tipOrder] <- tipLabel[tips]
   edge2[isTip] <- tipOrder
-    
+
   ## renumber nodes:
   nodeAdjust <- new.nTip + 1 - node
   edge2[!isTip] <- edge2[!isTip] + nodeAdjust
   edge[, 1] <- edge1 + nodeAdjust
   edge[, 2] <- edge2
-  
+
   # Return:
   structure(list(
     tip.label = name,
@@ -131,36 +131,36 @@ Subtree <- function (tree, node) {
 }
 
 #' Add a tip to a phylogenetic tree
-#' 
+#'
 #' `AddTip` adds a tip to a phylogenetic tree at a specified location.
 #'
-#'`AddTip` extends \code{\link{bind.tree}}, which cannot handle 
+#'`AddTip` extends \code{\link{bind.tree}}, which cannot handle
 #'   single-taxon trees.
 #'
-#' @template treeParam 
-#' @param where The node or tip that should form the sister taxon to the new 
-#' node.  To add a new tip at the root, use `where = 0`.  By default, the 
+#' @template treeParam
+#' @param where The node or tip that should form the sister taxon to the new
+#' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
-#' 
+#'
 #' @return `AddTip` returns a tree of class \code{phylo} with an additional tip
 #' at the desired location.
-#' 
-#' @author Martin R. Smith
-#' 
+#'
+#' @template MRS
+#'
 #' @seealso \code{\link{bind.tree}}
 #' @seealso \code{\link{nodelabels}}
-#' 
+#'
 #' @examples {
 #'   library('ape')
 #'   plot(tree <- rtree(10, br=NULL)); nodelabels(); nodelabels(15, 15, bg='green'); dev.new()
 #'   plot(AddTip(tree, 15, 'NEW_TIP'))
 #' }
-#' @keywords tree 
+#' @keywords tree
 #' @family tree manipulation
-#' 
+#'
 #' @export
-AddTip <- function (tree, 
+AddTip <- function (tree,
                     where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
                     label = "New tip") {
   nTip <- length(tree$tip.label)
@@ -169,7 +169,7 @@ AddTip <- function (tree,
   if (where < 1L) where <- ROOT
   new.tip.number <- nTip + 1L
   tree.edge <- tree$edge
-  
+
   ## find the row of 'where' before renumbering
   if (where == ROOT) case <- 1L else {
       insertion.edge <- which(tree.edge[, 2] == where)
@@ -186,7 +186,7 @@ AddTip <- function (tree,
   tree.edge[nodes] <- -(tree.edge[nodes] - nTip)  # -1, ..., -nTip
   next.node <- -nNode - 1L
   ROOT <- -1L # This may change later
-  
+
   switch(case, { # case = 1 -> y is bound on the root of x
       tree.edge <- rbind(c(next.node, tree.edge[1]), tree.edge, c(next.node, new.tip.number))
       ROOT <- next.node
@@ -202,7 +202,7 @@ AddTip <- function (tree,
   )
   tree$tip.label <- c(tree$tip.label, label)
   tree$Nnode <- nNode <- nNode + 1L
-  
+
   ## renumber nodes:
   new.numbering <- integer(nNode)
   new.numbering[-ROOT] <- new.tip.number + 1L
@@ -212,7 +212,7 @@ AddTip <- function (tree,
   tree.edge[, 1] <- new.numbering[-tree.edge[, 1]]
 
   tree$edge <- tree.edge
-  
+
   # Return:
   tree
 }
@@ -229,24 +229,24 @@ AddTipEverywhere <- function (tree, label = 'New tip') {
 #'
 #' \code{AllAncestors} lists ancestors of each parent node in a tree
 #'
-#' Note that the tree's edges must be listed in an order whereby each entry in 
-#' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in 
+#' Note that the tree's edges must be listed in an order whereby each entry in
+#' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in
 #' \code{tr$edge[, 2]}.
 #'
 #' @template treeParent
 #' @template treeChild
-#' 
+#'
 #' @examples
 #'   tr <- ape::rtree(20, br=NULL)
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
-#' 
+#'
 #' @return This function returns a list. Entry i contains a vector containing, in order,
-#' the nodes encountered when traversing the tree from node i to the root node.  The last 
-#' entry of each member of the list will therefore be the root node, with the exception of the 
+#' the nodes encountered when traversing the tree from node i to the root node.  The last
+#' entry of each member of the list will therefore be the root node, with the exception of the
 #' entry for the root node itself, which will be NULL.
-#'   
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @family tree navigation
 #' @export
 AllAncestors <- function (parent, child) {
@@ -263,7 +263,7 @@ AllAncestors <- function (parent, child) {
 #' @template treeParam
 #' @param nodes whose descendants should be returned
 #'
-#' @return the number of nodes (including tips) that are descended from each 
+#' @return the number of nodes (including tips) that are descended from each
 #'   node in nodes
 #'
 #' @importFrom phangorn allDescendants
@@ -282,6 +282,6 @@ CladeSizes <- function (tree, nodes) {
 #' @keywords internal
 #' @export
 C_node_depth <- function (nTip, nNode, parent, child, nEdge) {
-  .C("ape_node_depth", as.integer(nTip), as.integer(nNode), as.integer(parent), 
+  .C("ape_node_depth", as.integer(nTip), as.integer(nNode), as.integer(parent),
      as.integer(child), as.integer(nEdge), double(nTip + nNode), 1L)[[6]]
 }
