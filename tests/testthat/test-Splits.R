@@ -24,6 +24,7 @@ test_that("as.Split", {
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
+  expect_equal(splits1, as.Splits(splits1))
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 
   polytomy <- ape::read.tree(text='(a, b, c, d, e);')
