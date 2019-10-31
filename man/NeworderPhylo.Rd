@@ -5,7 +5,7 @@
 \title{neworder_phylo
 Wrapper for the ape function}
 \usage{
-NeworderPhylo(nTaxa, parent, child, nb.edge, whichwise)
+NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
 }
 \description{
 neworder_phylo

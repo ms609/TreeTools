@@ -1,3 +1,137 @@
+#' Subset of a split on fewer taxa
+#'
+#' @template splitsObjectParam
+#' @param tips A vector specifying a subset of the tip labels applied to `split`.
+#' @param keepAll logical specifying whether to keep entries that define trivial
+#' splits (i.e. splits of zero or one tip) on the subset of tips.
+#' @param unique logical specifying whether to remove duplicate splits.
+#'
+#' @return An object of class `Splits`, defined on `tips`.
+#'
+#' @examples
+#'
+#' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
+#' summary(efgh)
+#'
+#' TrivialSplits(efgh)
+#'
+#' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
+#'
+#'
+#' @template MRS
+#'
+#' @family split manipulation functions
+#' @export
+Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
+  if (mode(splits) == 'list') {
+    lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
+  } else if (length(splits) == 0) {
+    ret <- splits
+    attr(ret, 'nTip') <- length(tips)
+    attr(ret, 'tip.label') <- if (mode(tips) == 'character') {
+      tips
+    } else {
+      attr(splits, 'tip.label')[tips]
+    }
+    ret
+  } else {
+    allSplits <- as.Splits(as.logical(splits)[, tips])
+    ret <- if (keepAll) allSplits else WithoutTrivialSplits(allSplits)
+
+    # Return:
+    if (unique) unique(ret) else ret
+  }
+}
+
+#' Are splits trivial?
+#'
+#' @template splitsObjectParam
+#' @template nTipParam
+#'
+#' @return Logical vector specifying whether each split in `splits` is trivial,
+#' i.e. includes or excludes only a single tip or no tips at all.
+#'
+#' @template MRS
+#' @family split manipulation functions
+#' @examples
+#'
+#' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
+#' summary(efgh)
+#'
+#' TrivialSplits(efgh)
+#'
+#' @export
+TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+  inSplit <- TipsInSplits(splits, nTip)
+  inSplit < 2L | inSplit > nTip - 2L
+}
+
+#' @describeIn TrivialSplits Remove trivial splits from a splits object
+#' @export
+WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+  splits[[!TrivialSplits(splits, nTip)]]
+}
+
+#' Which splits are compatible?
+#'
+#' @template splitsObjectParam
+#' @param splits2 A second `Splits` object.
+#'
+#' @return A logical matrix specifying whether each split in `splits` is
+#' compatible with each split in `splits2`.
+#'
+#' @examples
+#'
+#' splits <- as.Splits(BalancedTree(8))
+#' splits2 <- as.Splits(PectinateTree(8))
+#'
+#' summary(splits)
+#' summary(splits2)
+#'
+#' CompatibleSplits(splits, splits2)
+#'
+#' @template MRS
+#' @export
+CompatibleSplits <- function (splits, splits2) {
+  splits <- as.Splits(splits)
+  nTip <- attr(splits, 'nTip')
+  splits2 <- as.Splits(splits2, splits)
+  apply(splits2, 1, function (split)
+    apply(splits, 1, .CompatibleSplit, split, nTip))
+}
+
+#' @param a,b Integer representations of splits, from an row of a `Splits` object
+#' @return logical vector stating whether splits are compatible
+#' @describeIn CompatibleSplits Evaluate a single split pair
+#' @keywords internal
+#' @export
+.CompatibleSplit <- function (a, b, nTip) {
+  rawA <- .UintToRaw(a)
+  rawB <- .UintToRaw(b)
+
+  rawMask <- if (nTip %% 32) {
+    .UintToRaw(c(2^(nTip %% 32) - 1, rep(2^32 - 1, nTip %/%32)))
+  } else {
+    .UintToRaw(rep(2^32 - 1, nTip %/%32))
+  }
+  .CompatibleRaws(rawA, rawB, rawMask)
+}
+
+#' @keywords internal
+#' @export
+.CompatibleRaws <- function (rawA, rawB, bitmask) {
+  !any(as.logical(rawA & rawB)) ||
+  !any(as.logical(rawA & !rawB)) ||
+  !any(as.logical(!rawA & rawB)) ||
+  !any(as.logical(!rawA & !rawB & bitmask))
+}
+
+.UintToRaw <- function (uint) {
+  vapply(uint, function(x) as.raw(x %/% 2^c(24, 16, 8, 0) %% 256L), raw(4))
+}
+
 #' Probability of matching this well
 #'
 #' Calculates the probability that two random splits of the sizes provided
@@ -13,7 +147,7 @@
 #' SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
 #'                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 SplitMatchProbability <- function (split1, split2) {
 
@@ -21,7 +155,7 @@ SplitMatchProbability <- function (split1, split2) {
   if (!identical(attr(split1, 'tip.label'), attr(split2, 'tip.label'))) {
     stop("Sequence of tip labels must match")
   }
-  
+
   split1 <- as.logical(split1)
   split2 <- as.logical(split2)
   partitions <- matrix(c(sum(split1 & split2),
@@ -77,43 +211,43 @@ SplitMatchProbability <- function (split1, split2) {
 }
 
 #' Distributions of tips consistent with a partition pair
-#' 
-#' Number of terminal arrangements matching a specified configuration of 
+#'
+#' Number of terminal arrangements matching a specified configuration of
 #' two partitions.
-#' 
+#'
 #' Consider partitions that divide eight terminals, labelled A to H.
-#' 
+#'
 #' \tabular{rcll}{
 #'   Bipartition 1:\tab ABCD:EFGH\tab A1 = ABCD\tab B1 = EFGH \cr
 #'   Bipartition 2:\tab ABE:CDFGH\tab A2 = ABE\tab B2 = CDFGH
 #' }
-#' 
+#'
 #' This can be represented by an association matrix:
-#' 
+#'
 #' \tabular{rll}{
 #'      \tab *A2* \tab *B2* \cr
 #' *A1* \tab AB  \tab C   \cr
 #' *B1* \tab E   \tab FGH
 #' }
-#' 
+#'
 #' The cells in this matrix contain 2, 1, 1 and 3 terminals respectively; this
-#' four-element vector (`c(2, 1, 1, 3)`) is the `configuration` implied by 
+#' four-element vector (`c(2, 1, 1, 3)`) is the `configuration` implied by
 #' this pair of bipartition splits.
-#' 
-#' @param configuration Integer vector of length four specifying the number of 
-#' terminals that occur in both 
-#'   (1) splits A1 and A2; 
+#'
+#' @param configuration Integer vector of length four specifying the number of
+#' terminals that occur in both
+#'   (1) splits A1 and A2;
 #'   (2) splits A1 and B2;
 #'   (3) splits B1 and A2;
 #'   (4) splits B1 and B2.
-#'   
+#'
 #' @return The number of ways to distribute `sum(configuration)` taxa according
 #'  to the specified pattern.
 #'
-#' @examples 
+#' @examples
 #' NPartitionPairs(c(2, 1, 1, 3))
-#'  
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @export
 NPartitionPairs <- function (configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *

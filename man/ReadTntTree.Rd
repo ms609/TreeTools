@@ -55,37 +55,37 @@ specify \code{tipLabels} to set manually.
   \dontrun{
   # TNT read a matrix from c:/myproject/tnt/coding1/dataset.nex
   # The results of an analysis were written to c:/myproject/tnt/output/results1.tnt
-  # results1.tnt will contain a hard-coded reference to 
+  # results1.tnt will contain a hard-coded reference to
   # "c:/myproject/tnt/coding1/dataset.nex"
-  
+
   getwd() # Gives the current working directory
-  
+
   # Say that working directory is c:/myproject, which perhaps corresponds to a
   # Git repository.
-  # This directory may be saved into another location by collaborators, or on a 
+  # This directory may be saved into another location by collaborators, or on a
   # different filesystem by a continuous integration platform.
-  
+
   # Works on local machine but not elsewhere:
   ReadTntTree('tnt/output/results1.tnt')
-  
+
   # Takes only the filename from the results
   ReadTntTree('tnt/output.results1.tnt', 'tnt/coding1')
-  
+
   # Uses the last three elements of c:/myproject/tnt/coding1/dataset.nex
   #                                               3     2       1
   # '.' means "relative to the current directory", which is c:/myproject
   ReadTntTree('tnt/output/results1.tnt', '.', 3)
-  
+
   # If the current working directory was c:/myproject/rscripts/testing,
   # you could navigate up the directory path with '..':
   ReadTntTree('../../tnt/output/results1.tnt', '../..', 3)
-  
+
   }
 }
 
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

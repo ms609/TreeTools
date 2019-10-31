@@ -16,5 +16,5 @@ Logical specifying whether a root node is resolved.
 Faster alternative to of \code{ape::is.rooted}.
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

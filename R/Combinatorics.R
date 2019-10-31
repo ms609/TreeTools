@@ -1,28 +1,28 @@
 globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
 
 #' Double Factorial
-#' 
+#'
 #' @param n Vector of integers.
-#' 
+#'
 #' @return Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
-#' 
+#'
 #' @examples {
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
 #' DoubleFactorial (2) # 2
 #' DoubleFactorial (5) # 1 x 3 x 5
 #' exp(LogDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
-#' 
+#'
 #' }
-#' 
-#' @author Martin R. Smith
+#'
+#' @template MRS
 #' @family Double factorial
 #' @export
 DoubleFactorial <- function (n) {
   if (any(n > 300)) stop("301!! is too large to store as an integer. Use LogDoubleFactorial instead.")
-  
+
   n[n < 2] <- 1
   doubleFactorials[n]
-  
+
   #
   #odds <- as.logical(x %% 2)
   #
@@ -45,21 +45,21 @@ DoubleFactorial <- function (n) {
 LogDoubleFactorial <- (function (n) {
   n[n < 2] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
-    
+
     odds <- as.logical(n %% 2)
-    
+
     oddN <- n[odds]
     nPlusOneOverTwo <- (oddN + 1) / 2
     evenN <- n[!odds]
     nOverTwo <- evenN / 2
-    
+
     ret <- integer(length(n))
     ret[odds] <- lgamma(oddN + 1L) - (lgamma(nPlusOneOverTwo) + (nPlusOneOverTwo - 1) * log(2))
     ret[!odds] <- log(evenN) + lgamma(nOverTwo) + (nOverTwo - 1) * log(2)
-    
+
     # Return:
     ret
-    
+
   } else {
     # Return from cache
     logDoubleFactorials[n]
@@ -80,18 +80,18 @@ LogDoubleFactorial.int <- function (n) {
 #' Number of rooted/unrooted trees
 #' These functions return the number of rooted or unrooted trees consistent with a given pattern
 #'  of splits.
-#' 
+#'
 #' Functions starting N return the number of rooted or unrooted trees, functions starting Ln
 #' provide the log of this number.  Calculations follow Carter et al. 1990, Theorem 2.
 #'
 #' @param tips The number of tips.
 #' @param splits vector listing the number of taxa in each tree bipartition.
 #'
-#' @author Martin R. Smith
-#' 
-#' @references 
+#' @template MRS
+#'
+#' @references
 #'  \insertRef{Carter1990}{TreeTools}
-#'  
+#'
 #' @examples
 #'   NRooted(10)
 #'   NUnrooted(10)
@@ -99,7 +99,7 @@ LogDoubleFactorial.int <- function (n) {
 #'   LnUnrooted(10)
 #'   # Number of trees consistent with a character whose states are 00000 11111 222
 #'   NUnrootedMult(c(5,5,3))
-#' 
+#'
 #' @export
 NRooted     <- function (tips)  DoubleFactorial(tips + tips - 3L) # addition faster than 2*
 #' @describeIn NRooted Number of unrooted trees
@@ -126,9 +126,9 @@ LnRooted.int <- function (tips) {
 #' Formula given by Allen and Steel (2001).
 #'
 #' @param n Number of tips in tree.
-#' @references 
+#' @references
 #'  \insertRef{Allen2001}{TreeTools}
-#' 
+#'
 #' @export
 N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
 
@@ -137,7 +137,7 @@ N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
 #' @describeIn N1Spr Information content of trees 0 or 1 SPR step from tree
 #'  with n tips.
 #' @export
-IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n)) 
+IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 
 #' @describeIn NRooted Log number of unrooted trees
 #' @export
@@ -154,13 +154,13 @@ NUnrootedSplits  <- function (splits) {
   return (NUnrootedMult(splits))
 }
 #' @describeIn NRooted Log unrooted mult
-#' @references 
+#' @references
 #'  \insertRef{Carter1990}{TreeTools}
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
-  
+
   # Return:
   LogDoubleFactorial(totalTips +  totalTips - 5L) -
     LogDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
@@ -171,7 +171,7 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
 NUnrootedMult  <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
-  
+
   # Return:
   round(DoubleFactorial(totalTips + totalTips - 5L) /
           DoubleFactorial(2L * (totalTips - length(splits)) - 1L)

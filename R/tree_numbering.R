@@ -4,8 +4,8 @@
 #' @keywords internal
 #' @useDynLib TreeTools, .registration = TRUE
 #' @export
-NeworderPhylo <- function (nTaxa, parent, child, nb.edge, whichwise) {
-  .C('ape_neworder_phylo', as.integer(nTaxa), as.integer(parent),
+NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
+  .C('ape_neworder_phylo', as.integer(nTip), as.integer(parent),
      as.integer(child), as.integer(nb.edge), integer(nb.edge),
      as.integer(whichwise), NAOK = TRUE)[[5]]
 }
@@ -15,8 +15,8 @@ NeworderPhylo <- function (nTaxa, parent, child, nb.edge, whichwise) {
 #' @family C wrappers
 #' @keywords internal
 #' @export
-NeworderPruningwise <- function (nTaxa, nb.node, parent, child, nb.edge) {
-  .C('ape_neworder_pruningwise', as.integer(nTaxa), as.integer(nb.node),
+NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
+  .C('ape_neworder_pruningwise', as.integer(nTip), as.integer(nb.node),
      as.integer(parent), as.integer(child), as.integer(nb.edge),
      integer(nb.edge))[[6]]
 }
@@ -38,7 +38,7 @@ OrderEdgesNumberNodes <- function (parent, child, nTips,
 #' Order edges and number nodes
 #' Wrapper for the C function RENUMBER_TREE
 #' @return an edge matrix for a tree in following the usual preorder convention
-#'  for edge and node numbering 
+#'  for edge and node numbering
 #' @family C wrappers
 #' @keywords internal
 #' @export
@@ -58,39 +58,39 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 }
 
 #' Reorder tree Cladewise
-#' 
-#' A wrapper for \code{ape:::.reorder_ape}.  
+#'
+#' A wrapper for \code{ape:::.reorder_ape}.
 #' Calling this C function directly is approximately twice as fast as using
-#' \code{ape::\link[ape:reorder.phylo]{cladewise}} or 
+#' \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
-#' 
+#'
 #' All nodes in a tree must be bifurcating; [ape::collapse.singles] and
 #' [ape::multi2di] may help.
 #'
 #' @template treeParam
-#' @param nTaxa (optional) number of tips in the tree
+#' @template nTipParam
 #' @param edge (optional) the value of tree$edge
 #'
 #' @return A tree with nodes numbered in postorder
-#' @author Modified by Martin R. Smith from \code{.reorder_ape} in \pkg{ape} 
+#' @author Modified by Martin R. Smith from \code{.reorder_ape} in \pkg{ape}
 #' (Emmanuel Paradis)
 #'
 #' @family C wrappers
 #' @keywords internal
 #' @export
-Cladewise <- function (tree, nTaxa = NULL, edge = tree$edge) {
+Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "cladewise") {
     return(tree)
   }
-  if (is.null(nTaxa)) nTaxa <- length(tree$tip.label)
+  if (is.null(nTip)) nTip <- length(tree$tip.label)
   if (is.null(edge)) edge <- tree$edge
   nb.edge <- dim(edge)[1]
   nb.node <- tree$Nnode
   if (nb.node == 1) return(tree)
-  if (nb.node >= nTaxa) stop("`tree` apparently badly conformed")
-  
-  neworder <- NeworderPhylo(nTaxa, edge[, 1], edge[, 2], nb.edge, 1)
-                 
+  if (nb.node >= nTip) stop("`tree` apparently badly conformed")
+
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 1)
+
   tree$edge <- edge[neworder, ]
   if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
   attr(tree, "order") <- "cladewise"
@@ -100,15 +100,15 @@ Cladewise <- function (tree, nTaxa = NULL, edge = tree$edge) {
 
 #' @describeIn Cladewise Reorder tree in Postorder
 #' @export
-Postorder <- function (tree, nTaxa = length(tree$tip.label), edge = tree$edge) {
+Postorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "postorder") {
     return(tree)
   }
   nb.edge <- dim(edge)[1]
   nb.node <- tree$Nnode
   if (nb.node == 1) return(tree)
-  if (nb.node >= nTaxa) stop("`tree` apparently badly conformed")
-  neworder <- NeworderPhylo(nTaxa, edge[, 1], edge[, 2], nb.edge, 2)
+  if (nb.node >= nTip) stop("`tree` apparently badly conformed")
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2)
   tree$edge <- edge[neworder, ]
   if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
   attr(tree, "order") <- "postorder"
@@ -118,20 +118,20 @@ Postorder <- function (tree, nTaxa = length(tree$tip.label), edge = tree$edge) {
 #' @describeIn Cladewise Reorder parent and child edges in Postorder
 #' @template treeParent
 #' @template treeChild
-#' @template nTaxaParam
+#' @template nTipParam
 #' @export
-PostorderEdges <- function (parent, child, 
-                            nEdge = length(parent), 
-                            nNode = nEdge / 2L, 
-                            nTaxa = nNode + 1L) {
+PostorderEdges <- function (parent, child,
+                            nEdge = length(parent),
+                            nNode = nEdge / 2L,
+                            nTip = nNode + 1L) {
   if (nNode == 1) return(list(parent, child))
-  newOrder <- NeworderPhylo(nTaxa, parent, child, nEdge, 2)
+  newOrder <- NeworderPhylo(nTip, parent, child, nEdge, 2)
   list(parent[newOrder], child[newOrder])
 }
 
 #' @describeIn Cladewise Reorder tree Pruningwise
 #' @export
-Pruningwise <- function (tree, nTaxa = length(tree$tip.label),
+Pruningwise <- function (tree, nTip = length(tree$tip.label),
                          edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == 'pruningwise') {
     return(tree)
@@ -139,9 +139,9 @@ Pruningwise <- function (tree, nTaxa = length(tree$tip.label),
   nb.edge <- dim(edge)[1]
   nb.node <- tree$Nnode
   if (nb.node == 1) return(tree)
-  if (nb.node >= nTaxa) stop("`tree` apparently badly conformed")
-  tree <- Cladewise(tree, nTaxa, edge)
-  neworder <- NeworderPruningwise(nTaxa, nb.node, tree$edge[, 1],
+  if (nb.node >= nTip) stop("`tree` apparently badly conformed")
+  tree <- Cladewise(tree, nTip, edge)
+  neworder <- NeworderPruningwise(nTip, nb.node, tree$edge[, 1],
                                   tree$edge[, 2], nb.edge)
   tree$edge <- tree$edge[neworder, ]
   if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
@@ -165,11 +165,11 @@ Preorder <- function (tree) {
       reorder.phylo(tree, 'cladewise')
     }
   } else {
-    
+
     child <- edge[, 2]
     tree$edge <- RenumberTree(parent, child)
     attr(tree, 'order') <- 'preorder'
-    
+
     # Return:
     tree
   }
@@ -178,20 +178,20 @@ Preorder <- function (tree) {
 
 #' Reorder tips
 #'
-#' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree 
+#' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
 #' such that the indices in \code{tree$edge[, 2]} correspond to the order of
 #' tips given in \code{tipOrder}
 #'
 #' @template treeParam
-#' @param tipOrder A character vector containing the values of 
+#' @param tipOrder A character vector containing the values of
 #'        \code{tree$tip.label} in the desired sort order
-#' 
+#'
 #' @examples
 #' data(Lobo) # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @export
 RenumberTips <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
@@ -199,11 +199,11 @@ RenumberTips <- function (tree, tipOrder) {
   if (length(startOrder) != length(tipOrder)) {
     stop("Tree labels and tipOrder must match")
   }
-  
+
   nTip <- length(startOrder)
   child <- tree$edge[, 2]
   tips <- child <= nTip
-  
+
   matchOrder <- match(startOrder, tipOrder)
   if (any(is.na(matchOrder))) stop("All tree labels must occur in tipOrder")
   tree$edge[tips, 2] <- matchOrder[tree$edge[tips, 2]]

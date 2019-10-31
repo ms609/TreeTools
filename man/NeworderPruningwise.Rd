@@ -5,7 +5,7 @@
 \title{neworder_pruningwise
 Wrapper for the ape function}
 \usage{
-NeworderPruningwise(nTaxa, nb.node, parent, child, nb.edge)
+NeworderPruningwise(nTip, nb.node, parent, child, nb.edge)
 }
 \description{
 neworder_pruningwise

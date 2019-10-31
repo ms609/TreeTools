@@ -13,7 +13,7 @@
 #'  a tip is a member of the split.  Splits are named according to the node
 #'  that defines them.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @examples
 #' splits <- as.Splits(BalancedTree(letters[1:6]))
@@ -37,7 +37,7 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-#' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
+#' @rdname as.Splits
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
@@ -64,33 +64,45 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
-  tipLabels <- .TipLabels(tipLabels)
-  oldLabels <- attr(x, 'tip.label')
-  nTip <- attr(x, 'nTip')
-  if (is.null(oldLabels)) {
-    if (length(tipLabels) == nTip) {
-      attr(x, 'tip.label') <- tipLabels
-      x
-    } else {
-      stop (length(tipLabels), " labels provided; expecting ", nTip)
-    }
-  }
-  if (!identical(oldLabels, tipLabels)) {
-    if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-      ret <- as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                         [match(tipLabels, oldLabels), ]))
-      attr(ret, 'tip.label') <- tipLabels
-      ret
-    } else {
-      stop ("Old and new labels must match")
-    }
-  } else {
+  if (is.null(tipLabels)) {
+    # Nothing needs doing
+    # Return:
     x
+  } else {
+    tipLabels <- .TipLabels(tipLabels)
+    oldLabels <- attr(x, 'tip.label')
+    nTip <- attr(x, 'nTip')
+    if (is.null(oldLabels)) {
+      if (length(tipLabels) == nTip) {
+        attr(x, 'tip.label') <- tipLabels
+        x
+      } else {
+        stop (length(tipLabels), " labels provided; expecting ", nTip)
+      }
+    }
+    if (!identical(oldLabels, tipLabels)) {
+      if (length(x) == 0) {
+        attr(x, 'tip.label') <- tipLabels
+        x
+      } else {
+        if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
+          as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                             [match(tipLabels, oldLabels), ]),
+                           tipLabels = tipLabels)
+        } else {
+          stop ("Old and new labels must match")
+        }
+      }
+    } else {
+      x
+    }
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   nTip = attr(x, 'nTip')
@@ -102,6 +114,7 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   ret
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ...) {
   if (class(x[[1]]) == 'phylo') {
@@ -111,6 +124,7 @@ as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ..
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- 2L^(0:31)
@@ -142,15 +156,21 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     nTip <- dimX[2]
     chunks <- (nTip %/% 32L) + 1L
     remainder <- nTip %% 32L
+    if (is.null(tipLabels)) {
+      tipLabels <- .TipLabels(x)
+    }
+    if (is.null(tipLabels)) {
+      tipLabels <- paste0('t', seq_len(nTip))
+    }
 
-    structure(vapply(seq_len(chunks) - 1L, function (i) {
+    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
       chunkSeq <- seq_len(
         if (i + 1L == chunks && remainder != 0L) remainder else 32L
       )
       chunk <- i * 32L + chunkSeq
       apply(x[, chunk, drop = FALSE], 1L,
             function (twos) sum(powersOf2[chunkSeq][twos]))
-    }, double(dimX[1])),
+    }, double(dimX[1])), dimX[1], chunks, dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
       class = 'Splits')
@@ -179,8 +199,14 @@ as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
 #' @export
 print.Splits <- function (x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
+  tipLabels <- attr(x, 'tip.label')
+  trivial <- TrivialSplits(x)
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
-      "dividing", nTip, "tips.")
+      if(any(trivial)) paste0('(', sum(trivial), ' trivial)'),
+      "dividing", nTip,
+      ifelse(is.null(tipLabels), "unlabelled tips.",
+             paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
+      )
   if (details) {
     #cat(paste0("\n  Tip ", seq_len(nTip), ': ', attr(x, 'tip.label')))
     #for (i in rev(seq_len(log10(nTip) + 1L)) - 1L) {
@@ -217,8 +243,12 @@ print.Splits <- function (x, details = FALSE, ...) {
 summary.Splits <- function (object, ...) {
   print(object, details = TRUE, ...)
   nTip <- attr(object, 'nTip')
-  cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
-                   "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+  if (is.null(attr(object, 'tip.label'))) {
+    cat("\n\nTips not labelled.")
+  } else {
+    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
+                     "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+  }
 }
 
 
@@ -240,6 +270,9 @@ as.character.Splits <- function (x, ...) {
 #' @family Splits operations
 #' @export
 Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
+
+#' @export
+Ntip.list <- function (phy, ...) attr(phy[[1]], 'nTip')
 
 #' Tips contained within splits
 #'
@@ -431,7 +464,7 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' @return A logical vector specifing which of the splits in `x` are present
 #' in `table`.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(7))

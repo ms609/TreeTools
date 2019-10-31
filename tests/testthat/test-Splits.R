@@ -3,7 +3,7 @@ context("Splits.R")
 test_that("as.Split", {
   A <- FALSE
   B <- TRUE
-  expect_equal(c("1 bipartition split dividing 4 tips.",
+  expect_equal(c("1 bipartition split dividing 4 tips, t1 .. t4",
                  "   1234",
                  "   ..**", "",
                  " Tip 1: t1\t Tip 2: t2\t Tip 3: t3\t Tip 4: t4\t"),
@@ -24,10 +24,21 @@ test_that("as.Split", {
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
+  expect_equal(splits1, as.Splits(splits1))
+
+  splitsC <- as.Splits(ape::read.tree(text="(((a, d), e), (b, (f, c)));"))
+  splitsD <- as.Splits(ape::read.tree(text="((a, b, c), (d, (e, f)));"))
+  splitsU <- as.Splits(ape::read.tree(text="(a, b, c, d, e, f);"))
+  oneSplit <- as.Splits(ape::read.tree(text="((a, b, c), (d, e, f));"))
+  expect_equal(attr(splitsC, 'tip.label'),
+               attr(as.Splits(splitsU, splitsC), 'tip.label'))
+  expect_equal(attr(splitsC, 'tip.label'),
+               attr(as.Splits(oneSplit, splitsC), 'tip.label'))
+
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 
   polytomy <- ape::read.tree(text='(a, b, c, d, e);')
-  expect_equal("0 bipartition splits dividing 5 tips.",
+  expect_equal("0 bipartition splits dividing 5 tips, a .. e",
                capture_output(print(as.Splits(polytomy))))
 
   notPreOrder <- structure(list(edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L,

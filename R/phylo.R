@@ -12,7 +12,7 @@
 #'
 #' @return This function returns a tree of class \code{phylo}
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family tree manipulation
 #' @export
 Renumber <- function (tree) {
@@ -85,7 +85,7 @@ SingleTaxonTree <- function (label) {
 #' plot(Subtree(tree, 33))
 #' }
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family tree manipulation
 #' @export
 Subtree <- function (tree, node) {
@@ -146,7 +146,7 @@ Subtree <- function (tree, node) {
 #' @return `AddTip` returns a tree of class \code{phylo} with an additional tip
 #' at the desired location.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #'
 #' @seealso \code{\link{bind.tree}}
 #' @seealso \code{\link{nodelabels}}
@@ -265,7 +265,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' entry of each member of the list will therefore be the root node, with the exception of the
 #' entry for the root node itself, which will be NULL.
 #'
-#' @author Martin R. Smith
+#' @template MRS
 #' @family tree navigation
 #' @export
 AllAncestors <- function (parent, child) {

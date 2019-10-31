@@ -18,6 +18,6 @@ Character vector listing tip names.
 Extract tip names from a dataset of unknown class
 }
 \author{
-Martin R. Smith
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{internal}
