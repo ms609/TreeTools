@@ -2,9 +2,12 @@
 % Please edit documentation in R/SplitFunctions.R
 \name{TrivialSplits}
 \alias{TrivialSplits}
+\alias{WithoutTrivialSplits}
 \title{Are splits trivial?}
 \usage{
 TrivialSplits(splits, nTip = attr(splits, "nTip"))
+
+WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 }
 \arguments{
 \item{splitsObjectParam}{}
@@ -15,6 +18,20 @@ i.e. includes or excludes only a single tip or no tips at all.
 }
 \description{
 Are splits trivial?
+}
+\section{Functions}{
+\itemize{
+\item \code{WithoutTrivialSplits}: Remove trivial splits from a splits object
+}}
+
+\examples{
+
+splits <- as.Splits(PectinateTree(letters[1:9]))
+efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
+summary(efgh)
+
+TrivialSplits(efgh)
+
 }
 \seealso{
 Other split manipulation functions: \code{\link{Subsplit}}

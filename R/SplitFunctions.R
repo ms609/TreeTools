@@ -25,7 +25,7 @@
 #' @export
 Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
   allSplits <- as.Splits(as.logical(splits)[, tips])
-  ret <- if (keepAll) allSplits else allSplits[[!TrivialSplits(allSplits)]]
+  ret <- if (keepAll) allSplits else WithoutTrivialSplits(allSplits)
 
   # Return:
   if (unique) unique(ret) else ret
@@ -52,6 +52,12 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   inSplit <- TipsInSplits(splits)
   inSplit < 2L | inSplit > nTip - 2L
+}
+
+#' @describeIn TrivialSplits Remove trivial splits from a splits object
+#' @export
+WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+  splits[[!TrivialSplits(splits, nTip)]]
 }
 
 
