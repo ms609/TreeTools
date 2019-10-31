@@ -4,6 +4,7 @@
 #' @param tips A vector specifying a subset of the tip labels applied to `split`.
 #' @param keepAll logical specifying whether to keep entries that define trivial
 #' splits (i.e. splits of zero or one tip) on the subset of tips.
+#' @param unique logical specifying whether to remove duplicate splits.
 #'
 #' @value An object of class `Splits`, defined on `tips`.
 #'
@@ -21,11 +22,12 @@
 #'
 #' @family split manipulation functions
 #' @export
-Subsplit <- function (splits, tips, keepAll = FALSE) {
+Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
   allSplits <- as.Splits(as.logical(splits)[, tips])
+  ret <- if (keepAll) allSplits else allSplits[[!TrivialSplits(allSplits)]]
 
   # Return:
-  if (keepAll) allSplits else allSplits[[!TrivialSplits(allSplits)]]
+  if (unique) unique(ret) else ret
 }
 
 #' Are splits trivial?

@@ -9,6 +9,9 @@ test_that('Subsplits', {
 
   efghF <- Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
   expect_equal(c(n16 = 2), TipsInSplits(efghF))
+
+  splits <- as.Splits(PectinateTree(32+32+10))
+  sub <- Subsplit(splits, tips = c('t32', 't33', 't64', 't65'))
 })
 
 test_that("SplitMatchProbability returns expected probabilities", {
