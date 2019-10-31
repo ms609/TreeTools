@@ -23,4 +23,4 @@ vignettes/.RData
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^.zenodo\.json$
+^\.zenodo\.json$
