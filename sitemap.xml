@@ -34,6 +34,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/CompatibleSplits.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc>
   </url>
   <url>
@@ -89,6 +92,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NSplits.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NTip.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NewickTree.html</loc>
@@ -157,6 +163,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/StringToPhyDat.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Subsplit.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/Subtree.html</loc>
   </url>
   <url>
@@ -175,7 +184,13 @@
     <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.Splits.html</loc>

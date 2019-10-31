@@ -153,14 +153,14 @@ Calling this C function directly is approximately twice as fast as using
 <code>ape::<a href='https://rdrr.io/pkg/ape/man/reorder.phylo.html'>postorder</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='kw'>nTaxa</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+    <pre class="usage"><span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
-<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>nTaxa</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
 <span class='fu'>PostorderEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>), <span class='kw'>nNode</span> <span class='kw'>=</span> <span class='no'>nEdge</span>/<span class='fl'>2L</span>,
-  <span class='kw'>nTaxa</span> <span class='kw'>=</span> <span class='no'>nNode</span> + <span class='fl'>1L</span>)
+  <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='no'>nNode</span> + <span class='fl'>1L</span>)
 
-<span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTaxa</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+<span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
 <span class='fu'>Preorder</span>(<span class='no'>tree</span>)</pre>
 
@@ -172,8 +172,8 @@ Calling this C function directly is approximately twice as fast as using
       <td><p>A tree of class <code>phylo</code>.</p></td>
     </tr>
     <tr>
-      <th>nTaxa</th>
-      <td><p>(optional) number of tips in the tree</p></td>
+      <th>nTip</th>
+      <td><p>Intger specifying number of tips (leaves).</p></td>
     </tr>
     <tr>
       <th>edge</th>
@@ -190,8 +190,8 @@ Calling this C function directly is approximately twice as fast as using
 <code>phylo</code>, i.e. <code>tree$edge[, 2]</code></p></td>
     </tr>
     <tr>
-      <th>nTaxa</th>
-      <td><p>Number of terminal taxa in tree.</p></td>
+      <th>nTip</th>
+      <td><p>Intger specifying number of tips (leaves).</p></td>
     </tr>
     </table>
 
