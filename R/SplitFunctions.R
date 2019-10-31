@@ -6,7 +6,7 @@
 #' splits (i.e. splits of zero or one tip) on the subset of tips.
 #' @param unique logical specifying whether to remove duplicate splits.
 #'
-#' @value An object of class `Splits`, defined on `tips`.
+#' @return An object of class `Splits`, defined on `tips`.
 #'
 #' @examples
 #'
@@ -17,6 +17,7 @@
 #' TrivialSplits(efgh)
 #'
 #' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
+#'
 #'
 #' @author Martin R. Smith
 #'
@@ -34,12 +35,18 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #'
 #' @param splitsObjectParam
 #'
-#' @value Logical vector specifying whether each split in `splits` is trivial,
+#' @return Logical vector specifying whether each split in `splits` is trivial,
 #' i.e. includes or excludes only a single tip or no tips at all.
 #'
 #' @author Martin R. Smith
 #' @family split manipulation functions
-#' @inheritSection Subsplit examples
+#' @examples
+#'
+#' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
+#' summary(efgh)
+#'
+#' TrivialSplits(efgh)
 #'
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
