@@ -94,10 +94,11 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @author Martin R. Smith
 #' @export
 CompatibleSplits <- function (splits, splits2) {
+  splits <- as.Splits(splits)
   nTip <- attr(splits, 'nTip')
   splits2 <- as.Splits(splits2, splits)
   apply(splits2, 1, function (split)
-    apply(splits, 1, .CompatibleSplit, split))
+    apply(splits, 1, .CompatibleSplit, split, nTip))
 }
 
 #' @param a,b Integer representations of splits, from an row of a `Splits` object
@@ -105,23 +106,25 @@ CompatibleSplits <- function (splits, splits2) {
 #' @describeIn CompatibleSplits Evaluate a single split pair
 #' @keywords internal
 #' @export
-.CompatibleSplit <- function (a, b) {
+.CompatibleSplit <- function (a, b, nTip) {
   rawA <- .UintToRaw(a)
   rawB <- .UintToRaw(b)
-  #rawMask <- if (nTip %% 32) {
-  #  .UintToRaw(c(2^(nTip %% 32) - 1, rep(2^32 - 1, nTip %/%32)))
-  #} else {
-  #  .UintToRaw(rep(2^32 - 1, nTip %/%32))
-  #}
-  .CompatibleRaws(rawA, rawB)
+
+  rawMask <- if (nTip %% 32) {
+    .UintToRaw(c(2^(nTip %% 32) - 1, rep(2^32 - 1, nTip %/%32)))
+  } else {
+    .UintToRaw(rep(2^32 - 1, nTip %/%32))
+  }
+  .CompatibleRaws(rawA, rawB, rawMask)
 }
 
 #' @keywords internal
 #' @export
-.CompatibleRaws <- function (rawA, rawB) {
-  !(any(as.logical(rawA & rawB)) &&
-      any(as.logical(rawA & !rawB)) &&
-      any(as.logical(!rawA & rawB)))
+.CompatibleRaws <- function (rawA, rawB, bitmask) {
+  !any(as.logical(rawA & rawB)) ||
+  !any(as.logical(rawA & !rawB)) ||
+  !any(as.logical(!rawA & rawB)) ||
+  !any(as.logical(!rawA & !rawB & bitmask))
 }
 
 .UintToRaw <- function (uint) {
