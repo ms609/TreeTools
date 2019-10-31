@@ -266,10 +266,19 @@ as.character.Splits <- function (x, ...) {
   })
 }
 
+#' @export
+Ntip <- function (phy, ...) UseMethod('Ntip')
+
 #' @importFrom ape Ntip
 #' @family Splits operations
 #' @export
 Ntip.Splits <- function (phy, ...) attr(phy, 'nTip')
+
+#' @export
+Ntip.list <- function (phy, ...) attr(phy[[1]], 'nTip')
+
+#' @export
+Ntip.multiPhylo <- function (phy, ...) attr(phy[[1]], 'nTip')
 
 #' Tips contained within splits
 #'

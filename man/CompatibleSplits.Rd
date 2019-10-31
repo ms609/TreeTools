@@ -2,22 +2,34 @@
 % Please edit documentation in R/SplitFunctions.R
 \name{CompatibleSplits}
 \alias{CompatibleSplits}
+\alias{.CompatibleSplit}
 \title{Which splits are compatible?}
 \usage{
 CompatibleSplits(splits, splits2)
+
+.CompatibleSplit(a, b)
 }
 \arguments{
 \item{splits2}{A second \code{Splits} object.}
+
+\item{a, b}{Integer representations of splits, from Splits[\link{i}]}
 
 \item{split}{An object of class \link{as.Splits}{`Splits`}.}
 }
 \value{
 A logical matrix specifying whether each split in \code{splits} is
 compatible with each split in \code{splits2}.
+
+logical vector stating whether splits are compatible
 }
 \description{
 Which splits are compatible?
 }
+\section{Functions}{
+\itemize{
+\item \code{.CompatibleSplit}: Evaluate a single split pair
+}}
+
 \examples{
 
 splits <- as.Splits(BalancedTree(8))
@@ -32,3 +44,4 @@ CompatibleSplits(splits, splits2)
 \author{
 Martin R. Smith
 }
+\keyword{internal}

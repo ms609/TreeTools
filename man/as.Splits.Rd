@@ -3,11 +3,24 @@
 \name{as.Splits}
 \alias{as.Splits}
 \alias{as.Splits.phylo}
+\alias{as.Splits.Splits}
+\alias{as.logical.Splits}
+\alias{as.Splits.list}
+\alias{as.Splits.logical}
 \title{As splits}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{phylo}(x, tipLabels = NULL, asSplits = TRUE, ...)
+
+\method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
+
+\method{as.logical}{Splits}(x, tipLabels = NULL, ...)
+
+\method{as.Splits}{list}(x, tipLabels = x[[1]]$tip.label,
+  asSplits = TRUE, ...)
+
+\method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 }
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class
@@ -32,11 +45,6 @@ that defines them.
 \description{
 Converts a phylogenetic tree to an array of bipartition splits.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{phylo}: Convert object of class \code{phylo} to \code{Splits}.
-}}
-
 \examples{
 splits <- as.Splits(BalancedTree(letters[1:6]))
 summary(splits)

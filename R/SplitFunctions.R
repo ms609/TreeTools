@@ -24,11 +24,24 @@
 #' @family split manipulation functions
 #' @export
 Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
-  allSplits <- as.Splits(as.logical(splits)[, tips])
-  ret <- if (keepAll) allSplits else WithoutTrivialSplits(allSplits)
+  if (mode(splits) == 'list') {
+    lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
+  } else if (length(splits) == 0) {
+    ret <- splits
+    attr(ret, 'nTip') <- length(tips)
+    attr(ret, 'tip.label') <- if (mode(tips) == 'character') {
+      tips
+    } else {
+      attr(splits, 'tip.label')[tips]
+    }
+    ret
+  } else {
+    allSplits <- as.Splits(as.logical(splits)[, tips])
+    ret <- if (keepAll) allSplits else WithoutTrivialSplits(allSplits)
 
-  # Return:
-  if (unique) unique(ret) else ret
+    # Return:
+    if (unique) unique(ret) else ret
+  }
 }
 
 #' Are splits trivial?
