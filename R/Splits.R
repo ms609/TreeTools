@@ -142,6 +142,12 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     nTip <- dimX[2]
     chunks <- (nTip %/% 32L) + 1L
     remainder <- nTip %% 32L
+    if (is.null(tipLabels)) {
+      tipLabels <- .TipLabels(x)
+    }
+    if (is.null(tipLabels)) {
+      tipLabels <- paste0('t', seq_len(nTip))
+    }
 
     structure(vapply(seq_len(chunks) - 1L, function (i) {
       chunkSeq <- seq_len(

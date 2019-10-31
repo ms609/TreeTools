@@ -62,6 +62,7 @@ reference:
     desc: "Functions that manipulate bipartition splits."
     contents:
       - matches('Split')
+      - has_concept("split manipulation functions")
 
   - title: "Information and combinatorics"
     desc: "Functions to calculate factorial quantities."

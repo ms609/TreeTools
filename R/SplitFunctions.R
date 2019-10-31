@@ -1,3 +1,49 @@
+#' Subset of a split on fewer taxa
+#'
+#' @template splitsObjectParam
+#' @param tips A vector specifying a subset of the tip labels applied to `split`.
+#' @param keepAll logical specifying whether to keep entries that define trivial
+#' splits (i.e. splits of zero or one tip) on the subset of tips.
+#'
+#' @value An object of class `Splits`, defined on `tips`.
+#'
+#' @examples
+#'
+#' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
+#' summary(efgh)
+#'
+#' TrivialSplits(efgh)
+#'
+#' @author Martin R. Smith
+#'
+#' @family split manipulation functions
+#' @export
+Subsplit <- function (splits, tips, keepAll = FALSE) {
+  allSplits <- as.Splits(as.logical(splits)[, tips])
+
+  # Return:
+  if (keepAll) allSplits else allSplits[[!TrivialSplits(allSplits)]]
+}
+
+#' Are splits trivial?
+#'
+#' @param splitsObjectParam
+#'
+#' @value Logical vector specifying whether each split in `splits` is trivial,
+#' i.e. includes or excludes only a single tip or no tips at all.
+#'
+#' @author Martin R. Smith
+#' @family split manipulation functions
+#' @inheritSection Subsplit examples
+#'
+#' @export
+TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+  inSplit <- TipsInSplits(splits)
+  inSplit %in% c(0, 1, nTip - 0:1)
+}
+
+
 #' Probability of matching this well
 #'
 #' Calculates the probability that two random splits of the sizes provided
@@ -21,7 +67,7 @@ SplitMatchProbability <- function (split1, split2) {
   if (!identical(attr(split1, 'tip.label'), attr(split2, 'tip.label'))) {
     stop("Sequence of tip labels must match")
   }
-  
+
   split1 <- as.logical(split1)
   split2 <- as.logical(split2)
   partitions <- matrix(c(sum(split1 & split2),
@@ -77,42 +123,42 @@ SplitMatchProbability <- function (split1, split2) {
 }
 
 #' Distributions of tips consistent with a partition pair
-#' 
-#' Number of terminal arrangements matching a specified configuration of 
+#'
+#' Number of terminal arrangements matching a specified configuration of
 #' two partitions.
-#' 
+#'
 #' Consider partitions that divide eight terminals, labelled A to H.
-#' 
+#'
 #' \tabular{rcll}{
 #'   Bipartition 1:\tab ABCD:EFGH\tab A1 = ABCD\tab B1 = EFGH \cr
 #'   Bipartition 2:\tab ABE:CDFGH\tab A2 = ABE\tab B2 = CDFGH
 #' }
-#' 
+#'
 #' This can be represented by an association matrix:
-#' 
+#'
 #' \tabular{rll}{
 #'      \tab *A2* \tab *B2* \cr
 #' *A1* \tab AB  \tab C   \cr
 #' *B1* \tab E   \tab FGH
 #' }
-#' 
+#'
 #' The cells in this matrix contain 2, 1, 1 and 3 terminals respectively; this
-#' four-element vector (`c(2, 1, 1, 3)`) is the `configuration` implied by 
+#' four-element vector (`c(2, 1, 1, 3)`) is the `configuration` implied by
 #' this pair of bipartition splits.
-#' 
-#' @param configuration Integer vector of length four specifying the number of 
-#' terminals that occur in both 
-#'   (1) splits A1 and A2; 
+#'
+#' @param configuration Integer vector of length four specifying the number of
+#' terminals that occur in both
+#'   (1) splits A1 and A2;
 #'   (2) splits A1 and B2;
 #'   (3) splits B1 and A2;
 #'   (4) splits B1 and B2.
-#'   
+#'
 #' @return The number of ways to distribute `sum(configuration)` taxa according
 #'  to the specified pattern.
 #'
-#' @examples 
+#' @examples
 #' NPartitionPairs(c(2, 1, 1, 3))
-#'  
+#'
 #' @author Martin R. Smith
 #' @export
 NPartitionPairs <- function (configuration) {
