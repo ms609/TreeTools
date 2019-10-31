@@ -266,9 +266,6 @@ as.character.Splits <- function (x, ...) {
   })
 }
 
-#' @export
-Ntip <- ape::Ntip
-
 #' @importFrom ape Ntip
 #' @family Splits operations
 #' @export
