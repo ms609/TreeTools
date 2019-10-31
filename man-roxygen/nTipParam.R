@@ -1,1 +1,1 @@
-#' @param nTaxa Number of terminal taxa in tree.
+#' @param nTip Intger specifying number of tips (leaves).
