@@ -50,7 +50,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #'
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
-  inSplit <- TipsInSplits(splits)
+  inSplit <- TipsInSplits(splits, nTip)
   inSplit < 2L | inSplit > nTip - 2L
 }
 
@@ -60,6 +60,59 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   splits[[!TrivialSplits(splits, nTip)]]
 }
 
+#' Which splits are compatible?
+#'
+#' @template splitsObjectParam
+#' @param splits2 A second `Splits` object.
+#'
+#' @return A logical matrix specifying whether each split in `splits` is
+#' compatible with each split in `splits2`.
+#'
+#' @examples
+#'
+#' splits <- as.Splits(BalancedTree(8))
+#' splits2 <- as.Splits(PectinateTree(8))
+#'
+#' summary(splits)
+#' summary(splits2)
+#'
+#' CompatibleSplits(splits, splits2)
+#'
+#' @author Martin R. Smith
+#' @export
+CompatibleSplits <- function (splits, splits2) {
+  nTip <- attr(splits, 'nTip')
+  splits2 <- as.Splits(splits2, splits)
+  apply(splits2, 1, function (split)
+    apply(splits, 1, .CompatibleSplit, split))
+}
+
+#' @param a,b Integer representations of splits, from Splits[[i]]
+#' @return logical vector stating whether splits are compatible
+#' @keywords internal
+#' @export
+.CompatibleSplit <- function (a, b) {
+  rawA <- .UintToRaw(a)
+  rawB <- .UintToRaw(b)
+  #rawMask <- if (nTip %% 32) {
+  #  .UintToRaw(c(2^(nTip %% 32) - 1, rep(2^32 - 1, nTip %/%32)))
+  #} else {
+  #  .UintToRaw(rep(2^32 - 1, nTip %/%32))
+  #}
+  .CompatibleRaws(rawA, rawB)
+}
+
+#' @keywords internal
+#' @export
+.CompatibleRaws <- function (rawA, rawB) {
+  !(any(as.logical(rawA & rawB)) &&
+      any(as.logical(rawA & !rawB)) &&
+      any(as.logical(!rawA & rawB)))
+}
+
+.UintToRaw <- function (uint) {
+  vapply(uint, function(x) as.raw(x %/% 2^c(24, 16, 8, 0) %% 256L), raw(4))
+}
 
 #' Probability of matching this well
 #'
