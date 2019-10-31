@@ -267,7 +267,7 @@ as.character.Splits <- function (x, ...) {
 }
 
 #' @export
-Ntip <- function (phy, ...) UseMethod('Ntip')
+Ntip <- ape::Ntip
 
 #' @importFrom ape Ntip
 #' @family Splits operations

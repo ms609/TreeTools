@@ -1,1 +1,1 @@
-#' @param split An object of class \link{as.Splits}{`Splits`}.
+#' @param splits An object of class \link{as.Splits}{`Splits`}.

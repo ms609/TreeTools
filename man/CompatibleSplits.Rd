@@ -7,14 +7,14 @@
 \usage{
 CompatibleSplits(splits, splits2)
 
-.CompatibleSplit(a, b)
+.CompatibleSplit(a, b, nTip)
 }
 \arguments{
+\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+
 \item{splits2}{A second \code{Splits} object.}
 
-\item{a, b}{Integer representations of splits, from Splits[\link{i}]}
-
-\item{split}{An object of class \link{as.Splits}{`Splits`}.}
+\item{a, b}{Integer representations of splits, from an row of a \code{Splits} object}
 }
 \value{
 A logical matrix specifying whether each split in \code{splits} is

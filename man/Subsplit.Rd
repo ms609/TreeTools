@@ -7,14 +7,14 @@
 Subsplit(splits, tips, keepAll = FALSE, unique = TRUE)
 }
 \arguments{
+\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+
 \item{tips}{A vector specifying a subset of the tip labels applied to \code{split}.}
 
 \item{keepAll}{logical specifying whether to keep entries that define trivial
 splits (i.e. splits of zero or one tip) on the subset of tips.}
 
 \item{unique}{logical specifying whether to remove duplicate splits.}
-
-\item{split}{An object of class \link{as.Splits}{`Splits`}.}
 }
 \value{
 An object of class \code{Splits}, defined on \code{tips}.

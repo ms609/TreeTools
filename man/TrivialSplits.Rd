@@ -10,7 +10,7 @@ TrivialSplits(splits, nTip = attr(splits, "nTip"))
 WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 }
 \arguments{
-\item{splitsObjectParam}{}
+\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
 }
 \value{
 Logical vector specifying whether each split in \code{splits} is trivial,
