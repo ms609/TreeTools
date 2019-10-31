@@ -89,6 +89,7 @@ CompatibleSplits <- function (splits, splits2) {
 
 #' @param a,b Integer representations of splits, from Splits[[i]]
 #' @return logical vector stating whether splits are compatible
+#' @describeIn CompatibleSplits Evaluate a single split pair
 #' @keywords internal
 #' @export
 .CompatibleSplit <- function (a, b) {
