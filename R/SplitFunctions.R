@@ -15,6 +15,8 @@
 #'
 #' TrivialSplits(efgh)
 #'
+#' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
+#'
 #' @author Martin R. Smith
 #'
 #' @family split manipulation functions
@@ -40,7 +42,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE) {
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   inSplit <- TipsInSplits(splits)
-  inSplit %in% c(0, 1, nTip - 0:1)
+  inSplit < 2L | inSplit > nTip - 2L
 }
 
 
