@@ -47,6 +47,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #' Are splits trivial?
 #'
 #' @template splitsObjectParam
+#' @template nTipParam
 #'
 #' @return Logical vector specifying whether each split in `splits` is trivial,
 #' i.e. includes or excludes only a single tip or no tips at all.

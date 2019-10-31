@@ -11,6 +11,8 @@ WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 }
 \arguments{
 \item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+
+\item{nTaxa}{Number of terminal taxa in tree.}
 }
 \value{
 Logical vector specifying whether each split in \code{splits} is trivial,

@@ -8,21 +8,19 @@
 \alias{Preorder}
 \title{Reorder tree Cladewise}
 \usage{
-Cladewise(tree, nTaxa = NULL, edge = tree$edge)
+Cladewise(tree, nTip = NULL, edge = tree$edge)
 
-Postorder(tree, nTaxa = length(tree$tip.label), edge = tree$edge)
+Postorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
 PostorderEdges(parent, child, nEdge = length(parent), nNode = nEdge/2L,
-  nTaxa = nNode + 1L)
+  nTip = nNode + 1L)
 
-Pruningwise(tree, nTaxa = length(tree$tip.label), edge = tree$edge)
+Pruningwise(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
 Preorder(tree)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
-
-\item{nTaxa}{(optional) number of tips in the tree}
 
 \item{edge}{(optional) the value of tree$edge}
 
@@ -31,6 +29,8 @@ Preorder(tree)
 
 \item{child}{the second column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+
+\item{nTaxa}{Number of terminal taxa in tree.}
 
 \item{nTaxa}{Number of terminal taxa in tree.}
 }
