@@ -66,28 +66,34 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
-  tipLabels <- .TipLabels(tipLabels)
-  oldLabels <- attr(x, 'tip.label')
-  nTip <- attr(x, 'nTip')
-  if (is.null(oldLabels)) {
-    if (length(tipLabels) == nTip) {
-      attr(x, 'tip.label') <- tipLabels
-      x
-    } else {
-      stop (length(tipLabels), " labels provided; expecting ", nTip)
-    }
-  }
-  if (!identical(oldLabels, tipLabels)) {
-    if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-      ret <- as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                         [match(tipLabels, oldLabels), ]))
-      attr(ret, 'tip.label') <- tipLabels
-      ret
-    } else {
-      stop ("Old and new labels must match")
-    }
-  } else {
+  if (is.null(tipLabels)) {
+    # Nothing needs doing
+    # Return:
     x
+  } else {
+    tipLabels <- .TipLabels(tipLabels)
+    oldLabels <- attr(x, 'tip.label')
+    nTip <- attr(x, 'nTip')
+    if (is.null(oldLabels)) {
+      if (length(tipLabels) == nTip) {
+        attr(x, 'tip.label') <- tipLabels
+        x
+      } else {
+        stop (length(tipLabels), " labels provided; expecting ", nTip)
+      }
+    }
+    if (!identical(oldLabels, tipLabels)) {
+      if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
+        ret <- as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                           [match(tipLabels, oldLabels), ]))
+        attr(ret, 'tip.label') <- tipLabels
+        ret
+      } else {
+        stop ("Old and new labels must match")
+      }
+    } else {
+      x
+    }
   }
 }
 
