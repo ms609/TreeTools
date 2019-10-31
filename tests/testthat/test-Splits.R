@@ -25,6 +25,16 @@ test_that("as.Split", {
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)
   expect_equal(splits1, as.Splits(splits1))
+
+  splitsC <- as.Splits(ape::read.tree(text="(((a, d), e), (b, (f, c)));"))
+  splitsD <- as.Splits(ape::read.tree(text="((a, b, c), (d, (e, f)));"))
+  splitsU <- as.Splits(ape::read.tree(text="(a, b, c, d, e, f);"))
+  oneSplit <- as.Splits(ape::read.tree(text="((a, b, c), (d, e, f));"))
+  expect_equal(attr(splitsC, 'tip.label'),
+               attr(as.Splits(splitsU, splitsC), 'tip.label'))
+  expect_equal(attr(splitsC, 'tip.label'),
+               attr(as.Splits(oneSplit, splitsC), 'tip.label'))
+
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 
   polytomy <- ape::read.tree(text='(a, b, c, d, e);')

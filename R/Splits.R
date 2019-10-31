@@ -37,7 +37,7 @@
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-#' @describeIn as.Splits Convert object of class `phylo` to `Splits`.
+#' @rdname as.Splits
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
@@ -64,6 +64,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
@@ -83,13 +84,17 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
       }
     }
     if (!identical(oldLabels, tipLabels)) {
-      if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-        ret <- as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                           [match(tipLabels, oldLabels), ]))
-        attr(ret, 'tip.label') <- tipLabels
-        ret
+      if (length(x) == 0) {
+        attr(x, 'tip.label') <- tipLabels
+        x
       } else {
-        stop ("Old and new labels must match")
+        if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
+          as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                             [match(tipLabels, oldLabels), ]),
+                           tipLabels = tipLabels)
+        } else {
+          stop ("Old and new labels must match")
+        }
       }
     } else {
       x
@@ -97,6 +102,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   nTip = attr(x, 'nTip')
@@ -108,6 +114,7 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   ret
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ...) {
   if (class(x[[1]]) == 'phylo') {
@@ -117,6 +124,7 @@ as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ..
   }
 }
 
+#' @rdname as.Splits
 #' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- 2L^(0:31)
@@ -155,14 +163,14 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       tipLabels <- paste0('t', seq_len(nTip))
     }
 
-    structure(vapply(seq_len(chunks) - 1L, function (i) {
+    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
       chunkSeq <- seq_len(
         if (i + 1L == chunks && remainder != 0L) remainder else 32L
       )
       chunk <- i * 32L + chunkSeq
       apply(x[, chunk, drop = FALSE], 1L,
             function (twos) sum(powersOf2[chunkSeq][twos]))
-    }, double(dimX[1])),
+    }, double(dimX[1])), dimX[1], chunks, dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
       class = 'Splits')
