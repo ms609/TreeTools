@@ -185,8 +185,14 @@ as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
 #' @export
 print.Splits <- function (x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
+  tipLabels <- attr(x, 'tip.label')
+  trivial <- TrivialSplits(x)
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
-      "dividing", nTip, "tips.")
+      if(any(trivial)) paste0('(', sum(trivial), ' trivial)'),
+      "dividing", nTip,
+      ifelse(is.null(tipLabels), "unlabelled tips.",
+             paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
+      )
   if (details) {
     #cat(paste0("\n  Tip ", seq_len(nTip), ': ', attr(x, 'tip.label')))
     #for (i in rev(seq_len(log10(nTip) + 1L)) - 1L) {
@@ -223,8 +229,12 @@ print.Splits <- function (x, details = FALSE, ...) {
 summary.Splits <- function (object, ...) {
   print(object, details = TRUE, ...)
   nTip <- attr(object, 'nTip')
-  cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
-                   "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+  if (is.null(attr(object, 'tip.label'))) {
+    cat("\n\nTips not labelled.")
+  } else {
+    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
+                     "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+  }
 }
 
 
