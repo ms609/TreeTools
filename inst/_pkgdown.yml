@@ -40,6 +40,12 @@ reference:
       - RenumberTips
       - TreeIsRooted
 
+  - title: "Tree navigation"
+    desc: >
+      Functions to navigate phylogenetic trees.
+    contents:
+      - has_concept('tree navigation')
+
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
     contents:

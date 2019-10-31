@@ -9,9 +9,25 @@ EdgeDistances(tree)
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
+\value{
+A symmetrical matrix listing the number of edges that must be
+traversed to travel from each numbered edge to each other.
+The two edges straddling the root of a rooted tree
+are counted as a single edge.  Add a 'root' tip using \code{\link{AddTip}} if the
+position of the root is significant.
+}
 \description{
 Number of nodes that must be traversed to navigate from each edge to
 each other edge within a tree
+}
+\examples{
+
+tree <- BalancedTree(5)
+plot(tree)
+ape::edgelabels()
+
+EdgeDistances(tree)
+
 }
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},

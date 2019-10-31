@@ -218,11 +218,30 @@ AddTip <- function (tree,
 }
 
 #' @describeIn AddTip AddTipEverywhere Add a tip to each edge in turn
+#' @param includeRoot Logical; if `TRUE`, the three positions adjacent
+#' to the root edge are considered to represent distinct edges.
 #' @return `AddTipEverywhere` returns a list of class `multiPhylo` containing
 #' the trees produced by adding `label` to each edge of `tree` in turn.
+#'
+#' @examples
+#' backbone <- BalancedTree(4)
+#' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
+#' par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
+#' lapply(additions, plot)
+#'
+#' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
+#' par(mfrow=c(2, 3))
+#' lapply(additions, plot)
+#'
 #' @export
-AddTipEverywhere <- function (tree, label = 'New tip') {
-  lapply(seq_len(tree$Nnode * 2 + 2L) - 1L, AddTip, tree = tree, label = label)
+AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
+  nTip <- length(tree$tip.label)
+  whichNodes <- if (includeRoot) {
+    seq_len(tree$Nnode * 2 + 1L)
+  } else {
+    c(seq_len(nTip), nTip + 2L + seq_len(tree$Nnode - 2L))
+  }
+  lapply(whichNodes, AddTip, tree = tree, label = label)
 }
 
 #' List all ancestral nodes
