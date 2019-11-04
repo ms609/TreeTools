@@ -48,6 +48,7 @@ test_that("as.Split", {
   expect_equal(c(n8 = 22, n9 = 6), as.Splits(notPreOrder)[, 1])
 
   expect_equal(c(61L, 2L), dim(as.Splits(PectinateTree(64L))))
+  expect_equal(c(62L, 3L), dim(as.Splits(PectinateTree(65L))))
   expect_equal(c(125L, 4L), dim(as.Splits(PectinateTree(128L))))
 })
 
