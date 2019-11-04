@@ -19,7 +19,7 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   const int n_edge = edge.rows(),
     n_node = n_edge + 1,
     n_tip = edge(0, 0) - 1,
-    n_bin = (n_tip / BIN_SIZE) + 1;
+    n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
   if (n_edge == n_tip) { /* No internal nodes resolved */
     return NumericMatrix (0, n_bin);
