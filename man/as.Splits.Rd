@@ -64,6 +64,7 @@ in.Splits(moreSplits, splits)
 }
 \seealso{
 Other Splits operations: \code{\link{NSplits}},
+  \code{\link{NTip}}, \code{\link{TipLabels}},
   \code{\link{TipsInSplits}}, \code{\link{in.Splits}},
   \code{\link{match.Splits}}
 }

@@ -31,6 +31,7 @@ match.Splits(splits1, splits2)
 }
 \seealso{
 Other Splits operations: \code{\link{NSplits}},
+  \code{\link{NTip}}, \code{\link{TipLabels}},
   \code{\link{TipsInSplits}}, \code{\link{as.Splits}},
   \code{\link{in.Splits}}
 }

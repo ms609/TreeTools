@@ -224,6 +224,7 @@ TipLabels <- function (x) UseMethod('TipLabels')
 TipLabels.phylo <- function (x) x$tip.label
 
 #' @rdname TipLabels
+#' @family Splits operations
 #' @export
 TipLabels.Splits <- function (x) attr(x, 'tip.label')
 

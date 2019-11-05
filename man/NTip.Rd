@@ -2,9 +2,15 @@
 % Please edit documentation in R/Splits.R
 \name{NTip}
 \alias{NTip}
+\alias{Ntip.Splits}
+\alias{Ntip.list}
 \title{Number of tips in a phylogenetic tree}
 \usage{
 NTip(phy)
+
+\method{Ntip}{Splits}(phy)
+
+\method{Ntip}{list}(phy)
 }
 \arguments{
 \item{phy}{Object to count.}
@@ -16,3 +22,10 @@ Single integer specifying the number of tips in each object in \code{phy}.
 Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects of
 class \code{Splits} and \code{list}.
 }
+\seealso{
+Other Splits operations: \code{\link{NSplits}},
+  \code{\link{TipLabels}}, \code{\link{TipsInSplits}},
+  \code{\link{as.Splits}}, \code{\link{in.Splits}},
+  \code{\link{match.Splits}}
+}
+\concept{Splits operations}

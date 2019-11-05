@@ -45,7 +45,8 @@ Number of distinct partitions in a tree
 
 }
 \seealso{
-Other Splits operations: \code{\link{TipsInSplits}},
+Other Splits operations: \code{\link{NTip}},
+  \code{\link{TipLabels}}, \code{\link{TipsInSplits}},
   \code{\link{as.Splits}}, \code{\link{in.Splits}},
   \code{\link{match.Splits}}
 }

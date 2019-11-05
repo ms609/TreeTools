@@ -291,10 +291,12 @@ as.character.Splits <- function (x, ...) {
 #' @export
 NTip <- function (phy) UseMethod('Ntip')
 
+#' @rdname NTip
 #' @family Splits operations
 #' @export
 Ntip.Splits <- function (phy) attr(phy, 'nTip')
 
+#' @rdname NTip
 #' @export
 Ntip.list <- function (phy) Ntip(phy[[1]])
 

@@ -30,6 +30,13 @@ A character vector listing the tip labels for the specified object.
 \description{
 Tip labels
 }
+\seealso{
+Other Splits operations: \code{\link{NSplits}},
+  \code{\link{NTip}}, \code{\link{TipsInSplits}},
+  \code{\link{as.Splits}}, \code{\link{in.Splits}},
+  \code{\link{match.Splits}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{Splits operations}
