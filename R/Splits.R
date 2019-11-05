@@ -116,8 +116,19 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
 
 #' @rdname as.Splits
 #' @export
-as.Splits.list <- function (x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ...) {
+as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (class(x[[1]]) == 'phylo') {
+    if (is.null(tipLabels)) {
+      tipLabels <- x[[1]]$tip.label
+    }
+    lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
+  } else if (class(x[[1]]) == 'Splits') {
+    if (is.null(tipLabels)) {
+      tipLabels <- attr(x, 'tip.label')
+      if (is.null(tipLabels)) {
+        tipLabels <- attr(x[[1]], 'tip.label')
+      }
+    }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
     stop("Unsupported list type.")

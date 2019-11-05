@@ -34,6 +34,8 @@ test_that("as.Split", {
                attr(as.Splits(splitsU, splitsC), 'tip.label'))
   expect_equal(attr(splitsC, 'tip.label'),
                attr(as.Splits(oneSplit, splitsC), 'tip.label'))
+  expect_equal(as.Splits(splitsD, splitsC),
+               as.Splits(list(splitsC, splitsD, splitsU, oneSplit))[[2]])
 
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 
