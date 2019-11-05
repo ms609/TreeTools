@@ -210,6 +210,51 @@ SplitMatchProbability <- function (split1, split2) {
     choose(n, A1)
 }
 
+#' Tip labels
+#'
+#' @param x An object of a supported class (see Usage section).
+#' @return A character vector listing the tip labels for the specified object.
+#'
+#' @template MRS
+#' @export
+TipLabels <- function (x) UseMethod('TipLabels')
+
+#' @rdname TipLabels
+#' @export
+TipLabels.phylo <- function (x) x$tip.label
+
+#' @rdname TipLabels
+#' @export
+TipLabels.Splits <- function (x) attr(x, 'tip.label')
+
+#' @rdname TipLabels
+#' @export
+TipLabels.list <- function (x) {
+  if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
+  if (!is.null(x$tip.label)) return (x$tip.label)
+  firstEntry <- x[[1]]
+  if (!is.null(attr(firstEntry, 'tip.label'))) {
+    return (attr(firstEntry, 'tip.label'))
+  }
+  if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
+
+  # else Return:
+  NULL
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.multiPhylo <- function (x) {
+  if (!is.null(x$tip.label)) return (x$tip.label)
+  firstEntry <- x[[1]]
+  if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
+
+  # else Return:
+  NULL
+}
+
+TipLabels.character <- function (x) x
+
 #' Distributions of tips consistent with a partition pair
 #'
 #' Number of terminal arrangements matching a specified configuration of

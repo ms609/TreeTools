@@ -148,3 +148,16 @@ test_that("SplitMatchProbability returns expected probabilities", {
   Test(4/84, splitABC, splitABCD)
   Test(4/84, splitBCD, splitABCD)
 })
+
+
+test_that('Tip labels are found', {
+  pt4 <- PectinateTree(4L)
+  bt4 <- BalancedTree(4L)
+  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(c('t1', 't2', 't3', 't4')))
+  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(pt4))
+  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(as.Splits(pt4)))
+  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(list(pt4, bt4)))
+  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(structure(list(pt4, bt4),
+                                                    class='multiPhylo')))
+  expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4))))
+})
