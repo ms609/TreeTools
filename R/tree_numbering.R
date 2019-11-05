@@ -153,25 +153,30 @@ Pruningwise <- function (tree, nTip = length(tree$tip.label),
 #' @importFrom ape collapse.singles reorder.phylo
 #' @export
 Preorder <- function (tree) {
-  edge <- tree$edge
-  parent <- edge[, 1]
-  nodeSizes <- table(parent)
-  if (!all(nodeSizes == 2L)) {
-    if (any(nodeSizes < 2L)) {
-      # Return:
-      Preorder(collapse.singles(tree))
-    } else {
-      # Return:
-      reorder.phylo(tree, 'cladewise')
-    }
-  } else {
-
-    child <- edge[, 2]
-    tree$edge <- RenumberTree(parent, child)
-    attr(tree, 'order') <- 'preorder'
-
-    # Return:
+  startOrder <- attr(tree, 'order')
+  if (startOrder == 'preorder') {
     tree
+  } else {
+    edge <- tree$edge
+    parent <- edge[, 1]
+    nodeSizes <- table(parent)
+    if (!all(nodeSizes == 2L)) {
+      if (any(nodeSizes < 2L)) {
+        # Return:
+        Preorder(collapse.singles(tree))
+      } else {
+        # Return:
+        reorder.phylo(tree, 'cladewise')
+      }
+    } else {
+
+      child <- edge[, 2]
+      tree$edge <- RenumberTree(parent, child)
+      attr(tree, 'order') <- 'preorder'
+
+      # Return:
+      tree
+    }
   }
 }
 
