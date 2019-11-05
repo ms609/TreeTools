@@ -253,6 +253,8 @@ TipLabels.multiPhylo <- function (x) {
   NULL
 }
 
+#' @rdname TipLabels
+#' @export
 TipLabels.character <- function (x) x
 
 #' Distributions of tips consistent with a partition pair

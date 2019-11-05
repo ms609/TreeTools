@@ -6,6 +6,7 @@
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
 \alias{TipLabels.multiPhylo}
+\alias{TipLabels.character}
 \title{Tip labels}
 \usage{
 TipLabels(x)
@@ -17,6 +18,8 @@ TipLabels(x)
 \method{TipLabels}{list}(x)
 
 \method{TipLabels}{multiPhylo}(x)
+
+\method{TipLabels}{character}(x)
 }
 \arguments{
 \item{x}{An object of a supported class (see Usage section).}

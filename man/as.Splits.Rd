@@ -17,8 +17,7 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.logical}{Splits}(x, tipLabels = NULL, ...)
 
-\method{as.Splits}{list}(x, tipLabels = x[[1]]$tip.label,
-  asSplits = TRUE, ...)
+\method{as.Splits}{list}(x, tipLabels = NULL, asSplits = TRUE, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 }
