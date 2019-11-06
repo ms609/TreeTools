@@ -151,7 +151,7 @@ CompatibleSplits <- function (splits, splits2) {
 #' @export
 SplitMatchProbability <- function (split1, split2) {
 
-  if (Ntip(split1) != Ntip(split2)) stop("Splits pertain to different tips")
+  if (NTip(split1) != NTip(split2)) stop("Splits pertain to different tips")
   if (!identical(attr(split1, 'tip.label'), attr(split2, 'tip.label'))) {
     stop("Sequence of tip labels must match")
   }

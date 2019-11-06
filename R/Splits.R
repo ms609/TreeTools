@@ -413,7 +413,7 @@ c.Splits <- function (...) {
 #' @export
 `!.Splits` <- function (x) {
   dimX <- dim(x)
-  matrix(2L ^ .BinSizes(Ntip(x)) - 1L, dimX[1], dimX[2], byrow=TRUE) - x
+  matrix(2L ^ .BinSizes(NTip(x)) - 1L, dimX[1], dimX[2], byrow=TRUE) - x
 }
 
 
