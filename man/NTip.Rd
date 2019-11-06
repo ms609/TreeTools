@@ -2,15 +2,15 @@
 % Please edit documentation in R/Splits.R
 \name{NTip}
 \alias{NTip}
-\alias{Ntip.Splits}
-\alias{Ntip.list}
+\alias{NTip.Splits}
+\alias{NTip.list}
 \title{Number of tips in a phylogenetic tree}
 \usage{
 NTip(phy)
 
-\method{Ntip}{Splits}(phy)
+\method{NTip}{Splits}(phy)
 
-\method{Ntip}{list}(phy)
+\method{NTip}{list}(phy)
 }
 \arguments{
 \item{phy}{Object to count.}
