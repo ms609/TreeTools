@@ -76,8 +76,8 @@ test_that('Renaming splits', {
 })
 
 test_that('match.Splits', {
-  tree1 <- BalancedTree(1:8)
-  tree2 <- BalancedTree(8:1)
+  tree1 <- PectinateTree(1:8)
+  tree2 <- PectinateTree(8:1)
   col2 <- as.Splits(CollapseNode(tree2, 13))
 
   expect_equal(5:1, match.Splits(as.Splits(tree1), as.Splits(tree2, tree1)))
