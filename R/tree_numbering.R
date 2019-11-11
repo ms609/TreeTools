@@ -21,19 +21,6 @@ NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
      integer(nb.edge))[[6]]
 }
 
-#' Order edges and number nodes
-#' Wrapper for the C function
-#' @return an edge matrix for a tree following the usual convention for edge
-#'  and node numbering
-#' @family C wrappers
-#' @keywords internal
-#' @export
-OrderEdgesNumberNodes <- function (parent, child, nTips,
-                                   nEdge = length(parent)) {
-  matrix(unlist(.C('order_edges_number_nodes', as.integer(parent),
-                   as.integer(child), as.integer(nEdge))[1:2]), ncol=2)
-}
-
 #' Renumber a tree
 #' Order edges and number nodes
 #' Wrapper for the C function RENUMBER_TREE
@@ -42,9 +29,8 @@ OrderEdgesNumberNodes <- function (parent, child, nTips,
 #' @family C wrappers
 #' @keywords internal
 #' @export
-RenumberTree <- function (parent, child, nEdge = length(parent)) {
-  matrix(.Call('RENUMBER_TREE', as.integer(parent), as.integer(child),
-               as.integer(nEdge)), ncol=2)
+RenumberTree <- function (parent, child) {
+  .Call(`_TreeTools_order_edges_number_nodes`, parent, child)
 }
 
 #' @describeIn RenumberTree Instead returns a list containing two items
@@ -53,8 +39,10 @@ RenumberTree <- function (parent, child, nEdge = length(parent)) {
 #' @keywords internal
 #' @export
 RenumberEdges <- function (parent, child, nEdge = length(parent)) {
-  .Call('RENUMBER_EDGES', as.integer(parent), as.integer(child),
-        as.integer(nEdge))
+  oenn <- .Call(`_TreeTools_order_edges_number_nodes`, parent, child)
+
+  # Return:
+  list(oenn[, 1], oenn[, 2])
 }
 
 #' Reorder tree Cladewise

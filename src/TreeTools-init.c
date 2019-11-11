@@ -4,13 +4,12 @@
 #include <stdlib.h> /* for NULL */
 
 #include "ape_reorder.h"
-#include "renumber_tree.h"
 
 extern SEXP _TreeTools_phangorn_bipCPP(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP);
+extern SEXP _TreeTools_order_edges_number_nodes(SEXP, SEXP);
 
 static const R_CMethodDef cMethods[] = {
-  {"order_edges_number_nodes", (DL_FUNC) &order_edges_number_nodes, 3, order_edges_number_nodes_t},
   {"ape_neworder_phylo",       (DL_FUNC) &ape_neworder_phylo, 6, ape_neworder_phylo_t},
   {"ape_node_depth",           (DL_FUNC) &ape_node_depth, 7, ape_node_depth_t},
   {"ape_neworder_pruningwise", (DL_FUNC) &ape_neworder_pruningwise, 6, ape_neworder_pruningwise_t},
@@ -20,8 +19,7 @@ static const R_CMethodDef cMethods[] = {
 static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 1},
   {"_TreeTools_phangorn_bipCPP", (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
-  {"RENUMBER_TREE",  (DL_FUNC) &RENUMBER_TREE,  3},
-  {"RENUMBER_EDGES", (DL_FUNC) &RENUMBER_EDGES, 3},
+  {"_TreeTools_order_edges_number_nodes", (DL_FUNC) &_TreeTools_order_edges_number_nodes, 2},
   {NULL, NULL, 0}
 };
 

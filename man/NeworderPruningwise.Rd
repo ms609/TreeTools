@@ -13,9 +13,7 @@ Wrapper for the ape function
 }
 \seealso{
 Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{NeworderPhylo}},
-  \code{\link{OrderEdgesNumberNodes}},
-  \code{\link{RenumberTree}}
+  \code{\link{NeworderPhylo}}, \code{\link{RenumberTree}}
 }
 \concept{C wrappers}
 \keyword{internal}

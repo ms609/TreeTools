@@ -7,7 +7,7 @@
 Order edges and number nodes
 Wrapper for the C function RENUMBER_TREE}
 \usage{
-RenumberTree(parent, child, nEdge = length(parent))
+RenumberTree(parent, child)
 
 RenumberEdges(parent, child, nEdge = length(parent))
 }
@@ -29,13 +29,11 @@ corresponding to the new parent and child vectors
 \seealso{
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}},
-  \code{\link{OrderEdgesNumberNodes}}
+  \code{\link{NeworderPruningwise}}
 
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}},
-  \code{\link{OrderEdgesNumberNodes}}
+  \code{\link{NeworderPruningwise}}
 }
 \concept{C wrappers}
 \keyword{internal}

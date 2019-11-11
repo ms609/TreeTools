@@ -61,7 +61,6 @@ All nodes in a tree must be bifurcating; \link[ape:collapse.singles]{ape::collap
 \seealso{
 Other C wrappers: \code{\link{NeworderPhylo}},
   \code{\link{NeworderPruningwise}},
-  \code{\link{OrderEdgesNumberNodes}},
   \code{\link{RenumberTree}}
 }
 \author{

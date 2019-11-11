@@ -14,7 +14,6 @@ Wrapper for the ape function
 \seealso{
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{NeworderPruningwise}},
-  \code{\link{OrderEdgesNumberNodes}},
   \code{\link{RenumberTree}}
 }
 \concept{C wrappers}

@@ -5,6 +5,10 @@ phangorn_bipCPP <- function(orig, nTips) {
     .Call(`_TreeTools_phangorn_bipCPP`, orig, nTips)
 }
 
+order_edges_number_nodes <- function(parent, child) {
+    .Call(`_TreeTools_order_edges_number_nodes`, parent, child)
+}
+
 cpp_edge_to_splits <- function(edge) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge)
 }
