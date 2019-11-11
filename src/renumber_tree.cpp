@@ -38,14 +38,13 @@ void create_edge_leading_to(int old_child_label, int *parent_of,
 // [[Rcpp::export]]
 IntegerMatrix order_edges_number_nodes(IntegerVector parent, IntegerVector child)
 {
-  const int n_edge = parent.length();
+  const int n_edge = parent.length(), node_limit = n_edge + 2;
   if (child.length() != n_edge) {
     throw(std::length_error("Length of parent and child must match"));
   }
 
-  int next_label, next_edge = 0,
-    root_node = n_edge + n_edge,
-    node_limit = n_edge + 2;
+  int next_edge = 0,
+    root_node = n_edge + n_edge;
 
   int * final_p =   (int*) calloc(n_edge, sizeof(int)),  /* calloc zero-initializes */
       * final_c =   (int*) calloc(n_edge, sizeof(int)),
@@ -74,7 +73,7 @@ IntegerMatrix order_edges_number_nodes(IntegerVector parent, IntegerVector child
     if (parent[i] < root_node) root_node = parent[i];
   }
   parent_of[root_node] = 0;
-  next_label = root_node;
+  int next_label = root_node;
 
   for (int tip = 1; tip < root_node; tip++) {
     new_label[tip] = tip;
