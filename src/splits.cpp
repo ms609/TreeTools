@@ -10,8 +10,6 @@ const uint32_t powers_of_two[32] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
                                     536870912U, 1073741824U, 2147483648U};
 const int BIN_SIZE = 32;
 
-// Edge must be in 'reverse postorder', i.e. working from the last edge
-// to the first should correspond to walking from the tips to the root.
 // [[Rcpp::export]]
 NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
   if (edge.cols() != 2) {

@@ -4,11 +4,11 @@ test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
   expect_equal(c(4, 4, 4, 3, 2, 1), as.integer(TipsInSplits(efgh)))
-  expect_equal(c(s1 = TRUE, s2 = TRUE, s3 = TRUE, s4 = TRUE, s5 = FALSE,
-                 s6 = TRUE), TrivialSplits(efgh))
+  expect_equal(c(n12 = TRUE, n13 = TRUE, n14 = TRUE, n15 = TRUE, n16 = FALSE,
+                 n17 = TRUE), TrivialSplits(efgh))
 
   efghF <- Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-  expect_equal(c(s5 = 2), TipsInSplits(efghF))
+  expect_equal(c(n16 = 2), TipsInSplits(efghF))
 
   splits <- as.Splits(PectinateTree(32+32+10))
   sub <- Subsplit(splits, tips = c('t32', 't33', 't64', 't65'))
@@ -22,7 +22,7 @@ test_that('Bitwise logic works', {
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
   B <- FALSE
-  dn <- paste0('s', 1:5)
+  dn <- paste0('n', 11:15)
   .AsDecimal <- function (bool) sum(2^(8:0) * bool)
   .CSB <- function (a, b) .CompatibleSplit(.AsDecimal(a), .AsDecimal(b),
                                            length(a))
