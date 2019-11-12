@@ -23,7 +23,7 @@ NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
 
 #' Renumber a tree
 #' Order edges and number nodes
-#' Wrapper for the C function RENUMBER_TREE
+#' Wrapper for the C function `preorder_edges_and_nodes`
 #' @return an edge matrix for a tree in following the usual preorder convention
 #'  for edge and node numbering
 #' @family C wrappers
@@ -45,23 +45,44 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
   list(oenn[, 1], oenn[, 2])
 }
 
-#' Reorder tree Cladewise
+#' Reorder trees
 #'
 #' A wrapper for \code{ape:::.reorder_ape}.
 #' Calling this C function directly is approximately twice as fast as using
 #' \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
 #'
-#' All nodes in a tree must be bifurcating; [ape::collapse.singles] and
-#' [ape::multi2di] may help.
+#' For `Cladewise`, `Postorder` and `Pruningwise`, all nodes must be binary;
+#'  [ape::collapse.singles] and [ape::multi2di] may help.
+#'
+#' `Preorder` is more robust: it supports polytomies, nodes can be numbered
+#' in any sequence, and edges can be listed in any order in the input tree.
+#' It has a unique output for each tree topology, allowing unique trees
+#' to be detected by comparing sorted edge matrices alone.
+#'
+#' A tree in preorder is numbered starting from the root node.
+#' Each node is numbered in the sequence in which it is encountered, and
+#' each edge is listed in the sequence in which it is visited.
+#'
+#' Child edges of a node are sorted from left to right in order of the
+#' smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
+#' of an edge leading to a subtree that contains tip 2.
+#'
+#' Numbering begins by following the leftmost edge of the root node,
+#' and sorting its descendant subtree into preorder.
+#' Then, the next edge at the root node is followed, and its descendants
+#' sorted into preorder, until each edge has been visited.
 #'
 #' @template treeParam
 #' @template nTipParam
 #' @param edge (optional) the value of tree$edge
 #'
-#' @return A tree with nodes numbered in postorder
-#' @author Modified by Martin R. Smith from \code{.reorder_ape} in \pkg{ape}
-#' (Emmanuel Paradis)
+#' @return A tree with nodes following the specified numbering scheme
+#' @author
+#'  `Preorder`: Martin R. Smith.
+#'
+#' `Cladewise`, `Postorder` and `Pruningwise`: modified by Martin R. Smith from
+#' \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 #'
 #' @family C wrappers
 #' @keywords internal
@@ -84,7 +105,6 @@ Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
   attr(tree, "order") <- "cladewise"
   tree
 }
-
 
 #' @describeIn Cladewise Reorder tree in Postorder
 #' @export
@@ -138,7 +158,6 @@ Pruningwise <- function (tree, nTip = length(tree$tip.label),
 }
 
 #' @describeIn Cladewise Reorder tree in Preorder (special case of cladewise)
-#' @importFrom ape collapse.singles reorder.phylo
 #' @export
 Preorder <- function (tree) {
   startOrder <- attr(tree, 'order')
@@ -147,24 +166,11 @@ Preorder <- function (tree) {
   } else {
     edge <- tree$edge
     parent <- edge[, 1]
-    nodeSizes <- table(parent)
-    if (!all(nodeSizes == 2L)) {
-      if (any(nodeSizes < 2L)) {
-        # Return:
-        Preorder(collapse.singles(tree))
-      } else {
-        # Return:
-        reorder.phylo(tree, 'cladewise')
-      }
-    } else {
-
-      child <- edge[, 2]
-      tree$edge <- RenumberTree(parent, child)
-      attr(tree, 'order') <- 'preorder'
-
-      # Return:
-      tree
-    }
+    child <- edge[, 2]
+    tree$edge <- RenumberTree(parent, child)
+    attr(tree, 'order') <- 'preorder'
+    # Return:
+    tree
   }
 }
 

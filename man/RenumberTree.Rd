@@ -5,7 +5,7 @@
 \alias{RenumberEdges}
 \title{Renumber a tree
 Order edges and number nodes
-Wrapper for the C function RENUMBER_TREE}
+Wrapper for the C function \code{preorder_edges_and_nodes}}
 \usage{
 RenumberTree(parent, child)
 
@@ -18,7 +18,7 @@ for edge and node numbering
 \description{
 Renumber a tree
 Order edges and number nodes
-Wrapper for the C function RENUMBER_TREE
+Wrapper for the C function \code{preorder_edges_and_nodes}
 }
 \section{Functions}{
 \itemize{

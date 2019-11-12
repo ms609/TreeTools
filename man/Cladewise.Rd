@@ -6,7 +6,7 @@
 \alias{PostorderEdges}
 \alias{Pruningwise}
 \alias{Preorder}
-\title{Reorder tree Cladewise}
+\title{Reorder trees}
 \usage{
 Cladewise(tree, nTip = NULL, edge = tree$edge)
 
@@ -35,7 +35,7 @@ Preorder(tree)
 \item{nTip}{Intger specifying number of tips (leaves).}
 }
 \value{
-A tree with nodes numbered in postorder
+A tree with nodes following the specified numbering scheme
 }
 \description{
 A wrapper for \code{ape:::.reorder_ape}.
@@ -44,8 +44,26 @@ Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{postorder}}
 }
 \details{
-All nodes in a tree must be bifurcating; \link[ape:collapse.singles]{ape::collapse.singles} and
-\link[ape:multi2di]{ape::multi2di} may help.
+For \code{Cladewise}, \code{Postorder} and \code{Pruningwise}, all nodes must be binary;
+\link[ape:collapse.singles]{ape::collapse.singles} and \link[ape:multi2di]{ape::multi2di} may help.
+
+\code{Preorder} is more robust: it supports polytomies, nodes can be numbered
+in any sequence, and edges can be listed in any order in the input tree.
+It has a unique output for each tree topology, allowing unique trees
+to be detected by comparing sorted edge matrices alone.
+
+A tree in preorder is numbered starting from the root node.
+Each node is numbered in the sequence in which it is encountered, and
+each edge is listed in the sequence in which it is visited.
+
+Child edges of a node are sorted from left to right in order of the
+smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
+of an edge leading to a subtree that contains tip 2.
+
+Numbering begins by following the leftmost edge of the root node,
+and sorting its descendant subtree into preorder.
+Then, the next edge at the root node is followed, and its descendants
+sorted into preorder, until each edge has been visited.
 }
 \section{Functions}{
 \itemize{
@@ -64,8 +82,10 @@ Other C wrappers: \code{\link{NeworderPhylo}},
   \code{\link{RenumberTree}}
 }
 \author{
-Modified by Martin R. Smith from \code{.reorder_ape} in \pkg{ape}
-(Emmanuel Paradis)
+\code{Preorder}: Martin R. Smith.
+
+\code{Cladewise}, \code{Postorder} and \code{Pruningwise}: modified by Martin R. Smith from
+\code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 }
 \concept{C wrappers}
 \keyword{internal}

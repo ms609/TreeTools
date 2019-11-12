@@ -38,7 +38,13 @@ test_that("RenumberTree handles polytomies", {
   expect_equal(c(9, 10, 10, 11, 11, 11, 10, 12, 12, 13, 13, 9,
                  10, 1, 11,  2,  4,  7, 12,  3, 13,  5,  6, 8),
                as.integer(RenumberTree(nasty$edge[, 1], nasty$edge[, 2])))
+})
 
+test_that("RenumberTree handles singles", {
+  withSingles <- ape::read.tree(text='(a, (b, (c), (((d), (e)))));')
+  expect_equal(c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
+                 1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5),
+               as.integer(Preorder(withSingles)$edge))
 })
 
 test_that("replacement reorder functions work correctly", {
