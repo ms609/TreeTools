@@ -116,6 +116,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
     quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
                           0, n_children[node] - 1);
   }
+  free(smallest_desc);
 
   int next_label = n_tip + 2;
   IntegerMatrix ret(n_edge, 2);
@@ -124,7 +125,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
                   &next_edge, &next_label, &n_tip, &n_edge);
 
   free(n_children);
-  free(smallest_desc);
   free(children_of);
+
   return (ret);
 }
