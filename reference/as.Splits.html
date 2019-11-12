@@ -194,8 +194,9 @@ paramount).</p></td>
 
     <p>Returns an object of class <code>Splits</code>, or (if <code>asSplits = FALSE</code>) a
 two-dimensional array of 32-bit integers, which each bit specifying whether
-a tip is a member of the split.  Splits are named according to the node
-that defines them.</p>
+a tip is a member of the split.  Split names correspond to the sequence of
+their defining nodes or edges once the tree has been sorted into preorder
+(see <code><a href='Cladewise.html'>Preorder</a></code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: <code><a href='NSplits.html'>NSplits</a></code>,
@@ -206,38 +207,38 @@ that defines them.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>]))
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
-#&gt;       123456
-#&gt;  n9   .**...
-#&gt;  n10  ...***
-#&gt;  n11  ....**
+#&gt;      123456
+#&gt;  s1  .**...
+#&gt;  s2  ...***
+#&gt;  s3  ....**
 #&gt; 
 #&gt;  Tip 1: a	 Tip 2: b	 Tip 3: c	 Tip 4: d	 Tip 5: e	
-#&gt;  Tip 6: f	</div><div class='input'><span class='fu'><a href='TipsInSplits.html'>TipsInSplits</a></span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt;  n9 n10 n11 
-#&gt;   2   3   2 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(!<span class='no'>splits</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
-#&gt;       123456
-#&gt;  n9   *..***
-#&gt;  n10  ***...
-#&gt;  n11  ****..
+#&gt;  Tip 6: f	</div><div class='input'><span class='fu'><a href='TipsInSplits.html'>TipsInSplits</a></span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; s1 s2 s3 
+#&gt;  2  3  2 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(!<span class='no'>splits</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
+#&gt;      123456
+#&gt;  s1  *..***
+#&gt;  s2  ***...
+#&gt;  s3  ****..
 #&gt; 
 #&gt;  Tip 1: a	 Tip 2: b	 Tip 3: c	 Tip 4: d	 Tip 5: e	
-#&gt;  Tip 6: f	</div><div class='input'><span class='fu'><a href='TipsInSplits.html'>TipsInSplits</a></span>(!<span class='no'>splits</span>)</div><div class='output co'>#&gt;  n9 n10 n11 
-#&gt;   4   3   4 </div><div class='input'>
+#&gt;  Tip 6: f	</div><div class='input'><span class='fu'><a href='TipsInSplits.html'>TipsInSplits</a></span>(!<span class='no'>splits</span>)</div><div class='output co'>#&gt; s1 s2 s3 
+#&gt;  4  3  4 </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>splits</span> + !<span class='no'>splits</span>)</div><div class='output co'>#&gt; [1] 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>splits</span> + !<span class='no'>splits</span>))</div><div class='output co'>#&gt; [1] 3</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>splits</span><span class='kw'>[[</span><span class='fl'>2</span>:<span class='fl'>3</span>]], !<span class='no'>splits</span><span class='kw'>[[</span><span class='fl'>1</span>:<span class='fl'>2</span>]]))</div><div class='output co'>#&gt; 4 bipartition splits dividing 6 tips, a .. f
-#&gt;       123456
-#&gt;  n10  ...***
-#&gt;  n11  ....**
-#&gt;  n9   *..***
-#&gt;  n10  ***...
+#&gt;      123456
+#&gt;  s2  ...***
+#&gt;  s3  ....**
+#&gt;  s1  *..***
+#&gt;  s2  ***...
 #&gt; 
 #&gt;  Tip 1: a	 Tip 2: b	 Tip 3: c	 Tip 4: d	 Tip 5: e	
 #&gt;  Tip 6: f	</div><div class='input'>
 <span class='no'>moreSplits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>6</span>:<span class='fl'>1</span>]), <span class='kw'>tipLabel</span> <span class='kw'>=</span> <span class='no'>splits</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>moreSplits</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
-#&gt;       123456
-#&gt;  n9   ****..
-#&gt;  n10  ***...
-#&gt;  n11  **....</div><div class='input'><span class='fu'><a href='match.Splits.html'>match.Splits</a></span>(<span class='no'>splits</span>, <span class='no'>moreSplits</span>)</div><div class='output co'>#&gt; [1] NA  2  1</div><div class='input'><span class='fu'><a href='in.Splits.html'>in.Splits</a></span>(<span class='no'>moreSplits</span>, <span class='no'>splits</span>)</div><div class='output co'>#&gt; [1]  TRUE  TRUE FALSE</div><div class='input'>
+#&gt;      123456
+#&gt;  s1  ****..
+#&gt;  s2  ***...
+#&gt;  s3  **....</div><div class='input'><span class='fu'><a href='match.Splits.html'>match.Splits</a></span>(<span class='no'>splits</span>, <span class='no'>moreSplits</span>)</div><div class='output co'>#&gt; [1] NA  2  1</div><div class='input'><span class='fu'><a href='in.Splits.html'>in.Splits</a></span>(<span class='no'>moreSplits</span>, <span class='no'>splits</span>)</div><div class='output co'>#&gt; [1]  TRUE  TRUE FALSE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
