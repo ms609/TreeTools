@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reorder tree Cladewise — Cladewise • TreeTools</title>
+<title>Reorder trees — Cladewise • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
 
 
 
-<meta property="og:title" content="Reorder tree Cladewise — Cladewise" />
+<meta property="og:title" content="Reorder trees — Cladewise" />
 <meta property="og:description" content="A wrapper for ape:::.reorder_ape.
 Calling this C function directly is approximately twice as fast as using
 ape::cladewise or
@@ -141,7 +141,7 @@ ape::postorder" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Reorder tree Cladewise</h1>
+    <h1>Reorder trees</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_numbering.R'><code>R/tree_numbering.R</code></a></small>
     <div class="hidden name"><code>Cladewise.Rd</code></div>
     </div>
@@ -197,11 +197,25 @@ Calling this C function directly is approximately twice as fast as using
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tree with nodes numbered in postorder</p>
+    <p>A tree with nodes following the specified numbering scheme</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>All nodes in a tree must be bifurcating; <a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> and
-<a href='https://rdrr.io/pkg/ape/man/multi2di.html'>ape::multi2di</a> may help.</p>
+    <p>For <code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>, all nodes must be binary;
+<a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> and <a href='https://rdrr.io/pkg/ape/man/multi2di.html'>ape::multi2di</a> may help.</p>
+<p><code>Preorder</code> is more robust: it supports polytomies, nodes can be numbered
+in any sequence, and edges can be listed in any order in the input tree.
+It has a unique output for each tree topology, allowing unique trees
+to be detected by comparing sorted edge matrices alone.</p>
+<p>A tree in preorder is numbered starting from the root node.
+Each node is numbered in the sequence in which it is encountered, and
+each edge is listed in the sequence in which it is visited.</p>
+<p>Child edges of a node are sorted from left to right in order of the
+smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
+of an edge leading to a subtree that contains tip 2.</p>
+<p>Numbering begins by following the leftmost edge of the root node,
+and sorting its descendant subtree into preorder.
+Then, the next edge at the root node is followed, and its descendants
+sorted into preorder, until each edge has been visited.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -229,8 +243,9 @@ Calling this C function directly is approximately twice as fast as using
     </ul>
 
     <h2>Author</h2>
-    <p>Modified by Martin R. Smith from <code>.reorder_ape</code> in <span class="pkg">ape</span>
-(Emmanuel Paradis)</p>
+    <p><code>Preorder</code>: Martin R. Smith.</p>
+<p><code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>: modified by Martin R. Smith from
+<code>.reorder_ape</code> in <span class="pkg">ape</span> (Emmanuel Paradis)</p>
   </div>
 </div>
 
