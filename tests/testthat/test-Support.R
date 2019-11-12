@@ -8,12 +8,12 @@ test_that("Node supports calculated correctly", {
     swapBC  = ape::read.tree(text = "((((((A,C),B),D),E),F),out);"),
     DbyA    = ape::read.tree(text = "((((((A,D),C),B),E),F),out);")
   )
-  expect_equal(c('n10'=4, 'n11'=4, 'n12'=4, 'n13'=3),
+  expect_equal(c('s1'=4, 's2'=4, 's3'=4, 's4'=3),
                SplitFrequency(treeSample$correct, treeSample))
 
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
-  expect_equal(c('n10'=4, 'n11'=4, 'n12'=4, 'n13'=3),
+  expect_equal(c('s1'=4, 's2'=4, 's3'=4, 's4'=3),
                SplitFrequency(balanced, treeSample))
 
 })

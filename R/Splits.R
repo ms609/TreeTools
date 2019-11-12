@@ -10,8 +10,9 @@
 #' @param \dots Presently unused.
 #' @return Returns an object of class `Splits`, or (if `asSplits = FALSE`) a
 #'  two-dimensional array of 32-bit integers, which each bit specifying whether
-#'  a tip is a member of the split.  Splits are named according to the node
-#'  that defines them.
+#'  a tip is a member of the split.  Split names correspond to the sequence of
+#'  their defining nodes or edges once the tree has been sorted into preorder
+#'  (see [`Preorder`]).
 #'
 #' @template MRS
 #'
@@ -46,14 +47,15 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, .TipLabels(tipLabels))
   }
-  x <- Preorder(x)
-  splits <- cpp_edge_to_splits(x$edge)
+  edge <- x$edge
+  edge <- RenumberTree(edge[, 1], edge[, 2])
+  splits <- cpp_edge_to_splits(edge)
   nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
     nEdge <- dim(x$edge)[1]
     nTip <- length(x$tip.label)
-    if (nSplits > 0) rownames(splits) <- paste0('n', nTip + 2L + seq_len(nSplits))
+    if (nSplits > 0) rownames(splits) <- paste0('s', seq_len(nSplits))
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
