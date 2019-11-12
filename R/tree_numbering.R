@@ -30,7 +30,7 @@ NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
 #' @keywords internal
 #' @export
 RenumberTree <- function (parent, child) {
-  .Call(`_TreeTools_order_edges_number_nodes`, parent, child)
+  .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
 #' @describeIn RenumberTree Instead returns a list containing two items
@@ -39,7 +39,7 @@ RenumberTree <- function (parent, child) {
 #' @keywords internal
 #' @export
 RenumberEdges <- function (parent, child, nEdge = length(parent)) {
-  oenn <- .Call(`_TreeTools_order_edges_number_nodes`, parent, child)
+  oenn <- .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 
   # Return:
   list(oenn[, 1], oenn[, 2])

@@ -17,15 +17,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// order_edges_number_nodes
-IntegerMatrix order_edges_number_nodes(IntegerVector parent, IntegerVector child);
-RcppExport SEXP _TreeTools_order_edges_number_nodes(SEXP parentSEXP, SEXP childSEXP) {
+// preorder_edges_and_nodes
+IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child);
+RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
-    rcpp_result_gen = Rcpp::wrap(order_edges_number_nodes(parent, child));
+    rcpp_result_gen = Rcpp::wrap(preorder_edges_and_nodes(parent, child));
     return rcpp_result_gen;
 END_RCPP
 }
