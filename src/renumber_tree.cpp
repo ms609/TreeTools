@@ -7,15 +7,15 @@ void report_calloc_error() {
 }
 
 int smallest_descendant(int *node, int *smallest_desc, int *n_children,
-                        int *children_of, const int *n_row) {
+                        int *children_of, const int *n_edge) {
   if (!smallest_desc[*node]) {
     smallest_desc[*node] =
-      smallest_descendant(&children_of[*node * *n_row + 0], smallest_desc,
-                          n_children, children_of, n_row);
+      smallest_descendant(&children_of[*node * *n_edge + 0], smallest_desc,
+                          n_children, children_of, n_edge);
     for (int j = 1; j < n_children[*node]; j++) {
       int this_child =
-        smallest_descendant(&children_of[*node * *n_row + j], smallest_desc,
-                            n_children, children_of, n_row);
+        smallest_descendant(&children_of[*node * *n_edge + j], smallest_desc,
+                            n_children, children_of, n_edge);
       smallest_desc[*node] = smallest_desc[*node] < this_child
         ? smallest_desc[*node] : this_child;
     }
@@ -47,10 +47,10 @@ void add_child_edges(int node, int node_label,
                      int *children_of, int *n_children,
                      int *final_parent, int *final_child,
                      int *next_edge, int *next_label,
-                     int *n_tip, const int *n_row) {
+                     int *n_tip, const int *n_edge) {
   for (int child = 0; child < n_children[node]; child++) {
     final_parent[*next_edge] = node_label;
-    int this_child = children_of[node * *n_row + child];
+    int this_child = children_of[node * *n_edge + child];
     if (this_child <= *n_tip) {
       final_child[*next_edge] = this_child;
       ++(*next_edge);
@@ -61,7 +61,7 @@ void add_child_edges(int node, int node_label,
       add_child_edges(this_child, child_label, children_of, n_children,
                       final_parent, final_child,
                       next_edge, next_label,
-                      n_tip, n_row);
+                      n_tip, n_edge);
     }
   }
 }
@@ -77,14 +77,13 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
   int next_edge = 0,
     root_node = n_edge + n_edge,
     n_tip = 0;
-  const int n_row = 10000; /* TODO REPLACE n_edge */
 
   int * final_p =   (int*) calloc(n_edge, sizeof(int)),  /* calloc zero-initializes */
       * final_c =   (int*) calloc(n_edge, sizeof(int)),
       * parent_of = (int*) calloc(node_limit, sizeof(int)),
       * n_children = (int*) calloc(node_limit, sizeof(int)),
       * smallest_desc = (int*) calloc(node_limit, sizeof(int)),
-      * children_of = (int*) calloc(n_row * node_limit, sizeof(int));
+      * children_of = (int*) calloc(n_edge * node_limit, sizeof(int));
 
   if (final_p == NULL || final_c == NULL || parent_of == NULL
         || n_children == NULL || smallest_desc == NULL || children_of == NULL) {
@@ -95,7 +94,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
 
   for (int i = 0; i < n_edge; i++) {
     parent_of[child[i]] = parent[i];
-    children_of[parent[i] * n_row + n_children[parent[i]]] = child[i];
+    children_of[parent[i] * n_edge + n_children[parent[i]]] = child[i];
     (n_children[parent[i]])++;
   }
 
@@ -109,8 +108,8 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
   }
 
   for (int node = n_tip + 1; node < node_limit; node++) {
-    smallest_descendant(&node, smallest_desc, n_children, children_of, &n_row);
-    quicksort_by_smallest(&children_of[node * n_row], smallest_desc,
+    smallest_descendant(&node, smallest_desc, n_children, children_of, &n_edge);
+    quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
                           0, n_children[node] - 1);
   }
 
@@ -118,7 +117,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
   add_child_edges(root_node, n_tip + 1,
                   children_of, n_children,
                   final_p, final_c,
-                  &next_edge, &next_label, &n_tip, &n_row);
+                  &next_edge, &next_label, &n_tip, &n_edge);
 
   IntegerMatrix ret(n_edge, 2);
   for (int i = 0; i < n_edge; i++) {
