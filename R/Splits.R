@@ -78,8 +78,8 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   } else {
     tipLabels <- .TipLabels(tipLabels)
     oldLabels <- attr(x, 'tip.label')
-    nTip <- attr(x, 'nTip')
     if (is.null(oldLabels)) {
+      nTip <- attr(x, 'nTip')
       if (length(tipLabels) == nTip) {
         attr(x, 'tip.label') <- tipLabels
         x
@@ -88,6 +88,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
       }
     }
     if (!identical(oldLabels, tipLabels)) {
+      nTip <- attr(x, 'nTip')
       if (length(x) == 0) {
         attr(x, 'tip.label') <- tipLabels
         x
@@ -170,7 +171,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     }
 
     structure(matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
-                     dimX[1], dimnames = list(rownames(x), NULL)),
+                     nrow = dimX[1], byrow=TRUE, dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
       class = 'Splits')

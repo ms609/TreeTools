@@ -56,6 +56,14 @@ test_that("as.Split", {
   expect_equal(c(125L, 16L), dim(as.Splits(PectinateTree(128L))))
 })
 
+test_that('as.Splits.Splits', {
+  # n tip > 8L
+  splitsA <- as.Splits(ape::read.tree(text="((((a, b, c, c2), g), h), (d, (e, f)));"))
+  splitsB <- as.Splits(ape::read.tree(text="(((((a, b), (c, c2)), h), g), (d, e, f));"))
+  expect_equivalent(as.raw(c(0x3f, 0x2f, 0x0f, 0x03, 0x0c, 0, 0, 0, 0, 0)),
+                    as.raw(as.Splits(splitsB, splitsA)))
+})
+
 
 test_that('Renaming splits', {
   tree1 <- PectinateTree(1:8)
