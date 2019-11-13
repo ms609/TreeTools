@@ -15,9 +15,6 @@ test_that('Subsplits', {
 })
 
 test_that('Bitwise logic works', {
-  bits <- c(0, 1, 15, 16, 2^31 - 1, 2^31, 2^32 - 1)
-  expect_equal(.UintToRaw(bits), !!(.UintToRaw(bits)))
-
   splits <- as.Splits(BalancedTree(8))
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
