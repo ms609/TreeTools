@@ -53,15 +53,15 @@ RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip) {
   RawMatrix ret(n_return, n_bin);
   int n_trivial = 0;
   const int trivial_one = edge(n_edge - 1, 0) - 1,
-    trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ? edge(n_edge - 1, 1) : 
-    edge(n_edge - 2, 1)) - 1;
+    trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ?
+                     edge(n_edge - 2, 1) : edge(n_edge - 1, 1)) - 1;
   Rcout << "trivial nodes: " << trivial_one << ", " << trivial_two << ".\n";
-  for (int i = n_tip; i != n_tip + n_edge - 1; i++) {
-    for (int j = 0; j != n_bin; j++) {
-      if (n_tip + i == trivial_one || n_tip + i == trivial_two) {
-        n_trivial++;
-      } else {
-        ret(i - n_tip - n_trivial, j) = splits[n_tip + i][j];
+  for (int i = n_tip; i != n_node; i++) {
+    if (i == trivial_one || i == trivial_two) {
+      n_trivial++;
+    } else {
+      for (int j = 0; j != n_bin; j++) {
+        ret(i - n_tip - n_trivial, j) = splits[i][j];
       }
     }
   }
