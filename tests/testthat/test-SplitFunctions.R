@@ -20,24 +20,24 @@ test_that('Bitwise logic works', {
   A <- TRUE
   B <- FALSE
   dn <- paste0('n', 11:15)
-  .AsDecimal <- function (bool) sum(2^(8:0) * bool)
-  .CSB <- function (a, b) .CompatibleSplit(.AsDecimal(a), .AsDecimal(b),
+  .CSB <- function (a, b) .CompatibleSplit(packBits(as.logical(a)),
+                                           packBits(as.logical(b)),
                                            length(a))
-  expect_true(.CSB(rep(0, 9), rep(0, 9)))
-  expect_true(.CSB(rep(0, 9), rep(1, 9)))
-  expect_true(.CSB(rep(1, 9), rep(1, 9)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 0, 1, 1),
-                   c(0, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 0, 1, 1),
-                   c(0, 0, 0, 0, 0, 1, 1, 1, 1)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 1, 1, 1, 1),
-                   c(0, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_true(.CSB(c(1, 1, 1, 1, 1, 0, 0, 0, 0),
-                   c(0, 0, 0, 1, 1, 1, 1, 1, 1)))
-  expect_false(.CSB(c(0, 0, 0, 0, 0, 1, 1, 1, 1),
-                    c(1, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_false(.CSB(c(1, 0, 0, 0, 0, 0, 0, 1, 1),
-                    c(0, 0, 0, 0, 0, 1, 1, 1, 1)))
+  expect_true(.CSB(rep(0, 8), rep(0, 8)))
+  expect_true(.CSB(rep(0, 8), rep(1, 8)))
+  expect_true(.CSB(rep(1, 8), rep(1, 8)))
+  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 1, 1),
+                   c(0, 0, 0, 0, 0, 0, 1, 1)))
+  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 1, 1),
+                   c(0, 0, 0, 0, 1, 1, 1, 1)))
+  expect_true(.CSB(c(0, 0, 0, 0, 1, 1, 1, 1),
+                   c(0, 0, 0, 0, 0, 0, 1, 1)))
+  expect_true(.CSB(c(1, 1, 1, 1, 1, 0, 0, 0),
+                   c(0, 0, 0, 1, 1, 1, 1, 1)))
+  expect_false(.CSB(c(0, 0, 0, 0, 1, 1, 1, 1),
+                    c(1, 0, 0, 0, 0, 0, 1, 1)))
+  expect_false(.CSB(c(1, 0, 0, 0, 0, 0, 1, 1),
+                    c(0, 0, 0, 0, 1, 1, 1, 1)))
 
   expect_equal(
     matrix(c(A, A, A, A, A,
