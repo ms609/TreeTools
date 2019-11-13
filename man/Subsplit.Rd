@@ -7,7 +7,7 @@
 Subsplit(splits, tips, keepAll = FALSE, unique = TRUE)
 }
 \arguments{
-\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+\item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
 
 \item{tips}{A vector specifying a subset of the tip labels applied to \code{split}.}
 

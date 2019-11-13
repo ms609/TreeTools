@@ -102,7 +102,7 @@ CompatibleSplits <- function (splits, splits2) {
     apply(splits, 1, .CompatibleSplit, split, nTip))
 }
 
-#' @param a,b [raw][Raw] representations of splits, from a row of a `Splits` object.
+#' @param a,b [Raw][raw] representations of splits, from a row of a `Splits` object.
 #' @return logical vector stating whether splits are compatible.
 #' @describeIn CompatibleSplits Evaluate a single split pair
 #' @keywords internal
