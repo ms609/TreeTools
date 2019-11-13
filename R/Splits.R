@@ -199,13 +199,6 @@ print.Splits <- function (x, details = FALSE, ...) {
              paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
       )
   if (details) {
-    #cat(paste0("\n  Tip ", seq_len(nTip), ': ', attr(x, 'tip.label')))
-    #for (i in rev(seq_len(log10(nTip) + 1L)) - 1L) {
-    #  cat("\n", vapply(seq_len(1L + (nTip %/% 10^i)) - 1, function (x) {
-    #    rep(ifelse(x == 0, ' ', as.character(x %% 10^i)), 10^i)}
-    #    , character(10^i)))
-    #}
-
     names <- rownames(x)
     if (!is.null(names)) {
 
@@ -319,26 +312,6 @@ TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 
 #' @export
 names.Splits <- function (x) rownames(x)
-
-#' @keywords internal
-#' @export
-.DecodeBinary32 <- function (n, stopAt = 32L, print = FALSE, appendLF = FALSE) {
-  ret <- logical(stopAt)
-  for (i in seq_len(stopAt)) {
-    ret[i] = as.logical(n %% 2)
-    if (print) cat(ifelse(ret[i], '*', '.'))
-    n <- n %/% 2
-  }
-  if (print && appendLF) cat("\n")
-  ret
-}
-
-#' @keywords internal
-#' @export
-.DecodeBinary32Last <- function (n, nTip, ...) {
-  remainder32 <- nTip %% 32L
-  .DecodeBinary32(n, stopAt = ifelse(remainder32, remainder32, 32L), ...)
-}
 
 #' @keywords internal
 #' @export
