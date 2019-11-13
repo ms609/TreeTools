@@ -4,6 +4,8 @@
 \alias{NTip}
 \alias{NTip.Splits}
 \alias{NTip.list}
+\alias{NTip.phylo}
+\alias{NTip.multiPhylo}
 \title{Number of tips in a phylogenetic tree}
 \usage{
 NTip(phy)
@@ -11,6 +13,10 @@ NTip(phy)
 \method{NTip}{Splits}(phy)
 
 \method{NTip}{list}(phy)
+
+\method{NTip}{phylo}(phy)
+
+\method{NTip}{multiPhylo}(phy)
 }
 \arguments{
 \item{phy}{Object to count.}

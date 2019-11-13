@@ -19,8 +19,8 @@ Description: Core functions for the creation, modification and analysis of
 URL: https://ms609.github.io/TreeTools, https://github.com/ms609/TreeTools
 BugReports: https://github.com/ms609/TreeTools/issues
 Depends: R (>= 3.4.0),
-    ape (>= 5.0)
 Imports:
+    ape (>= 5.0),
     colorspace,
     phangorn (>= 2.2.1),
     stats

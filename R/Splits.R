@@ -267,7 +267,6 @@ as.character.Splits <- function (x, ...) {
 #'
 #' @return Single integer specifying the number of tips in each object in `phy`.
 #'
-#' @importFrom ape Ntip
 #' @export
 NTip <- function (phy) UseMethod('NTip')
 
@@ -280,7 +279,22 @@ NTip.Splits <- function (phy) attr(phy, 'nTip')
 
 #' @rdname NTip
 #' @export
-NTip.list <- function (phy) NTip(phy[[1]])
+NTip.list <- function (phy) vapply(phy, NTip, integer(1))
+
+#' @rdname NTip
+#' @export
+NTip.phylo <- function (phy) length(phy$tip.label)
+
+#' @rdname NTip
+#' @export
+NTip.multiPhylo <- function (phy) {
+  ret <- attr(phy, 'TipLabel')
+  if (is.null(ret)) {
+    vapply(phy, NTip.phylo, integer(1))
+  } else {
+    rep(length(ret), length(phy))
+  }
+}
 
 #' Tips contained within splits
 #'
