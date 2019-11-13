@@ -1,9 +1,12 @@
 #' As splits
 #'
 #' Converts a phylogenetic tree to an array of bipartition splits.
+#' 
 #'
 #' @param x Object to convert into splits: perhaps a tree of class
 #'  \code{\link[ape:read.tree]{phylo}}.
+#'  If a logical matrix is provided, each row will be considered as a 
+#'  separate split.
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
@@ -140,13 +143,11 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 #' @rdname as.Splits
 #' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
-  powersOf2 <- 2L^(0:31)
+  powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-    chunks <- (nTip %/% 32L) + 1L
-    remainder <- nTip %% 32L
-
+    
     if (is.null(tipLabels)) {
       tipLabels <- .TipLabels(x)
       if (is.null(tipLabels)) {
@@ -156,34 +157,21 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       tipLabels <- .TipLabels(tipLabels)
     }
 
-    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
-      chunk <- seq_len(
-        if (i + 1L == chunks && remainder != 0L) remainder else 32L
-      )
-      sum(powersOf2[chunk][x[i * 32L + chunk]])
-    }, double(1)), nrow = 1L),
+    structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
     nTip = nTip,
     tip.label = tipLabels,
     class = 'Splits')
   } else {
     nTip <- dimX[2]
-    chunks <- (nTip %/% 32L) + 1L
-    remainder <- nTip %% 32L
     if (is.null(tipLabels)) {
       tipLabels <- .TipLabels(x)
     }
     if (is.null(tipLabels)) {
       tipLabels <- paste0('t', seq_len(nTip))
     }
-
-    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
-      chunkSeq <- seq_len(
-        if (i + 1L == chunks && remainder != 0L) remainder else 32L
-      )
-      chunk <- i * 32L + chunkSeq
-      apply(x[, chunk, drop = FALSE], 1L,
-            function (twos) sum(powersOf2[chunkSeq][twos]))
-    }, double(dimX[1])), dimX[1], chunks, dimnames = list(rownames(x), NULL)),
+    
+    structure(matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
+                     dimX[1], dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
       class = 'Splits')
