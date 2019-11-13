@@ -350,11 +350,28 @@ names.Splits <- function (x) rownames(x)
 
 #' @keywords internal
 #' @export
+.DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
+  bitMasks <- as.raw(c(1, 2, 4, 8, 16, 32, 64, 128)[seq_len(stopAt)])
+  ret <- as.logical(n & bitMasks)
+  if (print) cat(ifelse(ret, '*', '.'))
+  if (print && appendLF) cat("\n")
+  ret
+}
+
+#' @keywords internal
+#' @export
+.DecodeLastRaw <- function (n, nTip, ...) {
+  remainder <- nTip %% 8L
+  .DecodeRaw(n, stopAt = ifelse(remainder, remainder, 8L), ...)
+}
+
+#' @keywords internal
+#' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
   nN <- length(n)
-  c(vapply(n[-nN], .DecodeBinary32, print = print, appendLF = appendLF,
-           FUN.VALUE = logical(32L)),
-    .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
+  c(vapply(n[-nN], .DecodeRaw, print = print, appendLF = appendLF,
+           FUN.VALUE = logical(8L)),
+    .DecodeLastRaw(n[nN], nTip, print = print, appendLF = appendLF))
 }
 
 #' @family Splits operations

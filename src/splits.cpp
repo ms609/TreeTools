@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
-#include <stdint.h> /* for uint32_t */
+/*#include <stdint.h> // for uint32_t 
 
 const uint32_t powers_of_two[32] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
                                     1024, 2048, 4096, 8192, 16384, 32768,
@@ -8,10 +8,14 @@ const uint32_t powers_of_two[32] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
                                     2097152, 4194304, 8388608, 16777216,
                                     33554432, 67108864, 134217728, 268435456,
                                     536870912U, 1073741824U, 2147483648U};
-const int BIN_SIZE = 32;
+*/
+ 
+const int powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 
+                               2048, 4096, 8192, 16384, 32768};
+const int BIN_SIZE = 8;
 
 // [[Rcpp::export]]
-NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
+RawMatrix cpp_edge_to_splits(NumericMatrix edge) {
   if (edge.cols() != 2) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
@@ -22,19 +26,19 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
     n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
   if (n_edge == n_tip) { /* No internal nodes resolved */
-    return NumericMatrix (0, n_bin);
+    return RawMatrix (0, n_bin);
   }
 
-  uint32_t** splits = new uint32_t*[n_node];
+  int** splits = new int*[n_node];
   for (int i = 0; i != n_node; i++) {
-    splits[i] = new uint32_t[n_bin];
+    splits[i] = new int[n_bin];
     for (int j = 0; j != n_bin; j++) {
       splits[i][j] = 0;
     }
   }
 
   for (int i = 0; i != n_tip; i++) {
-    splits[i][(int) i / 32] = powers_of_two[i % 32];
+    splits[i][(int) i / BIN_SIZE] = powers_of_two[i % BIN_SIZE];
   }
 
   for (int i = n_edge - 1; i != 0; i--) { /* edge 0 is second root edge */
@@ -43,7 +47,7 @@ NumericMatrix cpp_edge_to_splits(NumericMatrix edge) {
     }
   }
 
-  NumericMatrix ret(n_edge - n_tip - 1, n_bin);
+  RawMatrix ret(n_edge - n_tip - 1, n_bin);
   for (int i = 0; i != n_edge - n_tip - 1; i++) {
     for (int j = 0; j != n_bin; j++) {
       /* Node n_tip = root node; split = ~0. */

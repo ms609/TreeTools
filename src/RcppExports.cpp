@@ -30,7 +30,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_edge_to_splits
-NumericMatrix cpp_edge_to_splits(NumericMatrix edge);
+RawMatrix cpp_edge_to_splits(NumericMatrix edge);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
