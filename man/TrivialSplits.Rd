@@ -10,7 +10,7 @@ TrivialSplits(splits, nTip = attr(splits, "nTip"))
 WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 }
 \arguments{
-\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+\item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
 
 \item{nTip}{Intger specifying number of tips (leaves).}
 }

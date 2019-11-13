@@ -4,50 +4,47 @@ test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
   expect_equal(c(4, 4, 4, 3, 2, 1), as.integer(TipsInSplits(efgh)))
-  expect_equal(c(n12 = TRUE, n13 = TRUE, n14 = TRUE, n15 = TRUE, n16 = FALSE,
-                 n17 = TRUE), TrivialSplits(efgh))
+  expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
+                 '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
 
   efghF <- Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-  expect_equal(c(n16 = 2), TipsInSplits(efghF))
+  expect_equal(c('16' = 2), TipsInSplits(efghF))
 
   splits <- as.Splits(PectinateTree(32+32+10))
   sub <- Subsplit(splits, tips = c('t32', 't33', 't64', 't65'))
 })
 
 test_that('Bitwise logic works', {
-  bits <- c(0, 1, 15, 16, 2^31 - 1, 2^31, 2^32 - 1)
-  expect_equal(.UintToRaw(bits), !!(.UintToRaw(bits)))
-
   splits <- as.Splits(BalancedTree(8))
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
   B <- FALSE
-  dn <- paste0('n', 11:15)
-  .AsDecimal <- function (bool) sum(2^(8:0) * bool)
-  .CSB <- function (a, b) .CompatibleSplit(.AsDecimal(a), .AsDecimal(b),
+  .CSB <- function (a, b) .CompatibleSplit(packBits(as.logical(a)),
+                                           packBits(as.logical(b)),
                                            length(a))
-  expect_true(.CSB(rep(0, 9), rep(0, 9)))
-  expect_true(.CSB(rep(0, 9), rep(1, 9)))
-  expect_true(.CSB(rep(1, 9), rep(1, 9)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 0, 1, 1),
-                   c(0, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 0, 1, 1),
-                   c(0, 0, 0, 0, 0, 1, 1, 1, 1)))
-  expect_true(.CSB(c(0, 0, 0, 0, 0, 1, 1, 1, 1),
-                   c(0, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_true(.CSB(c(1, 1, 1, 1, 1, 0, 0, 0, 0),
-                   c(0, 0, 0, 1, 1, 1, 1, 1, 1)))
-  expect_false(.CSB(c(0, 0, 0, 0, 0, 1, 1, 1, 1),
-                    c(1, 0, 0, 0, 0, 0, 0, 1, 1)))
-  expect_false(.CSB(c(1, 0, 0, 0, 0, 0, 0, 1, 1),
-                    c(0, 0, 0, 0, 0, 1, 1, 1, 1)))
+  expect_true(.CSB(rep(0, 8), rep(0, 8)))
+  expect_true(.CSB(rep(0, 8), rep(1, 8)))
+  expect_true(.CSB(rep(1, 8), rep(1, 8)))
+  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 1, 1),
+                   c(0, 0, 0, 0, 0, 0, 1, 1)))
+  expect_true(.CSB(c(0, 0, 0, 0, 0, 0, 1, 1),
+                   c(0, 0, 0, 0, 1, 1, 1, 1)))
+  expect_true(.CSB(c(0, 0, 0, 0, 1, 1, 1, 1),
+                   c(0, 0, 0, 0, 0, 0, 1, 1)))
+  expect_true(.CSB(c(1, 1, 1, 1, 1, 0, 0, 0),
+                   c(0, 0, 0, 1, 1, 1, 1, 1)))
+  expect_false(.CSB(c(0, 0, 0, 0, 1, 1, 1, 1),
+                    c(1, 0, 0, 0, 0, 0, 1, 1)))
+  expect_false(.CSB(c(1, 0, 0, 0, 0, 0, 1, 1),
+                    c(0, 0, 0, 0, 1, 1, 1, 1)))
 
   expect_equal(
     matrix(c(A, A, A, A, A,
-             A, B, A, A, A,
              A, A, A, A, A,
+             A, B, A, A, A,
              A, A, A, B, A,
-             A, A, A, A, A), byrow = TRUE, 5, 5, dimnames = list(dn, dn)),
+             A, A, A, A, A), byrow = TRUE, 5, 5,
+           dimnames = list(c(10:12, 14:15), 11:15)),
     CompatibleSplits(splits, splits2))
 })
 

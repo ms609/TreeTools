@@ -23,7 +23,9 @@ as.Splits(x, tipLabels = NULL, ...)
 }
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class
-\code{\link[ape:read.tree]{phylo}}.}
+\code{\link[ape:read.tree]{phylo}}.
+If a logical matrix is provided, each row will be considered as a
+separate split.}
 
 \item{tipLabels}{Character vector specifying sequence in which to order
 tip labels.  Label order must (currently) match to combine or compare separate

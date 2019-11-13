@@ -102,21 +102,18 @@ CompatibleSplits <- function (splits, splits2) {
     apply(splits, 1, .CompatibleSplit, split, nTip))
 }
 
-#' @param a,b Integer representations of splits, from an row of a `Splits` object
-#' @return logical vector stating whether splits are compatible
+#' @param a,b [Raw][raw] representations of splits, from a row of a `Splits` object.
+#' @return logical vector stating whether splits are compatible.
 #' @describeIn CompatibleSplits Evaluate a single split pair
 #' @keywords internal
 #' @export
 .CompatibleSplit <- function (a, b, nTip) {
-  rawA <- .UintToRaw(a)
-  rawB <- .UintToRaw(b)
-
-  rawMask <- if (nTip %% 32) {
-    .UintToRaw(c(2^(nTip %% 32) - 1, rep(2^32 - 1, nTip %/%32)))
+  rawMask <- if (nTip %% 8L) {
+    as.raw(c(2^(nTip %% 8L) - 1L, rep(255L, nTip %/% 8)))
   } else {
-    .UintToRaw(rep(2^32 - 1, nTip %/%32))
+    rep(as.raw(255), nTip %/% 8L)
   }
-  .CompatibleRaws(rawA, rawB, rawMask)
+  .CompatibleRaws(a, b, rawMask)
 }
 
 #' @keywords internal
@@ -126,10 +123,6 @@ CompatibleSplits <- function (splits, splits2) {
   !any(as.logical(rawA & !rawB)) ||
   !any(as.logical(!rawA & rawB)) ||
   !any(as.logical(!rawA & !rawB & bitmask))
-}
-
-.UintToRaw <- function (uint) {
-  vapply(uint, function(x) as.raw(x %/% 2^c(24, 16, 8, 0) %% 256L), raw(4))
 }
 
 #' Probability of matching this well

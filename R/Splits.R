@@ -2,8 +2,11 @@
 #'
 #' Converts a phylogenetic tree to an array of bipartition splits.
 #'
+#'
 #' @param x Object to convert into splits: perhaps a tree of class
 #'  \code{\link[ape:read.tree]{phylo}}.
+#'  If a logical matrix is provided, each row will be considered as a
+#'  separate split.
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
@@ -47,15 +50,14 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
     x <- RenumberTips(x, .TipLabels(tipLabels))
   }
   edge <- Postorder(x)$edge
-  edge <- edge[rev(seq_len(dim(edge)[1])), ]
+  nTip <- length(x$tip.label)
+  splits <- cpp_edge_to_splits(edge, nTip)
 
-  splits <- cpp_edge_to_splits(x$edge)
   nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
     nEdge <- dim(x$edge)[1]
     nTip <- length(x$tip.label)
-    if (nSplits > 0) rownames(splits) <- paste0('n', nTip + 2L + seq_len(nSplits))
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
@@ -107,7 +109,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
 #' @rdname as.Splits
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
-  nTip = attr(x, 'nTip')
+  nTip <- attr(x, 'nTip')
   ret <- t(apply(x, 1, function (split) {
     unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
   }))
@@ -140,12 +142,10 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 #' @rdname as.Splits
 #' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
-  powersOf2 <- 2L^(0:31)
+  powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-    chunks <- (nTip %/% 32L) + 1L
-    remainder <- nTip %% 32L
 
     if (is.null(tipLabels)) {
       tipLabels <- .TipLabels(x)
@@ -156,19 +156,12 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       tipLabels <- .TipLabels(tipLabels)
     }
 
-    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
-      chunk <- seq_len(
-        if (i + 1L == chunks && remainder != 0L) remainder else 32L
-      )
-      sum(powersOf2[chunk][x[i * 32L + chunk]])
-    }, double(1)), nrow = 1L),
+    structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
     nTip = nTip,
     tip.label = tipLabels,
     class = 'Splits')
   } else {
     nTip <- dimX[2]
-    chunks <- (nTip %/% 32L) + 1L
-    remainder <- nTip %% 32L
     if (is.null(tipLabels)) {
       tipLabels <- .TipLabels(x)
     }
@@ -176,14 +169,8 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       tipLabels <- paste0('t', seq_len(nTip))
     }
 
-    structure(matrix(vapply(seq_len(chunks) - 1L, function (i) {
-      chunkSeq <- seq_len(
-        if (i + 1L == chunks && remainder != 0L) remainder else 32L
-      )
-      chunk <- i * 32L + chunkSeq
-      apply(x[, chunk, drop = FALSE], 1L,
-            function (twos) sum(powersOf2[chunkSeq][twos]))
-    }, double(dimX[1])), dimX[1], chunks, dimnames = list(rownames(x), NULL)),
+    structure(matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
+                     dimX[1], dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
       class = 'Splits')
@@ -194,15 +181,6 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
 as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
-}
-
-#' @export
-as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
-  if (any(x >= 2^32)) stop ("Input out of range")
-  structure(matrix(x, ncol = 1),
-            nTip = length(tipLabels),
-            tip.label = tipLabels,
-            class = 'Splits')
 }
 
 #' @exportClass Splits
@@ -364,11 +342,28 @@ names.Splits <- function (x) rownames(x)
 
 #' @keywords internal
 #' @export
+.DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
+  bitMasks <- as.raw(c(1, 2, 4, 8, 16, 32, 64, 128)[seq_len(stopAt)])
+  ret <- as.logical(n & bitMasks)
+  if (print) cat(paste0(ifelse(ret, '*', '.'), collapse = ''))
+  if (print && appendLF) cat("\n")
+  ret
+}
+
+#' @keywords internal
+#' @export
+.DecodeLastRaw <- function (n, nTip, ...) {
+  remainder <- nTip %% 8L
+  .DecodeRaw(n, stopAt = ifelse(remainder, remainder, 8L), ...)
+}
+
+#' @keywords internal
+#' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
   nN <- length(n)
-  c(vapply(n[-nN], .DecodeBinary32, print = print, appendLF = appendLF,
-           FUN.VALUE = logical(32L)),
-    .DecodeBinary32Last(n[nN], nTip, print = print, appendLF = appendLF))
+  c(vapply(n[-nN], .DecodeRaw, print = print, appendLF = appendLF,
+           FUN.VALUE = logical(8L)),
+    .DecodeLastRaw(n[nN], nTip, print = print, appendLF = appendLF))
 }
 
 #' @family Splits operations
@@ -415,20 +410,19 @@ c.Splits <- function (...) {
   }
 }
 
-#' @keywords internal
-#' @export
-.LastBin <- function (n) if (n %% 32L) n %% 32L else 32L
-
-#' @keywords internal
-#' @export
-.BinSizes <- function (n) c(rep(32L, (n - 1L) %/% 32L), if (n %% 32L) n %% 32L else 32L)
-
-
 #' @family Splits operations
 #' @export
 `!.Splits` <- function (x) {
-  dimX <- dim(x)
-  matrix(2L ^ .BinSizes(NTip(x)) - 1L, dimX[1], dimX[2], byrow=TRUE) - x
+  nTip <- attr(x, 'nTip')
+  x <- !unclass(x)
+  remainder <- (8L - nTip) %% 8L
+  if (remainder) {
+    lastSplit <- dim(x)[2]
+    endMask <- packBits(c(rep(TRUE, 8L - remainder), rep(FALSE, remainder)))
+    x[, lastSplit] <- x[, lastSplit] & endMask
+  }
+  class(x) <- 'Splits'
+  x
 }
 
 
@@ -440,13 +434,7 @@ length.Splits <- function (x) nrow(x)
 #' @family Splits operations
 #' @export
 duplicated.Splits <- function (x, incomparables = FALSE, ...) {
-  nTip <- attr(x, 'nTip')
-  dimX <- dim(x)
-
-  dupX <- matrix(nrow = dimX[1], ncol = dimX[2])
-  dupX[, 1] <- (2 ^ nTip - 1) - x[, 1]
-  dupX[, -1] <- (2^32 - 1) - x[, -1]
-
+  dupX <- !x
   useOrig <- x[, 1] < dupX[, 1]
   dupX[useOrig, ] <- x[useOrig, ]
 

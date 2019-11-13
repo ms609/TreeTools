@@ -10,17 +10,17 @@ CompatibleSplits(splits, splits2)
 .CompatibleSplit(a, b, nTip)
 }
 \arguments{
-\item{splits}{An object of class \link{as.Splits}{`Splits`}.}
+\item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
 
 \item{splits2}{A second \code{Splits} object.}
 
-\item{a, b}{Integer representations of splits, from an row of a \code{Splits} object}
+\item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits} object.}
 }
 \value{
 A logical matrix specifying whether each split in \code{splits} is
 compatible with each split in \code{splits2}.
 
-logical vector stating whether splits are compatible
+logical vector stating whether splits are compatible.
 }
 \description{
 Which splits are compatible?
