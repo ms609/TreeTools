@@ -184,15 +184,6 @@ as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
   lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
 }
 
-#' @export
-as.Splits.numeric <- function (x, tipLabels = paste0('t', seq_along(x)), ...) {
-  if (any(x >= 2^32)) stop ("Input out of range")
-  structure(matrix(x, ncol = 1),
-            nTip = length(tipLabels),
-            tip.label = tipLabels,
-            class = 'Splits')
-}
-
 #' @exportClass Splits
 #
 

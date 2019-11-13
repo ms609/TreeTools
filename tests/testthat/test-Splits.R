@@ -132,8 +132,6 @@ test_that("Split combination", {
                as.integer(c(splits1,
                             as.Splits(RenumberTips(tree3, letters[1:5])))[, 1]))
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
-  expect_equal(2L, length(unique(c(splits1,
-                                   as.Splits(c(3, 7), tipLabels=letters[1:5])))))
 
   expect_equal(c(n8 = 3, n9 = 2), TipsInSplits(splits1))
 
