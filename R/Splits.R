@@ -1,11 +1,11 @@
 #' As splits
 #'
 #' Converts a phylogenetic tree to an array of bipartition splits.
-#' 
+#'
 #'
 #' @param x Object to convert into splits: perhaps a tree of class
 #'  \code{\link[ape:read.tree]{phylo}}.
-#'  If a logical matrix is provided, each row will be considered as a 
+#'  If a logical matrix is provided, each row will be considered as a
 #'  separate split.
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.  Label order must (currently) match to combine or compare separate
@@ -52,7 +52,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   edge <- Postorder(x)$edge
   nTip <- length(x$tip.label)
   splits <- cpp_edge_to_splits(edge, nTip)
-  
+
   nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
@@ -147,7 +147,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-    
+
     if (is.null(tipLabels)) {
       tipLabels <- .TipLabels(x)
       if (is.null(tipLabels)) {
@@ -169,7 +169,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     if (is.null(tipLabels)) {
       tipLabels <- paste0('t', seq_len(nTip))
     }
-    
+
     structure(matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
                      dimX[1], dimnames = list(rownames(x), NULL)),
       nTip = nTip,
