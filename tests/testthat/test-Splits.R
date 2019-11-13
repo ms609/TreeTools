@@ -18,7 +18,7 @@ test_that("as.Split", {
                as.logical(as.Splits(c(A, A, B, B))))
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
-  expect_equal(c(n8 = 'c d e | a b', n9 = 'd e | a b c'), as.character(splits1))
+  expect_equal(c(n8 = 'a b | c d e', n9 = 'd e | a b c'), as.character(splits1))
   logicalSplits <- as.Splits(matrix(c(A, A, B, B, B,  A, A, A, B, B),
                                     nrow=2, byrow = TRUE),
                              tipLabels = letters[1:5])
@@ -43,11 +43,13 @@ test_that("as.Split", {
   expect_equal("0 bipartition splits dividing 5 tips, a .. e",
                capture_output(print(as.Splits(polytomy))))
 
-  notPreOrder <- structure(list(edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L,
+  notPreorder <- structure(list(edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L,
                                             6L, 9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L),
                                           .Dim = c(8L, 2L)), Nnode = 4L,
                          tip.label = 1:5), class = "phylo", order = "cladewise")
-  expect_equal(c(n8 = as.raw(22), n9 = as.raw(6)), as.Splits(notPreOrder)[, 1])
+  expect_equal(c(n8 = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
+                 n9 = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
+               as.Splits(notPreorder)[, 1])
 
   expect_equal(c(61L, 2L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 3L), dim(as.Splits(PectinateTree(65L))))
