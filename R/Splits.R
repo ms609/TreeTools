@@ -399,17 +399,17 @@ c.Splits <- function (...) {
 #' @family Splits operations
 #' @export
 `!.Splits` <- function (x) {
-  ret <- x
-  attr(ret, 'class') <- NULL
-  ret <- !ret
   nTip <- attr(x, 'nTip')
+  unclass(x)
+  x <- !x
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
+    lastSplit <- dim(x)[2]
     endMask <- packBits(c(rep(TRUE, 8L - remainder), rep(FALSE, remainder)))
-    ret[, dim(ret)[2]] <- ret[, dim(ret)[2]] & endMask
+    x[, lastSplit] <- x[, lastSplit] & endMask
   }
-  class(ret) <- 'Splits'
-  ret
+  class(x) <- 'Splits'
+  x
 }
 
 
