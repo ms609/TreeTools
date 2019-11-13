@@ -18,7 +18,7 @@ test_that("as.Split", {
                as.logical(as.Splits(c(A, A, B, B))))
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
-  expect_equal(c(n8 = 'a b | c d e', n9 = 'd e | a b c'), as.character(splits1))
+  expect_equal(c('7' = 'a b | c d e', '9' = 'd e | a b c'), as.character(splits1))
   logicalSplits <- as.Splits(matrix(c(B, B, A, A, A,  A, A, A, B, B),
                                     nrow=2, byrow = TRUE),
                              tipLabels = letters[1:5])
@@ -47,8 +47,8 @@ test_that("as.Split", {
                                             6L, 9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L),
                                           .Dim = c(8L, 2L)), Nnode = 4L,
                          tip.label = 1:5), class = "phylo", order = "cladewise")
-  expect_equal(c(n8 = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
-                 n9 = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
+  expect_equal(c('7' = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
+                 '8' = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
                as.Splits(notPreorder)[, 1])
 
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
@@ -110,7 +110,7 @@ test_that("Split operations", {
   expect_error(split1 + split2)
 
   namedSplits <- as.Splits(BalancedTree(8))
-  expect_equal(c('n12', 'n14'), rownames(namedSplits[[c(2, 4)]]))
+  expect_equal(c('12', '14'), rownames(namedSplits[[c(3, 4)]]))
 
 })
 
@@ -132,7 +132,7 @@ test_that("Split combination", {
                     c(splits1, as.Splits(RenumberTips(tree3, letters[1:5])))[, 1])
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
 
-  expect_equal(c(n8 = 3, n9 = 2), TipsInSplits(splits1))
+  expect_equal(c('7' = 2, '9' = 2), TipsInSplits(splits1))
 
   #TODO: Fully test splits with large (> 8 tip) trees
 })
