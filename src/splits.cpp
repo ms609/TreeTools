@@ -51,6 +51,7 @@ RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip) {
   }
 
   RawMatrix ret(n_return, n_bin);
+  IntegerVector names(n_return);
   int n_trivial = 0;
   const int trivial_one = edge(n_edge - 1, 0) - 1,
     trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ?
@@ -61,9 +62,11 @@ RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip) {
     } else {
       for (int j = 0; j != n_bin; j++) {
         ret(i - n_tip - n_trivial, j) = splits[i][j];
+        names[i - n_tip - n_trivial] = (i + 1);
       }
     }
   }
 
+  rownames(ret) = names;
   return(ret);
 }

@@ -58,7 +58,6 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (asSplits) {
     nEdge <- dim(x$edge)[1]
     nTip <- length(x$tip.label)
-    if (nSplits > 0) rownames(splits) <- paste0('n', nTip + 2L + seq_len(nSplits))
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
