@@ -341,7 +341,7 @@ names.Splits <- function (x) rownames(x)
 .DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
   bitMasks <- as.raw(c(1, 2, 4, 8, 16, 32, 64, 128)[seq_len(stopAt)])
   ret <- as.logical(n & bitMasks)
-  if (print) cat(ifelse(ret, '*', '.'))
+  if (print) cat(paste0(ifelse(ret, '*', '.'), collapse = ''))
   if (print && appendLF) cat("\n")
   ret
 }
