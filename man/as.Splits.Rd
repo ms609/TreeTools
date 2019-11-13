@@ -23,7 +23,9 @@ as.Splits(x, tipLabels = NULL, ...)
 }
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class
-\code{\link[ape:read.tree]{phylo}}.}
+\code{\link[ape:read.tree]{phylo}}.
+If a logical matrix is provided, each row will be considered as a
+separate split.}
 
 \item{tipLabels}{Character vector specifying sequence in which to order
 tip labels.  Label order must (currently) match to combine or compare separate
@@ -38,9 +40,8 @@ paramount).}
 \value{
 Returns an object of class \code{Splits}, or (if \code{asSplits = FALSE}) a
 two-dimensional array of 32-bit integers, which each bit specifying whether
-a tip is a member of the split.  Split names correspond to the sequence of
-their defining nodes or edges once the tree has been sorted into preorder
-(see \code{\link{Preorder}}).
+a tip is a member of the split.  Splits are named according to the node
+that defines them.
 }
 \description{
 Converts a phylogenetic tree to an array of bipartition splits.
