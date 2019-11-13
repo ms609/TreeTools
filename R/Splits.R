@@ -400,8 +400,7 @@ c.Splits <- function (...) {
 #' @export
 `!.Splits` <- function (x) {
   nTip <- attr(x, 'nTip')
-  unclass(x)
-  x <- !x
+  x <- !unclass(x)
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
     lastSplit <- dim(x)[2]
