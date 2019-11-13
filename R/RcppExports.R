@@ -9,7 +9,7 @@ preorder_edges_and_nodes <- function(parent, child) {
     .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
-cpp_edge_to_splits <- function(edge) {
-    .Call(`_TreeTools_cpp_edge_to_splits`, edge)
+cpp_edge_to_splits <- function(edge, nTip) {
+    .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
 

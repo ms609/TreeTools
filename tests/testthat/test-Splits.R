@@ -47,7 +47,7 @@ test_that("as.Split", {
                                             6L, 9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L),
                                           .Dim = c(8L, 2L)), Nnode = 4L,
                          tip.label = 1:5), class = "phylo", order = "cladewise")
-  expect_equal(c(n8 = 22, n9 = 6), as.Splits(notPreOrder)[, 1])
+  expect_equal(c(n8 = as.raw(22), n9 = as.raw(6)), as.Splits(notPreOrder)[, 1])
 
   expect_equal(c(61L, 2L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 3L), dim(as.Splits(PectinateTree(65L))))

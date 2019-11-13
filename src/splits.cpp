@@ -14,15 +14,18 @@ const int powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
                                2048, 4096, 8192, 16384, 32768};
 const int BIN_SIZE = 8;
 
+
+// Edges must be listed in postorder
 // [[Rcpp::export]]
-RawMatrix cpp_edge_to_splits(NumericMatrix edge) {
+RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip) {
   if (edge.cols() != 2) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
-
+  
   const int n_edge = edge.rows(),
     n_node = n_edge + 1,
-    n_tip = edge(0, 0) - 1,
+    n_tip = nTip[0],
+    n_return = n_edge - n_tip - 1,
     n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
   if (n_edge == n_tip) { /* No internal nodes resolved */
@@ -41,18 +44,25 @@ RawMatrix cpp_edge_to_splits(NumericMatrix edge) {
     splits[i][(int) i / BIN_SIZE] = powers_of_two[i % BIN_SIZE];
   }
 
-  for (int i = n_edge - 1; i != 0; i--) { /* edge 0 is second root edge */
+  for (int i = 0; i != n_edge - 1; i++) { /* final edge is second root edge */
     for (int j = 0; j != n_bin; j++) {
       splits[(int) edge(i, 0) - 1][j] |= splits[(int) edge(i, 1) - 1][j];
     }
   }
 
-  RawMatrix ret(n_edge - n_tip - 1, n_bin);
-  for (int i = 0; i != n_edge - n_tip - 1; i++) {
+  RawMatrix ret(n_return, n_bin);
+  int n_trivial = 0;
+  const int trivial_one = edge(n_edge - 1, 0) - 1,
+    trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ? edge(n_edge - 1, 1) : 
+    edge(n_edge - 2, 1)) - 1;
+  Rcout << "trivial nodes: " << trivial_one << ", " << trivial_two << ".\n";
+  for (int i = n_tip; i != n_tip + n_edge - 1; i++) {
     for (int j = 0; j != n_bin; j++) {
-      /* Node n_tip = root node; split = ~0. */
-      /* Node n_tip + 1 == (right_root_node) == ~(left_root_node) */
-      ret(i, j) = splits[n_tip + i + 2][j];
+      if (n_tip + i == trivial_one || n_tip + i == trivial_two) {
+        n_trivial++;
+      } else {
+        ret(i - n_tip - n_trivial, j) = splits[n_tip + i][j];
+      }
     }
   }
 
