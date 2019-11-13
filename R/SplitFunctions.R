@@ -145,12 +145,9 @@ CompatibleSplits <- function (splits, splits2) {
 SplitMatchProbability <- function (split1, split2) {
 
   if (NTip(split1) != NTip(split2)) stop("Splits pertain to different tips")
-  if (!identical(attr(split1, 'tip.label'), attr(split2, 'tip.label'))) {
-    stop("Sequence of tip labels must match")
-  }
 
   split1 <- as.logical(split1)
-  split2 <- as.logical(split2)
+  split2 <- as.logical(as.Splits(split2, split1))
   partitions <- matrix(c(sum(split1 & split2),
                          sum(split1 & !split2),
                          sum(!split1 & split2),
