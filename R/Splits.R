@@ -110,7 +110,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
 #' @rdname as.Splits
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
-  nTip = attr(x, 'nTip')
+  nTip <- attr(x, 'nTip')
   ret <- t(apply(x, 1, function (split) {
     unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
   }))
@@ -406,20 +406,20 @@ c.Splits <- function (...) {
   }
 }
 
-#' @keywords internal
-#' @export
-.LastBin <- function (n) if (n %% 32L) n %% 32L else 32L
-
-#' @keywords internal
-#' @export
-.BinSizes <- function (n) c(rep(32L, (n - 1L) %/% 32L), if (n %% 32L) n %% 32L else 32L)
-
-
 #' @family Splits operations
 #' @export
 `!.Splits` <- function (x) {
-  dimX <- dim(x)
-  matrix(2L ^ .BinSizes(NTip(x)) - 1L, dimX[1], dimX[2], byrow=TRUE) - x
+  ret <- x
+  attr(ret, 'class') <- NULL
+  ret <- !ret
+  nTip <- attr(x, 'nTip')
+  remainder <- (8L - nTip) %% 8L
+  if (remainder) {
+    endMask <- packBits(c(rep(TRUE, remainder), rep(FALSE, 8L - remainder)))
+    ret[, dim(ret)[2]] <- ret[, dim(ret)[2]] & endMask
+  }
+  class(ret) <- 'Splits'
+  ret
 }
 
 
