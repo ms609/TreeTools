@@ -415,7 +415,7 @@ c.Splits <- function (...) {
   nTip <- attr(x, 'nTip')
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
-    endMask <- packBits(c(rep(TRUE, remainder), rep(FALSE, 8L - remainder)))
+    endMask <- packBits(c(rep(TRUE, 8L - remainder), rep(FALSE, remainder)))
     ret[, dim(ret)[2]] <- ret[, dim(ret)[2]] & endMask
   }
   class(ret) <- 'Splits'
