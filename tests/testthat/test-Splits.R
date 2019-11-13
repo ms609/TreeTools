@@ -111,7 +111,11 @@ test_that("Split operations", {
 
   namedSplits <- as.Splits(BalancedTree(8))
   expect_equal(c('12', '14'), rownames(namedSplits[[c(3, 4)]]))
+})
 
+test_that("Split subtraction", {
+  splits <- as.Splits(BalancedTree(8))
+  expect_equal(splits[[c(1, 2, 4, 5)]], splits - splits[[3]])
 })
 
 test_that("Split combination", {

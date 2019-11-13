@@ -392,6 +392,13 @@ c.Splits <- function (...) {
 #' @export
 `+.Splits` <- function (...) c(...)
 
+
+#' @family Splits operations
+#' @export
+`-.Splits` <- function (x, y) {
+  x[[!in.Splits(x, y)]]
+}
+
 #' @family Splits operations
 #' @export
 `[[.Splits` <- function (x, ..., drop = TRUE) {
