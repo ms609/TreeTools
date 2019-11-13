@@ -9,6 +9,12 @@ test_that('Subsplits', {
 
   efghF <- Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
   expect_equal(c('16' = 2), TipsInSplits(efghF))
+  expect_equal(efghF, Subsplit(list(splits, splits), tips = letters[5:8],
+                               keepAll = FALSE)[[1]])
+
+  noSplit <- Subsplit(splits - splits, letters[5:8])
+  expect_equal(attributes(noSplit)[3:5], attributes(efghF)[3:5])
+  expect_equivalent(noSplit[1], raw(1))
 
   splits <- as.Splits(PectinateTree(32+32+10))
   sub <- Subsplit(splits, tips = c('t32', 't33', 't64', 't65'))
@@ -46,6 +52,9 @@ test_that('Bitwise logic works', {
              A, A, A, A, A), byrow = TRUE, 5, 5,
            dimnames = list(c(10:12, 14:15), 11:15)),
     CompatibleSplits(splits, splits2))
+
+  expect_true(.CompatibleSplit(as.raw(3), as.raw(7), nTip = 5))
+  expect_false(.CompatibleSplit(as.raw(3), as.raw(6), nTip = 5))
 })
 
 test_that("SplitMatchProbability returns expected probabilities", {
@@ -66,6 +75,10 @@ test_that("SplitMatchProbability returns expected probabilities", {
   splitCD <- as.Splits(c(FALSE, FALSE, TRUE, TRUE, rep(FALSE, 5)))
 
   expect_error(SplitMatchProbability(as.Splits(TRUE), splitAB))
+
+  expect_equal(LnSplitMatchProbability(splitABC, splitABCD),
+                LnSplitMatchProbability(splitABCD,
+                                      as.Splits(splitABC, rev(TipLabels(splitABC)))))
 
   # Possible matches to ABCD:....
   expect_true(SplitMatchProbability(splitABC, splitABCD) <
@@ -150,11 +163,17 @@ test_that("SplitMatchProbability returns expected probabilities", {
 test_that('Tip labels are found', {
   pt4 <- PectinateTree(4L)
   bt4 <- BalancedTree(4L)
-  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(c('t1', 't2', 't3', 't4')))
-  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(pt4))
-  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(as.Splits(pt4)))
-  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(list(pt4, bt4)))
-  expect_equal(c('t1', 't2', 't3', 't4'), TipLabels(structure(list(pt4, bt4),
+  t1..4 <- c('t1', 't2', 't3', 't4')
+  expect_equal(t1..4, TipLabels(t1..4))
+  expect_equal(t1..4, TipLabels(pt4))
+  expect_equal(t1..4, TipLabels(as.Splits(pt4)))
+  expect_equal(t1..4, TipLabels(list(pt4, bt4)))
+  expect_equal(t1..4, TipLabels(structure(list(pt4, bt4),
                                                     class='multiPhylo')))
+  atList <- list()
+  attr(list, 'tip.label') <- t1..4
+  expect_equal(t1..4, TipLabels(atList))
   expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4))))
+
+
 })
