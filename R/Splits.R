@@ -431,13 +431,7 @@ length.Splits <- function (x) nrow(x)
 #' @family Splits operations
 #' @export
 duplicated.Splits <- function (x, incomparables = FALSE, ...) {
-  nTip <- attr(x, 'nTip')
-  dimX <- dim(x)
-
-  dupX <- matrix(nrow = dimX[1], ncol = dimX[2])
-  dupX[, 1] <- (2 ^ nTip - 1) - x[, 1]
-  dupX[, -1] <- (2^32 - 1) - x[, -1]
-
+  dupX <- !x
   useOrig <- x[, 1] < dupX[, 1]
   dupX[useOrig, ] <- x[useOrig, ]
 
