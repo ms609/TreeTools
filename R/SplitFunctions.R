@@ -223,11 +223,13 @@ TipLabels.Splits <- function (x) attr(x, 'tip.label')
 TipLabels.list <- function (x) {
   if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
   if (!is.null(x$tip.label)) return (x$tip.label)
-  firstEntry <- x[[1]]
-  if (!is.null(attr(firstEntry, 'tip.label'))) {
-    return (attr(firstEntry, 'tip.label'))
+  if (length(x)) {
+    firstEntry <- x[[1]]
+    if (!is.null(attr(firstEntry, 'tip.label'))) {
+      return (attr(firstEntry, 'tip.label'))
+    }
+    if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
   }
-  if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
 
   # else Return:
   NULL

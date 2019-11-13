@@ -171,8 +171,9 @@ test_that('Tip labels are found', {
   expect_equal(t1..4, TipLabels(structure(list(pt4, bt4),
                                                     class='multiPhylo')))
   atList <- list()
-  attr(list, 'tip.label') <- t1..4
+  attr(atList, 'tip.label') <- t1..4
   expect_equal(t1..4, TipLabels(atList))
+  expect_null(TipLabels(list()))
   expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4))))
 
 
