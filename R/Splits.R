@@ -312,7 +312,7 @@ NTip.phylo <- function (phy) length(phy$tip.label)
 NTip.multiPhylo <- function (phy) {
   ret <- attr(phy, 'TipLabel')
   if (is.null(ret)) {
-    vapply(phy, NTip, integer(1))
+    vapply(phy, NTip.phylo, integer(1))
   } else {
     rep(length(ret), length(phy))
   }
