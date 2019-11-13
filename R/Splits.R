@@ -488,7 +488,7 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' @export
 in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
-             incomparables = incomparables)[seq_along(x), ]
+             incomparables = incomparables)[seq_along(x)]
 }
 
 
