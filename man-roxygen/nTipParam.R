@@ -1,1 +1,1 @@
-#' @param nTip Intger specifying number of tips (leaves).
+#' @param nTip Integer specifying number of tips (leaves).

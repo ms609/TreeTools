@@ -15,7 +15,7 @@ each terminal is identified as a member of the ingroup (\code{TRUE}) or outgroup
 (\code{FALSE}) of the respective bipartition split.}
 }
 \value{
-The proportion of permissable informative splits
+The proportion of permissible informative splits
 splitting the terminals into bipartitions of the sizes given,
 that match as well as \code{split1} and \code{split2} do.
 }

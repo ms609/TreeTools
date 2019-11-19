@@ -33,7 +33,7 @@ ApeTime <- function (filename, format='double') {
 
 #' Parse TNT Tree
 #'
-#' Reads a tree from TNT's paranthetical output.
+#' Reads a tree from TNT's parenthetical output.
 #'
 #' Supports trees that have been written from TNT in parenthetical notation
 #' using `tsav*`.  If taxa have been saved using their names (`taxname=`),
@@ -203,7 +203,7 @@ ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
   tokens
 }
 
-#' @param tokens Vector of character strings correponding to phylogenetic
+#' @param tokens Vector of character strings corresponding to phylogenetic
 #'  tokens.
 #' @describeIn ExtractTaxa Extract tokens from a string
 #' @export

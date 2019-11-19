@@ -14,7 +14,7 @@ in.Splits(x, table, incomparables = NULL)
 For historical reasons, \code{FALSE} is equivalent to \code{NULL}.}
 }
 \value{
-A logical vector specifing which of the splits in \code{x} are present
+A logical vector specifying which of the splits in \code{x} are present
 in \code{table}.
 }
 \description{

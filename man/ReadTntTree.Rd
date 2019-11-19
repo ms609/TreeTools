@@ -33,7 +33,7 @@ format output by TNT.}
 a tree of class \code{phylo}.
 }
 \description{
-Reads a tree from TNT's paranthetical output.
+Reads a tree from TNT's parenthetical output.
 }
 \details{
 Supports trees that have been written from TNT in parenthetical notation
