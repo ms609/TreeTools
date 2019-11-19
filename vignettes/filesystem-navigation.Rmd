@@ -45,4 +45,4 @@ filename <- "tree.nex"
 ## What next?
 
 Now you know how to locate files, you might want to load a
-[dataset](load-data.Rmd) or [phylogenetic tree](load-trees.Rmd) into R.
+[dataset](load-data.html) or [phylogenetic tree](load-trees.html) into R.

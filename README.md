@@ -16,6 +16,9 @@ phylogenetic trees.  It complements packages such as
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 
+Version 0.1.0 is a pre-release; some functionality may change in version 1.0.0,
+due early 2020.
+
 # Installation
 
 Install and load the library from CRAN as follows:

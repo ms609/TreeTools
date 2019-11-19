@@ -101,6 +101,7 @@ CollapseNode <- function (tree, nodes) {
   tree$Nnode <- tree$Nnode - length(nodes)
 
   # TODO renumber nodes sequentially
+  # TODO should probably re-write this in C++.
   tree
 }
 

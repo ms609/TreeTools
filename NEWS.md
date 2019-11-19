@@ -1,3 +1,4 @@
-# TreeTools 1.0.0
+# TreeTools 0.1.0
 
-- Spun out of [TreeSearch](https://ms609.github.io/TreeSearch) package
+- Pre-release version spun out of [TreeSearch](https://ms609.github.io/TreeSearch)
+  package.  Some functionality is subject to change.
