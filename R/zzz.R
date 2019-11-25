@@ -9,7 +9,6 @@ release_questions <- function() {
     "Is the code free of #TODOs?",
     "Have you checked the Vignettes for sanity?",
     "Have you refreshed the package meta with codemetar::write_codemeta()?",
-    "Have you pkgdown::build_site()d (if not done by Travis)?",
     "Have you updated the version number in .zenodo.json, NEWS & DESCRIPTION?"
   )
 }

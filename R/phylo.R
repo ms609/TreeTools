@@ -224,14 +224,17 @@ AddTip <- function (tree,
 #' the trees produced by adding `label` to each edge of `tree` in turn.
 #'
 #' @examples
+#' oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
+#'
 #' backbone <- BalancedTree(4)
 #' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
-#' par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 #' lapply(additions, plot)
 #'
-#' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 #' par(mfrow=c(2, 3))
+#' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 #' lapply(additions, plot)
+#'
+#' par(oldPar)
 #'
 #' @export
 AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {

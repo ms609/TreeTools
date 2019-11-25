@@ -2,7 +2,7 @@
     "description": "An R package for creating, modifying and analysing phylogenetic trees.",
     "license": "gpl-3.0",
     "title": "TreeTools: Create, modify and analyse phylogenetic trees",
-    "version": "v0.1.0",
+    "version": "v0.1.1",
     "upload_type": "software",
     "creators": [
         {

@@ -47,14 +47,17 @@ single-taxon trees.
   plot(tree <- rtree(10, br=NULL)); nodelabels(); nodelabels(15, 15, bg='green'); dev.new()
   plot(AddTip(tree, 15, 'NEW_TIP'))
 }
+oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
+
 backbone <- BalancedTree(4)
 additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
-par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 lapply(additions, plot)
 
-additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 par(mfrow=c(2, 3))
+additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 lapply(additions, plot)
+
+par(oldPar)
 
 }
 \seealso{

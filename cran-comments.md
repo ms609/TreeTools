@@ -12,6 +12,34 @@ There was one NOTE:
 
 This is a new submission, maintained by Martin R. Smith <martin.smith@durham.ac.uk>.
 
+## Response to CRAN comments (Martina Schmirl, 2019-11-25)
+If there are references describing the methods in your package, please
+add these in the description field of your DESCRIPTION file [...]
+
+> This is a workhorse package and does not pertain to a published study;
+> no references are relevant.
+
+Please always make sure to reset to user's options, wd or par after you
+changed it in examples and vignettes.
+
+> Fixed.
+
+\dontrun{} should be only used if the example really cannot be executed
+(e.g. because of missing additional software, missing API keys, ...) by
+the user. That's why wrapping examples in \dontrun{} adds the comment
+("# Not run:") as a warning for the user.
+Examples of ReadTntTree.Rd are wrapped in \dontrun{}.
+Does not seem necessary.
+Please add small files needed for the examples in the inst/extdata
+subfolder of your package and use system.file() to get the correct
+package path.
+Please unwrap the examples if they are executable in < 5 sec, or replace
+\dontrun{} with \donttest{}.
+
+> I have included files in inst/extdata to reduce the amount of code within
+> \dontrun{}; now only examples that rely on a local system path that will
+> not be present on a user's machine are \dontrun{}ed.
+
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
