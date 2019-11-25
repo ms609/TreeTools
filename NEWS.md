@@ -1,3 +1,8 @@
-# TreeTools 1.0.0
+# TreeTools 0.1.1
+ 
+- Documentation changes to satisfy CRAN submission requirements.
 
-- Spun out of [TreeSearch](https://ms609.github.io/TreeSearch) package
+# TreeTools 0.1.0
+
+- Pre-release version spun out of [TreeSearch](https://ms609.github.io/TreeSearch)
+  package.  Some functionality is subject to change.

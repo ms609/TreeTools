@@ -12,7 +12,7 @@ WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 \arguments{
 \item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
 
-\item{nTip}{Intger specifying number of tips (leaves).}
+\item{nTip}{Integer specifying number of tips (leaves).}
 }
 \value{
 Logical vector specifying whether each split in \code{splits} is trivial,

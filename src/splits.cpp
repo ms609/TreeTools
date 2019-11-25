@@ -8,7 +8,7 @@ const int BIN_SIZE = 8;
 
 // Edges must be listed in postorder
 // [[Rcpp::export]]
-RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip) {
+RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   if (edge.cols() != 2) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }

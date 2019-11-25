@@ -175,6 +175,4 @@ test_that('Tip labels are found', {
   expect_equal(t1..4, TipLabels(atList))
   expect_null(TipLabels(list()))
   expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4))))
-
-
 })

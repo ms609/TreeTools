@@ -1,0 +1,12 @@
+#NEXUS
+
+BEGIN DATA;
+  DIMENSIONS NTAX = 5 NCHAR = 7;
+	MATRIX
+	'taxon_a'  0000000
+	'taxon_b'  0000000
+	'taxon_c'  1111?00
+	'taxon_d'  111??11
+	'taxon_e'  1111?11
+	;
+ENDBLOCK;

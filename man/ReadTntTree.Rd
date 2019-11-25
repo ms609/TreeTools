@@ -33,7 +33,7 @@ format output by TNT.}
 a tree of class \code{phylo}.
 }
 \description{
-Reads a tree from TNT's paranthetical output.
+Reads a tree from TNT's parenthetical output.
 }
 \details{
 Supports trees that have been written from TNT in parenthetical notation
@@ -47,41 +47,61 @@ specify \code{tipLabels} to set manually.
 }
 \section{Functions}{
 \itemize{
-\item \code{TNTText2Tree}: Converts text representation of a tree in TNT to an object of class \code{phylo}
+\item \code{TNTText2Tree}: Converts text representation of a tree in TNT to an
+object of class \code{phylo}.
 }}
 
 \examples{
-{
-  \dontrun{
-  # TNT read a matrix from c:/myproject/tnt/coding1/dataset.nex
-  # The results of an analysis were written to c:/myproject/tnt/output/results1.tnt
+  # In the examples below, TNT has read a matrix from
+  # "c:/TreeTools/input/dataset.nex"
+  # The results of an analysis were written to
+  # "c:/TreeTools/output/results1.tnt"
+  #
   # results1.tnt will contain a hard-coded reference to
-  # "c:/myproject/tnt/coding1/dataset.nex"
+  # "c:/TreeTools/input/dataset.nex".
 
-  getwd() # Gives the current working directory
+  # On the original machine, it would be possible to read this hard-coded
+  # reference from results.tnt:
 
-  # Say that working directory is c:/myproject, which perhaps corresponds to a
-  # Git repository.
-  # This directory may be saved into another location by collaborators, or on a
-  # different filesystem by a continuous integration platform.
-
-  # Works on local machine but not elsewhere:
-  ReadTntTree('tnt/output/results1.tnt')
+  \dontrun{
+  # Works on original machine but not elsewhere:
+  ReadTntTree('output/results1.tnt')
 
   # Takes only the filename from the results
-  ReadTntTree('tnt/output.results1.tnt', 'tnt/coding1')
-
-  # Uses the last three elements of c:/myproject/tnt/coding1/dataset.nex
-  #                                               3     2       1
-  # '.' means "relative to the current directory", which is c:/myproject
-  ReadTntTree('tnt/output/results1.tnt', '.', 3)
-
-  # If the current working directory was c:/myproject/rscripts/testing,
-  # you could navigate up the directory path with '..':
-  ReadTntTree('../../tnt/output/results1.tnt', '../..', 3)
-
+  ReadTntTree('output/results1.tnt', 'input/dataset.nex')
   }
-}
+
+  # These datasets are provided with the `TreeTools` package, which will
+  # probably not be located at c:/TreeTools on your machine:
+
+  oldWD <- getwd() # Remember the current working directory
+  setwd(system.file(package = 'TreeTools'))
+
+  # If taxon names were saved within the file (using `taxname=` in TNT),
+  # then our job is easy:
+  ReadTntTree('extdata/output/named.tre')
+
+  # But if taxa were compressed to numbers (using `taxname-`), we need to
+  # look up the original matrix in order to dereference the tip names.
+  #
+  # We need to extract the relevant file path from the end of the
+  # hard-coded path in the original file.
+  #
+  # We are interested in the last two elements of
+  # c:/TreeTools/input/dataset.nex
+  #                2      1
+  #
+  # '.' means "relative to the current directory"
+  ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
+
+  # If working in a lower subdirectory
+  setwd('extdata/otherfolder')
+
+  # then it will be necessary to navigate up the directory path with '..':
+  ReadTntTree('../output/numbered.tre', '..', 2)
+
+
+  setwd(oldWD) # Restore original working directory
 
 }
 \author{

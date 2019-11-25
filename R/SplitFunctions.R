@@ -132,7 +132,7 @@ CompatibleSplits <- function (splits, splits2) {
 #'
 #' @template split12Params
 #'
-#' @return The proportion of permissable informative splits
+#' @return The proportion of permissible informative splits
 #' splitting the terminals into bipartitions of the sizes given,
 #'  that match as well as `split1` and `split2` do.
 #'

@@ -19,7 +19,7 @@ NexusTokens(tokens, character_num = NULL, session = NULL)
 \item{session}{(optionally) a Shiny session with a numericInput named character_num
 whose maximum should be updated.}
 
-\item{tokens}{Vector of character strings correponding to phylogenetic
+\item{tokens}{Vector of character strings corresponding to phylogenetic
 tokens.}
 }
 \value{

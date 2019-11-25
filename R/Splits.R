@@ -474,7 +474,7 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' `x` matching a value in this vector is assigned the `nomatch` value.
 #' For historical reasons, `FALSE` is equivalent to `NULL`.
 #'
-#' @return A logical vector specifing which of the splits in `x` are present
+#' @return A logical vector specifying which of the splits in `x` are present
 #' in `table`.
 #'
 #' @template MRS

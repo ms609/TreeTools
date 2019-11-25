@@ -28,9 +28,9 @@ polytomies.
 \examples{
   library(ape)
   set.seed(1)
+  oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
 
   tree <- rtree(7)
-  par(mfrow=c(2, 1), mar=rep(0.5, 4))
   plot(tree)
   nodelabels()
   edgelabels(round(tree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
@@ -39,6 +39,8 @@ polytomies.
   plot(newTree)
   nodelabels()
   edgelabels(round(newTree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
+
+  par(oldPar)
 
 }
 \author{
