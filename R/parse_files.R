@@ -103,7 +103,7 @@ ApeTime <- function (filename, format='double') {
 #'   ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
 #'
 #'   # If working in a lower subdirectory
-#'   setwd('extdata/otherfolder')
+#'   setwd('./extdata/otherfolder')
 #'
 #'   # then it will be necessary to navigate up the directory path with '..':
 #'   ReadTntTree('../output/numbered.tre', '..', 2)
