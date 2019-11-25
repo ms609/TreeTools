@@ -24,12 +24,14 @@ test_that("TNT trees parsed correctly", {
   expect_equal('Flustra', namedLabels[1])
   expect_equal(74L, length(namedLabels))
 
-
+  oldWD <- getwd()
+  setwd(system.file(package = 'TreeTools'))
   expect_equal(paste0('taxon_', letters[1:5]),
     ReadTntTree('extdata/output/numbered.tre', './extdata', 2)[[1]]$tip.label)
 
   expect_equal(paste0('taxon_', letters[1:5]),
     ReadTntTree('extdata/output/named.tre')$tip.label)
+  setwd(oldWD)
 
 })
 

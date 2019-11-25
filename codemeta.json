@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
   "description": "Core functions for the creation, modification and analysis of \n  phylogenetic trees.",
@@ -8,7 +11,7 @@
   "relatedLink": "https://ms609.github.io/TreeTools",
   "issueTracker": "https://github.com/ms609/TreeTools/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -184,8 +187,11 @@
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "fileSize": "483.833KB",
-  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
+  "fileSize": "484.705KB",
+  "contIntegration": [
+    "https://travis-ci.org/ms609/TreeTools",
+    "https://codecov.io/gh/ms609/TreeTools"
+  ],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
