@@ -30,12 +30,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_edge_to_splits
-RawMatrix cpp_edge_to_splits(NumericMatrix edge, IntegerVector nTip);
+RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits(edge, nTip));
     return rcpp_result_gen;
