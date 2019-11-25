@@ -78,7 +78,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -157,8 +157,13 @@ Calling this C function directly is approximately twice as fast as using
 
 <span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
-<span class='fu'>PostorderEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>), <span class='kw'>nNode</span> <span class='kw'>=</span> <span class='no'>nEdge</span>/<span class='fl'>2L</span>,
-  <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='no'>nNode</span> + <span class='fl'>1L</span>)
+<span class='fu'>PostorderEdges</span>(
+  <span class='no'>parent</span>,
+  <span class='no'>child</span>,
+  <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>),
+  <span class='kw'>nNode</span> <span class='kw'>=</span> <span class='no'>nEdge</span>/<span class='fl'>2L</span>,
+  <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='no'>nNode</span> + <span class='fl'>1L</span>
+)
 
 <span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
@@ -173,7 +178,7 @@ Calling this C function directly is approximately twice as fast as using
     </tr>
     <tr>
       <th>nTip</th>
-      <td><p>Intger specifying number of tips (leaves).</p></td>
+      <td><p>Integer specifying number of tips (leaves).</p></td>
     </tr>
     <tr>
       <th>edge</th>
@@ -188,10 +193,6 @@ Calling this C function directly is approximately twice as fast as using
       <th>child</th>
       <td><p>the second column of the edge matrix of a tree of class
 <code>phylo</code>, i.e. <code>tree$edge[, 2]</code></p></td>
-    </tr>
-    <tr>
-      <th>nTip</th>
-      <td><p>Intger specifying number of tips (leaves).</p></td>
     </tr>
     </table>
 
@@ -227,9 +228,10 @@ sorted into preorder, until each edge has been visited.</p>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other C wrappers: <code><a href='NeworderPhylo.html'>NeworderPhylo</a></code>,
-  <code><a href='NeworderPruningwise.html'>NeworderPruningwise</a></code>,
-  <code><a href='RenumberTree.html'>RenumberTree</a></code></p></div>
+    <div class='dont-index'><p>Other C wrappers: 
+<code><a href='NeworderPhylo.html'>NeworderPhylo</a>()</code>,
+<code><a href='NeworderPruningwise.html'>NeworderPruningwise</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

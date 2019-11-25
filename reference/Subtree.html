@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -174,15 +174,17 @@ extracted from the original tree.</p>
 Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree manipulation: <code><a href='AddTip.html'>AddTip</a></code>,
-  <code><a href='Renumber.html'>Renumber</a></code>, <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a></code></p></div>
+    <div class='dont-index'><p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>{
 <span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Cladewise.html'>Preorder</a></span>(<span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>20</span>, <span class='kw'>br</span><span class='kw'>=</span><span class='kw'>NULL</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>); <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(); <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>33</span>, <span class='fl'>33</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'yellow'</span>); <span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>dev.new</a></span>()
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>Subtree</span>(<span class='no'>tree</span>, <span class='fl'>33</span>))
-}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots768.pdf")</span></div><div class='input'>
+}</div><div class='output co'>#&gt; <span class='message'>dev.new(): using pdf(file="Rplots796.pdf")</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

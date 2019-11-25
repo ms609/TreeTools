@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Parse TNT Tree — ReadTntTree" />
-<meta property="og:description" content="Reads a tree from TNT's paranthetical output." />
+<meta property="og:description" content="Reads a tree from TNT's parenthetical output." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -144,11 +144,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Reads a tree from TNT's paranthetical output.</p>
+    <p>Reads a tree from TNT's parenthetical output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ReadTntTree</span>(<span class='no'>filename</span>, <span class='kw'>relativePath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keepEnd</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>ReadTntTree</span>(<span class='no'>filename</span>, <span class='kw'>relativePath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keepEnd</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>TNTText2Tree</span>(<span class='no'>treeText</span>)</pre>
 
@@ -202,41 +201,64 @@ specify <code>tipLabels</code> to set manually.</p>
 
     
 <ul>
-<li><p><code>TNTText2Tree</code>: Converts text representation of a tree in TNT to an object of class <code>phylo</code></p></li>
+<li><p><code>TNTText2Tree</code>: Converts text representation of a tree in TNT to an
+object of class <code>phylo</code>.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-  <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-  <span class='co'># TNT read a matrix from c:/myproject/tnt/coding1/dataset.nex</span>
-  <span class='co'># The results of an analysis were written to c:/myproject/tnt/output/results1.tnt</span>
+    <pre class="examples"><div class='input'>  <span class='co'># In the examples below, TNT has read a matrix from</span>
+  <span class='co'># "c:/TreeTools/input/dataset.nex"</span>
+  <span class='co'># The results of an analysis were written to</span>
+  <span class='co'># "c:/TreeTools/output/results1.tnt"</span>
+  <span class='co'>#</span>
   <span class='co'># results1.tnt will contain a hard-coded reference to</span>
-  <span class='co'># "c:/myproject/tnt/coding1/dataset.nex"</span>
+  <span class='co'># "c:/TreeTools/input/dataset.nex".</span>
 
-  <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>() <span class='co'># Gives the current working directory</span>
+  <span class='co'># On the original machine, it would be possible to read this hard-coded</span>
+  <span class='co'># reference from results.tnt:</span>
 
-  <span class='co'># Say that working directory is c:/myproject, which perhaps corresponds to a</span>
-  <span class='co'># Git repository.</span>
-  <span class='co'># This directory may be saved into another location by collaborators, or on a</span>
-  <span class='co'># different filesystem by a continuous integration platform.</span>
-
-  <span class='co'># Works on local machine but not elsewhere:</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'tnt/output/results1.tnt'</span>)
+  <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+  <span class='co'># Works on original machine but not elsewhere:</span>
+  <span class='fu'>ReadTntTree</span>(<span class='st'>'output/results1.tnt'</span>)
 
   <span class='co'># Takes only the filename from the results</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'tnt/output.results1.tnt'</span>, <span class='st'>'tnt/coding1'</span>)
-
-  <span class='co'># Uses the last three elements of c:/myproject/tnt/coding1/dataset.nex</span>
-  <span class='co'>#                                               3     2       1</span>
-  <span class='co'># '.' means "relative to the current directory", which is c:/myproject</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'tnt/output/results1.tnt'</span>, <span class='st'>'.'</span>, <span class='fl'>3</span>)
-
-  <span class='co'># If the current working directory was c:/myproject/rscripts/testing,</span>
-  <span class='co'># you could navigate up the directory path with '..':</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'../../tnt/output/results1.tnt'</span>, <span class='st'>'../..'</span>, <span class='fl'>3</span>)
-
+  <span class='fu'>ReadTntTree</span>(<span class='st'>'output/results1.tnt'</span>, <span class='st'>'input/dataset.nex'</span>)
   }
-}</div></pre>
+
+  <span class='co'># These datasets are provided with the `TreeTools` package, which will</span>
+  <span class='co'># probably not be located at c:/TreeTools on your machine:</span>
+
+  <span class='no'>oldWD</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>() <span class='co'># Remember the current working directory</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'TreeTools'</span>))
+
+  <span class='co'># If taxon names were saved within the file (using `taxname=` in TNT),</span>
+  <span class='co'># then our job is easy:</span>
+  <span class='fu'>ReadTntTree</span>(<span class='st'>'extdata/output/named.tre'</span>)</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; [1] "taxon_a" "taxon_b" "taxon_c" "taxon_d" "taxon_e"
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'>
+  <span class='co'># But if taxa were compressed to numbers (using `taxname-`), we need to</span>
+  <span class='co'># look up the original matrix in order to dereference the tip names.</span>
+  <span class='co'>#</span>
+  <span class='co'># We need to extract the relevant file path from the end of the</span>
+  <span class='co'># hard-coded path in the original file.</span>
+  <span class='co'>#</span>
+  <span class='co'># We are interested in the last two elements of</span>
+  <span class='co'># c:/TreeTools/input/dataset.nex</span>
+  <span class='co'>#                2      1</span>
+  <span class='co'>#</span>
+  <span class='co'># '.' means "relative to the current directory"</span>
+  <span class='fu'>ReadTntTree</span>(<span class='st'>'extdata/output/numbered.tre'</span>, <span class='st'>'./extdata'</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
+  <span class='co'># If working in a lower subdirectory</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>'./extdata/otherfolder'</span>)
+
+  <span class='co'># then it will be necessary to navigate up the directory path with '..':</span>
+  <span class='fu'>ReadTntTree</span>(<span class='st'>'../output/numbered.tre'</span>, <span class='st'>'..'</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
+
+  <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>oldWD</span>) <span class='co'># Restore original working directory</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

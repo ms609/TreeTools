@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -147,14 +147,35 @@
     <p>Extract character data from a phyDat object as a string</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PhyToString</span>(<span class='no'>phy</span>, <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>PhyToString</span>(
+  <span class='no'>phy</span>,
+  <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>,
+  <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>PhyDatToString</span>(<span class='no'>phy</span>, <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>PhyDatToString</span>(
+  <span class='no'>phy</span>,
+  <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>,
+  <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
-<span class='fu'>PhydatToString</span>(<span class='no'>phy</span>, <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>, <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>PhydatToString</span>(
+  <span class='no'>phy</span>,
+  <span class='kw'>parentheses</span> <span class='kw'>=</span> <span class='st'>"{"</span>,
+  <span class='kw'>collapse</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>ps</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>useIndex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>byTaxon</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +187,7 @@
     <tr>
       <th>parentheses</th>
       <td><p>Character specifying format of parentheses with which
-to surround ambiguous tokens.  Choose from: <code>{</code> (default), <code>[</code>, <code>(</code>, <code>&lt;</code>.</p></td>
+to surround ambiguous tokens.  Choose from: <code>\{</code> (default), <code>[</code>, <code>(</code>, <code>&lt;</code>.</p></td>
     </tr>
     <tr>
       <th>collapse</th>
