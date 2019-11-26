@@ -7,8 +7,12 @@
 #' @template MRS
 #' @keywords internal
 GetTipNames <- function (tips) {
-  if (length(tips) == 1L && mode(tips) == 'numeric') {
-    tips <- paste0('t', seq_len(tips))
+  if (mode(tips) == 'numeric') {
+    if (length(tips) == 1L) {
+      tips <- paste0('t', seq_len(tips))
+    } else {
+      tips <- as.character(tips)
+    }
   } else if (class(tips) == 'phyDat') {
     tips <- names(tips)
   } else if (class(tips) == 'phylo') {
@@ -68,7 +72,7 @@ PectinateTree <- function (tips) {
   structure(list(
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
-    tip.label = as.character(tips)
+    tip.label = tips
   ), order = 'cladewise', class='phylo')
 }
 
