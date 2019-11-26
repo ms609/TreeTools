@@ -68,7 +68,7 @@ PectinateTree <- function (tips) {
   structure(list(
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
-    tip.label = tips
+    tip.label = as.character(tips)
   ), order = 'cladewise', class='phylo')
 }
 
