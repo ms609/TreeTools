@@ -29,14 +29,9 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
     if (where >= i) {
       where += prime + 2 - i;
     }
-    /*Rcout << i << ": " << tree_id << "%" << base << " => " << where << "\n";*/
 
-    /*Rcout  << "   Re-parenting edge " << i_prime << " to parent of " << where
-             << ", " << edge(where) << "\n";*/
     edge(i_prime) = edge(where);
-    /*Rcout  << "   Re-parenting edge " << i << " to " << i_prime_r << "\n";*/
     edge(i) = i_prime_r;
-    /*Rcout  << "   Re-parenting edge " << where << " to " << i_prime_r << "\n";*/
     edge(where) = i_prime_r;
 
     tree_id /= base;
@@ -95,12 +90,16 @@ double edge_to_num(IntegerVector parent, IntegerVector child,
       }
     }
   }
-
   double ret = 0;
   int multiplier = 1;
   for (unsigned int i = 3; i < n_tip; i++) {
     unsigned int insertion_edge = index[i];
-    ret += (((insertion_edge > n_tip) ? insertion_edge + 1 - n_tip : insertion_edge - 1) * multiplier);
+    if (insertion_edge < n_tip) {
+      --insertion_edge;
+    } else {
+      insertion_edge += i - (n_tip + 3);
+    }
+    ret += insertion_edge * multiplier;
     multiplier *= (i + i - 3);
   }
   return (ret);
