@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// int_to_parent
+IntegerVector int_to_parent(NumericVector n, IntegerVector nTip);
+RcppExport SEXP _TreeTools_int_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(int_to_parent(n, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // phangorn_bipCPP
 List phangorn_bipCPP(IntegerMatrix orig, int nTips);
 RcppExport SEXP _TreeTools_phangorn_bipCPP(SEXP origSEXP, SEXP nTipsSEXP) {

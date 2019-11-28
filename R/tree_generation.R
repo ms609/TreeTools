@@ -169,3 +169,16 @@ EnforceOutgroup <- function (tree, outgroup) {
   result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1), outgroup, resolve.root=TRUE)
   RenumberTips(Renumber(result), taxa)
 }
+
+#' @param nTip Integer specifying number of tips in the tree
+#' @param tipLabelsParam
+#' @template MRS
+#' @export
+as.phylo.numeric <- function (n, nTip, tipLabels = paste0('t', seq_len(nTip))) {
+  edge <- RenumberEdges(int_to_parent(n, nTip), seq_len(nTip + nTip - 2L))
+  structure(list(edge = do.call(cbind, edge),
+                 tip.label = tipLabels,
+                 Nnode = nTip - 1L),
+            order = 'postorder',
+            class = 'phylo')
+}

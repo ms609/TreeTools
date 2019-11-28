@@ -8,6 +8,7 @@
 extern SEXP _TreeTools_phangorn_bipCPP(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP);
 extern SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
+extern SEXP _TreeTools_int_to_parent(SEXP, SEXP);
 
 static const R_CMethodDef cMethods[] = {
   {"ape_neworder_phylo",       (DL_FUNC) &ape_neworder_phylo, 6, ape_neworder_phylo_t},
@@ -17,6 +18,7 @@ static const R_CMethodDef cMethods[] = {
 };
 
 static const R_CallMethodDef callMethods[] = {
+  {"_TreeTools_int_to_parent", (DL_FUNC) &_TreeTools_int_to_parent, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
   {"_TreeTools_phangorn_bipCPP", (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
   {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
