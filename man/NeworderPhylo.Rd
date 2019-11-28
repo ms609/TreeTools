@@ -2,13 +2,11 @@
 % Please edit documentation in R/tree_numbering.R
 \name{NeworderPhylo}
 \alias{NeworderPhylo}
-\title{neworder_phylo
-Wrapper for the ape function}
+\title{neworder_phylo}
 \usage{
 NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
 }
 \description{
-neworder_phylo
 Wrapper for the ape function
 }
 \seealso{

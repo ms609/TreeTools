@@ -2,13 +2,11 @@
 % Please edit documentation in R/tree_numbering.R
 \name{NeworderPruningwise}
 \alias{NeworderPruningwise}
-\title{neworder_pruningwise
-Wrapper for the ape function}
+\title{neworder_pruningwise}
 \usage{
 NeworderPruningwise(nTip, nb.node, parent, child, nb.edge)
 }
 \description{
-neworder_pruningwise
 Wrapper for the ape function
 }
 \seealso{

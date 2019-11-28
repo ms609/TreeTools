@@ -1,4 +1,5 @@
 #' neworder_phylo
+#'
 #' Wrapper for the ape function
 #' @family C wrappers
 #' @keywords internal
@@ -11,6 +12,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 }
 
 #' neworder_pruningwise
+#'
 #' Wrapper for the ape function
 #' @family C wrappers
 #' @keywords internal
@@ -22,8 +24,11 @@ NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
 }
 
 #' Renumber a tree
+#'
 #' Order edges and number nodes
+#'
 #' Wrapper for the C function `preorder_edges_and_nodes`
+#'
 #' @return an edge matrix for a tree in following the usual preorder convention
 #'  for edge and node numbering
 #' @family C wrappers
