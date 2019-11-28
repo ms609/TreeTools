@@ -8,5 +8,6 @@ test_that('Trees generated okay', {
   }
   lapply(0:104, Test, 6)
   lapply(seq_len(NUnrooted(7)) - 1L, Test, 7)
-
+  lapply(sample(seq_len(NUnrooted(8)) - 1L, 100), Test, 8)
+  lapply(sample(seq_len(NUnrooted(10)) - 1L, 100), Test, 10)
 })
