@@ -1,6 +1,7 @@
 #' Reorder edges of a phylogenetic tree
 #'
-#' Wrappers for the C functions called by [reorder.phylo][ape:reorder.phylo].
+#' Wrappers for the C functions called by
+#' \code{ape::\link[ape:reorder.phylo]{reorder.phylo}}.
 #' These call the C functions directly, so are faster -- but don't perform
 #' as many checks on user input.  Bad input could crash R.
 #'
@@ -57,7 +58,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #' renumbers internral nodes and orders edges in preorder, in an order
 #' guaranteed to be identical for any tree of an equivalent topology.
 #' At each node, child edges are arranged from left to right according to the
-#' lowest-numbered tip in the subtree subtended by each edge.#'
+#' lowest-numbered tip in the subtree subtended by each edge.
 #'
 #' @template treeParent
 #' @template treeChild

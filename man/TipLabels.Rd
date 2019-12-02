@@ -44,7 +44,7 @@ Character vector listing tip names.
 \description{
 Extracts tip labels from an object.  If the object is a single integer,
 \code{TipLabels} will return a vector \code{t1}, \code{t2} ... \code{tn}, to match
-the default of \link{ape:rtree}.
+the default of \code{ape::\link{rtree}}.
 }
 \seealso{
 Other Splits operations: \code{\link{NSplits}},

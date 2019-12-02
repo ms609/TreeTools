@@ -210,7 +210,7 @@ SplitMatchProbability <- function (split1, split2) {
 #'
 #' Extracts tip labels from an object.  If the object is a single integer,
 #' `TipLabels` will return a vector `t1`, `t2` ... `tn`, to match
-#' the default of [ape:rtree].
+#' the default of \code{ape::\link{rtree}}.
 #'
 #' @param x An object of a supported class (see Usage section).
 #' @return A character vector listing the tip labels for the specified object.

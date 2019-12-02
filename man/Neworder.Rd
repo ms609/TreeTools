@@ -31,7 +31,8 @@ pruningwise order of edges within a tree.
 of edges under the ordering sequence specified by \code{whichwise}.
 }
 \description{
-Wrappers for the C functions called by \link[=ape:reorder.phylo]{reorder.phylo}.
+Wrappers for the C functions called by
+\code{ape::\link[ape:reorder.phylo]{reorder.phylo}}.
 These call the C functions directly, so are faster -- but don't perform
 as many checks on user input.  Bad input could crash R.
 }

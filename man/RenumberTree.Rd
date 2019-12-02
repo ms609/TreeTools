@@ -28,7 +28,7 @@ Wrapper for the C function \code{preorder_edges_and_nodes}, which
 renumbers internral nodes and orders edges in preorder, in an order
 guaranteed to be identical for any tree of an equivalent topology.
 At each node, child edges are arranged from left to right according to the
-lowest-numbered tip in the subtree subtended by each edge.#'
+lowest-numbered tip in the subtree subtended by each edge.
 }
 \section{Functions}{
 \itemize{
