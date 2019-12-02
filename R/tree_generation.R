@@ -145,7 +145,11 @@ EnforceOutgroup <- function (tree, outgroup) {
   RenumberTips(Renumber(result), taxa)
 }
 
+
 #' Unique integer indices for bifurcating tree topologies
+#'
+#' Functions converting phylogenetic trees to and from their unique decimal
+#' representation, per details (below).
 #'
 #' There are `NUnrooted(n)` unrooted trees with _n_ tips.
 #' As such, each _n_-tip tree can be uniquely identifyed by a non-negative
@@ -212,14 +216,20 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' If we chose option 0 for the next two additions, we could specify this tree
 #' with the mixed-base number 0021.  We can convert this into decimal:
 #'
-#' 0 × (1 × 3 × 5 × 9) +
-#' 0 × (1 × 3 × 5) +
-#' 3 × (1 × 3) +
-#' 1 × (1)
+#' 0 &times; (1 &times; 3 &times; 5 &times; 9) +
+#'
+#' 0 &times; (1 &times; 3 &times; 5) +
+#'
+#' 3 &times; (1 &times; 3) +
+#'
+#' 1 &times; (1)
+#'
 #' = 10
 #'
-#' Note that the hyperexponential nature of tree space means that there are
-#' > 2^30 unique 12-tip trees.  As
+#' Note that the hyperexponential nature of tree space means that there are &gt;
+#' 2^30 unique 12-tip trees.  As integers &gt; 2^31 are not supported by R,
+#' numbers representing larger trees are represented internally as a vector of
+#' nine-digit integer 'chunks'.
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of tips in the tree.
@@ -235,8 +245,20 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' # Larger trees:
 #' as.numeric.phylo(BalancedTree(19))
 #'
+#' # If > 9 digits, represent the tree number as a string.
+#' representation <- as.TreeNumber("1234567890123", 14)
+#' tree <- as.phylo(representation)
+#'
+#' @exportClass TreeNumber
+#' @name TreeNumber
+#
+
+#' @rdname TreeNumber
 #' @template MRS
-#' @references Based on a concept by John Tromp (1995)
+#' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
+#'
+#' \insertRef{Li1996}[TreeTools]
+#'
 #' @importFrom ape as.phylo
 #' @export
 as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
@@ -252,15 +274,20 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
 
 as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
 
-#' @rdname as.phylo.numeric
+
+#' @rdname TreeNumber
 #'
 #' @return `as.TreeNumber` returns an object of class `TreeNumber`,
-#' which comprises numeric vector, whose elements
-#' represent digits of the decimal integer corresponding to the tree topology
-#' (in big endian order), with attributes `nTip` and `tip.labels`.
+#' which comprises a numeric vector, whose elements represent successive
+#' nine-digit chunks of the decimal integer corresponding to the tree topology
+#' (in big endian order).  The `TreeNumber` object has attributes
+#' `nTip` and `tip.labels`.
+as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
+
+#' @rdname TreeNumber
 #' @importFrom ape root
 #' @export
-as.TreeNumber <- function (x) {
+as.TreeNumber.phylo <- function (x, ...) {
   x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
@@ -268,6 +295,20 @@ as.TreeNumber <- function (x) {
   structure(edge_to_num(edge[[1]], edge[[2]], nTip),
             nTip = nTip,
             tip.labels = TipLabels(x),
+            class = 'TreeNumber')
+}
+
+#' @rdname TreeNumber
+#' @export
+as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) {
+  len <- nchar(x)
+  ends <- rev(len - (seq_len((len / 9L) + 1L) - 1L) * 9L)
+  starts <- pmax(1L, ends - 8L)
+
+  # Return:
+  structure(as.integer(substring(x, starts, ends)),
+            nTip = nTip,
+            tip.labels = tipLabels,
             class = 'TreeNumber')
 }
 
