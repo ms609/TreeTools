@@ -9,10 +9,17 @@ const unsigned int MAX_SHAPE_TIP = 200,
 unsigned int n_shapes_cache[MAX_SHAPE_TIP + 1] = {};
 
 unsigned int n_shapes (unsigned int n) {
-  if (n <= 4) return 1;
   if (!n_shapes_cache[n]) {
-    for (unsigned int n_larger = n - 1; n_larger >= n / 2; n_larger --) {
-      n_shapes_cache[n] += n_shapes(n_larger);
+    if (n < 4) {
+      n_shapes_cache[n] = 1;
+    } else {
+      for (unsigned int n_smaller = 1; n_smaller < ((n + 1) / 2); n_smaller++) {
+        const unsigned int n_larger = n - n_smaller;
+        n_shapes_cache[n] += (n_shapes(n_larger) * n_shapes(n_smaller));
+      }
+      if (n % 2 == 0) {
+        n_shapes_cache[n] += ((n_shapes(n/2) * (n_shapes(n/2) + 1)) / 2);
+      }
     }
   }
   return n_shapes_cache[n];
