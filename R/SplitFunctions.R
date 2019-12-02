@@ -250,6 +250,28 @@ TipLabels.multiPhylo <- function (x) {
 #' @export
 TipLabels.character <- function (x) x
 
+#' Extract tip names
+#'
+#' Extracts tip labels from a dataset whose class may be one of `phyDat`,
+#' `Splits`, `phylo` or `list`.
+#'
+#' If `tips` is numeric, will return a vector `t1`, `t2` ... `tn`, to match
+#' the default of [ape:rtree].
+#'
+#' @template tipsForTreeGeneration
+#'
+#' @return Character vector listing tip names.
+#'
+#' @template MRS
+#' @keywords internal
+TipLabels.numeric <- function (x) {
+  if (length(x) == 1L) paste0('t', seq_len(x)) else x
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.phyDat <- function (x) names(x)
+
 #' Distributions of tips consistent with a partition pair
 #'
 #' Number of terminal arrangements matching a specified configuration of

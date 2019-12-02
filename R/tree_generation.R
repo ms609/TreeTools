@@ -1,24 +1,3 @@
-#' Extract tip names from a dataset of unknown class
-#'
-#' @template tipsForTreeGeneration
-#'
-#' @return Character vector listing tip names.
-#'
-#' @template MRS
-#' @keywords internal
-GetTipNames <- function (tips) {
-  if (length(tips) == 1L && mode(tips) == 'numeric') {
-    tips <- paste0('t', seq_len(tips))
-  } else if (class(tips) == 'phyDat') {
-    tips <- names(tips)
-  } else if (class(tips) == 'phylo') {
-    tips <- tips$tip.label
-  }
-
-  # Return:
-  tips
-}
-
 #' Generate random tree topology
 #'
 #' @template tipsForTreeGeneration
@@ -30,7 +9,7 @@ GetTipNames <- function (tips) {
 #' @family tree generation functions
 #' @export
 RandomTree <- function (tips, root = FALSE) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
   nTips <- length(tips)
   tree <- rtree(nTips, tip.label=tips, br=NULL)
   if (root != FALSE) {
@@ -52,7 +31,7 @@ RandomTree <- function (tips, root = FALSE) {
 #' @template MRS
 #' @export
 PectinateTree <- function (tips) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
   nTips <- length(tips)
 
   nEdge <- nTips + nTips - 2L
@@ -84,7 +63,7 @@ PectinateTree <- function (tips) {
 #' @importFrom ape read.tree
 #' @export
 BalancedTree <- function (tips) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
 
   # Return:
   read.tree(text=paste0(BalancedBit(tips), ';'))
