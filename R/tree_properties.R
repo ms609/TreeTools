@@ -59,7 +59,8 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @param edge Number of an edge
 #' @template treeParent
 #' @template treeChild
-#' @return a logical vector identifying whether each edge is the edge that is ancestral to the given edge.
+#' @return a logical vector identifying whether each edge is the edge that is
+#' ancestral to the given edge.
 #' @keywords internal
 #' @family tree navigation
 #' @export

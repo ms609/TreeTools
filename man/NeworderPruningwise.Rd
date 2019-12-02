@@ -2,18 +2,47 @@
 % Please edit documentation in R/tree_numbering.R
 \name{NeworderPruningwise}
 \alias{NeworderPruningwise}
-\title{neworder_pruningwise
-Wrapper for the ape function}
+\title{Reorder edges in pruningwise}
 \usage{
-NeworderPruningwise(nTip, nb.node, parent, child, nb.edge)
+NeworderPruningwise(nTip, nNode, parent, child, nEdge)
+}
+\arguments{
+\item{nTip, nNode, nEdge}{Integer specifying the number of tips, nodes
+and edges in the input tree.}
+
+\item{parent}{the first column of the edge matrix of a tree of class
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+
+\item{child}{the second column of the edge matrix of a tree of class
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+}
+\value{
+\code{NeworderPruningwise} returns an integer vector specifying the
+pruningwise order of edges within a tree.
 }
 \description{
-neworder_pruningwise
-Wrapper for the ape function
+A Wrapper for the ape C function \code{neworder_pruningwise}.
+For details, or a slower implementation with more checks,
+see \link[=ape:reorder.phylo]{reorder.phylo}.
+}
+\examples{
+nTip <- 8L
+tree <- BalancedTree(nTip)
+edge <- tree$edge
+order <- NeworderPruningwise(nTip, tree$nNode, edge[, 1], edge[, 2],
+                             dim(edge)[1])
+tree$edge <- tree$edge[order, ]
+
 }
 \seealso{
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{NeworderPhylo}}, \code{\link{RenumberTree}}
+}
+\author{
+\itemize{
+\item C algorithm: Emmanuel Paradis
+\item R wrapper: Martin R. Smith
+}
 }
 \concept{C wrappers}
 \keyword{internal}
