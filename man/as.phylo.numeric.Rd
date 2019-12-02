@@ -2,10 +2,13 @@
 % Please edit documentation in R/tree_generation.R
 \name{as.phylo.numeric}
 \alias{as.phylo.numeric}
+\alias{as.TreeNumber}
 \title{Unique integer indices for bifurcating tree topologies}
 \usage{
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
   tipLabels = attr(x, "tip.label"))
+
+as.TreeNumber(x)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -17,6 +20,11 @@ in a tree, perhaps obtained using \link{TipLabels}.}
 }
 \value{
 \code{as.phylo.numeric} returns a tree of class \code{phylo}.
+
+\code{as.TreeNumber} returns an object of class \code{TreeNumber},
+which comprises numeric vector, whose elements
+represent digits of the decimal integer corresponding to the tree topology
+(in big endian order), with attributes \code{nTip} and \code{tip.labels}.
 }
 \description{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} tips.

@@ -15,6 +15,10 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
                      c_to_r = 1,
                      prime = n_tip - 2;
   uint64_t tree_id = n[0];
+  for (int i = 1; i < n.length(); i++) {
+    tree_id *= MAX_INT;
+    tree_id += n[i];
+  }
   unsigned int base;
 
   IntegerVector edge(n_tip + n_tip - 2);
