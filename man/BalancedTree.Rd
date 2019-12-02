@@ -8,8 +8,8 @@ BalancedTree(tips)
 }
 \arguments{
 \item{tips}{An integer specifying the number of tips, or a character vector
-naming the tips, or a tree of class phylo, or a phylogenetic dataset whose
-names will be used to name the tips.}
+naming the tips, or any other object from which tip labels can be extracted
+with function \code{TipLabels}.}
 }
 \value{
 A tree of class \code{phylo}.

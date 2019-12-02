@@ -314,6 +314,7 @@ TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @export
 names.Splits <- function (x) rownames(x)
 
+#' @rdname Decoders
 #' @keywords internal
 #' @export
 .DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
@@ -324,6 +325,7 @@ names.Splits <- function (x) rownames(x)
   ret
 }
 
+#' @rdname Decoders
 #' @keywords internal
 #' @export
 .DecodeLastRaw <- function (n, nTip, ...) {
@@ -331,6 +333,20 @@ names.Splits <- function (x) rownames(x)
   .DecodeRaw(n, stopAt = ifelse(remainder, remainder, 8L), ...)
 }
 
+#' Decode Splits objects
+#'
+#' Internal functions to decode raw representation of splits.
+#'
+#' @name Decoders
+#' @param n Number to decode.
+#' @param stopAt Integer specifying number of tips in partial raw element.
+#' @param nTip Integer specifying number of tips in original tree.
+#' @param print Logical specifying whether output is to be printed.
+#' @param appendLF Logical specifying whether to append line feed character to
+#'  output.
+#'
+#' @return Return a human-readable representation of split content.
+#'
 #' @keywords internal
 #' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {

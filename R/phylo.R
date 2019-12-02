@@ -285,8 +285,8 @@ AllAncestors <- function (parent, child) {
 #' @template treeParam
 #' @param nodes whose descendants should be returned
 #'
-#' @return `CladeSizes` returns the number of nodes (including tips) that are descended from each
-#'   node in nodes
+#' @return `CladeSizes` returns the number of nodes (including tips) that are
+#' descended from each node in nodes.
 #'
 #' @importFrom phangorn allDescendants
 #' @keywords internal
