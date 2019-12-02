@@ -11,6 +11,12 @@
 \item{x}{Integer identifying the tree (see details).}
 
 \item{nTip}{Integer specifying number of tips in the tree.}
+
+\item{tipLabels}{Character vector listing the labels assigned to each tip
+in a tree, perhaps obtained using \link{TipLabels}.}
+}
+\value{
+\code{as.phylo.numeric} returns a tree of class \code{phylo}.
 }
 \description{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} tips.
@@ -76,6 +82,19 @@ with the mixed-base number 0021.  We can convert this into decimal:
 3 × (1 × 3) +
 1 × (1)
 = 10
+
+Note that the hyperexponential nature of tree space means that there are
+
+2^30 unique 12-tip trees.  As
+}
+\examples{
+tree <- as.phylo(10, nTip = 6)
+plot(tree)
+as.TreeNumber(tree)
+
+# Larger trees:
+as.numeric.phylo(BalancedTree(19))
+
 }
 \references{
 Based on a concept by John Tromp (1995)

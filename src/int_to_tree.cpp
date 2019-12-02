@@ -3,6 +3,7 @@
 using namespace Rcpp;
 
 const unsigned int MAX_TIP = 100, MAX_NODE = MAX_TIP + MAX_TIP - 1;
+const uint64_t MAX_INT = 1000000000U;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
@@ -50,7 +51,7 @@ unsigned int maximum (unsigned int x, unsigned int y) {
 
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
-double edge_to_num(IntegerVector parent, IntegerVector child,
+NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
                    IntegerVector nTip) {
   if (parent.size() != child.size()) {
     throw std::length_error("Parent and child must be the same length");
@@ -90,7 +91,7 @@ double edge_to_num(IntegerVector parent, IntegerVector child,
       }
     }
   }
-  double ret = 0;
+  uint64_t num = 0;
   int multiplier = 1;
   for (unsigned int i = 3; i < n_tip; i++) {
     unsigned int insertion_edge = index[i];
@@ -99,8 +100,18 @@ double edge_to_num(IntegerVector parent, IntegerVector child,
     } else {
       insertion_edge += i - (n_tip + 3);
     }
-    ret += insertion_edge * multiplier;
+    num += insertion_edge * multiplier;
     multiplier *= (i + i - 3);
   }
-  return (ret);
+
+  if (num >= MAX_INT) {
+    NumericVector ret(2);
+    ret[0] = num / MAX_INT;
+    ret[1] = num % MAX_INT;
+    return (ret);
+  } else {
+    NumericVector ret(1);
+    ret[0] = num;
+    return (ret);
+  }
 }

@@ -249,6 +249,17 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of tips in the tree.
 #' @template tipLabelsParam
+#'
+#' @return `as.phylo.numeric` returns a tree of class `phylo`.
+#'
+#' @examples
+#' tree <- as.phylo(10, nTip = 6)
+#' plot(tree)
+#' as.TreeNumber(tree)
+#'
+#' # Larger trees:
+#' as.numeric.phylo(BalancedTree(19))
+#'
 #' @template MRS
 #' @references Based on a concept by John Tromp (1995)
 #' @importFrom ape as.phylo
@@ -264,15 +275,33 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
             class = 'phylo')
 }
 
+as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
+
 #' @describeIn as.phylo.numeric Converts tree to index.
+#'
+#' @return `as.numeric.phylo` returns an object of class `TreeNumber`,
+#' which comprises numeric vector, whose elements
+#' represent digits of the decimal integer corresponding to the tree topology
+#' (in big endian order), with attributes `nTip` and `tip.labels`.
 #' @importFrom ape root
 #' @export
-as.numeric.phylo <- function (x) {
+as.TreeNumber <- function (x) {
   x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
   edge <- PostorderEdges(edge[, 1], edge[, 2], nTip = nTip)
   structure(edge_to_num(edge[[1]], edge[[2]], nTip),
             nTip = nTip,
-            tip.labels = TipLabels(x))
+            tip.labels = TipLabels(x),
+            class = 'TreeNumber')
+}
+
+print.TreeNumber <- function (x) {
+  nTip <- attr(x, 'nTip')
+  cat("Phylogenetic tree number", .PrintedTreeNumber(x), "of", NUnrooted(nTip),
+      "\n", nTip, "tips:", paste0(attr(x, 'tip.labels')))
+}
+
+.PrintedTreeNumber <- function (x) {
+  paste0(c(x[1], formatC(x[-1], digits = 9L, flag='0')), collapse = '')
 }

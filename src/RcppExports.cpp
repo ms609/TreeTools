@@ -18,7 +18,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // edge_to_num
-double edge_to_num(IntegerVector parent, IntegerVector child, IntegerVector nTip);
+NumericVector edge_to_num(IntegerVector parent, IntegerVector child, IntegerVector nTip);
 RcppExport SEXP _TreeTools_edge_to_num(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
