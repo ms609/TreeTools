@@ -4,10 +4,12 @@
 \alias{print.TreeNumber}
 \title{Print TreeNumber object}
 \usage{
-\method{print}{TreeNumber}(x)
+\method{print}{TreeNumber}(x, ...)
 }
 \arguments{
 \item{x}{Object of class \code{TreeNumber}.}
+
+\item{\dots}{Additional arguments for consistency with S3 method (unused).}
 }
 \description{
 S3 method for objects of class \code{TreeNumber}.

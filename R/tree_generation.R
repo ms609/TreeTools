@@ -317,8 +317,10 @@ as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
 #' S3 method for objects of class `TreeNumber`.
 #'
 #' @param x Object of class `TreeNumber`.
+#' @param \dots Additional arguments for consistency with S3 method (unused).
+#'
 #' @export
-print.TreeNumber <- function (x) {
+print.TreeNumber <- function (x, ...) {
   nTip <- attr(x, 'nTip')
   cat("Phylogenetic tree number", .PrintedTreeNumber(x), "of", NUnrooted(nTip),
       "\n", nTip, "tips:", paste0(attr(x, 'tip.labels')))
