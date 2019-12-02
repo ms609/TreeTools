@@ -33,16 +33,14 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
     throw std::length_error("Parent and child must be the same length");
   }
   const unsigned int n_tip = nTip[0],
-                     n_internal = n_tip - 1,
                      n_edge = parent.size(),
-                     all_node = n_internal + n_tip,
                      r_to_c = 1;
   if (n_edge != n_tip + n_tip - 2) {
     throw std::length_error("nEdge must == nTip + nTip - 2");
   }
   uint64_t tree_at[MAX_SHAPE_NODE] = {};
   unsigned int tips_below[MAX_SHAPE_NODE] = {};
-  for (unsigned int i = 0; i != all_node; i++) {
+  for (unsigned int i = 0; i != n_tip; i++) {
     tree_at[i] = 0;
     tips_below[i] = 1;
   }
