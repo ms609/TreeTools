@@ -295,7 +295,7 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 #' @template MRS
 #' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
 #'
-#' \insertRef{Li1996}[TreeTools]
+#' \insertRef{Li1996}{TreeTools}
 #'
 #' @importFrom ape as.phylo
 #' @export
