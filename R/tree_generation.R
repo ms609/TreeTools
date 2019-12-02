@@ -239,7 +239,7 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' @return `as.phylo.numeric` returns a tree of class `phylo`.
 #'
 #' @examples
-#' tree <- as.phylo.numeric(10, nTip = 6)
+#' tree <- as.phylo(10, nTip = 6)
 #' plot(tree)
 #' as.TreeNumber(tree)
 #'
@@ -248,7 +248,7 @@ EnforceOutgroup <- function (tree, outgroup) {
 #'
 #' # If > 9 digits, represent the tree number as a string.
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
-#' tree <- as.phylo.TreeNumber(treeNumber)
+#' tree <- as.phylo(treeNumber)
 #'
 #' @exportClass TreeNumber
 #' @name TreeNumber
@@ -261,6 +261,7 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
 #' `nTip` and `tip.labels`.
+#' @export
 as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 
 #' @rdname TreeNumber
@@ -310,6 +311,8 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
             class = 'phylo')
 }
 
+#' @rdname TreeNumber
+#' @export
 as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
 
 #' Print TreeNumber object

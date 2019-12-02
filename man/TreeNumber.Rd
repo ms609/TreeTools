@@ -6,6 +6,7 @@
 \alias{as.TreeNumber.phylo}
 \alias{as.TreeNumber.character}
 \alias{as.phylo.numeric}
+\alias{as.phylo.TreeNumber}
 \title{Unique integer indices for bifurcating tree topologies}
 \usage{
 as.TreeNumber(x, ...)
@@ -17,6 +18,8 @@ as.TreeNumber(x, ...)
 
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
   tipLabels = attr(x, "tip.label"))
+
+\method{as.phylo}{TreeNumber}(x)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -115,7 +118,7 @@ numbers representing larger trees are represented internally as a vector of
 nine-digit integer 'chunks'.
 }
 \examples{
-tree <- as.phylo.numeric(10, nTip = 6)
+tree <- as.phylo(10, nTip = 6)
 plot(tree)
 as.TreeNumber(tree)
 
@@ -124,7 +127,7 @@ as.TreeNumber(BalancedTree(19))
 
 # If > 9 digits, represent the tree number as a string.
 treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
-tree <- as.phylo.TreeNumber(treeNumber)
+tree <- as.phylo(treeNumber)
 
 }
 \references{
