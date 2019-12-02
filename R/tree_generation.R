@@ -243,6 +243,8 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' 1 × (1)
 #' = 10
 #'
+#' Note that the hyperexponential nature of tree space means that there are
+#' > 2^30 unique 12-tip trees.  As
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of tips in the tree.
