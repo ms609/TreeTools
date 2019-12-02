@@ -115,7 +115,9 @@ with the mixed-base number 0021.  We can convert this into decimal:
 Note that the hyperexponential nature of tree space means that there are >
 2^30 unique 12-tip trees.  As integers > 2^31 are not supported by R,
 numbers representing larger trees are represented internally as a vector of
-nine-digit integer 'chunks'.
+nine-digit integer 'chunks' and passed to the underlying C code, where they
+are combined into a single 64-bit integer.  This allows trees with up to
+42 tips to be accommodated.
 }
 \examples{
 tree <- as.phylo(10, nTip = 6)
