@@ -30,16 +30,20 @@ in a tree, perhaps obtained using \link{TipLabels}.}
 \code{as.phylo.numeric} returns a tree of class \code{phylo}.
 
 \code{as.TreeNumber} returns an object of class \code{TreeNumber},
-which comprises numeric vector, whose elements
-represent digits of the decimal integer corresponding to the tree topology
-(in big endian order), with attributes \code{nTip} and \code{tip.labels}.
+which comprises a numeric vector, whose elements represent successive
+nine-digit chunks of the decimal integer corresponding to the tree topology
+(in big endian order).  The \code{TreeNumber} object has attributes
+\code{nTip} and \code{tip.labels}.
 }
 \description{
+Functions converting phylogenetic trees to and from their unique decimal
+representation, per details (below).
+}
+\details{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} tips.
 As such, each \emph{n}-tip tree can be uniquely identifyed by a non-negative
 integer \emph{x} < \code{NUnrooted(n)}.
-}
-\details{
+
 This integer can be converted by a tree by treating it as a mixed-base number,
 with bases 1, 3, 5, 7, ... (2_n_ - 5).
 
@@ -94,15 +98,19 @@ If we chose option 0 for the next two additions, we could specify this tree
 with the mixed-base number 0021.  We can convert this into decimal:
 
 0 × (1 × 3 × 5 × 9) +
+
 0 × (1 × 3 × 5) +
+
 3 × (1 × 3) +
+
 1 × (1)
+
 = 10
 
-Note that the hyperexponential nature of tree space means that there are
-
+Note that the hyperexponential nature of tree space means that there are >
 2^30 unique 12-tip trees.  As integers > 2^31 are not supported by R,
-numbers representing larger trees are broken into nine-digit chunks.
+numbers representing larger trees are represented internally as a vector of
+nine-digit integer 'chunks'.
 }
 \examples{
 tree <- as.phylo(10, nTip = 6)
@@ -110,7 +118,7 @@ plot(tree)
 as.TreeNumber(tree)
 
 # Larger trees:
-as.numeric.phylo(BalancedTree(19))
+as.TreeNumber(BalancedTree(19))
 
 # If > 9 digits, represent the tree number as a string.
 representation <- as.TreeNumber("1234567890123", 14)
@@ -118,7 +126,9 @@ tree <- as.phylo(representation)
 
 }
 \references{
-Based on a concept by John Tromp (1995)
+Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
+
+\insertRef{Li1996}\link{TreeTools}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

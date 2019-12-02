@@ -243,7 +243,7 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' as.TreeNumber(tree)
 #'
 #' # Larger trees:
-#' as.numeric.phylo(BalancedTree(19))
+#' as.TreeNumber(BalancedTree(19))
 #'
 #' # If > 9 digits, represent the tree number as a string.
 #' representation <- as.TreeNumber("1234567890123", 14)

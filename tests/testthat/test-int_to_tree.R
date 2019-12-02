@@ -17,5 +17,4 @@ test_that('Trees generated okay', {
   nTip <- 14L
   treeNumber <- as.TreeNumber('123456789876', nTip, seq_len(nTip) - 1L)
   expect_equal(treeNumber, as.TreeNumber(as.phylo(treeNumber)))
-
 })
