@@ -209,6 +209,10 @@ SplitMatchProbability <- function (split1, split2) {
 #' @export
 TipLabels <- function (x) UseMethod('TipLabels')
 
+#' @keywords internal
+#' @export
+TipLabels.matrix <- function (x) colnames(x)
+
 #' @rdname TipLabels
 #' @export
 TipLabels.phylo <- function (x) x$tip.label
@@ -265,12 +269,30 @@ TipLabels.character <- function (x) x
 #' @template MRS
 #' @keywords internal
 TipLabels.numeric <- function (x) {
-  if (length(x) == 1L) paste0('t', seq_len(x)) else x
+  if (length(x) == 1L) {
+    paste0('t', seq_len(x))}
+  else {
+    NextMethod('TipLabels', as.character(x))
+  }
 }
 
 #' @rdname TipLabels
 #' @export
 TipLabels.phyDat <- function (x) names(x)
+
+#' @keywords internal
+#' @export
+TipLabels.default <- function (x) {
+  if (is.null(names(x))) {
+    if (any(duplicated(x))) {
+      NULL
+    } else {
+      x
+    }
+  } else {
+    names(x)
+  }
+}
 
 #' Distributions of tips consistent with a partition pair
 #'

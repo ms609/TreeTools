@@ -37,12 +37,10 @@ lowest-numbered tip in the subtree subtended by each edge.#'
 
 \seealso{
 Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}}
+  \code{\link{Neworder}}
 
 Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}}
+  \code{\link{Neworder}}
 }
 \concept{C wrappers}
 \keyword{internal}

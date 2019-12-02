@@ -77,8 +77,7 @@ sorted into preorder, until each edge has been visited.
 }}
 
 \seealso{
-Other C wrappers: \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}},
+Other C wrappers: \code{\link{Neworder}},
   \code{\link{RenumberTree}}
 }
 \author{

@@ -47,7 +47,7 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
-    x <- RenumberTips(x, .TipLabels(tipLabels))
+    x <- RenumberTips(x, TipLabels(tipLabels))
   }
   edge <- Postorder(x)$edge
   nTip <- length(x$tip.label)
@@ -76,7 +76,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
     # Return:
     x
   } else {
-    tipLabels <- .TipLabels(tipLabels)
+    tipLabels <- TipLabels(tipLabels)
     oldLabels <- attr(x, 'tip.label')
     if (is.null(oldLabels)) {
       nTip <- attr(x, 'nTip')
@@ -149,12 +149,12 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     nTip <- length(x)
 
     if (is.null(tipLabels)) {
-      tipLabels <- .TipLabels(x)
+      tipLabels <- TipLabels(x)
       if (is.null(tipLabels)) {
         tipLabels <- paste0('t', seq_len(nTip))
       }
     } else {
-      tipLabels <- .TipLabels(tipLabels)
+      tipLabels <- TipLabels(tipLabels)
     }
 
     structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
@@ -164,7 +164,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   } else {
     nTip <- dimX[2]
     if (is.null(tipLabels)) {
-      tipLabels <- .TipLabels(x)
+      tipLabels <- TipLabels(x)
     }
     if (is.null(tipLabels)) {
       tipLabels <- paste0('t', seq_len(nTip))
@@ -407,7 +407,6 @@ c.Splits <- function (...) {
 }
 
 
-
 #' @family Splits operations
 #' @export
 length.Splits <- function (x) nrow(x)
@@ -491,51 +490,3 @@ in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x)]
 }
-
-
-#' @keywords internal
-#' @export
-.TipLabels <- function (x) UseMethod('.TipLabels')
-
-#' @keywords internal
-#' @export
-.TipLabels.default <- function (x) {
-  if (is.null(names(x))) {
-    if (any(duplicated(x))) {
-      NULL
-    } else {
-      x
-    }
-  } else {
-    names(x)
-  }
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.phylo <- function (x) x$tip.label
-
-#' @keywords internal
-#' @export
-.TipLabels.list <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.matrix <- function (x) colnames(x)
-
-#' @keywords internal
-#' @export
-.TipLabels.multiPhylo <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.Splits <- function (x) attr(x, 'tip.label')
-
-
-#' @keywords internal
-#' @export
-.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))
