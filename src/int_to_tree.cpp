@@ -77,7 +77,7 @@ NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
     prime_id[i] = i;
   }
 
-  for (unsigned int i = 0; i != n_edge - 2; i+=2) {
+  for (unsigned int i = 0; i != n_edge - 2; i += 2) {
     const unsigned int this_node = parent[i] - r_to_c,
       left_child = child[i] - r_to_c,
       right_child = child[i + 1] - r_to_c;
@@ -95,8 +95,8 @@ NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
       }
     }
   }
-  uint64_t num = 0;
-  int multiplier = 1;
+  uint64_t num = 0U;
+  uint64_t multiplier = 1U;
   for (unsigned int i = 3; i < n_tip; i++) {
     unsigned int insertion_edge = index[i];
     if (insertion_edge < n_tip) {
