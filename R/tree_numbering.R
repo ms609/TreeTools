@@ -1,9 +1,50 @@
-#' neworder_phylo
+#' Reorder edges of a phylogenetic tree
 #'
-#' Wrapper for the ape function
+#' Wrappers for the C functions called by
+#' \code{ape::\link[ape:reorder.phylo]{reorder.phylo}}.
+#' These call the C functions directly, so are faster -- but don't perform
+#' as many checks on user input.  Bad input could crash R.
+#'
+#'
+#' @param nTip,nNode,nEdge Integer specifying the number of tips, nodes
+#' and edges in the input tree.
+#' @template treeParent
+#' @template treeChild
+#'
+#' @return `NeworderPruningwise` returns an integer vector specifying the
+#' pruningwise order of edges within a tree.
+#'
+#' @examples
+#' nTip <- 8L
+#' tree <- BalancedTree(nTip)
+#' edge <- tree$edge
+#' pruningwise <- NeworderPruningwise(nTip, tree$nNode, edge[, 1], edge[, 2],
+#'                              dim(edge)[1])
+#' cladewise <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 1L)
+#' postorder <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 2L)
+#'
+#' tree$edge <- tree$edge[pruningwise, ]
+#'
+#' @author
+#'  - C algorithm: Emmanuel Paradis
+#'  - R wrapper: Martin R. Smith
 #' @family C wrappers
 #' @keywords internal
 #' @useDynLib TreeTools, .registration = TRUE
+#' @name Neworder
+#' @export
+NeworderPruningwise <- function (nTip, nNode, parent, child, nEdge) {
+  .C('ape_neworder_pruningwise', as.integer(nTip), as.integer(nNode),
+     as.integer(parent), as.integer(child), as.integer(nEdge),
+     integer(nEdge))[[6]]
+}
+
+#' @rdname Neworder
+#' @param `whichwise` Integer specifying whether to order edges (1)
+#' cladewise; or (2) in postorder.
+#' @return `NeworderPhylo` returns an integer vector specifying the order
+#' of edges under the ordering sequence specified by `whichwise`.
+#' @keywords internal
 #' @export
 NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
   .C('ape_neworder_phylo', as.integer(nTip), as.integer(parent),
@@ -11,26 +52,19 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
      as.integer(whichwise), NAOK = TRUE)[[5]]
 }
 
-#' neworder_pruningwise
+#' Renumber a tree in preorder
 #'
-#' Wrapper for the ape function
-#' @family C wrappers
-#' @keywords internal
-#' @export
-NeworderPruningwise <- function (nTip, nb.node, parent, child, nb.edge) {
-  .C('ape_neworder_pruningwise', as.integer(nTip), as.integer(nb.node),
-     as.integer(parent), as.integer(child), as.integer(nb.edge),
-     integer(nb.edge))[[6]]
-}
-
-#' Renumber a tree
+#' Wrapper for the C function `preorder_edges_and_nodes`, which
+#' renumbers internal nodes and orders edges in preorder, in an order
+#' guaranteed to be identical for any tree of an equivalent topology.
+#' At each node, child edges are arranged from left to right according to the
+#' lowest-numbered tip in the subtree subtended by each edge.
 #'
-#' Order edges and number nodes
+#' @template treeParent
+#' @template treeChild
 #'
-#' Wrapper for the C function `preorder_edges_and_nodes`
-#'
-#' @return an edge matrix for a tree in following the usual preorder convention
-#'  for edge and node numbering
+#' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
+#' following the usual preorder convention for edge and node numbering.
 #' @family C wrappers
 #' @keywords internal
 #' @export
@@ -38,8 +72,9 @@ RenumberTree <- function (parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
-#' @describeIn RenumberTree Instead returns a list containing two items
-#'  corresponding to the new parent and child vectors
+#' @describeIn RenumberTree Returns in list format
+#' @return `RenumberEdges` returns a list whose two entries correspond
+#' to the new parent and child vectors.
 #' @family C wrappers
 #' @keywords internal
 #' @export

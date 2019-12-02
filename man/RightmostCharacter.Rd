@@ -6,6 +6,14 @@
 \usage{
 RightmostCharacter(string, len = nchar(string))
 }
+\arguments{
+\item{string}{Character string.}
+
+\item{len}{Integer specifying number of characters in \code{string}.}
+}
+\value{
+Rightmost character of \code{string}.
+}
 \description{
 Rightmost character of string
 }

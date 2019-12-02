@@ -79,11 +79,10 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @template splitsObjectParam
 #' @param splits2 A second `Splits` object.
 #'
-#' @return A logical matrix specifying whether each split in `splits` is
-#' compatible with each split in `splits2`.
+#' @return `CompatibleSplits` returns a logical matrix specifying whether each +
+#' split in `splits` is compatible with each split in `splits2`.
 #'
 #' @examples
-#'
 #' splits <- as.Splits(BalancedTree(8))
 #' splits2 <- as.Splits(PectinateTree(8))
 #'
@@ -103,8 +102,9 @@ CompatibleSplits <- function (splits, splits2) {
 }
 
 #' @param a,b [Raw][raw] representations of splits, from a row of a `Splits` object.
-#' @return logical vector stating whether splits are compatible.
-#' @describeIn CompatibleSplits Evaluate a single split pair
+#' @return `.CompatibleSplit` returns a logical vector stating whether splits
+#' are compatible.
+#' @rdname CompatibleSplits
 #' @keywords internal
 #' @export
 .CompatibleSplit <- function (a, b, nTip) {
@@ -116,6 +116,12 @@ CompatibleSplits <- function (splits, splits2) {
   .CompatibleRaws(a, b, rawMask)
 }
 
+#' @rdname CompatibleSplits
+#' @param rawA,rawB Raw representations of splits.
+#' @param bitmask Raw masking bits that do not correspond to tips.
+#'
+#' @return `.CompatibleRaws` returns a logical vector specifying whether input
+#' raws are compatible.
 #' @keywords internal
 #' @export
 .CompatibleRaws <- function (rawA, rawB, bitmask) {
@@ -200,14 +206,23 @@ SplitMatchProbability <- function (split1, split2) {
     choose(n, A1)
 }
 
-#' Tip labels
+#' Extract tip labels
+#'
+#' Extracts tip labels from an object.  If the object is a single integer,
+#' `TipLabels` will return a vector `t1`, `t2` ... `tn`, to match
+#' the default of \code{ape::\link{rtree}}.
 #'
 #' @param x An object of a supported class (see Usage section).
 #' @return A character vector listing the tip labels for the specified object.
 #'
+#' @return Character vector listing tip names.
 #' @template MRS
 #' @export
 TipLabels <- function (x) UseMethod('TipLabels')
+
+#' @rdname TipLabels
+#' @export
+TipLabels.matrix <- function (x) colnames(x)
 
 #' @rdname TipLabels
 #' @export
@@ -253,6 +268,34 @@ TipLabels.multiPhylo <- function (x) {
 #' @rdname TipLabels
 #' @export
 TipLabels.character <- function (x) x
+
+#' @rdname TipLabels
+#' @export
+TipLabels.numeric <- function (x) {
+  if (length(x) == 1L) {
+    paste0('t', seq_len(x))}
+  else {
+    NextMethod('TipLabels', as.character(x))
+  }
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.phyDat <- function (x) names(x)
+
+#' @rdname TipLabels
+#' @export
+TipLabels.default <- function (x) {
+  if (is.null(names(x))) {
+    if (any(duplicated(x))) {
+      NULL
+    } else {
+      x
+    }
+  } else {
+    names(x)
+  }
+}
 
 #' Distributions of tips consistent with a partition pair
 #'

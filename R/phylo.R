@@ -285,8 +285,8 @@ AllAncestors <- function (parent, child) {
 #' @template treeParam
 #' @param nodes whose descendants should be returned
 #'
-#' @return the number of nodes (including tips) that are descended from each
-#'   node in nodes
+#' @return `CladeSizes` returns the number of nodes (including tips) that are
+#' descended from each node in nodes.
 #'
 #' @importFrom phangorn allDescendants
 #' @keywords internal
@@ -296,14 +296,4 @@ CladeSizes <- function (tree, nodes) {
     tree <- Postorder(tree)
   }
   vapply(allDescendants(tree)[nodes], length, integer(1))
-}
-
-#' Node depth
-#' Wrapper for the ape function
-#'
-#' @keywords internal
-#' @export
-C_node_depth <- function (nTip, nNode, parent, child, nEdge) {
-  .C("ape_node_depth", as.integer(nTip), as.integer(nNode), as.integer(parent),
-     as.integer(child), as.integer(nEdge), double(nTip + nNode), 1L)[[6]]
 }

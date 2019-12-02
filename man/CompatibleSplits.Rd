@@ -3,11 +3,14 @@
 \name{CompatibleSplits}
 \alias{CompatibleSplits}
 \alias{.CompatibleSplit}
+\alias{.CompatibleRaws}
 \title{Which splits are compatible?}
 \usage{
 CompatibleSplits(splits, splits2)
 
 .CompatibleSplit(a, b, nTip)
+
+.CompatibleRaws(rawA, rawB, bitmask)
 }
 \arguments{
 \item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
@@ -15,23 +18,25 @@ CompatibleSplits(splits, splits2)
 \item{splits2}{A second \code{Splits} object.}
 
 \item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits} object.}
+
+\item{rawA, rawB}{Raw representations of splits.}
+
+\item{bitmask}{Raw masking bits that do not correspond to tips.}
 }
 \value{
-A logical matrix specifying whether each split in \code{splits} is
-compatible with each split in \code{splits2}.
+\code{CompatibleSplits} returns a logical matrix specifying whether each +
+split in \code{splits} is compatible with each split in \code{splits2}.
 
-logical vector stating whether splits are compatible.
+\code{.CompatibleSplit} returns a logical vector stating whether splits
+are compatible.
+
+\code{.CompatibleRaws} returns a logical vector specifying whether input
+raws are compatible.
 }
 \description{
 Which splits are compatible?
 }
-\section{Functions}{
-\itemize{
-\item \code{.CompatibleSplit}: Evaluate a single split pair
-}}
-
 \examples{
-
 splits <- as.Splits(BalancedTree(8))
 splits2 <- as.Splits(PectinateTree(8))
 

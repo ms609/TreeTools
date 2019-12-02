@@ -24,7 +24,7 @@ A matrix corresponding to the uncompressed character states within
 a phyDat object.
 }
 \description{
-Converts a matrix of tokens to a phyDat object
+Converts a matrix of tokens to a phyDat object.
 }
 \section{Functions}{
 \itemize{

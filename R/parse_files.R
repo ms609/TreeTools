@@ -415,7 +415,7 @@ ReadTntCharacters <- function (filepath, character_num=NULL, session=NULL) {
 
 #' Matrix to phydat
 #'
-#' Converts a matrix of tokens to a phyDat object
+#' Converts a matrix of tokens to a phyDat object.
 #'
 #' @param tokens matrix of tokens, probably created with [ReadCharacters]
 #'               or [ReadTntCharacters]. Row names should correspond to tip
@@ -615,6 +615,11 @@ PhydatToString <- PhyToString
 
 
 #' Rightmost character of string
+#'
+#' @param string Character string.
+#' @param len Integer specifying number of characters in `string`.
+#'
+#' @return Rightmost character of `string`.
 #'
 #' @template MRS
 #' @export

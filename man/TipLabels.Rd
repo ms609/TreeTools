@@ -2,14 +2,20 @@
 % Please edit documentation in R/SplitFunctions.R
 \name{TipLabels}
 \alias{TipLabels}
+\alias{TipLabels.matrix}
 \alias{TipLabels.phylo}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
 \alias{TipLabels.multiPhylo}
 \alias{TipLabels.character}
-\title{Tip labels}
+\alias{TipLabels.numeric}
+\alias{TipLabels.phyDat}
+\alias{TipLabels.default}
+\title{Extract tip labels}
 \usage{
 TipLabels(x)
+
+\method{TipLabels}{matrix}(x)
 
 \method{TipLabels}{phylo}(x)
 
@@ -20,15 +26,25 @@ TipLabels(x)
 \method{TipLabels}{multiPhylo}(x)
 
 \method{TipLabels}{character}(x)
+
+\method{TipLabels}{numeric}(x)
+
+\method{TipLabels}{phyDat}(x)
+
+\method{TipLabels}{default}(x)
 }
 \arguments{
 \item{x}{An object of a supported class (see Usage section).}
 }
 \value{
 A character vector listing the tip labels for the specified object.
+
+Character vector listing tip names.
 }
 \description{
-Tip labels
+Extracts tip labels from an object.  If the object is a single integer,
+\code{TipLabels} will return a vector \code{t1}, \code{t2} ... \code{tn}, to match
+the default of \code{ape::\link{rtree}}.
 }
 \seealso{
 Other Splits operations: \code{\link{NSplits}},

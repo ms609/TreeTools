@@ -1,7 +1,6 @@
 # TreeTools 0.1.1.9000 (development)
 
 - `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
-- Convert numeric tip labels to class `character` in `GetTipNames`.
 
 # TreeTools 0.1.1
  
