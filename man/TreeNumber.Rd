@@ -115,7 +115,7 @@ numbers representing larger trees are represented internally as a vector of
 nine-digit integer 'chunks'.
 }
 \examples{
-tree <- as.phylo(10, nTip = 6)
+tree <- as.phylo.numeric(10, nTip = 6)
 plot(tree)
 as.TreeNumber(tree)
 
@@ -123,8 +123,8 @@ as.TreeNumber(tree)
 as.TreeNumber(BalancedTree(19))
 
 # If > 9 digits, represent the tree number as a string.
-representation <- as.TreeNumber("1234567890123", 14)
-tree <- as.phylo(representation)
+treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
+tree <- as.phylo.TreeNumber(treeNumber)
 
 }
 \references{
