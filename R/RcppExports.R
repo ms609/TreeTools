@@ -21,3 +21,7 @@ cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
 
+edge_to_shape <- function(parent, child, nTip) {
+    .Call(`_TreeTools_edge_to_shape`, parent, child, nTip)
+}
+

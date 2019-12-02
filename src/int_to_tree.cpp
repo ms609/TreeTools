@@ -2,7 +2,7 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-const unsigned int MAX_TIP = 100, MAX_NODE = MAX_TIP + MAX_TIP - 1;
+const unsigned int MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
 const uint64_t MAX_INT = 1000000000U;
 
 // [[Rcpp::export]]

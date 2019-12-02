@@ -1,3 +1,6 @@
+# TreeTools 0.1.1.9001 (development)
+ 
+- Tree shape enumeration.
 
 # TreeTools 0.1.1
  
