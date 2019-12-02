@@ -40,6 +40,18 @@ Please unwrap the examples if they are executable in < 5 sec, or replace
 > \dontrun{}; now only examples that rely on a local system path that will
 > not be present on a user's machine are \dontrun{}ed.
 
+>> Note that the included small files are in the format expected for TNT output
+>> files.  As such, they include hard-coded example paths that will not exist 
+>> on the user's machine.  But the examples are intended to show a user how they
+>> can easily work with files they have generated on their own machine using
+>> their own copy of TNT.  Thus it is necessary to retain the `\dontrun{}` 
+>> section.
+
+Please improve documentation of C_node_depth.Rd and similar ones, or do
+not export those functions.
+
+>> I have now either documented or removed all internal functions.
+
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
