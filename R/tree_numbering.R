@@ -223,7 +223,8 @@ Preorder <- function (tree) {
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
-#'        \code{tree$tip.label} in the desired sort order
+#'        \code{tree$tip.label} in the desired sort order, or an object
+#'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
 #' @examples
 #' data(Lobo) # Loads the phyDat object Lobo.phy
@@ -234,8 +235,9 @@ Preorder <- function (tree) {
 #' @export
 RenumberTips <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
-  if (identical(startOrder, tipOrder)) return (tree)
-  if (length(startOrder) != length(tipOrder)) {
+  newOrder <- .TipLabels(tipOrder)
+  if (identical(startOrder, newOrder)) return (tree)
+  if (length(startOrder) != length(newOrder)) {
     stop("Tree labels and tipOrder must match")
   }
 
@@ -243,9 +245,9 @@ RenumberTips <- function (tree, tipOrder) {
   child <- tree$edge[, 2]
   tips <- child <= nTip
 
-  matchOrder <- match(startOrder, tipOrder)
+  matchOrder <- match(startOrder, newOrder)
   if (any(is.na(matchOrder))) stop("All tree labels must occur in tipOrder")
   tree$edge[tips, 2] <- matchOrder[tree$edge[tips, 2]]
-  tree$tip.label <- tipOrder
+  tree$tip.label <- newOrder
   tree
 }

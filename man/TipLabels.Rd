@@ -4,6 +4,7 @@
 \alias{TipLabels}
 \alias{TipLabels.matrix}
 \alias{TipLabels.phylo}
+\alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
 \alias{TipLabels.multiPhylo}
@@ -18,6 +19,8 @@ TipLabels(x)
 \method{TipLabels}{matrix}(x)
 
 \method{TipLabels}{phylo}(x)
+
+\method{TipLabels}{TreeNumber}(x)
 
 \method{TipLabels}{Splits}(x)
 

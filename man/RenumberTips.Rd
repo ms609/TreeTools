@@ -10,7 +10,8 @@ RenumberTips(tree, tipOrder)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{tipOrder}{A character vector containing the values of
-\code{tree$tip.label} in the desired sort order}
+\code{tree$tip.label} in the desired sort order, or an object
+(perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
 }
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree

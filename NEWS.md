@@ -1,3 +1,8 @@
+# TreeTools 0.1.1.9000 (development)
+
+- Add functions to translate trees to mixed base integers.
+- `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
+
 # TreeTools 0.1.1
  
 - Documentation changes to satisfy CRAN submission requirements.

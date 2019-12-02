@@ -56,6 +56,8 @@ test_that("replacement reorder functions work correctly", {
 
   star <- ape::read.tree(text = '(a, b, d, c);')
   edge <- RenumberTips(star, letters[1:4])$edge
+  expect_equal(edge,
+               RenumberTips(star, ape::read.tree(text = '(a, b, c, d);'))$edge)
   expect_equal(star$edge, RenumberTree(edge[, 1], edge[, 2]))
   expect_equal(list(star$edge[, 1], star$edge[, 2]),
                RenumberEdges(edge[, 1], edge[, 2]))
