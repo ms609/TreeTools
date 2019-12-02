@@ -19,7 +19,7 @@
 #' tree <- BalancedTree(nTip)
 #' edge <- tree$edge
 #' pruningwise <- NeworderPruningwise(nTip, tree$nNode, edge[, 1], edge[, 2],
-#'                              dim(edge)[1])
+#'                                    dim(edge)[1])
 #' cladewise <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 1L)
 #' postorder <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 2L)
 #'
