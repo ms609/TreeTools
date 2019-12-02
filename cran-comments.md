@@ -12,7 +12,8 @@ There was one NOTE:
 
 This is a new submission, maintained by Martin R. Smith <martin.smith@durham.ac.uk>.
 
-## Response to CRAN comments (Martina Schmirl, 2019-11-25)
+## Response to CRAN comments
+### Original submission (Martina Schmirl, comments dated 2019-11-25)
 If there are references describing the methods in your package, please
 add these in the description field of your DESCRIPTION file [...]
 
@@ -40,12 +41,13 @@ Please unwrap the examples if they are executable in < 5 sec, or replace
 > \dontrun{}; now only examples that rely on a local system path that will
 > not be present on a user's machine are \dontrun{}ed.
 
+### Resubmission (comments dated 2019-11-28)
 >> Note that the included small files are in the format expected for TNT output
 >> files.  As such, they include hard-coded example paths that will not exist 
 >> on the user's machine.  But the examples are intended to show a user how they
 >> can easily work with files they have generated on their own machine using
 >> their own copy of TNT.  Thus it is necessary to retain the `\dontrun{}` 
->> section.
+>> section, unfortunately.
 
 Please improve documentation of C_node_depth.Rd and similar ones, or do
 not export those functions.
