@@ -55,7 +55,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #' Renumber a tree in preorder
 #'
 #' Wrapper for the C function `preorder_edges_and_nodes`, which
-#' renumbers internral nodes and orders edges in preorder, in an order
+#' renumbers internal nodes and orders edges in preorder, in an order
 #' guaranteed to be identical for any tree of an equivalent topology.
 #' At each node, child edges are arranged from left to right according to the
 #' lowest-numbered tip in the subtree subtended by each edge.

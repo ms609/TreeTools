@@ -66,7 +66,7 @@ If the file contains multiple trees, this will return a list of all trees in
 the file, with the class `multiPhylo`.
 If there is a single tree, then this will be returned as a tree of class
 `phylo` unless the option `force.multiPhylo = TRUE`.  This can be useful when
-an unknown number of trees are to be processesed in bulk, for example by
+an unknown number of trees are to be processed in bulk, for example by
 
 ```r
 lapply(ape::read.nexus(filename, force.multiPhylo = TRUE), ape::consensus)
