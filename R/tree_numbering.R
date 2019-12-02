@@ -235,7 +235,7 @@ Preorder <- function (tree) {
 #' @export
 RenumberTips <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
-  newOrder <- .TipLabels(tipOrder)
+  newOrder <- TipLabels(tipOrder)
   if (identical(startOrder, newOrder)) return (tree)
   if (length(startOrder) != length(newOrder)) {
     stop("Tree labels and tipOrder must match")

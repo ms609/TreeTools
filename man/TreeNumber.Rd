@@ -2,24 +2,26 @@
 % Please edit documentation in R/tree_generation.R
 \name{TreeNumber}
 \alias{TreeNumber}
-\alias{as.phylo.numeric}
 \alias{as.TreeNumber}
 \alias{as.TreeNumber.phylo}
 \alias{as.TreeNumber.character}
+\alias{as.phylo.numeric}
 \title{Unique integer indices for bifurcating tree topologies}
 \usage{
-\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
-  tipLabels = attr(x, "tip.label"))
-
 as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{phylo}(x, ...)
 
 \method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip),
   ...)
+
+\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
+  tipLabels = attr(x, "tip.label"))
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
+
+\item{\dots}{Additional parameters (unused).}
 
 \item{nTip}{Integer specifying number of tips in the tree.}
 
@@ -36,8 +38,8 @@ nine-digit chunks of the decimal integer corresponding to the tree topology
 \code{nTip} and \code{tip.labels}.
 }
 \description{
-Functions converting phylogenetic trees to and from their unique decimal
-representation, per details (below).
+Functions converting between phylogenetic trees and their unique decimal
+representation.
 }
 \details{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} tips.

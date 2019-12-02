@@ -148,8 +148,8 @@ EnforceOutgroup <- function (tree, outgroup) {
 
 #' Unique integer indices for bifurcating tree topologies
 #'
-#' Functions converting phylogenetic trees to and from their unique decimal
-#' representation, per details (below).
+#' Functions converting between phylogenetic trees and their unique decimal
+#' representation.
 #'
 #' There are `NUnrooted(n)` unrooted trees with _n_ tips.
 #' As such, each _n_-tip tree can be uniquely identifyed by a non-negative
@@ -234,6 +234,7 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of tips in the tree.
 #' @template tipLabelsParam
+#' @param \dots Additional parameters (unused).
 #'
 #' @return `as.phylo.numeric` returns a tree of class `phylo`.
 #'
@@ -252,28 +253,6 @@ EnforceOutgroup <- function (tree, outgroup) {
 #' @exportClass TreeNumber
 #' @name TreeNumber
 #
-
-#' @rdname TreeNumber
-#' @template MRS
-#' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
-#'
-#' \insertRef{Li1996}[TreeTools]
-#'
-#' @importFrom ape as.phylo
-#' @export
-as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
-                              tipLabels = attr(x, 'tip.label')) {
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = 'postorder',
-            class = 'phylo')
-}
-
-as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
-
 
 #' @rdname TreeNumber
 #'
@@ -312,12 +291,40 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
             class = 'TreeNumber')
 }
 
+#' @rdname TreeNumber
+#' @template MRS
+#' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
+#'
+#' \insertRef{Li1996}[TreeTools]
+#'
+#' @importFrom ape as.phylo
+#' @export
+as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
+                              tipLabels = attr(x, 'tip.label')) {
+  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+  structure(list(edge = do.call(cbind, edge),
+                 tip.label = tipLabels,
+                 Nnode = nTip - 1L),
+            order = 'postorder',
+            class = 'phylo')
+}
+
+as.phylo.TreeNumber <- function (x) as.phylo.numeric(x)
+
+#' Print TreeNumber object
+#'
+#' S3 method for objects of class `TreeNumber`.
+#'
+#' @param x Object of class `TreeNumber`.
+#' @export
 print.TreeNumber <- function (x) {
   nTip <- attr(x, 'nTip')
   cat("Phylogenetic tree number", .PrintedTreeNumber(x), "of", NUnrooted(nTip),
       "\n", nTip, "tips:", paste0(attr(x, 'tip.labels')))
 }
 
+#' @keywords internal
 .PrintedTreeNumber <- function (x) {
   paste0(c(x[1], formatC(x[-1], digits = 9L, flag='0')), collapse = '')
 }
