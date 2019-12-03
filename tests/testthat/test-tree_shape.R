@@ -64,29 +64,18 @@ test_that('Rooted tree shapes built', {
 
 test_that('Unrooted tree shapes built', {
   expect_equal(UnrootedTreeWithShape(0, 9), unroot(PectinateTree(rep('', 9))))
-  TestSym <- function (tree) {
+  TestSym <- function (tree, shape) {
+    expect_equal(shape, UnrootedTreeShape(tree))
     expect_equal(UnrootedTreeKey(tree),
-                 UnrootedTreeKey(UnrootedTreeWithShape(UnrootedTreeShape(tree), NTip(tree))))
+                 UnrootedTreeKey(UnrootedTreeWithShape(shape, NTip(tree))))
   }
-  TestSym(BalancedTree(rep('', 9)))
+  blank9 <- rep('', 9)
+  TestSym(PectinateTree(blank9), 0)
+  TestSym(as.phylo(72292, nTip = 9, blank9), 1)
+  TestSym(as.phylo(67987, nTip = 9, blank9), 2)
+  TestSym(BalancedTree(blank9), 3)
+  TestSym(as.phylo(72237, nTip = 9, blank9), 3)
+  TestSym(as.phylo(67882, nTip = 9, blank9), 4)
+  TestSym(as.phylo(72298, nTip = 9, blank9), 5)
 
-  expect_equal(RootedTreeWithShape(0L, 5L), PectinateTree(rep('', 5)))
-  expect_equal(RootedTreeWithShape(1L, 5L), as.phylo(1, 5, rep('', 5)))
-  expect_equal(RootedTreeWithShape(2L, 5L), BalancedTree(rep('', 5)))
-
-  blank6 <- rep('', 6L)
-  expect_equal(RootedTreeWithShape(0L, 6L), PectinateTree(blank6))
-  expect_equal(RootedTreeWithShape(1L, 6L), as.phylo(58, 6, blank6))
-  expect_equal(RootedTreeWithShape(2L, 6L), as.phylo(1, 6, blank6))
-  expect_equal(RootedTreeWithShape(3L, 6L), ape::read.tree(text='((,),(,(,(,))));'))
-  expect_equal(RootedTreeWithShape(4L, 6L), ape::read.tree(text='((,),((,),(,)));'))
-  expect_equal(RootedTreeWithShape(5L, 6L), BalancedTree(blank6))
-
-  expect_equal(RootedTreeWithShape(0, 8), PectinateTree(rep('', 8)))
-  expect_equal(RootedTreeWithShape(NRootedShapes(8), 8), BalancedTree(rep('', 8)))
-
-  BalancedTest <- function (i) {
-    expect_equal(BalancedTree(rep('', i)), RootedTreeWithShape(NRootedShapes(i) - 1L, i))
-  }
-  lapply(2^(1:4), BalancedTest)
 })

@@ -201,7 +201,7 @@ Pruningwise <- function (tree, nTip = length(tree$tip.label),
 #' @export
 Preorder <- function (tree) {
   startOrder <- attr(tree, 'order')
-  if (startOrder == 'preorder') {
+  if (length(startOrder) && startOrder == 'preorder') {
     tree
   } else {
     edge <- tree$edge

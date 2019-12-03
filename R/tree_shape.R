@@ -68,7 +68,7 @@ UnrootedTreeShape <- function (tree) {
 #' @importFrom ape drop.tip root
 #' @export
 UnrootedTreeKey <- function (tree) {
-  tree <- Postorder(tree)
+  tree <- Postorder(Preorder(tree))
   edge <- tree$edge
   nTip <- NTip(tree)
   parent <- edge[, 1]
@@ -85,12 +85,12 @@ UnrootedTreeKey <- function (tree) {
   }
 
   RootedNumber <- function (nodeChildren) {
-    RootedTreeShape(Postorder(drop.tip(root(tree, nodeChildren), nodeChildren)))
+    RootedTreeShape(Postorder(drop.tip(root(tree, nodeChildren[1]), nodeChildren)))
   }
 
-  basalTips <- nEdge - (seq_len(4L - unrooted) - 1L)
-  rootCandidate <- if (sum(child[basalTips] <= nTip) == 2) {
-    RootedNumber(child[basalTips][child[basalTips] <= nTip])
+  basalTipEdges <- nEdge - (seq_len(4L - unrooted) - 1L)
+  rootCandidate <- if (sum(child[basalTipEdges] <= nTip) == 2) {
+    RootedNumber(child[basalTipEdges][child[basalTipEdges] <= nTip])
   } else {
     double(0)
   }
@@ -102,8 +102,6 @@ UnrootedTreeKey <- function (tree) {
     RootedNumber(child[parent == node])
   }, double(1)), rootCandidate)
 }
-
-
 
 #' @rdname TreeShape
 #' @return `TreeShapes` returns an integer specifying the number of unique
