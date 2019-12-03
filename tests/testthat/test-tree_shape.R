@@ -2,7 +2,7 @@ context('tree_shape.cpp')
 
 test_that('Tree shapes counted', {
   expect_equal(c(1, 1, 1, 2, 3, 6, 11, 23),
-               vapply(1:8, NRootedTreeShapes, 0L))
+               vapply(1:8, NRootedShapes, 0L))
 })
 
 test_that('Tree shapes calculated', {
@@ -25,16 +25,19 @@ test_that('Tree shapes calculated', {
   PectinateTest <- function (i) expect_equal(0L, RootedTreeShape(PectinateTree(i)))
   lapply(4:16, PectinateTest)
 
-  #BalancedTest <- function (i) expect_equal(NRootedTreeShapes(i),
-  #                                          RootedTreeShape(BalancedTree(i)))
-  #lapply(2^(2:4), BalancedTest)
+
+  NRootedShapes(8) - 1L
+  RootedTreeShape(BalancedTree(8))
+
+  BalancedTest <- function (i) expect_equal(NRootedShapes(i) - 1L,
+                                            RootedTreeShape(BalancedTree(i)))
+  lapply(2^(1:4), BalancedTest)
 })
 
 
 test_that('Tree shapes built', {
   expect_equal(RootedTreeWithShape(0, 4), PectinateTree(rep('', 4)))
   expect_equal(RootedTreeWithShape(1, 4), BalancedTree(rep('', 4)))
-
 
   expect_equal(RootedTreeWithShape(0L, 5L), PectinateTree(rep('', 5)))
   expect_equal(RootedTreeWithShape(1L, 5L), as.phylo(1, 5, rep('', 5)))
@@ -49,7 +52,7 @@ test_that('Tree shapes built', {
   expect_equal(RootedTreeWithShape(5L, 6L), BalancedTree(blank6))
 
   expect_equal(RootedTreeWithShape(0, 8), PectinateTree(rep('', 8)))
-  expect_equal(RootedTreeWithShape(NRootedTreeShapes(8), 8), BalancedTree(rep('', 8)))
+  expect_equal(RootedTreeWithShape(NRootedShapes(8), 8), BalancedTree(rep('', 8)))
 
 })
 
