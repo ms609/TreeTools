@@ -33,9 +33,19 @@ unsigned int triangular_number(const unsigned int n) {
   return n * (n + 1) / 2;
 }
 
+unsigned int triangle_row (const unsigned int x) {
+  // Solve x = (n)(n+1) / 2 for n
+  return (sqrt((8 * x) + 1) - 1) / 2;
+}
+
+// [[Rcpp::export]]
+IntegerVector n_rooted_shapes(IntegerVector nTip) {
+  return IntegerVector::create(n_shapes(nTip[0]));
+}
+
 // Parent and child must be in postorder, with tree rooted.
 // [[Rcpp::export]]
-NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
+NumericVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
                             IntegerVector nTip) {
   if (parent.size() != child.size()) {
     throw std::length_error("Parent and child must be the same length");
@@ -74,12 +84,12 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
                        large_tips = tips_below[large_child];
     tips_below[this_node] = small_tips + large_tips;
     const unsigned int tips_here = tips_below[this_node];
-    Rcout << "Chosen option " << option_chosen << "\n";
     const unsigned int option_chosen = small_tips - 1;
 
     for (unsigned int unchosen_tips = 1; unchosen_tips <= option_chosen; unchosen_tips++) {
       tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
     }
+
     if (small_tips == large_tips) {
       const unsigned int max_shape = n_shapes(large_tips),
         small_shape = tree_at[small_child],
@@ -92,13 +102,8 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
       (tree_at[small_child] * n_shapes(large_tips));
     }
   }
-  return NumericVector::create(tree_at[parent[n_edge - 1] - r_to_c]);
-}
 
-// [[Rcpp::export]]
-NumericVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
-                                   IntegerVector nTip) {
-  return edge_to_shape(parent, child, nTip);
+  return NumericVector::create(tree_at[parent[n_edge - 1] - r_to_c]);
 }
 
 void fill_edges(unsigned int *parent, unsigned int *child,
@@ -132,7 +137,6 @@ void fill_edges(unsigned int *parent, unsigned int *child,
         child[(*next_edge)++] = *next_node;
         fill_edges(parent, child, small_tree, small_half,
                    next_edge, next_tip, next_node);
-      }
 
         parent[*next_edge] = this_node;
         child[(*next_edge)++] = *next_node;
@@ -140,6 +144,7 @@ void fill_edges(unsigned int *parent, unsigned int *child,
                    next_edge, next_tip, next_node);
       }
       break;
+
     } else {
       const unsigned int small_trees = n_shapes(small_half),
         large_trees = n_shapes(large_half),
