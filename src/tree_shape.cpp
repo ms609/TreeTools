@@ -75,3 +75,64 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
   }
   return NumericVector::create(tree_at[parent[n_edge - 1] - r_to_c]);
 }
+
+// [[Rcpp::export]]
+NumericVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
+                                   IntegerVector nTip) {
+  return edge_to_shape(parent, child, nTip);
+}
+
+void fill_edges(unsigned int *parent, unsigned int *child,
+                uint64_t n, const unsigned int n_tip,
+                unsigned int *next_edge, unsigned int *next_tip,
+                unsigned int *next_node) {
+
+  const unsigned int this_node = (*next_node)++;
+
+  for (unsigned int small_half = 1; ; small_half++) {
+    const unsigned int large_half = n_tip - small_half,
+      small_trees = n_shapes(small_half),
+      large_trees = n_shapes(large_half),
+      options_here = small_trees * large_trees;
+
+    if (n < options_here) {
+      parent[*next_edge] = this_node;
+      if (small_half == 1) {
+        child[(*next_edge)++] = (*next_tip)++;
+      } else {
+        child[(*next_edge)++] = *next_node;
+        fill_edges(parent, child, n / large_trees, small_half,
+                   next_edge, next_tip, next_node);
+      }
+
+      parent[*next_edge] = this_node;
+      if (large_half == 1) {
+        child[(*next_edge)++] = (*next_tip)++;
+      } else {
+        child[(*next_edge)++] = *next_node;
+        fill_edges(parent, child, n % large_trees, large_half,
+                   next_edge, next_tip, next_node);
+      }
+      break;
+    } else {
+      n -= options_here;
+    }
+  }
+
+}
+
+// [[Rcpp::export]]
+IntegerMatrix rooted_shape_to_edge(NumericVector shape, IntegerVector nTip) {
+  const unsigned int n_tip = nTip[0], n_edge = n_tip + n_tip - 2;
+  uint64_t n = shape[0];
+  unsigned int parent[MAX_SHAPE_NODE], child[MAX_SHAPE_NODE];
+  unsigned int next_edge = 0, next_tip = 1, next_node = n_tip + 1;
+  fill_edges(parent, child, n, n_tip, &next_edge, &next_tip, &next_node);
+
+  IntegerMatrix ret (n_edge, 2);
+  for (unsigned int i = 0; i < n_edge; i++) {
+    ret(i, 0) = parent[i];
+    ret(i, 1) = child[i];
+  }
+  return ret;
+}
