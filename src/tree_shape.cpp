@@ -29,6 +29,10 @@ unsigned int n_options(const unsigned int a, const unsigned int b) {
   return n_shapes(a) * ((a == b) ? n_shapes(a + 1) / 2 : n_shapes(b));
 }
 
+unsigned int triangular_number(const unsigned int n) {
+  return n * (n + 1) / 2;
+}
+
 // Parent and child must be in postorder, with tree rooted.
 // [[Rcpp::export]]
 NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
@@ -75,13 +79,8 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
       tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
     }
     if (small_tips == large_tips) {
-      const unsigned int largest_possible = n_shapes(large_tips);
-      for (
-          unsigned int small_wasnt = 0;
-          small_wasnt != tree_at[small_child];
-          small_wasnt++) {
-        tree_at[this_node] += largest_possible - small_wasnt;
-      }
+      tree_at[this_node] += triangular_number(n_shapes(large_tips)) -
+        triangular_number(tree_at[small_child]);
     } else {
       tree_at[this_node] += tree_at[large_child] +
       (tree_at[small_child] * n_shapes(large_tips));
