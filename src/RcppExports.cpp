@@ -66,16 +66,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// edge_to_shape
-NumericVector edge_to_shape(IntegerVector parent, IntegerVector child, IntegerVector nTip);
-RcppExport SEXP _TreeTools_edge_to_shape(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
+// n_rooted_shapes
+IntegerVector n_rooted_shapes(IntegerVector nTip);
+RcppExport SEXP _TreeTools_n_rooted_shapes(SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
-    rcpp_result_gen = Rcpp::wrap(edge_to_shape(parent, child, nTip));
+    rcpp_result_gen = Rcpp::wrap(n_rooted_shapes(nTip));
     return rcpp_result_gen;
 END_RCPP
 }

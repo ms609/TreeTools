@@ -21,7 +21,15 @@ cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
 
-edge_to_shape <- function(parent, child, nTip) {
-    .Call(`_TreeTools_edge_to_shape`, parent, child, nTip)
+n_rooted_shapes <- function(nTip) {
+    .Call(`_TreeTools_n_rooted_shapes`, nTip)
+}
+
+edge_to_rooted_shape <- function(parent, child, nTip) {
+    .Call(`_TreeTools_edge_to_rooted_shape`, parent, child, nTip)
+}
+
+rooted_shape_to_edge <- function(shape, nTip) {
+    .Call(`_TreeTools_rooted_shape_to_edge`, shape, nTip)
 }
 
