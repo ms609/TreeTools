@@ -70,10 +70,12 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
       large_child = right_child;
     }
 
-    tips_below[this_node] = tips_below[small_child] + tips_below[large_child];
+    const unsigned int small_tips = tips_below[small_child],
+                       large_tips = tips_below[large_child];
+    tips_below[this_node] = small_tips + large_tips;
     const unsigned int tips_here = tips_below[this_node];
-    const unsigned int option_chosen = tips_below[small_child] - 1;
     Rcout << "Chosen option " << option_chosen << "\n";
+    const unsigned int option_chosen = small_tips - 1;
 
     for (unsigned int unchosen_tips = 1; unchosen_tips <= option_chosen; unchosen_tips++) {
       tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
@@ -103,32 +105,64 @@ void fill_edges(unsigned int *parent, unsigned int *child,
   const unsigned int this_node = (*next_node)++;
 
   for (unsigned int small_half = 1; ; small_half++) {
-    const unsigned int large_half = n_tip - small_half,
-      small_trees = n_shapes(small_half),
-      large_trees = n_shapes(large_half),
-      options_here = small_trees * large_trees;
-
-    if (n < options_here) {
+    const unsigned int large_half = n_tip - small_half;
+    if (small_half == large_half) {
       parent[*next_edge] = this_node;
       if (small_half == 1) {
         child[(*next_edge)++] = (*next_tip)++;
+        parent[*next_edge] = this_node;
+        child[(*next_edge)++] = (*next_tip)++;
       } else {
+        /*         LARGE TREE ID
+         *          0  1   2  ...
+         *  small 0 0  1   2  ... n
+         *   tree 1   n+1 n+2 ... (2n - 1)
+         *    id  2        2n ...
+         */
+        const unsigned int large_tree_options = n_shapes(large_half),
+          total_options = triangular_number(large_tree_options),
+          further_options = (total_options - n) - 1,
+          small_tree = (large_tree_options - 1) - triangle_row(further_options),
+          large_tree = small_tree + n - (total_options -
+            triangular_number(triangle_row(further_options) + 1));
         child[(*next_edge)++] = *next_node;
-        fill_edges(parent, child, n / large_trees, small_half,
+        fill_edges(parent, child, small_tree, small_half,
                    next_edge, next_tip, next_node);
       }
 
-      parent[*next_edge] = this_node;
-      if (large_half == 1) {
-        child[(*next_edge)++] = (*next_tip)++;
-      } else {
+        parent[*next_edge] = this_node;
         child[(*next_edge)++] = *next_node;
-        fill_edges(parent, child, n % large_trees, large_half,
+        fill_edges(parent, child, large_tree, large_half,
                    next_edge, next_tip, next_node);
       }
       break;
     } else {
-      n -= options_here;
+      const unsigned int small_trees = n_shapes(small_half),
+        large_trees = n_shapes(large_half),
+        options_here = small_trees * large_trees;
+
+      if (n < options_here) {
+        parent[*next_edge] = this_node;
+        if (small_half == 1) {
+          child[(*next_edge)++] = (*next_tip)++;
+        } else {
+          child[(*next_edge)++] = *next_node;
+          fill_edges(parent, child, n / large_trees, small_half,
+                     next_edge, next_tip, next_node);
+        }
+
+        parent[*next_edge] = this_node;
+        if (large_half == 1) {
+          child[(*next_edge)++] = (*next_tip)++;
+        } else {
+          child[(*next_edge)++] = *next_node;
+          fill_edges(parent, child, n % large_trees, large_half,
+                     next_edge, next_tip, next_node);
+        }
+        break;
+      } else {
+        n -= options_here;
+      }
     }
   }
 
