@@ -67,11 +67,13 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
     const unsigned int option_chosen = tips_below[small_child] - 1;
     Rcout << "Chosen option " << option_chosen << "\n";
 
-    for (unsigned int unchosen = 0; unchosen < option_chosen; unchosen++) {
-      tree_at[this_node] += n_shapes(unchosen + 1) * n_shapes(tips_here - (unchosen + 1));
+    for (unsigned int unchosen_tips = 1; unchosen_tips <= option_chosen; unchosen_tips++) {
+      tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
     }
-    tree_at[this_node] += tree_at[small_child] +
-      (tree_at[large_child] * n_shapes(tips_below[small_child]));
+    tree_at[this_node] += tree_at[large_child] +
+      (tree_at[small_child] *
+      (tips_below[small_child] == tips_below[large_child] ?
+       tree_at[large_child] : n_shapes(tips_below[large_child])));
   }
   return NumericVector::create(tree_at[parent[n_edge - 1] - r_to_c]);
 }
