@@ -81,8 +81,12 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
       tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
     }
     if (small_tips == large_tips) {
-      tree_at[this_node] += triangular_number(n_shapes(large_tips)) -
-        triangular_number(tree_at[small_child]);
+      const unsigned int max_shape = n_shapes(large_tips),
+        small_shape = tree_at[small_child],
+        large_shape = tree_at[large_child];
+      tree_at[this_node] += (triangular_number(max_shape) -
+        triangular_number(max_shape - small_shape)) +
+        large_shape - small_shape;
     } else {
       tree_at[this_node] += tree_at[large_child] +
       (tree_at[small_child] * n_shapes(large_tips));

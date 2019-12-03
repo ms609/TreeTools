@@ -6,7 +6,7 @@ test_that('Tree shapes counted', {
 })
 
 test_that('Tree shapes calculated', {
-  expect_equal(NRootedShapes(8), RootedTreeShape(BalancedTree(0:7)))
+  expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
 
   expect_equal(0L, RootedTreeShape(PectinateTree(0:3)))
   expect_equal(1L, RootedTreeShape(BalancedTree(0:3)))
