@@ -3,6 +3,8 @@ context('tree_shape.cpp')
 test_that('Tree shapes counted', {
   expect_equal(c(1, 1, 1, 2, 3, 6, 11, 23),
                vapply(1:8, NRootedShapes, 0L))
+  expect_equal(c(1, 1, 1, 1, 1, 2, 2, 4, 6),
+               vapply(1:9, NUnrootedShapes, 0L))
 })
 
 test_that('Tree shapes calculated', {
