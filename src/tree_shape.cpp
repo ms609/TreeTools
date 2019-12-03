@@ -74,10 +74,18 @@ NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
     for (unsigned int unchosen_tips = 1; unchosen_tips <= option_chosen; unchosen_tips++) {
       tree_at[this_node] += n_options(unchosen_tips, tips_here - unchosen_tips);
     }
-    tree_at[this_node] += tree_at[large_child] +
-      (tree_at[small_child] *
-      (tips_below[small_child] == tips_below[large_child] ?
-       tree_at[large_child] : n_shapes(tips_below[large_child])));
+    if (small_tips == large_tips) {
+      const unsigned int largest_possible = n_shapes(large_tips);
+      for (
+          unsigned int small_wasnt = 0;
+          small_wasnt != tree_at[small_child];
+          small_wasnt++) {
+        tree_at[this_node] += largest_possible - small_wasnt;
+      }
+    } else {
+      tree_at[this_node] += tree_at[large_child] +
+      (tree_at[small_child] * n_shapes(large_tips));
+    }
   }
   return NumericVector::create(tree_at[parent[n_edge - 1] - r_to_c]);
 }
