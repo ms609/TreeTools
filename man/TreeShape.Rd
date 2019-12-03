@@ -4,6 +4,9 @@
 \alias{TreeShape}
 \alias{RootedTreeShape}
 \alias{RootedTreeWithShape}
+\alias{UnrootedTreeWithShape}
+\alias{UnrootedTreeShape}
+\alias{UnrootedShapes}
 \alias{NUnrootedShapes}
 \alias{NRootedShapes}
 \title{Integer representing shape of a tree}
@@ -11,6 +14,12 @@
 RootedTreeShape(tree)
 
 RootedTreeWithShape(shape, nTip)
+
+UnrootedTreeWithShape(shape, nTip)
+
+UnrootedTreeShape(tree)
+
+UnrootedShapes(nTip)
 
 NUnrootedShapes(nTip)
 
@@ -30,6 +39,9 @@ ignoring tip labels.
 
 \code{TreeWithShape} returns a tree of class \code{phylo} corresponding to the
 shape provided.  Tips are unlabelled.
+
+\code{TreeShapes} returns an integer specifying the number of unique
+unrooted tree shapes with \code{nTip} tips.
 
 \code{TreeShapes} returns an integer specifying the number of unique
 unrooted tree shapes with \code{nTip} tips.

@@ -54,55 +54,82 @@ UnrootedTreeWithShape <- function (shape, nTip) {
     x
   }
   SingleTaxonTree('') + SingleTaxonTree('') +
-    AddRoot(RootedTreeWithShape(shape, nTip - 2L))
+    AddRoot(RootedTreeWithShape(UnrootedShapes(nTip)[shape + 1L], nTip - 2L))
 }
 
 #' @rdname TreeShape
 #' @importFrom ape drop.tip root
 #' @export
 UnrootedTreeShape <- function (tree) {
+  which(UnrootedShapes(NTip(tree)) == UnrootedTreeKey(tree)) - 1L
+}
+
+#' @rdname TreeShape
+#' @importFrom ape drop.tip root
+#' @export
+UnrootedTreeKey <- function (tree) {
   tree <- Postorder(tree)
   edge <- tree$edge
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]
   nEdge <- length(child)
-  nodeFirst <- rep(c(TRUE, FALSE), nEdge / 2L)
+  unrooted <- nEdge %% 2L
+  nodeFirst <- c(rep(c(TRUE, FALSE), nEdge / 2L), logical(as.integer(unrooted)))
   nodeSecond <- !nodeFirst
   nodeNumbers <- unique(parent)
+  if (unrooted) {
+    nodeFirst [nEdge - 0:2] <- FALSE
+    nodeSecond[nEdge - 0:2] <- FALSE
+    nodeNumbers <- nodeNumbers[-(nTip - 2L)]
+  }
 
   RootedNumber <- function (nodeChildren) {
     RootedTreeShape(Postorder(drop.tip(root(tree, nodeChildren), nodeChildren)))
   }
 
-  rootCandidate <- if (sum(child[nEdge - 0:3] <= nTip) == 2) {
-    RootedNumber(child[nEdge - 0:3][child[nEdge - 0:3] <= nTip])
-  } else double(0)
-
+  basalTips <- nEdge - (seq_len(4L - unrooted) - 1L)
+  rootCandidate <- if (sum(child[basalTips] <= nTip) == 2) {
+    RootedNumber(child[basalTips][child[basalTips] <= nTip])
+  } else {
+    double(0)
+  }
 
   cherryNodes <- nodeNumbers[child[nodeFirst] <= nTip & child[nodeSecond] <= nTip]
 
   # Return:
   min(vapply(cherryNodes, function (node) {
-    cat(child[parent == node])
     RootedNumber(child[parent == node])
   }, double(1)), rootCandidate)
 }
+
+
+
+#' @rdname TreeShape
+#' @return `TreeShapes` returns an integer specifying the number of unique
+#' unrooted tree shapes with `nTip` tips.
+#' @importFrom memoise memoise
+#' @export
+UnrootedShapes <- memoise(function (nTip) {
+  if (nTip > 5) {
+    #TODO make efficient - this is horrible!
+    shapes <- vapply(seq_len(NRootedShapes(nTip)) - 1L, function (shape)
+      UnrootedTreeKey(RootedTreeWithShape(shape, nTip)), double(1))
+    uniqueShapes <- unique(shapes)
+  } else {
+    uniqueShapes <- 0
+  }
+
+  # Return:
+  sort(uniqueShapes)
+})
 
 #' @rdname TreeShape
 #' @return `TreeShapes` returns an integer specifying the number of unique
 #' unrooted tree shapes with `nTip` tips.
 #' @export
 NUnrootedShapes <- function (nTip) {
-  #TODO make efficient - this is horrible!
-  uniqueShapes <- unique(vapply(seq_len(NRootedShapes(nTip)) - 1L, function (shape)
-    UnrootedTreeShape(RootedTreeWithShape(shape, nTip)), double(1)))
-  if (max(uniqueShapes) + 1 != length(uniqueShapes)) {
-    warning("Holey numbers")
-  }
-
-  # Return:
-  length(uniqueShapes)
+  length(UnrootedShapes(nTip))
 }
 
 #' @rdname TreeShape
