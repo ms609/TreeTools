@@ -25,7 +25,11 @@ unsigned int n_shapes (unsigned int n) {
   return n_shapes_cache[n];
 }
 
-// Parent and child must be in postorder, with tree rooted on tip 1.
+unsigned int n_options(const unsigned int a, const unsigned int b) {
+  return n_shapes(a) * ((a == b) ? n_shapes(a + 1) / 2 : n_shapes(b));
+}
+
+// Parent and child must be in postorder, with tree rooted.
 // [[Rcpp::export]]
 NumericVector edge_to_shape(IntegerVector parent, IntegerVector child,
                             IntegerVector nTip) {
