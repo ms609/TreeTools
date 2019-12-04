@@ -6,6 +6,7 @@
 \alias{RootedTreeWithShape}
 \alias{UnrootedTreeWithShape}
 \alias{UnrootedTreeShape}
+\alias{UnrootedTreeKey}
 \alias{UnrootedShapes}
 \alias{NUnrootedShapes}
 \alias{NRootedShapes}
@@ -18,6 +19,8 @@ RootedTreeWithShape(shape, nTip)
 UnrootedTreeWithShape(shape, nTip)
 
 UnrootedTreeShape(tree)
+
+UnrootedTreeKey(tree)
 
 UnrootedShapes(nTip)
 
@@ -65,6 +68,15 @@ for the larger subtree.  Then, move to the next shape of the smaller subtree,
 and work through each possible shape of the larger subtree.
 
 Stop when the desired topology is encountered.
+
+Unrooted trees are numbered less elegantly.  Each cherry (i.e. node
+subtending a pair of tips) is treated in turn.  The subtended tips are
+removed, and the node treated as the root of a rooted tree.  The number of
+this rooted tree is then calculated.  The tree is assigned a \emph{key}
+corresponding to the lowest such value.  The keys of all unrooted tree shapes
+on \emph{n} tips are ranked, and the unrooted tree shape is assigned a \emph{number}
+based on the rank order of its key among all possible keys, counting from
+zero.
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

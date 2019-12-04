@@ -15,6 +15,15 @@
 #'
 #' Stop when the desired topology is encountered.
 #'
+#' Unrooted trees are numbered less elegantly.  Each cherry (i.e. node
+#' subtending a pair of tips) is treated in turn.  The subtended tips are
+#' removed, and the node treated as the root of a rooted tree.  The number of
+#' this rooted tree is then calculated.  The tree is assigned a _key_
+#' corresponding to the lowest such value.  The keys of all unrooted tree shapes
+#' on _n_ tips are ranked, and the unrooted tree shape is assigned a _number_
+#' based on the rank order of its key among all possible keys, counting from
+#' zero.
+#'
 #' @template treeParam
 #'
 #' @return `TreeShape` returns an integer specifying the shape of a tree,
@@ -29,7 +38,6 @@ RootedTreeShape <- function (tree) {
   edge <- PostorderEdges(edge[, 1], edge[, 2], nTip = nTip)
 
   edge_to_rooted_shape(edge[[1]], edge[[2]], nTip)
-
 }
 
 #' @rdname TreeShape
@@ -96,11 +104,12 @@ UnrootedTreeKey <- function (tree) {
   }
 
   cherryNodes <- nodeNumbers[child[nodeFirst] <= nTip & child[nodeSecond] <= nTip]
-
-  # Return:
-  min(vapply(cherryNodes, function (node) {
+  allKeys <- c(vapply(cherryNodes, function (node) {
     RootedNumber(child[parent == node])
   }, double(1)), rootCandidate)
+
+  # Return:
+  min(allKeys)
 }
 
 #' @rdname TreeShape
