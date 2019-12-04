@@ -5,14 +5,13 @@
 ## Reminders when releasing for CRAN
 release_questions <- function() {
   c(
-    "Have you really updated codemeta.json with codemetar::write_codemeta()?",
-    "Have you cleared GitHub issues for this release milestone?",
     "Is the code free of #TODOs?",
     "Have you checked the Vignettes for sanity?",
     "Have you updated the version number in .zenodo.json, NEWS & DESCRIPTION?"
   )
 }
 
+#codemetar::write_codemeta()
 #rhub::check_on_windows()
 #check_with_rdevel() # redundifies check_on_debian()
 #check_on_ubuntu()
