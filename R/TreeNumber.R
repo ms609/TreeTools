@@ -104,6 +104,7 @@
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 #' tree <- as.phylo(treeNumber)
 #'
+#' @seealso [`TreeShape`]
 #' @exportClass TreeNumber
 #' @name TreeNumber
 #
