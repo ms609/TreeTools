@@ -137,6 +137,9 @@ Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 
 \insertRef{Li1996}{TreeTools}
 }
+\seealso{
+\code{\link{TreeShape}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

@@ -5,24 +5,27 @@
 \alias{RootedTreeShape}
 \alias{RootedTreeWithShape}
 \alias{UnrootedTreeWithShape}
+\alias{UnrootedTreeWithKey}
 \alias{UnrootedTreeShape}
 \alias{UnrootedTreeKey}
-\alias{UnrootedShapes}
+\alias{UnrootedKeys}
 \alias{NUnrootedShapes}
 \alias{NRootedShapes}
 \title{Integer representing shape of a tree}
 \usage{
 RootedTreeShape(tree)
 
-RootedTreeWithShape(shape, nTip)
+RootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
 
-UnrootedTreeWithShape(shape, nTip)
+UnrootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
+
+UnrootedTreeWithKey(key, nTip, tipLabels = rep("", nTip))
 
 UnrootedTreeShape(tree)
 
 UnrootedTreeKey(tree)
 
-UnrootedShapes(nTip)
+UnrootedKeys(nTip)
 
 NUnrootedShapes(nTip)
 
@@ -35,16 +38,27 @@ NRootedShapes(nTip)
 \code{TreeShape}.}
 
 \item{nTip}{Integer specifying number of tips.}
+
+\item{tipLabels}{Character vector listing the labels assigned to each tip
+in a tree, perhaps obtained using \link{TipLabels}.}
+
+\item{key}{Integer specifying the \emph{key} (not number) of an unrooted tree.}
 }
 \value{
 \code{TreeShape} returns an integer specifying the shape of a tree,
 ignoring tip labels.
 
-\code{TreeWithShape} returns a tree of class \code{phylo} corresponding to the
+\code{RootedTreeWithShape} returns a tree of class \code{phylo} corresponding to the
 shape provided.  Tips are unlabelled.
 
-\code{TreeShapes} returns an integer specifying the number of unique
-unrooted tree shapes with \code{nTip} tips.
+\code{UnrootedTreeWithShape} returns a tree of class \code{phylo} corresponding
+to the shape provided.  Tips are unlabelled.
+
+\code{UnrootedTreeWithKey} returns a tree of class \code{phylo} corresponding
+to the key provided.  Tips are unlabelled.
+
+\code{UnrootedKeys} returns a vector of integers corresponding to the
+keys (not shape numbers) of unrooted tree shapes with \code{nTip} tips.
 
 \code{TreeShapes} returns an integer specifying the number of unique
 unrooted tree shapes with \code{nTip} tips.
@@ -53,7 +67,7 @@ unrooted tree shapes with \code{nTip} tips.
 rooted tree shapes with \code{nTip} tips.
 }
 \description{
-Returns an integer that uniquely represents the \emph{shape} of an \emph{n}-tip
+Returns an integer that uniquely represents the shape of an \emph{n}-tip
 binary tree, ignoring tip labels.
 }
 \details{
@@ -77,6 +91,36 @@ corresponding to the lowest such value.  The keys of all unrooted tree shapes
 on \emph{n} tips are ranked, and the unrooted tree shape is assigned a \emph{number}
 based on the rank order of its key among all possible keys, counting from
 zero.
+
+If \code{UnrootedTreeShape} or \code{UnrootedTreeKey} is passed a rooted tree,
+the position of the root will be ignored.
+}
+\examples{
+RootedTreeShape(PectinateTree(8))
+plot(RootedTreeWithShape(0, nTip = 8L))
+
+NRootedShapes(8L)
+# Shapes are numbered from 0 to NRootedShapes(n) - 1.  The maximum shape is:
+RootedTreeShape(BalancedTree(8))
+
+# Unique shapes of unrooted trees:
+NUnrootedShapes(8L)
+
+# Keys of these trees:
+UnrootedKeys(8L)
+
+# A tree may be represented by multiple keys.
+# For a one-to-one correspondence, use a number instead:
+allShapes <- lapply(seq_len(NUnrootedShapes(8L)) - 1L,
+                    UnrootedTreeWithShape, 8L)
+plot(allShapes[[1]])
+sapply(allShapes, UnrootedTreeShape)
+sapply(allShapes, UnrootedTreeKey) # Key >= number
+
+
+}
+\seealso{
+\code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

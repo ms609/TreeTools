@@ -22,7 +22,8 @@ Depends: R (>= 3.4.0),
     ape (>= 5.0)
 Imports:
     colorspace,
-    phangorn (>= 2.2.1)
+    phangorn (>= 2.2.1),
+    R.cache
 Suggests:
     knitr,
     Rcpp,
