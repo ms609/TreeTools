@@ -29,11 +29,11 @@ Assert <- function (statement) if (!statement) stop(deparse(statement), " is FAL
 #'
 #' @export
 UnshiftTree <- function(add, treeList) {
-  if (class(treeList) == 'multiPhylo') {
+  if (inherits(treeList, 'multiPhylo')) {
     structure(c(list(add), lapply(treeList, function (X) X)), class= 'multiPhylo')
-  } else if (class(treeList) == 'phylo') {
+  } else if (inherits(treeList, 'phylo')) {
     treeList <- structure(list(add, treeList), class='multiPhylo')
-  } else { # including: if (class(trees) == 'list') {
+  } else { # including: if (mode(trees) == 'list') {
     c(list(add), treeList)
   }
 }

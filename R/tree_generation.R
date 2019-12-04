@@ -123,12 +123,12 @@ NJTree <- function (dataset) {
 #' @importFrom ape root drop.tip bind.tree
 #' @export
 EnforceOutgroup <- function (tree, outgroup) {
-  if (class(tree) == 'phylo') {
+  if (inherits(tree, 'phylo')) {
     taxa <- tree$tip.label
-  } else if (class(tree) == 'character') {
+  } else if (inherits(tree, 'character')) {
     tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1], resolve.root=TRUE)
   } else {
-    stop ("tree must be of class phylo")
+    stop ("tree must inherit class phylo")
   }
 
   if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root=TRUE))
