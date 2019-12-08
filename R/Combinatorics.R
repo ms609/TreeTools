@@ -127,19 +127,32 @@ LnRooted.int <- function (tips) {
 }
 
 #' Number of trees one SPR step away
-#' Formula given by Allen and Steel (2001).
 #'
-#' @param n Number of tips in tree.
+#' `N1Spr` calculates the number of trees one subtree prune-and-regraft 
+#' operation away from a binary input tree using the formula given by Allen and
+#' Steel (2001).
+#'
+#' `IC1Spr` calculates the information content of trees at this distance: i.e.
+#' the entropy corresponding to the proportion of all possible _n_-tip trees
+#' whose SPR distance is at most one from a specified tree.
+#' 
+#' @param n Integer vector specifying the number of tips in a tree.
+#' 
+#' @return `N1SPR` returns an integer vector.
+#' 
+#' @examples 
+#' N1Spr(4:6)
+#' IC1Spr(5)
+#' 
 #' @references
 #'  \insertRef{Allen2001}{TreeTools}
 #'
 #' @export
-N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
-
-
+N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 
 #' @describeIn N1Spr Information content of trees 0 or 1 SPR step from tree
 #'  with n tips.
+#' @return `IC1SPR` returns an numeric vector.
 #' @export
 IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 

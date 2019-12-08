@@ -82,7 +82,8 @@ SortTree <- function(tree) {
 #'
 #' @template treeParam
 #'
-#' @return A character string describing `tree` in Newick format
+#' @return `NewickTree` returns a character string denoting `tree` in Newick 
+#' format.
 #'
 #' @importFrom ape write.tree
 #' @export

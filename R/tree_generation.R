@@ -92,11 +92,11 @@ BalancedBit <- function (tips, nTips = length(tips)) {
 
 #' Neighbour Joining Tree
 #'
-#' Generates a rooted neighbour joining tree, with no edge lengths
+#' Generates a rooted neighbour joining tree, with no edge lengths.
 #'
 #' @template datasetParam
 #'
-#' @return an object of class \code{phylo}
+#' @return `NJTree` returns an object of class \code{phylo}.
 #'
 #' @template MRS
 #' @importFrom ape nj root

@@ -8,7 +8,7 @@
 \alias{NSplits.list}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
-\title{Number of distinct partitions in a tree}
+\title{Number of distinct partitions}
 \usage{
 NSplits(x)
 
@@ -30,11 +30,11 @@ NPartitions(x)
 or a vector of integers.}
 }
 \value{
-Integer specifying the number of partitions in the specified trees,
-or in a rooted tree with \code{n} tips.
+\code{NSplits} returns an integer specifying the number of partitions in
+the specified objects, or in a rooted tree with \code{n} tips.
 }
 \description{
-Number of distinct partitions in a tree
+How many unique bipartition splits occur in a tree or object?
 }
 \examples{
 {
