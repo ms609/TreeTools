@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_rearrangement.R
 \name{RootTree}
 \alias{RootTree}
-\title{Root Tree on specified tips}
+\title{Root a phylogenetic tree}
 \usage{
 RootTree(tree, outgroupTips)
 }
@@ -13,10 +13,17 @@ RootTree(tree, outgroupTips)
 include in the outgroup.}
 }
 \value{
-A tree of class phylo, rooted on the smallest clade that contains the specified tips
+\code{RootTree} returns a tree of class \code{phylo}, rooted on the smallest
+clade that contains the specified tips.
 }
 \description{
 Roots a tree on the smallest clade containing the specified tips.
+}
+\seealso{
+\itemize{
+\item \link[ape:root]{ape::root}
+\item \code{\link{EnforceOutgroup}}
+}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

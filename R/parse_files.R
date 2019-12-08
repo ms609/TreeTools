@@ -57,7 +57,8 @@ ApeTime <- function (filename, format='double') {
 #'  `.tre` file specified in `filename`.
 #'
 #'
-#' @return a tree of class \code{phylo}.
+#' @return `ReadTNTTree` returns a tree of class \code{phylo}, corresponding
+#' to the tree in `filename`.
 #'
 #' @examples
 #'   # In the examples below, TNT has read a matrix from
@@ -68,16 +69,9 @@ ApeTime <- function (filename, format='double') {
 #'   # results1.tnt will contain a hard-coded reference to
 #'   # "c:/TreeTools/input/dataset.nex".
 #'
-#'   # On the original machine, it would be possible to read this hard-coded
-#'   # reference from results.tnt:
-#'
-#'   \dontrun{
-#'   # Works on original machine but not elsewhere:
-#'   ReadTntTree('output/results1.tnt')
-#'
-#'   # Takes only the filename from the results
-#'   ReadTntTree('output/results1.tnt', 'input/dataset.nex')
-#'   }
+#'   # On the original machine (but not elsewhere), it would be possible to read
+#'   # this hard-coded reference from results.tnt:
+#'   # ReadTntTree('output/results1.tnt')
 #'
 #'   # These datasets are provided with the `TreeTools` package, which will
 #'   # probably not be located at c:/TreeTools on your machine:
@@ -559,13 +553,22 @@ StringToPhydat <- StringToPhyDat
 #' @param collapse Character specifying text, perhaps `,`, with which to
 #' separate multiple tokens within parentheses
 #' @param ps Character specifying text, perhaps `;`, to append to the end of the string
-#' @param useIndex (default: TRUE) Print duplicate characters multiple
+#' @param useIndex (default: `TRUE`) Print duplicate characters multiple
 #'        times, as they appeared in the original matrix
-#' @param byTaxon If TRUE, write one taxon followed by the next.
-#'                If FALSE, write one character followed by the next.
+#' @param byTaxon If `TRUE`, write one taxon followed by the next.
+#'                If `FALSE`, write one character followed by the next.
 #' @param concatenate Logical specifying whether to concatenate all characters/taxa
 #'                    into a single string, or to return a separate string
 #'                    for each entry.
+#'
+#' @examples 
+#' fileName <- paste0(system.file(package='TreeTools'), 
+#'                    '/extdata/input/dataset.nex')
+#' phyDat <- ReadAsPhyDat(fileName)
+#' PhyToString(phyDat, concatenate = FALSE)
+#'
+#' @return `PhyToString` returns a character vector listing a text 
+#' representation of the phylogenetic character state for each taxon in turn.
 #'
 #' @template MRS
 #' @importFrom phangorn phyDat

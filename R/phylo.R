@@ -6,11 +6,10 @@
 #' @template treeParam
 #'
 #' @examples
-#' library('ape')
-#' tree <- rtree(10)
-#' Renumber (tree)
+#' tree <- RandomTree(letters[1:10])
+#' Renumber(tree)
 #'
-#' @return This function returns a tree of class \code{phylo}
+#' @return This function returns a tree of class \code{phylo}.
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -52,8 +51,13 @@ Renumber <- function (tree) {
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
-#' @return This function returns a \code{phylo} object containing a single tip with the specified label.
-#' @examples SingleTaxonTree('Homo_sapiens')
+#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single 
+#' tip with the specified label.
+#' 
+#' @examples 
+#' SingleTaxonTree('Homo_sapiens')
+#' plot(SingleTaxonTree('root') + BalancedTree(4))
+#' 
 #' @keywords  tree
 #' @family tree manipulation
 #' @family tree generation functions

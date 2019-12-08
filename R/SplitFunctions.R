@@ -213,9 +213,9 @@ SplitMatchProbability <- function (split1, split2) {
 #' the default of \code{ape::\link{rtree}}.
 #'
 #' @param x An object of a supported class (see Usage section).
+#'
 #' @return A character vector listing the tip labels for the specified object.
 #'
-#' @return Character vector listing tip names.
 #' @template MRS
 #' @export
 TipLabels <- function (x) UseMethod('TipLabels')

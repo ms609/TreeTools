@@ -1,14 +1,16 @@
-#' Generate random tree topology
+#' Generate a random tree topology
+#'
+#' Generates a binary tree with a random topology on specified tips, optionally
+#' rooting the tree on a given tip.
 #'
 #' @template tipsForTreeGeneration
-#' @param root Taxon to use as root (if desired; FALSE otherwise)
+#' @param root Tip to use as root (if desired; FALSE otherwise)
 #'
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
 #'
 #' @template MRS
-#' @importFrom ape rtree
-#' @importFrom ape root
+#' @importFrom ape rtree root
 #' @family tree generation functions
 #' @export
 RandomTree <- function (tips, root = FALSE) {

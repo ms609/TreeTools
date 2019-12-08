@@ -54,6 +54,16 @@ not export those functions.
 
 >> I have now either documented or removed all internal functions.
 
+### Resubmission (comments dated 2019-12-04)
+
+Please add \value to .Rd files regarding exported methods and explain
+the functions' results in the documentation.
+e.g. RenumberTips.Rd, RandomTree.Rd, ...
+> Done.
+
+Please use system.file() to get the correct package path in the example
+of ReadTntTree.Rd and unwrap theexample from \dontrun{}.
+> I have removed these examples.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
