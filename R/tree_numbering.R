@@ -77,7 +77,8 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' @template nTipParam
 #' @param edge (optional) the value of tree$edge
 #'
-#' @return A tree with nodes following the specified numbering scheme
+#' @return A tree of class `phylo` with nodes following the specified 
+#' numbering scheme.
 #' @author
 #'  `Preorder`: Martin R. Smith.
 #'

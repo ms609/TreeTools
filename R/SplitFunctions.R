@@ -79,8 +79,8 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @template splitsObjectParam
 #' @param splits2 A second `Splits` object.
 #'
-#' @return A logical matrix specifying whether each split in `splits` is
-#' compatible with each split in `splits2`.
+#' @return `CompatibleSplits` returns a logical matrix specifying whether each 
+#' split in `splits` is compatible with each split in `splits2`.
 #'
 #' @examples
 #'
@@ -103,7 +103,8 @@ CompatibleSplits <- function (splits, splits2) {
 }
 
 #' @param a,b [Raw][raw] representations of splits, from a row of a `Splits` object.
-#' @return logical vector stating whether splits are compatible.
+#' @return `.CompatibleSplit` returns a logical vector stating whether splits 
+#' are compatible.
 #' @describeIn CompatibleSplits Evaluate a single split pair
 #' @keywords internal
 #' @export
