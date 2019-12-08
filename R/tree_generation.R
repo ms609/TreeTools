@@ -131,7 +131,7 @@ NJTree <- function (dataset) {
 #' @importFrom ape root drop.tip bind.tree
 #' 
 #' @examples 
-#' tree <- EnforceOutgroup(letters[1:3], letters[1:9])
+#' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
 #' plot(tree)
 #' 
 #' @export
@@ -139,7 +139,8 @@ EnforceOutgroup <- function (tree, outgroup) {
   if (inherits(tree, 'phylo')) {
     taxa <- tree$tip.label
   } else if (inherits(tree, 'character')) {
-    tree <- root(rtree(length(tree), tip.label=tree, br=NULL), tree[1],
+    taxa <- tree
+    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1],
                  resolve.root=TRUE)
   } else {
     stop ("tree must be of class `phylo` or `character`")
