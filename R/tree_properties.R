@@ -66,15 +66,17 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @export
 AncestorEdge <- function (edge, parent, child) child == parent[edge]
 
-#' EdgeAncestry
+#' Edge ancestry
 #'
-#' Quickly identifies edges that are 'ancestral' to a particular edge in a tree
+#' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'
-#' @param edge number of the edge whose child edges are required
+#' @param edge Integer specifying the number of the edge whose child edges 
+#' should be returned.
 #' @template treeParent
 #' @template treeChild
 #' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
-#' @return a logical vector stating whether each edge in turn is a descendant of the specified edge
+#' @return `EdgeAncestry` returns a logical vector stating whether each edge in
+#'  turn is a descendant of the specified edge.
 #'
 #' @template MRS
 #' @family tree navigation
@@ -197,14 +199,16 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot
 }
 
-#' Number of distinct partitions in a tree
+#' Number of distinct partitions
+#' 
+#' How many unique bipartition splits occur in a tree or object?
 #'
 #' @param x A phylogenetic tree of class `phylo`, or a list of such trees
 #' (of class `list` or `multiPhylo`), or a `Splits` object,
 #' or a vector of integers.
 #'
-#' @return Integer specifying the number of partitions in the specified trees,
-#' or in a rooted tree with `n` tips.
+#' @return `NSplits` returns an integer specifying the number of partitions in
+#'  the specified objects, or in a rooted tree with `n` tips.
 #'
 #' @examples {
 #'   NSplits(8L)

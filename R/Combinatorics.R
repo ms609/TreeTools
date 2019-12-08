@@ -78,14 +78,17 @@ LogDoubleFactorial.int <- function (n) {
 }
 
 #' Number of rooted/unrooted trees
-#' These functions return the number of rooted or unrooted trees consistent with a given pattern
-#'  of splits.
+#' 
+#' These functions return the number of rooted or unrooted trees consistent with
+#' a given pattern of splits.
 #'
-#' Functions starting N return the number of rooted or unrooted trees, functions starting Ln
-#' provide the log of this number.  Calculations follow Carter et al. 1990, Theorem 2.
+#' Functions starting N return the number of rooted or unrooted trees, functions
+#' starting Ln provide the natural logarithm of this number. 
+#' Calculations follow Carter et al. 1990, Theorem 2.
 #'
-#' @param tips The number of tips.
-#' @param splits vector listing the number of taxa in each tree bipartition.
+#' @param tips Integer specifying the number of tips.
+#' @param splits Integer vector listing the number of taxa in each tree 
+#' bipartition.
 #'
 #' @template MRS
 #'
@@ -97,7 +100,8 @@ LogDoubleFactorial.int <- function (n) {
 #'   NUnrooted(10)
 #'   LnRooted(10)
 #'   LnUnrooted(10)
-#'   # Number of trees consistent with a character whose states are 00000 11111 222
+#'   # Number of trees consistent with a character whose states are 
+#'   # 00000 11111 222
 #'   NUnrootedMult(c(5,5,3))
 #'
 #' @export

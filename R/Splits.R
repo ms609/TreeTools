@@ -259,7 +259,8 @@ as.character.Splits <- function (x, ...) {
 #'
 #' @param phy Object to count.
 #'
-#' @return Single integer specifying the number of tips in each object in `phy`.
+#' @return `NTip` returns an integer specifying the number of tips in each 
+#' object in `phy`.
 #'
 #' @export
 NTip <- function (phy) UseMethod('NTip')
