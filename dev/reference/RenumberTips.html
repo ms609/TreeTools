@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reorder tips — RenumberTips • TreeTools</title>
+<title>Renumber a tree's tips — RenumberTips • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
 
 
 
-<meta property="og:title" content="Reorder tips — RenumberTips" />
+<meta property="og:title" content="Renumber a tree's tips — RenumberTips" />
 <meta property="og:description" content="RenumberTips(tree, tipOrder) sorts the tips of a phylogenetic tree
 such that the indices in tree$edge[, 2] correspond to the order of
 tips given in tipOrder" />
@@ -140,7 +140,7 @@ tips given in tipOrder" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Reorder tips</h1>
+    <h1>Renumber a tree's tips</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_numbering.R'><code>R/tree_numbering.R</code></a></small>
     <div class="hidden name"><code>RenumberTips.Rd</code></div>
     </div>
@@ -168,6 +168,10 @@ tips given in <code>tipOrder</code></p>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>RenumberTips</code> returns <code>tree1</code>, with the tips' internal
+representation numbered to match <code>tipOrder</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>Lobo</span>) <span class='co'># Loads the phyDat object Lobo.phy</span>
@@ -178,6 +182,7 @@ tips given in <code>tipOrder</code></p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
