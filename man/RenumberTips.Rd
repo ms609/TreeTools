@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_numbering.R
 \name{RenumberTips}
 \alias{RenumberTips}
-\title{Reorder tips}
+\title{Renumber a tree's tips}
 \usage{
 RenumberTips(tree, tipOrder)
 }
@@ -10,7 +10,12 @@ RenumberTips(tree, tipOrder)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{tipOrder}{A character vector containing the values of
-\code{tree$tip.label} in the desired sort order}
+\code{tree$tip.label} in the desired sort order, or an object
+(perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
+}
+\value{
+\code{RenumberTips} returns \code{tree1}, with the tips' internal
+representation numbered to match \code{tipOrder}.
 }
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree

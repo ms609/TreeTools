@@ -175,7 +175,7 @@ Preorder <- function (tree) {
 }
 
 
-#' Reorder tips
+#' Renumber a tree's tips
 #'
 #' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
 #' such that the indices in \code{tree$edge[, 2]} correspond to the order of
@@ -186,6 +186,9 @@ Preorder <- function (tree) {
 #'        \code{tree$tip.label} in the desired sort order, or an object
 #'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
+#' @return `RenumberTips` returns `tree1`, with the tips' internal 
+#' representation numbered to match `tipOrder`.
+#' 
 #' @examples
 #' data(Lobo) # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)

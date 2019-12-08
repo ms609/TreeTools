@@ -28,6 +28,9 @@ GetTipNames <- function (tips) {
 #' @template tipsForTreeGeneration
 #' @param root Taxon to use as root (if desired; FALSE otherwise)
 #'
+#' @return `RandomTree` returns a random tree of class `phylo`, with the
+#'  specified tips, and no branch lengths specified.
+#'
 #' @template MRS
 #' @importFrom ape rtree
 #' @importFrom ape root

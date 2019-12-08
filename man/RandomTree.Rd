@@ -13,6 +13,10 @@ names will be used to name the tips.}
 
 \item{root}{Taxon to use as root (if desired; FALSE otherwise)}
 }
+\value{
+\code{RandomTree} returns a random tree of class \code{phylo}, with the
+specified tips, and no branch lengths specified.
+}
 \description{
 Generate random tree topology
 }
