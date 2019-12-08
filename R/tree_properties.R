@@ -59,8 +59,8 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @param edge Number of an edge
 #' @template treeParent
 #' @template treeChild
-#' @return a logical vector identifying whether each edge is the edge that is
-#' ancestral to the given edge.
+#' @return `AncestorEdge` returns a logical vector identifying whether each edge
+#' is the edge that is ancestral to the given edge.
 #' @keywords internal
 #' @family tree navigation
 #' @export
@@ -88,10 +88,16 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
 }
 
 #' Most Recent Common Ancestor
+#' 
+#' What is the last common ancestor of the specified tips?
+#' 
 #' @param tip1,tip2 Integer specifying index of tips whose most recent common
 #' ancestor should be found.
 #' @param ancestors Output of [`AllAncestors`] for the tree in question
 #'
+#' @return `MRCA` returns an integer specifying the node number of the last 
+#' common ancestor of `tip1` and `tip2`.
+#' 
 #' @family tree navigation
 #' @template MRS
 #' @export

@@ -85,7 +85,7 @@ CollapseNode <- function (tree, nodes) {
   edgeBelow <- c(edgeBelow[1:(root-1L)], NA, edgeBelow[-(1:root-1L)])
   nodes <- unique(nodes)
 
-  if (class(tree) != 'phylo') stop ("tree must be an object of class phylo")
+  if (!inherits(tree, 'phylo')) stop ("tree must be an object of class phylo")
   if (!all(nodes %in% (root + 1L):maxNode)) stop("nodes must be integers between ",
                                                  root + 1L, " and ", maxNode)
 

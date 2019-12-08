@@ -29,7 +29,8 @@ RandomTree <- function (tips, root = FALSE) {
 #'
 #' @template tipsForTreeGeneration
 #'
-#' @return A tree of class `phylo`.
+#' @return `PectinateTree` and `BinaryTree` each return a binary tree of
+#'  class `phylo` of the specified shape.
 #' @family tree generation functions
 #' @template MRS
 #' @export
@@ -111,27 +112,37 @@ NJTree <- function (dataset) {
 
 #' Force taxa to form an outgroup
 #'
-#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such that the two
-#' are sister taxa across the root, without altering the relationships within the ingroup
-#' or within the outgroup.
+#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
+#' that the two are sister taxa across the root, without changing the 
+#' relationships within the ingroup or within the outgroup.
 #'
-#' @param tree either a tree of class \code{phylo}, or a character vector listing the names of
-#'        all the taxa in the tree, from which a random tree will be generated.
-#' @param outgroup a vector containing the names of taxa to include in the outgroup
+#' @param tree Either: a tree of class \code{phylo}; or a character vector
+#' listing the names of all the taxa in the tree, from which a random tree will
+#' be generated.
+#' @param outgroup Character vector containing the names of taxa to include in the 
+#' outgroup.
 #'
-#' @return a tree where all outgroup taxa are sister to all remaining taxa,
-#'         otherwise retaining the topology of the ingroup.
+#' @return `EnforceOutgroup` returns a tree of class `phylo` where all outgroup
+#' taxa are sister to all remaining taxa, without modifying the ingroup 
+#' topology.
+#' 
 #' @template MRS
 #' @importFrom ape rtree
 #' @importFrom ape root drop.tip bind.tree
+#' 
+#' @examples 
+#' tree <- EnforceOutgroup(letters[1:3], letters[1:9])
+#' plot(tree)
+#' 
 #' @export
 EnforceOutgroup <- function (tree, outgroup) {
-  if (class(tree) == 'phylo') {
+  if (inherits(tree, 'phylo')) {
     taxa <- tree$tip.label
-  } else if (class(tree) == 'character') {
-    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1], resolve.root=TRUE)
+  } else if (inherits(tree, 'character')) {
+    tree <- root(rtree(length(tree), tip.label=tree, br=NULL), tree[1],
+                 resolve.root=TRUE)
   } else {
-    stop ("tree must be of class phylo")
+    stop ("tree must be of class `phylo` or `character`")
   }
 
   if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root=TRUE))

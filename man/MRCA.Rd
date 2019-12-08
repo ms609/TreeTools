@@ -12,8 +12,12 @@ ancestor should be found.}
 
 \item{ancestors}{Output of \code{\link{AllAncestors}} for the tree in question}
 }
+\value{
+\code{MRCA} returns an integer specifying the node number of the last
+common ancestor of \code{tip1} and \code{tip2}.
+}
 \description{
-Most Recent Common Ancestor
+What is the last common ancestor of the specified tips?
 }
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},

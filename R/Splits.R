@@ -11,10 +11,10 @@
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
 #' @param \dots Presently unused.
-#' @return Returns an object of class `Splits`, or (if `asSplits = FALSE`) a
-#'  two-dimensional array of 32-bit integers, which each bit specifying whether
-#'  a tip is a member of the split.  Splits are named according to the node
-#'  that defines them.
+#' @return `as.Splits` returns an object of class `Splits`, or
+#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which 
+#' each bit specifying whether a tip is a member of the split.
+#' Splits are named according to the node that defines them.
 #'
 #' @template MRS
 #'
@@ -122,12 +122,12 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
 #' @rdname as.Splits
 #' @export
 as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (class(x[[1]]) == 'phylo') {
+  if (inherits(x[[1]], 'phylo')) {
     if (is.null(tipLabels)) {
       tipLabels <- x[[1]]$tip.label
     }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
-  } else if (class(x[[1]]) == 'Splits') {
+  } else if (inherits(x[[1]], 'Splits')) {
     if (is.null(tipLabels)) {
       tipLabels <- attr(x, 'tip.label')
       if (is.null(tipLabels)) {

@@ -18,7 +18,8 @@ to be dropped.
 to view numbers on a plotted tree.)}
 }
 \value{
-\code{tree}, with the specified nodes or edges collapsed.
+\code{CollapseNode} and \code{CollapseEdge} return a tree of class \code{phylo},
+correspoinding to \code{tree} with the specified nodes or edges collapsed.
 The length of each dropped edge will (naively) be added to each descendant edge.
 }
 \description{

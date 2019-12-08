@@ -263,10 +263,11 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @return This function returns a list. Entry i contains a vector containing, in order,
-#' the nodes encountered when traversing the tree from node i to the root node.  The last
-#' entry of each member of the list will therefore be the root node, with the exception of the
-#' entry for the root node itself, which will be NULL.
+#' @return `AllAncestors` returns a list. Entry i contains a vector containing,
+#' in order, the nodes encountered when traversing the tree from node i to the
+#' root node.
+#' The last entry of each member of the list is therefore the root node, 
+#' with the exception of the entry for the root node itself, which is NULL.
 #'
 #' @template MRS
 #' @family tree navigation

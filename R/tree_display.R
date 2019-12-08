@@ -16,7 +16,7 @@
 #' @importFrom ape consensus drop.tip
 #' @export
 ConsensusWithout <- function (trees, tip, ...) {
-  if (class(trees) == 'phylo') {
+  if (inherits(trees, 'phylo')) {
     drop.tip(trees, tip=tip)
   } else {
     consensus(lapply(trees, drop.tip, tip=tip), ...)
