@@ -24,7 +24,7 @@ CompatibleSplits(splits, splits2)
 \item{bitmask}{Raw masking bits that do not correspond to tips.}
 }
 \value{
-\code{CompatibleSplits} returns a logical matrix specifying whether each +
+\code{CompatibleSplits} returns a logical matrix specifying whether each
 split in \code{splits} is compatible with each split in \code{splits2}.
 
 \code{.CompatibleSplit} returns a logical vector stating whether splits

@@ -14,7 +14,8 @@ Note that ambiguous tokens such as \code{(01)} are not supported, and should be
 replaced with \code{?}.`}
 }
 \value{
-Phylogenetic information content of the character, in bits.
+\code{CharacterInformation} returns a numberic specifying the
+phylogenetic information content of the character, in bits.
 }
 \description{
 Calculates the phylogenetic information content of a given character.
