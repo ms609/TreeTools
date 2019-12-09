@@ -222,7 +222,7 @@ NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.multiPhylo <- function (x) vapply(x, NSplits, integer(1))
+NSplits.multiPhylo <- function (x) vapply(x, NSplits, numeric(1L))
 
 #' @rdname NSplits
 #' @export
