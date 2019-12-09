@@ -33,7 +33,8 @@ LogTreesMatchingSplit <- function (A, B) {
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.`
 #'
-#' @return Phylogenetic information content of the character, in bits.
+#' @return `CharacterInformation` returns a numberic specifying the 
+#' phylogenetic information content of the character, in bits.
 #'
 #' @family split information functions
 #' @template MRS

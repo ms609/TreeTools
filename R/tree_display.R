@@ -10,7 +10,8 @@
 #'                drop (using ape::drop.tip)
 #' @param \dots Additional parameters to pass on to ape::[consensus] or [legend]
 #'
-#' @return A consensus tree without the excluded taxa
+#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`) 
+#' without the excluded taxa.
 #' @template MRS
 #' @importFrom ape consensus drop.tip
 #' @export
