@@ -4,6 +4,7 @@
 \alias{TreeNumber}
 \alias{as.TreeNumber}
 \alias{as.TreeNumber.phylo}
+\alias{as.TreeNumber.multiPhylo}
 \alias{as.TreeNumber.character}
 \alias{as.phylo.numeric}
 \alias{as.phylo.TreeNumber}
@@ -13,13 +14,16 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{phylo}(x, ...)
 
+\method{as.TreeNumber}{multiPhylo}(x, ...)
+
 \method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip),
   ...)
 
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
   tipLabels = attr(x, "tip.label"), ...)
 
-\method{as.phylo}{TreeNumber}(x, ...)
+\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"),
+  tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -130,6 +134,8 @@ as.TreeNumber(BalancedTree(19))
 # If > 9 digits, represent the tree number as a string.
 treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 tree <- as.phylo(treeNumber)
+
+as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
 
 }
 \references{

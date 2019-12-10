@@ -136,6 +136,14 @@ as.TreeNumber.phylo <- function (x, ...) {
 
 #' @rdname TreeNumber
 #' @export
+as.TreeNumber.multiPhylo <- function (x, ...) {
+  vapply(x, as.TreeNumber.phylo, structure(0, nTip = 0,
+                                           tip.labels = '0',
+                                           class = 'TreeNumber'))
+}
+
+#' @rdname TreeNumber
+#' @export
 as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) {
   len <- nchar(x)
   ends <- rev(len - (seq_len((len / 9L) + 1L) - 1L) * 9L)
@@ -177,7 +185,16 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
 
 #' @rdname TreeNumber
 #' @export
-as.phylo.TreeNumber <- function (x, ...) as.phylo.numeric(x, ...)
+as.phylo.TreeNumber <- function (x, nTip = attr(x, 'nTip'),
+                                 tipLabels = attr(x, 'tip.label'), ...) {
+  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+  structure(list(edge = do.call(cbind, edge),
+                 tip.label = tipLabels,
+                 Nnode = nTip - 1L),
+            order = 'postorder',
+            class = 'phylo')
+}
 
 #' Print TreeNumber object
 #'
