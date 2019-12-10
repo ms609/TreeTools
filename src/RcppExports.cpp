@@ -5,6 +5,17 @@
 
 using namespace Rcpp;
 
+// as_newick
+CharacterVector as_newick(IntegerMatrix edge);
+RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
+    rcpp_result_gen = Rcpp::wrap(as_newick(edge));
+    return rcpp_result_gen;
+END_RCPP
+}
 // num_to_parent
 IntegerVector num_to_parent(NumericVector n, IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {

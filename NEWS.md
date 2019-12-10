@@ -1,6 +1,7 @@
-# TreeTools 0.1.1.9001 (development)
+# TreeTools 0.1.1.9002 (development)
  
-- Tree shape enumeration.
+- `as.Newick`: fast conversion to Newick format.
+- `as.TreeNumber`: Tree shape enumeration.
 
 # TreeTools 0.1.1
  
