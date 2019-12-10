@@ -1,7 +1,8 @@
 #' Write a phylogenetic tree in Newick format
 #'
 #' Creates a character string describing a phylogenetic tree in Newick format,
-#' using R's internal tip numbering.
+#' using R's internal tip numbering.  Use [`RenumberTips`] to ensure that the
+#' internal numbering follows the order you expect.
 #'
 #'
 #' @param x Object to convert to Newick format.
@@ -9,6 +10,11 @@
 #'
 #' @return `as.Newick` returns a character string representing `tree` in Newick
 #' format.
+#'
+#' @examples
+#' trees <- list(BalancedTree(1:8), PectinateTree(8:1))
+#' trees <- lapply(trees, RenumberTips, 1:8)
+#' as.Newick(trees)
 #'
 #' @seealso
 #' - [`RenumberTips`]

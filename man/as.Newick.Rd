@@ -16,7 +16,8 @@ as.Newick(x)
 \method{as.Newick}{multiPhylo}(x)
 }
 \arguments{
-\item{x}{Object to convert to Newick format.  See below for supported classes.}
+\item{x}{Object to convert to Newick format.
+See Usage section for supported classes.}
 }
 \value{
 \code{as.Newick} returns a character string representing \code{tree} in Newick
@@ -24,7 +25,14 @@ format.
 }
 \description{
 Creates a character string describing a phylogenetic tree in Newick format,
-using R's internal tip numbering.
+using R's internal tip numbering.  Use \code{\link{RenumberTips}} to ensure that the
+internal numbering follows the order you expect.
+}
+\examples{
+trees <- list(BalancedTree(1:8), PectinateTree(8:1))
+trees <- lapply(trees, RenumberTips, 1:8)
+as.Newick(trees)
+
 }
 \seealso{
 \itemize{
