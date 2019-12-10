@@ -154,17 +154,25 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 #'
 #' \insertRef{Li1996}{TreeTools}
 #'
+#' @examples
+#' as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
+#'
 #' @importFrom ape as.phylo
 #' @export
 as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
                               tipLabels = attr(x, 'tip.label'), ...) {
   if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = 'postorder',
-            class = 'phylo')
+  if (length(x) > 1) {
+    structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
+              tip.label = tipLabels, class='multiPhylo')
+  } else {
+    edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+    structure(list(edge = do.call(cbind, edge),
+                   tip.label = tipLabels,
+                   Nnode = nTip - 1L),
+              order = 'postorder',
+              class = 'phylo')
+  }
 }
 
 #' @rdname TreeNumber
