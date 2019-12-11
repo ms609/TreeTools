@@ -71,6 +71,13 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname as.Splits
 #' @export
+as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
+                                  asSplits = TRUE, ...) {
+  lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
+}
+
+#' @rdname as.Splits
+#' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
     # Nothing needs doing
@@ -166,13 +173,6 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       class = 'Splits')
   }
 }
-
-#' @export
-as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
-                                  asSplits = TRUE, ...) {
-  lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
-}
-
 
 #' @rdname as.Splits
 #' @export

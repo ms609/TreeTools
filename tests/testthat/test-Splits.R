@@ -1,6 +1,6 @@
 context("Splits.R")
 
-test_that("as.Split", {
+test_that("as.Splits", {
   A <- FALSE
   B <- TRUE
   expect_equal(c("1 bipartition split dividing 4 tips, t1 .. t4",
@@ -54,6 +54,19 @@ test_that("as.Split", {
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 9L), dim(as.Splits(PectinateTree(65L))))
   expect_equal(c(125L, 16L), dim(as.Splits(PectinateTree(128L))))
+})
+
+test_that('as.Splits.multiPhylo', {
+  nTip <- 11L
+  tipLabel <- seq_len(nTip)
+
+
+  randomTreeIds <- c(30899669, 9149275, 12823175, 19740197, 31296318,
+                     6949843, 30957991, 32552966, 22770711, 21678908)
+  randomTrees <- as.phylo(randomTreeIds, nTip, tipLabel)
+  expect_equal(as.Splits(randomTrees[[1]]),
+               as.Splits(randomTrees)[[1]])
+
 })
 
 test_that('as.Splits.Splits', {
