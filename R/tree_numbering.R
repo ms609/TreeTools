@@ -112,6 +112,13 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
 #'
+#' `Postorder` is modified from the ape function to return a specific
+#' order: edges are listed from the node that subtends the smallest
+#' subtree to the one that subtends the largest (i.e. the root node), with
+#' all of a node's descendant edges listed adjacently.  If a tree is already
+#' in postorder, it will not be rearranged unless `force = TRUE`, or
+#' `PostorderEdges` is employed.
+#'
 #' @template treeParam
 #' @template nTipParam
 #' @param edge (optional) the value of tree$edge
@@ -119,9 +126,9 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' @return A tree of class `phylo` with nodes following the specified
 #' numbering scheme.
 #' @author
-#'  `Preorder`: Martin R. Smith.
+#'  `Preorder` and `Postorder`: Martin R. Smith.
 #'
-#' `Cladewise`, `Postorder` and `Pruningwise`: modified by Martin R. Smith from
+#' `Cladewise`, `ApePostorder` and `Pruningwise`: modified by Martin R. Smith from
 #' \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 #'
 #' @family C wrappers
@@ -146,15 +153,40 @@ Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
   tree
 }
 
-#' @describeIn Cladewise Reorder tree in Postorder. Edge lengths are not retained.
+
+#' @describeIn Cladewise Reorder tree in Postorder using ape's `postorder`
+#' function, which is robust to unconventional node numbering
 #' @export
-Postorder <- function (tree) {
+ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "postorder") {
     return(tree)
   }
-  tree$edge <- PostorderEdges(tree$edge)
-  tree$edge.length <- NULL
+  nb.edge <- dim(edge)[1]
+  nb.node <- tree$Nnode
+  if (nb.node == 1) return(tree)
+  if (nb.node >= nTip) stop("`tree` apparently badly conformed")
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2)
+  tree$edge <- edge[neworder, ]
+  if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
   attr(tree, "order") <- "postorder"
+  tree
+}
+
+#' @describeIn Cladewise Reorder tree in Postorder. Edge lengths are not retained.
+#' @param force Logical specifying whether to rearrange trees already in
+#' postorder, in order to ensure TreeTools edge ordering.
+#' @export
+Postorder <- function (tree, force = FALSE) {
+  if (is.null(attr(tree, "order"))
+      || attr(tree, "order") != "postorder"
+      || (force &&
+          (is.null(attr(tree, 'suborder')) ||
+           attr(tree, 'suborder') != 'TreeTools'))) {
+    tree$edge <- PostorderEdges(tree$edge)
+    tree$edge.length <- NULL
+    attr(tree, "order") <- "postorder"
+    attr(tree, "suborder") <- "TreeTools"
+  }
   tree
 }
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/tree_numbering.R
 \name{Cladewise}
 \alias{Cladewise}
+\alias{ApePostorder}
 \alias{Postorder}
 \alias{PostorderEdges}
 \alias{Pruningwise}
@@ -10,7 +11,9 @@
 \usage{
 Cladewise(tree, nTip = NULL, edge = tree$edge)
 
-Postorder(tree)
+ApePostorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
+
+Postorder(tree, force = FALSE)
 
 PostorderEdges(edge)
 
@@ -24,6 +27,9 @@ Preorder(tree)
 \item{nTip}{Integer specifying number of tips (leaves).}
 
 \item{edge}{(optional) the value of tree$edge}
+
+\item{force}{Logical specifying whether to rearrange trees already in
+postorder, in order to ensure TreeTools edge ordering.}
 
 \item{edge}{A matrix with two columns, with each row listing the parent and
 child node of an edge in a phylogenetic tree.  Property \code{edge} of objects
@@ -60,9 +66,19 @@ Numbering begins by following the leftmost edge of the root node,
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.
+
+\code{Postorder} is modified from the ape function to return a specific
+order: edges are listed from the node that subtends the smallest
+subtree to the one that subtends the largest (i.e. the root node), with
+all of a node's descendant edges listed adjacently.  If a tree is already
+in postorder, it will not be rearranged unless \code{force = TRUE}, or
+\code{PostorderEdges} is employed.
 }
 \section{Functions}{
 \itemize{
+\item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
+function, which is robust to unconventional node numbering
+
 \item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
 
 \item \code{PostorderEdges}: Reorder edges in Postorder.
@@ -77,9 +93,9 @@ Other C wrappers: \code{\link{Neworder}},
   \code{\link{RenumberTree}}
 }
 \author{
-\code{Preorder}: Martin R. Smith.
+\code{Preorder} and \code{Postorder}: Martin R. Smith.
 
-\code{Cladewise}, \code{Postorder} and \code{Pruningwise}: modified by Martin R. Smith from
+\code{Cladewise}, \code{ApePostorder} and \code{Pruningwise}: modified by Martin R. Smith from
 \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 }
 \concept{C wrappers}

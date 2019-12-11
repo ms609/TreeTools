@@ -47,7 +47,9 @@ in a tree, perhaps obtained using \link{TipLabels}.}
 
 \item{key}{Integer specifying the \emph{key} (not number) of an unrooted tree.}
 
-\item{\dots}{See \code{nTip}.}
+\item{\dots}{Value of \code{nTip}, to pass to memoized \code{.UnrootedKeys}.}
+
+\item{envir}{Unused; passed to \code{\link{addMemoization}}.}
 }
 \value{
 \code{TreeShape} returns an integer specifying the shape of a tree,
@@ -64,6 +66,9 @@ to the key provided.  Tips are unlabelled.
 
 \code{UnrootedKeys} returns a vector of integers corresponding to the
 keys (not shape numbers) of unrooted tree shapes with \code{nTip} tips.
+It is a wrapper to \code{.UnrootedKeys}, with memoization, meaning that results
+once calculated are cached and need not be calculated on future calls to
+the function.
 
 \code{TreeShapes} returns an integer specifying the number of unique
 unrooted tree shapes with \code{nTip} tips.
