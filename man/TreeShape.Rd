@@ -8,6 +8,7 @@
 \alias{UnrootedTreeWithKey}
 \alias{UnrootedTreeShape}
 \alias{UnrootedTreeKey}
+\alias{.UnrootedKeys}
 \alias{UnrootedKeys}
 \alias{NUnrootedShapes}
 \alias{NRootedShapes}
@@ -25,7 +26,9 @@ UnrootedTreeShape(tree)
 
 UnrootedTreeKey(tree)
 
-UnrootedKeys(nTip)
+.UnrootedKeys(nTip)
+
+UnrootedKeys(..., envir = parent.frame())
 
 NUnrootedShapes(nTip)
 
@@ -43,6 +46,8 @@ NRootedShapes(nTip)
 in a tree, perhaps obtained using \link{TipLabels}.}
 
 \item{key}{Integer specifying the \emph{key} (not number) of an unrooted tree.}
+
+\item{\dots}{See \code{nTip}.}
 }
 \value{
 \code{TreeShape} returns an integer specifying the shape of a tree,
@@ -125,3 +130,4 @@ sapply(allShapes, UnrootedTreeKey) # Key >= number
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\keyword{internal}

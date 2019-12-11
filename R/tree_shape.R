@@ -152,12 +152,9 @@ UnrootedTreeKey <- function (tree) {
 }
 
 #' @rdname TreeShape
-#' @usage UnrootedKeys(nTip)
-#' @return `UnrootedKeys` returns a vector of integers corresponding to the
-#' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
-#' @importFrom R.cache addMemoization
+#' @keywords internal
 #' @export
-UnrootedKeys <- addMemoization(function (nTip) {
+.UnrootedKeys <- function (nTip) {
   if (nTip > 5) {
     #TODO make efficient - this is horrible!
     shapes <- vapply(seq_len(NRootedShapes(nTip)) - 1L, function (shape)
@@ -169,7 +166,19 @@ UnrootedKeys <- addMemoization(function (nTip) {
 
   # Return:
   sort(uniqueShapes)
-})
+}
+
+#' @rdname TreeShape
+#' @param \dots Value of `nTip`, to pass to memoized `.UnrootedKeys`.
+#' @param envir Unused; passed to [`addMemoization`].
+#' @return `UnrootedKeys` returns a vector of integers corresponding to the
+#' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
+#' It is a wrapper to `.UnrootedKeys`, with memoization, meaning that results
+#' once calculated are cached and need not be calculated on future calls to
+#' the function.
+#' @importFrom R.cache addMemoization
+#' @export
+UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
 
 #' @rdname TreeShape
 #' @return `TreeShapes` returns an integer specifying the number of unique
