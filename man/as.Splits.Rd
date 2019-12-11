@@ -3,6 +3,7 @@
 \name{as.Splits}
 \alias{as.Splits}
 \alias{as.Splits.phylo}
+\alias{as.Splits.multiPhylo}
 \alias{as.Splits.Splits}
 \alias{as.Splits.list}
 \alias{as.Splits.logical}
@@ -12,6 +13,9 @@
 as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{phylo}(x, tipLabels = NULL, asSplits = TRUE, ...)
+
+\method{as.Splits}{multiPhylo}(x, tipLabels = x[[1]]$tip.label,
+  asSplits = TRUE, ...)
 
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 

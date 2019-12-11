@@ -57,16 +57,12 @@ test_that("as.Splits", {
 })
 
 test_that('as.Splits.multiPhylo', {
-  nTip <- 11L
-  tipLabel <- seq_len(nTip)
-
-
   randomTreeIds <- c(30899669, 9149275, 12823175, 19740197, 31296318,
                      6949843, 30957991, 32552966, 22770711, 21678908)
-  randomTrees <- as.phylo(randomTreeIds, nTip, tipLabel)
+  randomTrees <- as.phylo(randomTreeIds, 11L, seq_len(11L))
+
   expect_equal(as.Splits(randomTrees[[1]]),
                as.Splits(randomTrees)[[1]])
-
 })
 
 test_that('as.Splits.Splits', {

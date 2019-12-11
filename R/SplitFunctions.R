@@ -213,65 +213,76 @@ SplitMatchProbability <- function (split1, split2) {
 #' the default of \code{ape::\link{rtree}}.
 #'
 #' @param x An object of a supported class (see Usage section).
+#' @param single Logical specifying whether to report the labels for the first
+#' object only (`TRUE`), or for each object in a list (`FALSE`).
 #' @return A character vector listing the tip labels for the specified object.
 #'
 #' @return Character vector listing tip names.
 #' @template MRS
 #' @export
-TipLabels <- function (x) UseMethod('TipLabels')
+TipLabels <- function (x, single = TRUE) UseMethod('TipLabels')
 
 #' @rdname TipLabels
 #' @export
-TipLabels.matrix <- function (x) colnames(x)
+TipLabels.matrix <- function (x, single = TRUE) colnames(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phylo <- function (x) x$tip.label
+TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.TreeNumber <- function (x) x$tip.label
+TipLabels.TreeNumber <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @family Splits operations
 #' @export
-TipLabels.Splits <- function (x) attr(x, 'tip.label')
+TipLabels.Splits <- function (x, single = TRUE) attr(x, 'tip.label')
 
 #' @rdname TipLabels
 #' @export
-TipLabels.list <- function (x) {
+TipLabels.list <- function (x, single = FALSE) {
   if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
   if (!is.null(x$tip.label)) return (x$tip.label)
+  .ListLabels(x, single, TipLabels)
+
+}
+
+#' @keywords internal
+.ListLabels <- function (x, single, Func) {
   if (length(x)) {
-    firstEntry <- x[[1]]
-    if (!is.null(attr(firstEntry, 'tip.label'))) {
-      return (attr(firstEntry, 'tip.label'))
+    if (single) {
+      Func(x[[1]])
+    } else {
+      ret <- lapply(x, Func)
+      uniqueRet <- unique(ret)
+      if (length(uniqueRet) == 1) uniqueRet[[1]] else ret
     }
-    if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
+  } else {
+    # else Return:
+    NULL
   }
-
-  # else Return:
-  NULL
 }
 
 #' @rdname TipLabels
 #' @export
-TipLabels.multiPhylo <- function (x) {
+TipLabels.multiPhylo <- function (x, single = FALSE) {
   if (!is.null(x$tip.label)) return (x$tip.label)
-  firstEntry <- x[[1]]
-  if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
-
-  # else Return:
-  NULL
+  if (single) {
+    firstEntry <- x[[1]]
+    if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
+  } else {
+    .ListLabels(x, single, TipLabels.phylo)
+  }
 }
 
 #' @rdname TipLabels
 #' @export
-TipLabels.character <- function (x) x
+TipLabels.character <- function (x, single = TRUE) x
 
 #' @rdname TipLabels
 #' @export
-TipLabels.numeric <- function (x) {
+TipLabels.numeric <- function (x, single = TRUE) {
   if (length(x) == 1L) {
     paste0('t', seq_len(x))}
   else {
@@ -281,11 +292,11 @@ TipLabels.numeric <- function (x) {
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phyDat <- function (x) names(x)
+TipLabels.phyDat <- function (x, single = TRUE) names(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.default <- function (x) {
+TipLabels.default <- function (x, single = TRUE) {
   if (is.null(names(x))) {
     if (any(duplicated(x))) {
       NULL

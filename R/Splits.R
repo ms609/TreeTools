@@ -48,7 +48,7 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
-    x <- RenumberTips(x, TipLabels(tipLabels))
+    x <- RenumberTips(x, tipLabels)
   }
   edge <- PostorderEdges(x$edge)
   nTip <- length(x$tip.label)
@@ -57,8 +57,6 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
-    nEdge <- dim(x$edge)[1]
-    nTip <- length(x$tip.label)
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
