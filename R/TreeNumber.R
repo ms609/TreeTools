@@ -177,7 +177,7 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
     structure(list(edge = do.call(cbind, edge),
                    tip.label = tipLabels,
                    Nnode = nTip - 1L),
-              order = 'postorder',
+              order = 'preorder',
               class = 'phylo')
   }
 }
@@ -191,7 +191,7 @@ as.phylo.TreeNumber <- function (x, nTip = attr(x, 'nTip'),
   structure(list(edge = do.call(cbind, edge),
                  tip.label = tipLabels,
                  Nnode = nTip - 1L),
-            order = 'postorder',
+            order = 'preorder',
             class = 'phylo')
 }
 
