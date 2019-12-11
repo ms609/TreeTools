@@ -82,7 +82,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
     # Return:
     x
   } else {
-    tipLabels <- TipLabels(tipLabels)
+    tipLabels <- TipLabels(tipLabels, single = TRUE)
     oldLabels <- attr(x, 'tip.label')
     if (is.null(oldLabels)) {
       nTip <- attr(x, 'nTip')
@@ -100,9 +100,9 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
         x
       } else {
         if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-          as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                             [match(tipLabels, oldLabels), ]),
-                           tipLabels = tipLabels)
+          as.Splits.logical(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                            [match(tipLabels, oldLabels), ]),
+                            tipLabels = tipLabels)
         } else {
           stop ("Old and new labels must match")
         }
