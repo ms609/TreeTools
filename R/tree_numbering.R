@@ -75,7 +75,6 @@ RenumberTree <- function (parent, child) {
 #' @describeIn RenumberTree Returns in list format
 #' @return `RenumberEdges` returns a list whose two entries correspond
 #' to the new parent and child vectors.
-#' @family C wrappers
 #' @keywords internal
 #' @export
 RenumberEdges <- function (parent, child, nEdge = length(parent)) {

@@ -115,8 +115,8 @@ UnrootedTreeShape <- function (tree) {
 #' @importFrom ape drop.tip root
 #' @export
 UnrootedTreeKey <- function (tree) {
-  tree <- Postorder(Preorder(tree))
-  edge <- tree$edge
+  tree <- Preorder(tree) # Guarantee unique representation of tree
+  edge <- PostorderEdges(tree$edge)
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]

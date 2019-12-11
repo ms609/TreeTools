@@ -10,10 +10,9 @@
 \usage{
 Cladewise(tree, nTip = NULL, edge = tree$edge)
 
-Postorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
+Postorder(tree)
 
-PostorderEdges(parent, child, nEdge = length(parent), nNode = nEdge/2L,
-  nTip = nNode + 1L)
+PostorderEdges(edge)
 
 Pruningwise(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
@@ -26,13 +25,9 @@ Preorder(tree)
 
 \item{edge}{(optional) the value of tree$edge}
 
-\item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
-
-\item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
-
-\item{nTip}{Integer specifying number of tips (leaves).}
+\item{edge}{A matrix with two columns, with each row listing the parent and
+child node of an edge in a phylogenetic tree.  Property \code{edge} of objects
+of class \code{phylo}.}
 }
 \value{
 A tree of class \code{phylo} with nodes following the specified
@@ -68,9 +63,9 @@ sorted into preorder, until each edge has been visited.
 }
 \section{Functions}{
 \itemize{
-\item \code{Postorder}: Reorder tree in Postorder
+\item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
 
-\item \code{PostorderEdges}: Reorder parent and child edges in Postorder
+\item \code{PostorderEdges}: Reorder edges in Postorder.
 
 \item \code{Pruningwise}: Reorder tree Pruningwise
 
