@@ -19,7 +19,7 @@ phylo standards.
 \examples{
 library('ape')
 tree <- rtree(10)
-Renumber (tree)
+Renumber(tree)
 
 }
 \seealso{

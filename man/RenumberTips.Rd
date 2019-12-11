@@ -2,9 +2,18 @@
 % Please edit documentation in R/tree_numbering.R
 \name{RenumberTips}
 \alias{RenumberTips}
+\alias{RenumberTips.phylo}
+\alias{RenumberTips.multiPhylo}
+\alias{RenumberTips.list}
 \title{Renumber a tree's tips}
 \usage{
 RenumberTips(tree, tipOrder)
+
+\method{RenumberTips}{phylo}(tree, tipOrder)
+
+\method{RenumberTips}{multiPhylo}(tree, tipOrder)
+
+\method{RenumberTips}{list}(tree, tipOrder)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}

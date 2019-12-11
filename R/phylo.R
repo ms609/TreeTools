@@ -8,7 +8,7 @@
 #' @examples
 #' library('ape')
 #' tree <- rtree(10)
-#' Renumber (tree)
+#' Renumber(tree)
 #'
 #' @return This function returns a tree of class \code{phylo}
 #'
@@ -16,7 +16,7 @@
 #' @family tree manipulation
 #' @export
 Renumber <- function (tree) {
-  tree   <- Postorder(tree)
+  tree   <- ApePostorder(tree)
   edge   <- tree$edge
   nTip   <- length(tree$tip.label)
   parent <- edge[, 1L]
@@ -292,8 +292,6 @@ AllAncestors <- function (parent, child) {
 #' @keywords internal
 #' @export
 CladeSizes <- function (tree, nodes) {
-  if (is.null(treeOrder <- attr(tree, 'order')) || treeOrder != 'postorder') {
-    tree <- Postorder(tree)
-  }
+  tree <- Postorder(tree, force = FALSE)
   vapply(allDescendants(tree)[nodes], length, integer(1))
 }

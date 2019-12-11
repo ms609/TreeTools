@@ -256,7 +256,11 @@ Preorder <- function (tree) {
 #'
 #' @template MRS
 #' @export
-RenumberTips <- function (tree, tipOrder) {
+RenumberTips <- function(tree, tipOrder) UseMethod('RenumberTips')
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.phylo <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
   newOrder <- TipLabels(tipOrder, single = TRUE)
   if (identical(startOrder, newOrder)) return (tree)
@@ -273,4 +277,16 @@ RenumberTips <- function (tree, tipOrder) {
   tree$edge[tips, 2] <- matchOrder[tree$edge[tips, 2]]
   tree$tip.label <- newOrder
   tree
+}
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.multiPhylo <- function (tree, tipOrder) {
+  lapply(tree, RenumberTips.phylo, tipOrder)
+}
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.list <- function (tree, tipOrder) {
+  lapply(tree, RenumberTips, tipOrder)
 }
