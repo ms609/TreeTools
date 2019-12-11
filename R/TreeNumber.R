@@ -123,12 +123,11 @@ as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 #' @importFrom ape root
 #' @export
 as.TreeNumber.phylo <- function (x, ...) {
-  #TODO replace Preorder->Postorder with a new, safe, Postorder function.
-  x <- Preorder(root(x, 1, resolve.root = TRUE))
+  x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
-  edge <- PostorderEdges(edge[, 1], edge[, 2], nTip = nTip)
-  structure(edge_to_num(edge[[1]], edge[[2]], nTip),
+  edge <- PostorderEdges(edge)
+  structure(edge_to_num(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.labels = TipLabels(x),
             class = 'TreeNumber')

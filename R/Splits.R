@@ -50,7 +50,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, TipLabels(tipLabels))
   }
-  edge <- Postorder(x)$edge
+  edge <- PostorderEdges(x$edge)
   nTip <- length(x$tip.label)
   splits <- cpp_edge_to_splits(edge, nTip)
 

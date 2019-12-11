@@ -63,9 +63,8 @@
 RootedTreeShape <- function (tree) {
   edge <- tree$edge
   nTip <- NTip(tree)
-  edge <- PostorderEdges(edge[, 1], edge[, 2], nTip = nTip)
-
-  edge_to_rooted_shape(edge[[1]], edge[[2]], nTip)
+  edge <- PostorderEdges(edge)
+  edge_to_rooted_shape(edge[, 1], edge[, 2], nTip)
 }
 
 #' @rdname TreeShape

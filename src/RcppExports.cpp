@@ -65,6 +65,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// postorder_edges
+IntegerMatrix postorder_edges(IntegerMatrix edge);
+RcppExport SEXP _TreeTools_postorder_edges(SEXP edgeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
+    rcpp_result_gen = Rcpp::wrap(postorder_edges(edge));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_edge_to_splits
 RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP nTipSEXP) {

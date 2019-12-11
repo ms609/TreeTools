@@ -52,7 +52,11 @@ test_that("replacement reorder functions work correctly", {
   tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
   expect_equal(ape::reorder.phylo(tree, 'cladewise'), Cladewise(tree))
   expect_equal(ape::reorder.phylo(tree, 'pruningwise'), Pruningwise(tree))
-  expect_equal(ape::reorder.phylo(tree, 'postorder'), Postorder(tree))
+
+  expect_equal(matrix(c(9,9,11,11,10,10,8,8,7,7,
+                        2,3,5,6,4,11,1,9,8,10), ncol=2),
+               Postorder(BalancedTree(6))$edge)
+
 
   star <- ape::read.tree(text = '(a, b, d, c);')
   edge <- RenumberTips(star, letters[1:4])$edge

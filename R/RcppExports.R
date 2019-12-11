@@ -21,6 +21,10 @@ preorder_edges_and_nodes <- function(parent, child) {
     .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
+postorder_edges <- function(edge) {
+    .Call(`_TreeTools_postorder_edges`, edge)
+}
+
 cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
