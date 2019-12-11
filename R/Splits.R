@@ -37,6 +37,7 @@
 #'
 #' @family Splits operations
 #' @importFrom ape reorder.phylo
+#' @exportClass Splits
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
@@ -109,18 +110,6 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
 
 #' @rdname as.Splits
 #' @export
-as.logical.Splits <- function (x, tipLabels = NULL, ...) {
-  nTip <- attr(x, 'nTip')
-  ret <- t(apply(x, 1, function (split) {
-    unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
-  }))
-  colnames(ret) <- attr(x, 'tip.label')
-  rownames(ret) <- rownames(x)
-  ret
-}
-
-#' @rdname as.Splits
-#' @export
 as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], 'phylo')) {
     if (is.null(tipLabels)) {
@@ -184,8 +173,18 @@ as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
   lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
 }
 
-#' @exportClass Splits
-#
+
+#' @rdname as.Splits
+#' @export
+as.logical.Splits <- function (x, tipLabels = NULL, ...) {
+  nTip <- attr(x, 'nTip')
+  ret <- t(apply(x, 1, function (split) {
+    unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
+  }))
+  colnames(ret) <- attr(x, 'tip.label')
+  rownames(ret) <- rownames(x)
+  ret
+}
 
 #' @family Splits operations
 #' @export

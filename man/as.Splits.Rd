@@ -4,9 +4,9 @@
 \alias{as.Splits}
 \alias{as.Splits.phylo}
 \alias{as.Splits.Splits}
-\alias{as.logical.Splits}
 \alias{as.Splits.list}
 \alias{as.Splits.logical}
+\alias{as.logical.Splits}
 \title{As splits}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
@@ -15,11 +15,11 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 
-\method{as.logical}{Splits}(x, tipLabels = NULL, ...)
-
 \method{as.Splits}{list}(x, tipLabels = NULL, asSplits = TRUE, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
+
+\method{as.logical}{Splits}(x, tipLabels = NULL, ...)
 }
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class
