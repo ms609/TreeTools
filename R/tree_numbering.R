@@ -66,7 +66,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
 #'
-#' @seealso SortTree
+#' @seealso [`SortTree`]
 #'
 #' @family C wrappers
 #' @keywords internal

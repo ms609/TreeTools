@@ -210,7 +210,6 @@ EdgeDistances <- function (tree) {
 #' edge <- tree$edge
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
-#'
 #' which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
@@ -265,7 +264,7 @@ NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.multiPhylo <- function (x) vapply(x, NSplits, integer(1))
+NSplits.multiPhylo <- function (x) vapply(x, NSplits, numeric(1L))
 
 #' @rdname NSplits
 #' @export

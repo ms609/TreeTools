@@ -20,7 +20,9 @@ TipLabels(x, single = TRUE)
 
 \method{TipLabels}{phylo}(x, single = TRUE)
 
-\method{TipLabels}{TreeNumber}(x, single = TRUE)
+\method{TipLabels}{TreeNumber}(x)
+
+\method{TipLabels}{TreeNumber}(x)
 
 \method{TipLabels}{Splits}(x, single = TRUE)
 
@@ -30,11 +32,17 @@ TipLabels(x, single = TRUE)
 
 \method{TipLabels}{character}(x, single = TRUE)
 
-\method{TipLabels}{numeric}(x, single = TRUE)
+\method{TipLabels}{numeric}(x)
 
-\method{TipLabels}{phyDat}(x, single = TRUE)
+\method{TipLabels}{phyDat}(x)
 
-\method{TipLabels}{default}(x, single = TRUE)
+\method{TipLabels}{default}(x)
+
+\method{TipLabels}{numeric}(x)
+
+\method{TipLabels}{phyDat}(x)
+
+\method{TipLabels}{default}(x)
 }
 \arguments{
 \item{x}{An object of a supported class (see Usage section).}

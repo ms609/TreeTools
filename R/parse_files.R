@@ -183,6 +183,8 @@ TNTText2Tree <- function (treeText) {
 #'
 #' Reads the character information from a Nexus-formatted matrix into R.
 #'
+#' Reads the character information from a Nexus-formatted matrix into R.
+#'
 #' Extracts the names of tips from the matrix block of a Nexus file.
 #'
 #' @param matrixLines lines of a file containing a phylogenetic matrix
@@ -193,6 +195,12 @@ TNTText2Tree <- function (treeText) {
 #' @return `ExtractTaxa` returns a matrix with _n_ rows, each named for the
 #' relevant taxon, and _c_ columns,
 #' each corresponding to the respective character specified in `character_num`.
+#'
+#' @examples
+#' fileName <- paste0(system.file(package='TreeTools'),
+#'                    '/extdata/input/dataset.nex')
+#' matrixLines <- readLines(fileName)[6:11]
+#' ExtractTaxa(matrixLines)
 #'
 #' @examples
 #' fileName <- paste0(system.file(package='TreeTools'),
