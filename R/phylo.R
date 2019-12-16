@@ -72,21 +72,25 @@ SingleTaxonTree <- function (label) {
 #' @description Safely extracts a clade from a phylogenetic tree.
 #' @usage Subtree(tree, node)
 #'
-#'
 #' @template preorderTreeParam
 #' @param node The number of the node at the base of the clade to be extracted.
 #'
 #' @details
-#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometimes behaves erratically.
-#' Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.
+#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
+#' sometimes behaves erratically.
+#' Unlike extract.clade, this function supports the extraction of 'clades'
+#' that constitute a single tip.
 #'
-#' @return This function returns a tree of class \code{phylo} that represents a clade
-#'         extracted from the original tree.
+#' @return This function returns a tree of class \code{phylo} that represents a
+#' clade extracted from the original tree.
 #'
 #' @examples
-#' tree <- Preorder(ape::rtree(20, br=NULL))
-#' plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
-#' plot(Subtree(tree, 33))
+#' tree <- Preorder(BalancedTree(8))
+#' plot(tree)
+#' ape::nodelabels()
+#' ape::nodelabels(13, 13, bg='yellow')
+#'
+#' plot(Subtree(tree, 13))
 #'
 #'
 #' @template MRS
@@ -256,7 +260,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 
 #' List all ancestral nodes
 #'
-#' \code{AllAncestors} lists ancestors of each parent node in a tree
+#' \code{AllAncestors} lists ancestors of each parent node in a tree.
 #'
 #' Note that the tree's edges must be listed in an order whereby each entry in
 #' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in
@@ -266,15 +270,18 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' @template treeChild
 #'
 #' @examples
-#'   tr <- ape::rtree(20, br=NULL)
+#'   tr <- PectinateTree(4)
+#'   plot(tr)
+#'   ape::tiplabels()
+#'   ape::nodelabels()
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @return `AllAncestors` returns a list. Entry i contains a vector containing,
-#' in order, the nodes encountered when traversing the tree from node i to the
+#' @return `AllAncestors` returns a list. Entry _i_ contains a vector containing,
+#' in order, the nodes encountered when traversing the tree from node _i_ to the
 #' root node.
 #' The last entry of each member of the list is therefore the root node,
-#' with the exception of the entry for the root node itself, which is NULL.
+#' with the exception of the entry for the root node itself, which is `NULL`.
 #'
 #' @template MRS
 #' @family tree navigation

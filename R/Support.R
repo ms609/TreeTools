@@ -82,11 +82,12 @@ TreeSplits <- function (tree) {
 #'
 #' Colour value with which to display node support.
 #'
-#' @param support A vector of doubles in the range 0--1.
+#' @param support A numeric vector of values in the range 0--1.
 #' @param show1 Logical specifying whether to display values of 1.
 #'              A transparent white will be returned if `FALSE`.
 #' @return A string containing the hexadecimal code for a colour picked from a
 #'         diverging scale, or `red` if a value is invalid.
+#' @examples SupportColour(0:4 / 4, show1 = FALSE)
 #' @importFrom colorspace diverge_hcl
 #' @export
 SupportColour <- function (support, show1=TRUE) {

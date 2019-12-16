@@ -242,11 +242,11 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #' @return `NSplits` returns an integer specifying the number of partitions in
 #'  the specified objects, or in a rooted tree with `n` tips.
 #'
-#' @examples {
-#'   NSplits(8L)
-#'   NSplits(PectinateTree(8))
-#'   NSplits(as.Splits(BalancedTree(8)))
-#' }
+#' @examples
+#' NSplits(8L)
+#' NSplits(PectinateTree(8))
+#' NSplits(as.Splits(BalancedTree(8)))
+#'
 #'
 #' @template MRS
 #'
@@ -286,6 +286,9 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' @param tree A phylogenetic tree of class phylo.
 #' @return Logical specifying whether a root node is resolved.
+#'
+#' @examples
+#' TreeIsRooted(BalancedTree(6))
 #'
 #' @template MRS
 #' @export

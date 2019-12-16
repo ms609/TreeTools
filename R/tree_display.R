@@ -64,7 +64,7 @@ MarkMissing <- function (tip, position='bottomleft', ...) {
 #' @return `SortTree` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
-#' @seealso RenumberTree
+#' @seealso [`RenumberTree`]
 #'
 #' @template MRS
 #' @export

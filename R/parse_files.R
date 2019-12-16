@@ -538,6 +538,8 @@ PhyDat <- function (dataset) {
 #'
 #' @template MRS
 #' @aliases StringToPhydat
+#' @seealso
+#' - [`PhyToString`]
 #' @importFrom phangorn phyDat
 #' @export
 StringToPhyDat <-
@@ -549,7 +551,9 @@ StringToPhyDat <-
 #' @rdname StringToPhyDat
 StringToPhydat <- StringToPhyDat
 
-#' Extract character data from a phyDat object as a string
+#' phyDat to String
+#'
+#' Extract character data from a phyDat object as a string.
 #'
 #' @param phy An object of class \code{\link{phyDat}}
 #' @param parentheses Character specifying format of parentheses with which
@@ -557,9 +561,9 @@ StringToPhydat <- StringToPhyDat
 #' @param collapse Character specifying text, perhaps `,`, with which to
 #' separate multiple tokens within parentheses
 #' @param ps Character specifying text, perhaps `;`, to append to the end of the string
-#' @param useIndex (default: `TRUE`) Print duplicate characters multiple
-#'        times, as they appeared in the original matrix
-#' @param byTaxon If `TRUE`, write one taxon followed by the next.
+#' @param useIndex Logical (default: `TRUE`) specifying whether to print
+#' duplicate characters multiple times, as they appeared in the original matrix
+#' @param byTaxon Logical. If `TRUE`, write one taxon followed by the next.
 #'                If `FALSE`, write one character followed by the next.
 #' @param concatenate Logical specifying whether to concatenate all characters/taxa
 #'                    into a single string, or to return a separate string
@@ -574,6 +578,8 @@ StringToPhydat <- StringToPhyDat
 #' @return `PhyToString` returns a character vector listing a text
 #' representation of the phylogenetic character state for each taxon in turn.
 #'
+#' @seealso
+#' - [`StringToPhyDat`]
 #' @template MRS
 #' @importFrom phangorn phyDat
 #' @export

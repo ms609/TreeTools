@@ -37,11 +37,10 @@ the specified objects, or in a rooted tree with \code{n} tips.
 How many unique bipartition splits occur in a tree or object?
 }
 \examples{
-{
-  NSplits(8L)
-  NSplits(PectinateTree(8))
-  NSplits(as.Splits(BalancedTree(8)))
-}
+NSplits(8L)
+NSplits(PectinateTree(8))
+NSplits(as.Splits(BalancedTree(8)))
+
 
 }
 \seealso{

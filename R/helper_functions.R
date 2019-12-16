@@ -1,6 +1,6 @@
 #' Quick sample
 #'
-#' Faster than inbuilt sample because it avoids some checks.
+#' Faster than inbuilt [`sample`] because it avoids some checks.
 #'
 #' @param x A vector to sample.
 #' @param len (optionally) integer specifying length of `x`.

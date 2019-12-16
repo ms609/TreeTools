@@ -7,8 +7,12 @@
 #'
 #' @return `TreesMatchingSplit` returns a numeric specifying the number of trees
 #' that are compatible with the given split.
-#' 
+#'
 #' `LnTreesMatchingSplit` gives the natural logarithm of this number.
+#'
+#' @examples
+#' TreesMatchingSplit(5, 6)
+#' LnTreesMatchingSplit(5, 6)
 #'
 #' @template MRS
 #'
@@ -38,7 +42,7 @@ LnTreesMatchingSplit <- function (A, B) {
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.`
 #'
-#' @return `CharacterInformation` returns a numberic specifying the 
+#' @return `CharacterInformation` returns a numberic specifying the
 #' phylogenetic information content of the character, in bits.
 #'
 #' @family split information functions
@@ -112,7 +116,7 @@ MultiSplitInformation <- function (partitionSizes) {
 #'  UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
 #'
 #' @references
-#' \insertRef{Carter1990}{TreeTools}, Theorem 2.
+#' See Theorem 2 in \insertRef{Carter1990}{TreeTools}
 #'
 #' @template MRS
 #' @family split information functions

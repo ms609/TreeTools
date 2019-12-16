@@ -65,9 +65,9 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #'
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
-#' 
+#'
 #' @seealso SortTree
-#' 
+#'
 #' @family C wrappers
 #' @keywords internal
 #' @export
@@ -240,9 +240,9 @@ Preorder <- function (tree) {
 
 #' Renumber a tree's tips
 #'
-#' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
-#' such that the indices in \code{tree$edge[, 2]} correspond to the order of
-#' tips given in \code{tipOrder}
+#' `RenumberTips(tree, tipOrder)` sorts the tips of a phylogenetic tree
+#' such that the indices in `tree$edge[, 2]` correspond to the order of
+#' tips given in `tipOrder`.
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
@@ -253,7 +253,7 @@ Preorder <- function (tree) {
 #' representation numbered to match `tipOrder`.
 #'
 #' @examples
-#' data(Lobo) # Loads the phyDat object Lobo.phy
+#' data('Lobo') # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
 #'

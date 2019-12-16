@@ -9,6 +9,12 @@
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
 #'
+#' @examples
+#' RandomTree(letters[1:5])
+#'
+#' data('Lobo')
+#' RandomTree(Lobo.phy)
+#'
 #' @template MRS
 #' @importFrom ape rtree root
 #' @family tree generation functions
@@ -31,9 +37,12 @@ RandomTree <- function (tips, root = FALSE) {
 #'
 #' @template tipsForTreeGeneration
 #'
-#' @return `PectinateTree` and `BinaryTree` each return a binary tree of
+#' @return `PectinateTree` and `BalancedTree` each return a binary tree of
 #'  class `phylo` of the specified shape.
 #' @family tree generation functions
+#' @examples
+#' plot(PectinateTree(LETTERS[1:10]))
+#'
 #' @template MRS
 #' @export
 PectinateTree <- function (tips) {
@@ -59,7 +68,7 @@ PectinateTree <- function (tips) {
 
 #' Generate a Balanced Tree
 #'
-#' Generates a balanced (symmetrical) tree with the specified tip labels.
+#' Generates a balanced (symmetrical) binary tree with the specified tip labels.
 #'
 #' @template tipsForTreeGeneration
 #'
@@ -67,6 +76,10 @@ PectinateTree <- function (tips) {
 #' @family tree generation functions
 #' @template MRS
 #' @importFrom ape read.tree
+#'
+#' @examples
+#' plot(BalancedTree(LETTERS[1:10]))
+
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
@@ -99,6 +112,10 @@ BalancedBit <- function (tips, nTips = length(tips)) {
 #' @template datasetParam
 #'
 #' @return `NJTree` returns an object of class \code{phylo}.
+#'
+#' @examples
+#' data('Lobo')
+#' NJTree(Lobo.phy)
 #'
 #' @template MRS
 #' @importFrom ape nj root
