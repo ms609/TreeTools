@@ -236,10 +236,6 @@ TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 TipLabels.TreeNumber <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
-#' @export
-TipLabels.TreeNumber <- function (x) x$tip.label
-
-#' @rdname TipLabels
 #' @family Splits operations
 #' @export
 TipLabels.Splits <- function (x, single = TRUE) attr(x, 'tip.label')
@@ -302,34 +298,6 @@ TipLabels.phyDat <- function (x, single = TRUE) names(x)
 #' @rdname TipLabels
 #' @export
 TipLabels.default <- function (x, single = TRUE) {
-  if (is.null(names(x))) {
-    if (any(duplicated(x))) {
-      NULL
-    } else {
-      x
-    }
-  } else {
-    names(x)
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.numeric <- function (x) {
-  if (length(x) == 1L) {
-    paste0('t', seq_len(x))}
-  else {
-    NextMethod('TipLabels', as.character(x))
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.phyDat <- function (x) names(x)
-
-#' @rdname TipLabels
-#' @export
-TipLabels.default <- function (x) {
   if (is.null(names(x))) {
     if (any(duplicated(x))) {
       NULL
