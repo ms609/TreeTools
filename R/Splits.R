@@ -12,7 +12,7 @@
 #' `Splits` objects.
 #' @param \dots Presently unused.
 #' @return `as.Splits` returns an object of class `Splits`, or
-#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which 
+#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which
 #' each bit specifying whether a tip is a member of the split.
 #' Splits are named according to the node that defines them.
 #'
@@ -37,6 +37,7 @@
 #'
 #' @family Splits operations
 #' @importFrom ape reorder.phylo
+#' @exportClass Splits
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
@@ -47,17 +48,15 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
-    x <- RenumberTips(x, TipLabels(tipLabels))
+    x <- RenumberTips(x, tipLabels)
   }
-  edge <- Postorder(x)$edge
+  edge <- PostorderEdges(x$edge)
   nTip <- length(x$tip.label)
   splits <- cpp_edge_to_splits(edge, nTip)
 
   nSplits <- dim(splits)[1]
   # Return:
   if (asSplits) {
-    nEdge <- dim(x$edge)[1]
-    nTip <- length(x$tip.label)
     structure(splits,
               nTip = nTip,
               tip.label = x$tip.label,
@@ -70,13 +69,20 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname as.Splits
 #' @export
+as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
+                                  asSplits = TRUE, ...) {
+  lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
+}
+
+#' @rdname as.Splits
+#' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
     # Nothing needs doing
     # Return:
     x
   } else {
-    tipLabels <- TipLabels(tipLabels)
+    tipLabels <- TipLabels(tipLabels, single = TRUE)
     oldLabels <- attr(x, 'tip.label')
     if (is.null(oldLabels)) {
       nTip <- attr(x, 'nTip')
@@ -94,9 +100,9 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
         x
       } else {
         if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-          as.Splits(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                             [match(tipLabels, oldLabels), ]),
-                           tipLabels = tipLabels)
+          as.Splits.logical(t(apply(x, 1, .DecodeBinary, nTip = nTip)
+                            [match(tipLabels, oldLabels), ]),
+                            tipLabels = tipLabels)
         } else {
           stop ("Old and new labels must match")
         }
@@ -105,18 +111,6 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
       x
     }
   }
-}
-
-#' @rdname as.Splits
-#' @export
-as.logical.Splits <- function (x, tipLabels = NULL, ...) {
-  nTip <- attr(x, 'nTip')
-  ret <- t(apply(x, 1, function (split) {
-    unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
-  }))
-  colnames(ret) <- attr(x, 'tip.label')
-  rownames(ret) <- rownames(x)
-  ret
 }
 
 #' @rdname as.Splits
@@ -178,14 +172,17 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   }
 }
 
+#' @rdname as.Splits
 #' @export
-as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
-                                  asSplits = TRUE, ...) {
-  lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
+as.logical.Splits <- function (x, tipLabels = NULL, ...) {
+  nTip <- attr(x, 'nTip')
+  ret <- t(apply(x, 1, function (split) {
+    unlist(.DecodeBinary(split, nTip = nTip, print = FALSE))
+  }))
+  colnames(ret) <- attr(x, 'tip.label')
+  rownames(ret) <- rownames(x)
+  ret
 }
-
-#' @exportClass Splits
-#
 
 #' @family Splits operations
 #' @export
@@ -259,7 +256,7 @@ as.character.Splits <- function (x, ...) {
 #'
 #' @param phy Object to count.
 #'
-#' @return `NTip` returns an integer specifying the number of tips in each 
+#' @return `NTip` returns an integer specifying the number of tips in each
 #' object in `phy`.
 #'
 #' @export

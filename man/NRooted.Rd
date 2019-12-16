@@ -74,14 +74,12 @@ Calculations follow Carter et al. 1990, Theorem 2.
   NUnrooted(10)
   LnRooted(10)
   LnUnrooted(10)
-  # Number of trees consistent with a character whose states are 
+  # Number of trees consistent with a character whose states are
   # 00000 11111 222
   NUnrootedMult(c(5,5,3))
 
 }
 \references{
-\insertRef{Carter1990}{TreeTools}
-
 \insertRef{Carter1990}{TreeTools}
 }
 \author{

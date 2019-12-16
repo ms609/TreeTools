@@ -23,8 +23,11 @@ filename <- "C:/nexus/matrix.nex"
 You can save typing by giving R a working directory.  You can 
 think of R as having a file explorer window open invisibly in the
 background.
+
 You can see the folder that's open at the moment by typing `getwd()` at the console.
+
 `setwd()` tells R to open a different folder instead.
+
 `setwd('../')` tells R to go up to a parent directory.
 (You can [do this using the  Graphical User Interface ](https://dss.princeton.edu/training/RStudio101.pdf) in RStudio).
 

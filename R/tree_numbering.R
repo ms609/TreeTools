@@ -65,9 +65,9 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #'
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
-#' 
-#' @seealso SortTree
-#' 
+#'
+#' @seealso [`SortTree`]
+#'
 #' @family C wrappers
 #' @keywords internal
 #' @export
@@ -78,7 +78,6 @@ RenumberTree <- function (parent, child) {
 #' @describeIn RenumberTree Returns in list format
 #' @return `RenumberEdges` returns a list whose two entries correspond
 #' to the new parent and child vectors.
-#' @family C wrappers
 #' @keywords internal
 #' @export
 RenumberEdges <- function (parent, child, nEdge = length(parent)) {
@@ -116,16 +115,23 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
 #'
+#' `Postorder` is modified from the ape function to return a specific
+#' order: edges are listed from the node that subtends the smallest
+#' subtree to the one that subtends the largest (i.e. the root node), with
+#' all of a node's descendant edges listed adjacently.  If a tree is already
+#' in postorder, it will not be rearranged unless `force = TRUE`, or
+#' `PostorderEdges` is employed.
+#'
 #' @template treeParam
 #' @template nTipParam
 #' @param edge (optional) the value of tree$edge
 #'
-#' @return A tree of class `phylo` with nodes following the specified 
+#' @return A tree of class `phylo` with nodes following the specified
 #' numbering scheme.
 #' @author
-#'  `Preorder`: Martin R. Smith.
+#'  `Preorder` and `Postorder`: Martin R. Smith.
 #'
-#' `Cladewise`, `Postorder` and `Pruningwise`: modified by Martin R. Smith from
+#' `Cladewise`, `ApePostorder` and `Pruningwise`: modified by Martin R. Smith from
 #' \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 #'
 #' @family C wrappers
@@ -150,9 +156,11 @@ Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
   tree
 }
 
-#' @describeIn Cladewise Reorder tree in Postorder
+
+#' @describeIn Cladewise Reorder tree in Postorder using ape's `postorder`
+#' function, which is robust to unconventional node numbering
 #' @export
-Postorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
+ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "postorder") {
     return(tree)
   }
@@ -167,18 +175,29 @@ Postorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
   tree
 }
 
-#' @describeIn Cladewise Reorder parent and child edges in Postorder
-#' @template treeParent
-#' @template treeChild
-#' @template nTipParam
+#' @describeIn Cladewise Reorder tree in Postorder. Edge lengths are not retained.
+#' @param force Logical specifying whether to rearrange trees already in
+#' postorder, in order to ensure TreeTools edge ordering.
 #' @export
-PostorderEdges <- function (parent, child,
-                            nEdge = length(parent),
-                            nNode = nEdge / 2L,
-                            nTip = nNode + 1L) {
-  if (nNode == 1) return(list(parent, child))
-  newOrder <- NeworderPhylo(nTip, parent, child, nEdge, 2)
-  list(parent[newOrder], child[newOrder])
+Postorder <- function (tree, force = FALSE) {
+  if (is.null(attr(tree, "order"))
+      || attr(tree, "order") != "postorder"
+      || (force &&
+          (is.null(attr(tree, 'suborder')) ||
+           attr(tree, 'suborder') != 'TreeTools'))) {
+    tree$edge <- PostorderEdges(tree$edge)
+    tree$edge.length <- NULL
+    attr(tree, "order") <- "postorder"
+    attr(tree, "suborder") <- "TreeTools"
+  }
+  tree
+}
+
+#' @describeIn Cladewise Reorder edges in Postorder.
+#' @template edgeParam
+#' @export
+PostorderEdges <- function (edge) {
+  postorder_edges(edge - 1L)
 }
 
 #' @describeIn Cladewise Reorder tree Pruningwise
@@ -205,7 +224,7 @@ Pruningwise <- function (tree, nTip = length(tree$tip.label),
 #' @export
 Preorder <- function (tree) {
   startOrder <- attr(tree, 'order')
-  if (startOrder == 'preorder') {
+  if (length(startOrder) && startOrder == 'preorder') {
     tree
   } else {
     edge <- tree$edge
@@ -221,28 +240,32 @@ Preorder <- function (tree) {
 
 #' Renumber a tree's tips
 #'
-#' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
-#' such that the indices in \code{tree$edge[, 2]} correspond to the order of
-#' tips given in \code{tipOrder}
+#' `RenumberTips(tree, tipOrder)` sorts the tips of a phylogenetic tree
+#' such that the indices in `tree$edge[, 2]` correspond to the order of
+#' tips given in `tipOrder`.
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
 #'        \code{tree$tip.label} in the desired sort order, or an object
 #'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
-#' @return `RenumberTips` returns `tree1`, with the tips' internal 
+#' @return `RenumberTips` returns `tree1`, with the tips' internal
 #' representation numbered to match `tipOrder`.
-#' 
+#'
 #' @examples
-#' data(Lobo) # Loads the phyDat object Lobo.phy
+#' data('Lobo') # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
 #'
 #' @template MRS
 #' @export
-RenumberTips <- function (tree, tipOrder) {
+RenumberTips <- function(tree, tipOrder) UseMethod('RenumberTips')
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.phylo <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
-  newOrder <- TipLabels(tipOrder)
+  newOrder <- TipLabels(tipOrder, single = TRUE)
   if (identical(startOrder, newOrder)) return (tree)
   if (length(startOrder) != length(newOrder)) {
     stop("Tree labels and tipOrder must match")
@@ -257,4 +280,16 @@ RenumberTips <- function (tree, tipOrder) {
   tree$edge[tips, 2] <- matchOrder[tree$edge[tips, 2]]
   tree$tip.label <- newOrder
   tree
+}
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.multiPhylo <- function (tree, tipOrder) {
+  lapply(tree, RenumberTips.phylo, tipOrder)
+}
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.list <- function (tree, tipOrder) {
+  lapply(tree, RenumberTips, tipOrder)
 }

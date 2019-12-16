@@ -4,6 +4,7 @@
 \alias{TreeNumber}
 \alias{as.TreeNumber}
 \alias{as.TreeNumber.phylo}
+\alias{as.TreeNumber.multiPhylo}
 \alias{as.TreeNumber.character}
 \alias{as.phylo.numeric}
 \alias{as.phylo.TreeNumber}
@@ -13,13 +14,16 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{phylo}(x, ...)
 
+\method{as.TreeNumber}{multiPhylo}(x, ...)
+
 \method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip),
   ...)
 
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
   tipLabels = attr(x, "tip.label"), ...)
 
-\method{as.phylo}{TreeNumber}(x, ...)
+\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"),
+  tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -115,7 +119,9 @@ with the mixed-base number 0021.  We can convert this into decimal:
 Note that the hyperexponential nature of tree space means that there are >
 2^30 unique 12-tip trees.  As integers > 2^31 are not supported by R,
 numbers representing larger trees are represented internally as a vector of
-nine-digit integer 'chunks'.
+nine-digit integer 'chunks' and passed to the underlying C code, where they
+are combined into a single 64-bit integer.  This allows trees with up to
+42 tips to be accommodated.
 }
 \examples{
 tree <- as.phylo(10, nTip = 6)
@@ -129,12 +135,22 @@ as.TreeNumber(BalancedTree(19))
 treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 tree <- as.phylo(treeNumber)
 
+as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
+
 }
 \references{
 Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 
 \insertRef{Li1996}{TreeTools}
 }
+\seealso{
+\code{\link{TreeShape}}
+
+Other tree generation functions: \code{\link{BalancedTree}},
+  \code{\link{NJTree}}, \code{\link{PectinateTree}},
+  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree generation functions}

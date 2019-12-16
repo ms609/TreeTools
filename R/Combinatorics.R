@@ -78,16 +78,16 @@ LogDoubleFactorial.int <- function (n) {
 }
 
 #' Number of rooted/unrooted trees
-#' 
+#'
 #' These functions return the number of rooted or unrooted trees consistent with
 #' a given pattern of splits.
 #'
 #' Functions starting N return the number of rooted or unrooted trees, functions
-#' starting Ln provide the natural logarithm of this number. 
+#' starting Ln provide the natural logarithm of this number.
 #' Calculations follow Carter et al. 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
-#' @param splits Integer vector listing the number of taxa in each tree 
+#' @param splits Integer vector listing the number of taxa in each tree
 #' bipartition.
 #'
 #' @template MRS
@@ -100,7 +100,7 @@ LogDoubleFactorial.int <- function (n) {
 #'   NUnrooted(10)
 #'   LnRooted(10)
 #'   LnUnrooted(10)
-#'   # Number of trees consistent with a character whose states are 
+#'   # Number of trees consistent with a character whose states are
 #'   # 00000 11111 222
 #'   NUnrootedMult(c(5,5,3))
 #'
@@ -114,36 +114,37 @@ NUnrooted   <- function (tips)  DoubleFactorial(tips + tips - 5L)
 LnUnrooted  <- function (tips) LogDoubleFactorial(tips + tips - 5L)
 #' @describeIn NRooted  Log Number of unrooted trees (as integer)
 #' @export
-LnUnrooted.int <- function (tips) if (tips < 3) 0 else {
-  logDoubleFactorials[tips + tips - 5L]
+LnUnrooted.int <- function (tips) {
+  ifelse(tips < 3L, 0, logDoubleFactorials[tips + tips - 5L])
 }
+
 #' @describeIn NRooted  Log Number of rooted trees
 #' @export
 LnRooted    <- function (tips) LogDoubleFactorial(tips + tips - 3L)
 #' @describeIn NRooted  Log Number of rooted trees (as integer)
 #' @export
 LnRooted.int <- function (tips) {
-  if (tips < 2L) 0 else logDoubleFactorials[tips + tips - 3L]
+  ifelse(tips < 2L, 0, logDoubleFactorials[tips + tips - 3L])
 }
 
 #' Number of trees one SPR step away
 #'
-#' `N1Spr` calculates the number of trees one subtree prune-and-regraft 
+#' `N1Spr` calculates the number of trees one subtree prune-and-regraft
 #' operation away from a binary input tree using the formula given by Allen and
 #' Steel (2001).
 #'
 #' `IC1Spr` calculates the information content of trees at this distance: i.e.
 #' the entropy corresponding to the proportion of all possible _n_-tip trees
 #' whose SPR distance is at most one from a specified tree.
-#' 
+#'
 #' @param n Integer vector specifying the number of tips in a tree.
-#' 
+#'
 #' @return `N1SPR` returns an integer vector.
-#' 
-#' @examples 
+#'
+#' @examples
 #' N1Spr(4:6)
 #' IC1Spr(5)
-#' 
+#'
 #' @references
 #'  \insertRef{Allen2001}{TreeTools}
 #'
@@ -171,8 +172,6 @@ NUnrootedSplits  <- function (splits) {
   return (NUnrootedMult(splits))
 }
 #' @describeIn NRooted Log unrooted mult
-#' @references
-#'  \insertRef{Carter1990}{TreeTools}
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]

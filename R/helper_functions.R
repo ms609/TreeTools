@@ -1,16 +1,16 @@
 #' Quick sample
 #'
-#' Faster than inbuilt sample because it avoids some checks. 
-#' 
+#' Faster than inbuilt [`sample`] because it avoids some checks.
+#'
 #' @param x A vector to sample.
 #' @param len (optionally) integer specifying length of `x`.
-#' 
+#'
 #' @return A vector of length one, randomly sampled from `x`.
-#' 
-#' @examples 
+#'
+#' @examples
 #' SampleOne(9:10)
 #' SampleOne(letters[1:4])
-#' 
+#'
 #' @template MRS
 #' @keywords internal
 #' @export
@@ -42,7 +42,7 @@ UnshiftTree <- function(add, treeList) {
     structure(c(list(add), lapply(treeList, function (X) X)), class= 'multiPhylo')
   } else if (inherits(treeList, 'phylo')) {
     treeList <- structure(list(add, treeList), class='multiPhylo')
-  } else { # including: if (class(trees) == 'list') {
+  } else { # including: if (mode(trees) == 'list') {
     c(list(add), treeList)
   }
 }

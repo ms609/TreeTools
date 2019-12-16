@@ -30,7 +30,7 @@ Other tree manipulation: \code{\link{AddTip}},
 
 Other tree generation functions: \code{\link{BalancedTree}},
   \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{RandomTree}}
+  \code{\link{RandomTree}}, \code{\link{TreeNumber}}
 }
 \concept{tree generation functions}
 \concept{tree manipulation}

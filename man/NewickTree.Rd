@@ -14,5 +14,13 @@ NewickTree(tree)
 format.
 }
 \description{
-Writes a tree in Newick format
+Writes a tree in Newick format.  This differs from ape's \code{write.tree}
+in the encoding of spaces as spaces, rather than underscores.
+}
+\examples{
+NewickTree(BalancedTree(6))
+
+}
+\seealso{
+\code{\link{as.Newick}}
 }

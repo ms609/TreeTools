@@ -27,6 +27,11 @@ a bipartition split that divides taxa into groups of size \code{A} and \code{B}.
 \item \code{LnTreesMatchingSplit}: Logarithm of the number of trees matching a split.
 }}
 
+\examples{
+TreesMatchingSplit(5, 6)
+LnTreesMatchingSplit(5, 6)
+
+}
 \seealso{
 Other split information functions: \code{\link{CharacterInformation}},
   \code{\link{SplitInformation}},

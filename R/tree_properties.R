@@ -2,12 +2,12 @@
 #'
 #' Quickly identifies edges that are 'descended' from a particular edge in a tree
 #'
-#' @param edge number of the edge whose child edges are required
+#' @param edge number of the edge whose child edges are required.
 #' @template treeParent
 #' @template treeChild
-#' @param nEdge number of edges (calculated from length(parent) if not supplied)
+#' @param nEdge number of edges (calculated from length(parent) if not supplied).
 #' @return `DescendantEdges` returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-#'         (or the edge itself)
+#'         (or the edge itself).
 #' @family tree navigation
 #' @export
 DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
@@ -36,10 +36,10 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
 
 #' All Descendant Edges
 #'
-#' @return `AllDescendantEdges` returns a matrix of class logical, with row N specifying whether each edge is a descendant of edge N
-#'         (or the edge itself)
-#' @describeIn DescendantEdges Quickly identifies edges that are 'descended' from each edge in a tree
-#' @family tree navigation
+#' @return `AllDescendantEdges` returns a matrix of class logical, with row N
+#' specifying whether each edge is a descendant of edge N (or the edge itself).
+#' @describeIn DescendantEdges Quickly identifies edges that are 'descended'
+#' from each edge in a tree.
 #' @export
 AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
@@ -60,7 +60,16 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @template treeParent
 #' @template treeChild
 #' @return `AncestorEdge` returns a logical vector identifying whether each edge
-#' is the edge that is ancestral to the given edge.
+#' is the immediate ancestor of the given edge.
+#' @examples
+#' tree <- BalancedTree(6)
+#' parent <- tree$edge[, 1]
+#' child <- tree$edge[, 2]
+#' plot(tree)
+#' ape::edgelabels()
+#' AncestorEdge(5, parent, child)
+#' which(AncestorEdge(5, parent, child))
+#'
 #' @keywords internal
 #' @family tree navigation
 #' @export
@@ -70,13 +79,22 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #'
 #' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'
-#' @param edge Integer specifying the number of the edge whose child edges 
+#' @param edge Integer specifying the number of the edge whose child edges
 #' should be returned.
 #' @template treeParent
 #' @template treeChild
-#' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
+#' @param stopAt number of the edge at which the search should terminate;
+#' defaults to the root edges.
 #' @return `EdgeAncestry` returns a logical vector stating whether each edge in
-#'  turn is a descendant of the specified edge.
+#' turn is a descendant of the specified edge.
+#' @examples
+#' tree <- PectinateTree(6)
+#' plot(tree)
+#' ape::edgelabels()
+#' parent <- tree$edge[, 1]
+#' child <- tree$edge[, 2]
+#' EdgeAncestry(7, parent, child)
+#' which(EdgeAncestry(7, parent, child, stopAt = 4))
 #'
 #' @template MRS
 #' @family tree navigation
@@ -90,16 +108,16 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
 }
 
 #' Most Recent Common Ancestor
-#' 
+#'
 #' What is the last common ancestor of the specified tips?
-#' 
+#'
 #' @param tip1,tip2 Integer specifying index of tips whose most recent common
 #' ancestor should be found.
 #' @param ancestors Output of [`AllAncestors`] for the tree in question
 #'
-#' @return `MRCA` returns an integer specifying the node number of the last 
+#' @return `MRCA` returns an integer specifying the node number of the last
 #' common ancestor of `tip1` and `tip2`.
-#' 
+#'
 #' @family tree navigation
 #' @template MRS
 #' @export
@@ -176,7 +194,7 @@ EdgeDistances <- function (tree) {
 #'
 #' Identify, for each edge, whether it denotes a different partition from
 #' the root edge.
-#' The first edge of the input tree must be a root edge; this can be 
+#' The first edge of the input tree must be a root edge; this can be
 #' accomplished using `Preorder`.
 #'
 #' @template treeParent
@@ -184,15 +202,15 @@ EdgeDistances <- function (tree) {
 #' @template treeNEdgeOptional
 #'
 #' @return `NonDuplicateRoot` returns a logical vector of length `nEdge`,
-#' specifying `TRUE` unless an edge identifies the same partition as 
+#' specifying `TRUE` unless an edge identifies the same partition as
 #' the root edge.
-#' 
-#' @examples 
+#'
+#' @examples
 #' tree <- Preorder(BalancedTree(8))
 #' edge <- tree$edge
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
-#' 
+#'
 #' which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
@@ -214,7 +232,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 }
 
 #' Number of distinct partitions
-#' 
+#'
 #' How many unique bipartition splits occur in a tree or object?
 #'
 #' @param x A phylogenetic tree of class `phylo`, or a list of such trees
@@ -224,11 +242,11 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #' @return `NSplits` returns an integer specifying the number of partitions in
 #'  the specified objects, or in a rooted tree with `n` tips.
 #'
-#' @examples {
-#'   NSplits(8L)
-#'   NSplits(PectinateTree(8))
-#'   NSplits(as.Splits(BalancedTree(8)))
-#' }
+#' @examples
+#' NSplits(8L)
+#' NSplits(PectinateTree(8))
+#' NSplits(as.Splits(BalancedTree(8)))
+#'
 #'
 #' @template MRS
 #'
@@ -268,6 +286,9 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' @param tree A phylogenetic tree of class phylo.
 #' @return Logical specifying whether a root node is resolved.
+#'
+#' @examples
+#' TreeIsRooted(BalancedTree(6))
 #'
 #' @template MRS
 #' @export

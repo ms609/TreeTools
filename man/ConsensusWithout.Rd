@@ -10,17 +10,17 @@ ConsensusWithout(trees, tip, ...)
 MarkMissing(tip, position = "bottomleft", ...)
 }
 \arguments{
-\item{trees}{A list of phylogenetic trees, of class \code{multiPhylo} or \code{list}}
+\item{trees}{A list of phylogenetic trees, of class \code{multiPhylo} or \code{list}.}
 
 \item{tip}{A character vector specifying the names (or numbers) of tips to
-drop (using ape::drop.tip)}
+drop (using ape::drop.tip).}
 
-\item{\dots}{Additional parameters to pass on to ape::\link{consensus} or \link{legend}}
+\item{\dots}{Additional parameters to pass on to \link[ape:consensus]{ape::consensus} or \link{legend}.}
 
 \item{position}{Where to plot the missing taxa.  See \link{legend} for options.}
 }
 \value{
-\code{ConsensusWithout} returns aA consensus tree (of class \code{phylo})
+\code{ConsensusWithout} returns a consensus tree (of class \code{phylo})
 without the excluded taxa.
 }
 \description{
@@ -32,9 +32,28 @@ set of relationship.
 }
 \section{Functions}{
 \itemize{
-\item \code{MarkMissing}: Adds missing taxa to a plotted consensus tree
+\item \code{MarkMissing}: Adds labels for taxa omitted from a plotted
+consensus tree.
 }}
 
+\examples{
+oldPar <- par(mfrow=c(1, 2), mar=rep(0.5, 4))
+
+# Two trees differing only in placement of tip 2:
+trees <- as.phylo(c(0, 53), 6)
+plot(trees[[1]])
+plot(trees[[2]])
+
+# Strict consensus lacks resolution:
+plot(ape::consensus(trees))
+
+# But omitting tip two reveals shared structure in common:
+plot(ConsensusWithout(trees, 't2'))
+MarkMissing('t2')
+
+par(oldPar)
+
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 

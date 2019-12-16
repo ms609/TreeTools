@@ -4,7 +4,7 @@
 \alias{PhyToString}
 \alias{PhyDatToString}
 \alias{PhydatToString}
-\title{Extract character data from a phyDat object as a string}
+\title{phyDat to String}
 \usage{
 PhyToString(phy, parentheses = "{", collapse = "", ps = "",
   useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE)
@@ -26,10 +26,10 @@ separate multiple tokens within parentheses}
 
 \item{ps}{Character specifying text, perhaps \code{;}, to append to the end of the string}
 
-\item{useIndex}{(default: \code{TRUE}) Print duplicate characters multiple
-times, as they appeared in the original matrix}
+\item{useIndex}{Logical (default: \code{TRUE}) specifying whether to print
+duplicate characters multiple times, as they appeared in the original matrix}
 
-\item{byTaxon}{If \code{TRUE}, write one taxon followed by the next.
+\item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
 If \code{FALSE}, write one character followed by the next.}
 
 \item{concatenate}{Logical specifying whether to concatenate all characters/taxa
@@ -41,14 +41,19 @@ for each entry.}
 representation of the phylogenetic character state for each taxon in turn.
 }
 \description{
-Extract character data from a phyDat object as a string
+Extract character data from a phyDat object as a string.
 }
 \examples{
-fileName <- paste0(system.file(package='TreeTools'), 
+fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 phyDat <- ReadAsPhyDat(fileName)
 PhyToString(phyDat, concatenate = FALSE)
 
+}
+\seealso{
+\itemize{
+\item \code{\link{StringToPhyDat}}
+}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

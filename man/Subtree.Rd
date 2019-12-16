@@ -9,27 +9,31 @@ Subtree(tree, node)
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}, with internal numbering
 in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
-\code{\link{Cladewise}(tree)})}
+\code{\link{Cladewise}(tree)}) .}
 
 \item{node}{The number of the node at the base of the clade to be extracted.}
 }
 \value{
-This function returns a tree of class \code{phylo} that represents a clade
-extracted from the original tree.
+This function returns a tree of class \code{phylo} that represents a
+clade extracted from the original tree.
 }
 \description{
 Safely extracts a clade from a phylogenetic tree.
 }
 \details{
-Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometimes behaves erratically.
-Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.
+Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
+sometimes behaves erratically.
+Unlike extract.clade, this function supports the extraction of 'clades'
+that constitute a single tip.
 }
 \examples{
-{
-tree <- Preorder(ape::rtree(20, br=NULL))
-plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
-plot(Subtree(tree, 33))
-}
+tree <- Preorder(BalancedTree(8))
+plot(tree)
+ape::nodelabels()
+ape::nodelabels(13, 13, bg='yellow')
+
+plot(Subtree(tree, 13))
+
 
 }
 \seealso{

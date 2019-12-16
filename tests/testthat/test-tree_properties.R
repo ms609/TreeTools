@@ -39,6 +39,4 @@ test_that('Edge distances are calculated correctly', {
   expect_equal(ed, t(ed)) # Symmetry
   expect_equal(c(6, 6, 6, 5, 5, 4, 4, 3, 2, 1, 0, 1, 2, 3, 4, 4, 5, 5),
                ed[11, ])
-
 })
-

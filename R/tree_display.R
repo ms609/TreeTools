@@ -5,25 +5,44 @@
 #' A useful way to gain resolution if a few wildcard taxa obscure a consistent
 #' set of relationship.
 #'
-#' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`
+#' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#'                drop (using ape::drop.tip)
-#' @param \dots Additional parameters to pass on to ape::[consensus] or [legend]
+#'                drop (using ape::drop.tip).
+#' @param \dots Additional parameters to pass on to [ape::consensus] or [legend].
 #'
-#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`) 
+#' @return `ConsensusWithout` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.
+#'
+#' @examples
+#' oldPar <- par(mfrow=c(1, 2), mar=rep(0.5, 4))
+#'
+#' # Two trees differing only in placement of tip 2:
+#' trees <- as.phylo(c(0, 53), 6)
+#' plot(trees[[1]])
+#' plot(trees[[2]])
+#'
+#' # Strict consensus lacks resolution:
+#' plot(ape::consensus(trees))
+#'
+#' # But omitting tip two reveals shared structure in common:
+#' plot(ConsensusWithout(trees, 't2'))
+#' MarkMissing('t2')
+#'
+#' par(oldPar)
+#'
 #' @template MRS
 #' @importFrom ape consensus drop.tip
 #' @export
 ConsensusWithout <- function (trees, tip, ...) {
   if (inherits(trees, 'phylo')) {
-    drop.tip(trees, tip=tip)
+    drop.tip(trees, tip = tip)
   } else {
-    consensus(lapply(trees, drop.tip, tip=tip), ...)
+    consensus(lapply(trees, drop.tip, tip = tip), ...)
   }
 }
 
-#' @describeIn ConsensusWithout Adds missing taxa to a plotted consensus tree
+#' @describeIn ConsensusWithout Adds labels for taxa omitted from a plotted
+#' consensus tree.
 #' @param position Where to plot the missing taxa.  See [legend] for options.
 #' @importFrom graphics legend
 #' @template MRS
@@ -37,15 +56,15 @@ MarkMissing <- function (tip, position='bottomleft', ...) {
 
 #' Sort tree
 #'
-#' Sorts each node into a consistent order, so similar trees look visually 
+#' Sorts each node into a consistent order, so similar trees look visually
 #' similar.
 #'
 #' @template treeParam
 #'
 #' @return `SortTree` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
-#' 
-#' @seealso RenumberTree
+#'
+#' @seealso [`RenumberTree`]
 #'
 #' @template MRS
 #' @export
@@ -82,13 +101,18 @@ SortTree <- function(tree) {
 
 #' Newick Tree
 #'
-#' Writes a tree in Newick format
+#' Writes a tree in Newick format.  This differs from ape's `write.tree`
+#' in the encoding of spaces as spaces, rather than underscores.
 #'
 #' @template treeParam
 #'
-#' @return `NewickTree` returns a character string denoting `tree` in Newick 
+#' @return `NewickTree` returns a character string denoting `tree` in Newick
 #' format.
 #'
+#' @examples
+#' NewickTree(BalancedTree(6))
+#'
+#' @seealso [`as.Newick`]
 #' @importFrom ape write.tree
 #' @export
 NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed=TRUE)

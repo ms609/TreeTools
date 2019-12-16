@@ -10,17 +10,27 @@ AncestorEdge(edge, parent, child)
 \item{edge}{Number of an edge}
 
 \item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
 
 \item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 }
 \value{
 \code{AncestorEdge} returns a logical vector identifying whether each edge
-is the edge that is ancestral to the given edge.
+is the immediate ancestor of the given edge.
 }
 \description{
 Ancestral edge
+}
+\examples{
+tree <- BalancedTree(6)
+parent <- tree$edge[, 1]
+child <- tree$edge[, 2]
+plot(tree)
+ape::edgelabels()
+AncestorEdge(5, parent, child)
+which(AncestorEdge(5, parent, child))
+
 }
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},

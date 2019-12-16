@@ -8,20 +8,20 @@ AllAncestors(parent, child)
 }
 \arguments{
 \item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
 
 \item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 }
 \value{
-\code{AllAncestors} returns a list. Entry i contains a vector containing,
-in order, the nodes encountered when traversing the tree from node i to the
+\code{AllAncestors} returns a list. Entry \emph{i} contains a vector containing,
+in order, the nodes encountered when traversing the tree from node \emph{i} to the
 root node.
 The last entry of each member of the list is therefore the root node,
-with the exception of the entry for the root node itself, which is NULL.
+with the exception of the entry for the root node itself, which is \code{NULL}.
 }
 \description{
-\code{AllAncestors} lists ancestors of each parent node in a tree
+\code{AllAncestors} lists ancestors of each parent node in a tree.
 }
 \details{
 Note that the tree's edges must be listed in an order whereby each entry in
@@ -29,7 +29,10 @@ Note that the tree's edges must be listed in an order whereby each entry in
 \code{tr$edge[, 2]}.
 }
 \examples{
-  tr <- ape::rtree(20, br=NULL)
+  tr <- PectinateTree(4)
+  plot(tr)
+  ape::tiplabels()
+  ape::nodelabels()
   edge <- tr$edge
   AllAncestors(edge[, 1], edge[, 2])
 

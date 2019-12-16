@@ -18,21 +18,15 @@
 #'         single split; see the example for how these might be plotted on a tree.
 #'
 #'
-#' @examples {
-#'   library(ape) # for functions rtree & nodelabels
-#'   set.seed(0) # Set seed so random trees are reproducable
-#'   tree1 <- rtree(7)
-#'   tree2 <- rtree(7)
-#'   tree3 <- rtree(7)
-#'   forest <- list(tree1, tree2, tree2, tree3, rtree(7))
+#' @examples
+#' forest <- as.phylo(c(1, 10, 10, 100, 1000), nTip = 7)
 #'
-#'   # Simple, but means counting each split in the forest twice:
-#'   tree1Freqs <- SplitFrequency(tree1, forest)
-#'   SplitFrequency(tree2, forest)
+#' # Simple, but means counting each split in the forest twice:
+#' tree1Freqs <- SplitFrequency(forest[[1]], forest)
+#' SplitFrequency(forest[[2]], forest)
 #'
-#'   plot(tree1)
-#'   nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
-#' }
+#' plot(forest[[1]])
+#' ape::nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
 #'
 #' @template MRS
 #' @export
@@ -85,11 +79,15 @@ TreeSplits <- function (tree) {
 }
 
 #' Support colour
-#' @param support A vector of doubles in the range 0-1
+#'
+#' Colour value with which to display node support.
+#'
+#' @param support A numeric vector of values in the range 0--1.
 #' @param show1 Logical specifying whether to display values of 1.
 #'              A transparent white will be returned if `FALSE`.
 #' @return A string containing the hexadecimal code for a colour picked from a
 #'         diverging scale, or `red` if a value is invalid.
+#' @examples SupportColour(0:4 / 4, show1 = FALSE)
 #' @importFrom colorspace diverge_hcl
 #' @export
 SupportColour <- function (support, show1=TRUE) {
@@ -99,6 +97,6 @@ SupportColour <- function (support, show1=TRUE) {
          ifelse(support == 1 & !show1, "#ffffff00", divergingScale[(support * 100) + 1L]))
 }
 
-#' @describeIn SupportColour alternative spelling
+#' @rdname SupportColour
 #' @export
 SupportColor <- SupportColour

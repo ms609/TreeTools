@@ -1,12 +1,14 @@
 #' Ape Time
 #'
-#' Reads the time that an ape tree was modified from the comment in the nexus file
+#' Reads the time that an ape tree was modified from the comment in the Nexus
+#' file.
 #'
 #' @param filename Character string specifying path to the file
 #' @param format Format in which to return the time: 'double' as a sortable numeric;
 #'               any other value to return a string in the format YYYY-MM-DD hh:mm:ss
 #'
-#' @return The time that the specified file was created by ape.
+#' @return `ApeTime` returns the time that the specified file was created by
+#' ape, in the format specified by `format`.
 #' @export
 #' @template MRS
 #'
@@ -178,20 +180,22 @@ TNTText2Tree <- function (treeText) {
 }
 
 #' Extract taxa from a matrix block
-#' 
+#'
 #' Reads the character information from a Nexus-formatted matrix into R.
+#'
+#' Extracts the names of tips from the matrix block of a Nexus file.
 #'
 #' @param matrixLines lines of a file containing a phylogenetic matrix
 #'  (see [`ReadCharacters`] for expected format).
 #' @template characterNumParam
 #' @template sessionParam
 #'
-#' @return `ExtractTaxa` returns a matrix with _n_ rows, each named for the 
+#' @return `ExtractTaxa` returns a matrix with _n_ rows, each named for the
 #' relevant taxon, and _c_ columns,
-#' each corresponding to the respective character specified in `character_num`
+#' each corresponding to the respective character specified in `character_num`.
 #'
-#' @examples 
-#' fileName <- paste0(system.file(package='TreeTools'), 
+#' @examples
+#' fileName <- paste0(system.file(package='TreeTools'),
 #'                    '/extdata/input/dataset.nex')
 #' matrixLines <- readLines(fileName)[6:11]
 #' ExtractTaxa(matrixLines)
@@ -231,9 +235,9 @@ ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
 #'  tokens.
 #' @describeIn ExtractTaxa Converts a Nexus string to a vector of character
 #'  states.
-#' @return `NexusTokens` returns a character vector in which each entry 
+#' @return `NexusTokens` returns a character vector in which each entry
 #' corresponds to the states of a phylogenetic character.
-#' @examples 
+#' @examples
 #' NexusTokens('01[01]-?')
 #' @export
 NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
@@ -292,11 +296,11 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #'   NEXUS: an extensible file format for systematic information.
 #'   Systematic Biology, 46, 590-621.
 #'
-#' @examples 
-#' fileName <- paste0(system.file(package='TreeTools'), 
+#' @examples
+#' fileName <- paste0(system.file(package='TreeTools'),
 #'                    '/extdata/input/dataset.nex')
 #' ReadCharacters(fileName)
-#' 
+#'
 #' @export
 ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
 
@@ -434,7 +438,7 @@ ReadTntCharacters <- function (filepath, character_num=NULL, session=NULL) {
 #'               or [`ReadTntCharacters`]. Row names should correspond to tip
 #'               labels; column names may optionally correspond to
 #'               character labels.
-#'               
+#'
 #' @return an object of class `phyDat`.
 #'
 #' @template MRS
@@ -534,6 +538,8 @@ PhyDat <- function (dataset) {
 #'
 #' @template MRS
 #' @aliases StringToPhydat
+#' @seealso
+#' - [`PhyToString`]
 #' @importFrom phangorn phyDat
 #' @export
 StringToPhyDat <-
@@ -545,7 +551,9 @@ StringToPhyDat <-
 #' @rdname StringToPhyDat
 StringToPhydat <- StringToPhyDat
 
-#' Extract character data from a phyDat object as a string
+#' phyDat to String
+#'
+#' Extract character data from a phyDat object as a string.
 #'
 #' @param phy An object of class \code{\link{phyDat}}
 #' @param parentheses Character specifying format of parentheses with which
@@ -553,23 +561,25 @@ StringToPhydat <- StringToPhyDat
 #' @param collapse Character specifying text, perhaps `,`, with which to
 #' separate multiple tokens within parentheses
 #' @param ps Character specifying text, perhaps `;`, to append to the end of the string
-#' @param useIndex (default: `TRUE`) Print duplicate characters multiple
-#'        times, as they appeared in the original matrix
-#' @param byTaxon If `TRUE`, write one taxon followed by the next.
+#' @param useIndex Logical (default: `TRUE`) specifying whether to print
+#' duplicate characters multiple times, as they appeared in the original matrix
+#' @param byTaxon Logical. If `TRUE`, write one taxon followed by the next.
 #'                If `FALSE`, write one character followed by the next.
 #' @param concatenate Logical specifying whether to concatenate all characters/taxa
 #'                    into a single string, or to return a separate string
 #'                    for each entry.
 #'
-#' @examples 
-#' fileName <- paste0(system.file(package='TreeTools'), 
+#' @examples
+#' fileName <- paste0(system.file(package='TreeTools'),
 #'                    '/extdata/input/dataset.nex')
 #' phyDat <- ReadAsPhyDat(fileName)
 #' PhyToString(phyDat, concatenate = FALSE)
 #'
-#' @return `PhyToString` returns a character vector listing a text 
+#' @return `PhyToString` returns a character vector listing a text
 #' representation of the phylogenetic character state for each taxon in turn.
 #'
+#' @seealso
+#' - [`StringToPhyDat`]
 #' @template MRS
 #' @importFrom phangorn phyDat
 #' @export
@@ -640,6 +650,8 @@ PhydatToString <- PhyToString
 #' @param len Integer specifying number of characters in `string`.
 #'
 #' @return Rightmost character of `string`.
+#' @examples
+#' RightmostCharacter("Hello, World!")
 #'
 #' @template MRS
 #' @export

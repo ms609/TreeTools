@@ -81,7 +81,9 @@
 #' Note that the hyperexponential nature of tree space means that there are &gt;
 #' 2^30 unique 12-tip trees.  As integers &gt; 2^31 are not supported by R,
 #' numbers representing larger trees are represented internally as a vector of
-#' nine-digit integer 'chunks'.
+#' nine-digit integer 'chunks' and passed to the underlying C code, where they
+#' are combined into a single 64-bit integer.  This allows trees with up to
+#' 42 tips to be accommodated.
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of tips in the tree.
@@ -102,6 +104,8 @@
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 #' tree <- as.phylo(treeNumber)
 #'
+#' @seealso [`TreeShape`]
+#' @family tree generation functions
 #' @exportClass TreeNumber
 #' @name TreeNumber
 #
@@ -123,11 +127,19 @@ as.TreeNumber.phylo <- function (x, ...) {
   x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
-  edge <- PostorderEdges(edge[, 1], edge[, 2], nTip = nTip)
-  structure(edge_to_num(edge[[1]], edge[[2]], nTip),
+  edge <- PostorderEdges(edge)
+  structure(edge_to_num(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.labels = TipLabels(x),
             class = 'TreeNumber')
+}
+
+#' @rdname TreeNumber
+#' @export
+as.TreeNumber.multiPhylo <- function (x, ...) {
+  vapply(x, as.TreeNumber.phylo, structure(0, nTip = 0,
+                                           tip.labels = '0',
+                                           class = 'TreeNumber'))
 }
 
 #' @rdname TreeNumber
@@ -150,22 +162,39 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 #'
 #' \insertRef{Li1996}{TreeTools}
 #'
+#' @examples
+#' as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
+#'
 #' @importFrom ape as.phylo
 #' @export
 as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
                               tipLabels = attr(x, 'tip.label'), ...) {
   if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = 'postorder',
-            class = 'phylo')
+  if (length(x) > 1) {
+    structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
+              tip.label = tipLabels, class='multiPhylo')
+  } else {
+    edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+    structure(list(edge = do.call(cbind, edge),
+                   tip.label = tipLabels,
+                   Nnode = nTip - 1L),
+              order = 'preorder',
+              class = 'phylo')
+  }
 }
 
 #' @rdname TreeNumber
 #' @export
-as.phylo.TreeNumber <- function (x, ...) as.phylo.numeric(x, ...)
+as.phylo.TreeNumber <- function (x, nTip = attr(x, 'nTip'),
+                                 tipLabels = attr(x, 'tip.label'), ...) {
+  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+  structure(list(edge = do.call(cbind, edge),
+                 tip.label = tipLabels,
+                 Nnode = nTip - 1L),
+            order = 'preorder',
+            class = 'phylo')
+}
 
 #' Print TreeNumber object
 #'

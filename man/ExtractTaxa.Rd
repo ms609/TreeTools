@@ -25,13 +25,16 @@ tokens.}
 \value{
 \code{ExtractTaxa} returns a matrix with \emph{n} rows, each named for the
 relevant taxon, and \emph{c} columns,
-each corresponding to the respective character specified in \code{character_num}
+each corresponding to the respective character specified in \code{character_num}.
 
 \code{NexusTokens} returns a character vector in which each entry
 corresponds to the states of a phylogenetic character.
 }
 \description{
 Reads the character information from a Nexus-formatted matrix into R.
+}
+\details{
+Extracts the names of tips from the matrix block of a Nexus file.
 }
 \section{Functions}{
 \itemize{
@@ -40,7 +43,7 @@ states.
 }}
 
 \examples{
-fileName <- paste0(system.file(package='TreeTools'), 
+fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 matrixLines <- readLines(fileName)[6:11]
 ExtractTaxa(matrixLines)

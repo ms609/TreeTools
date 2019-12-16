@@ -11,10 +11,10 @@ RenumberEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
 
 \item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 }
 \value{
 \code{RenumberTree} returns an edge matrix for a tree of class \code{phylo}
@@ -36,10 +36,7 @@ lowest-numbered tip in the subtree subtended by each edge.
 }}
 
 \seealso{
-SortTree
-
-Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{Neworder}}
+\code{\link{SortTree}}
 
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{Neworder}}

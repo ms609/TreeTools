@@ -56,21 +56,14 @@ Use as.Splits instead.
 }}
 
 \examples{
-{
-  library(ape) # for functions rtree & nodelabels
-  set.seed(0) # Set seed so random trees are reproducable
-  tree1 <- rtree(7)
-  tree2 <- rtree(7)
-  tree3 <- rtree(7)
-  forest <- list(tree1, tree2, tree2, tree3, rtree(7))
+forest <- as.phylo(c(1, 10, 10, 100, 1000), nTip = 7)
 
-  # Simple, but means counting each split in the forest twice:
-  tree1Freqs <- SplitFrequency(tree1, forest)
-  SplitFrequency(tree2, forest)
+# Simple, but means counting each split in the forest twice:
+tree1Freqs <- SplitFrequency(forest[[1]], forest)
+SplitFrequency(forest[[2]], forest)
 
-  plot(tree1)
-  nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
-}
+plot(forest[[1]])
+ape::nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
 
 }
 \author{

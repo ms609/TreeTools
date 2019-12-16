@@ -2,6 +2,7 @@
 % Please edit documentation in R/tree_numbering.R
 \name{Cladewise}
 \alias{Cladewise}
+\alias{ApePostorder}
 \alias{Postorder}
 \alias{PostorderEdges}
 \alias{Pruningwise}
@@ -10,10 +11,11 @@
 \usage{
 Cladewise(tree, nTip = NULL, edge = tree$edge)
 
-Postorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
+ApePostorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
-PostorderEdges(parent, child, nEdge = length(parent), nNode = nEdge/2L,
-  nTip = nNode + 1L)
+Postorder(tree, force = FALSE)
+
+PostorderEdges(edge)
 
 Pruningwise(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
@@ -26,13 +28,12 @@ Preorder(tree)
 
 \item{edge}{(optional) the value of tree$edge}
 
-\item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\item{force}{Logical specifying whether to rearrange trees already in
+postorder, in order to ensure TreeTools edge ordering.}
 
-\item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
-
-\item{nTip}{Integer specifying number of tips (leaves).}
+\item{edge}{A matrix with two columns, with each row listing the parent and
+child node of an edge in a phylogenetic tree.  Property \code{edge} of objects
+of class \code{phylo}.}
 }
 \value{
 A tree of class \code{phylo} with nodes following the specified
@@ -65,12 +66,22 @@ Numbering begins by following the leftmost edge of the root node,
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.
+
+\code{Postorder} is modified from the ape function to return a specific
+order: edges are listed from the node that subtends the smallest
+subtree to the one that subtends the largest (i.e. the root node), with
+all of a node's descendant edges listed adjacently.  If a tree is already
+in postorder, it will not be rearranged unless \code{force = TRUE}, or
+\code{PostorderEdges} is employed.
 }
 \section{Functions}{
 \itemize{
-\item \code{Postorder}: Reorder tree in Postorder
+\item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
+function, which is robust to unconventional node numbering
 
-\item \code{PostorderEdges}: Reorder parent and child edges in Postorder
+\item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
+
+\item \code{PostorderEdges}: Reorder edges in Postorder.
 
 \item \code{Pruningwise}: Reorder tree Pruningwise
 
@@ -82,9 +93,9 @@ Other C wrappers: \code{\link{Neworder}},
   \code{\link{RenumberTree}}
 }
 \author{
-\code{Preorder}: Martin R. Smith.
+\code{Preorder} and \code{Postorder}: Martin R. Smith.
 
-\code{Cladewise}, \code{Postorder} and \code{Pruningwise}: modified by Martin R. Smith from
+\code{Cladewise}, \code{ApePostorder} and \code{Pruningwise}: modified by Martin R. Smith from
 \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
 }
 \concept{C wrappers}

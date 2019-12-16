@@ -38,24 +38,26 @@ single-taxon trees.
 }
 \section{Functions}{
 \itemize{
-\item \code{AddTipEverywhere}: AddTipEverywhere Add a tip to each edge in turn
+\item \code{AddTipEverywhere}: Add a tip to each edge in turn.
 }}
 
 \examples{
-{
-  library('ape')
-  plot(tree <- rtree(10, br=NULL)); nodelabels(); nodelabels(15, 15, bg='green'); dev.new()
-  plot(AddTip(tree, 15, 'NEW_TIP'))
-}
+
+plot(tree <- BalancedTree(10))
+ape::nodelabels()
+ape::nodelabels(15, 15, bg='green')
+
+plot(AddTip(tree, 15, 'NEW_TIP'))
+
 oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 
 backbone <- BalancedTree(4)
 additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
-lapply(additions, plot)
+xx <- lapply(additions, plot)
 
 par(mfrow=c(2, 3))
 additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
-lapply(additions, plot)
+xx <- lapply(additions, plot)
 
 par(oldPar)
 

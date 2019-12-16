@@ -1,9 +1,13 @@
+# TreeTools 0.1.2
+ 
+- `as.Newick`: fast conversion to Newick format.
+- `as.TreeNumber`: Tree shape enumeration.
 
 # TreeTools 0.1.1
  
 - Add functions to translate trees to mixed base integers.
 - `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
-- Documentation changes to satisfy CRAN submission requirements.
+- Documentation changes to attempt to satisfy CRAN submission requirements.
 
 # TreeTools 0.1.0
 

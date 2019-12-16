@@ -2,9 +2,18 @@
 % Please edit documentation in R/tree_numbering.R
 \name{RenumberTips}
 \alias{RenumberTips}
+\alias{RenumberTips.phylo}
+\alias{RenumberTips.multiPhylo}
+\alias{RenumberTips.list}
 \title{Renumber a tree's tips}
 \usage{
 RenumberTips(tree, tipOrder)
+
+\method{RenumberTips}{phylo}(tree, tipOrder)
+
+\method{RenumberTips}{multiPhylo}(tree, tipOrder)
+
+\method{RenumberTips}{list}(tree, tipOrder)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
@@ -20,10 +29,10 @@ representation numbered to match \code{tipOrder}.
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
 such that the indices in \code{tree$edge[, 2]} correspond to the order of
-tips given in \code{tipOrder}
+tips given in \code{tipOrder}.
 }
 \examples{
-data(Lobo) # Loads the phyDat object Lobo.phy
+data('Lobo') # Loads the phyDat object Lobo.phy
 tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 

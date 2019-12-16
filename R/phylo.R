@@ -15,7 +15,7 @@
 #' @family tree manipulation
 #' @export
 Renumber <- function (tree) {
-  tree   <- Postorder(tree)
+  tree   <- ApePostorder(tree)
   edge   <- tree$edge
   nTip   <- length(tree$tip.label)
   parent <- edge[, 1L]
@@ -51,13 +51,13 @@ Renumber <- function (tree) {
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
-#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single 
+#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single
 #' tip with the specified label.
-#' 
-#' @examples 
+#'
+#' @examples
 #' SingleTaxonTree('Homo_sapiens')
 #' plot(SingleTaxonTree('root') + BalancedTree(4))
-#' 
+#'
 #' @keywords  tree
 #' @family tree manipulation
 #' @family tree generation functions
@@ -72,22 +72,26 @@ SingleTaxonTree <- function (label) {
 #' @description Safely extracts a clade from a phylogenetic tree.
 #' @usage Subtree(tree, node)
 #'
-#'
 #' @template preorderTreeParam
 #' @param node The number of the node at the base of the clade to be extracted.
 #'
 #' @details
-#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometimes behaves erratically.
-#' Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.
+#' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
+#' sometimes behaves erratically.
+#' Unlike extract.clade, this function supports the extraction of 'clades'
+#' that constitute a single tip.
 #'
-#' @return This function returns a tree of class \code{phylo} that represents a clade
-#'         extracted from the original tree.
+#' @return This function returns a tree of class \code{phylo} that represents a
+#' clade extracted from the original tree.
 #'
-#' @examples{
-#' tree <- Preorder(ape::rtree(20, br=NULL))
-#' plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
-#' plot(Subtree(tree, 33))
-#' }
+#' @examples
+#' tree <- Preorder(BalancedTree(8))
+#' plot(tree)
+#' ape::nodelabels()
+#' ape::nodelabels(13, 13, bg='yellow')
+#'
+#' plot(Subtree(tree, 13))
+#'
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -155,11 +159,14 @@ Subtree <- function (tree, node) {
 #' @seealso \code{\link{bind.tree}}
 #' @seealso \code{\link{nodelabels}}
 #'
-#' @examples {
-#'   library('ape')
-#'   plot(tree <- rtree(10, br=NULL)); nodelabels(); nodelabels(15, 15, bg='green'); dev.new()
-#'   plot(AddTip(tree, 15, 'NEW_TIP'))
-#' }
+#' @examples
+#'
+#' plot(tree <- BalancedTree(10))
+#' ape::nodelabels()
+#' ape::nodelabels(15, 15, bg='green')
+#'
+#' plot(AddTip(tree, 15, 'NEW_TIP'))
+#'
 #' @keywords tree
 #' @family tree manipulation
 #'
@@ -221,7 +228,7 @@ AddTip <- function (tree,
   tree
 }
 
-#' @describeIn AddTip AddTipEverywhere Add a tip to each edge in turn
+#' @describeIn AddTip Add a tip to each edge in turn.
 #' @param includeRoot Logical; if `TRUE`, the three positions adjacent
 #' to the root edge are considered to represent distinct edges.
 #' @return `AddTipEverywhere` returns a list of class `multiPhylo` containing
@@ -232,11 +239,11 @@ AddTip <- function (tree,
 #'
 #' backbone <- BalancedTree(4)
 #' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
-#' lapply(additions, plot)
+#' xx <- lapply(additions, plot)
 #'
 #' par(mfrow=c(2, 3))
 #' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
-#' lapply(additions, plot)
+#' xx <- lapply(additions, plot)
 #'
 #' par(oldPar)
 #'
@@ -253,7 +260,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 
 #' List all ancestral nodes
 #'
-#' \code{AllAncestors} lists ancestors of each parent node in a tree
+#' \code{AllAncestors} lists ancestors of each parent node in a tree.
 #'
 #' Note that the tree's edges must be listed in an order whereby each entry in
 #' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in
@@ -263,15 +270,18 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' @template treeChild
 #'
 #' @examples
-#'   tr <- ape::rtree(20, br=NULL)
+#'   tr <- PectinateTree(4)
+#'   plot(tr)
+#'   ape::tiplabels()
+#'   ape::nodelabels()
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @return `AllAncestors` returns a list. Entry i contains a vector containing,
-#' in order, the nodes encountered when traversing the tree from node i to the
+#' @return `AllAncestors` returns a list. Entry _i_ contains a vector containing,
+#' in order, the nodes encountered when traversing the tree from node _i_ to the
 #' root node.
-#' The last entry of each member of the list is therefore the root node, 
-#' with the exception of the entry for the root node itself, which is NULL.
+#' The last entry of each member of the list is therefore the root node,
+#' with the exception of the entry for the root node itself, which is `NULL`.
 #'
 #' @template MRS
 #' @family tree navigation
@@ -291,14 +301,18 @@ AllAncestors <- function (parent, child) {
 #' @param nodes whose descendants should be returned
 #'
 #' @return `CladeSizes` returns the number of nodes (including tips) that are
-#' descended from each node in nodes.
+#' descended from each node.
+#'
+#' @examples
+#' tree <- BalancedTree(6)
+#' plot(tree)
+#' ape::nodelabels()
+#' CladeSizes(tree, c(8, 9))
 #'
 #' @importFrom phangorn allDescendants
 #' @keywords internal
 #' @export
 CladeSizes <- function (tree, nodes) {
-  if (is.null(treeOrder <- attr(tree, 'order')) || treeOrder != 'postorder') {
-    tree <- Postorder(tree)
-  }
+  tree <- Postorder(tree, force = FALSE)
   vapply(allDescendants(tree)[nodes], length, integer(1))
 }

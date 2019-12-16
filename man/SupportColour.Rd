@@ -10,7 +10,7 @@ SupportColour(support, show1 = TRUE)
 SupportColor(support, show1 = TRUE)
 }
 \arguments{
-\item{support}{A vector of doubles in the range 0-1}
+\item{support}{A numeric vector of values in the range 0--1.}
 
 \item{show1}{Logical specifying whether to display values of 1.
 A transparent white will be returned if \code{FALSE}.}
@@ -20,10 +20,8 @@ A string containing the hexadecimal code for a colour picked from a
 diverging scale, or \code{red} if a value is invalid.
 }
 \description{
-Support colour
+Colour value with which to display node support.
 }
-\section{Functions}{
-\itemize{
-\item \code{SupportColor}: alternative spelling
-}}
-
+\examples{
+SupportColour(0:4 / 4, show1 = FALSE)
+}

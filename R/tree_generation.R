@@ -9,6 +9,12 @@
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
 #'
+#' @examples
+#' RandomTree(letters[1:5])
+#'
+#' data('Lobo')
+#' RandomTree(Lobo.phy)
+#'
 #' @template MRS
 #' @importFrom ape rtree root
 #' @family tree generation functions
@@ -31,9 +37,12 @@ RandomTree <- function (tips, root = FALSE) {
 #'
 #' @template tipsForTreeGeneration
 #'
-#' @return `PectinateTree` and `BinaryTree` each return a binary tree of
+#' @return `PectinateTree` and `BalancedTree` each return a binary tree of
 #'  class `phylo` of the specified shape.
 #' @family tree generation functions
+#' @examples
+#' plot(PectinateTree(LETTERS[1:10]))
+#'
 #' @template MRS
 #' @export
 PectinateTree <- function (tips) {
@@ -59,7 +68,7 @@ PectinateTree <- function (tips) {
 
 #' Generate a Balanced Tree
 #'
-#' Generates a balanced (symmetrical) tree with the specified tip labels.
+#' Generates a balanced (symmetrical) binary tree with the specified tip labels.
 #'
 #' @template tipsForTreeGeneration
 #'
@@ -67,6 +76,10 @@ PectinateTree <- function (tips) {
 #' @family tree generation functions
 #' @template MRS
 #' @importFrom ape read.tree
+#'
+#' @examples
+#' plot(BalancedTree(LETTERS[1:10]))
+
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
@@ -100,6 +113,10 @@ BalancedBit <- function (tips, nTips = length(tips)) {
 #'
 #' @return `NJTree` returns an object of class \code{phylo}.
 #'
+#' @examples
+#' data('Lobo')
+#' NJTree(Lobo.phy)
+#'
 #' @template MRS
 #' @importFrom ape nj root
 #' @importFrom phangorn dist.hamming
@@ -115,27 +132,27 @@ NJTree <- function (dataset) {
 #' Force taxa to form an outgroup
 #'
 #' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-#' that the two are sister taxa across the root, without changing the 
+#' that the two are sister taxa across the root, without changing the
 #' relationships within the ingroup or within the outgroup.
 #'
 #' @param tree Either: a tree of class \code{phylo}; or a character vector
 #' listing the names of all the taxa in the tree, from which a random tree will
 #' be generated.
-#' @param outgroup Character vector containing the names of taxa to include in the 
+#' @param outgroup Character vector containing the names of taxa to include in the
 #' outgroup.
 #'
 #' @return `EnforceOutgroup` returns a tree of class `phylo` where all outgroup
-#' taxa are sister to all remaining taxa, without modifying the ingroup 
+#' taxa are sister to all remaining taxa, without modifying the ingroup
 #' topology.
-#' 
+#'
 #' @template MRS
 #' @importFrom ape rtree
 #' @importFrom ape root drop.tip bind.tree
-#' 
-#' @examples 
+#'
+#' @examples
 #' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
 #' plot(tree)
-#' 
+#'
 #' @export
 EnforceOutgroup <- function (tree, outgroup) {
   if (inherits(tree, 'phylo')) {

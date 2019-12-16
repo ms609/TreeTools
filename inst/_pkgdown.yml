@@ -29,8 +29,8 @@ reference:
       - EnforceOutgroup
       - MRCA
       - NPartitions
+      - NPartitionPairs
       - NewickTree
-      - has_concept('tree generation functions')
       - NonDuplicateRoot
       - Renumber
       - RootTree
@@ -39,12 +39,20 @@ reference:
       - Subtree
       - RenumberTips
       - TreeIsRooted
+      - UnshiftTree
 
   - title: "Tree navigation"
     desc: >
       Functions to navigate phylogenetic trees.
     contents:
       - has_concept('tree navigation')
+
+  - title: "Tree creation"
+    desc: >
+      Functions to generate phylogenetic trees.
+    contents:
+      - has_concept('tree generation functions')
+      - print.TreeNumber
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
@@ -57,6 +65,7 @@ reference:
   - title: "Parsers"
     desc: "Functions to parse files."
     contents:
+      - as.Newick
       - ApeTime
       - ExtractTaxa
       - NewickTree
@@ -92,8 +101,6 @@ reference:
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
-      - ListToMatrix
-      - MatrixToList
       - RightmostCharacter
       - SampleOne
 

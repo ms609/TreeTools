@@ -14,21 +14,29 @@
 \alias{TipLabels.default}
 \title{Extract tip labels}
 \usage{
-TipLabels(x)
+TipLabels(x, single = TRUE)
 
-\method{TipLabels}{matrix}(x)
+\method{TipLabels}{matrix}(x, single = TRUE)
 
-\method{TipLabels}{phylo}(x)
+\method{TipLabels}{phylo}(x, single = TRUE)
 
 \method{TipLabels}{TreeNumber}(x)
 
-\method{TipLabels}{Splits}(x)
+\method{TipLabels}{TreeNumber}(x)
 
-\method{TipLabels}{list}(x)
+\method{TipLabels}{Splits}(x, single = TRUE)
 
-\method{TipLabels}{multiPhylo}(x)
+\method{TipLabels}{list}(x, single = FALSE)
 
-\method{TipLabels}{character}(x)
+\method{TipLabels}{multiPhylo}(x, single = FALSE)
+
+\method{TipLabels}{character}(x, single = TRUE)
+
+\method{TipLabels}{numeric}(x)
+
+\method{TipLabels}{phyDat}(x)
+
+\method{TipLabels}{default}(x)
 
 \method{TipLabels}{numeric}(x)
 
@@ -38,9 +46,13 @@ TipLabels(x)
 }
 \arguments{
 \item{x}{An object of a supported class (see Usage section).}
+
+\item{single}{Logical specifying whether to report the labels for the first
+object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 }
 \value{
-A character vector listing the tip labels for the specified object.
+\code{TipLabels} returns a character vector listing the tip labels for the
+specified object.
 }
 \description{
 Extracts tip labels from an object.  If the object is a single integer,

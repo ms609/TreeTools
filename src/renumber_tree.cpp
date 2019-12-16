@@ -25,18 +25,18 @@ void swap(int *a, int *b) {
   *b = temp;
 }
 
-void quicksort_by_smallest(int *to_sort, int *smallest_desc, int left, int right) {
+void quicksort_by_smallest(int *to_sort, int *sort_by, int left, int right) {
   if (left >= right) return;
-  int pivot = smallest_desc[to_sort[right]];
+  int pivot = sort_by[to_sort[right]];
   int centre = left;
   for (int i = left; i <= right; i++) {
-    if (smallest_desc[to_sort[i]] <= pivot) {
+    if (sort_by[to_sort[i]] <= pivot) {
       swap(&to_sort[centre], &to_sort[i]);
       centre++;
     }
   }
-  quicksort_by_smallest(to_sort, smallest_desc, left, centre - 2);
-  quicksort_by_smallest(to_sort, smallest_desc, centre, right);
+  quicksort_by_smallest(to_sort, sort_by, left, centre - 2);
+  quicksort_by_smallest(to_sort, sort_by, centre, right);
 }
 
 void add_child_edges(int node, int node_label,
@@ -115,6 +115,77 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
 
   free(n_children);
   free(children_of);
+
+  return (ret);
+}
+
+int get_subtree_size(int node, int *subtree_size, int *n_children,
+                     int *children_of, int n_edge) {
+  if (!subtree_size[node]) {
+    for (int i = 0; i < n_children[node]; i++) {
+      subtree_size[node] += get_subtree_size(children_of[node * n_edge + i],
+                              subtree_size, n_children, children_of, n_edge);
+    }
+  }
+  return subtree_size[node];
+}
+
+// "Arkorder" is my term for a specific subset of postorder in which
+// edges are ordered such that all occurrences of each parent node
+// occur together.
+// Subtract one from $edge before passing.
+// [[Rcpp::export]]
+IntegerMatrix postorder_edges(IntegerMatrix edge)
+{
+  const int n_edge = edge.nrow(), node_limit = n_edge + 1;
+  int root_node = 0, n_tip = 0;
+  int * parent_of = (int*) calloc(node_limit, sizeof(int)),
+      * n_children = (int*) calloc(node_limit, sizeof(int)),
+      * subtree_size = (int*) calloc(node_limit, sizeof(int)),
+      * children_of = (int*) calloc(n_edge * node_limit, sizeof(int));
+
+  for (int i = 0; i < n_edge; i++) {
+    parent_of[edge(i, 1)] = edge(i, 0);
+    children_of[edge(i, 0) * n_edge + n_children[edge(i, 0)]] = edge(i, 1);
+    (n_children[edge(i, 0)])++;
+  }
+
+  for (int i = 0; i < node_limit; i++) {
+    if (parent_of[i] == 0) root_node = i;
+    if (n_children[i] == 0) ++n_tip;
+  }
+  free(parent_of);
+  const int n_node = n_edge - n_tip + 1;
+
+  for (int tip = 0; tip < n_tip; tip++) {
+    subtree_size[tip] = 1;
+  }
+  get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
+
+  for (int node = n_tip; node < node_limit; node++) {
+    quicksort_by_smallest(&children_of[node * n_edge], subtree_size,
+                          0, n_children[node] - 1);
+  }
+  int * node_order = (int*) malloc(n_node * sizeof(int));
+  for (int i = 0; i < n_node; i++) {
+    node_order[i] = i + n_tip;
+  }
+  quicksort_by_smallest(node_order, subtree_size, 0, n_node - 1);
+
+  IntegerMatrix ret(n_edge, 2);
+  int this_edge = 0;
+  for (int i = 0; i < n_node; i++) {
+    const int this_parent = node_order[i];
+    for (int j = 0; j < n_children[this_parent]; j++) {
+      ret(this_edge, 0) = this_parent + 1;
+      ret(this_edge, 1) = children_of[this_parent * n_edge + j] + 1;
+      ++this_edge;
+    }
+  }
+  free(n_children);
+  free(subtree_size);
+  free(children_of);
+  free(node_order);
 
   return (ret);
 }

@@ -18,7 +18,7 @@ Sorts each node into a consistent order, so similar trees look visually
 similar.
 }
 \seealso{
-RenumberTree
+\code{\link{RenumberTree}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -21,10 +21,17 @@ specified tips, and no branch lengths specified.
 Generates a binary tree with a random topology on specified tips, optionally
 rooting the tree on a given tip.
 }
+\examples{
+RandomTree(letters[1:5])
+
+data('Lobo')
+RandomTree(Lobo.phy)
+
+}
 \seealso{
 Other tree generation functions: \code{\link{BalancedTree}},
   \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{SingleTaxonTree}}
+  \code{\link{SingleTaxonTree}}, \code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

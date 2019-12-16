@@ -15,7 +15,7 @@ SampleOne(x, len = length(x))
 A vector of length one, randomly sampled from \code{x}.
 }
 \description{
-Faster than inbuilt sample because it avoids some checks.
+Faster than inbuilt \code{\link{sample}} because it avoids some checks.
 }
 \examples{
 SampleOne(9:10)
