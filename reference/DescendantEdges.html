@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -156,46 +156,40 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>edge</th>
-      <td><p>number of the edge whose child edges are required</p></td>
+      <td><p>number of the edge whose child edges are required.</p></td>
     </tr>
     <tr>
       <th>parent</th>
       <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
+<code>phylo</code>, i.e. <code>tree$edge[, 1]</code>.</p></td>
     </tr>
     <tr>
       <th>child</th>
       <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code></p></td>
+<code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     <tr>
       <th>nEdge</th>
-      <td><p>number of edges (calculated from length(parent) if not supplied)</p></td>
+      <td><p>number of edges (calculated from length(parent) if not supplied).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>DescendantEdges</code> returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-(or the edge itself)</p>
-<p><code>AllDescendantEdges</code> returns a matrix of class logical, with row N specifying whether each edge is a descendant of edge N
-(or the edge itself)</p>
+(or the edge itself).</p>
+<p><code>AllDescendantEdges</code> returns a matrix of class logical, with row N
+specifying whether each edge is a descendant of edge N (or the edge itself).</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
-<li><p><code>AllDescendantEdges</code>: Quickly identifies edges that are 'descended' from each edge in a tree</p></li>
+<li><p><code>AllDescendantEdges</code>: Quickly identifies edges that are 'descended'
+from each edge in a tree.</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
-<code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
-<code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,
-<code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
-<code><a href='MRCA.html'>MRCA</a>()</code>,
-<code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code></p>
-<p>Other tree navigation: 
 <code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
 <code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,

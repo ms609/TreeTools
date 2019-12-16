@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -243,39 +243,15 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="NPartitionPairs.html">NPartitionPairs()</a></code> </p>
+        </td>
+        <td><p>Distributions of tips consistent with a partition pair</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="NewickTree.html">NewickTree()</a></code> </p>
         </td>
         <td><p>Newick Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="BalancedTree.html">BalancedTree()</a></code> </p>
-        </td>
-        <td><p>Generate a Balanced Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NJTree.html">NJTree()</a></code> </p>
-        </td>
-        <td><p>Neighbour Joining Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PectinateTree.html">PectinateTree()</a></code> </p>
-        </td>
-        <td><p>Generate a Pectinate Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RandomTree.html">RandomTree()</a></code> </p>
-        </td>
-        <td><p>Generate a random tree topology</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SingleTaxonTree.html">SingleTaxonTree()</a></code> </p>
-        </td>
-        <td><p>SingleTaxonTree</p></td>
       </tr><tr>
         
         <td>
@@ -294,6 +270,12 @@
           <p><code><a href="RootTree.html">RootTree()</a></code> </p>
         </td>
         <td><p>Root a phylogenetic tree</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SingleTaxonTree.html">SingleTaxonTree()</a></code> </p>
+        </td>
+        <td><p>SingleTaxonTree</p></td>
       </tr><tr>
         
         <td>
@@ -318,6 +300,12 @@
           <p><code><a href="TreeIsRooted.html">TreeIsRooted()</a></code> </p>
         </td>
         <td><p>Is tree rooted?</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="UnshiftTree.html">UnshiftTree()</a></code> </p>
+        </td>
+        <td><p>Add Tree to Start of List</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -360,6 +348,56 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-tree-creation" class="hasAnchor"><a href="#section-tree-creation" class="anchor"></a>Tree creation</h2>
+          <p class="section-desc"><p>Functions to generate phylogenetic trees.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="BalancedTree.html">BalancedTree()</a></code> </p>
+        </td>
+        <td><p>Generate a Balanced Tree</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="NJTree.html">NJTree()</a></code> </p>
+        </td>
+        <td><p>Neighbour Joining Tree</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="PectinateTree.html">PectinateTree()</a></code> </p>
+        </td>
+        <td><p>Generate a Pectinate Tree</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="RandomTree.html">RandomTree()</a></code> </p>
+        </td>
+        <td><p>Generate a random tree topology</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SingleTaxonTree.html">SingleTaxonTree()</a></code> </p>
+        </td>
+        <td><p>SingleTaxonTree</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="TreeNumber.html">as.TreeNumber()</a></code> <code><a href="TreeNumber.html">as.phylo(<i>&lt;numeric&gt;</i>)</a></code> <code><a href="TreeNumber.html">as.phylo(<i>&lt;TreeNumber&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Unique integer indices for bifurcating tree topologies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="print.TreeNumber.html">print(<i>&lt;TreeNumber&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print TreeNumber object</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-phylogenetic-data" class="hasAnchor"><a href="#section-phylogenetic-data" class="anchor"></a>Phylogenetic data</h2>
           <p class="section-desc"><p>Functions for modifying and evaluating datasets.</p></p>
         </th>
@@ -375,7 +413,7 @@
         <td>
           <p><code><a href="PhyToString.html">PhyToString()</a></code> <code><a href="PhyToString.html">PhyDatToString()</a></code> <code><a href="PhyToString.html">PhydatToString()</a></code> </p>
         </td>
-        <td><p>Extract character data from a phyDat object as a string</p></td>
+        <td><p>phyDat to String</p></td>
       </tr><tr>
         
         <td>
@@ -391,6 +429,12 @@
         </th>
       </tr>
       <tr>
+        
+        <td>
+          <p><code><a href="as.Newick.html">as.Newick()</a></code> </p>
+        </td>
+        <td><p>Write a phylogenetic tree in Newick format</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="ApeTime.html">ApeTime()</a></code> </p>
@@ -617,330 +661,6 @@
       <tr>
         
         <td>
-          <p><code><a href="AddTip.html">AddTip()</a></code> <code><a href="AddTip.html">AddTipEverywhere()</a></code> </p>
-        </td>
-        <td><p>Add a tip to a phylogenetic tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="AllAncestors.html">AllAncestors()</a></code> </p>
-        </td>
-        <td><p>List all ancestral nodes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ApeTime.html">ApeTime()</a></code> </p>
-        </td>
-        <td><p>Ape Time</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="BalancedTree.html">BalancedTree()</a></code> </p>
-        </td>
-        <td><p>Generate a Balanced Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="CharacterInformation.html">CharacterInformation()</a></code> </p>
-        </td>
-        <td><p>Character information content</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="CollapseNode.html">CollapseNode()</a></code> <code><a href="CollapseNode.html">CollapseEdge()</a></code> </p>
-        </td>
-        <td><p>Collapse nodes on a phylogenetic tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ConsensusWithout.html">ConsensusWithout()</a></code> <code><a href="ConsensusWithout.html">MarkMissing()</a></code> </p>
-        </td>
-        <td><p>Consensus without taxa</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DescendantEdges.html">DescendantEdges()</a></code> <code><a href="DescendantEdges.html">AllDescendantEdges()</a></code> </p>
-        </td>
-        <td><p>Descendant Edges</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DoubleFactorial.html">DoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">LogDoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">LogDoubleFactorial.int()</a></code> </p>
-        </td>
-        <td><p>Double Factorial</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="EdgeAncestry.html">EdgeAncestry()</a></code> </p>
-        </td>
-        <td><p>Edge ancestry</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="EdgeDistances.html">EdgeDistances()</a></code> </p>
-        </td>
-        <td><p>Distance between edges</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="EnforceOutgroup.html">EnforceOutgroup()</a></code> </p>
-        </td>
-        <td><p>Force taxa to form an outgroup</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Lobo.data.html">Lobo.data</a></code> </p>
-        </td>
-        <td><p>Raw data from Zhang et al. 2016</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Lobo.phy.html">Lobo.phy</a></code> </p>
-        </td>
-        <td><p>Data from Zhang et al. 2016 in phyDat format</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="MRCA.html">MRCA()</a></code> </p>
-        </td>
-        <td><p>Most Recent Common Ancestor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="N1Spr.html">N1Spr()</a></code> <code><a href="N1Spr.html">IC1Spr()</a></code> </p>
-        </td>
-        <td><p>Number of trees one SPR step away</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NJTree.html">NJTree()</a></code> </p>
-        </td>
-        <td><p>Neighbour Joining Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NPartitionPairs.html">NPartitionPairs()</a></code> </p>
-        </td>
-        <td><p>Distributions of tips consistent with a partition pair</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NRooted.html">NRooted()</a></code> <code><a href="NRooted.html">NUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted.int()</a></code> <code><a href="NRooted.html">LnRooted()</a></code> <code><a href="NRooted.html">LnRooted.int()</a></code> <code><a href="NRooted.html">LnUnrootedSplits()</a></code> <code><a href="NRooted.html">NUnrootedSplits()</a></code> <code><a href="NRooted.html">LnUnrootedMult()</a></code> <code><a href="NRooted.html">NUnrootedMult()</a></code> </p>
-        </td>
-        <td><p>Number of rooted/unrooted trees</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NSplits.html">NSplits()</a></code> <code><a href="NSplits.html">NPartitions()</a></code> </p>
-        </td>
-        <td><p>Number of distinct partitions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NTip.html">NTip()</a></code> </p>
-        </td>
-        <td><p>Number of tips in a phylogenetic tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="NewickTree.html">NewickTree()</a></code> </p>
-        </td>
-        <td><p>Newick Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PectinateTree.html">PectinateTree()</a></code> </p>
-        </td>
-        <td><p>Generate a Pectinate Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PhyToString.html">PhyToString()</a></code> <code><a href="PhyToString.html">PhyDatToString()</a></code> <code><a href="PhyToString.html">PhydatToString()</a></code> </p>
-        </td>
-        <td><p>Extract character data from a phyDat object as a string</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RandomTree.html">RandomTree()</a></code> </p>
-        </td>
-        <td><p>Generate a random tree topology</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ReadCharacters.html">ReadCharacters()</a></code> <code><a href="ReadCharacters.html">ReadTntCharacters()</a></code> <code><a href="ReadCharacters.html">ReadAsPhyDat()</a></code> <code><a href="ReadCharacters.html">ReadTntAsPhyDat()</a></code> <code><a href="ReadCharacters.html">PhyDat()</a></code> </p>
-        </td>
-        <td><p>Read characters from Nexus file</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ReadTntTree.html">ReadTntTree()</a></code> <code><a href="ReadTntTree.html">TNTText2Tree()</a></code> </p>
-        </td>
-        <td><p>Parse TNT Tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Renumber.html">Renumber()</a></code> </p>
-        </td>
-        <td><p>Renumber a tree's nodes and tips</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RenumberTips.html">RenumberTips()</a></code> </p>
-        </td>
-        <td><p>Renumber a tree's tips</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="RootTree.html">RootTree()</a></code> </p>
-        </td>
-        <td><p>Root a phylogenetic tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SingleTaxonTree.html">SingleTaxonTree()</a></code> </p>
-        </td>
-        <td><p>SingleTaxonTree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SortTree.html">SortTree()</a></code> </p>
-        </td>
-        <td><p>Sort tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitFrequency.html">SplitFrequency()</a></code> <code><a href="SplitFrequency.html">SplitNumber()</a></code> <code><a href="SplitFrequency.html">ForestSplits()</a></code> <code><a href="SplitFrequency.html">TreeSplits()</a></code> </p>
-        </td>
-        <td><p>Frequency of splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitInformation.html">SplitInformation()</a></code> <code><a href="SplitInformation.html">MultiSplitInformation()</a></code> </p>
-        </td>
-        <td><p>Information content of a split</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitMatchProbability.html">SplitMatchProbability()</a></code> <code><a href="SplitMatchProbability.html">LnSplitMatchProbability()</a></code> </p>
-        </td>
-        <td><p>Probability of matching this well</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StringToPhyDat.html">StringToPhyDat()</a></code> <code><a href="StringToPhyDat.html">StringToPhydat()</a></code> </p>
-        </td>
-        <td><p>String to phyDat</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Subsplit.html">Subsplit()</a></code> </p>
-        </td>
-        <td><p>Subset of a split on fewer taxa</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Subtree.html">Subtree()</a></code> </p>
-        </td>
-        <td><p>Extract subtree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SupportColour.html">SupportColour()</a></code> <code><a href="SupportColour.html">SupportColor()</a></code> </p>
-        </td>
-        <td><p>Support colour</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TipLabels.html">TipLabels()</a></code> </p>
-        </td>
-        <td><p>Extract tip labels</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TipsInSplits.html">TipsInSplits()</a></code> </p>
-        </td>
-        <td><p>Tips contained within splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TreeIsRooted.html">TreeIsRooted()</a></code> </p>
-        </td>
-        <td><p>Is tree rooted?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TreeNumber.html">as.TreeNumber()</a></code> <code><a href="TreeNumber.html">as.phylo(<i>&lt;numeric&gt;</i>)</a></code> <code><a href="TreeNumber.html">as.phylo(<i>&lt;TreeNumber&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Unique integer indices for bifurcating tree topologies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TreesMatchingSplit.html">TreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">LnTreesMatchingSplit()</a></code> </p>
-        </td>
-        <td><p>Number of trees matching a bipartition split</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TrivialSplits.html">TrivialSplits()</a></code> <code><a href="TrivialSplits.html">WithoutTrivialSplits()</a></code> </p>
-        </td>
-        <td><p>Are splits trivial?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="UnrootedTreesMatchingSplit.html">UnrootedTreesMatchingSplit()</a></code> </p>
-        </td>
-        <td><p>Number of trees consistent with split</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="UnshiftTree.html">UnshiftTree()</a></code> </p>
-        </td>
-        <td><p>Add Tree to Start of List</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.Splits.html">as.Splits()</a></code> <code><a href="as.Splits.html">as.logical(<i>&lt;Splits&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>As splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="brewer.html">brewer</a></code> </p>
-        </td>
-        <td><p>Brewer palettes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="doubleFactorials.html">doubleFactorials</a></code> </p>
-        </td>
-        <td><p>Double factorials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="in.Splits.html">in.Splits()</a></code> </p>
-        </td>
-        <td><p>Splits in Splits object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="logDoubleFactorials.html">logDoubleFactorials</a></code> </p>
-        </td>
-        <td><p>Natural logarithms of double factorials</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="match.Splits.html">match.Splits()</a></code> </p>
-        </td>
-        <td><p>Match splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="print.TreeNumber.html">print(<i>&lt;TreeNumber&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Print TreeNumber object</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="RightmostCharacter.html">RightmostCharacter()</a></code> </p>
         </td>
         <td><p>Rightmost character of string</p></td>
@@ -961,6 +681,7 @@
       <li><a href="#section-node-support">Node support</a></li>
       <li><a href="#section-tree-manipulation">Tree manipulation</a></li>
       <li><a href="#section-tree-navigation">Tree navigation</a></li>
+      <li><a href="#section-tree-creation">Tree creation</a></li>
       <li><a href="#section-phylogenetic-data">Phylogenetic data</a></li>
       <li><a href="#section-parsers">Parsers</a></li>
       <li><a href="#section-partitions">Partitions</a></li>

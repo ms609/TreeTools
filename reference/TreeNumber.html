@@ -76,7 +76,7 @@ representation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -154,6 +154,9 @@ representation.</p>
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>as.TreeNumber</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>as.TreeNumber</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
 <span class='co'># S3 method for character</span>
 <span class='fu'>as.TreeNumber</span>(<span class='no'>x</span>, <span class='no'>nTip</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='fu'><a href='TipLabels.html'>TipLabels</a></span>(<span class='no'>nTip</span>), <span class='no'>...</span>)
 
@@ -161,7 +164,7 @@ representation.</p>
 <span class='fu'>as.phylo</span>(<span class='no'>x</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"nTip"</span>), <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"tip.label"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for TreeNumber</span>
-<span class='fu'>as.phylo</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.phylo</span>(<span class='no'>x</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"nTip"</span>), <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"tip.label"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -252,7 +255,9 @@ with the mixed-base number 0021.  We can convert this into decimal:</p>
 <p>Note that the hyperexponential nature of tree space means that there are &gt;
 2^30 unique 12-tip trees.  As integers &gt; 2^31 are not supported by R,
 numbers representing larger trees are represented internally as a vector of
-nine-digit integer 'chunks'.</p>
+nine-digit integer 'chunks' and passed to the underlying C code, where they
+are combined into a single 64-bit integer.  This allows trees with up to
+42 tips to be accommodated.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Based on a concept by John Tromp, employed in Li <em>et al.</em> 1996.</p>
@@ -262,6 +267,15 @@ In Goos G, Hartmanis J, Leeuwen J, Cai J, Wong CK (eds.), <em>Computing and Comb
 Springer, Berlin, Heidelberg.
 ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/3-540-61332-3_168'>10.1007/3-540-61332-3_168</a>
 .</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='TreeShape.html'>TreeShape</a></code></p>
+<p>Other tree generation functions: 
+<code><a href='BalancedTree.html'>BalancedTree</a>()</code>,
+<code><a href='NJTree.html'>NJTree</a>()</code>,
+<code><a href='PectinateTree.html'>PectinateTree</a>()</code>,
+<code><a href='RandomTree.html'>RandomTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fl'>10</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>6</span>)
@@ -272,7 +286,10 @@ ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/
 #&gt;  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</div><div class='input'>
 <span class='co'># If &gt; 9 digits, represent the tree number as a string.</span>
 <span class='no'>treeNumber</span> <span class='kw'>&lt;-</span> <span class='fu'>as.TreeNumber</span>(<span class='st'>"1234567890123"</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>14</span>)
-<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='no'>treeNumber</span>)</div></pre>
+<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='no'>treeNumber</span>)
+
+<span class='fu'>as.phylo</span>(<span class='fl'>0</span>:<span class='fl'>2</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>])</div><div class='output co'>#&gt; 3 phylogenetic trees</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -281,6 +298,7 @@ ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

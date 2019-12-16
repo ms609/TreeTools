@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -160,16 +160,17 @@ should be returned.</p></td>
     <tr>
       <th>parent</th>
       <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
+<code>phylo</code>, i.e. <code>tree$edge[, 1]</code>.</p></td>
     </tr>
     <tr>
       <th>child</th>
       <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code></p></td>
+<code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     <tr>
       <th>stopAt</th>
-      <td><p>number of the edge at which the search should terminate; defaults to the root edges</p></td>
+      <td><p>number of the edge at which the search should terminate;
+defaults to the root edges.</p></td>
     </tr>
     </table>
 
@@ -187,6 +188,12 @@ turn is a descendant of the specified edge.</p>
 <code><a href='MRCA.html'>MRCA</a>()</code>,
 <code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>6</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='EdgeAncestry-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>1</span>]
+<span class='no'>child</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>2</span>]
+<span class='fu'>EdgeAncestry</span>(<span class='fl'>7</span>, <span class='no'>parent</span>, <span class='no'>child</span>)</div><div class='output co'>#&gt;  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'>EdgeAncestry</span>(<span class='fl'>7</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>stopAt</span> <span class='kw'>=</span> <span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 4 6</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -194,6 +201,7 @@ turn is a descendant of the specified edge.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

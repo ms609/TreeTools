@@ -78,7 +78,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -155,15 +155,11 @@ Calling this C function directly is approximately twice as fast as using
 
     <pre class="usage"><span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
-<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+<span class='fu'>ApePostorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
-<span class='fu'>PostorderEdges</span>(
-  <span class='no'>parent</span>,
-  <span class='no'>child</span>,
-  <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>),
-  <span class='kw'>nNode</span> <span class='kw'>=</span> <span class='no'>nEdge</span>/<span class='fl'>2L</span>,
-  <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='no'>nNode</span> + <span class='fl'>1L</span>
-)
+<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>PostorderEdges</span>(<span class='no'>edge</span>)
 
 <span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
@@ -182,17 +178,14 @@ Calling this C function directly is approximately twice as fast as using
     </tr>
     <tr>
       <th>edge</th>
-      <td><p>(optional) the value of tree$edge</p></td>
+      <td><p>A matrix with two columns, with each row listing the parent and
+child node of an edge in a phylogenetic tree.  Property <code>edge</code> of objects
+of class <code>phylo</code>.</p></td>
     </tr>
     <tr>
-      <th>parent</th>
-      <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
-    </tr>
-    <tr>
-      <th>child</th>
-      <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code></p></td>
+      <th>force</th>
+      <td><p>Logical specifying whether to rearrange trees already in
+postorder, in order to ensure TreeTools edge ordering.</p></td>
     </tr>
     </table>
 
@@ -218,12 +211,20 @@ of an edge leading to a subtree that contains tip 2.</p>
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.</p>
+<p><code>Postorder</code> is modified from the ape function to return a specific
+order: edges are listed from the node that subtends the smallest
+subtree to the one that subtends the largest (i.e. the root node), with
+all of a node's descendant edges listed adjacently.  If a tree is already
+in postorder, it will not be rearranged unless <code>force = TRUE</code>, or
+<code>PostorderEdges</code> is employed.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
-<li><p><code>Postorder</code>: Reorder tree in Postorder</p></li>
-<li><p><code>PostorderEdges</code>: Reorder parent and child edges in Postorder</p></li>
+<li><p><code>ApePostorder</code>: Reorder tree in Postorder using ape's <code>postorder</code>
+function, which is robust to unconventional node numbering</p></li>
+<li><p><code>Postorder</code>: Reorder tree in Postorder. Edge lengths are not retained.</p></li>
+<li><p><code>PostorderEdges</code>: Reorder edges in Postorder.</p></li>
 <li><p><code>Pruningwise</code>: Reorder tree Pruningwise</p></li>
 <li><p><code>Preorder</code>: Reorder tree in Preorder (special case of cladewise)</p></li>
 </ul>
@@ -245,8 +246,8 @@ sorted into preorder, until each edge has been visited.</p>
     </ul>
 
     <h2>Author</h2>
-    <p><code>Preorder</code>: Martin R. Smith.</p>
-<p><code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>: modified by Martin R. Smith from
+    <p><code>Preorder</code> and <code>Postorder</code>: Martin R. Smith.</p>
+<p><code>Cladewise</code>, <code>ApePostorder</code> and <code>Pruningwise</code>: modified by Martin R. Smith from
 <code>.reorder_ape</code> in <span class="pkg">ape</span> (Emmanuel Paradis)</p>
   </div>
 </div>

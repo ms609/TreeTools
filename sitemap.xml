@@ -169,6 +169,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/TreeNumber.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TreeShape.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreeTools-package.html</loc>
   </url>
   <url>
@@ -182,6 +185,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.Splits.html</loc>

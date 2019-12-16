@@ -42,7 +42,8 @@
 
 
 <meta property="og:title" content="Newick Tree — NewickTree" />
-<meta property="og:description" content="Writes a tree in Newick format" />
+<meta property="og:description" content="Writes a tree in Newick format.  This differs from ape's write.tree
+in the encoding of spaces as spaces, rather than underscores." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -144,7 +145,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Writes a tree in Newick format</p>
+    <p>Writes a tree in Newick format.  This differs from ape's <code>write.tree</code>
+in the encoding of spaces as spaces, rather than underscores.</p>
     </div>
 
     <pre class="usage"><span class='fu'>NewickTree</span>(<span class='no'>tree</span>)</pre>
@@ -162,13 +164,21 @@
 
     <p><code>NewickTree</code> returns a character string denoting <code>tree</code> in Newick
 format.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p><code><a href='as.Newick.html'>as.Newick</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>NewickTree</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>6</span>))</div><div class='output co'>#&gt; [1] "((t1,(t2,t3)),(t4,(t5,t6)));"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

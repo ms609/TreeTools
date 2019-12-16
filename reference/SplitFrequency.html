@@ -76,7 +76,7 @@ bipartition splits, as defined by a reference tree, occur in a forest of trees."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -210,21 +210,13 @@ Use as.Splits instead.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ape</span>) <span class='co'># for functions rtree &amp; nodelabels</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>0</span>) <span class='co'># Set seed so random trees are reproducable</span>
-  <span class='no'>tree1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
-  <span class='no'>tree2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
-  <span class='no'>tree3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
-  <span class='no'>forest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='no'>tree1</span>, <span class='no'>tree2</span>, <span class='no'>tree2</span>, <span class='no'>tree3</span>, <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>))
+    <pre class="examples"><div class='input'><span class='no'>forest</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>10</span>, <span class='fl'>10</span>, <span class='fl'>100</span>, <span class='fl'>1000</span>), <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>7</span>)
 
-  <span class='co'># Simple, but means counting each split in the forest twice:</span>
-  <span class='no'>tree1Freqs</span> <span class='kw'>&lt;-</span> <span class='fu'>SplitFrequency</span>(<span class='no'>tree1</span>, <span class='no'>forest</span>)
-  <span class='fu'>SplitFrequency</span>(<span class='no'>tree2</span>, <span class='no'>forest</span>)
-
-  <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree1</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='no'>tree1Freqs</span>, <span class='kw'>node</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>tree1Freqs</span>)))
-}</div><div class='img'><img src='SplitFrequency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Simple, but means counting each split in the forest twice:</span>
+<span class='no'>tree1Freqs</span> <span class='kw'>&lt;-</span> <span class='fu'>SplitFrequency</span>(<span class='no'>forest</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>forest</span>)
+<span class='fu'>SplitFrequency</span>(<span class='no'>forest</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='no'>forest</span>)</div><div class='output co'>#&gt; 10 11 12 13 
+#&gt;  2  3  5  5 </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>forest</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='no'>tree1Freqs</span>, <span class='kw'>node</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>tree1Freqs</span>)))</div><div class='img'><img src='SplitFrequency-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -156,16 +156,16 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>trees</th>
-      <td><p>A list of phylogenetic trees, of class <code>multiPhylo</code> or <code>list</code></p></td>
+      <td><p>A list of phylogenetic trees, of class <code>multiPhylo</code> or <code>list</code>.</p></td>
     </tr>
     <tr>
       <th>tip</th>
       <td><p>A character vector specifying the names (or numbers) of tips to
-drop (using ape::drop.tip)</p></td>
+drop (using ape::drop.tip).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters to pass on to ape::consensus or <a href='https://rdrr.io/r/graphics/legend.html'>legend</a></p></td>
+      <td><p>Additional parameters to pass on to <a href='https://rdrr.io/pkg/ape/man/consensus.html'>ape::consensus</a> or <a href='https://rdrr.io/r/graphics/legend.html'>legend</a>.</p></td>
     </tr>
     <tr>
       <th>position</th>
@@ -175,7 +175,7 @@ drop (using ape::drop.tip)</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ConsensusWithout</code> returns aA consensus tree (of class <code>phylo</code>)
+    <p><code>ConsensusWithout</code> returns a consensus tree (of class <code>phylo</code>)
 without the excluded taxa.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -185,9 +185,23 @@ set of relationship.</p>
 
     
 <ul>
-<li><p><code>MarkMissing</code>: Adds missing taxa to a plotted consensus tree</p></li>
+<li><p><code>MarkMissing</code>: Adds labels for taxa omitted from a plotted
+consensus tree.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.5</span>, <span class='fl'>4</span>))
+
+<span class='co'># Two trees differing only in placement of tip 2:</span>
+<span class='no'>trees</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>53</span>), <span class='fl'>6</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>trees</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>trees</span><span class='kw'>[[</span><span class='fl'>2</span>]])</div><div class='img'><img src='ConsensusWithout-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Strict consensus lacks resolution:</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/consensus.html'>consensus</a></span>(<span class='no'>trees</span>))
+
+<span class='co'># But omitting tip two reveals shared structure in common:</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>ConsensusWithout</span>(<span class='no'>trees</span>, <span class='st'>'t2'</span>))</div><div class='input'><span class='fu'>MarkMissing</span>(<span class='st'>'t2'</span>)</div><div class='img'><img src='ConsensusWithout-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -196,6 +210,7 @@ set of relationship.</p>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#functions">Functions</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

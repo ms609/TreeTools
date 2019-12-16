@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Generate a Balanced Tree — BalancedTree" />
-<meta property="og:description" content="Generates a balanced (symmetrical) tree with the specified tip labels." />
+<meta property="og:description" content="Generates a balanced (symmetrical) binary tree with the specified tip labels." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Generates a balanced (symmetrical) tree with the specified tip labels.</p>
+    <p>Generates a balanced (symmetrical) binary tree with the specified tip labels.</p>
     </div>
 
     <pre class="usage"><span class='fu'>BalancedTree</span>(<span class='no'>tips</span>)</pre>
@@ -169,8 +169,11 @@ with function <code>TipLabels</code>.</p></td>
 <code><a href='NJTree.html'>NJTree</a>()</code>,
 <code><a href='PectinateTree.html'>PectinateTree</a>()</code>,
 <code><a href='RandomTree.html'>RandomTree</a>()</code>,
-<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code></p></div>
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>BalancedTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='BalancedTree-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,6 +181,7 @@ with function <code>TipLabels</code>.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

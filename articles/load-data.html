@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
 
     
     
-<p>It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you are not used to working with files in the NEXUS format.</p>
+<p>It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you are not used to working with files in the Nexus format.</p>
 <p>First off, make sure that you are comfortable <a href="filesystem-navigation.html">telling R where to find a file</a>.</p>
 <p>Then you are ready to load raw data:</p>
 <div id="from-an-excel-spreadsheet" class="section level2">
@@ -120,15 +120,15 @@
 <p>Then you can read the data from the Excel file by telling R which sheet, rows and columns contain your data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">'xlsx'</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">raw_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">read.xlsx</span>(filename, </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">                      <span class="dt">sheetIndex=</span><span class="dv">1</span>, <span class="co"># Loads sheet number 1 from the excel file</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">                      <span class="dt">rowIndex=</span><span class="dv">2</span><span class="op">:</span><span class="dv">21</span>, <span class="co"># Extracts rows 2 to 21</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">colIndex=</span><span class="dv">2</span><span class="op">:</span><span class="dv">26</span>, <span class="co"># Extracts columns B to Z</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">                      <span class="dt">header=</span><span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                      <span class="dt">sheetIndex =</span> <span class="dv">1</span>, <span class="co"># Loads sheet number 1 from the excel file</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                      <span class="dt">rowIndex =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">21</span>, <span class="co"># Extracts rows 2 to 21</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">colIndex =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">26</span>, <span class="co"># Extracts columns B to Z</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                      <span class="dt">header =</span> <span class="ot">FALSE</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">                      ))</a>
 <a class="sourceLine" id="cb2-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># In this example, the names of taxa are in column 1</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">taxon_names &lt;-<span class="st"> </span><span class="kw">read.xlsx</span>(filename, <span class="dt">sheetIndex=</span><span class="dv">1</span>, <span class="dt">rowIndex=</span><span class="dv">2</span><span class="op">:</span><span class="dv">21</span>, <span class="dt">colIndex=</span><span class="dv">1</span>, </a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                         <span class="dt">as.data.frame=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">taxon_names &lt;-<span class="st"> </span><span class="kw">read.xlsx</span>(filename, <span class="dt">sheetIndex =</span> <span class="dv">1</span>, <span class="dt">rowIndex =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">21</span>, </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">                         <span class="dt">colIndex =</span> <span class="dv">1</span>, <span class="dt">as.data.frame=</span><span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12">                         </a>
 <a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(raw_data) &lt;-<span class="st"> </span>taxon_names</a></code></pre></div>
 </div>

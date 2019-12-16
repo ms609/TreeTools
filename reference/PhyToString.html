@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract character data from a phyDat object as a string — PhyToString • TreeTools</title>
+<title>phyDat to String — PhyToString • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
 
 
 
-<meta property="og:title" content="Extract character data from a phyDat object as a string — PhyToString" />
-<meta property="og:description" content="Extract character data from a phyDat object as a string" />
+<meta property="og:title" content="phyDat to String — PhyToString" />
+<meta property="og:description" content="Extract character data from a phyDat object as a string." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -138,13 +138,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract character data from a phyDat object as a string</h1>
+    <h1>phyDat to String</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/parse_files.R'><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>PhyToString.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract character data from a phyDat object as a string</p>
+    <p>Extract character data from a phyDat object as a string.</p>
     </div>
 
     <pre class="usage"><span class='fu'>PhyToString</span>(
@@ -200,12 +200,12 @@ separate multiple tokens within parentheses</p></td>
     </tr>
     <tr>
       <th>useIndex</th>
-      <td><p>(default: <code>TRUE</code>) Print duplicate characters multiple
-times, as they appeared in the original matrix</p></td>
+      <td><p>Logical (default: <code>TRUE</code>) specifying whether to print
+duplicate characters multiple times, as they appeared in the original matrix</p></td>
     </tr>
     <tr>
       <th>byTaxon</th>
-      <td><p>If <code>TRUE</code>, write one taxon followed by the next.
+      <td><p>Logical. If <code>TRUE</code>, write one taxon followed by the next.
 If <code>FALSE</code>, write one character followed by the next.</p></td>
     </tr>
     <tr>
@@ -220,6 +220,13 @@ for each entry.</p></td>
 
     <p><code>PhyToString</code> returns a character vector listing a text
 representation of the phylogenetic character state for each taxon in turn.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'>
+<ul>
+<li><p><code><a href='StringToPhyDat.html'>StringToPhyDat</a></code></p></li>
+</ul>
+</div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),
@@ -233,6 +240,7 @@ representation of the phylogenetic character state for each taxon in turn.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

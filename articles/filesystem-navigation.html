@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -110,7 +110,10 @@
     
 <p>Before you can open a file, you need to tell R where to find it. You can do this by providing the full path to the file on your system. Be careful to use forward slashes (<code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, not <code>\</code>, which you’ll get if you copy file paths in Windows).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">filename &lt;-<span class="st"> "C:/nexus/matrix.nex"</span></a></code></pre></div>
-<p>You can save typing by giving R a working directory. You can think of R as having a file explorer window open invisibly in the background. You can see the folder that’s open at the moment by typing <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> at the console. <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> tells R to open a different folder instead. <code><a href="https://rdrr.io/r/base/getwd.html">setwd('../')</a></code> tells R to go up to a parent directory. (You can <a href="https://dss.princeton.edu/training/RStudio101.pdf">do this using the Graphical User Interface</a> in RStudio).</p>
+<p>You can save typing by giving R a working directory. You can think of R as having a file explorer window open invisibly in the background.</p>
+<p>You can see the folder that’s open at the moment by typing <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> at the console.</p>
+<p><code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> tells R to open a different folder instead.</p>
+<p><code><a href="https://rdrr.io/r/base/getwd.html">setwd('../')</a></code> tells R to go up to a parent directory. (You can <a href="https://dss.princeton.edu/training/RStudio101.pdf">do this using the Graphical User Interface</a> in RStudio).</p>
 <p>By setting the directory that your files are in as the working directory, you only need to specify the filename:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"C:/nexus/"</span>) <span class="co"># You only need to do this once</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">filename &lt;-<span class="st"> "matrix.nex"</span></a>

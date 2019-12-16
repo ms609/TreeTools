@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -152,17 +152,20 @@
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>asSplits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for Splits</span>
-<span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='no'>x</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>tip.label</span>, <span class='kw'>asSplits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Splits</span>
-<span class='fu'><a href='https://rdrr.io/r/base/logical.html'>as.logical</a></span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for list</span>
 <span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>asSplits</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for logical</span>
-<span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.Splits</span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for Splits</span>
+<span class='fu'><a href='https://rdrr.io/r/base/logical.html'>as.logical</a></span>(<span class='no'>x</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
