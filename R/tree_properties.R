@@ -2,12 +2,12 @@
 #'
 #' Quickly identifies edges that are 'descended' from a particular edge in a tree
 #'
-#' @param edge number of the edge whose child edges are required
+#' @param edge number of the edge whose child edges are required.
 #' @template treeParent
 #' @template treeChild
-#' @param nEdge number of edges (calculated from length(parent) if not supplied)
+#' @param nEdge number of edges (calculated from length(parent) if not supplied).
 #' @return `DescendantEdges` returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-#'         (or the edge itself)
+#'         (or the edge itself).
 #' @family tree navigation
 #' @export
 DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
@@ -67,7 +67,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' plot(tree)
 #' ape::edgelabels()
 #' AncestorEdge(5, parent, child)
-#' which(AncestorEdge(5, parent, child))#'
+#' which(AncestorEdge(5, parent, child))
 #'
 #' @keywords internal
 #' @family tree navigation

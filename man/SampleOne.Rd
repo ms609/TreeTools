@@ -11,7 +11,14 @@ SampleOne(x, len = length(x))
 
 \item{len}{length of vector}
 }
+\value{
+Returns a single, randomly sampled element of \code{x}.
+}
 \description{
 Faster than inbuilt sample because it avoids some checks
+}
+\examples{
+SampleOne(1:5, 5)
+
 }
 \keyword{internal}

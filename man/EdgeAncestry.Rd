@@ -10,10 +10,10 @@ EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 \item{edge}{number of the edge whose child edges are required}
 
 \item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
 
 \item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
 \item{stopAt}{number of the edge at which the search should terminate; defaults to the root edges}
 }

@@ -12,7 +12,7 @@ vignette: >
 ---
 
 It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you
-are not used to working with files in the NEXUS format.
+are not used to working with files in the Nexus format.
 
 First off, make sure that you are comfortable 
 [telling R where to find a file](filesystem-navigation.html).
@@ -32,18 +32,18 @@ a taxon, and each column to a character.
 Then you can read the data from the Excel file by telling R which sheet, rows
 and columns contain your data:
 
-```R
+```r
 library('xlsx')
 raw_data <- as.matrix(read.xlsx(filename, 
-                      sheetIndex=1, # Loads sheet number 1 from the excel file
-                      rowIndex=2:21, # Extracts rows 2 to 21
-                      colIndex=2:26, # Extracts columns B to Z
-                      header=FALSE
+                      sheetIndex = 1, # Loads sheet number 1 from the excel file
+                      rowIndex = 2:21, # Extracts rows 2 to 21
+                      colIndex = 2:26, # Extracts columns B to Z
+                      header = FALSE
                       ))
 
 # In this example, the names of taxa are in column 1
-taxon_names <- read.xlsx(filename, sheetIndex=1, rowIndex=2:21, colIndex=1, 
-                         as.data.frame=FALSE)
+taxon_names <- read.xlsx(filename, sheetIndex = 1, rowIndex = 2:21, 
+                         colIndex = 1, as.data.frame=FALSE)
                          
 rownames(raw_data) <- taxon_names
 ```
@@ -52,7 +52,7 @@ rownames(raw_data) <- taxon_names
 
 `TreeTools` contains an inbuilt Nexus parser:
 
-```R
+```r
 raw_data <- ReadCharacters(filename)
 # Or, to go straight to PhyDat format:
 as_phydat <- ReadAsPhyDat(filename)
@@ -87,7 +87,7 @@ files.  If there's a file that's not being read correctly, please
 [let me know](https://github.com/ms609/TreeTools/issues/new?title=Unsupported+TNT+file&body=Please%20attach%20the%20problematic%20TNT%20file%20and%20describe%20the%20issue&labels=enhancement)
 and I'll try to fix it.
 
-```R
+```r
 raw_data <- ReadTntCharacters(filename)
 # Or, to go straight to PhyDat format:
 my_data <- ReadTntAsPhyDat(filename)
@@ -101,13 +101,13 @@ then you can skip this step -- you're already there.
 
 Otherwise, you can try 
 
-```R 
+```r 
 my_data <- PhyDat(raw_data)
 ```
 
 or if that doesn't work, 
 
-```R
+```r
 my_data <- MatrixToPhyDat(raw_data)
 ```
 
@@ -119,7 +119,7 @@ an unexpected dataset format -- if they don't work on your dataset, please
 Failing that, you can enlist the help of the
 `phangorn` package, which was installed when you installed `TreeTools`:
 
-```R
+```r
 library('phangorn')
 my_data <- phyDat(raw_data, type='USER', levels=c(0:9, '-'))
 ```

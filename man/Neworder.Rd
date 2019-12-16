@@ -15,10 +15,10 @@ NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
 and edges in the input tree.}
 
 \item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
 
 \item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
 \item{`whichwise`}{Integer specifying whether to order edges (1)
 cladewise; or (2) in postorder.}

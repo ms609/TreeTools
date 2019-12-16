@@ -5,13 +5,31 @@
 #' A useful way to gain resolution if a few wildcard taxa obscure a consistent
 #' set of relationship.
 #'
-#' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`
+#' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#'                drop (using ape::drop.tip)
-#' @param \dots Additional parameters to pass on to ape::[consensus] or [legend]
+#'                drop (using ape::drop.tip).
+#' @param \dots Additional parameters to pass on to [ape::consensus] or [legend].
 #'
-#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`)
+#' @return `ConsensusWithout` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.
+#'
+#' @examples
+#' # Two trees differing only in placement of tip 2:
+#' trees <- as.phylo(c(0, 53), 6)
+#'
+#' oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
+#' plot(trees[[1]])
+#' plot(trees[[2]])
+#'
+#' # Strict consensus lacks resolution:
+#' plot(ape::consensus(trees))
+#'
+#' # But omitting tip two reveals shared structure in common:
+#' plot(ConsensusWithout(trees, 't2'))
+#' MarkMissing('t2')
+#'
+#' par(oldPar)
+#'
 #' @template MRS
 #' @importFrom ape consensus drop.tip
 #' @export
@@ -23,7 +41,8 @@ ConsensusWithout <- function (trees, tip, ...) {
   }
 }
 
-#' @describeIn ConsensusWithout Adds missing taxa to a plotted consensus tree
+#' @describeIn ConsensusWithout Adds labels for taxa omitted from a plotted
+#' consensus tree.
 #' @param position Where to plot the missing taxa.  See [legend] for options.
 #' @importFrom graphics legend
 #' @template MRS

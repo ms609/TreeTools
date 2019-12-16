@@ -3,6 +3,11 @@
 #' Faster than inbuilt sample because it avoids some checks
 #' @param x vector to sample
 #' @param len length of vector
+#'
+#' @examples
+#' SampleOne(1:5, 5)
+#'
+#' @return Returns a single, randomly sampled element of `x`.
 #' @keywords internal
 #' @export
 SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FALSE)]

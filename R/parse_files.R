@@ -625,6 +625,8 @@ PhydatToString <- PhyToString
 #' @param len Integer specifying number of characters in `string`.
 #'
 #' @return Rightmost character of `string`.
+#' @examples
+#' RightmostCharacter("Hello, World!")
 #'
 #' @template MRS
 #' @export

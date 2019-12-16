@@ -17,6 +17,10 @@ Rightmost character of \code{string}.
 \description{
 Rightmost character of string
 }
+\examples{
+RightmostCharacter("Hello, World!")
+
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
