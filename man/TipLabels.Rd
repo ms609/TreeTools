@@ -43,7 +43,8 @@ TipLabels(x, single = TRUE)
 object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 }
 \value{
-A character vector listing the tip labels for the specified object.
+\code{TipLabels} returns a character vector listing the tip labels for the
+specified object.
 }
 \description{
 Extracts tip labels from an object.  If the object is a single integer,

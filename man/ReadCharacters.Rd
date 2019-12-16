@@ -63,7 +63,7 @@ because they have been read using \code{read.table}, try \link{MatrixToPhyDat} i
 }}
 
 \examples{
-fileName <- paste0(system.file(package='TreeTools'), 
+fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 ReadCharacters(fileName)
 

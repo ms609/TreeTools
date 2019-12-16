@@ -14,9 +14,6 @@ SampleOne(x, len = length(x))
 \value{
 A vector of length one, randomly sampled from \code{x}.
 }
-\value{
-Returns a single, randomly sampled element of \code{x}.
-}
 \description{
 Faster than inbuilt sample because it avoids some checks.
 }
@@ -27,9 +24,5 @@ SampleOne(letters[1:4])
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-}
-\examples{
-SampleOne(1:5, 5)
-
 }
 \keyword{internal}

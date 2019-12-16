@@ -44,7 +44,7 @@ representation of the phylogenetic character state for each taxon in turn.
 Extract character data from a phyDat object as a string
 }
 \examples{
-fileName <- paste0(system.file(package='TreeTools'), 
+fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 phyDat <- ReadAsPhyDat(fileName)
 PhyToString(phyDat, concatenate = FALSE)
