@@ -40,7 +40,7 @@ states.
 }}
 
 \examples{
-fileName <- paste0(system.file(package='TreeTools'), 
+fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 matrixLines <- readLines(fileName)[6:11]
 ExtractTaxa(matrixLines)
