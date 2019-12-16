@@ -4,7 +4,7 @@
 \name{TreeTools-package}
 \alias{TreeTools}
 \alias{TreeTools-package}
-\title{TreeTools: Create, modify and analyse phylogenetic trees}
+\title{TreeTools: Create, Modify and Analyse Phylogenetic Trees}
 \description{
 Core functions for the creation, modification and analysis of 
   phylogenetic trees.

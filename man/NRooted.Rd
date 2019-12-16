@@ -11,9 +11,7 @@
 \alias{NUnrootedSplits}
 \alias{LnUnrootedMult}
 \alias{NUnrootedMult}
-\title{Number of rooted/unrooted trees
-These functions return the number of rooted or unrooted trees consistent with a given pattern
-of splits.}
+\title{Number of rooted/unrooted trees}
 \usage{
 NRooted(tips)
 
@@ -41,6 +39,10 @@ NUnrootedMult(splits)
 \item{splits}{vector listing the number of taxa in each tree bipartition.}
 }
 \description{
+These functions return the number of rooted or unrooted trees consistent with a given pattern
+of splits.
+}
+\details{
 Functions starting N return the number of rooted or unrooted trees, functions starting Ln
 provide the log of this number.  Calculations follow Carter et al. 1990, Theorem 2.
 }
@@ -75,8 +77,6 @@ provide the log of this number.  Calculations follow Carter et al. 1990, Theorem
 
 }
 \references{
-\insertRef{Carter1990}{TreeTools}
-
 \insertRef{Carter1990}{TreeTools}
 }
 \author{

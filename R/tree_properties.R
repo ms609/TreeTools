@@ -39,7 +39,6 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
 #' @return `AllDescendantEdges` returns a matrix of class logical, with row N specifying whether each edge is a descendant of edge N
 #'         (or the edge itself)
 #' @describeIn DescendantEdges Quickly identifies edges that are 'descended' from each edge in a tree
-#' @family tree navigation
 #' @export
 AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
@@ -59,8 +58,17 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @param edge Number of an edge
 #' @template treeParent
 #' @template treeChild
-#' @return a logical vector identifying whether each edge is the edge that is
-#' ancestral to the given edge.
+#' @return `AncestorEdge` returns a logical vector identifying whether each edge
+#' is the immediate ancestor of the given edge.
+#' @examples
+#' tree <- BalancedTree(6)
+#' parent <- tree$edge[, 1]
+#' child <- tree$edge[, 2]
+#' plot(tree)
+#' ape::edgelabels()
+#' AncestorEdge(5, parent, child)
+#' which(AncestorEdge(5, parent, child))#'
+#'
 #' @keywords internal
 #' @family tree navigation
 #' @export
@@ -74,7 +82,16 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @template treeParent
 #' @template treeChild
 #' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
-#' @return a logical vector stating whether each edge in turn is a descendant of the specified edge
+#' @return `EdgeAncestry` returns a logical vector stating whether each edge in
+#' turn is a descendant of the specified edge.
+#' @examples
+#' tree <- PectinateTree(6)
+#' plot(tree)
+#' ape::edgelabels()
+#' parent <- tree$edge[, 1]
+#' child <- tree$edge[, 2]
+#' EdgeAncestry(7, parent, child)
+#' which(EdgeAncestry(7, parent, child, stopAt = 4))
 #'
 #' @template MRS
 #' @family tree navigation

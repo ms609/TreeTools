@@ -1,12 +1,14 @@
 #' Ape Time
 #'
-#' Reads the time that an ape tree was modified from the comment in the nexus file
+#' Reads the time that an ape tree was modified from the comment in the Nexus
+#' file.
 #'
 #' @param filename Character string specifying path to the file
 #' @param format Format in which to return the time: 'double' as a sortable numeric;
 #'               any other value to return a string in the format YYYY-MM-DD hh:mm:ss
 #'
-#' @return The time that the specified file was created by ape.
+#' @return `ApeTime` returns the time that the specified file was created by
+#' ape, in the format specified by `format`.
 #' @export
 #' @template MRS
 #'
@@ -185,13 +187,16 @@ TNTText2Tree <- function (treeText) {
 
 #' Extract taxa from a matrix block
 #'
+#' Extracts the names of tips from the matrix block of a Nexus file.
+#'
 #' @param matrixLines lines of a file containing a phylogenetic matrix
-#'  (see ReadCharacters for expected format)
+#'  (see [`ReadCharacters`] for expected format).
 #' @template characterNumParam
 #' @template sessionParam
 #'
-#' @return Matrix with n rows, each named for the relevant taxon, and c columns,
-#' each corresponding to the respective character specified in `character_num`
+#' @return Matrix with _n_ rows, each named for the relevant taxon, and _c_
+#' columns, each corresponding to the respective character specified in
+#' `character_num`.
 #'
 #' @keywords internal
 #' @export

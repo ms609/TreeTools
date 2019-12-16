@@ -13,9 +13,16 @@ CladeSizes(tree, nodes)
 }
 \value{
 \code{CladeSizes} returns the number of nodes (including tips) that are
-descended from each node in nodes.
+descended from each node.
 }
 \description{
 Clade sizes
+}
+\examples{
+tree <- BalancedTree(6)
+plot(tree)
+ape::nodelabels()
+CladeSizes(tree, c(8, 9))
+
 }
 \keyword{internal}

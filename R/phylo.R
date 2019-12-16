@@ -79,11 +79,11 @@ SingleTaxonTree <- function (label) {
 #' @return This function returns a tree of class \code{phylo} that represents a clade
 #'         extracted from the original tree.
 #'
-#' @examples{
+#' @examples
 #' tree <- Preorder(ape::rtree(20, br=NULL))
 #' plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
 #' plot(Subtree(tree, 33))
-#' }
+#'
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -217,7 +217,7 @@ AddTip <- function (tree,
   tree
 }
 
-#' @describeIn AddTip AddTipEverywhere Add a tip to each edge in turn
+#' @describeIn AddTip Add a tip to each edge in turn.
 #' @param includeRoot Logical; if `TRUE`, the three positions adjacent
 #' to the root edge are considered to represent distinct edges.
 #' @return `AddTipEverywhere` returns a list of class `multiPhylo` containing
@@ -232,7 +232,7 @@ AddTip <- function (tree,
 #'
 #' par(mfrow=c(2, 3))
 #' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
-#' lapply(additions, plot)
+#' xx <- lapply(additions, plot)
 #'
 #' par(oldPar)
 #'
@@ -286,7 +286,13 @@ AllAncestors <- function (parent, child) {
 #' @param nodes whose descendants should be returned
 #'
 #' @return `CladeSizes` returns the number of nodes (including tips) that are
-#' descended from each node in nodes.
+#' descended from each node.
+#'
+#' @examples
+#' tree <- BalancedTree(6)
+#' plot(tree)
+#' ape::nodelabels()
+#' CladeSizes(tree, c(8, 9))
 #'
 #' @importFrom phangorn allDescendants
 #' @keywords internal

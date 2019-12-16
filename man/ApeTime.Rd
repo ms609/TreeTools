@@ -13,10 +13,12 @@ ApeTime(filename, format = "double")
 any other value to return a string in the format YYYY-MM-DD hh:mm:ss}
 }
 \value{
-The time that the specified file was created by ape.
+\code{ApeTime} returns the time that the specified file was created by
+ape, in the format specified by \code{format}.
 }
 \description{
-Reads the time that an ape tree was modified from the comment in the nexus file
+Reads the time that an ape tree was modified from the comment in the Nexus
+file.
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

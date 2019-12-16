@@ -16,11 +16,21 @@ AncestorEdge(edge, parent, child)
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
 }
 \value{
-a logical vector identifying whether each edge is the edge that is
-ancestral to the given edge.
+\code{AncestorEdge} returns a logical vector identifying whether each edge
+is the immediate ancestor of the given edge.
 }
 \description{
 Ancestral edge
+}
+\examples{
+tree <- BalancedTree(6)
+parent <- tree$edge[, 1]
+child <- tree$edge[, 2]
+plot(tree)
+ape::edgelabels()
+AncestorEdge(5, parent, child)
+which(AncestorEdge(5, parent, child))#'
+
 }
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},

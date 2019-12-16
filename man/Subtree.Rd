@@ -25,11 +25,10 @@ Modified from the \pkg{ape} function \code{\link{extract.clade}}, which sometime
 Unlike extract.clade, this function supports the extraction of 'clades' that constitute a single tip.
 }
 \examples{
-{
 tree <- Preorder(ape::rtree(20, br=NULL))
 plot(tree); ape::nodelabels(); ape::nodelabels(33, 33, bg='yellow'); dev.new()
 plot(Subtree(tree, 33))
-}
+
 
 }
 \seealso{

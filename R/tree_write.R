@@ -17,6 +17,8 @@
 #' as.Newick(trees)
 #'
 #' @seealso
+#' - [`NewickTree`]
+#'
 #' - [`RenumberTips`]
 #'
 #' - [`ape::write.tree`]

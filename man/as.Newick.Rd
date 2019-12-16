@@ -36,6 +36,7 @@ as.Newick(trees)
 }
 \seealso{
 \itemize{
+\item \code{\link{NewickTree}}
 \item \code{\link{RenumberTips}}
 \item \code{\link[ape:write.tree]{ape::write.tree}}
 }

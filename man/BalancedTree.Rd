@@ -20,7 +20,7 @@ Generates a balanced (symmetrical) tree with the specified tip labels.
 \seealso{
 Other tree generation functions: \code{\link{NJTree}},
   \code{\link{PectinateTree}}, \code{\link{RandomTree}},
-  \code{\link{SingleTaxonTree}}
+  \code{\link{SingleTaxonTree}}, \code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

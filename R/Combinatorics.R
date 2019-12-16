@@ -78,6 +78,7 @@ LogDoubleFactorial.int <- function (n) {
 }
 
 #' Number of rooted/unrooted trees
+#'
 #' These functions return the number of rooted or unrooted trees consistent with a given pattern
 #'  of splits.
 #'
@@ -155,8 +156,6 @@ NUnrootedSplits  <- function (splits) {
   return (NUnrootedMult(splits))
 }
 #' @describeIn NRooted Log unrooted mult
-#' @references
-#'  \insertRef{Carter1990}{TreeTools}
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]

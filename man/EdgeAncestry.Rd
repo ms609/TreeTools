@@ -18,10 +18,21 @@ EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 \item{stopAt}{number of the edge at which the search should terminate; defaults to the root edges}
 }
 \value{
-a logical vector stating whether each edge in turn is a descendant of the specified edge
+\code{EdgeAncestry} returns a logical vector stating whether each edge in
+turn is a descendant of the specified edge.
 }
 \description{
 Quickly identifies edges that are 'ancestral' to a particular edge in a tree
+}
+\examples{
+tree <- PectinateTree(6)
+plot(tree)
+ape::edgelabels()
+parent <- tree$edge[, 1]
+child <- tree$edge[, 2]
+EdgeAncestry(7, parent, child)
+which(EdgeAncestry(7, parent, child, stopAt = 4))
+
 }
 \seealso{
 Other tree navigation: \code{\link{AllAncestors}},

@@ -38,7 +38,7 @@ single-taxon trees.
 }
 \section{Functions}{
 \itemize{
-\item \code{AddTipEverywhere}: AddTipEverywhere Add a tip to each edge in turn
+\item \code{AddTipEverywhere}: Add a tip to each edge in turn.
 }}
 
 \examples{
@@ -55,7 +55,7 @@ lapply(additions, plot)
 
 par(mfrow=c(2, 3))
 additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
-lapply(additions, plot)
+xx <- lapply(additions, plot)
 
 par(oldPar)
 

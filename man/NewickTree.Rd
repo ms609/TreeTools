@@ -10,8 +10,16 @@ NewickTree(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-A character string describing \code{tree} in Newick format
+A character string describing \code{tree} in Newick format.
 }
 \description{
-Writes a tree in Newick format
+Writes a tree in Newick format.  This differs from ape's \code{write.tree}
+in the encoding of spaces as spaces, rather than underscores.
+}
+\examples{
+NewickTree(BalancedTree(6))
+
+}
+\seealso{
+\code{\link{as.Newick}}
 }

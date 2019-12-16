@@ -11,7 +11,7 @@ NexusTokens(tokens, character_num = NULL, session = NULL)
 }
 \arguments{
 \item{matrixLines}{lines of a file containing a phylogenetic matrix
-(see ReadCharacters for expected format)}
+(see \code{\link{ReadCharacters}} for expected format).}
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
@@ -23,11 +23,12 @@ whose maximum should be updated.}
 tokens.}
 }
 \value{
-Matrix with n rows, each named for the relevant taxon, and c columns,
-each corresponding to the respective character specified in \code{character_num}
+Matrix with \emph{n} rows, each named for the relevant taxon, and \emph{c}
+columns, each corresponding to the respective character specified in
+\code{character_num}.
 }
 \description{
-Extract taxa from a matrix block
+Extracts the names of tips from the matrix block of a Nexus file.
 }
 \section{Functions}{
 \itemize{

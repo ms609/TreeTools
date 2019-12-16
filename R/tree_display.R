@@ -10,7 +10,7 @@
 #'                drop (using ape::drop.tip)
 #' @param \dots Additional parameters to pass on to ape::[consensus] or [legend]
 #'
-#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`) 
+#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`)
 #' without the excluded taxa.
 #' @template MRS
 #' @importFrom ape consensus drop.tip
@@ -78,12 +78,17 @@ SortTree <- function(tree) {
 
 #' Newick Tree
 #'
-#' Writes a tree in Newick format
+#' Writes a tree in Newick format.  This differs from ape's `write.tree`
+#' in the encoding of spaces as spaces, rather than underscores.
 #'
 #' @template treeParam
 #'
-#' @return A character string describing `tree` in Newick format
+#' @return A character string describing `tree` in Newick format.
 #'
+#' @examples
+#' NewickTree(BalancedTree(6))
+#'
+#' @seealso [`as.Newick`]
 #' @importFrom ape write.tree
 #' @export
 NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed=TRUE)

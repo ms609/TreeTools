@@ -145,7 +145,12 @@ Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 }
 \seealso{
 \code{\link{TreeShape}}
+
+Other tree generation functions: \code{\link{BalancedTree}},
+  \code{\link{NJTree}}, \code{\link{PectinateTree}},
+  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree generation functions}

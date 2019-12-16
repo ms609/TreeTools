@@ -105,6 +105,7 @@
 #' tree <- as.phylo(treeNumber)
 #'
 #' @seealso [`TreeShape`]
+#' @family tree generation functions
 #' @exportClass TreeNumber
 #' @name TreeNumber
 #
