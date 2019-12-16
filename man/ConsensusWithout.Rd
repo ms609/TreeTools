@@ -20,7 +20,8 @@ drop (using ape::drop.tip)}
 \item{position}{Where to plot the missing taxa.  See \link{legend} for options.}
 }
 \value{
-A consensus tree without the excluded taxa
+\code{ConsensusWithout} returns aA consensus tree (of class \code{phylo})
+without the excluded taxa.
 }
 \description{
 Displays a consensus plot with selected taxa excluded.

@@ -7,11 +7,22 @@
 SampleOne(x, len = length(x))
 }
 \arguments{
-\item{x}{vector to sample}
+\item{x}{A vector to sample.}
 
-\item{len}{length of vector}
+\item{len}{(optionally) integer specifying length of \code{x}.}
+}
+\value{
+A vector of length one, randomly sampled from \code{x}.
 }
 \description{
-Faster than inbuilt sample because it avoids some checks
+Faster than inbuilt sample because it avoids some checks.
+}
+\examples{
+SampleOne(9:10)
+SampleOne(letters[1:4])
+
+}
+\author{
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{internal}

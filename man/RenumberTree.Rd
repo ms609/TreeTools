@@ -3,37 +3,46 @@
 \name{RenumberTree}
 \alias{RenumberTree}
 \alias{RenumberEdges}
-\title{Renumber a tree
-Order edges and number nodes
-Wrapper for the C function \code{preorder_edges_and_nodes}}
+\title{Renumber a tree in preorder}
 \usage{
 RenumberTree(parent, child)
 
 RenumberEdges(parent, child, nEdge = length(parent))
 }
+\arguments{
+\item{parent}{the first column of the edge matrix of a tree of class
+\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+
+\item{child}{the second column of the edge matrix of a tree of class
+\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
+}
 \value{
-an edge matrix for a tree in following the usual preorder convention
-for edge and node numbering
+\code{RenumberTree} returns an edge matrix for a tree of class \code{phylo}
+following the usual preorder convention for edge and node numbering.
+
+\code{RenumberEdges} returns a list whose two entries correspond
+to the new parent and child vectors.
 }
 \description{
-Renumber a tree
-Order edges and number nodes
-Wrapper for the C function \code{preorder_edges_and_nodes}
+Wrapper for the C function \code{preorder_edges_and_nodes}, which
+renumbers internal nodes and orders edges in preorder, in an order
+guaranteed to be identical for any tree of an equivalent topology.
+At each node, child edges are arranged from left to right according to the
+lowest-numbered tip in the subtree subtended by each edge.
 }
 \section{Functions}{
 \itemize{
-\item \code{RenumberEdges}: Instead returns a list containing two items
-corresponding to the new parent and child vectors
+\item \code{RenumberEdges}: Returns in list format
 }}
 
 \seealso{
-Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}}
+SortTree
 
 Other C wrappers: \code{\link{Cladewise}},
-  \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}}
+  \code{\link{Neworder}}
+
+Other C wrappers: \code{\link{Cladewise}},
+  \code{\link{Neworder}}
 }
 \concept{C wrappers}
 \keyword{internal}

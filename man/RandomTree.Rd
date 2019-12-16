@@ -2,23 +2,24 @@
 % Please edit documentation in R/tree_generation.R
 \name{RandomTree}
 \alias{RandomTree}
-\title{Generate random tree topology}
+\title{Generate a random tree topology}
 \usage{
 RandomTree(tips, root = FALSE)
 }
 \arguments{
 \item{tips}{An integer specifying the number of tips, or a character vector
-naming the tips, or a tree of class phylo, or a phylogenetic dataset whose
-names will be used to name the tips.}
+naming the tips, or any other object from which tip labels can be extracted
+with function \code{TipLabels}.}
 
-\item{root}{Taxon to use as root (if desired; FALSE otherwise)}
+\item{root}{Tip to use as root (if desired; FALSE otherwise)}
 }
 \value{
 \code{RandomTree} returns a random tree of class \code{phylo}, with the
 specified tips, and no branch lengths specified.
 }
 \description{
-Generate random tree topology
+Generates a binary tree with a random topology on specified tips, optionally
+rooting the tree on a given tip.
 }
 \seealso{
 Other tree generation functions: \code{\link{BalancedTree}},

@@ -1,43 +1,20 @@
-#' Extract tip names from a dataset of unknown class
+#' Generate a random tree topology
+#'
+#' Generates a binary tree with a random topology on specified tips, optionally
+#' rooting the tree on a given tip.
 #'
 #' @template tipsForTreeGeneration
-#'
-#' @return Character vector listing tip names.
-#'
-#' @template MRS
-#' @keywords internal
-GetTipNames <- function (tips) {
-  if (mode(tips) == 'numeric') {
-    if (length(tips) == 1L) {
-      tips <- paste0('t', seq_len(tips))
-    } else {
-      tips <- as.character(tips)
-    }
-  } else if (class(tips) == 'phyDat') {
-    tips <- names(tips)
-  } else if (class(tips) == 'phylo') {
-    tips <- tips$tip.label
-  }
-
-  # Return:
-  tips
-}
-
-#' Generate random tree topology
-#'
-#' @template tipsForTreeGeneration
-#' @param root Taxon to use as root (if desired; FALSE otherwise)
+#' @param root Tip to use as root (if desired; FALSE otherwise)
 #'
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
 #'
 #' @template MRS
-#' @importFrom ape rtree
-#' @importFrom ape root
+#' @importFrom ape rtree root
 #' @family tree generation functions
 #' @export
 RandomTree <- function (tips, root = FALSE) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
   nTips <- length(tips)
   tree <- rtree(nTips, tip.label=tips, br=NULL)
   if (root != FALSE) {
@@ -54,12 +31,13 @@ RandomTree <- function (tips, root = FALSE) {
 #'
 #' @template tipsForTreeGeneration
 #'
-#' @return A tree of class `phylo`.
+#' @return `PectinateTree` and `BinaryTree` each return a binary tree of
+#'  class `phylo` of the specified shape.
 #' @family tree generation functions
 #' @template MRS
 #' @export
 PectinateTree <- function (tips) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
   nTips <- length(tips)
 
   nEdge <- nTips + nTips - 2L
@@ -91,7 +69,7 @@ PectinateTree <- function (tips) {
 #' @importFrom ape read.tree
 #' @export
 BalancedTree <- function (tips) {
-  tips <- GetTipNames(tips)
+  tips <- TipLabels(tips)
 
   # Return:
   read.tree(text=paste0(BalancedBit(tips), ';'))
@@ -116,11 +94,11 @@ BalancedBit <- function (tips, nTips = length(tips)) {
 
 #' Neighbour Joining Tree
 #'
-#' Generates a rooted neighbour joining tree, with no edge lengths
+#' Generates a rooted neighbour joining tree, with no edge lengths.
 #'
 #' @template datasetParam
 #'
-#' @return an object of class \code{phylo}
+#' @return `NJTree` returns an object of class \code{phylo}.
 #'
 #' @template MRS
 #' @importFrom ape nj root
@@ -136,27 +114,38 @@ NJTree <- function (dataset) {
 
 #' Force taxa to form an outgroup
 #'
-#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such that the two
-#' are sister taxa across the root, without altering the relationships within the ingroup
-#' or within the outgroup.
+#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
+#' that the two are sister taxa across the root, without changing the 
+#' relationships within the ingroup or within the outgroup.
 #'
-#' @param tree either a tree of class \code{phylo}, or a character vector listing the names of
-#'        all the taxa in the tree, from which a random tree will be generated.
-#' @param outgroup a vector containing the names of taxa to include in the outgroup
+#' @param tree Either: a tree of class \code{phylo}; or a character vector
+#' listing the names of all the taxa in the tree, from which a random tree will
+#' be generated.
+#' @param outgroup Character vector containing the names of taxa to include in the 
+#' outgroup.
 #'
-#' @return a tree where all outgroup taxa are sister to all remaining taxa,
-#'         otherwise retaining the topology of the ingroup.
+#' @return `EnforceOutgroup` returns a tree of class `phylo` where all outgroup
+#' taxa are sister to all remaining taxa, without modifying the ingroup 
+#' topology.
+#' 
 #' @template MRS
 #' @importFrom ape rtree
 #' @importFrom ape root drop.tip bind.tree
+#' 
+#' @examples 
+#' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
+#' plot(tree)
+#' 
 #' @export
 EnforceOutgroup <- function (tree, outgroup) {
-  if (class(tree) == 'phylo') {
+  if (inherits(tree, 'phylo')) {
     taxa <- tree$tip.label
-  } else if (class(tree) == 'character') {
-    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1], resolve.root=TRUE)
+  } else if (inherits(tree, 'character')) {
+    taxa <- tree
+    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1],
+                 resolve.root=TRUE)
   } else {
-    stop ("tree must be of class phylo")
+    stop ("tree must be of class `phylo` or `character`")
   }
 
   if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root=TRUE))

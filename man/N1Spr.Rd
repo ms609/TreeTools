@@ -3,19 +3,29 @@
 \name{N1Spr}
 \alias{N1Spr}
 \alias{IC1Spr}
-\title{Number of trees one SPR step away
-Formula given by Allen and Steel (2001).}
+\title{Number of trees one SPR step away}
 \usage{
 N1Spr(n)
 
 IC1Spr(n)
 }
 \arguments{
-\item{n}{Number of tips in tree.}
+\item{n}{Integer vector specifying the number of tips in a tree.}
+}
+\value{
+\code{N1SPR} returns an integer vector.
+
+\code{IC1SPR} returns an numeric vector.
 }
 \description{
-Number of trees one SPR step away
-Formula given by Allen and Steel (2001).
+\code{N1Spr} calculates the number of trees one subtree prune-and-regraft
+operation away from a binary input tree using the formula given by Allen and
+Steel (2001).
+}
+\details{
+\code{IC1Spr} calculates the information content of trees at this distance: i.e.
+the entropy corresponding to the proportion of all possible \emph{n}-tip trees
+whose SPR distance is at most one from a specified tree.
 }
 \section{Functions}{
 \itemize{
@@ -23,6 +33,11 @@ Formula given by Allen and Steel (2001).
 with n tips.
 }}
 
+\examples{
+N1Spr(4:6)
+IC1Spr(5)
+
+}
 \references{
 \insertRef{Allen2001}{TreeTools}
 }

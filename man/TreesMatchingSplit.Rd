@@ -2,15 +2,21 @@
 % Please edit documentation in R/Information.R
 \name{TreesMatchingSplit}
 \alias{TreesMatchingSplit}
-\alias{LogTreesMatchingSplit}
+\alias{LnTreesMatchingSplit}
 \title{Number of trees matching a bipartition split}
 \usage{
 TreesMatchingSplit(A, B)
 
-LogTreesMatchingSplit(A, B)
+LnTreesMatchingSplit(A, B)
 }
 \arguments{
 \item{A, B}{Number of taxa in each partition.}
+}
+\value{
+\code{TreesMatchingSplit} returns a numeric specifying the number of trees
+that are compatible with the given split.
+
+\code{LnTreesMatchingSplit} gives the natural logarithm of this number.
 }
 \description{
 Calculates the number of unrooted bifurcated trees that are consistent with
@@ -18,7 +24,7 @@ a bipartition split that divides taxa into groups of size \code{A} and \code{B}.
 }
 \section{Functions}{
 \itemize{
-\item \code{LogTreesMatchingSplit}: Logarithm of the number of trees matching a split.
+\item \code{LnTreesMatchingSplit}: Logarithm of the number of trees matching a split.
 }}
 
 \seealso{

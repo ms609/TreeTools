@@ -11,10 +11,10 @@
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
 #' @param \dots Presently unused.
-#' @return Returns an object of class `Splits`, or (if `asSplits = FALSE`) a
-#'  two-dimensional array of 32-bit integers, which each bit specifying whether
-#'  a tip is a member of the split.  Splits are named according to the node
-#'  that defines them.
+#' @return `as.Splits` returns an object of class `Splits`, or
+#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which 
+#' each bit specifying whether a tip is a member of the split.
+#' Splits are named according to the node that defines them.
 #'
 #' @template MRS
 #'
@@ -47,7 +47,7 @@ as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 #' @export
 as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
-    x <- RenumberTips(x, .TipLabels(tipLabels))
+    x <- RenumberTips(x, TipLabels(tipLabels))
   }
   edge <- Postorder(x)$edge
   nTip <- length(x$tip.label)
@@ -76,7 +76,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
     # Return:
     x
   } else {
-    tipLabels <- .TipLabels(tipLabels)
+    tipLabels <- TipLabels(tipLabels)
     oldLabels <- attr(x, 'tip.label')
     if (is.null(oldLabels)) {
       nTip <- attr(x, 'nTip')
@@ -122,12 +122,12 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
 #' @rdname as.Splits
 #' @export
 as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (class(x[[1]]) == 'phylo') {
+  if (inherits(x[[1]], 'phylo')) {
     if (is.null(tipLabels)) {
       tipLabels <- x[[1]]$tip.label
     }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
-  } else if (class(x[[1]]) == 'Splits') {
+  } else if (inherits(x[[1]], 'Splits')) {
     if (is.null(tipLabels)) {
       tipLabels <- attr(x, 'tip.label')
       if (is.null(tipLabels)) {
@@ -149,12 +149,12 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     nTip <- length(x)
 
     if (is.null(tipLabels)) {
-      tipLabels <- .TipLabels(x)
+      tipLabels <- TipLabels(x)
       if (is.null(tipLabels)) {
         tipLabels <- paste0('t', seq_len(nTip))
       }
     } else {
-      tipLabels <- .TipLabels(tipLabels)
+      tipLabels <- TipLabels(tipLabels)
     }
 
     structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
@@ -164,7 +164,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   } else {
     nTip <- dimX[2]
     if (is.null(tipLabels)) {
-      tipLabels <- .TipLabels(x)
+      tipLabels <- TipLabels(x)
     }
     if (is.null(tipLabels)) {
       tipLabels <- paste0('t', seq_len(nTip))
@@ -259,7 +259,8 @@ as.character.Splits <- function (x, ...) {
 #'
 #' @param phy Object to count.
 #'
-#' @return Single integer specifying the number of tips in each object in `phy`.
+#' @return `NTip` returns an integer specifying the number of tips in each 
+#' object in `phy`.
 #'
 #' @export
 NTip <- function (phy) UseMethod('NTip')
@@ -314,6 +315,7 @@ TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @export
 names.Splits <- function (x) rownames(x)
 
+#' @rdname Decoders
 #' @keywords internal
 #' @export
 .DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
@@ -324,6 +326,7 @@ names.Splits <- function (x) rownames(x)
   ret
 }
 
+#' @rdname Decoders
 #' @keywords internal
 #' @export
 .DecodeLastRaw <- function (n, nTip, ...) {
@@ -331,6 +334,20 @@ names.Splits <- function (x) rownames(x)
   .DecodeRaw(n, stopAt = ifelse(remainder, remainder, 8L), ...)
 }
 
+#' Decode Splits objects
+#'
+#' Internal functions to decode raw representation of splits.
+#'
+#' @name Decoders
+#' @param n Number to decode.
+#' @param stopAt Integer specifying number of tips in partial raw element.
+#' @param nTip Integer specifying number of tips in original tree.
+#' @param print Logical specifying whether output is to be printed.
+#' @param appendLF Logical specifying whether to append line feed character to
+#'  output.
+#'
+#' @return Return a human-readable representation of split content.
+#'
 #' @keywords internal
 #' @export
 .DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
@@ -405,7 +422,6 @@ c.Splits <- function (...) {
   class(x) <- 'Splits'
   x
 }
-
 
 
 #' @family Splits operations
@@ -491,51 +507,3 @@ in.Splits <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x)]
 }
-
-
-#' @keywords internal
-#' @export
-.TipLabels <- function (x) UseMethod('.TipLabels')
-
-#' @keywords internal
-#' @export
-.TipLabels.default <- function (x) {
-  if (is.null(names(x))) {
-    if (any(duplicated(x))) {
-      NULL
-    } else {
-      x
-    }
-  } else {
-    names(x)
-  }
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.phylo <- function (x) x$tip.label
-
-#' @keywords internal
-#' @export
-.TipLabels.list <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.matrix <- function (x) colnames(x)
-
-#' @keywords internal
-#' @export
-.TipLabels.multiPhylo <- function (x) {
-  .TipLabels(x[[1]])
-}
-
-#' @keywords internal
-#' @export
-.TipLabels.Splits <- function (x) attr(x, 'tip.label')
-
-
-#' @keywords internal
-#' @export
-.TipLabels.numeric <- function (x) NextMethod('.TipLabels', as.character(x))

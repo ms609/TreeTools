@@ -5,6 +5,31 @@
 
 using namespace Rcpp;
 
+// num_to_parent
+IntegerVector num_to_parent(NumericVector n, IntegerVector nTip);
+RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(num_to_parent(n, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
+// edge_to_num
+NumericVector edge_to_num(IntegerVector parent, IntegerVector child, IntegerVector nTip);
+RcppExport SEXP _TreeTools_edge_to_num(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(edge_to_num(parent, child, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // phangorn_bipCPP
 List phangorn_bipCPP(IntegerMatrix orig, int nTips);
 RcppExport SEXP _TreeTools_phangorn_bipCPP(SEXP origSEXP, SEXP nTipsSEXP) {

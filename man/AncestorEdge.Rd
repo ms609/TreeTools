@@ -16,7 +16,8 @@ AncestorEdge(edge, parent, child)
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}}
 }
 \value{
-a logical vector identifying whether each edge is the edge that is ancestral to the given edge.
+\code{AncestorEdge} returns a logical vector identifying whether each edge
+is the edge that is ancestral to the given edge.
 }
 \description{
 Ancestral edge

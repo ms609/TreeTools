@@ -6,11 +6,10 @@
 #' @template treeParam
 #'
 #' @examples
-#' library('ape')
-#' tree <- rtree(10)
-#' Renumber (tree)
+#' tree <- RandomTree(letters[1:10])
+#' Renumber(tree)
 #'
-#' @return This function returns a tree of class \code{phylo}
+#' @return This function returns a tree of class \code{phylo}.
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -52,8 +51,13 @@ Renumber <- function (tree) {
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
-#' @return This function returns a \code{phylo} object containing a single tip with the specified label.
-#' @examples SingleTaxonTree('Homo_sapiens')
+#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single 
+#' tip with the specified label.
+#' 
+#' @examples 
+#' SingleTaxonTree('Homo_sapiens')
+#' plot(SingleTaxonTree('root') + BalancedTree(4))
+#' 
 #' @keywords  tree
 #' @family tree manipulation
 #' @family tree generation functions
@@ -263,10 +267,11 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @return This function returns a list. Entry i contains a vector containing, in order,
-#' the nodes encountered when traversing the tree from node i to the root node.  The last
-#' entry of each member of the list will therefore be the root node, with the exception of the
-#' entry for the root node itself, which will be NULL.
+#' @return `AllAncestors` returns a list. Entry i contains a vector containing,
+#' in order, the nodes encountered when traversing the tree from node i to the
+#' root node.
+#' The last entry of each member of the list is therefore the root node, 
+#' with the exception of the entry for the root node itself, which is NULL.
 #'
 #' @template MRS
 #' @family tree navigation
@@ -285,8 +290,8 @@ AllAncestors <- function (parent, child) {
 #' @template treeParam
 #' @param nodes whose descendants should be returned
 #'
-#' @return the number of nodes (including tips) that are descended from each
-#'   node in nodes
+#' @return `CladeSizes` returns the number of nodes (including tips) that are
+#' descended from each node in nodes.
 #'
 #' @importFrom phangorn allDescendants
 #' @keywords internal
@@ -296,14 +301,4 @@ CladeSizes <- function (tree, nodes) {
     tree <- Postorder(tree)
   }
   vapply(allDescendants(tree)[nodes], length, integer(1))
-}
-
-#' Node depth
-#' Wrapper for the ape function
-#'
-#' @keywords internal
-#' @export
-C_node_depth <- function (nTip, nNode, parent, child, nEdge) {
-  .C("ape_node_depth", as.integer(nTip), as.integer(nNode), as.integer(parent),
-     as.integer(child), as.integer(nEdge), double(nTip + nNode), 1L)[[6]]
 }

@@ -35,7 +35,8 @@ Preorder(tree)
 \item{nTip}{Integer specifying number of tips (leaves).}
 }
 \value{
-A tree with nodes following the specified numbering scheme
+A tree of class \code{phylo} with nodes following the specified
+numbering scheme.
 }
 \description{
 A wrapper for \code{ape:::.reorder_ape}.
@@ -77,8 +78,7 @@ sorted into preorder, until each edge has been visited.
 }}
 
 \seealso{
-Other C wrappers: \code{\link{NeworderPhylo}},
-  \code{\link{NeworderPruningwise}},
+Other C wrappers: \code{\link{Neworder}},
   \code{\link{RenumberTree}}
 }
 \author{

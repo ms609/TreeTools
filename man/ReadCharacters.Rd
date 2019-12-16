@@ -38,22 +38,22 @@ listing the state labels for each character; or a character string
 explaining why the character cannot be returned.
 }
 \description{
-Parses Nexus file, reading character states and names
+Parses a Nexus file, reading character states and names.
 }
 \details{
 Tested with nexus files downloaded from MorphoBank with the "no notes"
 option, but should also work more generally.
 
-Do \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
+Please \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incorrectly parsed files.
 }
 \section{Functions}{
 \itemize{
 \item \code{ReadTntCharacters}: Read characters from TNT file
 
-\item \code{ReadAsPhyDat}: Read Nexus characters as phyDat object
+\item \code{ReadAsPhyDat}: Read Nexus characters as phyDat object.
 
-\item \code{ReadTntAsPhyDat}: Read TNT characters as phyDat object
+\item \code{ReadTntAsPhyDat}: Read TNT characters as phyDat object.
 
 \item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
 \code{phyDat}, which converts a \emph{list} of morphological characters into a
@@ -62,15 +62,17 @@ If your morphological characters are in the form of a \emph{matrix}, perhaps
 because they have been read using \code{read.table}, try \link{MatrixToPhyDat} instead.
 }}
 
+\examples{
+fileName <- paste0(system.file(package='TreeTools'), 
+                   '/extdata/input/dataset.nex')
+ReadCharacters(fileName)
+
+}
 \references{
 Maddison, D. R., Swofford, D. L. and Maddison, W. P. (1997)
 NEXUS: an extensible file format for systematic information.
 Systematic Biology, 46, 590-621.
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

@@ -1,12 +1,16 @@
-
-#' Root Tree on specified tips
+#' Root a phylogenetic tree
 #'
 #' Roots a tree on the smallest clade containing the specified tips.
 #'
 #' @template treeParam
 #' @template outgroupTipsParam
 #'
-#' @return A tree of class phylo, rooted on the smallest clade that contains the specified tips
+#' @return `RootTree` returns a tree of class `phylo`, rooted on the smallest 
+#' clade that contains the specified tips.
+#' 
+#' @seealso 
+#' - [ape::root]
+#' - [`EnforceOutgroup`]
 #'
 #' @template MRS
 #' @importFrom phangorn Ancestors Descendants
@@ -85,7 +89,7 @@ CollapseNode <- function (tree, nodes) {
   edgeBelow <- c(edgeBelow[1:(root-1L)], NA, edgeBelow[-(1:root-1L)])
   nodes <- unique(nodes)
 
-  if (class(tree) != 'phylo') stop ("tree must be an object of class phylo")
+  if (!inherits(tree, 'phylo')) stop ("tree must be an object of class phylo")
   if (!all(nodes %in% (root + 1L):maxNode)) stop("nodes must be integers between ",
                                                  root + 1L, " and ", maxNode)
 

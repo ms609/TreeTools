@@ -180,13 +180,10 @@
       "sameAs": "https://CRAN.R-project.org/package=phangorn"
     }
   ],
-  "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/ms609/TreeTools.git/blob/master/NEWS.md",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "fileSize": "484.805KB",
-  "contIntegration": [
-    "https://travis-ci.org/ms609/TreeTools",
-    "https://codecov.io/gh/ms609/TreeTools"
-  ],
+  "fileSize": "495.502KB",
+  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
