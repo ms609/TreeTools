@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate random tree topology — RandomTree • TreeTools</title>
+<title>Generate a random tree topology — RandomTree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,9 @@
 
 
 
-<meta property="og:title" content="Generate random tree topology — RandomTree" />
-<meta property="og:description" content="Generate random tree topology" />
+<meta property="og:title" content="Generate a random tree topology — RandomTree" />
+<meta property="og:description" content="Generates a binary tree with a random topology on specified tips, optionally
+rooting the tree on a given tip." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -138,13 +139,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate random tree topology</h1>
+    <h1>Generate a random tree topology</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_generation.R'><code>R/tree_generation.R</code></a></small>
     <div class="hidden name"><code>RandomTree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate random tree topology</p>
+    <p>Generates a binary tree with a random topology on specified tips, optionally
+rooting the tree on a given tip.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RandomTree</span>(<span class='no'>tips</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
@@ -155,15 +157,19 @@
     <tr>
       <th>tips</th>
       <td><p>An integer specifying the number of tips, or a character vector
-naming the tips, or a tree of class phylo, or a phylogenetic dataset whose
-names will be used to name the tips.</p></td>
+naming the tips, or any other object from which tip labels can be extracted
+with function <code>TipLabels</code>.</p></td>
     </tr>
     <tr>
       <th>root</th>
-      <td><p>Taxon to use as root (if desired; FALSE otherwise)</p></td>
+      <td><p>Tip to use as root (if desired; FALSE otherwise)</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>RandomTree</code> returns a random tree of class <code>phylo</code>, with the
+specified tips, and no branch lengths specified.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree generation functions: 
@@ -177,6 +183,7 @@ names will be used to name the tips.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 

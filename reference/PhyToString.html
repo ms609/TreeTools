@@ -200,13 +200,13 @@ separate multiple tokens within parentheses</p></td>
     </tr>
     <tr>
       <th>useIndex</th>
-      <td><p>(default: TRUE) Print duplicate characters multiple
+      <td><p>(default: <code>TRUE</code>) Print duplicate characters multiple
 times, as they appeared in the original matrix</p></td>
     </tr>
     <tr>
       <th>byTaxon</th>
-      <td><p>If TRUE, write one taxon followed by the next.
-If FALSE, write one character followed by the next.</p></td>
+      <td><p>If <code>TRUE</code>, write one taxon followed by the next.
+If <code>FALSE</code>, write one character followed by the next.</p></td>
     </tr>
     <tr>
       <th>concatenate</th>
@@ -216,12 +216,24 @@ for each entry.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p><code>PhyToString</code> returns a character vector listing a text
+representation of the phylogenetic character state for each taxon in turn.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),
+                   <span class='st'>'/extdata/input/dataset.nex'</span>)
+<span class='no'>phyDat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ReadCharacters.html'>ReadAsPhyDat</a></span>(<span class='no'>fileName</span>)
+<span class='fu'>PhyToString</span>(<span class='no'>phyDat</span>, <span class='kw'>concatenate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "0000000" "0000000" "1111?00" "111??11" "1111?11"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

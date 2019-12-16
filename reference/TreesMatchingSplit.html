@@ -151,7 +151,7 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
 
     <pre class="usage"><span class='fu'>TreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)
 
-<span class='fu'>LogTreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)</pre>
+<span class='fu'>LnTreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,11 +162,16 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>TreesMatchingSplit</code> returns a numeric specifying the number of trees
+that are compatible with the given split.</p>
+<p><code>LnTreesMatchingSplit</code> gives the natural logarithm of this number.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
-<li><p><code>LogTreesMatchingSplit</code>: Logarithm of the number of trees matching a split.</p></li>
+<li><p><code>LnTreesMatchingSplit</code>: Logarithm of the number of trees matching a split.</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -180,6 +185,7 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#functions">Functions</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>

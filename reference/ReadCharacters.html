@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Read characters from Nexus file — ReadCharacters" />
-<meta property="og:description" content="Parses Nexus file, reading character states and names" />
+<meta property="og:description" content="Parses a Nexus file, reading character states and names." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -144,7 +144,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Parses Nexus file, reading character states and names</p>
+    <p>Parses a Nexus file, reading character states and names.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ReadCharacters</span>(<span class='no'>filepath</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -192,15 +192,15 @@ explaining why the character cannot be returned.</p>
 
     <p>Tested with nexus files downloaded from MorphoBank with the "no notes"
 option, but should also work more generally.</p>
-<p>Do <a href='https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&amp;body=&lt;!--Tell+me+more+and+attach+your+file...--&gt;'>report</a>
+<p>Please <a href='https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&amp;body=&lt;!--Tell+me+more+and+attach+your+file...--&gt;'>report</a>
 incorrectly parsed files.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
 <li><p><code>ReadTntCharacters</code>: Read characters from TNT file</p></li>
-<li><p><code>ReadAsPhyDat</code>: Read Nexus characters as phyDat object</p></li>
-<li><p><code>ReadTntAsPhyDat</code>: Read TNT characters as phyDat object</p></li>
+<li><p><code>ReadAsPhyDat</code>: Read Nexus characters as phyDat object.</p></li>
+<li><p><code>ReadTntAsPhyDat</code>: Read TNT characters as phyDat object.</p></li>
 <li><p><code>PhyDat</code>: A convenient wrapper for <span class="pkg">phangorn</span>'s
 <code>phyDat</code>, which converts a <em>list</em> of morphological characters into a
 <code>phyDat</code> object.
@@ -213,6 +213,16 @@ because they have been read using <code>read.table</code>, try <a href='MatrixTo
 NEXUS: an extensible file format for systematic information.
 Systematic Biology, 46, 590-621.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),
+                   <span class='st'>'/extdata/input/dataset.nex'</span>)
+<span class='fu'>ReadCharacters</span>(<span class='no'>fileName</span>)</div><div class='output co'>#&gt;         [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+#&gt; taxon_a "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; taxon_b "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; taxon_c "1"  "1"  "1"  "1"  "?"  "0"  "0" 
+#&gt; taxon_d "1"  "1"  "1"  "?"  "?"  "1"  "1" 
+#&gt; taxon_e "1"  "1"  "1"  "1"  "?"  "1"  "1" </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -222,12 +232,11 @@ Systematic Biology, 46, 590-621.</p>
       <li><a href="#details">Details</a></li>
       <li><a href="#functions">Functions</a></li>
       <li><a href="#references">References</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
-<p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
-<p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
   </div>
 </div>
 

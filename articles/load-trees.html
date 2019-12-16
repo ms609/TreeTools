@@ -99,7 +99,7 @@
       <h1>Loading phylogenetic trees into R</h1>
                         <h4 class="author">Martin R. Smith</h4>
             
-            <h4 class="date">2019-11-25</h4>
+            <h4 class="date">2019-12-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
@@ -141,7 +141,7 @@
 <p>You can load trees from a nexus file using:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">filename &lt;-<span class="st"> "my_file_name.nex"</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">ape<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ape/man/read.nexus.html">read.nexus</a></span>(filename)</a></code></pre></div>
-<p>If the file contains multiple trees, this will return a list of all trees in the file, with the class <code>multiPhylo</code>. If there is a single tree, then this will be returned as a tree of class <code>phylo</code> unless the option <code>force.multiPhylo = TRUE</code>. This can be useful when an unknown number of trees are to be processesed in bulk, for example by</p>
+<p>If the file contains multiple trees, this will return a list of all trees in the file, with the class <code>multiPhylo</code>. If there is a single tree, then this will be returned as a tree of class <code>phylo</code> unless the option <code>force.multiPhylo = TRUE</code>. This can be useful when an unknown number of trees are to be processed in bulk, for example by</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(ape<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ape/man/read.nexus.html">read.nexus</a></span>(filename, <span class="dt">force.multiPhylo =</span> <span class="ot">TRUE</span>), ape<span class="op">::</span>consensus)</a></code></pre></div>
 </div>
 <div id="newick-files" class="section level3">

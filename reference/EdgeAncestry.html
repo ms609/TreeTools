@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EdgeAncestry — EdgeAncestry • TreeTools</title>
+<title>Edge ancestry — EdgeAncestry • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
 
 
 
-<meta property="og:title" content="EdgeAncestry — EdgeAncestry" />
-<meta property="og:description" content="Quickly identifies edges that are 'ancestral' to a particular edge in a tree" />
+<meta property="og:title" content="Edge ancestry — EdgeAncestry" />
+<meta property="og:description" content="Quickly identify edges that are 'ancestral' to a particular edge in a tree." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -138,13 +138,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>EdgeAncestry</h1>
+    <h1>Edge ancestry</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>EdgeAncestry.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Quickly identifies edges that are 'ancestral' to a particular edge in a tree</p>
+    <p>Quickly identify edges that are 'ancestral' to a particular edge in a tree.</p>
     </div>
 
     <pre class="usage"><span class='fu'>EdgeAncestry</span>(<span class='no'>edge</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>stopAt</span> <span class='kw'>=</span> (<span class='no'>parent</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='no'>parent</span>)))</pre>
@@ -154,7 +154,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>edge</th>
-      <td><p>number of the edge whose child edges are required</p></td>
+      <td><p>Integer specifying the number of the edge whose child edges
+should be returned.</p></td>
     </tr>
     <tr>
       <th>parent</th>
@@ -174,7 +175,8 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a logical vector stating whether each edge in turn is a descendant of the specified edge</p>
+    <p><code>EdgeAncestry</code> returns a logical vector stating whether each edge in
+turn is a descendant of the specified edge.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 

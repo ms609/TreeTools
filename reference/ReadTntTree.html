@@ -186,7 +186,8 @@ format output by TNT.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tree of class <code>phylo</code>.</p>
+    <p><code>ReadTNTTree</code> returns a tree of class <code>phylo</code>, corresponding
+to the tree in <code>filename</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Supports trees that have been written from TNT in parenthetical notation
@@ -214,16 +215,9 @@ object of class <code>phylo</code>.</p></li>
   <span class='co'># results1.tnt will contain a hard-coded reference to</span>
   <span class='co'># "c:/TreeTools/input/dataset.nex".</span>
 
-  <span class='co'># On the original machine, it would be possible to read this hard-coded</span>
-  <span class='co'># reference from results.tnt:</span>
-
-  <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-  <span class='co'># Works on original machine but not elsewhere:</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'output/results1.tnt'</span>)
-
-  <span class='co'># Takes only the filename from the results</span>
-  <span class='fu'>ReadTntTree</span>(<span class='st'>'output/results1.tnt'</span>, <span class='st'>'input/dataset.nex'</span>)
-  }
+  <span class='co'># On the original machine (but not elsewhere), it would be possible to read</span>
+  <span class='co'># this hard-coded reference from results.tnt:</span>
+  <span class='co'># ReadTntTree('output/results1.tnt')</span>
 
   <span class='co'># These datasets are provided with the `TreeTools` package, which will</span>
   <span class='co'># probably not be located at c:/TreeTools on your machine:</span>

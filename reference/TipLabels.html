@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tip labels — TipLabels • TreeTools</title>
+<title>Extract tip labels — TipLabels • TreeTools</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,10 @@
 
 
 
-<meta property="og:title" content="Tip labels — TipLabels" />
-<meta property="og:description" content="Tip labels" />
+<meta property="og:title" content="Extract tip labels — TipLabels" />
+<meta property="og:description" content="Extracts tip labels from an object.  If the object is a single integer,
+TipLabels will return a vector t1, t2 ... tn, to match
+the default of ape::rtree." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -138,18 +140,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tip labels</h1>
+    <h1>Extract tip labels</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/SplitFunctions.R'><code>R/SplitFunctions.R</code></a></small>
     <div class="hidden name"><code>TipLabels.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Tip labels</p>
+    <p>Extracts tip labels from an object.  If the object is a single integer,
+<code>TipLabels</code> will return a vector <code>t1</code>, <code>t2</code> ... <code>tn</code>, to match
+the default of <code><a href='https://rdrr.io/pkg/ape/man/rtree.html'>ape::rtree</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>TipLabels</span>(<span class='no'>x</span>)
 
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>TipLabels</span>(<span class='no'>x</span>)
+
 <span class='co'># S3 method for phylo</span>
+<span class='fu'>TipLabels</span>(<span class='no'>x</span>)
+
+<span class='co'># S3 method for TreeNumber</span>
 <span class='fu'>TipLabels</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for Splits</span>
@@ -162,6 +172,15 @@
 <span class='fu'>TipLabels</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for character</span>
+<span class='fu'>TipLabels</span>(<span class='no'>x</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>TipLabels</span>(<span class='no'>x</span>)
+
+<span class='co'># S3 method for phyDat</span>
+<span class='fu'>TipLabels</span>(<span class='no'>x</span>)
+
+<span class='co'># S3 method for default</span>
 <span class='fu'>TipLabels</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>

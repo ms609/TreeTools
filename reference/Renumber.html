@@ -162,7 +162,7 @@ phylo standards.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function returns a tree of class <code>phylo</code></p>
+    <p>This function returns a tree of class <code>phylo</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree manipulation: 
@@ -171,15 +171,14 @@ phylo standards.</p>
 <code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'ape'</span>)
-<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>10</span>)
-<span class='fu'>Renumber</span> (<span class='no'>tree</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RandomTree.html'>RandomTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>])
+<span class='fu'>Renumber</span>(<span class='no'>tree</span>)</div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 10 tips and 9 internal nodes.
 #&gt; 
 #&gt; Tip labels:
-#&gt; 	t2, t5, t1, t8, t4, t7, ...
+#&gt; 	e, j, g, c, a, b, ...
 #&gt; 
-#&gt; Rooted; includes branch lengths.</div><div class='input'>
+#&gt; Rooted; no branch lengths.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

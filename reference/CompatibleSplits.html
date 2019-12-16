@@ -149,7 +149,9 @@
 
     <pre class="usage"><span class='fu'>CompatibleSplits</span>(<span class='no'>splits</span>, <span class='no'>splits2</span>)
 
-<span class='fu'>.CompatibleSplit</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>nTip</span>)</pre>
+<span class='fu'>.CompatibleSplit</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>nTip</span>)
+
+<span class='fu'>.CompatibleRaws</span>(<span class='no'>rawA</span>, <span class='no'>rawB</span>, <span class='no'>bitmask</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,23 +168,27 @@
       <th>a, b</th>
       <td><p><a href='https://rdrr.io/r/base/raw.html'>Raw</a> representations of splits, from a row of a <code>Splits</code> object.</p></td>
     </tr>
+    <tr>
+      <th>rawA, rawB</th>
+      <td><p>Raw representations of splits.</p></td>
+    </tr>
+    <tr>
+      <th>bitmask</th>
+      <td><p>Raw masking bits that do not correspond to tips.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A logical matrix specifying whether each split in <code>splits</code> is
-compatible with each split in <code>splits2</code>.</p>
-<p>logical vector stating whether splits are compatible.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>.CompatibleSplit</code>: Evaluate a single split pair</p></li>
-</ul>
+    <p><code>CompatibleSplits</code> returns a logical matrix specifying whether each
+split in <code>splits</code> is compatible with each split in <code>splits2</code>.</p>
+<p><code>.CompatibleSplit</code> returns a logical vector stating whether splits
+are compatible.</p>
+<p><code>.CompatibleRaws</code> returns a logical vector specifying whether input
+raws are compatible.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))
+    <pre class="examples"><div class='input'><span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))
 <span class='no'>splits2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))
 
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; 5 bipartition splits dividing 8 tips, t1 .. t8
@@ -217,7 +223,6 @@ compatible with each split in <code>splits2</code>.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#functions">Functions</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

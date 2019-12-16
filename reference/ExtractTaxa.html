@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Extract taxa from a matrix block — ExtractTaxa" />
-<meta property="og:description" content="Extract taxa from a matrix block" />
+<meta property="og:description" content="Reads the character information from a Nexus-formatted matrix into R." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -144,7 +144,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Extract taxa from a matrix block</p>
+    <p>Reads the character information from a Nexus-formatted matrix into R.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ExtractTaxa</span>(<span class='no'>matrixLines</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -157,7 +157,7 @@
     <tr>
       <th>matrixLines</th>
       <td><p>lines of a file containing a phylogenetic matrix
-(see ReadCharacters for expected format)</p></td>
+(see <code><a href='ReadCharacters.html'>ReadCharacters</a></code> for expected format).</p></td>
     </tr>
     <tr>
       <th>character_num</th>
@@ -178,15 +178,31 @@ tokens.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Matrix with n rows, each named for the relevant taxon, and c columns,
+    <p><code>ExtractTaxa</code> returns a matrix with <em>n</em> rows, each named for the
+relevant taxon, and <em>c</em> columns,
 each corresponding to the respective character specified in <code>character_num</code></p>
+<p><code>NexusTokens</code> returns a character vector in which each entry
+corresponds to the states of a phylogenetic character.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
-<li><p><code>NexusTokens</code>: Extract tokens from a string</p></li>
+<li><p><code>NexusTokens</code>: Converts a Nexus string to a vector of character
+states.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),
+                   <span class='st'>'/extdata/input/dataset.nex'</span>)
+<span class='no'>matrixLines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='no'>fileName</span>)[<span class='fl'>6</span>:<span class='fl'>11</span>]
+<span class='fu'>ExtractTaxa</span>(<span class='no'>matrixLines</span>)</div><div class='output co'>#&gt;           [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+#&gt; \ttaxon_a "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; \ttaxon_b "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; \ttaxon_c "1"  "1"  "1"  "1"  "?"  "0"  "0" 
+#&gt; \ttaxon_d "1"  "1"  "1"  "?"  "?"  "1"  "1" 
+#&gt; \ttaxon_e "1"  "1"  "1"  "1"  "?"  "1"  "1" </div><div class='input'>
+<span class='fu'>NexusTokens</span>(<span class='st'>'01[01]-?'</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3]   [,4] [,5]
+#&gt; [1,] "0"  "1"  "[01]" "-"  "?" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -194,6 +210,7 @@ each corresponding to the respective character specified in <code>character_num<
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#functions">Functions</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
