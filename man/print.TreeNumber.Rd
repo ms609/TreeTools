@@ -4,7 +4,7 @@
 \alias{print.TreeNumber}
 \title{Print TreeNumber object}
 \usage{
-\method{print}{TreeNumber}(x, ...)
+\method{print}{TreeNumber}(x)
 }
 \arguments{
 \item{x}{Object of class \code{TreeNumber}.}

@@ -210,6 +210,7 @@ EdgeDistances <- function (tree) {
 #' edge <- tree$edge
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
+#'
 #' which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal

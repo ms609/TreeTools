@@ -34,8 +34,6 @@ corresponds to the states of a phylogenetic character.
 Reads the character information from a Nexus-formatted matrix into R.
 }
 \details{
-Reads the character information from a Nexus-formatted matrix into R.
-
 Extracts the names of tips from the matrix block of a Nexus file.
 }
 \section{Functions}{
@@ -45,11 +43,6 @@ states.
 }}
 
 \examples{
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/input/dataset.nex')
-matrixLines <- readLines(fileName)[6:11]
-ExtractTaxa(matrixLines)
-
 fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 matrixLines <- readLines(fileName)[6:11]
