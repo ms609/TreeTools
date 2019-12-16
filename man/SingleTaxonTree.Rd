@@ -10,7 +10,8 @@ SingleTaxonTree(label)
 \item{label}{a character vector specifying the label of the tip.}
 }
 \value{
-This function returns a \code{phylo} object containing a single tip with the specified label.
+\code{SingleTaxonTree} returns a \code{phylo} object containing a single
+tip with the specified label.
 }
 \description{
 Single taxon tree
@@ -20,6 +21,8 @@ Create a phylogenetic 'tree' that comprises a single taxon.
 }
 \examples{
 SingleTaxonTree('Homo_sapiens')
+plot(SingleTaxonTree('root') + BalancedTree(4))
+
 }
 \seealso{
 Other tree manipulation: \code{\link{AddTip}},

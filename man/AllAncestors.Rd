@@ -14,10 +14,11 @@ AllAncestors(parent, child)
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 }
 \value{
-This function returns a list. Entry i contains a vector containing, in order,
-the nodes encountered when traversing the tree from node i to the root node.  The last
-entry of each member of the list will therefore be the root node, with the exception of the
-entry for the root node itself, which will be NULL.
+\code{AllAncestors} returns a list. Entry i contains a vector containing,
+in order, the nodes encountered when traversing the tree from node i to the
+root node.
+The last entry of each member of the list is therefore the root node,
+with the exception of the entry for the root node itself, which is NULL.
 }
 \description{
 \code{AllAncestors} lists ancestors of each parent node in a tree

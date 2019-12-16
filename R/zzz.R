@@ -13,6 +13,7 @@ release_questions <- function() {
 
 #codemetar::write_codemeta()
 #rhub::check_on_windows()
+#codemetar::write_codemeta()
 #check_with_rdevel() # redundifies check_on_debian()
 #check_on_ubuntu()
 #check_on_fedora()

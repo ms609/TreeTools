@@ -7,22 +7,27 @@
 EnforceOutgroup(tree, outgroup)
 }
 \arguments{
-\item{tree}{either a tree of class \code{phylo}, or a character vector
+\item{tree}{Either: a tree of class \code{phylo}; or a character vector
 listing the names of all the taxa in the tree, from which a random tree will
 be generated.}
 
-\item{outgroup}{a vector containing the names of taxa to include in the
+\item{outgroup}{Character vector containing the names of taxa to include in the
 outgroup.}
 }
 \value{
 \code{EnforceOutgroup} returns a tree of class \code{phylo} where all outgroup
-taxa are sister to all remaining taxa, otherwise retaining the topology of
-the ingroup.
+taxa are sister to all remaining taxa, without modifying the ingroup
+topology.
 }
 \description{
 Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-that the two are sister taxa across the root, without altering the
+that the two are sister taxa across the root, without changing the
 relationships within the ingroup or within the outgroup.
+}
+\examples{
+tree <- EnforceOutgroup(letters[1:9], letters[1:3])
+plot(tree)
+
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

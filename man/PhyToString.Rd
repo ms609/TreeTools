@@ -26,18 +26,29 @@ separate multiple tokens within parentheses}
 
 \item{ps}{Character specifying text, perhaps \code{;}, to append to the end of the string}
 
-\item{useIndex}{(default: TRUE) Print duplicate characters multiple
+\item{useIndex}{(default: \code{TRUE}) Print duplicate characters multiple
 times, as they appeared in the original matrix}
 
-\item{byTaxon}{If TRUE, write one taxon followed by the next.
-If FALSE, write one character followed by the next.}
+\item{byTaxon}{If \code{TRUE}, write one taxon followed by the next.
+If \code{FALSE}, write one character followed by the next.}
 
 \item{concatenate}{Logical specifying whether to concatenate all characters/taxa
 into a single string, or to return a separate string
 for each entry.}
 }
+\value{
+\code{PhyToString} returns a character vector listing a text
+representation of the phylogenetic character state for each taxon in turn.
+}
 \description{
 Extract character data from a phyDat object as a string
+}
+\examples{
+fileName <- paste0(system.file(package='TreeTools'), 
+                   '/extdata/input/dataset.nex')
+phyDat <- ReadAsPhyDat(fileName)
+PhyToString(phyDat, concatenate = FALSE)
+
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

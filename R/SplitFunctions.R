@@ -215,9 +215,10 @@ SplitMatchProbability <- function (split1, split2) {
 #' @param x An object of a supported class (see Usage section).
 #' @param single Logical specifying whether to report the labels for the first
 #' object only (`TRUE`), or for each object in a list (`FALSE`).
-#' @return A character vector listing the tip labels for the specified object.
 #'
-#' @return Character vector listing tip names.
+#' @return `TipLabels` returns a character vector listing the tip labels for the
+#' specified object.
+#'
 #' @template MRS
 #' @export
 TipLabels <- function (x, single = TRUE) UseMethod('TipLabels')

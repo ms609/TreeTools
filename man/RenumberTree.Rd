@@ -36,6 +36,8 @@ lowest-numbered tip in the subtree subtended by each edge.
 }}
 
 \seealso{
+SortTree
+
 Other C wrappers: \code{\link{Cladewise}},
   \code{\link{Neworder}}
 }

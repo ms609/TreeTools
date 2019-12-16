@@ -44,8 +44,6 @@ object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 }
 \value{
 A character vector listing the tip labels for the specified object.
-
-Character vector listing tip names.
 }
 \description{
 Extracts tip labels from an object.  If the object is a single integer,

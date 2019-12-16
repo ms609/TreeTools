@@ -30,7 +30,8 @@ taxon names will be loaded from the data file linked in the first line of the
 format output by TNT.}
 }
 \value{
-a tree of class \code{phylo}.
+\code{ReadTNTTree} returns a tree of class \code{phylo}, corresponding
+to the tree in \code{filename}.
 }
 \description{
 Reads a tree from TNT's parenthetical output.
@@ -60,16 +61,9 @@ object of class \code{phylo}.
   # results1.tnt will contain a hard-coded reference to
   # "c:/TreeTools/input/dataset.nex".
 
-  # On the original machine, it would be possible to read this hard-coded
-  # reference from results.tnt:
-
-  \dontrun{
-  # Works on original machine but not elsewhere:
-  ReadTntTree('output/results1.tnt')
-
-  # Takes only the filename from the results
-  ReadTntTree('output/results1.tnt', 'input/dataset.nex')
-  }
+  # On the original machine (but not elsewhere), it would be possible to read
+  # this hard-coded reference from results.tnt:
+  # ReadTntTree('output/results1.tnt')
 
   # These datasets are provided with the `TreeTools` package, which will
   # probably not be located at c:/TreeTools on your machine:

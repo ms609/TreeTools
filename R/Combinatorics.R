@@ -79,14 +79,16 @@ LogDoubleFactorial.int <- function (n) {
 
 #' Number of rooted/unrooted trees
 #'
-#' These functions return the number of rooted or unrooted trees consistent with a given pattern
-#'  of splits.
+#' These functions return the number of rooted or unrooted trees consistent with
+#' a given pattern of splits.
 #'
-#' Functions starting N return the number of rooted or unrooted trees, functions starting Ln
-#' provide the log of this number.  Calculations follow Carter et al. 1990, Theorem 2.
+#' Functions starting N return the number of rooted or unrooted trees, functions
+#' starting Ln provide the natural logarithm of this number.
+#' Calculations follow Carter et al. 1990, Theorem 2.
 #'
-#' @param tips The number of tips.
-#' @param splits vector listing the number of taxa in each tree bipartition.
+#' @param tips Integer specifying the number of tips.
+#' @param splits Integer vector listing the number of taxa in each tree
+#' bipartition.
 #'
 #' @template MRS
 #'
@@ -98,7 +100,8 @@ LogDoubleFactorial.int <- function (n) {
 #'   NUnrooted(10)
 #'   LnRooted(10)
 #'   LnUnrooted(10)
-#'   # Number of trees consistent with a character whose states are 00000 11111 222
+#'   # Number of trees consistent with a character whose states are
+#'   # 00000 11111 222
 #'   NUnrootedMult(c(5,5,3))
 #'
 #' @export
@@ -125,19 +128,32 @@ LnRooted.int <- function (tips) {
 }
 
 #' Number of trees one SPR step away
-#' Formula given by Allen and Steel (2001).
 #'
-#' @param n Number of tips in tree.
+#' `N1Spr` calculates the number of trees one subtree prune-and-regraft
+#' operation away from a binary input tree using the formula given by Allen and
+#' Steel (2001).
+#'
+#' `IC1Spr` calculates the information content of trees at this distance: i.e.
+#' the entropy corresponding to the proportion of all possible _n_-tip trees
+#' whose SPR distance is at most one from a specified tree.
+#'
+#' @param n Integer vector specifying the number of tips in a tree.
+#'
+#' @return `N1SPR` returns an integer vector.
+#'
+#' @examples
+#' N1Spr(4:6)
+#' IC1Spr(5)
+#'
 #' @references
 #'  \insertRef{Allen2001}{TreeTools}
 #'
 #' @export
-N1Spr <- function (n) if (n > 3L) (n + n - 6L) * (n + n - 7L) else 0L
-
-
+N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 
 #' @describeIn N1Spr Information content of trees 0 or 1 SPR step from tree
 #'  with n tips.
+#' @return `IC1SPR` returns an numeric vector.
 #' @export
 IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 

@@ -3,28 +3,28 @@
 \name{MatrixToPhyDat}
 \alias{MatrixToPhyDat}
 \alias{PhyDatToMatrix}
-\title{Matrix to phydat}
+\title{Matrix to phyDat}
 \usage{
 MatrixToPhyDat(tokens)
 
 PhyDatToMatrix(dataset)
 }
 \arguments{
-\item{tokens}{matrix of tokens, probably created with \link{ReadCharacters}
-or \link{ReadTntCharacters}. Row names should correspond to tip
+\item{tokens}{matrix of tokens, probably created with \code{\link{ReadCharacters}}
+or \code{\link{ReadTntCharacters}}. Row names should correspond to tip
 labels; column names may optionally correspond to
 character labels.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
 }
 \value{
-an object of class \code{phyDat}
+an object of class \code{phyDat}.
 
 A matrix corresponding to the uncompressed character states within
 a phyDat object.
 }
 \description{
-Converts a matrix of tokens to a phyDat object.
+Converts a matrix of tokens to a \code{phyDat} object.
 }
 \section{Functions}{
 \itemize{

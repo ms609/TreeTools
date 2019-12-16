@@ -10,15 +10,14 @@ Renumber(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-This function returns a tree of class \code{phylo}
+This function returns a tree of class \code{phylo}.
 }
 \description{
 \code{Renumber} numbers the nodes and tips in a tree to conform with the
 phylo standards.
 }
 \examples{
-library('ape')
-tree <- rtree(10)
+tree <- RandomTree(letters[1:10])
 Renumber(tree)
 
 }

@@ -11,10 +11,10 @@
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
 #' @param \dots Presently unused.
-#' @return Returns an object of class `Splits`, or (if `asSplits = FALSE`) a
-#'  two-dimensional array of 32-bit integers, which each bit specifying whether
-#'  a tip is a member of the split.  Splits are named according to the node
-#'  that defines them.
+#' @return `as.Splits` returns an object of class `Splits`, or
+#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which 
+#' each bit specifying whether a tip is a member of the split.
+#' Splits are named according to the node that defines them.
 #'
 #' @template MRS
 #'
@@ -256,7 +256,8 @@ as.character.Splits <- function (x, ...) {
 #'
 #' @param phy Object to count.
 #'
-#' @return Single integer specifying the number of tips in each object in `phy`.
+#' @return `NTip` returns an integer specifying the number of tips in each 
+#' object in `phy`.
 #'
 #' @export
 NTip <- function (phy) UseMethod('NTip')

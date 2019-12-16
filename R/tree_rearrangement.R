@@ -1,12 +1,16 @@
-
-#' Root Tree on specified tips
+#' Root a phylogenetic tree
 #'
 #' Roots a tree on the smallest clade containing the specified tips.
 #'
 #' @template treeParam
 #' @template outgroupTipsParam
 #'
-#' @return A tree of class phylo, rooted on the smallest clade that contains the specified tips
+#' @return `RootTree` returns a tree of class `phylo`, rooted on the smallest 
+#' clade that contains the specified tips.
+#' 
+#' @seealso 
+#' - [ape::root]
+#' - [`EnforceOutgroup`]
 #'
 #' @template MRS
 #' @importFrom phangorn Ancestors Descendants

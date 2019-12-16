@@ -2,12 +2,13 @@
 % Please edit documentation in R/tree_properties.R
 \name{EdgeAncestry}
 \alias{EdgeAncestry}
-\title{EdgeAncestry}
+\title{Edge ancestry}
 \usage{
 EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 }
 \arguments{
-\item{edge}{number of the edge whose child edges are required.}
+\item{edge}{Integer specifying the number of the edge whose child edges
+should be returned.}
 
 \item{parent}{the first column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
@@ -23,7 +24,7 @@ defaults to the root edges.}
 turn is a descendant of the specified edge.
 }
 \description{
-Quickly identifies edges that are 'ancestral' to a particular edge in a tree
+Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 }
 \examples{
 tree <- PectinateTree(6)

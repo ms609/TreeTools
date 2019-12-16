@@ -1,13 +1,17 @@
 #' Quick sample
 #'
-#' Faster than inbuilt sample because it avoids some checks
-#' @param x vector to sample
-#' @param len length of vector
+#' Faster than inbuilt sample because it avoids some checks.
+#'
+#' @param x A vector to sample.
+#' @param len (optionally) integer specifying length of `x`.
+#'
+#' @return A vector of length one, randomly sampled from `x`.
 #'
 #' @examples
-#' SampleOne(1:5, 5)
+#' SampleOne(9:10)
+#' SampleOne(letters[1:4])
 #'
-#' @return Returns a single, randomly sampled element of `x`.
+#' @template MRS
 #' @keywords internal
 #' @export
 SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FALSE)]

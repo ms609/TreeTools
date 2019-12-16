@@ -10,10 +10,15 @@ SortTree(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-A tree of class phylo, with each node sorted such that the larger clade is first.
+\code{SortTree} returns a tree of class \code{phylo}, with each node sorted
+such that the larger clade is first.
 }
 \description{
-Sorts each node into a consistent order, so similar trees look visually similar.
+Sorts each node into a consistent order, so similar trees look visually
+similar.
+}
+\seealso{
+RenumberTree
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

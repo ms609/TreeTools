@@ -42,10 +42,10 @@ or an unannotated two-dimensional array (useful where performance is
 paramount).}
 }
 \value{
-Returns an object of class \code{Splits}, or (if \code{asSplits = FALSE}) a
-two-dimensional array of 32-bit integers, which each bit specifying whether
-a tip is a member of the split.  Splits are named according to the node
-that defines them.
+\code{as.Splits} returns an object of class \code{Splits}, or
+(if \code{asSplits = FALSE}) a two-dimensional array of 32-bit integers, which
+each bit specifying whether a tip is a member of the split.
+Splits are named according to the node that defines them.
 }
 \description{
 Converts a phylogenetic tree to an array of bipartition splits.

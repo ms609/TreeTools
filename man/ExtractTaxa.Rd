@@ -23,16 +23,31 @@ whose maximum should be updated.}
 tokens.}
 }
 \value{
-Matrix with \emph{n} rows, each named for the relevant taxon, and \emph{c}
-columns, each corresponding to the respective character specified in
-\code{character_num}.
+\code{ExtractTaxa} returns a matrix with \emph{n} rows, each named for the
+relevant taxon, and \emph{c} columns,
+each corresponding to the respective character specified in \code{character_num}.
+
+\code{NexusTokens} returns a character vector in which each entry
+corresponds to the states of a phylogenetic character.
 }
 \description{
+Reads the character information from a Nexus-formatted matrix into R.
+}
+\details{
 Extracts the names of tips from the matrix block of a Nexus file.
 }
 \section{Functions}{
 \itemize{
-\item \code{NexusTokens}: Extract tokens from a string
+\item \code{NexusTokens}: Converts a Nexus string to a vector of character
+states.
 }}
 
+\examples{
+fileName <- paste0(system.file(package='TreeTools'),
+                   '/extdata/input/dataset.nex')
+matrixLines <- readLines(fileName)[6:11]
+ExtractTaxa(matrixLines)
+
+NexusTokens('01[01]-?')
+}
 \keyword{internal}
