@@ -12,7 +12,8 @@ naming the tips, or any other object from which tip labels can be extracted
 with function \code{TipLabels}.}
 }
 \value{
-A tree of class \code{phylo}.
+\code{PectinateTree} and \code{BinaryTree} each return a binary tree of
+class \code{phylo} of the specified shape.
 }
 \description{
 Generates a pectinate (caterpillar) tree with the specified tip labels.

@@ -11,7 +11,7 @@ NexusTokens(tokens, character_num = NULL, session = NULL)
 }
 \arguments{
 \item{matrixLines}{lines of a file containing a phylogenetic matrix
-(see ReadCharacters for expected format)}
+(see \code{\link{ReadCharacters}} for expected format).}
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
@@ -23,15 +23,28 @@ whose maximum should be updated.}
 tokens.}
 }
 \value{
-Matrix with n rows, each named for the relevant taxon, and c columns,
+\code{ExtractTaxa} returns a matrix with \emph{n} rows, each named for the
+relevant taxon, and \emph{c} columns,
 each corresponding to the respective character specified in \code{character_num}
+
+\code{NexusTokens} returns a character vector in which each entry
+corresponds to the states of a phylogenetic character.
 }
 \description{
-Extract taxa from a matrix block
+Reads the character information from a Nexus-formatted matrix into R.
 }
 \section{Functions}{
 \itemize{
-\item \code{NexusTokens}: Extract tokens from a string
+\item \code{NexusTokens}: Converts a Nexus string to a vector of character
+states.
 }}
 
+\examples{
+fileName <- paste0(system.file(package='TreeTools'), 
+                   '/extdata/input/dataset.nex')
+matrixLines <- readLines(fileName)[6:11]
+ExtractTaxa(matrixLines)
+
+NexusTokens('01[01]-?')
+}
 \keyword{internal}

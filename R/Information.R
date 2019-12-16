@@ -5,6 +5,11 @@
 #'
 #' @param A,B Number of taxa in each partition.
 #'
+#' @return `TreesMatchingSplit` returns a numeric specifying the number of trees
+#' that are compatible with the given split.
+#' 
+#' `LnTreesMatchingSplit` gives the natural logarithm of this number.
+#'
 #' @template MRS
 #'
 #' @family split information functions
@@ -17,7 +22,7 @@ TreesMatchingSplit <- function (A, B) {
 
 #' @describeIn TreesMatchingSplit Logarithm of the number of trees matching a split.
 #' @export
-LogTreesMatchingSplit <- function (A, B) {
+LnTreesMatchingSplit <- function (A, B) {
   if (A == 0) LnUnrooted.int(B) else
   if (B == 0) LnUnrooted.int(A) else
   LnRooted.int(A) + LnRooted.int(B)
@@ -33,7 +38,8 @@ LogTreesMatchingSplit <- function (A, B) {
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.`
 #'
-#' @return Phylogenetic information content of the character, in bits.
+#' @return `CharacterInformation` returns a numberic specifying the 
+#' phylogenetic information content of the character, in bits.
 #'
 #' @family split information functions
 #' @template MRS
@@ -79,7 +85,7 @@ CharacterInformation <- function (tokens) {
 #' @family split information functions
 #' @export
 SplitInformation <- function (A, B) {
-  -(LogTreesMatchingSplit(A, B) - LnUnrooted.int(A + B)) / log(2)
+  -(LnTreesMatchingSplit(A, B) - LnUnrooted.int(A + B)) / log(2)
 }
 
 #' @describeIn SplitInformation Information content of a multi-partition split.

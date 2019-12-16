@@ -22,7 +22,8 @@ NTip(phy)
 \item{phy}{Object to count.}
 }
 \value{
-Single integer specifying the number of tips in each object in \code{phy}.
+\code{NTip} returns an integer specifying the number of tips in each
+object in \code{phy}.
 }
 \description{
 Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects of

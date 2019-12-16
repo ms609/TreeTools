@@ -18,10 +18,10 @@
 #' nTip <- 8L
 #' tree <- BalancedTree(nTip)
 #' edge <- tree$edge
-#' pruningwise <- NeworderPruningwise(nTip, tree$nNode, edge[, 1], edge[, 2],
-#'                              dim(edge)[1])
-#' cladewise <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 1L)
-#' postorder <- NeworderPhylo(nTip,edge[, 1], edge[, 2], dim(edge)[1], 2L)
+#' pruningwise <- NeworderPruningwise(nTip, tree$Nnode, edge[, 1], edge[, 2],
+#'                                    dim(edge)[1])
+#' cladewise <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 1L)
+#' postorder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 2L)
 #'
 #' tree$edge <- tree$edge[pruningwise, ]
 #'
@@ -65,6 +65,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #'
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
+#' @seealso [`SortTree`]
 #' @family C wrappers
 #' @keywords internal
 #' @export
@@ -117,7 +118,8 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' @template nTipParam
 #' @param edge (optional) the value of tree$edge
 #'
-#' @return A tree with nodes following the specified numbering scheme
+#' @return A tree of class `phylo` with nodes following the specified
+#' numbering scheme.
 #' @author
 #'  `Preorder`: Martin R. Smith.
 #'
@@ -215,7 +217,7 @@ Preorder <- function (tree) {
 }
 
 
-#' Reorder tips
+#' Renumber a tree's tips
 #'
 #' \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
 #' such that the indices in \code{tree$edge[, 2]} correspond to the order of
@@ -226,6 +228,9 @@ Preorder <- function (tree) {
 #'        \code{tree$tip.label} in the desired sort order, or an object
 #'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
+#' @return `RenumberTips` returns `tree1`, with the tips' internal
+#' representation numbered to match `tipOrder`.
+#'
 #' @examples
 #' data(Lobo) # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
@@ -235,7 +240,7 @@ Preorder <- function (tree) {
 #' @export
 RenumberTips <- function (tree, tipOrder) {
   startOrder <- tree$tip.label
-  newOrder <- .TipLabels(tipOrder)
+  newOrder <- TipLabels(tipOrder)
   if (identical(startOrder, newOrder)) return (tree)
   if (length(startOrder) != length(newOrder)) {
     stop("Tree labels and tipOrder must match")

@@ -10,12 +10,13 @@
 #'                drop (using ape::drop.tip)
 #' @param \dots Additional parameters to pass on to ape::[consensus] or [legend]
 #'
-#' @return A consensus tree without the excluded taxa
+#' @return `ConsensusWithout` returns aA consensus tree (of class `phylo`) 
+#' without the excluded taxa.
 #' @template MRS
 #' @importFrom ape consensus drop.tip
 #' @export
 ConsensusWithout <- function (trees, tip, ...) {
-  if (class(trees) == 'phylo') {
+  if (inherits(trees, 'phylo')) {
     drop.tip(trees, tip=tip)
   } else {
     consensus(lapply(trees, drop.tip, tip=tip), ...)
@@ -36,11 +37,15 @@ MarkMissing <- function (tip, position='bottomleft', ...) {
 
 #' Sort tree
 #'
-#' Sorts each node into a consistent order, so similar trees look visually similar.
+#' Sorts each node into a consistent order, so similar trees look visually 
+#' similar.
 #'
 #' @template treeParam
 #'
-#' @return A tree of class phylo, with each node sorted such that the larger clade is first.
+#' @return `SortTree` returns a tree of class `phylo`, with each node sorted
+#' such that the larger clade is first.
+#' 
+#' @seealso RenumberTree
 #'
 #' @template MRS
 #' @export
@@ -81,7 +86,8 @@ SortTree <- function(tree) {
 #'
 #' @template treeParam
 #'
-#' @return A character string describing `tree` in Newick format
+#' @return `NewickTree` returns a character string denoting `tree` in Newick 
+#' format.
 #'
 #' @importFrom ape write.tree
 #' @export

@@ -6,11 +6,10 @@
 #' @template treeParam
 #'
 #' @examples
-#' library('ape')
-#' tree <- rtree(10)
-#' Renumber (tree)
+#' tree <- RandomTree(letters[1:10])
+#' Renumber(tree)
 #'
-#' @return This function returns a tree of class \code{phylo}
+#' @return This function returns a tree of class \code{phylo}.
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -52,8 +51,13 @@ Renumber <- function (tree) {
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
-#' @return This function returns a \code{phylo} object containing a single tip with the specified label.
-#' @examples SingleTaxonTree('Homo_sapiens')
+#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single 
+#' tip with the specified label.
+#' 
+#' @examples 
+#' SingleTaxonTree('Homo_sapiens')
+#' plot(SingleTaxonTree('root') + BalancedTree(4))
+#' 
 #' @keywords  tree
 #' @family tree manipulation
 #' @family tree generation functions
@@ -263,10 +267,11 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'   edge <- tr$edge
 #'   AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @return This function returns a list. Entry i contains a vector containing, in order,
-#' the nodes encountered when traversing the tree from node i to the root node.  The last
-#' entry of each member of the list will therefore be the root node, with the exception of the
-#' entry for the root node itself, which will be NULL.
+#' @return `AllAncestors` returns a list. Entry i contains a vector containing,
+#' in order, the nodes encountered when traversing the tree from node i to the
+#' root node.
+#' The last entry of each member of the list is therefore the root node, 
+#' with the exception of the entry for the root node itself, which is NULL.
 #'
 #' @template MRS
 #' @family tree navigation

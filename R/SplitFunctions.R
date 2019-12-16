@@ -79,7 +79,7 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @template splitsObjectParam
 #' @param splits2 A second `Splits` object.
 #'
-#' @return `CompatibleSplits` returns a logical matrix specifying whether each +
+#' @return `CompatibleSplits` returns a logical matrix specifying whether each
 #' split in `splits` is compatible with each split in `splits2`.
 #'
 #' @examples
@@ -213,6 +213,7 @@ SplitMatchProbability <- function (split1, split2) {
 #' the default of \code{ape::\link{rtree}}.
 #'
 #' @param x An object of a supported class (see Usage section).
+#'
 #' @return A character vector listing the tip labels for the specified object.
 #'
 #' @return Character vector listing tip names.

@@ -59,22 +59,24 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @param edge Number of an edge
 #' @template treeParent
 #' @template treeChild
-#' @return a logical vector identifying whether each edge is the edge that is
-#' ancestral to the given edge.
+#' @return `AncestorEdge` returns a logical vector identifying whether each edge
+#' is the edge that is ancestral to the given edge.
 #' @keywords internal
 #' @family tree navigation
 #' @export
 AncestorEdge <- function (edge, parent, child) child == parent[edge]
 
-#' EdgeAncestry
+#' Edge ancestry
 #'
-#' Quickly identifies edges that are 'ancestral' to a particular edge in a tree
+#' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'
-#' @param edge number of the edge whose child edges are required
+#' @param edge Integer specifying the number of the edge whose child edges
+#' should be returned.
 #' @template treeParent
 #' @template treeChild
 #' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
-#' @return a logical vector stating whether each edge in turn is a descendant of the specified edge
+#' @return `EdgeAncestry` returns a logical vector stating whether each edge in
+#'  turn is a descendant of the specified edge.
 #'
 #' @template MRS
 #' @family tree navigation
@@ -88,9 +90,15 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
 }
 
 #' Most Recent Common Ancestor
+#'
+#' What is the last common ancestor of the specified tips?
+#'
 #' @param tip1,tip2 Integer specifying index of tips whose most recent common
 #' ancestor should be found.
 #' @param ancestors Output of [`AllAncestors`] for the tree in question
+#'
+#' @return `MRCA` returns an integer specifying the node number of the last
+#' common ancestor of `tip1` and `tip2`.
 #'
 #' @family tree navigation
 #' @template MRS
@@ -166,17 +174,31 @@ EdgeDistances <- function (tree) {
 
 #' Non-duplicate root
 #'
-#' Identify, for each edge, whether it is not a duplicate of the root edge
+#' Identify, for each edge, whether it denotes a different partition from
+#' the root edge.
+#' The first edge of the input tree must be a root edge; this can be
+#' accomplished using `Preorder`.
 #'
 #' @template treeParent
 #' @template treeChild
 #' @template treeNEdgeOptional
 #'
-#' @template MRS
-#' @export
-#' @family tree navigation
+#' @return `NonDuplicateRoot` returns a logical vector of length `nEdge`,
+#' specifying `TRUE` unless an edge identifies the same partition as
+#' the root edge.
+#'
+#' @examples
+#' tree <- Preorder(BalancedTree(8))
+#' edge <- tree$edge
+#' parent <- edge[, 1]
+#' child <- edge[, 2]
+#'
+#' which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
+#' @template MRS
+#' @family tree navigation
+#' @export
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot <- !logical(nEdge)
   rightSide <- DescendantEdges(1, parent, child, nEdge)
@@ -191,14 +213,16 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot
 }
 
-#' Number of distinct partitions in a tree
+#' Number of distinct partitions
+#'
+#' How many unique bipartition splits occur in a tree or object?
 #'
 #' @param x A phylogenetic tree of class `phylo`, or a list of such trees
 #' (of class `list` or `multiPhylo`), or a `Splits` object,
 #' or a vector of integers.
 #'
-#' @return Integer specifying the number of partitions in the specified trees,
-#' or in a rooted tree with `n` tips.
+#' @return `NSplits` returns an integer specifying the number of partitions in
+#'  the specified objects, or in a rooted tree with `n` tips.
 #'
 #' @examples {
 #'   NSplits(8L)
@@ -223,7 +247,7 @@ NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.multiPhylo <- function (x) vapply(x, NSplits, integer(1))
+NSplits.multiPhylo <- function (x) vapply(x, NSplits, numeric(1L))
 
 #' @rdname NSplits
 #' @export

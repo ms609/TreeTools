@@ -2,10 +2,6 @@
 #include <stdio.h>
 using namespace Rcpp;
 
-void report_calloc_error() {
-  Rprintf("Error allocating memory in calloc");
-}
-
 int smallest_descendant(int *node, int *smallest_desc, int *n_children,
                         int *children_of, const int *n_edge) {
   if (!smallest_desc[*node]) {
@@ -87,13 +83,6 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
       * n_children = (int*) calloc(node_limit, sizeof(int)),
       * smallest_desc = (int*) calloc(node_limit, sizeof(int)),
       * children_of = (int*) calloc(n_edge * node_limit, sizeof(int));
-
-  if (parent_of == NULL || n_children == NULL || smallest_desc == NULL
-        || children_of == NULL) {
-    /* Should probably free those that have been set */
-    report_calloc_error();
-  } /* Assume that calloc's fine otherwise... lazy but simple */
-
 
   for (int i = 0; i < n_edge; i++) {
     parent_of[child[i]] = parent[i];

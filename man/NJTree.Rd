@@ -11,10 +11,10 @@ NJTree(dataset)
 whose names correspond to the labels of any accompanying tree.}
 }
 \value{
-an object of class \code{phylo}
+\code{NJTree} returns an object of class \code{phylo}.
 }
 \description{
-Generates a rooted neighbour joining tree, with no edge lengths
+Generates a rooted neighbour joining tree, with no edge lengths.
 }
 \seealso{
 Other tree generation functions: \code{\link{BalancedTree}},
