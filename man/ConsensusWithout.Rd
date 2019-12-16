@@ -37,10 +37,10 @@ consensus tree.
 }}
 
 \examples{
+oldPar <- par(mfrow=c(1, 2), mar=rep(0.5, 4))
+
 # Two trees differing only in placement of tip 2:
 trees <- as.phylo(c(0, 53), 6)
-
-oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
 plot(trees[[1]])
 plot(trees[[2]])
 

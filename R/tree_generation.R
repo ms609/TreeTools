@@ -111,16 +111,20 @@ NJTree <- function (dataset) {
 
 #' Force taxa to form an outgroup
 #'
-#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such that the two
-#' are sister taxa across the root, without altering the relationships within the ingroup
-#' or within the outgroup.
+#' Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
+#' that the two are sister taxa across the root, without altering the
+#' relationships within the ingroup or within the outgroup.
 #'
-#' @param tree either a tree of class \code{phylo}, or a character vector listing the names of
-#'        all the taxa in the tree, from which a random tree will be generated.
-#' @param outgroup a vector containing the names of taxa to include in the outgroup
+#' @param tree either a tree of class \code{phylo}, or a character vector
+#' listing the names of all the taxa in the tree, from which a random tree will
+#'  be generated.
+#' @param outgroup a vector containing the names of taxa to include in the
+#' outgroup.
 #'
-#' @return a tree where all outgroup taxa are sister to all remaining taxa,
-#'         otherwise retaining the topology of the ingroup.
+#' @return `EnforceOutgroup` returns a tree of class `phylo` where all outgroup
+#' taxa are sister to all remaining taxa, otherwise retaining the topology of
+#' the ingroup.
+#'
 #' @template MRS
 #' @importFrom ape rtree
 #' @importFrom ape root drop.tip bind.tree

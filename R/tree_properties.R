@@ -36,9 +36,10 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
 
 #' All Descendant Edges
 #'
-#' @return `AllDescendantEdges` returns a matrix of class logical, with row N specifying whether each edge is a descendant of edge N
-#'         (or the edge itself)
-#' @describeIn DescendantEdges Quickly identifies edges that are 'descended' from each edge in a tree
+#' @return `AllDescendantEdges` returns a matrix of class logical, with row N
+#' specifying whether each edge is a descendant of edge N (or the edge itself).
+#' @describeIn DescendantEdges Quickly identifies edges that are 'descended'
+#' from each edge in a tree.
 #' @export
 AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
@@ -78,10 +79,11 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #'
 #' Quickly identifies edges that are 'ancestral' to a particular edge in a tree
 #'
-#' @param edge number of the edge whose child edges are required
+#' @param edge number of the edge whose child edges are required.
 #' @template treeParent
 #' @template treeChild
-#' @param stopAt number of the edge at which the search should terminate; defaults to the root edges
+#' @param stopAt number of the edge at which the search should terminate;
+#' defaults to the root edges.
 #' @return `EdgeAncestry` returns a logical vector stating whether each edge in
 #' turn is a descendant of the specified edge.
 #' @examples
