@@ -15,6 +15,10 @@ Logical specifying whether a root node is resolved.
 \description{
 Faster alternative to of \code{ape::is.rooted}.
 }
+\examples{
+TreeIsRooted(BalancedTree(6))
+
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

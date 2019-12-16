@@ -29,10 +29,10 @@ representation numbered to match \code{tipOrder}.
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
 such that the indices in \code{tree$edge[, 2]} correspond to the order of
-tips given in \code{tipOrder}
+tips given in \code{tipOrder}.
 }
 \examples{
-data(Lobo) # Loads the phyDat object Lobo.phy
+data('Lobo') # Loads the phyDat object Lobo.phy
 tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 

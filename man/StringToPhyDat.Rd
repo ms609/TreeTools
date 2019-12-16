@@ -34,6 +34,10 @@ morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon=TRUE)
 }
 \seealso{
 \code{\link{phyDat}}
+
+\itemize{
+\item \code{\link{PhyToString}}
+}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

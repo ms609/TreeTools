@@ -16,6 +16,11 @@ whose names correspond to the labels of any accompanying tree.}
 \description{
 Generates a rooted neighbour joining tree, with no edge lengths.
 }
+\examples{
+data('Lobo')
+NJTree(Lobo.phy)
+
+}
 \seealso{
 Other tree generation functions: \code{\link{BalancedTree}},
   \code{\link{PectinateTree}}, \code{\link{RandomTree}},

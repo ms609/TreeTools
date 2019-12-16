@@ -12,11 +12,15 @@ naming the tips, or any other object from which tip labels can be extracted
 with function \code{TipLabels}.}
 }
 \value{
-\code{PectinateTree} and \code{BinaryTree} each return a binary tree of
+\code{PectinateTree} and \code{BalancedTree} each return a binary tree of
 class \code{phylo} of the specified shape.
 }
 \description{
 Generates a pectinate (caterpillar) tree with the specified tip labels.
+}
+\examples{
+plot(PectinateTree(LETTERS[1:10]))
+
 }
 \seealso{
 Other tree generation functions: \code{\link{BalancedTree}},

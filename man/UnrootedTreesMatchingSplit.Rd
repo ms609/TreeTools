@@ -8,7 +8,7 @@ UnrootedTreesMatchingSplit(splits)
 }
 \arguments{
 \item{splits}{A vector of integers listing the number of tips in each of a number of
-tree splits (e.g. bipartitions).  For example, \kbd{c(3, 5)} states that
+tree splits (e.g. bipartitions).  For example, \code{c(3, 5)} states that
 a character divides a set of eight tips into a group of three and a group
 of five.}
 }
@@ -26,7 +26,7 @@ specified multi-partition split, using the formula of Carter \emph{et al}. (1990
 
 }
 \references{
-\insertRef{Carter1990}{TreeTools}, Theorem 2.
+See Theorem 2 in \insertRef{Carter1990}{TreeTools}
 }
 \seealso{
 Other split information functions: \code{\link{CharacterInformation}},
