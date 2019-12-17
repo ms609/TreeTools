@@ -65,5 +65,48 @@ Please use system.file() to get the correct package path in the example
 of ReadTntTree.Rd and unwrap theexample from \dontrun{}.
 > I have removed these examples.
 
+### Re-submission (comments date 2019-12-15, Swetlana Herbrandt)
+### Additional comments by e-mail (2019-12-17, Swetlana Herbrandt)
+
+> Thanks, please write your title in title case:
+> Create, Modify and Analyse Phylogenetic Trees
+
+Done.
+
+> Please ensure that your functions do not modify (save or delete) the
+> user's home filespace in your examples/vignettes/tests. That is not
+> allow by CRAN policies. Please only write/save files if the user has
+> specified a directory. In your examples/vignettes/tests you can write to
+> tempdir().
+
+>> If you are sure that your examples do not modify the user's home
+>> filespace then everything is fine.
+
+I have checked carefully and am not able to find any cases where the 
+user's home filespace is modified.
+Note that `write.tree()` is only used to generate character strings
+within R, and does not write files to disk.
+
+> Is there any reason why some paths are hard coded? That seems to be very
+> inflexible. Please change.
+
+>> As far as I remember I found the hard coded paths in ReadTntTree(). If
+>> you are sure that these paths will be always correct, you can keep them.
+>> If not, an argument that has as default the path that is actually hard
+>> coded may be a solution.
+
+I have expanded the documentation of ReadTNTTree() to make clear how a
+user can avoid relying on hard-coded paths, whilst retaining support for
+hard-coded paths to maximise user-friendliness for inexperienced users. 
+
+I have additionally moved test files from `testthat/tests` to 
+inst/extdata/tests` in order to allow use of `system.file()`.
+
+>>BTW: Your desctiption text is really short and you do not even mention
+>>the TNT software and what analysis metheds you provide. Maybe you can
+>>add a few more details.
+
+Thank you for this suggestion; I have expanded the text.
+
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.

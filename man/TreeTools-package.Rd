@@ -6,8 +6,17 @@
 \alias{TreeTools-package}
 \title{TreeTools: Create, Modify and Analyse Phylogenetic Trees}
 \description{
-Core functions for the creation, modification and analysis of 
-  phylogenetic trees.
+Efficient implementations of functions for the creation, 
+  modification and analysis of phylogenetic trees.
+  Applications include: generation of trees with specified shapes;
+  rooting of trees and extraction of subtrees;
+  calculation and depiction of node support;
+  calculation of ancestor-descendant relationships;
+  import and export of trees from Newick, Nexus (Maddison et al. 1997)
+  <doi:10.1093/sysbio/46.4.590>,
+  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;
+  and
+  analysis of partitions and partition information.
 }
 \seealso{
 Useful links:
