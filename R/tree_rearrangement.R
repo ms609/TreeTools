@@ -51,26 +51,27 @@ RootTree <- function (tree, outgroupTips) {
 #' (Use \code{\link[ape]{nodelabels}} or \code{\link[ape:nodelabels]{edgelabels}}
 #' to view numbers on a plotted tree.)
 #'
-#' @return `CollapseNode` and `CollapseEdge` return a tree of class `phylo`, 
-#' correspoinding to `tree` with the specified nodes or edges collapsed.
-#' The length of each dropped edge will (naively) be added to each descendant edge.
+#' @return `CollapseNode` and `CollapseEdge` return a tree of class `phylo`,
+#' corresponding to `tree` with the specified nodes or edges collapsed.
+#' The length of each dropped edge will (naively) be added to each descendant
+#' edge.
 #'
 #' @examples
-#'   library(ape)
-#'   set.seed(1)
-#'   oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
+#' library(ape)
+#' set.seed(1)
+#' oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
 #'
-#'   tree <- rtree(7)
-#'   plot(tree)
-#'   nodelabels()
-#'   edgelabels(round(tree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
+#' tree <- rtree(7)
+#' plot(tree)
+#' nodelabels()
+#' edgelabels(round(tree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
 #'
-#'   newTree <- CollapseNode(tree, c(12, 13))
-#'   plot(newTree)
-#'   nodelabels()
-#'   edgelabels(round(newTree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
+#' newTree <- CollapseNode(tree, c(12, 13))
+#' plot(newTree)
+#' nodelabels()
+#' edgelabels(round(newTree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
 #'
-#'   par(oldPar)
+#' par(oldPar)
 #'
 #' @author  Martin R. Smith
 #' @export
