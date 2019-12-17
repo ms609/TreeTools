@@ -2,6 +2,24 @@ library(ape)
 
 context("Tree rearrangements")
 
+test_that("RootOnNode works", {
+  Test <- function (tr, node, rr) {
+    if (node <= 8) {
+      expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
+                   RootOnNode(tr, node, rr))
+    } else {
+      expect_equal(Preorder(ape::root(tr, node = node, resolve.root = rr)),
+                 RootOnNode(tr, node, rr))
+    }
+  }
+
+  urt <- UnrootedTreeWithShape(3, 8, letters[1:8])
+  Test(urt, 12, TRUE)
+  Test(urt, 12, FALSE)
+  Test(urt, 4L, TRUE)
+  Test(urt, 4L, FALSE)
+})
+
 test_that("CollapseNodes works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
