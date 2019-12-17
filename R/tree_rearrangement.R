@@ -16,6 +16,7 @@
 #' plot(RootTree(tree, c('t6', 't7')))
 #'
 #' plot(RootOnNode(tree, 12))
+#' plot(RootOnNode(tree, 2))
 #'
 #' @seealso
 #' - [ape::root]
@@ -50,10 +51,15 @@ RootTree <- function (tree, outgroupTips) {
 }
 
 #' @describeIn RootTree Roots a tree on a specified internal node.
-#' @param node integer specifying internal node to set as root.
+#' @param node integer specifying node (internal or tip) to set as the root.
+#' @param resolveRoot logical specifying whether to resolve the root node.
 #'
+#' @return `RootOnNode` returns a tree of class `phylo`, rooted on the requested
+#' `node` and ordered in [`Preorder`].
+#'
+#' @importFrom ape unroot
 #' @export
-RootOnNode <- function (tree, node, resolve.root = FALSE) {
+RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -62,48 +68,58 @@ RootOnNode <- function (tree, node, resolve.root = FALSE) {
   rootNode <- parent[rootEdges][1]
   rooted <- sum(rootEdges) == 2L
 
-  if (rooted) {
-    rootChildren <- child[rootEdges]
-    spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
-    parent[rootEdges][!spareRoot] <- rootChildren[spareRoot]
-    inverters <- EdgeAncestry(which(nodeParentEdge), parent, child) |
-      rootEdges | nodeParentEdge
-    if (resolve.root) {
-      parent[rootEdges][spareRoot] <- node
-      child[rootEdges][spareRoot] <- rootNode
-      child[nodeParentEdge] <- rootNode
+  if (any(nodeParentEdge)) {
+    if (rooted) {
+      rootChildren <- child[rootEdges]
+      spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
+      parent[rootEdges][!spareRoot] <- rootChildren[spareRoot]
+      inverters <- EdgeAncestry(which(nodeParentEdge), parent, child) |
+        rootEdges
+      if (resolveRoot) {
+        inverters <- inverters | nodeParentEdge
+        parent[rootEdges][spareRoot] <- node
+        child[rootEdges][spareRoot] <- rootNode
+        child[nodeParentEdge] <- rootNode
+      } else {
+        if (node > rootNode) inverters <- inverters | nodeParentEdge
+        deletedEdge <- which(rootEdges)[spareRoot]
+
+        parent <- parent[-deletedEdge]
+        child <- child[-deletedEdge]
+        inverters <- inverters[-deletedEdge]
+
+        parent[parent > rootNode] <- parent[parent > rootNode] - 1L
+        child[child > rootNode] <- child[child > rootNode] - 1L
+
+        tree$Nnode <- tree$Nnode - 1L
+
+      }
     } else {
-      deletedEdge <- which(rootEdges)[spareRoot]
-
-      parent <- parent[-deletedEdge]
-      child <- child[-deletedEdge]
-      inverters <- inverters[-deletedEdge]
-
-      parent[parent > rootNode] <- parent[parent > rootNode] - 1L
-      child[child > rootNode] <- child[child > rootNode] - 1L
-
-      tree$Nnode <- tree$Nnode - 1L
-
+      if (resolveRoot) {
+        inverters <- c(EdgeAncestry(which(nodeParentEdge), parent, child), FALSE)
+        newNode <- max(parent) + 1L
+        parent <- c(parent, newNode)
+        child <- c(child, parent[nodeParentEdge])
+        parent[nodeParentEdge] <- newNode
+        tree$Nnode <- 1L + tree$Nnode
+      } else {
+        inverters <- EdgeAncestry(which(nodeParentEdge), parent, child)
+      }
     }
+    tree$edge <- RenumberTree(ifelse(inverters, child, parent),
+                              ifelse(inverters, parent, child))
+    attr(tree, 'order') <- 'preorder'
+    tree
   } else {
-    if (resolve.root) {
-      inverters <- c(EdgeAncestry(which(nodeParentEdge), parent, child), FALSE)
-      newNode <- max(parent) + 1L
-      parent <- c(parent, newNode)
-      child <- c(child, parent[nodeParentEdge])
-      parent[nodeParentEdge] <- newNode
-      tree$Nnode <- 1L + tree$Nnode
+    # Root position is already correct
+    if (rooted && !resolveRoot) {
+      unroot(tree)
+    } else if (!rooted && resolveRoot) {
+      RootOnNode(tree, max(child[rootEdges]), resolveRoot = TRUE)
     } else {
-      inverters <- EdgeAncestry(which(nodeParentEdge), parent, child)
+      Preorder(tree)
     }
   }
-
-  cbind(ifelse(inverters, child, parent), ifelse(inverters, parent, child))
-
-  tree$edge <- RenumberTree(ifelse(inverters, child, parent),
-                            ifelse(inverters, parent, child))
-  attr(tree, 'order') <- 'preorder'
-  tree
 }
 
 #' Collapse nodes on a phylogenetic tree

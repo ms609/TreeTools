@@ -3,21 +3,36 @@ library(ape)
 context("Tree rearrangements")
 
 test_that("RootOnNode works", {
-  Test <- function (tr, node, rr) {
-    if (node <= 8) {
-      expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
+  TestTip <- function (tr, node, rr) {
+    expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
                    RootOnNode(tr, node, rr))
-    } else {
-      expect_equal(Preorder(ape::root(tr, node = node, resolve.root = rr)),
-                 RootOnNode(tr, node, rr))
-    }
+  }
+  TestInternal <- function (tr, node, rr) {
+    expect_equal(Preorder(ape::root(tr, node = node, resolve.root = rr)),
+               RootOnNode(tr, node, rr))
   }
 
+  TestInternal(PectinateTree(8), 14, TRUE)
+  TestInternal(PectinateTree(8), 14, FALSE)
+  TestTip(PectinateTree(8), 4L, TRUE)
+  TestTip(PectinateTree(8), 4L, FALSE)
+
   urt <- UnrootedTreeWithShape(3, 8, letters[1:8])
-  Test(urt, 12, TRUE)
-  Test(urt, 12, FALSE)
-  Test(urt, 4L, TRUE)
-  Test(urt, 4L, FALSE)
+  TestInternal(urt, 12, TRUE)
+  TestInternal(urt, 12, FALSE)
+  TestTip(urt, 4L, TRUE)
+  TestTip(urt, 4L, FALSE)
+
+  # Children of an unresolved root
+  TestInternal(urt, 10, TRUE)
+  TestTip(urt, 1, TRUE)
+
+  expect_equal(PectinateTree(8), RootOnNode(PectinateTree(8), 9L, TRUE))
+  expect_equal(unroot(PectinateTree(8)), RootOnNode(PectinateTree(8), 9L, FALSE))
+  expect_equal(urt, RootOnNode(urt, 9L, FALSE))
+  expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
+               RootOnNode(urt, 9L, TRUE))
+
 })
 
 test_that("CollapseNodes works", {

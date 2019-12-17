@@ -2,22 +2,48 @@
 % Please edit documentation in R/tree_rearrangement.R
 \name{RootTree}
 \alias{RootTree}
+\alias{RootOnNode}
 \title{Root a phylogenetic tree}
 \usage{
 RootTree(tree, outgroupTips)
+
+RootOnNode(tree, node, resolveRoot = FALSE)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{outgroupTips}{Character vector specifying the names of the tips to
 include in the outgroup.}
+
+\item{node}{integer specifying node (internal or tip) to set as the root.}
+
+\item{resolveRoot}{logical specifying whether to resolve the root node.}
 }
 \value{
 \code{RootTree} returns a tree of class \code{phylo}, rooted on the smallest
 clade that contains the specified tips.
+
+\code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
+\code{node} and ordered in \code{\link{Preorder}}.
 }
 \description{
 Roots a tree on the smallest clade containing the specified tips.
+}
+\section{Functions}{
+\itemize{
+\item \code{RootOnNode}: Roots a tree on a specified internal node.
+}}
+
+\examples{
+tree <- PectinateTree(8)
+plot(tree)
+ape::nodelabels()
+
+plot(RootTree(tree, c('t6', 't7')))
+
+plot(RootOnNode(tree, 12))
+plot(RootOnNode(tree, 2))
+
 }
 \seealso{
 \itemize{
