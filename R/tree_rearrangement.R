@@ -79,7 +79,11 @@ RootOnNode <- function (tree, node, resolve.root = FALSE) {
       child <- child[-deletedEdge]
       inverters <- inverters[-deletedEdge]
 
+      parent[parent > rootNode] <- parent[parent > rootNode] - 1L
+      child[child > rootNode] <- child[child > rootNode] - 1L
+
       tree$Nnode <- tree$Nnode - 1L
+
     }
   } else {
     if (resolve.root) {
@@ -90,9 +94,11 @@ RootOnNode <- function (tree, node, resolve.root = FALSE) {
       parent[nodeParentEdge] <- newNode
       tree$Nnode <- 1L + tree$Nnode
     } else {
-      inverters <- EdgeAncestry(which(nodeParentEdge), parent, child) | nodeParentEdge
+      inverters <- EdgeAncestry(which(nodeParentEdge), parent, child)
     }
   }
+
+  cbind(ifelse(inverters, child, parent), ifelse(inverters, parent, child))
 
   tree$edge <- RenumberTree(ifelse(inverters, child, parent),
                             ifelse(inverters, parent, child))
