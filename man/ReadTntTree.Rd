@@ -11,15 +11,16 @@ ReadTntTree(filename, relativePath = NULL, keepEnd = 1L,
 TNTText2Tree(treeText)
 }
 \arguments{
-\item{filename}{character string specifying path to TNT \code{.tre} file.}
+\item{filename}{character string specifying path to TNT \code{.tre} file,
+relative to the R working directory (visible with \code{getwd()}).}
 
-\item{relativePath}{(optional) character string specifying location of the
+\item{relativePath}{(discouraged) character string specifying location of the
 matrix file used to generate the TNT results, relative to the current working
-directory, for portability.  Taxon names will be read from this file if they
-are not specified by \code{tipLabels}.}
+directory.  Taxon names will be read from this file if they are not specified
+by \code{tipLabels}.}
 
-\item{keepEnd}{(optional, default 1) integer specifying how many elements of the file
-path to conserve when creating relative path (see examples).}
+\item{keepEnd}{(optional, default 1) integer specifying how many elements of
+the file path to conserve when creating relative path (see examples).}
 
 \item{tipLabels}{(optional) character vector specifying the names of the
 taxa, in the sequence that they appear in the TNT file.  If not specified,
@@ -37,14 +38,30 @@ to the tree in \code{filename}.
 Reads a tree from TNT's parenthetical output.
 }
 \details{
-Supports trees that have been written from TNT in parenthetical notation
-using \code{tsav*}.  If taxa have been saved using their names (\code{taxname=}),
-then the tip labels will be read directly from the TNT \code{.tre} file.  If
-taxa have been saved using their numbers (\code{taxname-}), tip labels will be
-imported from the linked matrix file that is listed in the first line of the
-\code{.tre} file.  Ensure that this file exists in the expected location -- if
-it does not, use the \code{relativePath} argument to override this default, or
-specify \code{tipLabels} to set manually.
+\href{http://www.lillo.org.ar/phylogeny/tnt/}{TNT} is software for parsimony
+analysis.  Whilst its implementation of tree search is extremely rapid,
+analysis of results in TNT is made difficult by its esoteric and scantly
+documented scripting language.
+
+\code{ReadTNTTree} aims to aid the user by facilitating the import of trees
+generated in TNT into R for further analysis.
+
+The function depends on tree files being saved by TNT in parenthetical
+notation, using the TNT command \code{tsav*}.
+Trees are easiest to load into R if taxa have been saved using their names
+(TNT command \code{taxname=}).  In this case, the TNT \code{.tre} file
+contains tip labels and can be parsed directly.  The downside is that the
+uncompressed \code{.tre} files will have a larger file size.
+
+\code{ReadTNTTree} can also read \code{.tre} files in which taxa have been saved using
+their numbers (\code{taxname-}).  Such files contain a hard-coded link to the
+matrix file that was used to generate the trees, in the first line of the
+\code{.tre} file.  This poses problems for portability: if the matrix file is
+moved, or the \code{.tre} file is accessed on another computer, the taxon names
+may be lost.  As such, it is important to check that the matrix file
+exists in the expected location -- if it does not,
+either use the \code{relativePath} argument to point to its new location, or
+specify \code{tipLabels} to manually specify the tip labels.
 }
 \section{Functions}{
 \itemize{

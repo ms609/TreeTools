@@ -37,27 +37,43 @@ ApeTime <- function (filename, format='double') {
 #'
 #' Reads a tree from TNT's parenthetical output.
 #'
-#' Supports trees that have been written from TNT in parenthetical notation
-#' using `tsav*`.  If taxa have been saved using their names (`taxname=`),
-#' then the tip labels will be read directly from the TNT `.tre` file.  If
-#' taxa have been saved using their numbers (`taxname-`), tip labels will be
-#' imported from the linked matrix file that is listed in the first line of the
-#'  `.tre` file.  Ensure that this file exists in the expected location -- if
-#'  it does not, use the `relativePath` argument to override this default, or
-#'  specify `tipLabels` to set manually.
+#' [TNT](http://www.lillo.org.ar/phylogeny/tnt/) is software for parsimony
+#' analysis.  Whilst its implementation of tree search is extremely rapid,
+#' analysis of results in TNT is made difficult by its esoteric and scantly
+#' documented scripting language.
 #'
-#' @param filename character string specifying path to TNT `.tre` file.
-#' @param relativePath (optional) character string specifying location of the
+#' `ReadTNTTree` aims to aid the user by facilitating the import of trees
+#' generated in TNT into R for further analysis.
+#'
+#' The function depends on tree files being saved by TNT in parenthetical
+#' notation, using the TNT command `tsav*`.
+#' Trees are easiest to load into R if taxa have been saved using their names
+#' (TNT command `taxname=`).  In this case, the TNT `.tre` file
+#' contains tip labels and can be parsed directly.  The downside is that the
+#' uncompressed `.tre` files will have a larger file size.
+#'
+#' `ReadTNTTree` can also read `.tre` files in which taxa have been saved using
+#' their numbers (`taxname-`).  Such files contain a hard-coded link to the
+#' matrix file that was used to generate the trees, in the first line of the
+#' `.tre` file.  This poses problems for portability: if the matrix file is
+#' moved, or the `.tre` file is accessed on another computer, the taxon names
+#' may be lost.  As such, it is important to check that the matrix file
+#' exists in the expected location -- if it does not,
+#' either use the `relativePath` argument to point to its new location, or
+#' specify `tipLabels` to manually specify the tip labels.
+#'
+#' @param filename character string specifying path to TNT `.tre` file,
+#' relative to the R working directory (visible with `getwd()`).
+#' @param relativePath (discouraged) character string specifying location of the
 #' matrix file used to generate the TNT results, relative to the current working
-#' directory, for portability.  Taxon names will be read from this file if they
-#' are not specified by `tipLabels`.
-#' @param keepEnd (optional, default 1) integer specifying how many elements of the file
-#'                path to conserve when creating relative path (see examples).
+#' directory.  Taxon names will be read from this file if they are not specified
+#'  by `tipLabels`.
+#' @param keepEnd (optional, default 1) integer specifying how many elements of
+#'  the file path to conserve when creating relative path (see examples).
 #' @param tipLabels (optional) character vector specifying the names of the
 #' taxa, in the sequence that they appear in the TNT file.  If not specified,
 #' taxon names will be loaded from the data file linked in the first line of the
 #'  `.tre` file specified in `filename`.
-#'
 #'
 #' @return `ReadTNTTree` returns a tree of class \code{phylo}, corresponding
 #' to the tree in `filename`.
@@ -117,8 +133,10 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
 
   if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
-      taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '', fileText[1], fixed=TRUE)
-      taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed=TRUE), fixed=TRUE)
+      taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
+                        fileText[1], fixed=TRUE)
+      taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed=TRUE),
+                        fixed=TRUE)
       if (!is.null(relativePath)) {
         taxonFileParts <- strsplit(taxonFile, '/')[[1]]
         nParts <- length(taxonFileParts)
@@ -126,7 +144,8 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
           stop("Taxon file path (", taxonFile, ") contains fewer than keepEnd (",
                keepEnd, ") components.")
         }
-        taxonFile <- paste0(c(relativePath, taxonFileParts[(nParts + 1L - keepEnd):nParts]),
+        taxonFile <- paste0(c(relativePath,
+                              taxonFileParts[(nParts + 1L - keepEnd):nParts]),
                             collapse='/')
       }
 
@@ -141,7 +160,8 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
         if (is.null(tipLabels)) {
           warning("Could not read taxon names from linked TNT file:\n  ",
                   taxonFile,
-                  "\nIs the file in TNT or Nexus format? If failing inexplicably, please report:",
+                  "\nIs the file in TNT or Nexus format?",
+                  " If failing inexplicably, please report:",
                   "\n  https://github.com/ms609/TreeTools/issues/new")
         }
       }
@@ -292,9 +312,7 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #'
 #' @template MRS
 #' @references
-#'   Maddison, D. R., Swofford, D. L. and Maddison, W. P. (1997)
-#'   NEXUS: an extensible file format for systematic information.
-#'   Systematic Biology, 46, 590-621.
+#'   \insertRef{Maddison1997}{TreeTools}
 #'
 #' @examples
 #' fileName <- paste0(system.file(package='TreeTools'),
