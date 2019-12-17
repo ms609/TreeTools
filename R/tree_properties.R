@@ -101,10 +101,12 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @export
 EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
   ret <- edge <- AncestorEdge(edge, parent, child)
-  repeat {
+  if (any(ret)) repeat {
     if (any(ret[stopAt])) return(ret)
     ret[edge <- AncestorEdge(edge, parent, child)] <- TRUE
   }
+  # Return:
+  ret
 }
 
 #' Most Recent Common Ancestor
