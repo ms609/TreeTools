@@ -73,8 +73,11 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
       rootChildren <- child[rootEdges]
       spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
       parent[rootEdges][!spareRoot] <- rootChildren[spareRoot]
-      inverters <- EdgeAncestry(which(nodeParentEdge), parent, child) |
-        rootEdges
+      ancestorEdges <- EdgeAncestry(which(nodeParentEdge), parent, child)
+      inverters <- ancestorEdges | rootEdges
+      if (!ancestorEdges[rootEdges][!spareRoot]) {
+        inverters[which(rootEdges)[!spareRoot]] <- FALSE
+      }
       if (resolveRoot) {
         inverters <- inverters | nodeParentEdge
         parent[rootEdges][spareRoot] <- node

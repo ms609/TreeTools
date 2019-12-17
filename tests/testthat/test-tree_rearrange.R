@@ -5,17 +5,20 @@ context("Tree rearrangements")
 test_that("RootOnNode works", {
   TestTip <- function (tr, node, rr) {
     expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
-                   RootOnNode(tr, node, rr))
+                 RootOnNode(tr, node, rr))
   }
   TestInternal <- function (tr, node, rr) {
     expect_equal(Preorder(ape::root(tr, node = node, resolve.root = rr)),
-               RootOnNode(tr, node, rr))
+                 RootOnNode(tr, node, rr))
   }
 
   TestInternal(PectinateTree(8), 14, TRUE)
   TestInternal(PectinateTree(8), 14, FALSE)
   TestTip(PectinateTree(8), 4L, TRUE)
   TestTip(PectinateTree(8), 4L, FALSE)
+
+  TestInternal(BalancedTree(8L), 11L, TRUE)
+  TestInternal(BalancedTree(8L), 11L, FALSE)
 
   urt <- UnrootedTreeWithShape(3, 8, letters[1:8])
   TestInternal(urt, 12, TRUE)
