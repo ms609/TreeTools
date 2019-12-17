@@ -87,6 +87,11 @@ RootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
 #' to the shape provided.  Tips are unlabelled.
 #' @export
 UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
+  nShapes <- NUnrootedShapes(nTip)
+  if (shape >= nShapes) {
+    stop("Shape must be between 0 and ", nShapes)
+  }
+
   UnrootedTreeWithKey(UnrootedKeys(nTip)[shape + 1L], nTip, tipLabels)
 }
 
