@@ -1,3 +1,7 @@
+# TreeTools 0.1.3
+
+- `RootOnNode`: Quickly root a tree on a specified node.
+
 # TreeTools 0.1.2
  
 - `as.Newick`: fast conversion to Newick format.
