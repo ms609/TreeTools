@@ -1,5 +1,16 @@
 context("tree_properties.R")
 
+test_that('EdgeAncestry works', {
+  tree <- BalancedTree(10)
+  edge <- tree$edge
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  expect_equal(c(10, 14, 16), which(EdgeAncestry(18, parent, child)))
+  expect_equal(1, which(EdgeAncestry(2, parent, child)))
+  expect_equal(integer(0), which(EdgeAncestry(1, parent, child)))
+  expect_equal(logical(18), EdgeAncestry(10, parent, child))
+})
+
 test_that('Rooting and partition counting', {
   set.seed(0)
 
