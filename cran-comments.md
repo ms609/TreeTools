@@ -7,7 +7,7 @@ and made concominant changes; I have also added Solaris to my test environments.
 * Windows 10 on local machine, R 3.6.1
 * Windows 10 via check_win_devel(quiet = TRUE), R devel
 * ubuntu 16.04.6 LTS (on travis-ci), R 3.4.0, release and devel
-* Mac OS X 10.13.3 (on travis-ci), R release
+* Mac OS X 10.13.3 (on travis-ci), R devel
 * Using check_rhub(platforms = rhub::platforms()[[1]])
 
 ## R CMD check results
