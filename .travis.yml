@@ -30,7 +30,7 @@ matrix:
         skip_cleanup: true
         local_dir: "docs"
         keep-history: true
-        on: 
+        on:
           branch: master
     - r: devel
       branches:
