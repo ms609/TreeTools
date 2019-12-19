@@ -1,7 +1,7 @@
-#include <stdint.h>
+#include <cstdint>
 #include <Rcpp.h>
 using namespace Rcpp;
-
+using namespace std;
 
 const unsigned int MAX_SHAPE_TIP = 200,
   MAX_SHAPE_NODE = MAX_SHAPE_TIP + MAX_SHAPE_TIP - 1;
@@ -35,7 +35,7 @@ unsigned int triangular_number(const unsigned int n) {
 
 unsigned int triangle_row (const unsigned int x) {
   // Solve x = (n)(n+1) / 2 for n
-  return (sqrt((8 * x) + 1) - 1) / 2;
+  return (unsigned int) (sqrt(double(8 * x) + 1) - 1) / 2;
 }
 
 // [[Rcpp::export]]
