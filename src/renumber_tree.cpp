@@ -1,5 +1,6 @@
+#include <cstdio>
+#include <cstdlib> /* for calloc */
 #include <Rcpp.h>
-#include <stdio.h>
 using namespace Rcpp;
 
 int smallest_descendant(int *node, int *smallest_desc, int *n_children,
@@ -79,10 +80,10 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
     root_node = n_edge + n_edge,
     n_tip = 0;
 
-  int * parent_of = (int*) calloc(node_limit, sizeof(int)),
-      * n_children = (int*) calloc(node_limit, sizeof(int)),
-      * smallest_desc = (int*) calloc(node_limit, sizeof(int)),
-      * children_of = (int*) calloc(n_edge * node_limit, sizeof(int));
+  int * parent_of = (int*) std::calloc(node_limit, sizeof(int)),
+      * n_children = (int*) std::calloc(node_limit, sizeof(int)),
+      * smallest_desc = (int*) std::calloc(node_limit, sizeof(int)),
+      * children_of = (int*) std::calloc(n_edge * node_limit, sizeof(int));
 
   for (int i = 0; i < n_edge; i++) {
     parent_of[child[i]] = parent[i];
@@ -94,7 +95,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
     if (parent_of[i] == 0) root_node = i;
     if (n_children[i] == 0) ++n_tip;
   }
-  free(parent_of);
+  std::free(parent_of);
 
   for (int tip = 1; tip <= n_tip; tip++) {
     smallest_desc[tip] = tip;
@@ -105,7 +106,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
     quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
                           0, n_children[node] - 1);
   }
-  free(smallest_desc);
+  std::free(smallest_desc);
 
   int next_label = n_tip + 2;
   IntegerMatrix ret(n_edge, 2);
@@ -113,8 +114,8 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child
                   children_of, n_children, ret,
                   &next_edge, &next_label, &n_tip, &n_edge);
 
-  free(n_children);
-  free(children_of);
+  std::free(n_children);
+  std::free(children_of);
 
   return (ret);
 }
@@ -139,10 +140,10 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
 {
   const int n_edge = edge.nrow(), node_limit = n_edge + 1;
   int root_node = 0, n_tip = 0;
-  int * parent_of = (int*) calloc(node_limit, sizeof(int)),
-      * n_children = (int*) calloc(node_limit, sizeof(int)),
-      * subtree_size = (int*) calloc(node_limit, sizeof(int)),
-      * children_of = (int*) calloc(n_edge * node_limit, sizeof(int));
+  int * parent_of = (int*) std::calloc(node_limit, sizeof(int)),
+      * n_children = (int*) std::calloc(node_limit, sizeof(int)),
+      * subtree_size = (int*) std::calloc(node_limit, sizeof(int)),
+      * children_of = (int*) std::calloc(n_edge * node_limit, sizeof(int));
 
   for (int i = 0; i < n_edge; i++) {
     parent_of[edge(i, 1)] = edge(i, 0);
@@ -154,7 +155,7 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
     if (parent_of[i] == 0) root_node = i;
     if (n_children[i] == 0) ++n_tip;
   }
-  free(parent_of);
+  std::free(parent_of);
   const int n_node = n_edge - n_tip + 1;
 
   for (int tip = 0; tip < n_tip; tip++) {
@@ -182,10 +183,10 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
       ++this_edge;
     }
   }
-  free(n_children);
-  free(subtree_size);
-  free(children_of);
-  free(node_order);
+  std::free(n_children);
+  std::free(subtree_size);
+  std::free(children_of);
+  std::free(node_order);
 
   return (ret);
 }

@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include <cstdint>
 #include <Rcpp.h>
 using namespace Rcpp;
 
