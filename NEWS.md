@@ -1,6 +1,7 @@
 # TreeTools 0.1.3
 
 - `RootOnNode`: Quickly root a tree on a specified node.
+- Improve portability of C++ code.
 
 # TreeTools 0.1.2
  
