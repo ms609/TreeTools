@@ -1,8 +1,3 @@
-This re-submission catches the overloading of sqrt on Solaris identified by 
-the CRAN package check results, and highlighted by Brian Ripley.
-I have re-read the guidance for portable C/C++ code in 'Writing R Extensions'
-and made concominant changes; I have also added Solaris to my test environments.
-
 ## Test environments
 * Windows 10 on local machine, R 3.6.1
 * Windows 10 via check_win_devel(quiet = TRUE), R devel
@@ -11,7 +6,36 @@ and made concominant changes; I have also added Solaris to my test environments.
 * Using check_rhub(platforms = rhub::platforms()[[1]])
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs.
+
+There was one NOTE:
+
+> Days since last update: 1
+
+This re-submission catches the overloading of sqrt on Solaris identified by 
+the CRAN package check results, highlighted by Brian Ripley.
+
+I have re-read the guidance for portable C/C++ code in 'Writing R Extensions'
+and made concominant changes; I have also added Solaris to my test environments.
+
+Apologies for overlooking this in the initial submission.
+ 
+> Found the following (possibly) invalid URLs:
+>   URL: https://doi.org/10.1093/sysbio/46.4.590
+>     From: man/ReadCharacters.Rd
+>     Status: Error
+>     Message: libcurl error code 56:
+>       	Recv failure: Operation timed out
+> 
+> Found the following (possibly) invalid DOIs:
+>   DOI: 10.1093/sysbio/46.4.590
+>     From: DESCRIPTION
+>     Status: libcurl error code 56:
+>     	Recv failure: Operation timed out
+>     Message: Error
+
+The DOI and URL are correct (though the page seems a little slow to load and
+is presumably causing a timeout).
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
