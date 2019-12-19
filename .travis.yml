@@ -40,7 +40,7 @@ matrix:
     - os: osx
       branches:
         only: master
-      r: devel
+      r: release
       r_packages:
         - ape
         - devtools
