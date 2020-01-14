@@ -172,6 +172,7 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
     node_order[i] = i + n_tip;
   }
   quicksort_by_smallest(node_order, subtree_size, 0, n_node - 1);
+  std::free(subtree_size);
 
   IntegerMatrix ret(n_edge, 2);
   int this_edge = 0;
@@ -184,7 +185,6 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
     }
   }
   std::free(n_children);
-  std::free(subtree_size);
   std::free(children_of);
   std::free(node_order);
 
