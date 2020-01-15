@@ -169,6 +169,13 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 #' @export
 as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
                               tipLabels = attr(x, 'tip.label'), ...) {
+  if (is.null(nTip)) {
+    if (is.null(tipLabels)) {
+      stop("Either nTip or tipLabels must be specified.")
+    } else {
+      nTip <- length(tipLabels)
+    }
+  }
   if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
   if (length(x) > 1) {
     structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
