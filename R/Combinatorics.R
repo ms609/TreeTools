@@ -167,8 +167,8 @@ IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 
 #' @describeIn NRooted Log number of unrooted trees
 #' @examples
-#' LnUnrootedSplits(2,4)
-#' LnUnrootedSplits(3,3)
+#' LnUnrootedSplits(c(2,4))
+#' LnUnrootedSplits(c(3,3))
 #' @export
 LnUnrootedSplits <- function (splits) {
   if ((nSplits <- length(splits)) < 2) return (LnUnrooted(splits));
@@ -178,8 +178,8 @@ LnUnrootedSplits <- function (splits) {
 #' @describeIn NRooted Number of unrooted trees consistent with a bipartition
 #' split.
 #' @examples
-#' NUnrootedSplits(2,4)
-#' NUnrootedSplits(3,3)
+#' NUnrootedSplits(c(2,4))
+#' NUnrootedSplits(c(3,3))
 #' @family split information function
 #' @export
 NUnrootedSplits  <- function (splits) {

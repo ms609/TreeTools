@@ -80,10 +80,10 @@ split
   # 00000 11111 222
   NUnrootedMult(c(5,5,3))
 
-LnUnrootedSplits(2,4)
-LnUnrootedSplits(3,3)
-NUnrootedSplits(2,4)
-NUnrootedSplits(3,3)
+LnUnrootedSplits(c(2,4))
+LnUnrootedSplits(c(3,3))
+NUnrootedSplits(c(2,4))
+NUnrootedSplits(c(3,3))
 }
 \references{
 \insertRef{Carter1990}{TreeTools}
