@@ -92,7 +92,7 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' Functions starting N return the number of rooted or unrooted trees, functions
 #' starting Ln provide the natural logarithm of this number.
-#' Calculations follow Carter et al. 1990, Theorem 2.
+#' Calculations follow Carter _et al._ 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
 #' @param splits Integer vector listing the number of taxa in each tree
@@ -166,13 +166,21 @@ N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 
 #' @describeIn NRooted Log number of unrooted trees
+#' @examples
+#' LnUnrootedSplits(2,4)
+#' LnUnrootedSplits(3,3)
 #' @export
 LnUnrootedSplits <- function (splits) {
   if ((nSplits <- length(splits)) < 2) return (LnUnrooted(splits));
   if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
   return (LnUnrootedMult(splits))
 }
-#' @describeIn NRooted Number of unrooted trees
+#' @describeIn NRooted Number of unrooted trees consistent with a bipartition
+#' split.
+#' @examples
+#' NUnrootedSplits(2,4)
+#' NUnrootedSplits(3,3)
+#' @family split information function
 #' @export
 NUnrootedSplits  <- function (splits) {
   if ((nSplits <- length(splits)) < 2) return (NUnrooted(splits));
@@ -190,7 +198,8 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
     LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
     sum(LnDoubleFactorial(splits + splits - 3L))
 }
-#' @describeIn NRooted Number of unrooted trees (mult)
+#' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
+#' split
 #' @export
 NUnrootedMult  <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]
