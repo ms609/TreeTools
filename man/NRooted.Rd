@@ -46,7 +46,7 @@ a given pattern of splits.
 \details{
 Functions starting N return the number of rooted or unrooted trees, functions
 starting Ln provide the natural logarithm of this number.
-Calculations follow Carter et al. 1990, Theorem 2.
+Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
 \itemize{
@@ -62,11 +62,13 @@ Calculations follow Carter et al. 1990, Theorem 2.
 
 \item \code{LnUnrootedSplits}: Log number of unrooted trees
 
-\item \code{NUnrootedSplits}: Number of unrooted trees
+\item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
+split.
 
 \item \code{LnUnrootedMult}: Log unrooted mult
 
-\item \code{NUnrootedMult}: Number of unrooted trees (mult)
+\item \code{NUnrootedMult}: Number of unrooted trees consistent with a multi-partition
+split
 }}
 
 \examples{
@@ -78,6 +80,10 @@ Calculations follow Carter et al. 1990, Theorem 2.
   # 00000 11111 222
   NUnrootedMult(c(5,5,3))
 
+LnUnrootedSplits(2,4)
+LnUnrootedSplits(3,3)
+NUnrootedSplits(2,4)
+NUnrootedSplits(3,3)
 }
 \references{
 \insertRef{Carter1990}{TreeTools}
@@ -85,3 +91,4 @@ Calculations follow Carter et al. 1990, Theorem 2.
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{split information function}
