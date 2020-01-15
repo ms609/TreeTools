@@ -126,7 +126,7 @@ UnrootedTreesMatchingSplit <- function (splits) {
   totalTips <- sum(splits)
   tipsMinusLengthSplits <- totalTips - length(splits)
   # use exp and log as it's just as fast, but less likely to overflow to Inf
-  exp(sum(LogDoubleFactorial(totalTips + totalTips - 5L),
-          LogDoubleFactorial(splits + splits - 3L)) -
-        LogDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L))
+  exp(sum(LnDoubleFactorial(totalTips + totalTips - 5L),
+          LnDoubleFactorial(splits + splits - 3L)) -
+        LnDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L))
 }

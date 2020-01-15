@@ -2,13 +2,19 @@
 % Please edit documentation in R/Combinatorics.R
 \name{DoubleFactorial}
 \alias{DoubleFactorial}
+\alias{LnDoubleFactorial}
 \alias{LogDoubleFactorial}
+\alias{LnDoubleFactorial.int}
 \alias{LogDoubleFactorial.int}
 \title{Double Factorial}
 \usage{
 DoubleFactorial(n)
 
+LnDoubleFactorial(n)
+
 LogDoubleFactorial(n)
+
+LnDoubleFactorial.int(n)
 
 LogDoubleFactorial.int(n)
 }
@@ -23,9 +29,9 @@ Double Factorial
 }
 \section{Functions}{
 \itemize{
-\item \code{LogDoubleFactorial}: Returns the logarithm of the double factorial.
+\item \code{LnDoubleFactorial}: Returns the logarithm of the double factorial.
 
-\item \code{LogDoubleFactorial.int}: Slightly faster, when x is known to be length one
+\item \code{LnDoubleFactorial.int}: Slightly faster, when x is known to be length one
 and below 50001
 }}
 
@@ -34,7 +40,7 @@ and below 50001
 DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2
 DoubleFactorial (5) # 1 x 3 x 5
-exp(LogDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
+exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 
 }
 

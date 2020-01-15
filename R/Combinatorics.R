@@ -10,7 +10,7 @@ globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
 #' DoubleFactorial (2) # 2
 #' DoubleFactorial (5) # 1 x 3 x 5
-#' exp(LogDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
+#' exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 #'
 #' }
 #'
@@ -18,7 +18,7 @@ globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
 #' @family Double factorial
 #' @export
 DoubleFactorial <- function (n) {
-  if (any(n > 300)) stop("301!! is too large to store as an integer. Use LogDoubleFactorial instead.")
+  if (any(n > 300)) stop("301!! is too large to store as an integer. Use LnDoubleFactorial instead.")
 
   n[n < 2] <- 1
   doubleFactorials[n]
@@ -42,7 +42,7 @@ DoubleFactorial <- function (n) {
 # Memoizing this function makes it MUCH slower...
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
 #' @export
-LogDoubleFactorial <- (function (n) {
+LnDoubleFactorial <- (function (n) {
   n[n < 2] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
 
@@ -66,16 +66,24 @@ LogDoubleFactorial <- (function (n) {
   }
 })
 
+#' @rdname DoubleFactorial
+#' @export
+LogDoubleFactorial <- LnDoubleFactorial
+
 #' @describeIn DoubleFactorial Slightly faster, when x is known to be length one
 #' and below 50001
 #' @export
-LogDoubleFactorial.int <- function (n) {
+LnDoubleFactorial.int <- function (n) {
   if (n < 2) {
     0
   } else {
     logDoubleFactorials[n]
   }
 }
+
+#' @rdname DoubleFactorial
+#' @export
+LogDoubleFactorial.int <- LnDoubleFactorial.int
 
 #' Number of rooted/unrooted trees
 #'
@@ -111,7 +119,7 @@ NRooted     <- function (tips)  DoubleFactorial(tips + tips - 3L) # addition fas
 NUnrooted   <- function (tips)  DoubleFactorial(tips + tips - 5L)
 #' @describeIn NRooted  Log Number of unrooted trees
 #' @export
-LnUnrooted  <- function (tips) LogDoubleFactorial(tips + tips - 5L)
+LnUnrooted  <- function (tips) LnDoubleFactorial(tips + tips - 5L)
 #' @describeIn NRooted  Log Number of unrooted trees (as integer)
 #' @export
 LnUnrooted.int <- function (tips) {
@@ -120,7 +128,7 @@ LnUnrooted.int <- function (tips) {
 
 #' @describeIn NRooted  Log Number of rooted trees
 #' @export
-LnRooted    <- function (tips) LogDoubleFactorial(tips + tips - 3L)
+LnRooted    <- function (tips) LnDoubleFactorial(tips + tips - 3L)
 #' @describeIn NRooted  Log Number of rooted trees (as integer)
 #' @export
 LnRooted.int <- function (tips) {
@@ -178,9 +186,9 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   totalTips <- sum(splits)
 
   # Return:
-  LogDoubleFactorial(totalTips +  totalTips - 5L) -
-    LogDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
-    sum(LogDoubleFactorial(splits + splits - 3L))
+  LnDoubleFactorial(totalTips +  totalTips - 5L) -
+    LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
+    sum(LnDoubleFactorial(splits + splits - 3L))
 }
 #' @describeIn NRooted Number of unrooted trees (mult)
 #' @export
