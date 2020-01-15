@@ -187,7 +187,7 @@ bipartition.</p></td>
 
     <p>Functions starting N return the number of rooted or unrooted trees, functions
 starting Ln provide the natural logarithm of this number.
-Calculations follow Carter et al. 1990, Theorem 2.</p>
+Calculations follow Carter <em>et al.</em> 1990, Theorem 2.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -198,9 +198,11 @@ Calculations follow Carter et al. 1990, Theorem 2.</p>
 <li><p><code>LnRooted</code>: Log Number of rooted trees</p></li>
 <li><p><code>LnRooted.int</code>: Log Number of rooted trees (as integer)</p></li>
 <li><p><code>LnUnrootedSplits</code>: Log number of unrooted trees</p></li>
-<li><p><code>NUnrootedSplits</code>: Number of unrooted trees</p></li>
+<li><p><code>NUnrootedSplits</code>: Number of unrooted trees consistent with a bipartition
+split.</p></li>
 <li><p><code>LnUnrootedMult</code>: Log unrooted mult</p></li>
-<li><p><code>NUnrootedMult</code>: Number of unrooted trees (mult)</p></li>
+<li><p><code>NUnrootedMult</code>: Number of unrooted trees consistent with a multi-partition
+split</p></li>
 </ul>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -214,7 +216,7 @@ doi: <a href='https://doi.org/10.1137/0403005'>10.1137/0403005</a>
     <pre class="examples"><div class='input'>  <span class='fu'>NRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 34459425</div><div class='input'>  <span class='fu'>NUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 2027025</div><div class='input'>  <span class='fu'>LnRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 17.35529</div><div class='input'>  <span class='fu'>LnUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 14.52208</div><div class='input'>  <span class='co'># Number of trees consistent with a character whose states are</span>
   <span class='co'># 00000 11111 222</span>
   <span class='fu'>NUnrootedMult</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 694575</div><div class='input'>
-</div></pre>
+<span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 2.70805</div><div class='input'><span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 2.197225</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 9</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
