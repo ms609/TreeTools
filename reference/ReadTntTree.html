@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -156,19 +156,20 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filename</th>
-      <td><p>character string specifying path to TNT <code>.tre</code> file.</p></td>
+      <td><p>character string specifying path to TNT <code>.tre</code> file,
+relative to the R working directory (visible with <code><a href='https://rdrr.io/r/base/getwd.html'>getwd()</a></code>).</p></td>
     </tr>
     <tr>
       <th>relativePath</th>
-      <td><p>(optional) character string specifying location of the
+      <td><p>(discouraged) character string specifying location of the
 matrix file used to generate the TNT results, relative to the current working
-directory, for portability.  Taxon names will be read from this file if they
-are not specified by <code>tipLabels</code>.</p></td>
+directory.  Taxon names will be read from this file if they are not specified
+by <code>tipLabels</code>.</p></td>
     </tr>
     <tr>
       <th>keepEnd</th>
-      <td><p>(optional, default 1) integer specifying how many elements of the file
-path to conserve when creating relative path (see examples).</p></td>
+      <td><p>(optional, default 1) integer specifying how many elements of
+the file path to conserve when creating relative path (see examples).</p></td>
     </tr>
     <tr>
       <th>tipLabels</th>
@@ -190,14 +191,27 @@ format output by TNT.</p></td>
 to the tree in <code>filename</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Supports trees that have been written from TNT in parenthetical notation
-using <code>tsav*</code>.  If taxa have been saved using their names (<code>taxname=</code>),
-then the tip labels will be read directly from the TNT <code>.tre</code> file.  If
-taxa have been saved using their numbers (<code>taxname-</code>), tip labels will be
-imported from the linked matrix file that is listed in the first line of the
-<code>.tre</code> file.  Ensure that this file exists in the expected location -- if
-it does not, use the <code>relativePath</code> argument to override this default, or
-specify <code>tipLabels</code> to set manually.</p>
+    <p><a href='http://www.lillo.org.ar/phylogeny/tnt/'>TNT</a> is software for parsimony
+analysis.  Whilst its implementation of tree search is extremely rapid,
+analysis of results in TNT is made difficult by its esoteric and scantly
+documented scripting language.</p>
+<p><code>ReadTNTTree</code> aims to aid the user by facilitating the import of trees
+generated in TNT into R for further analysis.</p>
+<p>The function depends on tree files being saved by TNT in parenthetical
+notation, using the TNT command <code>tsav*</code>.
+Trees are easiest to load into R if taxa have been saved using their names
+(TNT command <code>taxname=</code>).  In this case, the TNT <code>.tre</code> file
+contains tip labels and can be parsed directly.  The downside is that the
+uncompressed <code>.tre</code> files will have a larger file size.</p>
+<p><code>ReadTNTTree</code> can also read <code>.tre</code> files in which taxa have been saved using
+their numbers (<code>taxname-</code>).  Such files contain a hard-coded link to the
+matrix file that was used to generate the trees, in the first line of the
+<code>.tre</code> file.  This poses problems for portability: if the matrix file is
+moved, or the <code>.tre</code> file is accessed on another computer, the taxon names
+may be lost.  As such, it is important to check that the matrix file
+exists in the expected location -- if it does not,
+either use the <code>relativePath</code> argument to point to its new location, or
+specify <code>tipLabels</code> to manually specify the tip labels.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     

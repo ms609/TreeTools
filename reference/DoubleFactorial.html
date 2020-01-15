@@ -75,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -149,7 +149,11 @@
 
     <pre class="usage"><span class='fu'>DoubleFactorial</span>(<span class='no'>n</span>)
 
+<span class='fu'>LnDoubleFactorial</span>(<span class='no'>n</span>)
+
 <span class='fu'>LogDoubleFactorial</span>(<span class='no'>n</span>)
+
+<span class='fu'>LnDoubleFactorial.int</span>(<span class='no'>n</span>)
 
 <span class='fu'>LogDoubleFactorial.int</span>(<span class='no'>n</span>)</pre>
 
@@ -169,8 +173,8 @@
 
     
 <ul>
-<li><p><code>LogDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
-<li><p><code>LogDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
+<li><p><code>LnDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
+<li><p><code>LnDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
 and below 50001</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -184,7 +188,7 @@ and below 50001</p></li>
 <span class='fu'>DoubleFactorial</span> (-<span class='fl'>4</span>:<span class='fl'>0</span>) <span class='co'># Return 1 if n &lt; 2</span>
 <span class='fu'>DoubleFactorial</span> (<span class='fl'>2</span>) <span class='co'># 2</span>
 <span class='fu'>DoubleFactorial</span> (<span class='fl'>5</span>) <span class='co'># 1 x 3 x 5</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LogDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># 2 x 4 x 6 x 8</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LnDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># 2 x 4 x 6 x 8</span>
 
 }</div><div class='output co'>#&gt; [1] 384</div><div class='input'>
 </div></pre>
