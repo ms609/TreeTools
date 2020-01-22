@@ -106,6 +106,8 @@ reference:
 
 template:
   params:
+    bootswatch: flatly
     docsearch:
       api_key: 6078115fdeb422f23fe2f8c478c70150
       index_name: treetools
+    ganalytics: UA-156666971-2
