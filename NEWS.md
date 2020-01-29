@@ -1,3 +1,7 @@
+# TreeTools 0.1.3.9001 (development)
+ 
+- Update `doubleFactorials` cache to fix `as.integer()` rounding error
+
 # TreeTools 0.1.3
 
 - `RootOnNode`: Quickly root a tree on a specified node.
