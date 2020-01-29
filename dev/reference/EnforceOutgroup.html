@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -42,9 +42,9 @@
 
 
 <meta property="og:title" content="Force taxa to form an outgroup — EnforceOutgroup" />
-<meta property="og:description" content="Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such that the two
-are sister taxa across the root, without altering the relationships within the ingroup
-or within the outgroup." />
+<meta property="og:description" content="Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
+that the two are sister taxa across the root, without changing the
+relationships within the ingroup or within the outgroup." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -59,6 +59,16 @@ or within the outgroup." />
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156666971-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156666971-2');
+</script>
 
 
   </head>
@@ -77,7 +87,7 @@ or within the outgroup." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9001</span>
       </span>
     </div>
 
@@ -146,9 +156,9 @@ or within the outgroup." />
     </div>
 
     <div class="ref-description">
-    <p>Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such that the two
-are sister taxa across the root, without altering the relationships within the ingroup
-or within the outgroup.</p>
+    <p>Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
+that the two are sister taxa across the root, without changing the
+relationships within the ingroup or within the outgroup.</p>
     </div>
 
     <pre class="usage"><span class='fu'>EnforceOutgroup</span>(<span class='no'>tree</span>, <span class='no'>outgroup</span>)</pre>
@@ -158,26 +168,34 @@ or within the outgroup.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>either a tree of class <code>phylo</code>, or a character vector listing the names of
-all the taxa in the tree, from which a random tree will be generated.</p></td>
+      <td><p>Either: a tree of class <code>phylo</code>; or a character vector
+listing the names of all the taxa in the tree, from which a random tree will
+be generated.</p></td>
     </tr>
     <tr>
       <th>outgroup</th>
-      <td><p>a vector containing the names of taxa to include in the outgroup</p></td>
+      <td><p>Character vector containing the names of taxa to include in the
+outgroup.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tree where all outgroup taxa are sister to all remaining taxa,
-otherwise retaining the topology of the ingroup.</p>
+    <p><code>EnforceOutgroup</code> returns a tree of class <code>phylo</code> where all outgroup
+taxa are sister to all remaining taxa, without modifying the ingroup
+topology.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'>EnforceOutgroup</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>9</span>], <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='img'><img src='EnforceOutgroup-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

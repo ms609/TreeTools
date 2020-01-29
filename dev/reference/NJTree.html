@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Neighbour Joining Tree — NJTree" />
-<meta property="og:description" content="Generates a rooted neighbour joining tree, with no edge lengths" />
+<meta property="og:description" content="Generates a rooted neighbour joining tree, with no edge lengths." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -57,6 +57,16 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156666971-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156666971-2');
+</script>
 
 
   </head>
@@ -75,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9001</span>
       </span>
     </div>
 
@@ -144,7 +154,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Generates a rooted neighbour joining tree, with no edge lengths</p>
+    <p>Generates a rooted neighbour joining tree, with no edge lengths.</p>
     </div>
 
     <pre class="usage"><span class='fu'>NJTree</span>(<span class='no'>dataset</span>)</pre>
@@ -161,15 +171,26 @@ whose names correspond to the labels of any accompanying tree.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of class <code>phylo</code></p>
+    <p><code>NJTree</code> returns an object of class <code>phylo</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree generation functions: 
 <code><a href='BalancedTree.html'>BalancedTree</a>()</code>,
 <code><a href='PectinateTree.html'>PectinateTree</a>()</code>,
 <code><a href='RandomTree.html'>RandomTree</a>()</code>,
-<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code></p></div>
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'Lobo'</span>)
+<span class='fu'>NJTree</span>(<span class='no'>Lobo.phy</span>)</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 48 tips and 47 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; 	Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -177,6 +198,7 @@ whose names correspond to the labels of any accompanying tree.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

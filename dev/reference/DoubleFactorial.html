@@ -12,8 +12,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -58,6 +58,16 @@
 <![endif]-->
 
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-156666971-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-156666971-2');
+</script>
+
 
   </head>
 
@@ -75,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9001</span>
       </span>
     </div>
 
@@ -149,7 +159,11 @@
 
     <pre class="usage"><span class='fu'>DoubleFactorial</span>(<span class='no'>n</span>)
 
+<span class='fu'>LnDoubleFactorial</span>(<span class='no'>n</span>)
+
 <span class='fu'>LogDoubleFactorial</span>(<span class='no'>n</span>)
+
+<span class='fu'>LnDoubleFactorial.int</span>(<span class='no'>n</span>)
 
 <span class='fu'>LogDoubleFactorial.int</span>(<span class='no'>n</span>)</pre>
 
@@ -169,8 +183,8 @@
 
     
 <ul>
-<li><p><code>LogDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
-<li><p><code>LogDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
+<li><p><code>LnDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
+<li><p><code>LnDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
 and below 50001</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -184,7 +198,7 @@ and below 50001</p></li>
 <span class='fu'>DoubleFactorial</span> (-<span class='fl'>4</span>:<span class='fl'>0</span>) <span class='co'># Return 1 if n &lt; 2</span>
 <span class='fu'>DoubleFactorial</span> (<span class='fl'>2</span>) <span class='co'># 2</span>
 <span class='fu'>DoubleFactorial</span> (<span class='fl'>5</span>) <span class='co'># 1 x 3 x 5</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LogDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># 2 x 4 x 6 x 8</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LnDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># 2 x 4 x 6 x 8</span>
 
 }</div><div class='output co'>#&gt; [1] 384</div><div class='input'>
 </div></pre>
