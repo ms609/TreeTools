@@ -3,7 +3,7 @@
 #' Quickly identify edges that are 'descended' from a particular edge in a tree.
 #'
 #' @param edge Integer specifying the number of the edge whose child edges are
-#' required (see [`phangorn::edgelabels()`].
+#' required (see \code{\link[ape:nodelabels]{edgelabels}}).
 #' @template treeParent
 #' @template treeChild
 #' @param nEdge number of edges (calculated from `length(parent)` if not

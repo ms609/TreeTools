@@ -11,7 +11,7 @@ AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{edge}{Integer specifying the number of the edge whose child edges are
-required (see \code{\link[phangorn:edgelabels]{phangorn::edgelabels()}}.}
+required (see \code{\link[ape:nodelabels]{edgelabels}}).}
 
 \item{parent}{the first column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
