@@ -1,13 +1,15 @@
 #' Descendant Edges
 #'
-#' Quickly identifies edges that are 'descended' from a particular edge in a tree
+#' Quickly identify edges that are 'descended' from a particular edge in a tree.
 #'
-#' @param edge number of the edge whose child edges are required.
+#' @param edge Integer specifying the number of the edge whose child edges are
+#' required (see [`phangorn::edgelabels()`].
 #' @template treeParent
 #' @template treeChild
-#' @param nEdge number of edges (calculated from length(parent) if not supplied).
-#' @return `DescendantEdges` returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-#'         (or the edge itself).
+#' @param nEdge number of edges (calculated from `length(parent)` if not
+#' supplied).
+#' @return `DescendantEdges` returns a logical vector stating whether each edge
+#' in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
 DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
@@ -83,8 +85,9 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' should be returned.
 #' @template treeParent
 #' @template treeChild
-#' @param stopAt number of the edge at which the search should terminate;
-#' defaults to the root edges.
+#' @param stopAt Integer or logical vector specifying the edge(s) at which to
+#' terminate the search; defaults to the edges with the smallest parent,
+#' which will be the root edges if nodes are numbered cladewise or in Preorder.
 #' @return `EdgeAncestry` returns a logical vector stating whether each edge in
 #' turn is a descendant of the specified edge.
 #' @examples

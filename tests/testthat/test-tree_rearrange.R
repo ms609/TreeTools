@@ -3,6 +3,33 @@ library(ape)
 context("Tree rearrangements")
 
 test_that("RootOnNode works", {
+
+  tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
+                                            6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L),
+                    class = "phylo", order = "cladewise")
+
+  exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L, 8L, 1L, 2L, 3L, 9L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp7 <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L, 7L, 1L, 2L, 8L, 3L, 9L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp5 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L, 8L, 9L, 1L, 2L, 3L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp4 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L, 8L, 9L, 1L, 2L, 3L, 5L, 4L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp3 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 9L, 9L, 6L, 7L, 8L, 1L, 2L, 9L, 4L, 5L, 3L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp2 <- structure(list(edge = structure(c(6L, 7L, 7L, 8L, 8L, 9L, 9L, 6L, 7L, 1L, 8L, 3L, 9L, 4L, 5L, 2L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  #t2 <- Preorder(t2)
+  expect_equal(tree, RootOnNode(tree, node = 9L, TRUE))
+  expect_equal(exp8, RootOnNode(tree, node = 8L, TRUE))
+  expect_equal(exp7, RootOnNode(tree, node = 7L, TRUE))
+  expect_equal(tree, RootOnNode(tree, node = 6L, TRUE))
+
+  expect_equal(exp5, RootOnNode(tree, node = 5L, TRUE))
+  expect_equal(exp4, RootOnNode(tree, node = 4L, TRUE))
+  expect_equal(exp3, RootOnNode(tree, node = 3L, TRUE))
+  expect_equal(exp2, RootOnNode(tree, node = 2L, TRUE))
+  expect_equal(tree, RootOnNode(tree, node = 1L, TRUE))
+  expect_equal(tree, RootOnNode(unroot(tree), node = 1L, TRUE))
+
+
   TestTip <- function (tr, node, rr) {
     expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
                  RootOnNode(tr, node, rr))

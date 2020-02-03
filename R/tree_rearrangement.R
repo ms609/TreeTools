@@ -70,32 +70,38 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 
   if (any(nodeParentEdge)) {
     if (rooted) {
-      rootChildren <- child[rootEdges]
-      spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
-      parent[rootEdges][!spareRoot] <- rootChildren[spareRoot]
+      # Do before editing parent:
       ancestorEdges <- EdgeAncestry(which(nodeParentEdge), parent, child)
-      inverters <- ancestorEdges | rootEdges
-      if (!ancestorEdges[rootEdges][!spareRoot]) {
-        inverters[which(rootEdges)[!spareRoot]] <- FALSE
-      }
-      if (resolveRoot) {
-        inverters <- inverters | nodeParentEdge
-        parent[rootEdges][spareRoot] <- node
-        child[rootEdges][spareRoot] <- rootNode
-        child[nodeParentEdge] <- rootNode
+
+      rootChildren <- child[rootEdges]
+      if (node %in% rootChildren) {
+        inverters <- logical(length(parent))
       } else {
-        if (node > rootNode) inverters <- inverters | nodeParentEdge
-        deletedEdge <- which(rootEdges)[spareRoot]
+        spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
+        parent[rootEdges][!spareRoot] <- rootChildren[spareRoot]
 
-        parent <- parent[-deletedEdge]
-        child <- child[-deletedEdge]
-        inverters <- inverters[-deletedEdge]
+        inverters <- ancestorEdges | rootEdges
+        if (!ancestorEdges[rootEdges][!spareRoot]) {
+          inverters[which(rootEdges)[!spareRoot]] <- FALSE
+        }
+        if (resolveRoot) {
+          inverters <- inverters | nodeParentEdge
+          parent[rootEdges][spareRoot] <- node
+          child[rootEdges][spareRoot] <- rootNode
+          child[nodeParentEdge] <- rootNode
+        } else {
+          if (node > rootNode) inverters <- inverters | nodeParentEdge
+          deletedEdge <- which(rootEdges)[spareRoot]
 
-        parent[parent > rootNode] <- parent[parent > rootNode] - 1L
-        child[child > rootNode] <- child[child > rootNode] - 1L
+          parent <- parent[-deletedEdge]
+          child <- child[-deletedEdge]
+          inverters <- inverters[-deletedEdge]
 
-        tree$Nnode <- tree$Nnode - 1L
+          parent[parent > rootNode] <- parent[parent > rootNode] - 1L
+          child[child > rootNode] <- child[child > rootNode] - 1L
 
+          tree$Nnode <- tree$Nnode - 1L
+        }
       }
     } else {
       if (resolveRoot) {

@@ -1,6 +1,7 @@
-# TreeTools 0.1.3.9001 (development)
+# TreeTools 0.1.3.9002 (development)
  
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error
+- Catch hang-inducing bugs in `RootOnNode()`
 
 # TreeTools 0.1.3
 

@@ -10,7 +10,8 @@ DescendantEdges(edge, parent, child, nEdge = length(parent))
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
-\item{edge}{number of the edge whose child edges are required.}
+\item{edge}{Integer specifying the number of the edge whose child edges are
+required (see \code{\link[phangorn:edgelabels]{phangorn::edgelabels()}}.}
 
 \item{parent}{the first column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
@@ -18,17 +19,18 @@ AllDescendantEdges(parent, child, nEdge = length(parent))
 \item{child}{the second column of the edge matrix of a tree of class
 \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
-\item{nEdge}{number of edges (calculated from length(parent) if not supplied).}
+\item{nEdge}{number of edges (calculated from \code{length(parent)} if not
+supplied).}
 }
 \value{
-\code{DescendantEdges} returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-(or the edge itself).
+\code{DescendantEdges} returns a logical vector stating whether each edge
+in turn is a descendant of the specified edge (or the edge itself).
 
 \code{AllDescendantEdges} returns a matrix of class logical, with row N
 specifying whether each edge is a descendant of edge N (or the edge itself).
 }
 \description{
-Quickly identifies edges that are 'descended' from a particular edge in a tree
+Quickly identify edges that are 'descended' from a particular edge in a tree.
 }
 \section{Functions}{
 \itemize{
