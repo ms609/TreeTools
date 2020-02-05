@@ -75,7 +75,7 @@ RenumberTree <- function (parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
-#' @describeIn RenumberTree Returns in list format
+#' @rdname RenumberTree
 #' @return `RenumberEdges` returns a list whose two entries correspond
 #' to the new parent and child vectors.
 #' @keywords internal
