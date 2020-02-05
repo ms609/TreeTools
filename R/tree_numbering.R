@@ -124,9 +124,11 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #'
 #' @template treeParam
 #' @template nTipParam
-#' @param edge (optional) the value of tree$edge
+#' @param edge Two-column matrix listing the parent and child of each edge in a
+#' tree, corresponding to `tree$edge`. Optional in `Cladewise()`.
 #'
-#' @return A tree of class `phylo` with nodes following the specified
+#' @return `ApePostorder, `Cladewise`, `Postorder`, `Preorder` and `Pruningwise`
+#' return a tree of class `phylo` with nodes following the specified
 #' numbering scheme.
 #' @author
 #'  `Preorder` and `Postorder`: Martin R. Smith.
@@ -136,6 +138,10 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #'
 #' @family C wrappers
 #' @keywords internal
+#' @name Reorder
+NULL
+
+#' @describeIn Reorder Reorder tree cladewise.
 #' @export
 Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "cladewise") {
@@ -157,8 +163,8 @@ Cladewise <- function (tree, nTip = NULL, edge = tree$edge) {
 }
 
 
-#' @describeIn Cladewise Reorder tree in Postorder using ape's `postorder`
-#' function, which is robust to unconventional node numbering
+#' @describeIn Reorder Reorder tree in Postorder using ape's `postorder`
+#' function, which is robust to unconventional node numbering.
 #' @export
 ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "postorder") {
@@ -175,7 +181,7 @@ ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge)
   tree
 }
 
-#' @describeIn Cladewise Reorder tree in Postorder. Edge lengths are not retained.
+#' @describeIn Reorder Reorder tree in Postorder. Edge lengths are not retained.
 #' @param force Logical specifying whether to rearrange trees already in
 #' postorder, in order to ensure TreeTools edge ordering.
 #' @export
@@ -193,14 +199,16 @@ Postorder <- function (tree, force = FALSE) {
   tree
 }
 
-#' @describeIn Cladewise Reorder edges in Postorder.
+#' @rdname Reorder
+#' @return `PostorderEdges` returns a two-column array corresponding to `edge`, 
+#' with edges listed in postorder.
 #' @template edgeParam
 #' @export
 PostorderEdges <- function (edge) {
   postorder_edges(edge - 1L)
 }
 
-#' @describeIn Cladewise Reorder tree Pruningwise
+#' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
 Pruningwise <- function (tree, nTip = length(tree$tip.label),
                          edge = tree$edge) {
@@ -220,7 +228,7 @@ Pruningwise <- function (tree, nTip = length(tree$tip.label),
   tree
 }
 
-#' @describeIn Cladewise Reorder tree in Preorder (special case of cladewise)
+#' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
 #' @export
 Preorder <- function (tree) {
   startOrder <- attr(tree, 'order')
