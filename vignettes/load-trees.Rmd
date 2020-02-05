@@ -103,6 +103,14 @@ Ensure that this file exists in the expected location – if it does not, use
 Are there other formats that should be listed here?
 Please let me know by [opening an issue](https://github.com/ms609/TreeSearch/issues/new?title=Loading%20trees).
 
+## Export (write) trees
+
+To save a tree to a text file, use
+`ape::write.tree(tree, file='filename.txt')`
+for Newick format (widely supported by most phylogenetic software), or
+`ape::write.nexus(tree, file='filename.nex')`
+for Nexus format.
+
 ## What next?
 
 You might want to:

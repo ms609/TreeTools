@@ -47,7 +47,7 @@ test_that("RenumberTree handles singles", {
                as.integer(Preorder(withSingles)$edge))
 })
 
-test_that("replacement reorder functions work correctly", {
+test_that("Replacement reorder functions work correctly", {
   ## Tree
   tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
   expect_equal(ape::reorder.phylo(tree, 'cladewise'), Cladewise(tree))
@@ -67,3 +67,20 @@ test_that("replacement reorder functions work correctly", {
                RenumberEdges(edge[, 1], edge[, 2]))
 })
 
+test_that("Preorder handles malformed trees without crashing", {
+  treeDoubleNode <- read.tree(text = "((((((1,2)),3),4),5),6);")
+  treePolytomy   <- read.tree(text = "((((1,2,3),4),5),6);")
+  treeDoublyPoly <- read.tree(text = "(((((1,2,3)),4),5),6);")
+  
+  reordered <- Preorder(treeDoubleNode)$edge
+  expect_equal(11L, dim(reordered)[1])
+  expect_equal(5L, sum(table(reordered[, 1]) == 2L))
+  
+  reordered <- Preorder(treePolytomy)$edge
+  expect_equal(9L, dim(reordered)[1])
+  expect_equal(c(2L, 2L, 2L, 3L), as.integer(table(reordered[, 1])))
+  
+  reordered <- Preorder(treeDoublyPoly)$edge
+  expect_equal(10L, dim(reordered)[1])
+  expect_equal(c(2L, 2L, 2L, 1L, 3L), as.integer(table(reordered[, 1])))
+})

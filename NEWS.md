@@ -2,6 +2,7 @@
  
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error
 - Catch hang-inducing bugs in `RootOnNode()`
+- Documentation improvements
 
 # TreeTools 0.1.3
 
