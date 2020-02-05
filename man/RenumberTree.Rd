@@ -30,11 +30,6 @@ guaranteed to be identical for any tree of an equivalent topology.
 At each node, child edges are arranged from left to right according to the
 lowest-numbered tip in the subtree subtended by each edge.
 }
-\section{Functions}{
-\itemize{
-\item \code{RenumberEdges}: Returns in list format
-}}
-
 \seealso{
 \code{\link{SortTree}}
 
