@@ -25,9 +25,6 @@
     <loc>https://ms609.github.io/TreeTools/reference/CladeSizes.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Cladewise.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc>
   </url>
   <url>
@@ -119,6 +116,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RenumberTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Reorder.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc>
