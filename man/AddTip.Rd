@@ -23,10 +23,10 @@ new tip is added to a random edge.}
 to the root edge are considered to represent distinct edges.}
 }
 \value{
-\code{AddTip} returns a tree of class \code{phylo} with an additional tip
+\code{AddTip()} returns a tree of class \code{phylo} with an additional tip
 at the desired location.
 
-\code{AddTipEverywhere} returns a list of class \code{multiPhylo} containing
+\code{AddTipEverywhere()} returns a list of class \code{multiPhylo} containing
 the trees produced by adding \code{label} to each edge of \code{tree} in turn.
 }
 \description{

@@ -7,14 +7,14 @@
 AllAncestors(parent, child)
 }
 \arguments{
-\item{parent}{the first column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 1]}.}
+\item{parent}{Integer vector corresponding to the first column of the edge
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
 
-\item{child}{the second column of the edge matrix of a tree of class
-\code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+\item{child}{Integer vector corresponding to the second column of the edge
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 }
 \value{
-\code{AllAncestors} returns a list. Entry \emph{i} contains a vector containing,
+\code{AllAncestors()} returns a list. Entry \emph{i} contains a vector containing,
 in order, the nodes encountered when traversing the tree from node \emph{i} to the
 root node.
 The last entry of each member of the list is therefore the root node,

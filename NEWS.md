@@ -1,8 +1,9 @@
-# TreeTools 0.1.3.9002 (development)
+# TreeTools 0.1.3.9003 (development)
  
-- Update `doubleFactorials` cache to fix `as.integer()` rounding error
-- Catch hang-inducing bugs in `RootOnNode()`
-- Documentation improvements
+- Update `doubleFactorials` cache to fix `as.integer()` rounding error.
+- Support unrooted trees in `AddTipEverywhere()`.
+- Catch hang-inducing bugs in `RootOnNode()`.
+- Documentation improvements.
 
 # TreeTools 0.1.3
 
