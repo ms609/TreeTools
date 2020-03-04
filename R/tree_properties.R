@@ -289,8 +289,9 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' Faster alternative to of `ape::is.rooted`.
 #'
-#' @param tree A phylogenetic tree of class phylo.
-#' @return Logical specifying whether a root node is resolved.
+#' @param tree A phylogenetic tree of class `phylo`.
+#' @return `TreeIsRooted()` returns a logical specifying whether a root node is
+#' resolved.
 #'
 #' @examples
 #' TreeIsRooted(BalancedTree(6))

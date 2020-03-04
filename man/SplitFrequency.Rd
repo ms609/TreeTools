@@ -21,21 +21,23 @@ TreeSplits(tree)
 \item{forest}{a list of trees of class \code{phylo}, or a \code{multiPhylo} object; or a
 \code{Splits} object.}
 
-\item{tips}{Integer vector specifying the tips of the tree within the chosen split}
+\item{tips}{Integer vector specifying the tips of the tree within the chosen
+split.}
 
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
-\item{tipIndex}{Character vector of tip names, in a fixed order}
+\item{tipIndex}{Character vector of tip names, in a fixed order.}
 
-\item{powersOf2}{Integer vector of same length as tipIndex, specifying a power
-of 2 to be associated with each tip in turn}
+\item{powersOf2}{Integer vector of same length as \code{tipIndex}, specifying a
+power of 2 to be associated with each tip in turn.}
 }
 \value{
-Number of trees in \code{forest} that contain each split in \code{reference}.
-if \code{reference} is a tree of class phylo, then the sequence will
-correspond to the order of nodes (use `ape::nodelabels to view).
-Note that the three nodes at the root of the tree correspond to a
-single split; see the example for how these might be plotted on a tree.
+\code{SplitFrequency()} returns the number of trees in \code{forest} that
+contain each split in \code{reference}.
+If \code{reference} is a tree of class \code{phylo}, then the sequence will correspond
+to the order of nodes (use \code{ape::nodelabels()} to view).
+Note that the three nodes at the root of the tree correspond to a single
+split; see the example for how these might be plotted on a tree.
 }
 \description{
 \code{SplitFrequency} provides a simple way to count the number of times that

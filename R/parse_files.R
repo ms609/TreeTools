@@ -448,7 +448,7 @@ ReadTntCharacters <- function (filepath, character_num=NULL, session=NULL) {
   tokens
 }
 
-#' Matrix to phyDat
+#' Matrix to `phyDat`
 #'
 #' Converts a matrix of tokens to a `phyDat` object.
 #'
@@ -480,15 +480,15 @@ MatrixToPhyDat <- function (tokens) {
   dat
 }
 
-#' @describeIn MatrixToPhyDat Converts a phyDat object to a matrix of tokens.
+#' @describeIn MatrixToPhyDat Converts a `phyDat` object to a matrix of tokens.
 #' @param dataset A dataset of class `phyDat`.
 ## @param parentheses Character vector specifying style of parentheses
 ## with which to enclose ambiguous characters, e.g, `c('[', ']')` will render
 ## `[01]`.
 ## @param sep Character with which to separate ambiguous tokens, e.g. `','`
 ## will render `[0,1]`.
-#' @return A matrix corresponding to the uncompressed character states within
-#' a phyDat object.
+#' @return `PhyDatToMatrix()` returns a matrix corresponding to the
+#' uncompressed character states within a `phyDat` object.
 #' @export
 PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   at <- attributes(dataset)
@@ -497,7 +497,7 @@ PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   t(vapply(dataset, function (x) allLevels[x[index]], character(length(index))))
 }
 
-#' @describeIn ReadCharacters Read Nexus characters as phyDat object.
+#' @describeIn ReadCharacters Read Nexus characters as `phyDat` object.
 #' @importFrom phangorn phyDat
 #' @export
 ReadAsPhyDat <- function (filepath) {
@@ -505,7 +505,7 @@ ReadAsPhyDat <- function (filepath) {
 }
 
 
-#' @describeIn ReadCharacters Read TNT characters as phyDat object.
+#' @describeIn ReadCharacters Read TNT characters as `phyDat` object.
 #' @importFrom phangorn phyDat
 #' @export
 ReadTntAsPhyDat <- function (filepath) {
@@ -514,10 +514,11 @@ ReadTntAsPhyDat <- function (filepath) {
 
 
 #' @describeIn ReadCharacters A convenient wrapper for \pkg{phangorn}'s
-#' \code{phyDat}, which converts a *list* of morphological characters into a
+#' `phyDat()`, which converts a *list* of morphological characters into a
 #' `phyDat` object.
 #' If your morphological characters are in the form of a *matrix*, perhaps
-#' because they have been read using `read.table`, try [MatrixToPhyDat] instead.
+#' because they have been read using `read.table`, try [`MatrixToPhyDat()`]
+#' instead.
 #'
 #' @param dataset list of taxa and characters, in the format produced by [read.nexus.data]:
 #'                a list of sequences each made of a single vector of mode character,
@@ -534,19 +535,20 @@ PhyDat <- function (dataset) {
   MatrixToPhyDat(mat)
 }
 
-#' String to phyDat
+#' String to `phyDat`
 #'
-#' Converts a character string to a PhyDat object.
+#' Converts a character string to a `phyDat` object.
 #'
-#' @param string a string of tokens, optionally containing whitespace, with no
+#' @param string String of tokens, optionally containing whitespace, with no
 #'   terminating semi-colon.
-#' @param tips, a character vector corresponding to the names (in order)
-#' of each taxon in the matrix
-#' @param byTaxon = TRUE, string is one TAXON's coding at a time; FALSE: one
-#'  CHARACTER's coding at a time
+#' @param tips Character vector corresponding to the names (in order)
+#' of each taxon in the matrix.
+#' @param byTaxon Logical; if `TRUE`, string is one **taxon's** coding at a
+#' time; if `FALSE`, string is interpreted as one ***character's** coding at a
+#' time.
 #'
 #' @examples
-#' morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon=TRUE)
+#' morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
 #' # encodes the following matrix:
 #' # Lion     -?0123
 #' # Gazelle  1230?-
@@ -569,9 +571,9 @@ StringToPhyDat <-
 #' @rdname StringToPhyDat
 StringToPhydat <- StringToPhyDat
 
-#' phyDat to String
+#' `phyDat` to String
 #'
-#' Extract character data from a phyDat object as a string.
+#' Extract character data from a `phyDat` object as a string.
 #'
 #' @param phy An object of class \code{\link{phyDat}}
 #' @param parentheses Character specifying format of parentheses with which

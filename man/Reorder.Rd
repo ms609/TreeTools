@@ -35,8 +35,9 @@ of class \code{phylo}.}
 postorder, in order to ensure TreeTools edge ordering.}
 }
 \value{
-\verb{ApePostorder, }Cladewise\verb{, }Postorder\verb{, }Preorder\code{and}Pruningwise\verb{return a tree of class}phylo` with nodes following the specified
-numbering scheme.
+\code{ApePostorder()}, \code{Cladewise()}, \code{Postorder()}, \code{Preorder()} and
+\code{Pruningwise()} each return a tree of class \code{phylo} with nodes following the
+specified numbering scheme.
 
 \code{PostorderEdges} returns a two-column array corresponding to \code{edge},
 with edges listed in postorder.
@@ -96,10 +97,10 @@ Other C wrappers:
 \code{\link{RenumberTree}()}
 }
 \author{
-\code{Preorder} and \code{Postorder}: Martin R. Smith.
+\code{Preorder()} and \code{Postorder()}: Martin R. Smith.
 
-\code{Cladewise}, \code{ApePostorder} and \code{Pruningwise}: modified by Martin R. Smith from
-\code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
+\code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()}: modified by Martin R.
+Smith from \code{.reorder_ape()} in \pkg{ape} (Emmanuel Paradis).
 }
 \concept{C wrappers}
 \keyword{internal}

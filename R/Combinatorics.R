@@ -187,7 +187,7 @@ NUnrootedSplits  <- function (splits) {
   if (nSplits == 2) return (NRooted(splits[1]) * NRooted(splits[2]))
   return (NUnrootedMult(splits))
 }
-#' @describeIn NRooted Log unrooted mult
+#' @describeIn NRooted Log unrooted with multi-partition splits.
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]
@@ -199,7 +199,7 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
     sum(LnDoubleFactorial(splits + splits - 3L))
 }
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
-#' split
+#' split.
 #' @export
 NUnrootedMult  <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]

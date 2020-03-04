@@ -11,12 +11,12 @@
 #' @param forest a list of trees of class `phylo`, or a `multiPhylo` object; or a
 #' `Splits` object.
 #'
-#' @return Number of trees in `forest` that contain each split in `reference`.
-#'         if `reference` is a tree of class phylo, then the sequence will
-#'         correspond to the order of nodes (use `ape::nodelabels to view).
-#'         Note that the three nodes at the root of the tree correspond to a
-#'         single split; see the example for how these might be plotted on a tree.
-#'
+#' @return `SplitFrequency()` returns the number of trees in `forest` that
+#' contain each split in `reference`.
+#' If `reference` is a tree of class `phylo`, then the sequence will correspond
+#' to the order of nodes (use `ape::nodelabels()` to view).
+#' Note that the three nodes at the root of the tree correspond to a single
+#' split; see the example for how these might be plotted on a tree.
 #'
 #' @examples
 #' forest <- as.phylo(c(1, 10, 10, 100, 1000), nTip = 7)
@@ -43,11 +43,12 @@ SplitFrequency <- function(reference, forest) {
 }
 
 #' @describeIn SplitFrequency Assign a unique integer to each split
-#' @param tips Integer vector specifying the tips of the tree within the chosen split
+#' @param tips Integer vector specifying the tips of the tree within the chosen
+#' split.
 #' @template treeParam
-#' @param tipIndex Character vector of tip names, in a fixed order
-#' @param powersOf2 Integer vector of same length as tipIndex, specifying a power
-#'  of 2 to be associated with each tip in turn
+#' @param tipIndex Character vector of tip names, in a fixed order.
+#' @param powersOf2 Integer vector of same length as `tipIndex`, specifying a
+#' power of 2 to be associated with each tip in turn.
 #' @export
 SplitNumber <- function (tips, tree, tipIndex, powersOf2) {
   .Deprecated("SplitFrequency")
@@ -85,9 +86,10 @@ TreeSplits <- function (tree) {
 #' @param support A numeric vector of values in the range 0--1.
 #' @param show1 Logical specifying whether to display values of 1.
 #'              A transparent white will be returned if `FALSE`.
-#' @return A string containing the hexadecimal code for a colour picked from a
-#'         diverging scale, or `red` if a value is invalid.
-#' @examples SupportColour(0:4 / 4, show1 = FALSE)
+#' @return `SupportColour()` returns a string containing the hexadecimal code
+#'  for a colour picked from a diverging scale, or `red` if a value is invalid.
+#' @examples
+#' SupportColour(0:4 / 4, show1 = FALSE)
 #' @importFrom colorspace diverge_hcl
 #' @export
 SupportColour <- function (support, show1=TRUE) {

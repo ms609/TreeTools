@@ -43,7 +43,7 @@ NRootedShapes(nTip)
 \item{nTip}{Integer specifying number of tips.}
 
 \item{tipLabels}{Character vector listing the labels assigned to each tip
-in a tree, perhaps obtained using \link{TipLabels}.}
+in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 
 \item{key}{Integer specifying the \emph{key} (not number) of an unrooted tree.}
 

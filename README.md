@@ -10,13 +10,13 @@
 
 This package provides functions for creating, modifying and analysing 
 phylogenetic trees.  It complements packages such as 
-[ape](https://cran.r-project.org/package=ape),
-[phangorn](https://cran.r-project.org/package=phangorn) and
-[phytools](https://cran.r-project.org/package=phytools),
+['ape'](https://cran.r-project.org/package=ape),
+['phangorn'](https://cran.r-project.org/package=phangorn) and
+['phytools'](https://cran.r-project.org/package=phytools),
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 
-Version 0.1.3 is a pre-release; some functionality may change in version 1.0.0,
+Version 0.1.x is a pre-release; some functionality may change in version 1.0.0,
 due early 2020.
 
 # Installation

@@ -4,7 +4,7 @@
 \alias{PhyToString}
 \alias{PhyDatToString}
 \alias{PhydatToString}
-\title{phyDat to String}
+\title{\code{phyDat} to String}
 \usage{
 PhyToString(
   phy,
@@ -62,7 +62,7 @@ for each entry.}
 representation of the phylogenetic character state for each taxon in turn.
 }
 \description{
-Extract character data from a phyDat object as a string.
+Extract character data from a \code{phyDat} object as a string.
 }
 \examples{
 fileName <- paste0(system.file(package='TreeTools'),

@@ -7,10 +7,11 @@
 TreeIsRooted(tree)
 }
 \arguments{
-\item{tree}{A phylogenetic tree of class phylo.}
+\item{tree}{A phylogenetic tree of class \code{phylo}.}
 }
 \value{
-Logical specifying whether a root node is resolved.
+\code{TreeIsRooted()} returns a logical specifying whether a root node is
+resolved.
 }
 \description{
 Faster alternative to of \code{ape::is.rooted}.

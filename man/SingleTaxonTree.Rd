@@ -2,7 +2,7 @@
 % Please edit documentation in R/phylo.R
 \name{SingleTaxonTree}
 \alias{SingleTaxonTree}
-\title{SingleTaxonTree}
+\title{Single Taxon Tree}
 \usage{
 SingleTaxonTree(label)
 }
@@ -10,13 +10,10 @@ SingleTaxonTree(label)
 \item{label}{a character vector specifying the label of the tip.}
 }
 \value{
-\code{SingleTaxonTree} returns a \code{phylo} object containing a single
+\code{SingleTaxonTree()} returns a \code{phylo} object containing a single
 tip with the specified label.
 }
 \description{
-Single taxon tree
-}
-\details{
 Create a phylogenetic 'tree' that comprises a single taxon.
 }
 \examples{

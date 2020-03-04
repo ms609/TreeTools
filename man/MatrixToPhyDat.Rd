@@ -3,7 +3,7 @@
 \name{MatrixToPhyDat}
 \alias{MatrixToPhyDat}
 \alias{PhyDatToMatrix}
-\title{Matrix to phyDat}
+\title{Matrix to \code{phyDat}}
 \usage{
 MatrixToPhyDat(tokens)
 
@@ -20,15 +20,15 @@ character labels.}
 \value{
 an object of class \code{phyDat}.
 
-A matrix corresponding to the uncompressed character states within
-a phyDat object.
+\code{PhyDatToMatrix()} returns a matrix corresponding to the
+uncompressed character states within a \code{phyDat} object.
 }
 \description{
 Converts a matrix of tokens to a \code{phyDat} object.
 }
 \section{Functions}{
 \itemize{
-\item \code{PhyDatToMatrix}: Converts a phyDat object to a matrix of tokens.
+\item \code{PhyDatToMatrix}: Converts a \code{phyDat} object to a matrix of tokens.
 }}
 
 \author{

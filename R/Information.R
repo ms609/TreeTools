@@ -42,7 +42,7 @@ LnTreesMatchingSplit <- function (A, B) {
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.`
 #'
-#' @return `CharacterInformation` returns a numberic specifying the
+#' @return `CharacterInformation` returns a numeric specifying the
 #' phylogenetic information content of the character, in bits.
 #'
 #' @family split information functions

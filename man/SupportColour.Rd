@@ -16,8 +16,8 @@ SupportColor(support, show1 = TRUE)
 A transparent white will be returned if \code{FALSE}.}
 }
 \value{
-A string containing the hexadecimal code for a colour picked from a
-diverging scale, or \code{red} if a value is invalid.
+\code{SupportColour()} returns a string containing the hexadecimal code
+for a colour picked from a diverging scale, or \code{red} if a value is invalid.
 }
 \description{
 Colour value with which to display node support.
