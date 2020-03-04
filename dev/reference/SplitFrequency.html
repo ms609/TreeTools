@@ -181,7 +181,8 @@ bipartition splits, as defined by a reference tree, occur in a forest of trees.<
     </tr>
     <tr>
       <th>tips</th>
-      <td><p>Integer vector specifying the tips of the tree within the chosen split</p></td>
+      <td><p>Integer vector specifying the tips of the tree within the chosen
+split.</p></td>
     </tr>
     <tr>
       <th>tree</th>
@@ -189,22 +190,23 @@ bipartition splits, as defined by a reference tree, occur in a forest of trees.<
     </tr>
     <tr>
       <th>tipIndex</th>
-      <td><p>Character vector of tip names, in a fixed order</p></td>
+      <td><p>Character vector of tip names, in a fixed order.</p></td>
     </tr>
     <tr>
       <th>powersOf2</th>
-      <td><p>Integer vector of same length as tipIndex, specifying a power
-of 2 to be associated with each tip in turn</p></td>
+      <td><p>Integer vector of same length as <code>tipIndex</code>, specifying a
+power of 2 to be associated with each tip in turn.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Number of trees in <code>forest</code> that contain each split in <code>reference</code>.
-if <code>reference</code> is a tree of class phylo, then the sequence will
-correspond to the order of nodes (use `ape::nodelabels to view).
-Note that the three nodes at the root of the tree correspond to a
-single split; see the example for how these might be plotted on a tree.</p>
+    <p><code>SplitFrequency()</code> returns the number of trees in <code>forest</code> that
+contain each split in <code>reference</code>.
+If <code>reference</code> is a tree of class <code>phylo</code>, then the sequence will correspond
+to the order of nodes (use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>ape::nodelabels()</a></code> to view).
+Note that the three nodes at the root of the tree correspond to a single
+split; see the example for how these might be plotted on a tree.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If multiple calculations are required, some time can be saved by using the
