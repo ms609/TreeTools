@@ -28,12 +28,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (0000-0001-5660-1727) [copyright holder]
+\strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
 
 Other contributors:
 \itemize{
-  \item Emmanuel Paradis (0000-0003-3092-2199) [copyright holder]
-  \item Klaus Schliep (0000-0003-2941-0161) [copyright holder]
+  \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) [copyright holder]
+  \item Klaus Schliep (\href{https://orcid.org/0000-0003-2941-0161}{ORCID}) [copyright holder]
 }
 
 }

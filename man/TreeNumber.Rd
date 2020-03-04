@@ -16,14 +16,11 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{multiPhylo}(x, ...)
 
-\method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip),
-  ...)
+\method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip), ...)
 
-\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
-  tipLabels = attr(x, "tip.label"), ...)
+\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
-\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"),
-  tipLabels = attr(x, "tip.label"), ...)
+\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -146,9 +143,12 @@ Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 \seealso{
 \code{\link{TreeShape}}
 
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{SingleTaxonTree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

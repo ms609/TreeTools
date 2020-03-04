@@ -37,11 +37,13 @@ which(!NonDuplicateRoot(parent, child))
 
 }
 \seealso{
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{AncestorEdge}},
-  \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{MRCA}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{AncestorEdge}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{MRCA}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

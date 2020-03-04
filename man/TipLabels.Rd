@@ -52,10 +52,13 @@ Extracts tip labels from an object.  If the object is a single integer,
 the default of \code{ape::\link{rtree}}.
 }
 \seealso{
-Other Splits operations: \code{\link{NSplits}},
-  \code{\link{NTip}}, \code{\link{TipsInSplits}},
-  \code{\link{as.Splits}}, \code{\link{in.Splits}},
-  \code{\link{match.Splits}}
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{in.Splits}()},
+\code{\link{match.Splits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

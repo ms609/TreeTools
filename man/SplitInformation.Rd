@@ -40,9 +40,10 @@ content.
 
 }
 \seealso{
-Other split information functions: \code{\link{CharacterInformation}},
-  \code{\link{TreesMatchingSplit}},
-  \code{\link{UnrootedTreesMatchingSplit}}
+Other split information functions: 
+\code{\link{CharacterInformation}()},
+\code{\link{TreesMatchingSplit}()},
+\code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

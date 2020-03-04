@@ -10,14 +10,15 @@ StringToPhyDat(string, tips, byTaxon = TRUE)
 StringToPhydat(string, tips, byTaxon = TRUE)
 }
 \arguments{
-\item{string}{a string of tokens, optionally containing whitespace, with no
+\item{string}{String of tokens, optionally containing whitespace, with no
 terminating semi-colon.}
 
-\item{tips, }{a character vector corresponding to the names (in order)
-of each taxon in the matrix}
+\item{tips}{Character vector corresponding to the names (in order)
+of each taxon in the matrix.}
 
-\item{byTaxon}{= TRUE, string is one TAXON's coding at a time; FALSE: one
-CHARACTER's coding at a time}
+\item{byTaxon}{Logical; if \code{TRUE}, string is one \strong{taxon}'s coding at a
+time; if \code{FALSE}, string is interpreted as one *\strong{character}'s coding at a
+time.}
 }
 \value{
 This function returns a data matrix in \code{\link[phangorn]{phyDat}} format.
@@ -26,7 +27,7 @@ This function returns a data matrix in \code{\link[phangorn]{phyDat}} format.
 Converts a character string to a PhyDat object.
 }
 \examples{
-morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon=TRUE)
+morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
 # encodes the following matrix:
 # Lion     -?0123
 # Gazelle  1230?-

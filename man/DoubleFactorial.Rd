@@ -46,8 +46,9 @@ exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 
 }
 \seealso{
-Other Double factorial: \code{\link{doubleFactorials}},
-  \code{\link{logDoubleFactorials}}
+Other Double factorial: 
+\code{\link{doubleFactorials}},
+\code{\link{logDoubleFactorials}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

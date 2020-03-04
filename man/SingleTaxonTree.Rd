@@ -25,12 +25,17 @@ plot(SingleTaxonTree('root') + BalancedTree(4))
 
 }
 \seealso{
-Other tree manipulation: \code{\link{AddTip}},
-  \code{\link{Renumber}}, \code{\link{Subtree}}
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{Renumber}()},
+\code{\link{Subtree}()}
 
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{RandomTree}}, \code{\link{TreeNumber}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{TreeNumber}}
 }
 \concept{tree generation functions}
 \concept{tree manipulation}

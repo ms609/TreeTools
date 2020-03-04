@@ -5,8 +5,7 @@
 \alias{TNTText2Tree}
 \title{Parse TNT Tree}
 \usage{
-ReadTntTree(filename, relativePath = NULL, keepEnd = 1L,
-  tipLabels = NULL)
+ReadTntTree(filename, relativePath = NULL, keepEnd = 1L, tipLabels = NULL)
 
 TNTText2Tree(treeText)
 }
@@ -47,14 +46,14 @@ documented scripting language.
 generated in TNT into R for further analysis.
 
 The function depends on tree files being saved by TNT in parenthetical
-notation, using the TNT command \code{tsav*}.
+notation, using the TNT command \verb{tsav*}.
 Trees are easiest to load into R if taxa have been saved using their names
-(TNT command \code{taxname=}).  In this case, the TNT \code{.tre} file
+(TNT command \verb{taxname=}).  In this case, the TNT \code{.tre} file
 contains tip labels and can be parsed directly.  The downside is that the
 uncompressed \code{.tre} files will have a larger file size.
 
 \code{ReadTNTTree} can also read \code{.tre} files in which taxa have been saved using
-their numbers (\code{taxname-}).  Such files contain a hard-coded link to the
+their numbers (\verb{taxname-}).  Such files contain a hard-coded link to the
 matrix file that was used to generate the trees, in the first line of the
 \code{.tre} file.  This poses problems for portability: if the matrix file is
 moved, or the \code{.tre} file is accessed on another computer, the taxon names

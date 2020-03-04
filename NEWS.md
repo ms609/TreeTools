@@ -1,13 +1,13 @@
 # TreeTools 0.1.3.9003 (development)
  
+- Catch hang-inducing bugs in `RootOnNode()`.
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error.
 - Support unrooted trees in `AddTipEverywhere()`.
-- Catch hang-inducing bugs in `RootOnNode()`.
 - Documentation improvements.
 
 # TreeTools 0.1.3
 
-- `RootOnNode`: Quickly root a tree on a specified node.
+- `RootOnNode()`: Quickly root a tree on a specified node.
 - Improve portability of C++ code.
 
 # TreeTools 0.1.2

@@ -37,8 +37,10 @@ plot(Subtree(tree, 13))
 
 }
 \seealso{
-Other tree manipulation: \code{\link{AddTip}},
-  \code{\link{Renumber}}, \code{\link{SingleTaxonTree}}
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

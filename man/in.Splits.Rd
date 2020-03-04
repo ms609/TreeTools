@@ -29,10 +29,13 @@ in.Splits(splits1, splits2)
 
 }
 \seealso{
-Other Splits operations: \code{\link{NSplits}},
-  \code{\link{NTip}}, \code{\link{TipLabels}},
-  \code{\link{TipsInSplits}}, \code{\link{as.Splits}},
-  \code{\link{match.Splits}}
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{match.Splits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -12,7 +12,7 @@ CladeSizes(tree, nodes)
 \item{nodes}{whose descendants should be returned}
 }
 \value{
-\code{CladeSizes} returns the number of nodes (including tips) that are
+\code{CladeSizes()} returns the number of nodes (including tips) that are
 descended from each node.
 }
 \description{

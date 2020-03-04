@@ -30,9 +30,12 @@ Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects o
 class \code{Splits} and \code{list}.
 }
 \seealso{
-Other Splits operations: \code{\link{NSplits}},
-  \code{\link{TipLabels}}, \code{\link{TipsInSplits}},
-  \code{\link{as.Splits}}, \code{\link{in.Splits}},
-  \code{\link{match.Splits}}
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{in.Splits}()},
+\code{\link{match.Splits}()}
 }
 \concept{Splits operations}

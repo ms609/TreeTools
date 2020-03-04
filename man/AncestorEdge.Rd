@@ -33,10 +33,13 @@ which(AncestorEdge(5, parent, child))
 
 }
 \seealso{
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{MRCA}()},
+\code{\link{NonDuplicateRoot}()}
 }
 \concept{tree navigation}
 \keyword{internal}

@@ -33,9 +33,10 @@ LnTreesMatchingSplit(5, 6)
 
 }
 \seealso{
-Other split information functions: \code{\link{CharacterInformation}},
-  \code{\link{SplitInformation}},
-  \code{\link{UnrootedTreesMatchingSplit}}
+Other split information functions: 
+\code{\link{CharacterInformation}()},
+\code{\link{SplitInformation}()},
+\code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

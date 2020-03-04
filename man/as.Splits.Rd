@@ -14,8 +14,7 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{phylo}(x, tipLabels = NULL, asSplits = TRUE, ...)
 
-\method{as.Splits}{multiPhylo}(x, tipLabels = x[[1]]$tip.label,
-  asSplits = TRUE, ...)
+\method{as.Splits}{multiPhylo}(x, tipLabels = x[[1]]$tip.label, asSplits = TRUE, ...)
 
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 
@@ -69,10 +68,13 @@ in.Splits(moreSplits, splits)
 
 }
 \seealso{
-Other Splits operations: \code{\link{NSplits}},
-  \code{\link{NTip}}, \code{\link{TipLabels}},
-  \code{\link{TipsInSplits}}, \code{\link{in.Splits}},
-  \code{\link{match.Splits}}
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{in.Splits}()},
+\code{\link{match.Splits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

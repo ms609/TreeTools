@@ -29,9 +29,10 @@ specified multi-partition split, using the formula of Carter \emph{et al}. (1990
 See Theorem 2 in \insertRef{Carter1990}{TreeTools}
 }
 \seealso{
-Other split information functions: \code{\link{CharacterInformation}},
-  \code{\link{SplitInformation}},
-  \code{\link{TreesMatchingSplit}}
+Other split information functions: 
+\code{\link{CharacterInformation}()},
+\code{\link{SplitInformation}()},
+\code{\link{TreesMatchingSplit}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

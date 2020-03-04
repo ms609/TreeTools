@@ -44,10 +44,13 @@ NSplits(as.Splits(BalancedTree(8)))
 
 }
 \seealso{
-Other Splits operations: \code{\link{NTip}},
-  \code{\link{TipLabels}}, \code{\link{TipsInSplits}},
-  \code{\link{as.Splits}}, \code{\link{in.Splits}},
-  \code{\link{match.Splits}}
+Other Splits operations: 
+\code{\link{NTip}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{in.Splits}()},
+\code{\link{match.Splits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

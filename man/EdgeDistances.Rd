@@ -30,11 +30,13 @@ EdgeDistances(tree)
 
 }
 \seealso{
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{AncestorEdge}},
-  \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{MRCA}},
-  \code{\link{NonDuplicateRoot}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{AncestorEdge}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{MRCA}()},
+\code{\link{NonDuplicateRoot}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
