@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       <h1>Loading phylogenetic trees into R</h1>
                         <h4 class="author">Martin R. Smith</h4>
             
-            <h4 class="date">2020-01-22</h4>
+            <h4 class="date">2020-03-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
@@ -168,6 +168,11 @@
 <p>Are there other formats that should be listed here? Please let me know by <a href="https://github.com/ms609/TreeSearch/issues/new?title=Loading%20trees">opening an issue</a>.</p>
 </div>
 </div>
+<div id="export-write-trees" class="section level2">
+<h2 class="hasAnchor">
+<a href="#export-write-trees" class="anchor"></a>Export (write) trees</h2>
+<p>To save a tree to a text file, use <code><a href="https://rdrr.io/pkg/ape/man/write.tree.html">ape::write.tree(tree, file='filename.txt')</a></code> for Newick format (widely supported by most phylogenetic software), or <code><a href="https://rdrr.io/pkg/ape/man/write.nexus.html">ape::write.nexus(tree, file='filename.nex')</a></code> for Nexus format.</p>
+</div>
 <div id="what-next" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-next" class="anchor"></a>What next?</h2>
@@ -188,6 +193,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#manual-entry">Manual entry</a></li>
       <li><a href="#from-a-file">From a file</a></li>
+      <li><a href="#export-write-trees">Export (write) trees</a></li>
       <li><a href="#what-next">What next?</a></li>
       </ul>
 </div>

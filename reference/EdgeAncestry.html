@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -169,18 +169,19 @@ should be returned.</p></td>
     </tr>
     <tr>
       <th>parent</th>
-      <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code>.</p></td>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
     </tr>
     <tr>
       <th>child</th>
-      <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     <tr>
       <th>stopAt</th>
-      <td><p>number of the edge at which the search should terminate;
-defaults to the root edges.</p></td>
+      <td><p>Integer or logical vector specifying the edge(s) at which to
+terminate the search; defaults to the edges with the smallest parent,
+which will be the root edges if nodes are numbered cladewise or in Preorder.</p></td>
     </tr>
     </table>
 

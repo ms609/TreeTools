@@ -42,7 +42,7 @@
 
 
 <meta property="og:title" content="Descendant Edges — DescendantEdges" />
-<meta property="og:description" content="Quickly identifies edges that are 'descended' from a particular edge in a tree" />
+<meta property="og:description" content="Quickly identify edges that are 'descended' from a particular edge in a tree." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -154,7 +154,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Quickly identifies edges that are 'descended' from a particular edge in a tree</p>
+    <p>Quickly identify edges that are 'descended' from a particular edge in a tree.</p>
     </div>
 
     <pre class="usage"><span class='fu'>DescendantEdges</span>(<span class='no'>edge</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))
@@ -166,28 +166,30 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>edge</th>
-      <td><p>number of the edge whose child edges are required.</p></td>
+      <td><p>Integer specifying the number of the edge whose child edges are
+required (see <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></code>).</p></td>
     </tr>
     <tr>
       <th>parent</th>
-      <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code>.</p></td>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
     </tr>
     <tr>
       <th>child</th>
-      <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     <tr>
       <th>nEdge</th>
-      <td><p>number of edges (calculated from length(parent) if not supplied).</p></td>
+      <td><p>number of edges (calculated from <code><a href='https://rdrr.io/r/base/length.html'>length(parent)</a></code> if not
+supplied).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DescendantEdges</code> returns a logical vector stating whether each edge in turn is a descendant of the specified edge
-(or the edge itself).</p>
+    <p><code>DescendantEdges</code> returns a logical vector stating whether each edge
+in turn is a descendant of the specified edge (or the edge itself).</p>
 <p><code>AllDescendantEdges</code> returns a matrix of class logical, with row N
 specifying whether each edge is a descendant of edge N (or the edge itself).</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>

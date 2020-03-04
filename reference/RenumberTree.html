@@ -89,7 +89,7 @@ lowest-numbered tip in the subtree subtended by each edge." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
       </span>
     </div>
 
@@ -174,13 +174,13 @@ lowest-numbered tip in the subtree subtended by each edge.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>parent</th>
-      <td><p>the first column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 1]</code>.</p></td>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
     </tr>
     <tr>
       <th>child</th>
-      <td><p>the second column of the edge matrix of a tree of class
-<code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     </table>
 
@@ -190,18 +190,12 @@ lowest-numbered tip in the subtree subtended by each edge.</p>
 following the usual preorder convention for edge and node numbering.</p>
 <p><code>RenumberEdges</code> returns a list whose two entries correspond
 to the new parent and child vectors.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>RenumberEdges</code>: Returns in list format</p></li>
-</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='SortTree.html'>SortTree</a></code></p>
 <p>Other C wrappers: 
-<code><a href='Cladewise.html'>Cladewise</a>()</code>,
-<code><a href='Neworder.html'>Neworder</a></code></p></div>
+<code><a href='Neworder.html'>Neworder</a></code>,
+<code><a href='Reorder.html'>Reorder</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -209,7 +203,6 @@ to the new parent and child vectors.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#functions">Functions</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 
