@@ -1,7 +1,6 @@
 ## Test environments
 
 * Local Windows 10 installation, R 3.6.3
-* Windows 10 via check_win_devel(quiet = TRUE), R devel
 * Ubuntu 16.04.6 LTS, R 3.4.0, release and devel, via 
   [Travis CI](https://travis-ci.org/ms609/TreeTools)
 * Mac OS X 10.13.6, R release, via Travis
@@ -13,24 +12,35 @@ There were no ERRORs or WARNINGs.
 
 There was one NOTE:
 
-Apologies for overlooking this in the initial submission.
- 
+> Maintainer: 'Martin R. Smith <martin.smith@durham.ac.uk>'
+> 
 > Found the following (possibly) invalid URLs:
+>   URL: http://epubs.siam.org/doi/abs/10.1137/0403005
+>     From: man/NRooted.Rd
+>           man/UnrootedTreesMatchingSplit.Rd
+>     Message: libcurl error code 56:
+>       	Recv failure: Connection was reset
+>     Status: Error
 >   URL: https://doi.org/10.1093/sysbio/46.4.590
 >     From: man/ReadCharacters.Rd
 >     Status: Error
 >     Message: libcurl error code 56:
->       	Recv failure: Operation timed out
+>       	Recv failure: Connection was reset
+>   URL: https://doi.org/10.1137/0403005
+>     From: man/NRooted.Rd
+>           man/UnrootedTreesMatchingSplit.Rd
+>     Status: Error
+>     Message: libcurl error code 56:
+>       	Recv failure: Connection was reset
 > 
 > Found the following (possibly) invalid DOIs:
 >   DOI: 10.1093/sysbio/46.4.590
 >     From: DESCRIPTION
 >     Status: libcurl error code 56:
->     	Recv failure: Operation timed out
+>     	Recv failure: Connection was reset
 >     Message: Error
 
-The DOI and URL are correct (though the page seems a little slow to load and
-is presumably causing a timeout).
+The DOI and URLs are correct.
 
 ## Downstream dependencies
 
