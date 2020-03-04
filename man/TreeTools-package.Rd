@@ -21,9 +21,9 @@ Efficient implementations of functions for the creation,
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://ms609.github.io/TreeTools}
-  \item \url{https://github.com/ms609/TreeTools}
-  \item Report bugs at \url{https://github.com/ms609/TreeTools/issues}
+  \item \url{https://ms609.github.io/TreeTools/}
+  \item \url{https://github.com/ms609/TreeTools/}
+  \item Report bugs at \url{https://github.com/ms609/TreeTools/issues/}
 }
 
 }

@@ -11,13 +11,21 @@ release_questions <- function() {
   )
 }
 
-#codemetar::write_codemeta()
-#rhub::check_on_windows()
-#codemetar::write_codemeta()
-#check_with_rdevel() # redundifies check_on_debian()
-#check_on_ubuntu()
-#check_on_fedora()
-#check_on_centos()
-#check_with_valgrind() # runs the build and check on Linux, in valgrind to find memory leaks and pointer errors.
-#check_with_sanitizers() # runs all package package tests, examples and vignettes with Address Sanitizer and Undefined Behavior Sanitizer.
-#list_my_checks() # list_package_checks
+
+# Additional tests:
+#
+# pkgdown::build_reference_index()
+#
+# run_examples()
+# build_vignettes()
+#
+# check_win_devel(); rhub::check_for_cran()
+# rhub::check_with_valgrind() # runs the build and check on Linux, in valgrind to find memory leaks and pointer errors.
+# rhub::check_with_sanitizers() # runs all package package tests, examples and vignettes with Address Sanitizer and Undefined Behavior Sanitizer.
+#
+# revdepcheck::revdep_check()
+#
+# codemetar::write_codemeta()
+#
+# tools::resaveRdaFiles('R', compress='auto') - is default bzip2 the optimal?
+# tools::checkRdaFiles('R') - set optimal compression in `data-raw`

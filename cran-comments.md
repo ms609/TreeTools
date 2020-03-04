@@ -1,22 +1,17 @@
 ## Test environments
-* Windows 10 on local machine, R 3.6.1
+
+* Local Windows 10 installation, R 3.6.3
 * Windows 10 via check_win_devel(quiet = TRUE), R devel
-* ubuntu 16.04.6 LTS (on travis-ci), R 3.4.0, release and devel
-* Mac OS X 10.13.3 (on travis-ci), R release
-* Using check_rhub(platforms = rhub::platforms()[[1]])
+* Ubuntu 16.04.6 LTS, R 3.4.0, release and devel, via 
+  [Travis CI](https://travis-ci.org/ms609/TreeTools)
+* Mac OS X 10.13.6, R release, via Travis
+* R-hub, with `check_for_cran()`
 
 ## R CMD check results
+
 There were no ERRORs or WARNINGs.
 
 There was one NOTE:
-
-> Days since last update: 1
-
-This re-submission catches the overloading of sqrt on Solaris identified by 
-the CRAN package check results, highlighted by Brian Ripley.
-
-I have re-read the guidance for portable C/C++ code in 'Writing R Extensions'
-and made concominant changes; I have also added Solaris to my test environments.
 
 Apologies for overlooking this in the initial submission.
  
@@ -38,4 +33,9 @@ The DOI and URL are correct (though the page seems a little slow to load and
 is presumably causing a timeout).
 
 ## Downstream dependencies
-There are currently no downstream dependencies for this package.
+
+revdepcheck::revdep_check() found no changes to worse in downstream dependencies
+
+√ Quartet 1.1.0                          -- E: 0     | W: 0     | N: 0
+√ TreeSearch 0.4.0                       -- E: 0     | W: 0     | N: 0
+

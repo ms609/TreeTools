@@ -56,10 +56,11 @@ incorrectly parsed files.
 \item \code{ReadTntAsPhyDat}: Read TNT characters as \code{phyDat} object.
 
 \item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
-\code{phyDat}, which converts a \emph{list} of morphological characters into a
+\code{phyDat()}, which converts a \emph{list} of morphological characters into a
 \code{phyDat} object.
 If your morphological characters are in the form of a \emph{matrix}, perhaps
-because they have been read using \code{read.table}, try \link{MatrixToPhyDat} instead.
+because they have been read using \code{read.table}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+instead.
 }}
 
 \examples{
