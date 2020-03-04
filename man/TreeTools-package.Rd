@@ -4,26 +4,24 @@
 \name{TreeTools-package}
 \alias{TreeTools}
 \alias{TreeTools-package}
-\title{TreeTools: Create, Modify and Analyse Phylogenetic Trees}
+\title{'TreeTools' is an R package that provides functions for creating, modifying and
+analysing phylogenetic trees.
+It complements packages such as
+\href{https://cran.r-project.org/package=ape}{'ape'},
+\href{https://cran.r-project.org/package=phangorn}{'phangorn'} and
+\href{https://cran.r-project.org/package=phytools}{'phytools'},
+aiming for efficient and robust implementations of functions, typically
+applied to unweighted trees (i.e. those without edge lengths).}
 \description{
-Efficient implementations of functions for the creation, 
-  modification and analysis of phylogenetic trees.
-  Applications include: generation of trees with specified shapes;
-  rooting of trees and extraction of subtrees;
-  calculation and depiction of node support;
-  calculation of ancestor-descendant relationships;
-  import and export of trees from Newick, Nexus (Maddison et al. 1997)
-  <doi:10.1093/sysbio/46.4.590>,
-  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;
-  and
-  analysis of partitions and partition information.
+Version 0.1 is a pre-release; some minor functionality may change in version
+1.0, due in mid-2020.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://ms609.github.io/TreeTools}
-  \item \url{https://github.com/ms609/TreeTools}
-  \item Report bugs at \url{https://github.com/ms609/TreeTools/issues}
+  \item \url{https://ms609.github.io/TreeTools/}
+  \item \url{https://github.com/ms609/TreeTools/}
+  \item Report bugs at \url{https://github.com/ms609/TreeTools/issues/}
 }
 
 }
