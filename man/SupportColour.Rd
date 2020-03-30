@@ -3,7 +3,7 @@
 \name{SupportColour}
 \alias{SupportColour}
 \alias{SupportColor}
-\title{Support colour}
+\title{Colour for node support value}
 \usage{
 SupportColour(support, show1 = TRUE)
 

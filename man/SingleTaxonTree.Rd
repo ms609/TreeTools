@@ -2,7 +2,7 @@
 % Please edit documentation in R/phylo.R
 \name{SingleTaxonTree}
 \alias{SingleTaxonTree}
-\title{Single Taxon Tree}
+\title{Generate a single taxon tree}
 \usage{
 SingleTaxonTree(label)
 }

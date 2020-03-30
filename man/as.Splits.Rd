@@ -8,7 +8,7 @@
 \alias{as.Splits.list}
 \alias{as.Splits.logical}
 \alias{as.logical.Splits}
-\title{As splits}
+\title{Convert object to splits}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
 

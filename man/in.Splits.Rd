@@ -2,7 +2,7 @@
 % Please edit documentation in R/Splits.R
 \name{in.Splits}
 \alias{in.Splits}
-\title{Splits in Splits object}
+\title{\code{\%in\%} equivalent for splits objects}
 \usage{
 in.Splits(x, table, incomparables = NULL)
 }

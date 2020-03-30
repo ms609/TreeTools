@@ -1,3 +1,7 @@
+# TreeTools 0.1.4.9000
+
+- Documentation improvements.
+
 # TreeTools 0.1.4
  
 - Catch hang-inducing bugs in `RootOnNode()`.

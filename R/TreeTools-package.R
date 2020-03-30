@@ -1,3 +1,5 @@
+#' TreeTools
+#'
 #' 'TreeTools' is an R package that provides functions for creating, modifying and
 #' analysing phylogenetic trees.
 #' It complements packages such as

@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse_files.R
 \name{ApeTime}
 \alias{ApeTime}
-\title{Ape Time}
+\title{Read modification time from ape Nexus file}
 \usage{
 ApeTime(filename, format = "double")
 }

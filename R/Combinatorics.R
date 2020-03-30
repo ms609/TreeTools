@@ -1,6 +1,6 @@
 globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
 
-#' Double Factorial
+#' Double factorial
 #'
 #' @param n Vector of integers.
 #'

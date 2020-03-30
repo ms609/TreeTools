@@ -43,7 +43,7 @@ Renumber <- function (tree) {
   Cladewise(tree)
 }
 
-#' Single Taxon Tree
+#' Generate a single taxon tree
 #'
 #' Create a phylogenetic 'tree' that comprises a single taxon.
 #'

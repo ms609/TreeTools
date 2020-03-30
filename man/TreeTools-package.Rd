@@ -4,15 +4,18 @@
 \name{TreeTools-package}
 \alias{TreeTools}
 \alias{TreeTools-package}
-\title{'TreeTools' is an R package that provides functions for creating, modifying and
+\title{TreeTools}
+\description{
+'TreeTools' is an R package that provides functions for creating, modifying and
 analysing phylogenetic trees.
 It complements packages such as
 \href{https://cran.r-project.org/package=ape}{'ape'},
 \href{https://cran.r-project.org/package=phangorn}{'phangorn'} and
 \href{https://cran.r-project.org/package=phytools}{'phytools'},
 aiming for efficient and robust implementations of functions, typically
-applied to unweighted trees (i.e. those without edge lengths).}
-\description{
+applied to unweighted trees (i.e. those without edge lengths).
+}
+\details{
 Version 0.1 is a pre-release; some minor functionality may change in version
 1.0, due in mid-2020.
 }

@@ -6,7 +6,7 @@
 \alias{LogDoubleFactorial}
 \alias{LnDoubleFactorial.int}
 \alias{LogDoubleFactorial.int}
-\title{Double Factorial}
+\title{Double factorial}
 \usage{
 DoubleFactorial(n)
 
@@ -25,7 +25,7 @@ LogDoubleFactorial.int(n)
 Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
 }
 \description{
-Double Factorial
+Double factorial
 }
 \section{Functions}{
 \itemize{

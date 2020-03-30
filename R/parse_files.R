@@ -1,4 +1,4 @@
-#' Ape Time
+#' Read modification time from ape Nexus file
 #'
 #' Reads the time that an ape tree was modified from the comment in the Nexus
 #' file.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{EdgeAncestry}
 \alias{EdgeAncestry}
-\title{Edge ancestry}
+\title{Ancestros of an edge}
 \usage{
 EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 }

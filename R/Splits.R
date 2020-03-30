@@ -1,4 +1,4 @@
-#' As splits
+#' Convert object to splits
 #'
 #' Converts a phylogenetic tree to an array of bipartition splits.
 #'
@@ -78,7 +78,7 @@ as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
-    # Nothing needs doing
+    # Nothing needs doing.
     # Return:
     x
   } else {
@@ -477,7 +477,7 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
   }, integer(1))
 }
 
-#' Splits in Splits object
+#' `%in%` equivalent for splits objects
 #'
 #' `in.Splits` is an equivalent to `%in%` that can be applied to objects
 #' of class `Splits`.

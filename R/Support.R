@@ -79,7 +79,7 @@ TreeSplits <- function (tree) {
   .Deprecated("as.Splits")
 }
 
-#' Support colour
+#' Colour for node support value
 #'
 #' Colour value with which to display node support.
 #'

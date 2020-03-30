@@ -105,7 +105,7 @@ BalancedBit <- function (tips, nTips = length(tips)) {
   }
 }
 
-#' Neighbour Joining Tree
+#' Generate a neighbour joining tree
 #'
 #' Generates a rooted neighbour joining tree, with no edge lengths.
 #'

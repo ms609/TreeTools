@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_display.R
 \name{NewickTree}
 \alias{NewickTree}
-\title{Newick Tree}
+\title{Write Newick Tree}
 \usage{
 NewickTree(tree)
 }

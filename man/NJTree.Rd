@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_generation.R
 \name{NJTree}
 \alias{NJTree}
-\title{Neighbour Joining Tree}
+\title{Generate a neighbour joining tree}
 \usage{
 NJTree(dataset)
 }

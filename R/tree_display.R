@@ -99,7 +99,7 @@ SortTree <- function(tree) {
   Cladewise(Renumber(tree))
 }
 
-#' Newick Tree
+#' Write Newick Tree
 #'
 #' Writes a tree in Newick format.  This differs from ape's `write.tree`
 #' in the encoding of spaces as spaces, rather than underscores.
