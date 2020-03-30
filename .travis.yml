@@ -1,6 +1,7 @@
-language: R
+language: r
+os: linux
+dist: xenial
 cache: packages
-sudo: required # required if r_binary_packages; false otherwise
 warnings_are_errors: true
 r_check_args: --as-cran --no-manual # Workaround error compiling PDF manual
 
@@ -19,7 +20,7 @@ r_binary_packages:
 before_script:
   - R -e "devtools::load_all(); devtools::document()"
 
-matrix:
+jobs:
   include:
     - r: 3.4.0
     - r: release
@@ -27,6 +28,7 @@ matrix:
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
+        cleanup: false
         skip_cleanup: true
         local_dir: "docs"
         keep-history: true
