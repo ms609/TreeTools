@@ -8,8 +8,13 @@ r_check_args: --as-cran --no-manual # Workaround error compiling PDF manual
 git:
   depth: 1
 
+r_packages:
+ - pkgload
+ - devtools
+ - testthat
+
 before_script:
-  - R -e "devtools::load_all(); devtools::document()"
+  - R -e "pkgload::load_all(); devtools::document()"
 
 jobs:
   include:
