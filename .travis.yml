@@ -48,6 +48,5 @@ jobs:
         only: master
       r: release
       before_install:
-      - brew install cairo
       - sudo tlmgr install doi titling hyperref
 #  allow_failures:
