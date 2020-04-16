@@ -41,6 +41,8 @@ jobs:
     - r: devel
       branches:
         only: master
+      r_packages:
+       - covr
       after_success:
         - Rscript -e "covr::codecov()"
     - os: osx
