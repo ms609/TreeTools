@@ -43,6 +43,8 @@ jobs:
         only: master
       r_packages:
        - devtools
+       - ps # Dependency; shouldn't be necessary to list?
+       - promises # Dependency; shouldn't be necessary to list?
        - testthat
        - covr
       after_success:
