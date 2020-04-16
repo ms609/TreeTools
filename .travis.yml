@@ -8,15 +8,6 @@ r_check_args: --as-cran --no-manual # Workaround error compiling PDF manual
 git:
   depth: 1
 
-r_binary_packages:
- - ape
- - covr
- - devtools
- - phangorn
- - Rcpp
- - roxygen2
- - testthat
-
 before_script:
   - R -e "devtools::load_all(); devtools::document()"
 
@@ -25,6 +16,14 @@ jobs:
     - r: 3.4.0
     - r: release
       before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
+      r_binary_packages:
+       - ape
+       - covr
+       - devtools
+       - phangorn
+       - Rcpp
+       - roxygen2
+       - testthat
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
@@ -43,13 +42,6 @@ jobs:
       branches:
         only: master
       r: release
-      r_packages:
-        - ape
-        - devtools
-        - phangorn
-        - Rcpp
-        - roxygen2
-        - testthat
       before_install:
       - brew install cairo
       - sudo tlmgr install doi titling hyperref
