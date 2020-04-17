@@ -1,9 +1,12 @@
-# TreeTools 0.1.4.9000
+# TreeTools 0.1.4.9000 (development)
 
+- `RootNode()`: Which node is a tree's root?
+- `PhylogeneticInfo()`: Calculate the information content of a tree.
+- `NodeOrder()`, `NDescendants()`: Calculate edges incident to each node.
 - Documentation improvements.
 
 # TreeTools 0.1.4
- 
+
 - Catch hang-inducing bugs in `RootOnNode()`.
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error.
 - Support unrooted trees in `AddTipEverywhere()`.
@@ -16,7 +19,7 @@
 
 # TreeTools 0.1.2
  
-- `as.Newick`: fast conversion to Newick format.
+- `as.Newick`: Fast conversion to Newick format.
 - `as.TreeNumber`: Tree shape enumeration.
 
 # TreeTools 0.1.1

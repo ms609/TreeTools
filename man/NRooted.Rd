@@ -5,11 +5,17 @@
 \alias{NUnrooted}
 \alias{LnUnrooted}
 \alias{LnUnrooted.int}
+\alias{Log2Unrooted}
+\alias{Log2Unrooted.int}
 \alias{LnRooted}
 \alias{LnRooted.int}
+\alias{Log2Rooted}
+\alias{Log2Rooted.int}
 \alias{LnUnrootedSplits}
+\alias{Log2UnrootedSplits}
 \alias{NUnrootedSplits}
 \alias{LnUnrootedMult}
+\alias{Log2UnrootedMult}
 \alias{NUnrootedMult}
 \title{Number of rooted/unrooted trees}
 \usage{
@@ -21,15 +27,27 @@ LnUnrooted(tips)
 
 LnUnrooted.int(tips)
 
+Log2Unrooted(tips)
+
+Log2Unrooted.int(tips)
+
 LnRooted(tips)
 
 LnRooted.int(tips)
 
+Log2Rooted(tips)
+
+Log2Rooted.int(tips)
+
 LnUnrootedSplits(splits)
+
+Log2UnrootedSplits(splits)
 
 NUnrootedSplits(splits)
 
 LnUnrootedMult(splits)
+
+Log2UnrootedMult(splits)
 
 NUnrootedMult(splits)
 }
@@ -44,8 +62,10 @@ These functions return the number of rooted or unrooted trees consistent with
 a given pattern of splits.
 }
 \details{
-Functions starting N return the number of rooted or unrooted trees, functions
-starting Ln provide the natural logarithm of this number.
+Functions starting \code{N} return the number of rooted or unrooted trees.
+Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
+or \code{Log2} for its base 2 logarithm.
+
 Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
@@ -60,12 +80,8 @@ Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 
 \item \code{LnRooted.int}: Log Number of rooted trees (as integer)
 
-\item \code{LnUnrootedSplits}: Log number of unrooted trees
-
 \item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
 split.
-
-\item \code{LnUnrootedMult}: Log unrooted with multi-partition splits.
 
 \item \code{NUnrootedMult}: Number of unrooted trees consistent with a multi-partition
 split.
@@ -76,12 +92,15 @@ split.
   NUnrooted(10)
   LnRooted(10)
   LnUnrooted(10)
+  Log2Unrooted(10)
   # Number of trees consistent with a character whose states are
   # 00000 11111 222
   NUnrootedMult(c(5,5,3))
 
 LnUnrootedSplits(c(2,4))
 LnUnrootedSplits(c(3,3))
+Log2UnrootedSplits(c(2,4))
+Log2UnrootedSplits(c(3,3))
 NUnrootedSplits(c(2,4))
 NUnrootedSplits(c(3,3))
 }

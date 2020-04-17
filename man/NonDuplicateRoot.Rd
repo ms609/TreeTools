@@ -43,7 +43,9 @@ Other tree navigation:
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
-\code{\link{MRCA}()}
+\code{\link{MRCA}()},
+\code{\link{NodeOrder}()},
+\code{\link{RootNode}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

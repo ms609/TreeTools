@@ -56,6 +56,78 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret
 }
 
+#' Number of descendants for each node in a tree
+#' 
+#' @template treeParam
+#' 
+#' @return `NDescendants()` returns a table listing the number of direct
+#' descendants for each node in a tree.
+#' 
+#' @examples 
+#' tree <- CollapseNode(BalancedTree(8), 12:15)
+#' plot(tree)
+#' nodelabels()
+#' NDescendants(tree)
+#' 
+#' @template MRS
+#' @export
+NDescendants <- function (tree) {
+  NodeOrder(tree$edge, includeAncestor = FALSE)
+}
+
+#' Order of each node in a tree
+#' 
+#' Calculate the number of edges incident to each node in a tree. 
+#' Includes the root edge in rooted trees.
+#' 
+#' @param x A tree of class `phylo`, its `$edge` property, or a list thereof.
+#' @param includeAncestor Logical specifying whether to count edge leading to 
+#' ancestral node in calculation of order.
+#' @param internalOnly Logical specifying whether to restrict to results
+#' to internal nodes, i.e. to omit leaves. Irrelevant if
+#' `includeAncestor = FALSE`.
+#' 
+#' @return `NodeOrder()` returns a table listing the order of each node; 
+#' entries are named with the number of each node.
+#' 
+#' @examples 
+#' tree <- CollapseNode(BalancedTree(8), 12:15)
+#' plot(tree)
+#' nodelabels()
+#' NodeOrder(tree, internalOnly = TRUE)
+#' 
+#' @template MRS
+#' @family tree navigation
+#' @export
+NodeOrder <- function (x, includeAncestor = TRUE, internalOnly = FALSE) UseMethod('NodeOrder')
+
+
+#' @export
+NodeOrder.list <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  lapply(x, NodeOrder, includeAncestor, internalOnly)
+}
+
+#' @export
+NodeOrder.multiPhylo <- NodeOrder.list
+
+#' @export
+NodeOrder.phylo <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  NodeOrder(x$edge, includeAncestor, internalOnly)
+}
+
+#' @export
+NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  if (includeAncestor) {
+    if (internalOnly) {
+      table(x[x >= min(x[, 1])]) 
+    } else {
+      table(x)
+    }
+  } else {
+    table(x[, 1])
+  }
+}
+
 #' Ancestral edge
 #'
 #' @param edge Number of an edge
@@ -302,4 +374,66 @@ TreeIsRooted <- function (tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   sum(parent == min(parent)) < 3L
+}
+
+#' Which node is a tree's root?
+#' 
+#' Identify the root node of a (rooted or unrooted) phylogenetic tree.
+#' Unrooted trees are represented internally by a rooted tree with an 
+#' unresolved root node.
+#' 
+#' @param x A tree of class `phylo`, or its edge matrix; or a list or
+#' `multiPhylo` object containing multiple trees.
+#' @return `RootNode()` returns an integer denoting the root node for each tree.
+#' Badly conformed trees trigger an error.
+#' @template MRS
+#' 
+#' @examples 
+#' RootNode(BalancedTree(8))
+#' RootNode(unroot(BalancedTree(8)))
+#' 
+#' 
+#' @family tree navigation
+#' @seealso
+#' 
+#' [`TreeIsRooted()`]
+#' 
+#'  phangorn::[`getRoot()`]
+#' 
+#' @export
+RootNode <- function (x) UseMethod('RootNode')
+
+#' @export
+RootNode.phylo <- function (x) {
+  edge <- x$edge
+  edgeOrder <- attr(x, "order")
+  if (!is.null(edgeOrder)) {
+    if (edgeOrder == "postorder") {
+      return(edge[nrow(edge), 1L])
+    } else if (edgeOrder == 'preorder') {
+      return(edge[1L])
+    }
+  }
+  RootNode(edge)
+}
+
+#' @export
+RootNode.list <- function (x) {
+  vapply(x, RootNode, 0L)
+}
+
+#' @export
+RootNode.multiPhylo <- RootNode.list
+
+#' @export
+RootNode.matrix <- function (x) {
+  parent <- x[, 1]
+  child <- x[, 2]
+  ret <- unique(parent[!parent %in% child])
+  if (length(ret) != 1) {
+    warning("Root not unique: found ", paste(ret, collapse = ', '))
+  }
+  
+  # Return:
+  ret
 }

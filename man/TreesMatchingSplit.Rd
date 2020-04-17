@@ -3,33 +3,33 @@
 \name{TreesMatchingSplit}
 \alias{TreesMatchingSplit}
 \alias{LnTreesMatchingSplit}
+\alias{Log2TreesMatchingSplit}
 \title{Number of trees matching a bipartition split}
 \usage{
 TreesMatchingSplit(A, B)
 
 LnTreesMatchingSplit(A, B)
+
+Log2TreesMatchingSplit(A, B)
 }
 \arguments{
 \item{A, B}{Integer specifying the number of taxa in each partition.}
 }
 \value{
-\code{TreesMatchingSplit} returns a numeric specifying the number of trees
+\code{TreesMatchingSplit()} returns a numeric specifying the number of trees
 that are compatible with the given split.
 
-\code{LnTreesMatchingSplit} gives the natural logarithm of this number.
+\code{LnTreesMatchingSplit()} and \code{Log2TreesMatchingSplit()} give the natural
+and base-2 logarithms of this number.
 }
 \description{
 Calculates the number of unrooted bifurcated trees that are consistent with
 a bipartition split that divides taxa into groups of size \code{A} and \code{B}.
 }
-\section{Functions}{
-\itemize{
-\item \code{LnTreesMatchingSplit}: Logarithm of the number of trees matching a split.
-}}
-
 \examples{
 TreesMatchingSplit(5, 6)
 LnTreesMatchingSplit(5, 6)
+Log2TreesMatchingSplit(5, 6)
 
 }
 \seealso{

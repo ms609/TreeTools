@@ -5,14 +5,16 @@
 #'
 #' @param A,B Integer specifying the number of taxa in each partition.
 #'
-#' @return `TreesMatchingSplit` returns a numeric specifying the number of trees
+#' @return `TreesMatchingSplit()` returns a numeric specifying the number of trees
 #' that are compatible with the given split.
 #'
-#' `LnTreesMatchingSplit` gives the natural logarithm of this number.
+#' `LnTreesMatchingSplit()` and `Log2TreesMatchingSplit()` give the natural
+#' and base-2 logarithms of this number.
 #'
 #' @examples
 #' TreesMatchingSplit(5, 6)
 #' LnTreesMatchingSplit(5, 6)
+#' Log2TreesMatchingSplit(5, 6)
 #'
 #' @template MRS
 #'
@@ -24,12 +26,20 @@ TreesMatchingSplit <- function (A, B) {
   NRooted(A) * NRooted(B)
 }
 
-#' @describeIn TreesMatchingSplit Logarithm of the number of trees matching a split.
+#' @rdname TreesMatchingSplit
 #' @export
 LnTreesMatchingSplit <- function (A, B) {
   if (A == 0) LnUnrooted.int(B) else
   if (B == 0) LnUnrooted.int(A) else
   LnRooted.int(A) + LnRooted.int(B)
+}
+
+#' @rdname TreesMatchingSplit
+#' @export
+Log2TreesMatchingSplit <- function (A, B) {
+  if (A == 0) Log2Unrooted.int(B) else
+  if (B == 0) Log2Unrooted.int(A) else
+  Log2Rooted.int(A) + Log2Rooted.int(B)
 }
 
 #' Character information content
@@ -59,12 +69,10 @@ CharacterInformation <- function (tokens) {
   # n trees consistent with character / n trees with that many tips
   # NUnrootedMult(splits) / NUnrooted(splits)
   # As we are working with large numbers we can use logarithms
-  lnP <- LnUnrootedMult(splits) - LnUnrooted(sum(splits))
-  log2P <- lnP / log(2)
-  information <- -log2P
-
+  log2P <- Log2UnrootedMult(splits) - Log2Unrooted(sum(splits))
+  
   # Return:
-  information
+  -log2P
 }
 
 #' Phylogenetic information content of a split
@@ -164,7 +172,7 @@ CharacterInformation <- function (tokens) {
 #' @template MRS
 #' @export
 SplitInformation <- function (A, B) {
-  -(LnTreesMatchingSplit(A, B) - LnUnrooted.int(A + B)) / log(2)
+  -(Log2TreesMatchingSplit(A, B) - Log2Unrooted.int(A + B))
 }
 
 #' @rdname SplitInformation

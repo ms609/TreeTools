@@ -36,7 +36,9 @@ Other tree navigation:
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{MRCA}()},
-\code{\link{NonDuplicateRoot}()}
+\code{\link{NodeOrder}()},
+\code{\link{NonDuplicateRoot}()},
+\code{\link{RootNode}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -66,6 +66,32 @@ LnDoubleFactorial <- (function (n) {
   }
 })
 
+#' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
+#' @export
+Log2DoubleFactorial <- (function (n) {
+  n[n < 2] <- 1 # Much faster than pmax
+  if (any(n > 49999L)) {
+
+    odds <- as.logical(n %% 2)
+
+    oddN <- n[odds]
+    nPlusOneOverTwo <- (oddN + 1) / 2
+    evenN <- n[!odds]
+    nOverTwo <- evenN / 2
+
+    ret <- integer(length(n))
+    ret[odds] <-  ((lgamma(oddN + 1L) - lgamma(nPlusOneOverTwo)) / log(2)) - nPlusOneOverTwo + 1
+    ret[!odds] <- log2(evenN) + (lgamma(nOverTwo) / log(2)) + (nOverTwo - 1)
+
+    # Return:
+    ret
+
+  } else {
+    # Return from cache
+    log2DoubleFactorials[n]
+  }
+})
+
 #' @rdname DoubleFactorial
 #' @export
 LogDoubleFactorial <- LnDoubleFactorial
@@ -90,8 +116,10 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' These functions return the number of rooted or unrooted trees consistent with
 #' a given pattern of splits.
 #'
-#' Functions starting N return the number of rooted or unrooted trees, functions
-#' starting Ln provide the natural logarithm of this number.
+#' Functions starting `N` return the number of rooted or unrooted trees.
+#' Replace this initial `N` with `Ln` for the natural logarithm of this number; 
+#' or `Log2` for its base 2 logarithm.
+#' 
 #' Calculations follow Carter _et al._ 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
@@ -108,6 +136,7 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'   NUnrooted(10)
 #'   LnRooted(10)
 #'   LnUnrooted(10)
+#'   Log2Unrooted(10)
 #'   # Number of trees consistent with a character whose states are
 #'   # 00000 11111 222
 #'   NUnrootedMult(c(5,5,3))
@@ -125,6 +154,14 @@ LnUnrooted  <- function (tips) LnDoubleFactorial(tips + tips - 5L)
 LnUnrooted.int <- function (tips) {
   ifelse(tips < 3L, 0, logDoubleFactorials[tips + tips - 5L])
 }
+#' @rdname NRooted
+#' @export
+Log2Unrooted  <- function (tips) Log2DoubleFactorial(tips + tips - 5L)
+#' @rdname NRooted
+#' @export
+Log2Unrooted.int <- function (tips) {
+  ifelse(tips < 3L, 0, log2DoubleFactorials[tips + tips - 5L])
+}
 
 #' @describeIn NRooted  Log Number of rooted trees
 #' @export
@@ -133,6 +170,14 @@ LnRooted    <- function (tips) LnDoubleFactorial(tips + tips - 3L)
 #' @export
 LnRooted.int <- function (tips) {
   ifelse(tips < 2L, 0, logDoubleFactorials[tips + tips - 3L])
+}
+#' @rdname NRooted
+#' @export
+Log2Rooted    <- function (tips) Log2DoubleFactorial(tips + tips - 3L)
+#' @rdname NRooted
+#' @export
+Log2Rooted.int <- function (tips) {
+  ifelse(tips < 2L, 0, log2DoubleFactorials[tips + tips - 3L])
 }
 
 #' Number of trees one SPR step away
@@ -165,7 +210,7 @@ N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 #' @export
 IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 
-#' @describeIn NRooted Log number of unrooted trees
+#' @rdname NRooted
 #' @examples
 #' LnUnrootedSplits(c(2,4))
 #' LnUnrootedSplits(c(3,3))
@@ -174,6 +219,16 @@ LnUnrootedSplits <- function (splits) {
   if ((nSplits <- length(splits)) < 2) return (LnUnrooted(splits));
   if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
   return (LnUnrootedMult(splits))
+}
+#' @rdname NRooted
+#' @examples
+#' Log2UnrootedSplits(c(2,4))
+#' Log2UnrootedSplits(c(3,3))
+#' @export
+Log2UnrootedSplits <- function (splits) {
+  if ((nSplits <- length(splits)) < 2) return (Log2Unrooted(splits));
+  if (nSplits == 2) return (Log2Rooted(splits[1]) + Log2Rooted(splits[2]));
+  return (Log2UnrootedMult(splits))
 }
 #' @describeIn NRooted Number of unrooted trees consistent with a bipartition
 #' split.
@@ -187,17 +242,29 @@ NUnrootedSplits  <- function (splits) {
   if (nSplits == 2) return (NRooted(splits[1]) * NRooted(splits[2]))
   return (NUnrootedMult(splits))
 }
-#' @describeIn NRooted Log unrooted with multi-partition splits.
+#' @rdname NRooted
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
-
   # Return:
   LnDoubleFactorial(totalTips +  totalTips - 5L) -
     LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
     sum(LnDoubleFactorial(splits + splits - 3L))
+  
+  }
+#' @rdname NRooted
+#' @export
+Log2UnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
+  splits <- splits[splits > 0]
+  totalTips <- sum(splits)
+
+  # Return:
+  Log2DoubleFactorial(totalTips +  totalTips - 5L) -
+    Log2DoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
+    sum(Log2DoubleFactorial(splits + splits - 3L))
 }
+
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
 #' split.
 #' @export
