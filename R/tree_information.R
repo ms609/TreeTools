@@ -43,26 +43,38 @@ Log2TreesMatchingTree <- function (tree) {
   sum(Log2Unrooted(NodeOrder(tree)))
 }
 
-#' Tree information content
+#' Phylogenetic information content
 #' 
-#' Calculate the phylogenetic or clustering information content of a
-#' phylogenetic tree.
+#' Calculate the phylogenetic information content of a phylogenetic object.
 #' 
 #' 
 #' #TODO
-#' Detailed explanation to follow.
+#' Splits to follow
 #' 
-#' @inheritParams TreesMatchingTree
+#' @param x Tree of class `phylo`, or a list thereof.
+#' 
+#' @return Returns the phylogenetic or clustering information content 
+#' of the input tree(s).
+#' 
 #' @family tree information functions
+#' @seealso Clustering information content: coming soon. #TODO.
 #' @template MRS
 #' @export
 #' @name TreeInformation
 
 #' @rdname TreeInformation
 #' @export
-TreePhylogeneticInfo <- function (tree) {
-  Log2Unrooted(NTip(tree)) - Log2TreesMatchingTree(tree)
+PhylogeneticInfo <- function (x) UseMethod(PhylogeneticInfo) 
+
+PhylogeneticInfo.phylo <- function (x) {
+  Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
 }
+
+#' @export
+PhylogeneticInfo.list <- function (x) vapply(x, PhylogeneticInfo, 0)
+#' @export
+PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
+
 
 #' @rdname TreeInformation
 #' @export

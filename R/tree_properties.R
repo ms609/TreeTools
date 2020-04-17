@@ -80,7 +80,7 @@ NDescendants <- function (tree) {
 #' Calculate the number of edges incident to each node in a tree. 
 #' Includes the root edge in rooted trees.
 #' 
-#' @template treeParam
+#' @param x A tree of class `phylo`, its `$edge` property, or a list thereof.
 #' @param includeAncestor Logical specifying whether to count edge leading to 
 #' ancestral node in calculation of order.
 #' @param internalOnly Logical specifying whether to restrict to results
@@ -94,7 +94,7 @@ NDescendants <- function (tree) {
 #' tree <- CollapseNode(BalancedTree(8), 12:15)
 #' plot(tree)
 #' nodelabels()
-#' NodeOrder(tree, internalOnly)
+#' NodeOrder(tree, internalOnly = TRUE)
 #' 
 #' @template MRS
 #' @family tree navigation

@@ -116,9 +116,10 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' These functions return the number of rooted or unrooted trees consistent with
 #' a given pattern of splits.
 #'
-#' Functions starting `N` return the number of rooted or unrooted trees, functions
-#' starting `Ln` provide the natural logarithm of this number; functions starting
-#' `Log2` return its base 2 logarithm.
+#' Functions starting `N` return the number of rooted or unrooted trees.
+#' Replace this initial `N` with `Ln` for the natural logarithm of this number; 
+#' or `Log2` for its base 2 logarithm.
+#' 
 #' Calculations follow Carter _et al._ 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
@@ -153,10 +154,10 @@ LnUnrooted  <- function (tips) LnDoubleFactorial(tips + tips - 5L)
 LnUnrooted.int <- function (tips) {
   ifelse(tips < 3L, 0, logDoubleFactorials[tips + tips - 5L])
 }
-#' @describeIn NRooted  Log2 Number of unrooted trees
+#' @rdname NRooted
 #' @export
 Log2Unrooted  <- function (tips) Log2DoubleFactorial(tips + tips - 5L)
-#' @describeIn NRooted  Log2 Number of unrooted trees (as integer)
+#' @rdname NRooted
 #' @export
 Log2Unrooted.int <- function (tips) {
   ifelse(tips < 3L, 0, log2DoubleFactorials[tips + tips - 5L])
@@ -170,10 +171,10 @@ LnRooted    <- function (tips) LnDoubleFactorial(tips + tips - 3L)
 LnRooted.int <- function (tips) {
   ifelse(tips < 2L, 0, logDoubleFactorials[tips + tips - 3L])
 }
-#' @describeIn NRooted  Log2 Number of rooted trees
+#' @rdname NRooted
 #' @export
 Log2Rooted    <- function (tips) Log2DoubleFactorial(tips + tips - 3L)
-#' @describeIn NRooted  Log2 Number of rooted trees (as integer)
+#' @rdname NRooted
 #' @export
 Log2Rooted.int <- function (tips) {
   ifelse(tips < 2L, 0, log2DoubleFactorials[tips + tips - 3L])
@@ -209,7 +210,7 @@ N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 #' @export
 IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
 
-#' @describeIn NRooted Log number of unrooted trees
+#' @rdname NRooted
 #' @examples
 #' LnUnrootedSplits(c(2,4))
 #' LnUnrootedSplits(c(3,3))
@@ -219,6 +220,10 @@ LnUnrootedSplits <- function (splits) {
   if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
   return (LnUnrootedMult(splits))
 }
+#' @rdname NRooted
+#' @examples
+#' Log2UnrootedSplits(c(2,4))
+#' Log2UnrootedSplits(c(3,3))
 #' @export
 Log2UnrootedSplits <- function (splits) {
   if ((nSplits <- length(splits)) < 2) return (Log2Unrooted(splits));
