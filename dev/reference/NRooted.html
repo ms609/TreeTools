@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,7 +39,7 @@
 
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
@@ -44,7 +48,6 @@
 <meta property="og:title" content="Number of rooted/unrooted trees — NRooted" />
 <meta property="og:description" content="These functions return the number of rooted or unrooted trees consistent with
 a given pattern of splits." />
-<meta name="twitter:card" content="summary" />
 
 
 <meta name="robots" content="noindex">
@@ -72,7 +75,7 @@ a given pattern of splits." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -86,7 +89,7 @@ a given pattern of splits." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
       </span>
     </div>
 
@@ -125,7 +128,7 @@ a given pattern of splits." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ms609/TreeTools">
+  <a href="https://github.com/ms609/TreeTools/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -167,15 +170,27 @@ a given pattern of splits.</p>
 
 <span class='fu'>LnUnrooted.int</span>(<span class='no'>tips</span>)
 
+<span class='fu'>Log2Unrooted</span>(<span class='no'>tips</span>)
+
+<span class='fu'>Log2Unrooted.int</span>(<span class='no'>tips</span>)
+
 <span class='fu'>LnRooted</span>(<span class='no'>tips</span>)
 
 <span class='fu'>LnRooted.int</span>(<span class='no'>tips</span>)
 
+<span class='fu'>Log2Rooted</span>(<span class='no'>tips</span>)
+
+<span class='fu'>Log2Rooted.int</span>(<span class='no'>tips</span>)
+
 <span class='fu'>LnUnrootedSplits</span>(<span class='no'>splits</span>)
+
+<span class='fu'>Log2UnrootedSplits</span>(<span class='no'>splits</span>)
 
 <span class='fu'>NUnrootedSplits</span>(<span class='no'>splits</span>)
 
 <span class='fu'>LnUnrootedMult</span>(<span class='no'>splits</span>)
+
+<span class='fu'>Log2UnrootedMult</span>(<span class='no'>splits</span>)
 
 <span class='fu'>NUnrootedMult</span>(<span class='no'>splits</span>)</pre>
 
@@ -195,9 +210,10 @@ bipartition.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Functions starting N return the number of rooted or unrooted trees, functions
-starting Ln provide the natural logarithm of this number.
-Calculations follow Carter <em>et al.</em> 1990, Theorem 2.</p>
+    <p>Functions starting <code>N</code> return the number of rooted or unrooted trees.
+Replace this initial <code>N</code> with <code>Ln</code> for the natural logarithm of this number;
+or <code>Log2</code> for its base 2 logarithm.</p>
+<p>Calculations follow Carter <em>et al.</em> 1990, Theorem 2.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -207,10 +223,8 @@ Calculations follow Carter <em>et al.</em> 1990, Theorem 2.</p>
 <li><p><code>LnUnrooted.int</code>: Log Number of unrooted trees (as integer)</p></li>
 <li><p><code>LnRooted</code>: Log Number of rooted trees</p></li>
 <li><p><code>LnRooted.int</code>: Log Number of rooted trees (as integer)</p></li>
-<li><p><code>LnUnrootedSplits</code>: Log number of unrooted trees</p></li>
 <li><p><code>NUnrootedSplits</code>: Number of unrooted trees consistent with a bipartition
 split.</p></li>
-<li><p><code>LnUnrootedMult</code>: Log unrooted with multi-partition splits.</p></li>
 <li><p><code>NUnrootedMult</code>: Number of unrooted trees consistent with a multi-partition
 split.</p></li>
 </ul>
@@ -223,23 +237,15 @@ doi: <a href='https://doi.org/10.1137/0403005'>10.1137/0403005</a>
 , <a href='http://epubs.siam.org/doi/abs/10.1137/0403005'>http://epubs.siam.org/doi/abs/10.1137/0403005</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='fu'>NRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 34459425</div><div class='input'>  <span class='fu'>NUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 2027025</div><div class='input'>  <span class='fu'>LnRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 17.35529</div><div class='input'>  <span class='fu'>LnUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 14.52208</div><div class='input'>  <span class='co'># Number of trees consistent with a character whose states are</span>
+    <pre class="examples"><div class='input'>  <span class='fu'>NRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 34459425</div><div class='input'>  <span class='fu'>NUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 2027025</div><div class='input'>  <span class='fu'>LnRooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 17.35529</div><div class='input'>  <span class='fu'>LnUnrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 14.52208</div><div class='input'>  <span class='fu'>Log2Unrooted</span>(<span class='fl'>10</span>)</div><div class='output co'>#&gt; [1] 20.95093</div><div class='input'>  <span class='co'># Number of trees consistent with a character whose states are</span>
   <span class='co'># 00000 11111 222</span>
   <span class='fu'>NUnrootedMult</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 694575</div><div class='input'>
-<span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 2.70805</div><div class='input'><span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 2.197225</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 9</div></pre>
+<span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 2.70805</div><div class='input'><span class='fu'>LnUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 2.197225</div><div class='input'><span class='fu'>Log2UnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 3.906891</div><div class='input'><span class='fu'>Log2UnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 3.169925</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'>NUnrootedSplits</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>,<span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 9</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#functions">Functions</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -250,7 +256,7 @@ doi: <a href='https://doi.org/10.1137/0403005'>10.1137/0403005</a>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

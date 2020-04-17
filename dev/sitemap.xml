@@ -70,6 +70,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/N1Spr.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NDescendants.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/NJTree.html</loc>
   </url>
   <url>
@@ -91,6 +94,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/Neworder.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/NonDuplicateRoot.html</loc>
   </url>
   <url>
@@ -98,6 +104,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/PhylogeneticInfo.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RandomTree.html</loc>
@@ -122,6 +131,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/RootNode.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RootTree.html</loc>
@@ -176,6 +188,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc>

@@ -6,27 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Information content of a split — SplitInformation • TreeTools</title>
+<title>Phylogenetic information content of a split — SplitInformation • TreeTools</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,18 +39,18 @@
 
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 
-<meta property="og:title" content="Information content of a split — SplitInformation" />
-<meta property="og:description" content="SplitInformation calculates the information content of a split, based on
-the entropy of the subset of trees consistent with the split; a split that
-is consistent with a smaller number of trees will have a higher information
-content." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="Phylogenetic information content of a split — SplitInformation" />
+<meta property="og:description" content="Calculate the phylogenetic information content (sensu
+Steel &amp;amp; Penny, 2006) of a split, which reflects the probability that a
+uniformly selected random tree will contain the split:
+a split that is consistent with a smaller number of trees will have a higher
+information content." />
 
 
 <meta name="robots" content="noindex">
@@ -74,7 +78,7 @@ content." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -88,7 +92,7 @@ content." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.3.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9000</span>
       </span>
     </div>
 
@@ -127,7 +131,7 @@ content." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ms609/TreeTools">
+  <a href="https://github.com/ms609/TreeTools/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -151,16 +155,17 @@ content." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Information content of a split</h1>
+    <h1>Phylogenetic information content of a split</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Information.R'><code>R/Information.R</code></a></small>
     <div class="hidden name"><code>SplitInformation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>SplitInformation</code> calculates the information content of a split, based on
-the entropy of the subset of trees consistent with the split; a split that
-is consistent with a smaller number of trees will have a higher information
-content.</p>
+    <p>Calculate the phylogenetic information content (<em>sensu</em>
+Steel &amp; Penny, 2006) of a split, which reflects the probability that a
+uniformly selected random tree will contain the split:
+a split that is consistent with a smaller number of trees will have a higher
+information content.</p>
     </div>
 
     <pre class="usage"><span class='fu'>SplitInformation</span>(<span class='no'>A</span>, <span class='no'>B</span>)
@@ -172,11 +177,11 @@ content.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>A</th>
-      <td><p>Number of taxa in each partition.</p></td>
+      <td><p>Integer specifying the number of taxa in each partition.</p></td>
     </tr>
     <tr>
       <th>B</th>
-      <td><p>Number of taxa in each partition.</p></td>
+      <td><p>Integer specifying the number of taxa in each partition.</p></td>
     </tr>
     <tr>
       <th>partitionSizes</th>
@@ -187,39 +192,91 @@ partition of a multi-partition split.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Information content of the split, in bits.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <p><code>SplitInformation()</code> and <code>MultiSplitInformation()</code> return the
+phylogenetic information content, in bits, of a split that subdivides leaves
+into partitions of the specified sizes.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>SplitInformation()</code> addresses bipartition splits, which correspond to
+edges in an unrooted phylogeny; <code>MultiSplitInformation()</code> supports splits
+that subdivide taxa into multiple partitions, which may correspond to
+multi-state characters in a phylogenetic matrix.</p>
+<p>A simple way to characterise trees is to count the number of edges.
+(Edges are almost, but not quite, equivalent to nodes.)
+Counting edges (or nodes) provides a quick measaure of a tree's resolution,
+and underpins the Robinson-Foulds tree distance measure.
+Not all edges, however, are created equal.</p>
+<p>An edge splits the leaves of a tree into two subdivisions.  The more equal
+these subdivisions are in size, the more instructive this edge is.
+Intuitively, the division of mammals from reptiles is a profound revelation
+that underpins much of zoology; recognizing that two species of bat are more
+closely related to each other than to any other mammal or reptile is still
+instructive, but somewhat less fundamental.</p>
+<p>Formally, the phylogenetic (Shannon) information content of a split <em>S</em>,
+<em>h(S)</em>, corresponds to the probability that a uniformly selected random tree
+will contain the split, <em>P(S)</em>: <em>h(S)</em> = -log <em>P(S)</em>.
+Base 2 logarithms are typically employed to yield an information content in
+bits.</p>
+<p>As an example, the split <code>AB|CDEF</code> occurs in 15 of the 105 six-leaf trees;
+<em>h</em>(<code>AB|CDEF</code>) = -log <em>P</em>(<code>AB|CDEF</code>) = -log(15/105) ~ 2.81 bits.  The split
+<code>ABC|DEF</code> subdivides the leaves more evenly, and is thus more instructive:
+it occurs in just nine of the 105 six-leaf trees, and
+<em>h</em>(<code>ABC|DEF</code>) = -log(9/105) ~ 3.54 bits.</p>
+<p>As the number of leaves increases, a single even split may contain more
+information than multiple uneven splits -- see the examples section below.</p>
+<p>Summing the information content of all splits within a tree, perhaps using
+the '<a href='https://ms609.github.io/TreeDist/'>TreeDist</a>' function
+<a href='https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html'><code>SplitwiseInfo()</code></a>,
+arguably gives a more instructive picture of its resolution than simply
+counting the number of splits that are present -- though with the caveat
+that splits within a tree are not independent of one another, so some
+information may be double counted.  (This same charge applies to simply
+counting nodes, too.)</p>
+<p>Alternatives would be to count the number of quartets that are resolved,
+perhaps using the '<a href='https://ms609.github.io/Quartet/'>Quartet</a>' function
+<a href='https://ms609.github.io/Quartet/reference/QuartetState.html'><code>QuartetStates()</code></a>,
+or to use a different take on the information contained within a split, the
+clustering information: see the 'TreeDist' function
+<a href='https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html'><code>ClusteringInfo()</code></a>
+for details.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     
 <ul>
-<li><p><code>MultiSplitInformation</code>: Information content of a multi-partition split.</p></li>
+<li><p>Steel MA, Penny D (2006).
+&#8220;Maximum parsimony and the phylogenetic information in multistate characters.&#8221;
+In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163--178.
+Oxford University Press, Oxford.</p></li>
 </ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other split information functions: 
+    <div class='dont-index'><p>Sum the phylogenetic information content of splits within a tree:
+<a href='https://ms609.github.io/TreeDist/'><code>TreeDist</code></a><code>::</code><a href='https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html'><code>SplitwiseInfo()</code></a></p>
+<p>Sum the clustering information content of splits within a tree:
+<a href='https://ms609.github.io/TreeDist/'><code>TreeDist</code></a><code>::</code><a href='https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html'><code>ClusteringInfo()</code></a></p>
+<p>Other split information functions: 
 <code><a href='CharacterInformation.html'>CharacterInformation</a>()</code>,
 <code><a href='TreesMatchingSplit.html'>TreesMatchingSplit</a>()</code>,
 <code><a href='UnrootedTreesMatchingSplit.html'>UnrootedTreesMatchingSplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>  <span class='co'># Eight tips can be split evenly:</span>
-  <span class='fu'>SplitInformation</span> (<span class='fl'>4</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 5.529821</div><div class='input'>
-  <span class='co'># or unevenly, which is less informative:</span>
-  <span class='fu'>SplitInformation</span> (<span class='fl'>2</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 3.459432</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='co'># Eight leaves can be split evenly:</span>
+<span class='fu'>SplitInformation</span>(<span class='fl'>4</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; [1] 5.529821</div><div class='input'>
+<span class='co'># or unevenly, which is less informative:</span>
+<span class='fu'>SplitInformation</span>(<span class='fl'>2</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 3.459432</div><div class='input'>
+<span class='co'># A single split that evenly subdivides 50 leaves contains more information</span>
+<span class='co'># that seven maximally uneven splits on the same leaves:</span>
+<span class='fu'>SplitInformation</span>(<span class='fl'>25</span>, <span class='fl'>25</span>)</div><div class='output co'>#&gt; [1] 47.50376</div><div class='input'><span class='fl'>7</span> * <span class='fu'>SplitInformation</span>(<span class='fl'>2</span>, <span class='fl'>48</span>)</div><div class='output co'>#&gt; [1] 45.98899</div><div class='input'>
+<span class='co'># Three ways to split eight leaves into multiple partitions:</span>
+<span class='fu'>MultiSplitInformation</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 5.97728</div><div class='input'><span class='fu'>MultiSplitInformation</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] 6.714246</div><div class='input'><span class='fu'>MultiSplitInformation</span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 6.714246</div><div class='input'>
+
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#functions">Functions</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -230,7 +287,7 @@ partition of a multi-partition split.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
