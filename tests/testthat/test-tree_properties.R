@@ -11,6 +11,21 @@ test_that('EdgeAncestry works', {
   expect_equal(logical(18), EdgeAncestry(10, parent, child))
 })
 
+test_that('Root node can be found', {
+  rooted <- BalancedTree(8)
+  postorder <- Postorder(rooted)
+  unrooted <- unroot(rooted)
+  expect_true(TreeIsRooted(rooted))
+  expect_false(TreeIsRooted(unrooted))
+  expect_equal(9L, RootNode(rooted))
+  expect_equal(9L, RootNode(unrooted))
+  expect_equal(9L, RootNode(Preorder(postorder)))
+  expect_equal(9L, RootNode(postorder))
+  expect_equal(9L, RootNode(Cladewise(postorder)))
+  expect_equal(9L, RootNode(ApePostorder(rooted)))
+  expect_equal(9L, RootNode(Pruningwise(postorder)))
+})
+
 test_that('Rooting and partition counting', {
   set.seed(0)
 

@@ -41,7 +41,8 @@ Note that the tree's edges must be listed in an order whereby each entry in
 Other tree navigation: \code{\link{AncestorEdge}},
   \code{\link{DescendantEdges}},
   \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}}
+  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}},
+  \code{\link{RootNode}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

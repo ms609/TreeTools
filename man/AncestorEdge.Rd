@@ -36,7 +36,8 @@ which(AncestorEdge(5, parent, child))
 Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{DescendantEdges}},
   \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}}
+  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}},
+  \code{\link{RootNode}}
 }
 \concept{tree navigation}
 \keyword{internal}

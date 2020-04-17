@@ -1,3 +1,7 @@
+# TreeTools 0.1.4.9000 (development)
+
+- `RootNode()`: Which node is a tree's root?
+
 # TreeTools 0.1.3.9003 (development)
  
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error.

@@ -42,6 +42,6 @@ from each edge in a tree.
 Other tree navigation: \code{\link{AllAncestors}},
   \code{\link{AncestorEdge}}, \code{\link{EdgeAncestry}},
   \code{\link{EdgeDistances}}, \code{\link{MRCA}},
-  \code{\link{NonDuplicateRoot}}
+  \code{\link{NonDuplicateRoot}}, \code{\link{RootNode}}
 }
 \concept{tree navigation}

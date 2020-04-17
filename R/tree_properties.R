@@ -302,3 +302,44 @@ TreeIsRooted <- function (tree) {
   parent <- edge[, 1]
   sum(parent == min(parent)) < 3L
 }
+
+#' Which node is a tree's root?
+#' 
+#' Identify the root node of a (rooted or unrooted) phylogenetic tree.
+#' Unrooted trees are represented internally by a rooted tree with an 
+#' unresolved root node.
+#' 
+#' @template treeParam
+#' @return `RootNode()` returns an integer denoting the root node.
+#' @template MRS
+#' 
+#' @examples 
+#' RootNode(BalancedTree(8))
+#' RootNode(unroot(BalancedTree(8)))
+#' 
+#' 
+#' @family tree navigation
+#' @seealso
+#' 
+#' [`TreeIsRooted()`]
+#' 
+#'  phangorn::[`getRoot()`]
+#' 
+#' @export
+#' 
+RootNode <- function (tree) {
+  edge <- tree$edge
+  edgeOrder <- attr(tree, "order")
+  if (!is.null(edgeOrder)) {
+    if (edgeOrder == "postorder") {
+      return(edge[nrow(edge), 1L])
+    } else if (edgeOrder == 'preorder') {
+      return(edge[1L])
+    }
+  } 
+
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  # Return:
+  unique(parent[!parent %in% child])
+}
