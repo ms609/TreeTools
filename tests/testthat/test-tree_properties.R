@@ -18,6 +18,7 @@ test_that('Root node can be found', {
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
   expect_equal(9L, RootNode(rooted))
+  expect_equal(9L, RootNode(as.phylo(1337L, 8L)))
   expect_equal(9L, RootNode(unrooted))
   expect_equal(9L, RootNode(Preorder(postorder)))
   expect_equal(9L, RootNode(postorder))
