@@ -70,6 +70,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' NDescendants(tree)
 #' 
 #' @template MRS
+#' @family tree navigation
 #' @export
 NDescendants <- function (tree) {
   NodeOrder(tree$edge, includeAncestor = FALSE)

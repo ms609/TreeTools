@@ -44,6 +44,7 @@ Other tree navigation:
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
 \code{\link{MRCA}()},
+\code{\link{NDescendants}()},
 \code{\link{NodeOrder}()},
 \code{\link{RootNode}()}
 }

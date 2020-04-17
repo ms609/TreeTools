@@ -48,8 +48,11 @@ Log2TreesMatchingTree <- function (tree) {
 #' Calculate the phylogenetic information content of a phylogenetic object.
 #' 
 #' 
+#' 
 #' #TODO
-#' Splits to follow
+#' - Splits to follow
+#' - Further information to follow
+#' - See also Clustering Information
 #' 
 #' @param x Tree of class `phylo`, or a list thereof.
 #' 

@@ -21,12 +21,15 @@ Calculate the phylogenetic information content of a phylogenetic object.
 }
 \details{
 #TODO
-Splits to follow
+\itemize{
+\item Splits to follow
+\item Further information to follow
+\item See also Clustering Information
+}
 }
 \seealso{
-Clustering information content: coming soon. #TODO.
-
 Other tree information functions: 
+\code{\link{ClusteringInfo}()},
 \code{\link{TreesMatchingTree}()}
 }
 \author{
