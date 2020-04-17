@@ -60,11 +60,7 @@ Log2TreesMatchingTree <- function (tree) {
 #' @seealso Clustering information content: coming soon. #TODO.
 #' @template MRS
 #' @export
-#' @name TreeInformation
-
-#' @rdname TreeInformation
-#' @export
-PhylogeneticInfo <- function (x) UseMethod(PhylogeneticInfo) 
+PhylogeneticInfo <- function (x) UseMethod('PhylogeneticInfo') 
 
 PhylogeneticInfo.phylo <- function (x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
@@ -76,6 +72,6 @@ PhylogeneticInfo.list <- function (x) vapply(x, PhylogeneticInfo, 0)
 PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
 
 
-#' @rdname TreeInformation
+#' @rdname PhylogeneticInfo
 #' @export
 PhylogeneticInformation <- PhylogeneticInfo

@@ -1,7 +1,7 @@
 # TreeTools 0.1.4.9000 (development)
 
 - `RootNode()`: Which node is a tree's root?
-- `TreePhylogeneticInfo()`: Calculate the information content of a tree.
+- `PhylogeneticInfo()`: Calculate the information content of a tree.
 - `NodeOrder()`, `NDescendants()`: Calculate edges incident to each node.
 - Documentation improvements.
 
