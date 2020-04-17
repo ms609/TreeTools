@@ -20,11 +20,15 @@ common ancestor of \code{tip1} and \code{tip2}.
 What is the last common ancestor of the specified tips?
 }
 \seealso{
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{AncestorEdge}},
-  \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{NonDuplicateRoot}}, \code{\link{RootNode}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{AncestorEdge}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{NodeOrder}()},
+\code{\link{NonDuplicateRoot}()},
+\code{\link{RootNode}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -39,9 +39,14 @@ from each edge in a tree.
 }}
 
 \seealso{
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{AncestorEdge}}, \code{\link{EdgeAncestry}},
-  \code{\link{EdgeDistances}}, \code{\link{MRCA}},
-  \code{\link{NonDuplicateRoot}}, \code{\link{RootNode}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{AncestorEdge}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{MRCA}()},
+\code{\link{NodeOrder}()},
+\code{\link{NonDuplicateRoot}()},
+\code{\link{RootNode}()}
 }
 \concept{tree navigation}
