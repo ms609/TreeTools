@@ -17,14 +17,16 @@ test_that('Root node can be found', {
   unrooted <- unroot(rooted)
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
+  expect_equal(9L, RootNode(rooted$edge))
   expect_equal(9L, RootNode(rooted))
   expect_equal(9L, RootNode(as.phylo(1337L, 8L)))
-  expect_equal(9L, RootNode(unrooted))
-  expect_equal(9L, RootNode(Preorder(postorder)))
-  expect_equal(9L, RootNode(postorder))
-  expect_equal(9L, RootNode(Cladewise(postorder)))
-  expect_equal(9L, RootNode(ApePostorder(rooted)))
-  expect_equal(9L, RootNode(Pruningwise(postorder)))
+  expect_equal(list(9L, 9L, 9L),
+               RootNode(c(unrooted, Preorder(postorder), postorder)))
+  expect_equal(list(9L, 9L, 9L),
+               RootNode(list(Cladewise(postorder),
+                             ApePostorder(rooted),
+                             Pruningwise(postorder))))
+  expect_warning(RootNode(matrix(1:4, 2)))
 })
 
 test_that('Rooting and partition counting', {

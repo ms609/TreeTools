@@ -4,13 +4,15 @@
 \alias{RootNode}
 \title{Which node is a tree's root?}
 \usage{
-RootNode(tree)
+RootNode(x)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{x}{A tree of class \code{phylo}, or its edge matrix; or a list or
+\code{multiPhylo} object containing multiple trees.}
 }
 \value{
-\code{RootNode()} returns an integer denoting the root node.
+\code{RootNode()} returns an integer denoting the root node for each tree.
+Badly conformed trees trigger an error.
 }
 \description{
 Identify the root node of a (rooted or unrooted) phylogenetic tree.
@@ -28,11 +30,14 @@ RootNode(unroot(BalancedTree(8)))
 
 phangorn::\code{\link[=getRoot]{getRoot()}}
 
-Other tree navigation: \code{\link{AllAncestors}},
-  \code{\link{AncestorEdge}},
-  \code{\link{DescendantEdges}},
-  \code{\link{EdgeAncestry}}, \code{\link{EdgeDistances}},
-  \code{\link{MRCA}}, \code{\link{NonDuplicateRoot}}
+Other tree navigation: 
+\code{\link{AllAncestors}()},
+\code{\link{AncestorEdge}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{MRCA}()},
+\code{\link{NonDuplicateRoot}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -310,8 +310,10 @@ TreeIsRooted <- function (tree) {
 #' Unrooted trees are represented internally by a rooted tree with an 
 #' unresolved root node.
 #' 
-#' @template treeParam
-#' @return `RootNode()` returns an integer denoting the root node.
+#' @param x A tree of class `phylo`, or its edge matrix; or a list or
+#' `multiPhylo` object containing multiple trees.
+#' @return `RootNode()` returns an integer denoting the root node for each tree.
+#' Badly conformed trees trigger an error.
 #' @template MRS
 #' 
 #' @examples 
@@ -327,20 +329,39 @@ TreeIsRooted <- function (tree) {
 #'  phangorn::[`getRoot()`]
 #' 
 #' @export
-#' 
-RootNode <- function (tree) {
-  edge <- tree$edge
-  edgeOrder <- attr(tree, "order")
+RootNode <- function (x) UseMethod('RootNode')
+
+#' @export
+RootNode.phylo <- function (x) {
+  edge <- x$edge
+  edgeOrder <- attr(x, "order")
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
       return(edge[nrow(edge), 1L])
     } else if (edgeOrder == 'preorder') {
       return(edge[1L])
     }
-  } 
+  }
+  RootNode(edge)
+}
 
-  parent <- edge[, 1]
-  child <- edge[, 2]
+#' @export
+RootNode.list <- function (x) {
+  vapply(x, RootNode, 0L)
+}
+
+#' @export
+RootNode.multiPhylo <- RootNode.list
+
+#' @export
+RootNode.matrix <- function (x) {
+  parent <- x[, 1]
+  child <- x[, 2]
+  ret <- unique(parent[!parent %in% child])
+  if (length(ret) != 1) {
+    warning("Root not unique: found ", paste(ret, collapse = ', '))
+  }
+  
   # Return:
-  unique(parent[!parent %in% child])
+  ret
 }
