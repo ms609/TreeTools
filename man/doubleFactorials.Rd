@@ -4,7 +4,9 @@
 \name{doubleFactorials}
 \alias{doubleFactorials}
 \title{Double factorials}
-\format{An object of class \code{numeric} of length 300.}
+\format{
+An object of class \code{numeric} of length 300.
+}
 \usage{
 doubleFactorials
 }

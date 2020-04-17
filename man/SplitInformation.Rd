@@ -10,9 +10,9 @@ SplitInformation(A, B)
 MultiSplitInformation(partitionSizes)
 }
 \arguments{
-\item{A}{Number of taxa in each partition.}
+\item{A}{Integer specifying the number of taxa in each partition.}
 
-\item{B}{Number of taxa in each partition.}
+\item{B}{Integer specifying the number of taxa in each partition.}
 
 \item{partitionSizes}{Integer vector specifying the number of taxa in each
 partition of a multi-partition split.}
@@ -45,8 +45,8 @@ An edge splits the leaves of a tree into two subdivisions.  The more equal
 these subdivisions are in size, the more instructive this edge is.
 Intuitively, the division of mammals from reptiles is a profound revelation
 that underpins much of zoology; recognizing that two species of bat are more
-closely related to each other than to any other mammal or reptile is less
-fundamental.
+closely related to each other than to any other mammal or reptile is still
+instructive, but somewhat less fundamental.
 
 Formally, the phylogenetic (Shannon) information content of a split \emph{S},
 \emph{h(S)}, corresponds to the probability that a uniformly selected random tree
@@ -56,8 +56,8 @@ bits.
 
 As an example, the split \code{AB|CDEF} occurs in 15 of the 105 six-leaf trees;
 \emph{h}(\code{AB|CDEF}) = -log \emph{P}(\code{AB|CDEF}) = -log(15/105) ~ 2.81 bits.  The split
-\code{ABC|DEF} subdivides the leaves more evenly, and thus occurs in just nine
-of the 105 six-leaf trees, making it more instructive:
+\code{ABC|DEF} subdivides the leaves more evenly, and is thus more instructive:
+it occurs in just nine of the 105 six-leaf trees, and
 \emph{h}(\code{ABC|DEF}) = -log(9/105) ~ 3.54 bits.
 
 As the number of leaves increases, a single even split may contain more
@@ -92,7 +92,6 @@ SplitInformation(2, 6)
 SplitInformation(25, 25)
 7 * SplitInformation(2, 48)
 
-
 # Three ways to split eight leaves into multiple partitions:
 MultiSplitInformation(c(2, 2, 4))
 MultiSplitInformation(c(2, 3, 3))
@@ -107,12 +106,10 @@ MultiSplitInformation(rep(2, 4))
 }
 \seealso{
 Sum the phylogenetic information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}
-\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}}
+\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}}
 
 Sum the clustering information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}
-\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
 
 Other split information functions: 
 \code{\link{CharacterInformation}()},

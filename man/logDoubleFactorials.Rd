@@ -4,7 +4,9 @@
 \name{logDoubleFactorials}
 \alias{logDoubleFactorials}
 \title{Natural logarithms of double factorials}
-\format{An object of class \code{numeric} of length 50000.}
+\format{
+An object of class \code{numeric} of length 50000.
+}
 \usage{
 logDoubleFactorials
 }

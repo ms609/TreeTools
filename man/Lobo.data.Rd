@@ -4,7 +4,9 @@
 \name{Lobo.data}
 \alias{Lobo.data}
 \title{Raw data from Zhang et al. 2016}
-\format{An object of class \code{list} of length 48.}
+\format{
+An object of class \code{list} of length 48.
+}
 \source{
 \insertRef{Zhang2016}{TreeTools}
 }

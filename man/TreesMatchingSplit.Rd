@@ -10,7 +10,7 @@ TreesMatchingSplit(A, B)
 LnTreesMatchingSplit(A, B)
 }
 \arguments{
-\item{A, B}{Number of taxa in each partition.}
+\item{A, B}{Integer specifying the number of taxa in each partition.}
 }
 \value{
 \code{TreesMatchingSplit} returns a numeric specifying the number of trees

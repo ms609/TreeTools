@@ -4,7 +4,9 @@
 \name{Lobo.phy}
 \alias{Lobo.phy}
 \title{Data from Zhang et al. 2016 in \code{phyDat} format}
-\format{An object of class \code{phyDat} of length 48.}
+\format{
+An object of class \code{phyDat} of length 48.
+}
 \source{
 \insertRef{Zhang2016}{TreeTools}
 }
