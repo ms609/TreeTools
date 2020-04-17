@@ -2,26 +2,31 @@
 % Please edit documentation in R/tree_information.R
 \name{TreeInformation}
 \alias{TreeInformation}
-\alias{TreePhylogeneticInfo}
-\alias{TreePhylogeneticInformation}
-\title{Tree information content}
+\alias{PhylogeneticInfo}
+\alias{PhylogeneticInformation}
+\title{Phylogenetic information content}
 \usage{
-TreePhylogeneticInfo(tree)
+PhylogeneticInfo(x)
 
-TreePhylogeneticInformation(tree)
+PhylogeneticInformation(x)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{x}{Tree of class \code{phylo}, or a list thereof.}
+}
+\value{
+Returns the phylogenetic or clustering information content
+of the input tree(s).
 }
 \description{
-Calculate the phylogenetic or clustering information content of a
-phylogenetic tree.
+Calculate the phylogenetic information content of a phylogenetic object.
 }
 \details{
 #TODO
-Detailed explanation to follow.
+Splits to follow
 }
 \seealso{
+Clustering information content: coming soon. #TODO.
+
 Other tree information functions: 
 \code{\link{TreesMatchingTree}()}
 }

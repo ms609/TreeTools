@@ -78,4 +78,4 @@ PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
 
 #' @rdname TreeInformation
 #' @export
-TreePhylogeneticInformation <- TreePhylogeneticInfo
+PhylogeneticInformation <- PhylogeneticInfo

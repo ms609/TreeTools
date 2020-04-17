@@ -12,6 +12,7 @@
 \alias{Log2Rooted}
 \alias{Log2Rooted.int}
 \alias{LnUnrootedSplits}
+\alias{Log2UnrootedSplits}
 \alias{NUnrootedSplits}
 \alias{LnUnrootedMult}
 \alias{Log2UnrootedMult}
@@ -40,6 +41,8 @@ Log2Rooted.int(tips)
 
 LnUnrootedSplits(splits)
 
+Log2UnrootedSplits(splits)
+
 NUnrootedSplits(splits)
 
 LnUnrootedMult(splits)
@@ -59,9 +62,10 @@ These functions return the number of rooted or unrooted trees consistent with
 a given pattern of splits.
 }
 \details{
-Functions starting \code{N} return the number of rooted or unrooted trees, functions
-starting \code{Ln} provide the natural logarithm of this number; functions starting
-\code{Log2} return its base 2 logarithm.
+Functions starting \code{N} return the number of rooted or unrooted trees.
+Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
+or \code{Log2} for its base 2 logarithm.
+
 Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
@@ -72,19 +76,9 @@ Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 
 \item \code{LnUnrooted.int}: Log Number of unrooted trees (as integer)
 
-\item \code{Log2Unrooted}: Log2 Number of unrooted trees
-
-\item \code{Log2Unrooted.int}: Log2 Number of unrooted trees (as integer)
-
 \item \code{LnRooted}: Log Number of rooted trees
 
 \item \code{LnRooted.int}: Log Number of rooted trees (as integer)
-
-\item \code{Log2Rooted}: Log2 Number of rooted trees
-
-\item \code{Log2Rooted.int}: Log2 Number of rooted trees (as integer)
-
-\item \code{LnUnrootedSplits}: Log number of unrooted trees
 
 \item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
 split.
@@ -105,6 +99,8 @@ split.
 
 LnUnrootedSplits(c(2,4))
 LnUnrootedSplits(c(3,3))
+Log2UnrootedSplits(c(2,4))
+Log2UnrootedSplits(c(3,3))
 NUnrootedSplits(c(2,4))
 NUnrootedSplits(c(3,3))
 }

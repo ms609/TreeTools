@@ -7,14 +7,14 @@
 NodeOrder(x, includeAncestor = TRUE, internalOnly = FALSE)
 }
 \arguments{
+\item{x}{A tree of class \code{phylo}, its \verb{$edge} property, or a list thereof.}
+
 \item{includeAncestor}{Logical specifying whether to count edge leading to
 ancestral node in calculation of order.}
 
 \item{internalOnly}{Logical specifying whether to restrict to results
 to internal nodes, i.e. to omit leaves. Irrelevant if
 \code{includeAncestor = FALSE}.}
-
-\item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
 \code{NodeOrder()} returns a table listing the order of each node;
@@ -28,7 +28,7 @@ Includes the root edge in rooted trees.
 tree <- CollapseNode(BalancedTree(8), 12:15)
 plot(tree)
 nodelabels()
-NodeOrder(tree, internalOnly)
+NodeOrder(tree, internalOnly = TRUE)
 
 }
 \seealso{
