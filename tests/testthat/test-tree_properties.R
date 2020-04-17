@@ -20,13 +20,26 @@ test_that('Root node can be found', {
   expect_equal(9L, RootNode(rooted$edge))
   expect_equal(9L, RootNode(rooted))
   expect_equal(9L, RootNode(as.phylo(1337L, 8L)))
-  expect_equal(list(9L, 9L, 9L),
+  expect_equal(rep(9L, 3L), 
                RootNode(c(unrooted, Preorder(postorder), postorder)))
-  expect_equal(list(9L, 9L, 9L),
+  expect_equal(rep(9L, 3L),
                RootNode(list(Cladewise(postorder),
                              ApePostorder(rooted),
                              Pruningwise(postorder))))
   expect_warning(RootNode(matrix(1:4, 2)))
+})
+
+test_that('NodeOrder works', {
+  expect_equivalent(c(2L, rep(3L, 6)),
+                    as.integer(NodeOrder(BalancedTree(8), internalOnly = TRUE)))
+  expect_equivalent(c(rep(1L, 8), 2L, rep(3L, 6)), 
+                    as.integer(NodeOrder(BalancedTree(8), internalOnly = FALSE)))
+  expect_equivalent(rep(2L, 7), as.integer(NodeOrder(BalancedTree(8), FALSE)))
+  tree <- CollapseNode(BalancedTree(8), 12:15)
+  expect_equivalent(c(`9` = 5L, `10` = 4L, `11` = 3L), 
+                    as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
+  expect_equal(list(NodeOrder(tree), NodeOrder(tree)), NodeOrder(c(tree, tree)))
+  expect_equal(NodeOrder(c(tree, tree)), NodeOrder(list(tree, tree)))
 })
 
 test_that('Rooting and partition counting', {

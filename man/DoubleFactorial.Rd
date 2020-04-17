@@ -3,6 +3,7 @@
 \name{DoubleFactorial}
 \alias{DoubleFactorial}
 \alias{LnDoubleFactorial}
+\alias{Log2DoubleFactorial}
 \alias{LogDoubleFactorial}
 \alias{LnDoubleFactorial.int}
 \alias{LogDoubleFactorial.int}
@@ -11,6 +12,8 @@
 DoubleFactorial(n)
 
 LnDoubleFactorial(n)
+
+Log2DoubleFactorial(n)
 
 LogDoubleFactorial(n)
 
@@ -30,6 +33,8 @@ Double factorial
 \section{Functions}{
 \itemize{
 \item \code{LnDoubleFactorial}: Returns the logarithm of the double factorial.
+
+\item \code{Log2DoubleFactorial}: Returns the logarithm of the double factorial.
 
 \item \code{LnDoubleFactorial.int}: Slightly faster, when x is known to be length one
 and below 50001

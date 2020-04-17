@@ -56,6 +56,78 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret
 }
 
+#' Number of descendants for each node in a tree
+#' 
+#' @template treeParam
+#' 
+#' @return `NDescendants()` returns a table listing the number of direct
+#' descendants for each node in a tree.
+#' 
+#' @examples 
+#' tree <- CollapseNode(BalancedTree(8), 12:15)
+#' plot(tree)
+#' nodelabels()
+#' NDescendants(tree)
+#' 
+#' @template MRS
+#' @export
+NDescendants <- function (tree) {
+  NodeOrder(tree$edge, includeAncestor = FALSE)
+}
+
+#' Order of each node in a tree
+#' 
+#' Calculate the number of edges incident to each node in a tree. 
+#' Includes the root edge in rooted trees.
+#' 
+#' @template treeParam
+#' @param includeAncestor Logical specifying whether to count edge leading to 
+#' ancestral node in calculation of order.
+#' @param internalOnly Logical specifying whether to restrict to results
+#' to internal nodes, i.e. to omit leaves. Irrelevant if
+#' `includeAncestor = FALSE`.
+#' 
+#' @return `NodeOrder()` returns a table listing the order of each node; 
+#' entries are named with the number of each node.
+#' 
+#' @examples 
+#' tree <- CollapseNode(BalancedTree(8), 12:15)
+#' plot(tree)
+#' nodelabels()
+#' NodeOrder(tree, internalOnly)
+#' 
+#' @template MRS
+#' @family tree navigation
+#' @export
+NodeOrder <- function (x, includeAncestor = TRUE, internalOnly = FALSE) UseMethod('NodeOrder')
+
+
+#' @export
+NodeOrder.list <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  lapply(x, NodeOrder, includeAncestor, internalOnly)
+}
+
+#' @export
+NodeOrder.multiPhylo <- NodeOrder.list
+
+#' @export
+NodeOrder.phylo <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  NodeOrder(x$edge, includeAncestor, internalOnly)
+}
+
+#' @export
+NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  if (includeAncestor) {
+    if (internalOnly) {
+      table(x[x >= min(x[, 1])]) 
+    } else {
+      table(x)
+    }
+  } else {
+    table(x[, 1])
+  }
+}
+
 #' Ancestral edge
 #'
 #' @param edge Number of an edge
