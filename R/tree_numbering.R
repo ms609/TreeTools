@@ -127,14 +127,14 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' @param edge Two-column matrix listing the parent and child of each edge in a
 #' tree, corresponding to `tree$edge`. Optional in `Cladewise()`.
 #'
-#' @return `ApePostorder, `Cladewise`, `Postorder`, `Preorder` and `Pruningwise`
-#' return a tree of class `phylo` with nodes following the specified
-#' numbering scheme.
+#' @return `ApePostorder()`, `Cladewise()`, `Postorder()`, `Preorder()` and
+#' `Pruningwise()` each return a tree of class `phylo` with nodes following the
+#' specified numbering scheme.
 #' @author
-#'  `Preorder` and `Postorder`: Martin R. Smith.
+#' `Preorder()` and `Postorder()`: Martin R. Smith.
 #'
-#' `Cladewise`, `ApePostorder` and `Pruningwise`: modified by Martin R. Smith from
-#' \code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
+#' `Cladewise()`, `ApePostorder()` and `Pruningwise()`: modified by Martin R.
+#' Smith from \code{.reorder_ape()} in \pkg{ape} (Emmanuel Paradis).
 #'
 #' @family C wrappers
 #' @keywords internal
@@ -200,7 +200,7 @@ Postorder <- function (tree, force = FALSE) {
 }
 
 #' @rdname Reorder
-#' @return `PostorderEdges` returns a two-column array corresponding to `edge`, 
+#' @return `PostorderEdges` returns a two-column array corresponding to `edge`,
 #' with edges listed in postorder.
 #' @template edgeParam
 #' @export

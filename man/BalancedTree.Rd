@@ -21,9 +21,12 @@ Generates a balanced (symmetrical) binary tree with the specified tip labels.
 plot(BalancedTree(LETTERS[1:10]))
 }
 \seealso{
-Other tree generation functions: \code{\link{NJTree}},
-  \code{\link{PectinateTree}}, \code{\link{RandomTree}},
-  \code{\link{SingleTaxonTree}}, \code{\link{TreeNumber}}
+Other tree generation functions: 
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

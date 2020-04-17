@@ -65,10 +65,10 @@ Calculations follow Carter \emph{et al.} 1990, Theorem 2.
 \item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
 split.
 
-\item \code{LnUnrootedMult}: Log unrooted mult
+\item \code{LnUnrootedMult}: Log unrooted with multi-partition splits.
 
 \item \code{NUnrootedMult}: Number of unrooted trees consistent with a multi-partition
-split
+split.
 }}
 
 \examples{

@@ -27,19 +27,17 @@ Preorder(tree)
 
 \item{nTip}{Integer specifying number of tips (leaves).}
 
-\item{edge}{Two-column matrix listing the parent and child of each edge in a
-tree, corresponding to \code{tree$edge}. Optional in \code{Cladewise()}.}
-
-\item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure TreeTools edge ordering.}
-
 \item{edge}{A matrix with two columns, with each row listing the parent and
 child node of an edge in a phylogenetic tree.  Property \code{edge} of objects
 of class \code{phylo}.}
+
+\item{force}{Logical specifying whether to rearrange trees already in
+postorder, in order to ensure TreeTools edge ordering.}
 }
 \value{
-\code{ApePostorder, }Cladewise\code{, }Postorder\code{, }Preorder\code{and}Pruningwise\code{return a tree of class}phylo` with nodes following the specified
-numbering scheme.
+\code{ApePostorder()}, \code{Cladewise()}, \code{Postorder()}, \code{Preorder()} and
+\code{Pruningwise()} each return a tree of class \code{phylo} with nodes following the
+specified numbering scheme.
 
 \code{PostorderEdges} returns a two-column array corresponding to \code{edge},
 with edges listed in postorder.
@@ -94,14 +92,15 @@ function, which is robust to unconventional node numbering.
 }}
 
 \seealso{
-Other C wrappers: \code{\link{Neworder}},
-  \code{\link{RenumberTree}}
+Other C wrappers: 
+\code{\link{Neworder}},
+\code{\link{RenumberTree}()}
 }
 \author{
-\code{Preorder} and \code{Postorder}: Martin R. Smith.
+\code{Preorder()} and \code{Postorder()}: Martin R. Smith.
 
-\code{Cladewise}, \code{ApePostorder} and \code{Pruningwise}: modified by Martin R. Smith from
-\code{.reorder_ape} in \pkg{ape} (Emmanuel Paradis)
+\code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()}: modified by Martin R.
+Smith from \code{.reorder_ape()} in \pkg{ape} (Emmanuel Paradis).
 }
 \concept{C wrappers}
 \keyword{internal}

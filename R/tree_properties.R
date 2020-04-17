@@ -1,4 +1,4 @@
-#' Descendant Edges
+#' Identify descendant edges
 #'
 #' Quickly identify edges that are 'descended' from a particular edge in a tree.
 #'
@@ -77,7 +77,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @export
 AncestorEdge <- function (edge, parent, child) child == parent[edge]
 
-#' Edge ancestry
+#' Ancestros of an edge
 #'
 #' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'
@@ -112,7 +112,7 @@ EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
   ret
 }
 
-#' Most Recent Common Ancestor
+#' Most recent common ancestor
 #'
 #' What is the last common ancestor of the specified tips?
 #'
@@ -289,8 +289,9 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' Faster alternative to of `ape::is.rooted`.
 #'
-#' @param tree A phylogenetic tree of class phylo.
-#' @return Logical specifying whether a root node is resolved.
+#' @param tree A phylogenetic tree of class `phylo`.
+#' @return `TreeIsRooted()` returns a logical specifying whether a root node is
+#' resolved.
 #'
 #' @examples
 #' TreeIsRooted(BalancedTree(6))

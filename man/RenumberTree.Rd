@@ -33,8 +33,9 @@ lowest-numbered tip in the subtree subtended by each edge.
 \seealso{
 \code{\link{SortTree}}
 
-Other C wrappers: \code{\link{Neworder}},
-  \code{\link{Reorder}}
+Other C wrappers: 
+\code{\link{Neworder}},
+\code{\link{Reorder}}
 }
 \concept{C wrappers}
 \keyword{internal}

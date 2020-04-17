@@ -1,32 +1,38 @@
-language: R
+language: r
+os: linux
+dist: xenial
 cache: packages
-sudo: required # required if r_binary_packages; false otherwise
 warnings_are_errors: true
 r_check_args: --as-cran --no-manual # Workaround error compiling PDF manual
 
 git:
   depth: 1
 
-r_binary_packages:
- - ape
- - covr
+r_packages:
+ - pkgload
  - devtools
- - phangorn
- - Rcpp
- - roxygen2
  - testthat
 
 before_script:
-  - R -e "devtools::load_all(); devtools::document()"
+  - R -e "pkgload::load_all(); devtools::document()"
 
-matrix:
+jobs:
   include:
     - r: 3.4.0
     - r: release
       before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
+      r_binary_packages:
+       - ape
+       - covr
+       - devtools
+       - phangorn
+       - Rcpp
+       - roxygen2
+       - testthat
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
+        cleanup: false
         skip_cleanup: true
         local_dir: "docs"
         keep-history: true
@@ -35,20 +41,18 @@ matrix:
     - r: devel
       branches:
         only: master
+      r_packages:
+       - devtools
+       - ps # Dependency; shouldn't be necessary to list?
+       - promises # Dependency; shouldn't be necessary to list?
+       - testthat
+       - covr
       after_success:
         - Rscript -e "covr::codecov()"
     - os: osx
       branches:
         only: master
       r: release
-      r_packages:
-        - ape
-        - devtools
-        - phangorn
-        - Rcpp
-        - roxygen2
-        - testthat
       before_install:
-      - brew install cairo
       - sudo tlmgr install doi titling hyperref
 #  allow_failures:

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{MRCA}
 \alias{MRCA}
-\title{Most Recent Common Ancestor}
+\title{Most recent common ancestor}
 \usage{
 MRCA(tip1, tip2, ancestors)
 }

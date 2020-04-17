@@ -8,12 +8,6 @@ development:
   mode: auto
 
 reference:
-  - title: "Node support"
-    desc: "Functions that describe support for nodes in trees."
-    contents:
-      - SplitFrequency
-      - SupportColour
-
   - title: "Tree manipulation"
     desc: >
       Functions for editing phylogenetic trees.
@@ -87,6 +81,12 @@ reference:
     - N1Spr
     - DoubleFactorial
     - has_concept("split information functions")
+
+  - title: "Node support"
+    desc: "Functions that describe support for nodes in trees."
+    contents:
+      - SplitFrequency
+      - SupportColour
 
   - title: "Datasets"
     desc: "Data that accompanies the package."

@@ -11,19 +11,20 @@ CharacterInformation(tokens)
 a character.  Example: \code{c(0, 0, 0, 1, 1, 1, '?', '-')}.
 
 Note that ambiguous tokens such as \code{(01)} are not supported, and should be
-replaced with \code{?}.`}
+replaced with \verb{?}.`}
 }
 \value{
-\code{CharacterInformation} returns a numberic specifying the
+\code{CharacterInformation} returns a numeric specifying the
 phylogenetic information content of the character, in bits.
 }
 \description{
 Calculates the phylogenetic information content of a given character.
 }
 \seealso{
-Other split information functions: \code{\link{SplitInformation}},
-  \code{\link{TreesMatchingSplit}},
-  \code{\link{UnrootedTreesMatchingSplit}}
+Other split information functions: 
+\code{\link{SplitInformation}()},
+\code{\link{TreesMatchingSplit}()},
+\code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -2,7 +2,7 @@
 % Please edit documentation in R/phylo.R
 \name{SingleTaxonTree}
 \alias{SingleTaxonTree}
-\title{SingleTaxonTree}
+\title{Generate a single taxon tree}
 \usage{
 SingleTaxonTree(label)
 }
@@ -10,13 +10,10 @@ SingleTaxonTree(label)
 \item{label}{a character vector specifying the label of the tip.}
 }
 \value{
-\code{SingleTaxonTree} returns a \code{phylo} object containing a single
+\code{SingleTaxonTree()} returns a \code{phylo} object containing a single
 tip with the specified label.
 }
 \description{
-Single taxon tree
-}
-\details{
 Create a phylogenetic 'tree' that comprises a single taxon.
 }
 \examples{
@@ -25,12 +22,17 @@ plot(SingleTaxonTree('root') + BalancedTree(4))
 
 }
 \seealso{
-Other tree manipulation: \code{\link{AddTip}},
-  \code{\link{Renumber}}, \code{\link{Subtree}}
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{Renumber}()},
+\code{\link{Subtree}()}
 
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{RandomTree}}, \code{\link{TreeNumber}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{TreeNumber}}
 }
 \concept{tree generation functions}
 \concept{tree manipulation}

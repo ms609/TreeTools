@@ -35,7 +35,8 @@ Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
 
 }
 \seealso{
-Other split manipulation functions: \code{\link{TrivialSplits}}
+Other split manipulation functions: 
+\code{\link{TrivialSplits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

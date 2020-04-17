@@ -16,8 +16,8 @@ NexusTokens(tokens, character_num = NULL, session = NULL)
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(optionally) a Shiny session with a numericInput named character_num
-whose maximum should be updated.}
+\item{session}{(optionally) a Shiny session with a \code{numericInput} named
+\code{character_num} whose maximum should be updated.}
 
 \item{tokens}{Vector of character strings corresponding to phylogenetic
 tokens.}

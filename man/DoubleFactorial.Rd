@@ -6,7 +6,7 @@
 \alias{LogDoubleFactorial}
 \alias{LnDoubleFactorial.int}
 \alias{LogDoubleFactorial.int}
-\title{Double Factorial}
+\title{Double factorial}
 \usage{
 DoubleFactorial(n)
 
@@ -25,7 +25,7 @@ LogDoubleFactorial.int(n)
 Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
 }
 \description{
-Double Factorial
+Double factorial
 }
 \section{Functions}{
 \itemize{
@@ -46,8 +46,9 @@ exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 
 }
 \seealso{
-Other Double factorial: \code{\link{doubleFactorials}},
-  \code{\link{logDoubleFactorials}}
+Other Double factorial: 
+\code{\link{doubleFactorials}},
+\code{\link{logDoubleFactorials}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

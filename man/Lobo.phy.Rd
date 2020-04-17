@@ -3,7 +3,7 @@
 \docType{data}
 \name{Lobo.phy}
 \alias{Lobo.phy}
-\title{Data from Zhang et al. 2016 in phyDat format}
+\title{Data from Zhang et al. 2016 in \code{phyDat} format}
 \format{An object of class \code{phyDat} of length 48.}
 \source{
 \insertRef{Zhang2016}{TreeTools}
@@ -12,7 +12,7 @@
 Lobo.phy
 }
 \description{
-Data from Zhang et al. 2016 in phyDat format
+Data from Zhang et al. 2016 in \code{phyDat} format
 
 Modified so that absences are treated appropriately:
 \describe{

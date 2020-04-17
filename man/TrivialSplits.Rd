@@ -36,7 +36,8 @@ TrivialSplits(efgh)
 
 }
 \seealso{
-Other split manipulation functions: \code{\link{Subsplit}}
+Other split manipulation functions: 
+\code{\link{Subsplit}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

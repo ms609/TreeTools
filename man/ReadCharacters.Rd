@@ -24,8 +24,8 @@ PhyDat(dataset)
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(optionally) a Shiny session with a numericInput named character_num
-whose maximum should be updated.}
+\item{session}{(optionally) a Shiny session with a \code{numericInput} named
+\code{character_num} whose maximum should be updated.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
 a list of sequences each made of a single vector of mode character,
@@ -51,15 +51,16 @@ incorrectly parsed files.
 \itemize{
 \item \code{ReadTntCharacters}: Read characters from TNT file
 
-\item \code{ReadAsPhyDat}: Read Nexus characters as phyDat object.
+\item \code{ReadAsPhyDat}: Read Nexus characters as \code{phyDat} object.
 
-\item \code{ReadTntAsPhyDat}: Read TNT characters as phyDat object.
+\item \code{ReadTntAsPhyDat}: Read TNT characters as \code{phyDat} object.
 
 \item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
-\code{phyDat}, which converts a \emph{list} of morphological characters into a
+\code{phyDat()}, which converts a \emph{list} of morphological characters into a
 \code{phyDat} object.
 If your morphological characters are in the form of a \emph{matrix}, perhaps
-because they have been read using \code{read.table}, try \link{MatrixToPhyDat} instead.
+because they have been read using \code{read.table}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+instead.
 }}
 
 \examples{

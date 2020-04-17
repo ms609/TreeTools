@@ -3,7 +3,7 @@
 \name{DescendantEdges}
 \alias{DescendantEdges}
 \alias{AllDescendantEdges}
-\title{Descendant Edges}
+\title{Identify descendant edges}
 \usage{
 DescendantEdges(edge, parent, child, nEdge = length(parent))
 

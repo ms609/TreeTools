@@ -29,9 +29,12 @@ RandomTree(Lobo.phy)
 
 }
 \seealso{
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{SingleTaxonTree}}, \code{\link{TreeNumber}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

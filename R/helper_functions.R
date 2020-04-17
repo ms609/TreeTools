@@ -18,7 +18,7 @@ SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FA
 
 Assert <- function (statement) if (!statement) stop(deparse(statement), " is FALSE")
 
-#' Add Tree to Start of List
+#' Add tree to start of list
 #'
 #' `UnshiftTree` adds a phylogenetic tree to the start of a list of trees.
 #' This is useful where the class of a list of trees is unknown.

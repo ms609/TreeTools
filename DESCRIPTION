@@ -25,8 +25,8 @@ Description: Efficient implementations of functions for the creation,
   and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;
   and
   analysis of partitions and partition information.
-URL: https://ms609.github.io/TreeTools, https://github.com/ms609/TreeTools
-BugReports: https://github.com/ms609/TreeTools/issues
+URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
+BugReports: https://github.com/ms609/TreeTools/issues/
 SystemRequirements: C++11
 Depends: R (>= 3.4.0),
     ape (>= 5.0)
@@ -48,5 +48,5 @@ Encoding: UTF-8
 Language: en-GB
 LinkingTo: Rcpp
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)

@@ -16,24 +16,21 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{multiPhylo}(x, ...)
 
-\method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip),
-  ...)
+\method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip), ...)
 
-\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"),
-  tipLabels = attr(x, "tip.label"), ...)
+\method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
-\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"),
-  tipLabels = attr(x, "tip.label"), ...)
+\method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
 
 \item{\dots}{Additional parameters for consistency with S3 methods (unused).}
 
-\item{nTip}{Integer specifying number of tips in the tree.}
+\item{nTip}{Integer specifying number of leaves in the tree.}
 
 \item{tipLabels}{Character vector listing the labels assigned to each tip
-in a tree, perhaps obtained using \link{TipLabels}.}
+in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 }
 \value{
 \code{as.phylo.numeric} returns a tree of class \code{phylo}.
@@ -49,25 +46,27 @@ Functions converting between phylogenetic trees and their unique decimal
 representation.
 }
 \details{
-There are \code{NUnrooted(n)} unrooted trees with \emph{n} tips.
-As such, each \emph{n}-tip tree can be uniquely identifyed by a non-negative
+There are \code{NUnrooted(n)} unrooted trees with \emph{n} leaves.
+As such, each \emph{n}-leaf tree can be uniquely identified by a non-negative
 integer \emph{x} < \code{NUnrooted(n)}.
 
 This integer can be converted by a tree by treating it as a mixed-base number,
 with bases 1, 3, 5, 7, ... (2_n_ - 5).
 
-Each digit of this mixed base number corresponds to a tip, and determines
-the location on a growing tree to which that tip should be added.
+Each digit of this mixed base number corresponds to a leaf, and determines
+the location on a growing tree to which that leaf should be added.
 
-We start with a two-tip tree, and treat 0 as the origin of the tree.\preformatted{
+We start with a two-leaf tree, and treat 0 as the origin of the tree.\preformatted{
 0 ---- 1
 
 }
 
-We add tip 2 by breaking an edge and inserting a node (numbered 2 + nTip - 1).
-In this example, we'll work up to a six-tip tree; this node will be numbered
+We add leaf 2 by breaking an edge and inserting a node (numbered
+\code{2 + nTip - 1}).
+In this example, we'll work up to a six-leaf tree; this node will be numbered
 2 + 6 - 1 = 7.
-There is only one edge on which tip 2 can be added.  Let's add node 7 and tip 2:\preformatted{
+There is only one edge on which leaf 2 can be added.  Let's add node 7 and
+leaf 2:\preformatted{
 0 ---- 7 ---- 1
        |
        |
@@ -75,7 +74,7 @@ There is only one edge on which tip 2 can be added.  Let's add node 7 and tip 2:
 
 }
 
-There are now three edges on which tip 3 can be added.  Our options are:
+There are now three edges on which leaf 3 can be added.  Our options are:
 Option 0: the edge leading to 1;
 Option 1: the edge leading to 2;
 Option 2: the edge leading to 7.
@@ -93,7 +92,7 @@ If we select option 1, we produce:\preformatted{
 
 \code{1} is now the final digit of our mixed-base number
 
-There are five places to add tip 4:
+There are five places to add leaf 4:
 Option 0: the edge leading to 1;
 Option 1: the edge leading to 2;
 Option 2: the edge leading to 3;
@@ -117,11 +116,11 @@ with the mixed-base number 0021.  We can convert this into decimal:
 = 10
 
 Note that the hyperexponential nature of tree space means that there are >
-2^30 unique 12-tip trees.  As integers > 2^31 are not supported by R,
+2^30 unique 12-leaf trees.  As integers > 2^31 are not supported by R,
 numbers representing larger trees are represented internally as a vector of
 nine-digit integer 'chunks' and passed to the underlying C code, where they
 are combined into a single 64-bit integer.  This allows trees with up to
-42 tips to be accommodated.
+42 leaves to be accommodated.
 }
 \examples{
 tree <- as.phylo(10, nTip = 6)
@@ -146,9 +145,12 @@ Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 \seealso{
 \code{\link{TreeShape}}
 
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{NJTree}}, \code{\link{PectinateTree}},
-  \code{\link{RandomTree}}, \code{\link{SingleTaxonTree}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{NJTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{SingleTaxonTree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

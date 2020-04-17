@@ -14,14 +14,14 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.3.9001",
+  "version": "0.1.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.1",
+    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
+  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
   "author": [
     {
       "@type": "Person",
@@ -201,7 +201,7 @@
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools.git/blob/master/NEWS.md",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "fileSize": "514.574KB",
+  "fileSize": "517.046KB",
   "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [

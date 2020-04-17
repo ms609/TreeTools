@@ -3,17 +3,17 @@
 #' Functions converting between phylogenetic trees and their unique decimal
 #' representation.
 #'
-#' There are `NUnrooted(n)` unrooted trees with _n_ tips.
-#' As such, each _n_-tip tree can be uniquely identifyed by a non-negative
+#' There are `NUnrooted(n)` unrooted trees with _n_ leaves.
+#' As such, each _n_-leaf tree can be uniquely identified by a non-negative
 #' integer _x_ < `NUnrooted(n)`.
 #'
 #' This integer can be converted by a tree by treating it as a mixed-base number,
 #' with bases 1, 3, 5, 7, ... (2_n_ - 5).
 #'
-#' Each digit of this mixed base number corresponds to a tip, and determines
-#' the location on a growing tree to which that tip should be added.
+#' Each digit of this mixed base number corresponds to a leaf, and determines
+#' the location on a growing tree to which that leaf should be added.
 #'
-#' We start with a two-tip tree, and treat 0 as the origin of the tree.
+#' We start with a two-leaf tree, and treat 0 as the origin of the tree.
 #'
 #' ```
 #'
@@ -21,10 +21,12 @@
 #'
 #' ```
 #'
-#' We add tip 2 by breaking an edge and inserting a node (numbered 2 + nTip - 1).
-#' In this example, we'll work up to a six-tip tree; this node will be numbered
+#' We add leaf 2 by breaking an edge and inserting a node (numbered
+#' `2 + nTip - 1`).
+#' In this example, we'll work up to a six-leaf tree; this node will be numbered
 #' 2 + 6 - 1 = 7.
-#' There is only one edge on which tip 2 can be added.  Let's add node 7 and tip 2:
+#' There is only one edge on which leaf 2 can be added.  Let's add node 7 and
+#' leaf 2:
 #'
 #' ```
 #'
@@ -35,7 +37,7 @@
 #'
 #' ```
 #'
-#' There are now three edges on which tip 3 can be added.  Our options are:
+#' There are now three edges on which leaf 3 can be added.  Our options are:
 #' Option 0: the edge leading to 1;
 #' Option 1: the edge leading to 2;
 #' Option 2: the edge leading to 7.
@@ -55,7 +57,7 @@
 #' ```
 #' `1` is now the final digit of our mixed-base number
 #'
-#' There are five places to add tip 4:
+#' There are five places to add leaf 4:
 #' Option 0: the edge leading to 1;
 #' Option 1: the edge leading to 2;
 #' Option 2: the edge leading to 3;
@@ -79,14 +81,14 @@
 #' = 10
 #'
 #' Note that the hyperexponential nature of tree space means that there are &gt;
-#' 2^30 unique 12-tip trees.  As integers &gt; 2^31 are not supported by R,
+#' 2^30 unique 12-leaf trees.  As integers &gt; 2^31 are not supported by R,
 #' numbers representing larger trees are represented internally as a vector of
 #' nine-digit integer 'chunks' and passed to the underlying C code, where they
 #' are combined into a single 64-bit integer.  This allows trees with up to
-#' 42 tips to be accommodated.
+#' 42 leaves to be accommodated.
 #'
 #' @param x Integer identifying the tree (see details).
-#' @param nTip Integer specifying number of tips in the tree.
+#' @param nTip Integer specifying number of leaves in the tree.
 #' @template tipLabelsParam
 #' @param \dots Additional parameters for consistency with S3 methods (unused).
 #'
@@ -203,7 +205,7 @@ as.phylo.TreeNumber <- function (x, nTip = attr(x, 'nTip'),
             class = 'phylo')
 }
 
-#' Print TreeNumber object
+#' Print `TreeNumber` object
 #'
 #' S3 method for objects of class `TreeNumber`.
 #'

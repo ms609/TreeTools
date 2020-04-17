@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_generation.R
 \name{NJTree}
 \alias{NJTree}
-\title{Neighbour Joining Tree}
+\title{Generate a neighbour joining tree}
 \usage{
 NJTree(dataset)
 }
@@ -22,9 +22,12 @@ NJTree(Lobo.phy)
 
 }
 \seealso{
-Other tree generation functions: \code{\link{BalancedTree}},
-  \code{\link{PectinateTree}}, \code{\link{RandomTree}},
-  \code{\link{SingleTaxonTree}}, \code{\link{TreeNumber}}
+Other tree generation functions: 
+\code{\link{BalancedTree}()},
+\code{\link{PectinateTree}()},
+\code{\link{RandomTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{TreeNumber}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

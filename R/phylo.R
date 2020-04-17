@@ -1,7 +1,7 @@
 #' Renumber a tree's nodes and tips
 #'
-#' \code{Renumber} numbers the nodes and tips in a tree to conform with the
-#' phylo standards.
+#' `Renumber()` numbers the nodes and tips in a tree to conform with the
+#' `phylo` standards.
 #'
 #' @template treeParam
 #'
@@ -9,7 +9,7 @@
 #' tree <- RandomTree(letters[1:10])
 #' Renumber(tree)
 #'
-#' @return This function returns a tree of class \code{phylo}.
+#' @return `Renumber()` returns a tree of class `phylo`.
 #'
 #' @template MRS
 #' @family tree manipulation
@@ -43,15 +43,13 @@ Renumber <- function (tree) {
   Cladewise(tree)
 }
 
-#' SingleTaxonTree
-#'
-#' Single taxon tree
+#' Generate a single taxon tree
 #'
 #' Create a phylogenetic 'tree' that comprises a single taxon.
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
-#' @return `SingleTaxonTree` returns a \code{phylo} object containing a single
+#' @return `SingleTaxonTree()` returns a \code{phylo} object containing a single
 #' tip with the specified label.
 #'
 #' @examples

@@ -2,7 +2,7 @@
 % Please edit documentation in R/TreeNumber.R
 \name{print.TreeNumber}
 \alias{print.TreeNumber}
-\title{Print TreeNumber object}
+\title{Print \code{TreeNumber} object}
 \usage{
 \method{print}{TreeNumber}(x, ...)
 }

@@ -4,27 +4,48 @@
 \alias{PhyToString}
 \alias{PhyDatToString}
 \alias{PhydatToString}
-\title{phyDat to String}
+\title{\code{phyDat} to String}
 \usage{
-PhyToString(phy, parentheses = "{", collapse = "", ps = "",
-  useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE)
+PhyToString(
+  phy,
+  parentheses = "{",
+  collapse = "",
+  ps = "",
+  useIndex = TRUE,
+  byTaxon = TRUE,
+  concatenate = TRUE
+)
 
-PhyDatToString(phy, parentheses = "{", collapse = "", ps = "",
-  useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE)
+PhyDatToString(
+  phy,
+  parentheses = "{",
+  collapse = "",
+  ps = "",
+  useIndex = TRUE,
+  byTaxon = TRUE,
+  concatenate = TRUE
+)
 
-PhydatToString(phy, parentheses = "{", collapse = "", ps = "",
-  useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE)
+PhydatToString(
+  phy,
+  parentheses = "{",
+  collapse = "",
+  ps = "",
+  useIndex = TRUE,
+  byTaxon = TRUE,
+  concatenate = TRUE
+)
 }
 \arguments{
 \item{phy}{An object of class \code{\link{phyDat}}}
 
 \item{parentheses}{Character specifying format of parentheses with which
-to surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}, \code{<}.}
+to surround ambiguous tokens.  Choose from: \verb{\\\{} (default), \code{[}, \code{(}, \code{<}.}
 
-\item{collapse}{Character specifying text, perhaps \code{,}, with which to
+\item{collapse}{Character specifying text, perhaps \verb{,}, with which to
 separate multiple tokens within parentheses}
 
-\item{ps}{Character specifying text, perhaps \code{;}, to append to the end of the string}
+\item{ps}{Character specifying text, perhaps \verb{;}, to append to the end of the string}
 
 \item{useIndex}{Logical (default: \code{TRUE}) specifying whether to print
 duplicate characters multiple times, as they appeared in the original matrix}
@@ -41,7 +62,7 @@ for each entry.}
 representation of the phylogenetic character state for each taxon in turn.
 }
 \description{
-Extract character data from a phyDat object as a string.
+Extract character data from a \code{phyDat} object as a string.
 }
 \examples{
 fileName <- paste0(system.file(package='TreeTools'),
