@@ -1,6 +1,6 @@
 context("tree_information.R")
 
-test_that("Trees matching trees calculated correctly", {
+test_that("Phylogenetic info calculated correctly", {
   bal8 <- BalancedTree(8)
   expect_equal(1, TreesMatchingTree(bal8))
   expect_equal(Log2Unrooted(8), PhylogeneticInfo(bal8))
