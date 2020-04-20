@@ -16,7 +16,6 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   const int n_edge = edge.rows(),
     n_node = n_edge + 1,
     n_tip = nTip[0],
-    n_return = n_edge - n_tip - 1,
     n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
   if (n_edge == n_tip) { /* No internal nodes resolved */
@@ -41,12 +40,16 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
     }
   }
 
+  int n_trivial = 0;
+  const int NOT_TRIVIAL = -1;
+  const int trivial_origin = edge(n_edge - 1, 0) - 1,
+    trivial_two = (edge(n_edge - 1, 0) == edge(n_edge - 3, 0) ?
+                     NOT_TRIVIAL : (edge(n_edge - 1, 1) - 1L));
+
+  const int n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL);
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
-  int n_trivial = 0;
-  const int trivial_one = edge(n_edge - 1, 0) - 1,
-    trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ?
-                     edge(n_edge - 2, 1) : edge(n_edge - 1, 1)) - 1;
+
   for (int i = n_tip; i != n_node; i++) {
     if (i == trivial_origin || i == trivial_two) {
       n_trivial++;

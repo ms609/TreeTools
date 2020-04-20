@@ -43,13 +43,39 @@ test_that("as.Splits", {
   expect_equal("0 bipartition splits dividing 5 tips, a .. e",
                capture_output(print(as.Splits(polytomy))))
 
-  notPreorder <- structure(list(edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L,
-                                            6L, 9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L),
-                                          .Dim = c(8L, 2L)), Nnode = 4L,
-                         tip.label = 1:5), class = "phylo", order = "cladewise")
+  notPreorder <- structure(list(
+    edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L, 6L,
+                       9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L), .Dim = c(8L, 2L)),
+    Nnode = 4L, tip.label = 1:5), class = "phylo", order = "cladewise")
   expect_equal(c('7' = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
                  '8' = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
                as.Splits(notPreorder)[, 1])
+})
+
+test_that('as.Splits.phylo', {
+  rootedStar <- structure(list(edge = structure(c(7L, 8L, 8L, 8L, 8L, 8L, 7L,
+                                                  8L, 1L, 2L, 3L, 4L, 5L, 6L),
+                                                .Dim = c(7L, 2L)), Nnode = 2L,
+                               tip.label = letters[1:6]), class = "phylo")
+
+  rootedStar2 <- structure(list(edge = structure(c(8L, 8L, 8L, 8L, 8L, 7L, 7L,
+                                                   1L, 2L, 3L, 4L, 5L, 6L, 8L),
+                                                .Dim = c(7L, 2L)), Nnode = 2L,
+                               tip.label = letters[1:6]), class = "phylo")
+
+  expect_equal(c(0L, 1L), dim(as.Splits(rootedStar)))
+  expect_equal(c(0L, 1L), dim(as.Splits(rootedStar2)))
+
+  expect_equal(c(2L, 1L), dim(as.Splits(PectinateTree(5L))))
+  expect_equal(c(2L, 1L), dim(as.Splits(unroot(PectinateTree(5L)))))
+
+  twoCherriesInGrass <- PectinateTree(3) + PectinateTree(3)
+  expect_equal(c(2L, 1L), dim(as.Splits(twoCherriesInGrass)))
+
+  unresolvedRoot <- CollapseNode(twoCherriesInGrass, 8)
+  expect_equal(c(1L, 1L), dim(as.Splits(unresolvedRoot)))
+  expect_equal(c(3L, 1L), dim(as.Splits(BalancedTree(6))))
+
 
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 9L), dim(as.Splits(PectinateTree(65L))))
