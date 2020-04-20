@@ -75,7 +75,7 @@ CharacterInformation <- function (tokens) {
   -log2P
 }
 
-#' Phylogenetic information content of a split
+#' Phylogenetic information content of splitting leaves into two partitions
 #'
 #' Calculate the phylogenetic information content (_sensu_
 #' Steel & Penny, 2006) of a split, which reflects the probability that a

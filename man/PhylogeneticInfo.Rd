@@ -19,14 +19,10 @@ of the input tree(s).
 \description{
 Calculate the phylogenetic information content of a phylogenetic object.
 }
-\details{
-#TODO
-Splits to follow
-}
-\seealso{
-Clustering information content: coming soon. #TODO.
 
+\seealso{
 Other tree information functions: 
+\code{\link{ClusteringInfo}()},
 \code{\link{TreesMatchingTree}()}
 }
 \author{

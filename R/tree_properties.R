@@ -70,6 +70,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' NDescendants(tree)
 #' 
 #' @template MRS
+#' @family tree navigation
 #' @export
 NDescendants <- function (tree) {
   NodeOrder(tree$edge, includeAncestor = FALSE)
@@ -149,7 +150,7 @@ NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
 #' @export
 AncestorEdge <- function (edge, parent, child) child == parent[edge]
 
-#' Ancestros of an edge
+#' Ancestors of an edge
 #'
 #' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'

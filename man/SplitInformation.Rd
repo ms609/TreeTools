@@ -3,7 +3,7 @@
 \name{SplitInformation}
 \alias{SplitInformation}
 \alias{MultiSplitInformation}
-\title{Phylogenetic information content of a split}
+\title{Phylogenetic information content of splitting leaves into two partitions}
 \usage{
 SplitInformation(A, B)
 

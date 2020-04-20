@@ -18,8 +18,6 @@ reference:
       - CladeSizes
       - CollapseNode
       - ConsensusWithout
-      - DescendantEdges
-      - EdgeAncestry
       - EnforceOutgroup
       - MRCA
       - NPartitions
@@ -67,7 +65,7 @@ reference:
       - ReadTntTree
       - TNTText2Tree
 
-  - title: "Partitions"
+  - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
     contents:
       - matches('Split')
@@ -80,6 +78,7 @@ reference:
     - NRooted
     - N1Spr
     - DoubleFactorial
+    - has_concept("tree information functions")
     - has_concept("split information functions")
 
   - title: "Node support"

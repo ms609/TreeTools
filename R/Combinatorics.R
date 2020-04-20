@@ -1,4 +1,8 @@
-globalVariables(c('doubleFactorials', 'logDoubleFactorials'), 'TreeTools')
+#' @importFrom utils globalVariables
+utils::globalVariables(c('doubleFactorials',
+                         'logDoubleFactorials',
+                         'log2DoubleFactorials'),
+                       'TreeTools')
 
 #' Double factorial
 #'
