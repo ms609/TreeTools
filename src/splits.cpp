@@ -48,7 +48,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
     trivial_two = ((edge(n_edge - 1, 1) <= n_tip) ?
                      edge(n_edge - 2, 1) : edge(n_edge - 1, 1)) - 1;
   for (int i = n_tip; i != n_node; i++) {
-    if (i == trivial_one || i == trivial_two) {
+    if (i == trivial_origin || i == trivial_two) {
       n_trivial++;
     } else {
       for (int j = 0; j != n_bin; j++) {
