@@ -3,7 +3,7 @@
 \name{PhylogeneticInfo}
 \alias{PhylogeneticInfo}
 \alias{PhylogeneticInformation}
-\title{Phylogenetic information content}
+\title{Cladistic information content}
 \usage{
 PhylogeneticInfo(x)
 
@@ -17,9 +17,20 @@ Returns the phylogenetic or clustering information content
 of the input tree(s).
 }
 \description{
-Calculate the phylogenetic information content of a phylogenetic object.
+Calculate the cladistic (phylogenetic) information content of a
+phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
-
+\details{
+#TODO
+\itemize{
+\item Splits to follow
+\item Further information to follow
+\item See also Clustering Information
+}
+}
+\references{
+\insertRef{Thorley1998}{TreeTools}
+}
 \seealso{
 Other tree information functions: 
 \code{\link{ClusteringInfo}()},

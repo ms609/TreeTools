@@ -4,13 +4,26 @@
 \alias{ClusteringInfo}
 \title{Clustering Information}
 \usage{
-ClusteringInfo(x, nTip = NTip(x))
+ClusteringInfo(x)
 }
 \arguments{
 \item{x}{Tree of class \code{phylo}, or a list thereof.}
 }
 \description{
-Clustering Information
+#TODO
+}
+\details{
+update TreeDist docs to refer to this function.
+}
+\examples{
+tree <- CollapseNode(BalancedTree(9), 13:15)
+plot(tree)
+nodelabels()
+ClusteringInfo(tree)
+ClusteringInfo(BalancedTree(8))
+ClusteringInfo(PectinateTree(8))
+
+
 }
 \seealso{
 Other tree information functions: 
