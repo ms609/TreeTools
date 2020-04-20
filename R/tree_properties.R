@@ -150,7 +150,7 @@ NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
 #' @export
 AncestorEdge <- function (edge, parent, child) child == parent[edge]
 
-#' Ancestros of an edge
+#' Ancestors of an edge
 #'
 #' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
 #'
