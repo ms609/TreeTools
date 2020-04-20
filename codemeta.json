@@ -7,14 +7,15 @@
   "identifier": "TreeTools",
   "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of partitions and partition information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
-  "codeRepository": "https://github.com/ms609/TreeTools",
+  "codeRepository": "https://github.com/ms609/TreeTools/",
   "relatedLink": [
     "https://ms609.github.io/TreeTools",
-    "https://CRAN.R-project.org/package=TreeTools"
+    "https://CRAN.R-project.org/package=TreeTools",
+    "https://ms609.github.io/TreeTools/"
   ],
-  "issueTracker": "https://github.com/ms609/TreeTools/issues",
+  "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.4",
+  "version": "0.1.4.9001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -201,7 +202,6 @@
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools.git/blob/master/NEWS.md",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "fileSize": "517.046KB",
   "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [

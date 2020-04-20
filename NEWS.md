@@ -1,3 +1,7 @@
+# TreeTools 0.1.4.9001 (development)
+
+- Improve support for unrooted trees in `as.Splits()`
+
 # TreeTools 0.1.4.9000 (development)
 
 - `RootNode()`: Which node is a tree's root?
