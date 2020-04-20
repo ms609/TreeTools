@@ -48,18 +48,28 @@ Log2TreesMatchingTree <- function (tree) {
 #' Calculate the cladistic (phylogenetic) information content of a
 #' phylogenetic object, _sensu_ Thorley _et al._ (1998).
 #'
+#' The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
+#' an information-theoretic justification, by Thorley _et al_. (1998).
+#' Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
+#' content' in the context of individual characters.
+#'
+#'
 #'
 #' #TODO
-#' - Splits to follow
-#' - Further information to follow
+#' - Detailed documentation to follow
+#' - CIC.Splits to follow
 #' - See also Clustering Information
 #' 
 #' @param x Tree of class `phylo`, or a list thereof.
-#' 
-#' @return Returns the phylogenetic or clustering information content 
+#'
+#' @return Returns the phylogenetic or clustering information content
 #' of the input tree(s).
 #'
 #' @references
+#' \insertRef{Rohlf1982}{TreeTools}
+#'
+#' \insertRef{Steel2006}{TreeTools}
+#'
 #' \insertRef{Thorley1998}{TreeTools}
 #'
 #' @family tree information functions
