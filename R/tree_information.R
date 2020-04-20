@@ -60,7 +60,6 @@ Log2TreesMatchingTree <- function (tree) {
 #' of the input tree(s).
 #' 
 #' @family tree information functions
-#' @seealso Clustering information content: coming soon. #TODO.
 #' @template MRS
 #' @export
 PhylogeneticInfo <- function (x) UseMethod('PhylogeneticInfo') 
@@ -78,3 +77,71 @@ PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
 #' @rdname PhylogeneticInfo
 #' @export
 PhylogeneticInformation <- PhylogeneticInfo
+
+#' Clustering Information
+#' 
+#' 
+#' #TODO 
+#' 
+#' update TreeDist docs to refer to this function.
+#' 
+#' 
+#' @inheritParams PhylogeneticInfo
+#' @family tree information functions
+#' @template MRS
+#' @examples
+#' tree <- CollapseNode(BalancedTree(9), 13:15)
+#' plot(tree)
+#' nodelabels()
+#' ClusteringInfo(tree)
+#' ClusteringInfo(BalancedTree(8))
+#' ClusteringInfo(PectinateTree(8))
+#' 
+#' 
+#' @export
+ClusteringInfo <- function (x) UseMethod('ClusteringInfo')
+
+ClusteringInfo.phylo <- function (x) {
+  # TODO
+  # This is basically a C function written in R. 
+  # Once satisfied it's working... write in C!
+  
+  ClusteringInfo.matrix(unroot(x)$edge)
+}
+
+
+.Entropy <- function (p) -sum(p * log2(p))
+
+# Ensure that tree is unrooted, or root will create an extra cluster.
+ClusteringInfo.matrix <- function (x) {
+  edge <- RenumberTree(x[, 1], x[, 2])
+  parent <- edge[, 1] 
+  child <- edge[, 2]
+  maxNode <- max(parent)
+  rootNode <- parent[1]
+  nTip <- rootNode - 1L
+  nNode <- maxNode - nTip
+  nDesc <- c(rep(1L, nTip), integer(nNode))
+  
+  for (i in rev(seq_len(nrow(edge)))) {
+    nDesc[parent[i]] <- nDesc[parent[i]] + nDesc[child[i]]
+  }
+  
+  orders <- NodeOrder(edge, includeAncestor = FALSE)
+  
+  entropy <- integer(maxNode - nTip)
+  internalEdge <- edge[child > nTip, ]
+  nInternal <- nrow(internalEdge)
+  
+  nEntities <- nTip
+  for (i in seq_len(nInternal) - 1L) {
+    inCluster <- orders[internalEdge[nInternal - i, 2] - nTip]
+    notInCluster <- nEntities - inCluster
+    entropy[i + 1L] <- .Entropy(c(inCluster, notInCluster) / nEntities)
+    nEntities <- nEntities - inCluster + 1L
+  }
+  
+  message(paste(signif(entropy, 4), collapse=', '))
+  sum(entropy)
+  
+}

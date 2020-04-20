@@ -11,3 +11,9 @@ test_that("Phylogenetic info calculated correctly", {
                TreesMatchingTree(tr1))
   expect_equal(Log2Unrooted(8) - log2(45), PhylogeneticInfo(tr1))
 })
+
+test_that("Clsutering info calculated correctly", {
+  expect_equal(3L, ClusteringInfo(BalancedTree(8)))
+  expect_gt(ClusteringInfo(BalancedTree(8)),
+            ClusteringInfo(CollapseNode(BalancedTree(8), 14)))
+})
