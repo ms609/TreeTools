@@ -40,7 +40,6 @@ TreesMatchingTree(partiallyResolvedTree)
 }
 \seealso{
 Other tree information functions: 
-\code{\link{ClusteringInfo}()},
 \code{\link{PhylogeneticInfo}()}
 }
 \author{
