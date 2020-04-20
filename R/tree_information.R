@@ -43,12 +43,12 @@ Log2TreesMatchingTree <- function (tree) {
   sum(Log2Unrooted(NodeOrder(tree)))
 }
 
-#' Phylogenetic information content
-#' 
-#' Calculate the phylogenetic information content of a phylogenetic object.
-#' 
-#' 
-#' 
+#' Cladistic information content
+#'
+#' Calculate the cladistic (phylogenetic) information content of a
+#' phylogenetic object, _sensu_ Thorley _et al._ (1998).
+#'
+#'
 #' #TODO
 #' - Splits to follow
 #' - Further information to follow
@@ -58,7 +58,10 @@ Log2TreesMatchingTree <- function (tree) {
 #' 
 #' @return Returns the phylogenetic or clustering information content 
 #' of the input tree(s).
-#' 
+#'
+#' @references
+#' \insertRef{Thorley1998}{TreeTools}
+#'
 #' @family tree information functions
 #' @template MRS
 #' @export
