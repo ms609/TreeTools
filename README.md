@@ -8,14 +8,24 @@
 -->
 [![Project Status: Active – – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
-'TreeTools' is an R package that provides functions for creating, modifying and 
-analysing phylogenetic trees.
+'TreeTools' is an R package that provides efficient implementations of 
+functions for the creation, modification and analysis of phylogenetic trees.
+
+Applications include: generation of trees with specified shapes;
+rooting of trees and extraction of subtrees;
+calculation and depiction of node support;
+calculation of ancestor-descendant relationships;
+import and export of trees from Newick, Nexus and 
+[TNT](http://www.lillo.org.ar/phylogeny/tnt/) formats;
+and analysis of partitions and cladistic information.
+
 It complements packages such as 
 ['ape'](https://cran.r-project.org/package=ape),
 ['phangorn'](https://cran.r-project.org/package=phangorn) and
 ['phytools'](https://cran.r-project.org/package=phytools),
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
+
 
 This is a pre-release; some minor functionality may change in version 1.0, due
 in mid-2020.
@@ -28,7 +38,7 @@ install.packages('TreeTools')
 library('TreeTools')
 ```
 
-If you're feeling brave, you can install the development version thus:
+Install the very lastest version, which may be under development, with:
 ```r
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github('ms609/TreeTools')
