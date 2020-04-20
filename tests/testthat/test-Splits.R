@@ -50,7 +50,10 @@ test_that("as.Splits", {
   expect_equal(c('7' = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
                  '8' = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
                as.Splits(notPreorder)[, 1])
+})
 
+test_that('as.Splits.phylo', {
+  expect_equal(c(2L, 1L), dim(as.Splits(unroot(PectinateTree(5L)))))
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 9L), dim(as.Splits(PectinateTree(65L))))
   expect_equal(c(125L, 16L), dim(as.Splits(PectinateTree(128L))))
