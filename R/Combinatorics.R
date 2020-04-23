@@ -139,14 +139,14 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'  \insertRef{CavalliSforza1967}{TreeTools}
 #'
 #' @examples
-#'   NRooted(10)
-#'   NUnrooted(10)
-#'   LnRooted(10)
-#'   LnUnrooted(10)
-#'   Log2Unrooted(10)
-#'   # Number of trees consistent with a character whose states are
-#'   # 00000 11111 222
-#'   NUnrootedMult(c(5,5,3))
+#' NRooted(10)
+#' NUnrooted(10)
+#' LnRooted(10)
+#' LnUnrooted(10)
+#' Log2Unrooted(10)
+#' # Number of trees consistent with a character whose states are
+#' # 00000 11111 222
+#' NUnrootedMult(c(5,5,3))
 #'
 #' @export
 NRooted     <- function (tips)  DoubleFactorial(tips + tips - 3L) # addition faster than 2*
