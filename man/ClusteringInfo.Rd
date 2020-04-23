@@ -18,10 +18,21 @@ update TreeDist docs to refer to this function.
 Unbalanced trees contain more uneven clusters, and thus contain
 more clustering information than balanced trees.
 
-This is considered a defect by Rohlf (1982) and Page (1992)
+This is considered a defect by Rohlf (1982) and Page (1992), on the basis
+that tree shape does not influence the amount of \emph{cladistic} information
+held within a tree.  Cladistic information sees the purpose of trees as
+depicting the evolutionary relationships of a set of taxa.  On this view,
+a tree is either 'right' or 'wrong'.
+
+Clustering information represents a different concept of the information
+within a tree; trees serve to define groups of closely related taxa.
+On this view, an unalanced tree makes more grouping ('nesting') statements
+than a balanced one (Adams, 1986), corresponding to more information.
+As such, a tree can differ from the 'true' tree in small details, yet
+still convey much 'true' information.
 }
 \examples{
-tree <- CollapseNode(BalancedTree(9), 13:15)
+tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 plot(tree)
 nodelabels()
 ClusteringInfo(tree)
@@ -30,6 +41,8 @@ ClusteringInfo(PectinateTree(8))
 
 }
 \references{
+\insertRef{Adams1986}{TreeTools}
+
 \insertRef{Page1992}{TreeTools}
 
 \insertRef{Rohlf1982}{TreeTools}

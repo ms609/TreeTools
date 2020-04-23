@@ -20,7 +20,7 @@ test_that('Root node can be found', {
   expect_equal(9L, RootNode(rooted$edge))
   expect_equal(9L, RootNode(rooted))
   expect_equal(9L, RootNode(as.phylo(1337L, 8L)))
-  expect_equal(rep(9L, 3L), 
+  expect_equal(rep(9L, 3L),
                RootNode(c(unrooted, Preorder(postorder), postorder)))
   expect_equal(rep(9L, 3L),
                RootNode(list(Cladewise(postorder),
@@ -32,11 +32,11 @@ test_that('Root node can be found', {
 test_that('NodeOrder works', {
   expect_equivalent(c(2L, rep(3L, 6)),
                     as.integer(NodeOrder(BalancedTree(8), internalOnly = TRUE)))
-  expect_equivalent(c(rep(1L, 8), 2L, rep(3L, 6)), 
+  expect_equivalent(c(rep(1L, 8), 2L, rep(3L, 6)),
                     as.integer(NodeOrder(BalancedTree(8), internalOnly = FALSE)))
   expect_equivalent(rep(2L, 7), as.integer(NodeOrder(BalancedTree(8), FALSE)))
   tree <- CollapseNode(BalancedTree(8), 12:15)
-  expect_equivalent(c(`9` = 5L, `10` = 4L, `11` = 3L), 
+  expect_equivalent(c(`9` = 5L, `10` = 4L, `11` = 3L),
                     as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
   expect_equal(list(NodeOrder(tree), NodeOrder(tree)), NodeOrder(c(tree, tree)))
   expect_equal(NodeOrder(c(tree, tree)), NodeOrder(list(tree, tree)))
@@ -81,4 +81,29 @@ test_that('Edge distances are calculated correctly', {
   expect_equal(ed, t(ed)) # Symmetry
   expect_equal(c(6, 6, 6, 5, 5, 4, 4, 3, 2, 1, 0, 1, 2, 3, 4, 4, 5, 5),
                ed[11, ])
+})
+
+test_that("Node depths calculated correctly", {
+  #par(mar=rep(0.4, 4))
+  #plot(PectinateTree(20))
+  #nodelabels(NodeDepth(PectinateTree(20), F))
+  expect_equal(c(rep(0, 20), 1:10, 9:1), NodeDepth(PectinateTree(20)))
+
+  #plot(BalancedTree(20))
+  #nodelabels(NodeDepth(BalancedTree(20), F))
+  expect_equal(c(5,4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
+               NodeDepth(BalancedTree(20L), FALSE))
+
+  #tree <- CollapseNode(BalancedTree(20), c(22:26, 33:35))
+  #plot(tree)
+  #nodelabels(NodeDepth(tree, FALSE))
+  expect_equal(c(4,3,1,2,1,4,1,3,1,2,1), NodeDepth(tree, FALSE))
+
+  #tree <- CollapseNode(BalancedTree(20), c(22, 33:35))
+  #plot(tree)
+  #nodelabels(NodeDepth(tree, FALSE))
+  expect_equal(c(4,3,1,2,1,3,1,2,1,4,1,3,1,2,1),
+               NodeDepth(tree, FALSE))
+
+  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), FALSE))
 })
