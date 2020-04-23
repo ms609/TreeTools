@@ -58,15 +58,16 @@ NUnrootedMult(splits)
 bipartition.}
 }
 \description{
-These functions return the number of rooted or unrooted trees consistent with
-a given pattern of splits.
+These functions return the number of rooted or unrooted binary trees
+consistent with a given pattern of splits.
 }
 \details{
 Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow Carter \emph{et al.} 1990, Theorem 2.
+Calculations follow Cavalli‐Sforza & Edwards (1967) and
+Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
 \itemize{
@@ -106,6 +107,8 @@ NUnrootedSplits(c(3,3))
 }
 \references{
 \insertRef{Carter1990}{TreeTools}
+
+\insertRef{CavalliSforza1967}{TreeTools}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

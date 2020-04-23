@@ -117,14 +117,15 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 
 #' Number of rooted/unrooted trees
 #'
-#' These functions return the number of rooted or unrooted trees consistent with
-#' a given pattern of splits.
+#' These functions return the number of rooted or unrooted binary trees
+#' consistent with a given pattern of splits.
 #'
 #' Functions starting `N` return the number of rooted or unrooted trees.
-#' Replace this initial `N` with `Ln` for the natural logarithm of this number; 
+#' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
-#' 
-#' Calculations follow Carter _et al._ 1990, Theorem 2.
+#'
+#' Calculations follow Cavalli‐Sforza & Edwards (1967) and
+#' Carter _et al._ 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
 #' @param splits Integer vector listing the number of taxa in each tree
@@ -134,6 +135,8 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @references
 #'  \insertRef{Carter1990}{TreeTools}
+#'
+#'  \insertRef{CavalliSforza1967}{TreeTools}
 #'
 #' @examples
 #'   NRooted(10)
@@ -255,7 +258,7 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
   LnDoubleFactorial(totalTips +  totalTips - 5L) -
     LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
     sum(LnDoubleFactorial(splits + splits - 3L))
-  
+
   }
 #' @rdname NRooted
 #' @export

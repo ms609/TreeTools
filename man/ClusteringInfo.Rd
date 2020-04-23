@@ -14,6 +14,11 @@ ClusteringInfo(x)
 }
 \details{
 update TreeDist docs to refer to this function.
+
+Unbalanced trees contain more uneven clusters, and thus contain
+more clustering information than balanced trees.
+
+This is considered a defect by Rohlf (1982) and Page (1992)
 }
 \examples{
 tree <- CollapseNode(BalancedTree(9), 13:15)
@@ -23,7 +28,11 @@ ClusteringInfo(tree)
 ClusteringInfo(BalancedTree(8))
 ClusteringInfo(PectinateTree(8))
 
+}
+\references{
+\insertRef{Page1992}{TreeTools}
 
+\insertRef{Rohlf1982}{TreeTools}
 }
 \seealso{
 Other tree information functions: 
