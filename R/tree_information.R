@@ -48,11 +48,17 @@ Log2TreesMatchingTree <- function (tree) {
 #' Calculate the cladistic (phylogenetic) information content of a
 #' phylogenetic object, _sensu_ Thorley _et al._ (1998).
 #'
+#' The CIC is the logarithm of the number of binary trees that include the
+#' specified topology.  A base two logarithm gives an information content in bits.
+#'
 #' The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
 #' an information-theoretic justification, by Thorley _et al_. (1998).
 #' Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
 #' content' in the context of individual characters.
 #'
+#' The number of binary trees consistent with a cladogram provides a more
+#' satisfactory measure of the resolution of a tree than simply
+#' counting the number of edges resolved (Page, 1992).
 #'
 #'
 #' #TODO
@@ -66,6 +72,9 @@ Log2TreesMatchingTree <- function (tree) {
 #' of the input tree(s).
 #'
 #' @references
+#'
+#' \insertRef{Page1992}{TreeTools}
+#'
 #' \insertRef{Rohlf1982}{TreeTools}
 #'
 #' \insertRef{Steel2006}{TreeTools}
@@ -97,8 +106,15 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' #TODO 
 #' 
 #' update TreeDist docs to refer to this function.
-#' 
-#' 
+#'
+#' Unbalanced trees contain more uneven clusters, and thus contain
+#' more clustering information than balanced trees.
+#'
+#' This is considered a defect by Rohlf (1982) and Page (1992)
+#'
+#'
+#'
+#'
 #' @inheritParams PhylogeneticInfo
 #' @family tree information functions
 #' @template MRS
@@ -109,8 +125,12 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' ClusteringInfo(tree)
 #' ClusteringInfo(BalancedTree(8))
 #' ClusteringInfo(PectinateTree(8))
-#' 
-#' 
+#'
+#' @references
+#' \insertRef{Page1992}{TreeTools}
+#'
+#' \insertRef{Rohlf1982}{TreeTools}
+#'
 #' @export
 ClusteringInfo <- function (x) UseMethod('ClusteringInfo')
 

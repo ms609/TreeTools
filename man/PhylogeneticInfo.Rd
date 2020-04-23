@@ -21,14 +21,32 @@ Calculate the cladistic (phylogenetic) information content of a
 phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
+The CIC is the logarithm of the number of binary trees that include the
+specified topology.  A base two logarithm gives an information content in bits.
+
+The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
+an information-theoretic justification, by Thorley \emph{et al}. (1998).
+Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
+content' in the context of individual characters.
+
+The number of binary trees consistent with a cladogram provides a more
+satisfactory measure of the resolution of a tree than simply
+counting the number of edges resolved (Page, 1992).
+
 #TODO
 \itemize{
-\item Splits to follow
-\item Further information to follow
+\item Detailed documentation to follow
+\item CIC.Splits to follow
 \item See also Clustering Information
 }
 }
 \references{
+\insertRef{Page1992}{TreeTools}
+
+\insertRef{Rohlf1982}{TreeTools}
+
+\insertRef{Steel2006}{TreeTools}
+
 \insertRef{Thorley1998}{TreeTools}
 }
 \seealso{
