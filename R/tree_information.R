@@ -2,7 +2,7 @@
 #'
 #' Calculates the number of unrooted binary trees that are consistent with
 #' a tree topology on the same leaves.
-#' 
+#'
 #' Remember to unroot a tree first if the position of its root is arbitrary.
 #'
 #' @template treeParam
@@ -17,7 +17,7 @@
 #' partiallyResolvedTree <- CollapseNode(BalancedTree(8), 12:15)
 #' TreesMatchingTree(partiallyResolvedTree)
 #' LnTreesMatchingTree(partiallyResolvedTree)
-#' 
+#'
 #' # Number of rooted trees:
 #' rootedTree <- AddTip(partiallyResolvedTree, where = 0)
 #' TreesMatchingTree(partiallyResolvedTree)
@@ -65,7 +65,7 @@ Log2TreesMatchingTree <- function (tree) {
 #' - Detailed documentation to follow
 #' - CIC.Splits to follow
 #' - See also Clustering Information
-#' 
+#'
 #' @param x Tree of class `phylo`, or a list thereof.
 #'
 #' @return Returns the phylogenetic or clustering information content
@@ -84,7 +84,7 @@ Log2TreesMatchingTree <- function (tree) {
 #' @family tree information functions
 #' @template MRS
 #' @export
-PhylogeneticInfo <- function (x) UseMethod('PhylogeneticInfo') 
+PhylogeneticInfo <- function (x) UseMethod('PhylogeneticInfo')
 
 PhylogeneticInfo.phylo <- function (x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
@@ -101,10 +101,10 @@ PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
 PhylogeneticInformation <- PhylogeneticInfo
 
 #' Clustering Information
-#' 
-#' 
-#' #TODO 
-#' 
+#'
+#'
+#' #TODO
+#'
 #' update TreeDist docs to refer to this function.
 #'
 #' Unbalanced trees contain more uneven clusters, and thus contain
@@ -120,6 +120,8 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' within a tree; trees serve to define groups of closely related taxa.
 #' On this view, an unalanced tree makes more grouping ('nesting') statements
 #' than a balanced one (Adams, 1986), corresponding to more information.
+#' As such, a tree can differ from the 'true' tree in small details, yet
+#' still convey much 'true' information.
 #'
 #'
 #'
@@ -127,14 +129,21 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' @family tree information functions
 #' @template MRS
 #' @examples
-#' tree <- CollapseNode(BalancedTree(9), 13:15)
+#' tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 #' plot(tree)
 #' nodelabels()
 #' ClusteringInfo(tree)
 #' ClusteringInfo(BalancedTree(8))
 #' ClusteringInfo(PectinateTree(8))
 #'
+#' tr <- CollapseNode(BalancedTree(8), 11:12)
+#' plot(tr); nodelabels(NodeDepth(tr, F))
+#' plot(tr); nodelabels(NodeOrder(tr, F))
+#'
+#'
 #' @references
+#' \insertRef{Adams1986}{TreeTools}
+#'
 #' \insertRef{Page1992}{TreeTools}
 #'
 #' \insertRef{Rohlf1982}{TreeTools}
@@ -142,47 +151,27 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' @export
 ClusteringInfo <- function (x) UseMethod('ClusteringInfo')
 
+#' @importFrom ape is.rooted unroot
 ClusteringInfo.phylo <- function (x) {
-  # TODO
-  # This is basically a C function written in R. 
-  # Once satisfied it's working... write in C!
-  
-  ClusteringInfo.matrix(unroot(x)$edge)
+  if (is.rooted(x)) {
+    warning("Unrooting rooted tree")
+    x <- unroot(x)
+  }
+  ClusteringInfo.matrix(x$edge)
 }
 
 
 .Entropy <- function (p) -sum(p * log2(p))
 
+.H <- function (...) .Entropy(c(...) / sum(...))
+
 # Ensure that tree is unrooted, or root will create an extra cluster.
 ClusteringInfo.matrix <- function (x) {
-  edge <- RenumberTree(x[, 1], x[, 2])
-  parent <- edge[, 1] 
-  child <- edge[, 2]
-  maxNode <- max(parent)
-  rootNode <- parent[1]
-  nTip <- rootNode - 1L
-  nNode <- maxNode - nTip
-  nDesc <- c(rep(1L, nTip), integer(nNode))
-  
-  for (i in rev(seq_len(nrow(edge)))) {
-    nDesc[parent[i]] <- nDesc[parent[i]] + nDesc[child[i]]
-  }
-  
-  orders <- NodeOrder(edge, includeAncestor = FALSE)
-  
-  entropy <- integer(maxNode - nTip)
-  internalEdge <- edge[child > nTip, ]
-  nInternal <- nrow(internalEdge)
-  
-  nEntities <- nTip
-  for (i in seq_len(nInternal) - 1L) {
-    inCluster <- orders[internalEdge[nInternal - i, 2] - nTip]
-    notInCluster <- nEntities - inCluster
-    entropy[i + 1L] <- .Entropy(c(inCluster, notInCluster) / nEntities)
-    nEntities <- nEntities - inCluster + 1L
-  }
-  
-  message(paste(signif(entropy, 4), collapse=', '))
-  sum(entropy)
-  
+
+  depths <- NodeDepth(x, includeTips = FALSE)
+  orders <- NodeOrder(x, includeAncestor = FALSE)
+  rootNode <- as.character(RootNode(x))
+  orders[rootNode] <- orders[rootNode] - 1L
+  sum(vapply(unique(depths), function (depth) .H(orders[depths == depth]), 0))
+
 }
