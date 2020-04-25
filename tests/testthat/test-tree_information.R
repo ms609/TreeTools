@@ -17,6 +17,7 @@ test_that("Clustering info calculated correctly", {
   expect_warning(ClusteringInfo(BalancedTree(8)))
   ciBal8 <- ClusteringInfo(unroot(BalancedTree(8)))
   expect_equal(3L, ciBal8)
+  expect_equal(6L, ClusteringInfo(unroot(BalancedTree(16))))
   expect_equal(3L, ClusteringInfo(unroot(PectinateTree(8))))
   expect_gt(ciBal8, ClusteringInfo(CollapseNode(bal8, c(10, 14))))
   expect_gt(ciBal8, ClusteringInfo(CollapseNode(bal8, c(10, 13))))

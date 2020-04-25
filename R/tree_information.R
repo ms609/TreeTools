@@ -152,6 +152,7 @@ PhylogeneticInformation <- PhylogeneticInfo
 ClusteringInfo <- function (x) UseMethod('ClusteringInfo')
 
 #' @importFrom ape is.rooted unroot
+#' @export
 ClusteringInfo.phylo <- function (x) {
   if (is.rooted(x)) {
     warning("Unrooting rooted tree")
@@ -166,6 +167,7 @@ ClusteringInfo.phylo <- function (x) {
 .H <- function (...) .Entropy(c(...) / sum(...))
 
 # Ensure that tree is unrooted, or root will create an extra cluster.
+#' @export
 ClusteringInfo.matrix <- function (x) {
 
   depths <- NodeDepth(x, includeTips = FALSE)
