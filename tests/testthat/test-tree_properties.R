@@ -86,24 +86,33 @@ test_that('Edge distances are calculated correctly', {
 test_that("Node depths calculated correctly", {
   #par(mar=rep(0.4, 4))
   #plot(PectinateTree(20))
-  #nodelabels(NodeDepth(PectinateTree(20), F))
+  #nodelabels(NodeDepth(PectinateTree(20), T, F))
   expect_equal(c(rep(0, 20), 1:10, 9:1), NodeDepth(PectinateTree(20)))
+  expect_equal(c(rep(0, 20), rep(1, 19)),
+               NodeDepth(PectinateTree(20), shortest = TRUE))
 
   #plot(BalancedTree(20))
-  #nodelabels(NodeDepth(BalancedTree(20), F))
+  #nodelabels(NodeDepth(BalancedTree(20), F, F))
   expect_equal(c(5,4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
-               NodeDepth(BalancedTree(20L), FALSE))
+               NodeDepth(BalancedTree(20L), includeTips = FALSE))
+  expect_equal(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
+               NodeDepth(BalancedTree(20L), shortest = TRUE,
+                         includeTips = FALSE))
 
   tree <- CollapseNode(BalancedTree(20), c(22:26, 33:35))
   #plot(tree)
-  #nodelabels(NodeDepth(tree, FALSE))
-  expect_equal(c(4,3,1,2,1,4,1,3,1,2,1), NodeDepth(tree, FALSE))
+  #nodelabels(NodeDepth(tree, TRUE, FALSE))
+  expect_equal(c(4,3,1,2,1,4,1,3,1,2,1), NodeDepth(tree, FALSE, FALSE))
+  expect_equal(c(1,2,1,1,1,2,1,2,1,1,1), NodeDepth(tree, TRUE, FALSE))
 
   tree <- CollapseNode(BalancedTree(20), c(22, 33:35))
   #plot(tree)
-  #nodelabels(NodeDepth(tree, FALSE))
+  #nodelabels(NodeDepth(tree, TRUE, FALSE))
   expect_equal(c(4,3,1,2,1,3,1,2,1,4,1,3,1,2,1),
-               NodeDepth(tree, FALSE))
+               NodeDepth(tree, FALSE, FALSE))
+  expect_equal(c(3,2,1,1,1,2,1,1,1,2,1,2,1,1,1),
+               NodeDepth(tree, TRUE, FALSE))
 
-  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), FALSE))
+  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), FALSE, FALSE))
+  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), TRUE, FALSE))
 })

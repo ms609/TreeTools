@@ -105,50 +105,93 @@ NDescendants <- function (tree) {
 #'
 #'
 #' @export
-NodeDepth <- function (x, includeTips = TRUE) UseMethod('NodeDepth')
+NodeDepth <- function (x, shortest = FALSE, includeTips = TRUE) UseMethod('NodeDepth')
 
 #' @export
-NodeDepth.list <- function (x) lapply(x, NodeDepth, includeTips = includeTips)
+NodeDepth.list <- function (x, shortest = FALSE, includeTips = TRUE) {
+  lapply(x, NodeDepth, shortest = shortest, includeTips = includeTips)
+}
 
 #' @export
 NodeDepth.multiPhylo <- NodeDepth.list
 
 #' @importFrom ape unroot
 #' @export
-NodeDepth.phylo <- function (x, includeTips = TRUE) NodeDepth(x$edge,
-                                                              includeTips)
+NodeDepth.phylo <- function (x, shortest = FALSE, includeTips = TRUE) {
+  NodeDepth(x$edge, shortest, includeTips)
+}
 
 #' @export
-NodeDepth.matrix <- function (x, includeTips = TRUE) {
-  parent <- x[, 1]
-  child <- x[, 2]
-  nVertex <- max(parent)
-  minVertex <- min(parent)
-  nLeaf <- minVertex - 1L
-  nNode <- nVertex - nLeaf
+NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 
-  leaf0s <- integer(nLeaf)
-  depths <- c(leaf0s, vapply(minVertex:nVertex, function (node)
-    if (any(is.na(leaf0s[child[parent == node]]))) NA_integer_ else 1L
-  , 0L))
-  maxDepth <- 1L
 
-  while(any(is.na(depths))) {
-    for (node in rev(which(is.na(depths)))) {
-      incident <- c(depths[child[parent == node]], depths[parent[child == node]])
-      na <- is.na(incident)
-      nNa <- sum(na)
-      if (nNa == 0L) {
-        depths[node] <- sort(incident, decreasing = TRUE)[2] + 1L
-      } else if (nNa == 1L) {
-        aIncident <- incident[!na]
-        if (all(aIncident <= maxDepth)) {
-          depths[node] <- max(aIncident) + 1L
+  .NodeDepth.short <- function () {
+
+    depths <- c(leaf0s, vapply(minVertex:nVertex, function (node)
+      if (any(!is.na(leaf0s[child[parent == node]]))) 1L else NA_integer_
+      , 0L))
+    maxDepth <- 1L
+
+    while(any(is.na(depths))) {
+      for (node in rev(which(is.na(depths)))) {
+        incident <- c(depths[child[parent == node]], depths[parent[child == node]])
+        na <- is.na(incident)
+        nNa <- sum(na)
+        if (nNa == 0L) {
+          depths[node] <- min(incident) + 1L
+        } else if (nNa == 1L) {
+          aIncident <- incident[!na]
+          if (all(aIncident <= maxDepth)) {
+            depths[node] <- min(aIncident) + 1L
+          }
         }
       }
+      maxDepth <- maxDepth + 1L
     }
-    maxDepth <- maxDepth + 1L
+
+    #Return:
+    depths
   }
+
+  .NodeDepth.long <- function () {
+
+    depths <- c(leaf0s, vapply(minVertex:nVertex, function (node)
+      if (any(is.na(leaf0s[child[parent == node]]))) NA_integer_ else 1L
+      , 0L))
+    maxDepth <- 1L
+
+    while(any(is.na(depths))) {
+      for (node in rev(which(is.na(depths)))) {
+        incident <- c(depths[child[parent == node]], depths[parent[child == node]])
+        na <- is.na(incident)
+        nNa <- sum(na)
+        if (nNa == 0L) {
+          depths[node] <- sort(incident, decreasing = TRUE)[2] + 1L
+        } else if (nNa == 1L) {
+          aIncident <- incident[!na]
+          if (all(aIncident <= maxDepth)) {
+            depths[node] <- max(aIncident) + 1L
+          }
+        }
+      }
+      maxDepth <- maxDepth + 1L
+    }
+
+    #Return:
+    depths
+  }
+
+
+  parent <- x[, 1]
+  child <- x[, 2]
+  minVertex <- min(parent)
+  nVertex <- max(parent)
+
+  nLeaf <- minVertex - 1L
+  nNode <- nVertex - nLeaf
+  leaf0s <- integer(nLeaf)
+
+  depths <- if (shortest) .NodeDepth.short() else .NodeDepth.long()
 
   # Return:
   if (includeTips) depths else depths[minVertex:nVertex]
