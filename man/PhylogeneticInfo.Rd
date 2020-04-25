@@ -51,7 +51,7 @@ counting the number of edges resolved (Page, 1992).
 }
 \seealso{
 Other tree information functions: 
-\code{\link{ClusteringInfo}()},
+\code{\link{ClusterInfo}()},
 \code{\link{TreesMatchingTree}()}
 }
 \author{

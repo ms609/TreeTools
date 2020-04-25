@@ -132,13 +132,9 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 #' plot(tree)
 #' nodelabels()
-#' ClusteringInfo(tree)
-#' ClusteringInfo(BalancedTree(8))
-#' ClusteringInfo(PectinateTree(8))
-#'
-#' tr <- CollapseNode(BalancedTree(8), 11:12)
-#' plot(tr); nodelabels(NodeDepth(tr, F))
-#' plot(tr); nodelabels(NodeOrder(tr, F))
+#' ClusterInfo(tree)
+#' ClusterInfo(BalancedTree(8))
+#' ClusterInfo(PectinateTree(8))
 #'
 #'
 #' @references
@@ -149,16 +145,16 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' \insertRef{Rohlf1982}{TreeTools}
 #'
 #' @export
-ClusteringInfo <- function (x) UseMethod('ClusteringInfo')
+ClusterInfo <- function (x) UseMethod('ClusterInfo')
 
 #' @importFrom ape is.rooted unroot
 #' @export
-ClusteringInfo.phylo <- function (x) {
+ClusterInfo.phylo <- function (x) {
   if (is.rooted(x)) {
     warning("Unrooting rooted tree")
     x <- unroot(x)
   }
-  ClusteringInfo.matrix(x$edge)
+  ClusterInfo.matrix(x$edge)
 }
 
 
@@ -168,7 +164,7 @@ ClusteringInfo.phylo <- function (x) {
 
 # Ensure that tree is unrooted, or root will create an extra cluster.
 #' @export
-ClusteringInfo.matrix <- function (x) {
+ClusterInfo.matrix <- function (x) {
 
   depths <- NodeDepth(x, includeTips = FALSE)
   orders <- NodeOrder(x, includeAncestor = FALSE)
