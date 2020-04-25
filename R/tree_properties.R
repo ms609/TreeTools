@@ -78,21 +78,26 @@ NDescendants <- function (tree) {
 
 #' Distance of each node from tree exterior
 #'
-#' `NodeDepth()` evaluates how 'deep' each node is within an unrooted tree.
+#' `NodeDepth()` evaluates how 'deep' each node is within a tree.
 #'
-#' A leaf is considered to represent the surface of the tree and has depth zero.
-#' The depth of an edge is the smallest of the depths of the two vertices that
-#' it connects.
-#' The depth of a vertex is one greater than its second deepest incident edge.
-#' (The deepest incident edge leads 'deeper' into the tree.)
+#' For a rooted tree, the depth of a node is the minimum (if `shortest = TRUE`)
+#' or maximum  (`shortest = FALSE`) number of edges that must be traversed,
+#' moving away from the root, to reach a leaf.
+#'
+#' Unrooted trees are treated as if a root node occurs in the 'middle' of the
+#' tree, meaning the position that will minimise the maximum node depth.
 #'
 #'
 #' @template xPhylo
+#' @param shortest Logical specifying whether to calculate the length of the
+#' shortest away-from-root path to a leaf.  If `FALSE`, the length of the
+#' longest such route will be returned.
 #' @param includeTips Logical specifying whether to include leaves
 #' (each of depth zero) in return value.
 #'
 #' @return `NodeDepth()` returns an integer vector specifying the depth of
 #' each external and internal node in `x`.
+#'
 #' @template MRS
 #' @family tree navigation
 #' @seealso [`ape::node.depth`] returns the number of tips descended from a
@@ -115,10 +120,14 @@ NodeDepth.list <- function (x, shortest = FALSE, includeTips = TRUE) {
 #' @export
 NodeDepth.multiPhylo <- NodeDepth.list
 
-#' @importFrom ape unroot
+#' @importFrom ape is.rooted
 #' @export
 NodeDepth.phylo <- function (x, shortest = FALSE, includeTips = TRUE) {
-  NodeDepth(x$edge, shortest, includeTips)
+  if (is.rooted(x)) {
+    .NodeDepth.rooted(x$edge, shortest, includeTips)
+  } else {
+    NodeDepth(x$edge, shortest, includeTips)
+  }
 }
 
 #' @export
@@ -192,6 +201,33 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
   leaf0s <- integer(nLeaf)
 
   depths <- if (shortest) .NodeDepth.short() else .NodeDepth.long()
+
+  # Return:
+  if (includeTips) depths else depths[minVertex:nVertex]
+
+}
+
+.NodeDepth.rooted <- function (x, shortest = FALSE, includeTips = TRUE) {
+
+  parent <- x[, 1]
+  child <- x[, 2]
+  minVertex <- min(parent)
+  nVertex <- max(parent)
+
+  nLeaf <- minVertex - 1L
+  nNode <- nVertex - nLeaf
+  leaf0s <- integer(nLeaf)
+  depths <- c(leaf0s, rep(NA, nNode))
+  uncalculated <- is.na(depths)
+  Func <- if (shortest) min else max
+
+  while(any(uncalculated)) {
+    depths[uncalculated] <- vapply(which(uncalculated), function (node) {
+      Func(depths[child[parent == node]])
+    }, 0L) + 1L
+    uncalculated <- is.na(depths)
+  }
+
 
   # Return:
   if (includeTips) depths else depths[minVertex:nVertex]

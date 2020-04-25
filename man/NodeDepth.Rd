@@ -4,10 +4,14 @@
 \alias{NodeDepth}
 \title{Distance of each node from tree exterior}
 \usage{
-NodeDepth(x, includeTips = TRUE)
+NodeDepth(x, shortest = FALSE, includeTips = TRUE)
 }
 \arguments{
 \item{x}{A tree of class \code{phylo}, its \verb{$edge} property, or a list thereof.}
+
+\item{shortest}{Logical specifying whether to calculate the length of the
+shortest away-from-root path to a leaf.  If \code{FALSE}, the length of the
+longest such route will be returned.}
 
 \item{includeTips}{Logical specifying whether to include leaves
 (each of depth zero) in return value.}
@@ -17,14 +21,15 @@ NodeDepth(x, includeTips = TRUE)
 each external and internal node in \code{x}.
 }
 \description{
-\code{NodeDepth()} evaluates how 'deep' each node is within an unrooted tree.
+\code{NodeDepth()} evaluates how 'deep' each node is within a tree.
 }
 \details{
-A leaf is considered to represent the surface of the tree and has depth zero.
-The depth of an edge is the smallest of the depths of the two vertices that
-it connects.
-The depth of a vertex is one greater than its second deepest incident edge.
-(The deepest incident edge leads 'deeper' into the tree.)
+For a rooted tree, the depth of a node is the minimum (if \code{shortest = TRUE})
+or maximum  (\code{shortest = FALSE}) number of edges that must be traversed,
+moving away from the root, to reach a leaf.
+
+Unrooted trees are treated as if a root node occurs in the 'middle' of the
+tree, meaning the position that will minimise the maximum node depth.
 }
 \examples{
 tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
