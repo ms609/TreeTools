@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Tips contained within splits — TipsInSplits" />
-<meta property="og:description" content="TipsInSplits specifies the number of tips that occur within each
+<meta property="og:description" content="TipsInSplits() specifies the number of tips that occur within each
 bipartition split in a Splits object." />
 
 
@@ -158,11 +158,11 @@ bipartition split in a Splits object." />
     </div>
 
     <div class="ref-description">
-    <p><code>TipsInSplits</code> specifies the number of tips that occur within each
+    <p><code>TipsInSplits()</code> specifies the number of tips that occur within each
 bipartition split in a <code>Splits</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>splits</span>, <span class='st'>"nTip"</span>))</pre>
+    <pre class="usage"><span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,16 +171,12 @@ bipartition split in a <code>Splits</code> object.</p>
       <th>splits</th>
       <td><p>Object of class <code>Splits</code>.</p></td>
     </tr>
-    <tr>
-      <th>nTip</th>
-      <td><p>Number of tips in <code>Splits</code> object (inferred if not specified).</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named vector of integers, specifying the number of tips contained
-within each split in <code>splits</code>.</p>
+    <p><code>TipsInSplits()</code> returns a named vector of integers, specifying the
+number of tips contained within each split in <code>splits</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: 
