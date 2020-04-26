@@ -154,15 +154,12 @@ SplitMatchProbability <- function (split1, split2) {
 
   split1 <- as.logical(split1)
   split2 <- as.logical(as.Splits(split2, split1))
-  partitions <- matrix(c(sum(split1 & split2),
-                         sum(split1 & !split2),
-                         sum(!split1 & split2),
-                         sum(!split1 & !split2)
-  ), 2, 2)
+  partitions <- c(sum(split1 & split2), sum(split1 & !split2),
+                  sum(!split1 & split2), sum(!split1 & !split2))
   #, dimnames=list(c('A1', 'B1'), c('A2', 'B2')))
 
-  split1Size <- rowSums(partitions)
-  split2Size <- colSums(partitions)
+  split1Size <- .rowSums(partitions, 2, 2)
+  split2Size <- .colSums(partitions, 2, 2)
   A1 <- split1Size[1]
   A2 <- split2Size[1]
   B2 <- split2Size[2]
@@ -202,8 +199,7 @@ SplitMatchProbability <- function (split1, split2) {
   choices <- apply(arrangements, 2, NPartitionPairs)
 
   # Return:
-  sum(choices[ranking <= ranking[partitions[1, 2] + 1L - minA1B2]]) /
-    choose(n, A1)
+  sum(choices[ranking <= ranking[partitions[3] + 1L - minA1B2]]) / choose(n, A1)
 }
 
 #' Extract tip labels
