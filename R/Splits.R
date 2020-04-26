@@ -287,14 +287,14 @@ NTip.multiPhylo <- function (phy) {
 
 #' Tips contained within splits
 #'
-#' `TipsInSplits` specifies the number of tips that occur within each
+#' `TipsInSplits()` specifies the number of tips that occur within each
 #' bipartition split in a `Splits` object.
 #'
 #' @param splits Object of class `Splits`.
 #' @param nTip Number of tips in `Splits` object (inferred if not specified).
 #'
-#' @return A named vector of integers, specifying the number of tips contained
-#' within each split in `splits`.
+#' @return `TipsInSplits()` returns a named vector of integers, specifying the
+#' number of tips contained within each split in `splits`.
 #'
 #' @examples
 #' splits <- as.Splits(PectinateTree(8))
@@ -302,8 +302,11 @@ NTip.multiPhylo <- function (phy) {
 #'
 #' @family Splits operations
 #' @export
-TipsInSplits <- function (splits, nTip = attr(splits, 'nTip')) {
-  apply(splits, 1, function (split) sum(unlist(.DecodeBinary(split, nTip = nTip))))
+TipsInSplits <- function (splits) {
+  dims <- dim(splits)
+  ret <- .colSums(as.logical(rawToBits(t(splits))), 8L * dims[2], dims[1])
+  names(ret) <- names(splits)
+  ret
 }
 
 #' @export

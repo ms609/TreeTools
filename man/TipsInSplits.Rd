@@ -4,7 +4,7 @@
 \alias{TipsInSplits}
 \title{Tips contained within splits}
 \usage{
-TipsInSplits(splits, nTip = attr(splits, "nTip"))
+TipsInSplits(splits)
 }
 \arguments{
 \item{splits}{Object of class \code{Splits}.}
@@ -12,11 +12,11 @@ TipsInSplits(splits, nTip = attr(splits, "nTip"))
 \item{nTip}{Number of tips in \code{Splits} object (inferred if not specified).}
 }
 \value{
-A named vector of integers, specifying the number of tips contained
-within each split in \code{splits}.
+\code{TipsInSplits()} returns a named vector of integers, specifying the
+number of tips contained within each split in \code{splits}.
 }
 \description{
-\code{TipsInSplits} specifies the number of tips that occur within each
+\code{TipsInSplits()} specifies the number of tips that occur within each
 bipartition split in a \code{Splits} object.
 }
 \examples{
