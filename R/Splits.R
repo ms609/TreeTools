@@ -238,12 +238,11 @@ as.character.Splits <- function (x, ...) {
   tipLabels <- attr(x, 'tip.label')
   nTip <- attr(x, 'nTip')
 
-  apply(x, 1, function (split) {
-    inSplit <- unlist(.DecodeBinary(split, nTip))
+  apply(as.logical(x), 1L, function (inSplit) {
     paste0(paste(tipLabels[inSplit], collapse=' '), ' | ',
            paste(tipLabels[!inSplit], collapse=' '))
-
   })
+
 }
 
 
