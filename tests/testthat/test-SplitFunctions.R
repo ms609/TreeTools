@@ -77,8 +77,8 @@ test_that("SplitMatchProbability returns expected probabilities", {
   expect_error(SplitMatchProbability(as.Splits(TRUE), splitAB))
 
   expect_equal(LnSplitMatchProbability(splitABC, splitABCD),
-                LnSplitMatchProbability(splitABCD,
-                                      as.Splits(splitABC, rev(TipLabels(splitABC)))))
+               LnSplitMatchProbability(splitABCD,
+                                       as.Splits(splitABC, rev(TipLabels(splitABC)))))
 
   # Possible matches to ABCD:....
   expect_true(SplitMatchProbability(splitABC, splitABCD) <
