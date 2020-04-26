@@ -9,8 +9,9 @@ git:
   depth: 1
 
 r_packages:
- - R6 # pkgload dependency
+ - processx # pkgload dependency
  - callr # pkgload dependency
+ - R6 # pkgload dependency
  - pkgload
  - devtools
  - testthat
