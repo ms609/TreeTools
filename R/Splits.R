@@ -100,8 +100,8 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
         x
       } else {
         if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
-          as.Splits.logical(t(apply(x, 1, .DecodeBinary, nTip = nTip)
-                            [match(tipLabels, oldLabels), ]),
+          as.Splits.logical(as.logical(x, tipLabels = tipLabels)
+                            [, match(tipLabels, oldLabels), drop = FALSE],
                             tipLabels = tipLabels)
         } else {
           stop ("Old and new labels must match")
