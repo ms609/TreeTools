@@ -9,7 +9,8 @@ git:
   depth: 1
 
 r_packages:
- - R6 # For OS R4.0.0
+ - R6 # pkgload dependency
+ - callr # pkgload dependency
  - pkgload
  - devtools
  - testthat
