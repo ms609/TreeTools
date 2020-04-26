@@ -64,7 +64,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #'
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
-  inSplit <- TipsInSplits(splits, nTip)
+  inSplit <- TipsInSplits(splits)
   inSplit < 2L | inSplit > nTip - 2L
 }
 

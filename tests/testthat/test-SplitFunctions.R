@@ -3,7 +3,7 @@ context('SplitFunctions.R')
 test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
-  expect_equal(c(4, 4, 4, 3, 2, 1), as.integer(TipsInSplits(efgh)))
+  expect_equivalent(c(4, 4, 4, 3, 2, 1), TipsInSplits(efgh))
   expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
                  '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
 
@@ -77,8 +77,8 @@ test_that("SplitMatchProbability returns expected probabilities", {
   expect_error(SplitMatchProbability(as.Splits(TRUE), splitAB))
 
   expect_equal(LnSplitMatchProbability(splitABC, splitABCD),
-                LnSplitMatchProbability(splitABCD,
-                                      as.Splits(splitABC, rev(TipLabels(splitABC)))))
+               LnSplitMatchProbability(splitABCD,
+                                       as.Splits(splitABC, rev(TipLabels(splitABC)))))
 
   # Possible matches to ABCD:....
   expect_true(SplitMatchProbability(splitABC, splitABCD) <
