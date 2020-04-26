@@ -38,8 +38,10 @@ SplitFrequency <- function(reference, forest) {
   ret <- rowSums(vapply(forestSplits, function (cf) in.Splits(referenceSplits, cf),
          logical(length(referenceSplits))))
   names(ret) <- rownames(referenceSplits)
+
   # Return:
   ret
+
 }
 
 #' @describeIn SplitFrequency Assign a unique integer to each split
