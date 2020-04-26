@@ -1,6 +1,7 @@
 # TreeTools 0.1.4.9001 (development)
 
-- Improve support for unrooted trees in `as.Splits()`
+- Improve support for unrooted trees in `as.Splits()`.
+- Improve performance of `as.logical.Splits()` and related functions.
 
 # TreeTools 0.1.4.9000 (development)
 

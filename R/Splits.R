@@ -195,24 +195,25 @@ print.Splits <- function (x, details = FALSE, ...) {
              paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
       )
   if (details) {
-    names <- rownames(x)
-    if (!is.null(names)) {
+    splitNames <- rownames(x)
+    if (!is.null(splitNames)) {
 
-      nameLengths <- vapply(names, nchar, 0)
+      nameLengths <- vapply(splitNames, nchar, 0)
       namePads <- vapply(nameLengths, function (thisLength)
         paste0(rep(' ', max(nameLengths) - thisLength), collapse=''), character(1))
-      names <- paste0(names, namePads)
+      splitNames <- paste0(splitNames, namePads)
     } else {
-      names <- rep('', length(x))
+      splitNames <- rep('', length(x))
       nameLengths = 0L
     }
     cat("\n ", paste0(rep(' ', max(nameLengths)), collapse = ''),
-        paste0(rep(c(1:9, ' '), length.out = nTip), collapse=''))
+        paste0(rep(c(1:9, ' '), length.out = nTip), collapse = ''))
 
     for (i in seq_len(dim(x)[1])) {
       split <- x[i, , drop = FALSE]
-      cat("\n", names[i], ' ')
-      .DecodeBinary(split, nTip, print = TRUE)
+      cat("\n", splitNames[i], '',
+          paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), '*', '.'),
+                collapse = ''))
     }
   }
 }
@@ -291,7 +292,6 @@ NTip.multiPhylo <- function (phy) {
 #' bipartition split in a `Splits` object.
 #'
 #' @param splits Object of class `Splits`.
-#' @param nTip Number of tips in `Splits` object (inferred if not specified).
 #'
 #' @return `TipsInSplits()` returns a named vector of integers, specifying the
 #' number of tips contained within each split in `splits`.
@@ -311,48 +311,6 @@ TipsInSplits <- function (splits) {
 
 #' @export
 names.Splits <- function (x) rownames(x)
-
-#' @rdname Decoders
-#' @keywords internal
-#' @export
-.DecodeRaw <- function (n, stopAt = 8L, print = FALSE, appendLF = FALSE) {
-  bitMasks <- as.raw(c(1, 2, 4, 8, 16, 32, 64, 128)[seq_len(stopAt)])
-  ret <- as.logical(n & bitMasks)
-  if (print) cat(paste0(ifelse(ret, '*', '.'), collapse = ''))
-  if (print && appendLF) cat("\n")
-  ret
-}
-
-#' @rdname Decoders
-#' @keywords internal
-#' @export
-.DecodeLastRaw <- function (n, nTip, ...) {
-  remainder <- nTip %% 8L
-  .DecodeRaw(n, stopAt = ifelse(remainder, remainder, 8L), ...)
-}
-
-#' Decode Splits objects
-#'
-#' Internal functions to decode raw representation of splits.
-#'
-#' @name Decoders
-#' @param n Number to decode.
-#' @param stopAt Integer specifying number of tips in partial raw element.
-#' @param nTip Integer specifying number of tips in original tree.
-#' @param print Logical specifying whether output is to be printed.
-#' @param appendLF Logical specifying whether to append line feed character to
-#'  output.
-#'
-#' @return Return a human-readable representation of split content.
-#'
-#' @keywords internal
-#' @export
-.DecodeBinary <- function (n, nTip, print = FALSE, appendLF = FALSE, ...) {
-  nN <- length(n)
-  c(vapply(n[-nN], .DecodeRaw, print = print, appendLF = appendLF,
-           FUN.VALUE = logical(8L)),
-    .DecodeLastRaw(n[nN], nTip, print = print, appendLF = appendLF))
-}
 
 #' @family Splits operations
 #' @export

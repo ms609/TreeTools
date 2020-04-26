@@ -20,7 +20,7 @@ test_that("as.Splits", {
   splits1 <- as.Splits(tree1)
   expect_equal(c('7' = 'a b | c d e', '9' = 'd e | a b c'), as.character(splits1))
   logicalSplits <- as.Splits(matrix(c(B, B, A, A, A,  A, A, A, B, B),
-                                    nrow=2, byrow = TRUE),
+                                    nrow = 2, byrow = TRUE),
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
   expect_equal(splits1, logicalSplits)

@@ -8,8 +8,6 @@ TipsInSplits(splits)
 }
 \arguments{
 \item{splits}{Object of class \code{Splits}.}
-
-\item{nTip}{Number of tips in \code{Splits} object (inferred if not specified).}
 }
 \value{
 \code{TipsInSplits()} returns a named vector of integers, specifying the
