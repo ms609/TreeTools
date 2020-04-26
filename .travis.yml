@@ -9,6 +9,7 @@ git:
   depth: 1
 
 r_packages:
+ - R6 # For OS R4.0.0
  - pkgload
  - devtools
  - testthat
