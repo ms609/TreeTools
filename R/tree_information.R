@@ -130,8 +130,10 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' @template MRS
 #' @examples
 #' tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
+#' tree <- ape::read.tree(text='((a, b), (c, d), (e, (f, (g, h))));')
 #' plot(tree)
 #' nodelabels()
+#' x <- as.Splits(tree)
 #' ClusterInfo(tree)
 #' ClusterInfo(BalancedTree(8))
 #' ClusterInfo(PectinateTree(8))
@@ -154,13 +156,47 @@ ClusterInfo.phylo <- function (x) {
     warning("Unrooting rooted tree")
     x <- unroot(x)
   }
-  ClusterInfo.matrix(x$edge)
+  ClusterInfo.Splits(as.Splits(x))
 }
 
 
 .Entropy <- function (p) -sum(p * log2(p))
 
 .H <- function (...) .Entropy(c(...) / sum(...))
+
+ClusterInfo.Splits <- function (x) {
+  lx <- as.logical(x)
+  nTip <- ncol(lx)
+  tips <- diag(nTip) > 0L
+  rownames(tips) <- seq_len(nTip)
+  allSplits <- rbind(tips, !tips, lx, !lx)
+  info <- 0
+  available <- diag(nTip) == 0L
+  #TODO DELETE:
+  dimnames(available) <- list(seq_len(nTip), seq_len(nTip))
+
+  entities <- rbind(!logical(nTip), diag(nTip) > 0, matrix(NA, nrow(lx), nTip))
+  for (i in seq_len(ncol(lx))) {
+    availableI <- available[i, ]
+    infoNeeded <- log2(2L ^ sum(availableI) - 1L)
+    if (infoNeeded) {
+      info <- info + infoNeeded
+      dups <- duplicated(allSplits[, available[i, ]], MARGIN = 1L)
+      ourSplits <- allSplits[dups, ]
+
+      for (j in 1:2) {
+        ourSplitsJ <- ourSplits[j, ]
+        stillAvailable <- ourSplits[rep(j, sum(ourSplitsJ)), ]
+        stillAvailable[, i] <- TRUE
+        available[ourSplitsJ, ] <- available[ourSplitsJ, ] & stillAvailable
+      }
+    }
+
+  }
+
+
+}
+
 
 # Ensure that tree is unrooted, or root will create an extra cluster.
 #' @export
