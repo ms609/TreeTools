@@ -29,8 +29,8 @@
 RootTree <- function (tree, outgroupTips) {
   tipLabels <- tree$tip.label
   if (!all(outgroupTips %in% tipLabels)) {
-    stop("Outgroup tips", paste(outgroupTips, collapse=', '),
-         "not found in tree's tip labels.")
+    stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
+         "] not found in tree's tip labels.")
   }
   if (length(outgroupTips) == 1) {
     outgroup <- outgroupTips

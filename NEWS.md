@@ -1,3 +1,8 @@
+# TreeTools 0.1.4.9002 (development)
+
+- `NodeDepth()`: discriminate shallow from deep nodes.
+- Experiments with Clustering Information.
+
 # TreeTools 0.1.4.9001 (development)
 
 - Improve support for unrooted trees in `as.Splits()`.

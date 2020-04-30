@@ -2,7 +2,7 @@
 #'
 #' Calculates the number of unrooted binary trees that are consistent with
 #' a tree topology on the same leaves.
-#' 
+#'
 #' Remember to unroot a tree first if the position of its root is arbitrary.
 #'
 #' @template treeParam
@@ -17,7 +17,7 @@
 #' partiallyResolvedTree <- CollapseNode(BalancedTree(8), 12:15)
 #' TreesMatchingTree(partiallyResolvedTree)
 #' LnTreesMatchingTree(partiallyResolvedTree)
-#' 
+#'
 #' # Number of rooted trees:
 #' rootedTree <- AddTip(partiallyResolvedTree, where = 0)
 #' TreesMatchingTree(partiallyResolvedTree)
@@ -43,38 +43,63 @@ Log2TreesMatchingTree <- function (tree) {
   sum(Log2Unrooted(NodeOrder(tree)))
 }
 
-#' Phylogenetic information content
-#' 
-#' Calculate the phylogenetic information content of a phylogenetic object.
-#' 
-#' 
-#' 
-#' #TODO
-#' - Splits to follow
-#' - Further information to follow
-#' - See also Clustering Information
-#' 
+#' Cladistic information content
+#'
+#' Calculate the cladistic (phylogenetic) information content of a
+#' phylogenetic object, _sensu_ Thorley _et al._ (1998).
+#'
+#' The CIC is the logarithm of the number of binary trees that include the
+#' specified topology.  A base two logarithm gives an information content in bits.
+#'
+#' The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
+#' an information-theoretic justification, by Thorley _et al_. (1998).
+#' Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
+#' content' in the context of individual characters.
+#'
+#' The number of binary trees consistent with a cladogram provides a more
+#' satisfactory measure of the resolution of a tree than simply
+#' counting the number of edges resolved (Page, 1992).
+#'
 #' @param x Tree of class `phylo`, or a list thereof.
-#' 
-#' @return Returns the phylogenetic or clustering information content 
+#'
+#' @return Returns the phylogenetic or clustering information content
 #' of the input tree(s).
-#' 
+#'
+#' @references
+#'
+#' \insertRef{Page1992}{TreeTools}
+#'
+#' \insertRef{Rohlf1982}{TreeTools}
+#'
+#' \insertRef{Steel2006}{TreeTools}
+#'
+#' \insertRef{Thorley1998}{TreeTools}
+#'
 #' @family tree information functions
-#' @seealso Clustering information content: coming soon. #TODO.
 #' @template MRS
 #' @export
-PhylogeneticInfo <- function (x) UseMethod('PhylogeneticInfo') 
+CladisticInfo <- function (x) UseMethod('CladisticInfo')
 
-PhylogeneticInfo.phylo <- function (x) {
+#' @rdname CladisticInfo
+#' @export
+PhylogeneticInfo <- function (x) {
+  .Deprecated('CladisticInfo()')
+  UseMethod('CladisticInfo')
+}
+
+CladisticInfo.phylo <- function (x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
 }
 
 #' @export
-PhylogeneticInfo.list <- function (x) vapply(x, PhylogeneticInfo, 0)
+CladisticInfo.list <- function (x) vapply(x, CladisticInfo, 0)
 #' @export
-PhylogeneticInfo.multiPhylo <- PhylogeneticInfo.list
+CladisticInfo.multiPhylo <- CladisticInfo.list
 
 
-#' @rdname PhylogeneticInfo
+#' @rdname CladisticInfo
 #' @export
 PhylogeneticInformation <- PhylogeneticInfo
+#' @rdname CladisticInfo
+#' @export
+CladisticInformation <- CladisticInfo

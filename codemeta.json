@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
-  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of partitions and partition information.",
+  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of partitions and cladistic information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "relatedLink": [
@@ -15,14 +15,14 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.4.9001",
+  "version": "0.1.4.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
+    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
   "author": [
     {
       "@type": "Person",
@@ -200,9 +200,12 @@
       "identifier": "https://sysreqs.r-hub.io/get/cxx11"
     }
   ],
-  "releaseNotes": "https://github.com/ms609/TreeTools.git/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
+  "contIntegration": [
+    "https://travis-ci.org/ms609/TreeTools",
+    "https://codecov.io/gh/ms609/TreeTools"
+  ],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
@@ -227,5 +230,6 @@
     "@type": "Organization",
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
-  }
+  },
+  "fileSize": "917.935KB"
 }

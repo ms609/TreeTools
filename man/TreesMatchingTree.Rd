@@ -40,7 +40,7 @@ TreesMatchingTree(partiallyResolvedTree)
 }
 \seealso{
 Other tree information functions: 
-\code{\link{PhylogeneticInfo}()}
+\code{\link{CladisticInfo}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
