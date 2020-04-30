@@ -133,7 +133,10 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' tree <- ape::read.tree(text='((a, b), (c, d), (e, (f, (g, h))));')
 #' plot(tree)
 #' nodelabels()
-#' x <- as.Splits(tree)
+#'
+#' x <- unroot(CollapseNode(BalancedTree(8), 11))
+#' plot(x)
+#'
 #' ClusterInfo(tree)
 #' ClusterInfo(BalancedTree(8))
 #' ClusterInfo(PectinateTree(8))
@@ -149,14 +152,34 @@ PhylogeneticInformation <- PhylogeneticInfo
 #' @export
 ClusterInfo <- function (x) UseMethod('ClusterInfo')
 
-#' @importFrom ape is.rooted unroot
+#' @importFrom ape keep.tip root
 #' @export
 ClusterInfo.phylo <- function (x) {
-  if (is.rooted(x)) {
-    warning("Unrooting rooted tree")
-    x <- unroot(x)
-  }
-  ClusterInfo.Splits(as.Splits(x))
+  nTip <- NTip(x)
+  if (nTip < 3L) return (0)
+
+  edge <- x$edge
+  parent <- edge[, 1]
+  child <- edge[, 2]
+
+
+  rootOn1 <- RootOnNode(x, parent[child == 1L], resolveRoot = is.rooted(x))
+  plot(rootOn1)
+  edge <- rootOn1$edge
+  parent <- edge[, 1]
+  child <- edge[, 2]
+
+  clusters <- child[parent == nTip + 1L][-1]
+  clusterTips <- Descendants(rootOn1, clusters, type = 'tips')
+  clusterTips[[1]] <- c(1, clusterTips[[1]])
+  clusterSizes <- vapply(clusterTips, length, 1L)
+
+  message(signif(.Entropy(clusterSizes / nTip), 3), ' -- ' ,
+          signif(.Entropy(clusterSizes / sum(clusterSizes)), 3))
+  .Entropy(clusterSizes / nTip) +
+    sum(vapply(clusterTips[clusterSizes > 2], function (tips) {
+        ClusterInfo.phylo(keep.tip(rootOn1, tips))
+      }, numeric(1)))
 }
 
 
@@ -175,21 +198,33 @@ ClusterInfo.Splits <- function (x) {
   #TODO DELETE:
   dimnames(available) <- list(seq_len(nTip), seq_len(nTip))
 
-  entities <- rbind(!logical(nTip), diag(nTip) > 0, matrix(NA, nrow(lx), nTip))
   for (i in seq_len(ncol(lx))) {
+  #for (i in 1:4) {
     availableI <- available[i, ]
     infoNeeded <- log2(2L ^ sum(availableI) - 1L)
-    if (infoNeeded) {
+    if (infoNeeded > 0) {
       info <- info + infoNeeded
-      dups <- duplicated(allSplits[, available[i, ]], MARGIN = 1L)
-      ourSplits <- allSplits[dups, ]
+      sisterOptions <- allSplits[, available[i, ]]
+      dups <- duplicated(sisterOptions, MARGIN = 1L) &
+        apply(sisterOptions, 1L, any) &
+        !apply(sisterOptions, 1L, all)
+      which(dups)
 
-      for (j in 1:2) {
-        ourSplitsJ <- ourSplits[j, ]
-        stillAvailable <- ourSplits[rep(j, sum(ourSplitsJ)), ]
-        stillAvailable[, i] <- TRUE
-        available[ourSplitsJ, ] <- available[ourSplitsJ, ] & stillAvailable
-      }
+      ourSplits <- allSplits[dups, ]
+      allSplits <- allSplits[!dups, ]
+
+      sister <- which(ourSplits[, i])
+      sisterSplits <- ourSplits[sister, ]
+      stillAvailable <- ourSplits[rep(sister, sum(sisterSplits)), ]
+      stillAvailable[, i] <- FALSE
+      available[sisterSplits, ] <- available[sisterSplits, ] & stillAvailable
+
+      nonSister <- 3L - sister
+      otherSplits <- ourSplits[nonSister, ]
+      stillAvailable <- ourSplits[rep(nonSister, sum(otherSplits)), ]
+      stillAvailable[, i] <- FALSE
+      available[otherSplits, ] <- available[otherSplits, ] & stillAvailable
+
     }
 
   }
