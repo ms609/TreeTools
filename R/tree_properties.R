@@ -319,8 +319,10 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @param stopAt Integer or logical vector specifying the edge(s) at which to
 #' terminate the search; defaults to the edges with the smallest parent,
 #' which will be the root edges if nodes are numbered cladewise or in Preorder.
+#'
 #' @return `EdgeAncestry` returns a logical vector stating whether each edge in
 #' turn is a descendant of the specified edge.
+#'
 #' @examples
 #' tree <- PectinateTree(6)
 #' plot(tree)
@@ -333,7 +335,8 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @template MRS
 #' @family tree navigation
 #' @export
-EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
+EdgeAncestry <- function (edge, parent, child,
+                          stopAt = (parent == min(parent))) {
   ret <- edge <- AncestorEdge(edge, parent, child)
   if (any(ret)) repeat {
     if (any(ret[stopAt])) return(ret)

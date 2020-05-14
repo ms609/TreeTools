@@ -71,7 +71,8 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   if (any(nodeParentEdge)) {
     if (rooted) {
       # Do before editing parent:
-      ancestorEdges <- EdgeAncestry(which(nodeParentEdge), parent, child)
+      ancestorEdges <- EdgeAncestry(which(nodeParentEdge), parent, child,
+                                    stopAt = rootEdges)
 
       rootChildren <- child[rootEdges]
       if (node %in% rootChildren) {
@@ -112,7 +113,8 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
         parent[nodeParentEdge] <- newNode
         tree$Nnode <- 1L + tree$Nnode
       } else {
-        inverters <- EdgeAncestry(which(nodeParentEdge), parent, child)
+        inverters <- EdgeAncestry(which(nodeParentEdge), parent, child,
+                                  stopAt = rootEdges)
       }
     }
     tree$edge <- RenumberTree(ifelse(inverters, child, parent),

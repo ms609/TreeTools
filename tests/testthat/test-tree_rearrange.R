@@ -69,7 +69,13 @@ test_that("RootOnNode works", {
   expect_equal(urt, RootOnNode(urt, 9L, FALSE))
   expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
                RootOnNode(urt, 9L, TRUE))
+})
 
+test_that("RootOnNode supports nasty node ordering", {
+  expect_equal(Preorder(nasty),
+               RootOnNode(nasty, 12L, resolveRoot = TRUE))
+  expect_equal(RootOnNode(Preorder(nasty), 11L),
+               RootOnNode(nasty, 13L))
 })
 
 test_that("CollapseNodes works", {
