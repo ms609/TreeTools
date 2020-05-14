@@ -1,4 +1,11 @@
-library(ape)
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
 
 context("Tree rearrangements")
 
@@ -69,6 +76,7 @@ test_that("CollapseNodes works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
   expect_error(CollapseNode(tree8, 1))
+  expect_warning(CollapseNode(tree8, 9L))
 
   tree <- as.phylo(123, 7)
   tree$edge.length <- 12:1
@@ -87,4 +95,6 @@ test_that("CollapseNodes works", {
   no11 <- CollapseEdge(tree, c(7, 8))
   expect_equal(exp1213, no11$edge)
 
+  expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
+               Preorder(CollapseNode(nasty, c(11, 13))))
 })

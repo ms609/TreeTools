@@ -166,7 +166,11 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 #'
 #' @author  Martin R. Smith
 #' @export
-CollapseNode <- function (tree, nodes) {
+CollapseNode <- function (tree, nodes, ...) UseMethod('CollapseNode')
+
+#' @rdname CollapseNode
+#' @export
+CollapseNode.phylo <- function (tree, nodes, ...) {
   if (length(nodes) == 0) return (tree)
 
   edge <- tree$edge
@@ -174,33 +178,40 @@ CollapseNode <- function (tree, nodes) {
   hasLengths <- !is.null(lengths)
   parent <- edge[, 1]
   child <- edge[, 2]
-  root <- min(parent)
-  nTip <- root - 1L
+  root <- RootNode(edge)
+  nTip <- NTip(tree)
   maxNode <- max(parent)
   edgeBelow <- order(child)
-  edgeBelow <- c(edgeBelow[1:(root-1L)], NA, edgeBelow[-(1:root-1L)])
+  tips <- seq_len(nTip)
+  preRoot <- seq_len(root - 1L)
+  edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
   nodes <- unique(nodes)
 
-  if (!inherits(tree, 'phylo')) stop ("tree must be an object of class phylo")
-  if (!all(nodes %in% (root + 1L):maxNode)) stop("nodes must be integers between ",
-                                                 root + 1L, " and ", maxNode)
+  if (!all(nodes %in% (nTip + 1L):maxNode)) stop("nodes must be integers between ",
+                                                 nTip + 1L, " and ", maxNode)
+  if (any(nodes == root)) {
+    warning("Cannot collapse root node")
+    nodes <- nodes[nodes != root]
+    if (length(nodes) == 0L) return(tree)
+  }
 
   keptEdges <- -edgeBelow[nodes]
+  depths <- NodeDepth(edge)[nodes]
 
-  for (node in rev(sort(nodes))) {
+  for (node in nodes[order(depths)]) {
     newParent <- parent[edgeBelow[node]]
     if (hasLengths) lengths[parent == node] <- lengths[parent == node] + lengths[child == node]
     parent[parent == node] <- newParent
   }
 
-  newNumber <- c(seq_len(nTip), nTip + cumsum(root:maxNode %in% parent))
+  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %in% parent))
 
   tree$edge <-cbind(newNumber[parent[keptEdges]], newNumber[child[keptEdges]])
   tree$edge.length <- lengths[keptEdges]
   tree$Nnode <- tree$Nnode - length(nodes)
 
-  # TODO renumber nodes sequentially
-  # TODO should probably re-write this in C++.
+  # TODO Renumber nodes sequentially
+  # TODO Re-write this in C++.
   tree
 }
 
