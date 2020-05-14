@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{NDescendants}
 \alias{NDescendants}
-\title{Number of descendants for each node in a tree}
+\title{Count descendants for each node in a tree}
 \usage{
 NDescendants(tree)
 }
@@ -14,7 +14,7 @@ NDescendants(tree)
 descendants for each node in a tree.
 }
 \description{
-Number of descendants for each node in a tree
+Count descendants for each node in a tree
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)

@@ -28,7 +28,8 @@ phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
 The CIC is the logarithm of the number of binary trees that include the
-specified topology.  A base two logarithm gives an information content in bits.
+specified topology.  A base two logarithm gives an information content in
+bits.
 
 The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
 an information-theoretic justification, by Thorley \emph{et al}. (1998).

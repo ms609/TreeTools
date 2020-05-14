@@ -56,7 +56,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret
 }
 
-#' Number of descendants for each node in a tree
+#' Count descendants for each node in a tree
 #'
 #' @template treeParam
 #'
