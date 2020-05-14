@@ -19,11 +19,11 @@ jobs:
     - r: 3.4.0
     - r: release
       before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
-      r_binary_packages:
-       - ape
-       - devtools
-       - phangorn
-       - Rcpp
+#      r_binary_packages:
+#       - ape
+#       - devtools
+#       - phangorn
+#       - Rcpp
       deploy:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github()'
