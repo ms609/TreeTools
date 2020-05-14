@@ -77,7 +77,7 @@ SortTree <- function(tree) {
   descendants <- Descendants(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function (tips) min(tipLabels[tips])
-  swaps <- vapply(tree.ntip + 1:tree$Nnode, function(node) {
+  swaps <- vapply(tree.ntip + seq_len(tree$Nnode), function(node) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
     if (all(descs == 1L)) {
