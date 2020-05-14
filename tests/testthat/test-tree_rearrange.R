@@ -104,3 +104,20 @@ test_that("CollapseNodes works", {
   expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
                Preorder(CollapseNode(nasty, c(11, 13))))
 })
+
+test_that("DropTip works", {
+  bal8 <- BalancedTree(8)
+  expect_null(DropTip(bal8, 1:8))
+  expect_warning(expect_equal(bal8, DropTip(bal8, -1)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 99)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 'MissingTip')))
+  expect_error(DropTip(bal8, list('Invalid format')))
+
+  expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
+  expect_equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8))
+  expect_equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7)))
+
+  expect_equal(DropTip(Preorder(nasty), c(1, 3)),
+               Preorder(DropTip(nasty, c(1, 3))))
+
+})

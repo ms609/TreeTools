@@ -222,3 +222,88 @@ CollapseNode.phylo <- function (tree, nodes, ...) {
 CollapseEdge <- function (tree, edges) {
   CollapseNode(tree, tree$edge[edges, 2])
 }
+
+#' Drop tips from tree
+#'
+#' Remove specified tips from a phylogenetic tree, collapsing incident branches.
+#'
+#' This function is more robust than [`ape::drop.tip()`] as it does not
+#' require any particular internal node numbering schema.  It is not presently
+#' as fast, though it is ripe for optimization; if you are finding this
+#' function is a rate-limiting step, please get in touch and I'll prioritise
+#' writing a faster implementation.
+#'
+#'
+#' @template treeParam
+#' @param tip Characer vector specifying labels of leaves in tree to be dropped,
+#' or integer vector specifying the indices of leaves to be dropped.
+#' Specifying the index of an internal node will drop all descendants of that
+#' node.
+#'
+#' @return A tree of class `phylo`, with the requested leaves removed.
+#'
+#' @examples
+#' tree <- BalancedTree(8)
+#' plot(tree)
+#' plot(DropTip(tree, c('t4', 't5')))
+#'
+#' @template MRS
+#' @export
+DropTip <- function (tree, tip) {
+  #TODO Rewrite in C.
+  labels <- tree$tip.label
+  nTip <- length(labels)
+  if (is.character(tip)) {
+    found <- tip %in% labels
+    if (!all(found)) warning(paste(tip[!found], collapse = ', '),
+                             " not present in tree")
+    drop <- tree$tip.label %in% tip[found]
+  } else if (is.numeric(tip)) {
+    nNodes <- nTip + tree$Nnode
+    if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
+    if (any(tip < 1L)) warning("tip must be > 0")
+
+    drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
+  } else {
+    stop("`tip` must be of mode character or numeric")
+  }
+
+  if (any(drop)) {
+    if (all(drop)) {
+      return (NULL)
+    }
+    edge <- tree$edge
+    edge <- edge[!edge[, 2] %in% which(drop), ]
+    repeat {
+      danglers <- (!edge[, 2] %in% edge[, 1]) & edge[, 2] > nTip
+      edge <- edge[!danglers, ]
+
+      descendants <- table(edge[, 1])
+      singleton <- descendants == 1
+      if (any(singleton)) {
+        singleton <- as.integer(names((descendants[singleton])[1]))
+        edgeAbove <- edge[, 2] == singleton
+        edgeBelow <- edge[, 1] == singleton
+        edge[edgeAbove, 2] <- edge[edgeBelow, 2]
+        edge <- edge[!edgeBelow, ]
+      } else {
+        if (!any(danglers)) break
+      }
+    }
+
+    newNumbers <- integer(max(edge))
+    uniqueInts <- unique(as.integer(edge))
+    newNumbers[uniqueInts] <- match(uniqueInts, sort(uniqueInts))
+    edge <- matrix(newNumbers[edge], ncol = 2L)
+    # Return:
+    structure(list(
+      edge = edge,
+      tip.label = labels[!drop],
+      Nnode = max(edge) - sum(!drop)
+    ), class = 'phylo')
+
+  } else {
+    # Return:
+    tree
+  }
+}
