@@ -227,8 +227,9 @@ AddTip <- function (tree,
 }
 
 #' @describeIn AddTip Add a tip to each edge in turn.
-#' @param includeRoot Logical; if `TRUE`, the three positions adjacent
-#' to the root edge are considered to represent distinct edges.
+#' @param includeRoot Logical; if `TRUE`, each position adjacent
+#' to the root edge is considered to represent distinct edges; if `FALSE`,
+#' they are treated as a single edge.
 #' @return `AddTipEverywhere()` returns a list of class `multiPhylo` containing
 #' the trees produced by adding `label` to each edge of `tree` in turn.
 #'
@@ -248,13 +249,21 @@ AddTip <- function (tree,
 #' @importFrom ape is.rooted
 #' @export
 AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
-  nTip <- length(tree$tip.label)
-  whichNodes <- if (includeRoot) {
-    seq_len(tree$Nnode * 2 + 1L)
-  } else {
-    c(seq_len(nTip),
-      if (!is.rooted(tree)) nTip + 2L,
-      nTip + 2L + seq_len(tree$Nnode - 2L))
+  nTip <- NTip(tree)
+  whichNodes <- seq_len(nTip + tree$Nnode)
+  if (!includeRoot) {
+    root <- RootNode(tree)
+    edge <- tree$edge
+    parent <- edge[, 1]
+    child <- edge[, 2]
+    rootChildren <- child[parent == root]
+
+    whichNodes <- if (length(rootChildren) == 2L) {
+      rootChildrenNodes <- rootChildren[rootChildren > nTip]
+      whichNodes[-c(root, rootChildrenNodes[1])]
+    } else {
+      whichNodes[-root]
+    }
   }
   lapply(whichNodes, AddTip, tree = tree, label = label)
 }

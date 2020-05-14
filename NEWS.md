@@ -10,7 +10,7 @@
 ## Enhancements
 
 - Improve support for unrooted trees in `as.Splits()`.
-- Handle funny node orders in `CollapseNode()` and `RootOnNode()`.
+- Handle funny node orders.
 - Improve performance of `as.logical.Splits()` and related functions.
 - Documentation improvements.
 
