@@ -53,4 +53,6 @@ jobs:
       r: release
       before_install:
       - sudo tlmgr install doi titling hyperref
-#  allow_failures:
+  allow_failures:
+  - os: osx
+  fast_finish: true
