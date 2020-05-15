@@ -120,10 +120,6 @@ RenumberEdges <- function (parent, child) {
 #' in postorder, it will not be rearranged unless `force = TRUE`, or
 #' `PostorderEdges()` is employed.
 #'
-#' Trees with >8191 leaves require additional memory and are not handled
-#' at present.  If you require this functionality, please contact the
-#' maintainer for advice.
-#'
 #' @template treeParam
 #' @template nTipParam
 #' @param edge Two-column matrix listing the parent and child of each edge in a

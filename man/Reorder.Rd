@@ -76,10 +76,6 @@ subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
 in postorder, it will not be rearranged unless \code{force = TRUE}, or
 \code{PostorderEdges()} is employed.
-
-Trees with >8191 leaves require additional memory and are not handled
-at present.  If you require this functionality, please contact the
-maintainer for advice.
 }
 \section{Functions}{
 \itemize{

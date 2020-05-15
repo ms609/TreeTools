@@ -4,7 +4,8 @@ test_that("RenumberTree fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
-  expect_error(Preorder(RandomTree(8192)))
+  Preorder(RandomTree(8192)) # Should be handled on this branch
+  expect_null(NULL)
 })
 
 test_that("RenumberTree handles polytomies", {
