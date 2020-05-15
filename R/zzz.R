@@ -14,6 +14,7 @@ release_questions <- function() {
 
 # Additional tests:
 #
+# spell_check()
 # pkgdown::build_reference_index()
 #
 # run_examples()
