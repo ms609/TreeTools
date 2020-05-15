@@ -6,7 +6,7 @@ warnings_are_errors: true
 r_check_args: --no-manual # Workaround error compiling PDF manual
 env:
   global:
-    - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    - _R_CHECK_FORCE_SUGGESTS_: FALSE
 
 git:
   depth: 1
@@ -41,23 +41,23 @@ jobs:
         on:
           branch: master
     - r: devel
-    r_check_args: --as-cran --no-manual
-    env:
-      global:
-         - _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
-         - _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
-         - R_COMPILE_AND_INSTALL_PACKAGES: never
-         - _R_CHECK_THINGS_IN_CHECK_DIR_: false
-         - R_REMOTES_STANDALONE: true
-         - R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-         - _R_CHECK_FORCE_SUGGESTS_: true
-         - _R_CHECK_CRAN_INCOMING_USE_ASPELL_: true
+      r_check_args: --as-cran --no-manual
+      env:
+        global:
+           - _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
+           - _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
+           - R_COMPILE_AND_INSTALL_PACKAGES: never
+           - _R_CHECK_THINGS_IN_CHECK_DIR_: false
+           - R_REMOTES_STANDALONE: true
+           - R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+           - _R_CHECK_FORCE_SUGGESTS_: true
+           - _R_CHECK_CRAN_INCOMING_USE_ASPELL_: true
     - os: osx
       branches:
         only: master
       r: release
       before_install:
       - sudo tlmgr install doi titling hyperref
-    allow_failures:
-      - os: osx
-    fast_finish: true
+  allow_failures:
+    - os: osx
+  fast_finish: true
