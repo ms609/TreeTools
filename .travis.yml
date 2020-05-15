@@ -4,7 +4,15 @@ dist: xenial
 cache: packages
 warnings_are_errors: true
 r_check_args: --as-cran --no-manual # Workaround error compiling PDF manual
-env: _R_CHECK_FORCE_SUGGESTS_=false R_COMPILE_AND_INSTALL_PACKAGES=never _R_CHECK_THINGS_IN_CHECK_DIR_=false R_REMOTES_STANDALONE=true R_REMOTES_NO_ERRORS_FROM_WARNINGS=true _R_CHECK_FORCE_SUGGESTS_=true  - _R_CHECK_CRAN_INCOMING_USE_ASPELL_=true
+env:
+  global:
+     - _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
+     - R_COMPILE_AND_INSTALL_PACKAGES: never
+     - _R_CHECK_THINGS_IN_CHECK_DIR_: false
+     - R_REMOTES_STANDALONE: true
+     - R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+     - _R_CHECK_FORCE_SUGGESTS_: true
+     - _R_CHECK_CRAN_INCOMING_USE_ASPELL_: true
 
 git:
   depth: 1
