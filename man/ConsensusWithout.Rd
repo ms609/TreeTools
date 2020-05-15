@@ -2,10 +2,19 @@
 % Please edit documentation in R/tree_display.R
 \name{ConsensusWithout}
 \alias{ConsensusWithout}
+\alias{ConsensusWithout.phylo}
+\alias{ConsensusWithout.multiPhylo}
+\alias{ConsensusWithout.list}
 \alias{MarkMissing}
 \title{Consensus without taxa}
 \usage{
-ConsensusWithout(trees, tip, ...)
+ConsensusWithout(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{phylo}(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{multiPhylo}(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{list}(trees, tip = character(0), ...)
 
 MarkMissing(tip, position = "bottomleft", ...)
 }

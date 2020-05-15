@@ -31,15 +31,28 @@
 #' par(oldPar)
 #'
 #' @template MRS
-#' @importFrom ape consensus drop.tip
 #' @export
-ConsensusWithout <- function (trees, tip, ...) {
-  if (inherits(trees, 'phylo')) {
-    drop.tip(trees, tip = tip)
-  } else {
-    consensus(lapply(trees, drop.tip, tip = tip), ...)
-  }
+ConsensusWithout <- function (trees, tip = character(0), ...) {
+  UseMethod('ConsensusWithout')
 }
+
+#' @importFrom ape consensus drop.tip
+#' @rdname ConsensusWithout
+#' @export
+ConsensusWithout.phylo <- function (trees, tip = character(0), ...) {
+  drop.tip(trees, tip = tip)
+}
+
+#' @importFrom ape consensus drop.tip
+#' @rdname ConsensusWithout
+#' @export
+ConsensusWithout.multiPhylo <- function (trees, tip = character(0), ...) {
+  consensus(lapply(trees, drop.tip, tip = tip), ...)
+}
+
+#' @rdname ConsensusWithout
+#' @export
+ConsensusWithout.list <- ConsensusWithout.multiPhylo
 
 #' @describeIn ConsensusWithout Adds labels for taxa omitted from a plotted
 #' consensus tree.
