@@ -70,8 +70,12 @@ test_that('as.Splits.phylo', {
 
   expect_equal(c(0L, 1L), dim(as.Splits(rootedStar)))
   expect_equal(c(0L, 1L), dim(as.Splits(rootedStar2)))
-  expect_equal(dim(as.Splits(Preorder(nasty))),
-               dim(as.Splits(nasty)))
+  expected <- as.raw(as.Splits(Preorder(nasty)))
+  actual <- as.raw(as.Splits(nasty))
+  expect_equal(length(expected), length(actual))
+  expect_equal(length(actual), length(unique(actual)))
+  expect_true(all(actual %in% expected))
+  expect_true(all(expected %in% actual))
 
   expect_equal(c(2L, 1L), dim(as.Splits(PectinateTree(5L))))
   expect_equal(c(2L, 1L), dim(as.Splits(unroot(PectinateTree(5L)))))
