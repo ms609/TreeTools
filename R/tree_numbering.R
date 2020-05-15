@@ -86,8 +86,8 @@ RenumberEdges <- function (parent, child) {
 }
 
 .CheckSize <- function (tree) {
-  if (NTip(tree) > 23170) {
-    stop("Can only preorder trees with < 23171 leaves. Sorry.")
+  if (NTip(tree) > 16384) { # 23170 is max on local machine, but fails on Travis.
+    stop("Can only preorder trees with < 16385 leaves. Sorry.")
   }
 }
 

@@ -68,7 +68,7 @@ test_that("Replacement reorder functions work correctly", {
 })
 
 test_that("Preorder handles large trees safely", {
-  Preorder(PectinateTree(23170))
+  Preorder(PectinateTree(16384))
   expect_error(Preorder(RandomTree(23171)))
 })
 
