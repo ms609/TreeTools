@@ -2,10 +2,13 @@
 % Please edit documentation in R/tree_rearrangement.R
 \name{CollapseNode}
 \alias{CollapseNode}
+\alias{CollapseNode.phylo}
 \alias{CollapseEdge}
 \title{Collapse nodes on a phylogenetic tree}
 \usage{
 CollapseNode(tree, nodes)
+
+\method{CollapseNode}{phylo}(tree, nodes)
 
 CollapseEdge(tree, edges)
 }

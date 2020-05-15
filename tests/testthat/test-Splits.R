@@ -62,9 +62,20 @@ test_that('as.Splits.phylo', {
                                                    1L, 2L, 3L, 4L, 5L, 6L, 8L),
                                                 .Dim = c(7L, 2L)), Nnode = 2L,
                                tip.label = letters[1:6]), class = "phylo")
+  nasty <- structure(list(edge = structure( # Danger: Do not plot!
+    c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+      5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+    .Dim = c(12, 2)), Nnode = 5L, tip.label = letters[1:8]), class = 'phylo')
+
 
   expect_equal(c(0L, 1L), dim(as.Splits(rootedStar)))
   expect_equal(c(0L, 1L), dim(as.Splits(rootedStar2)))
+  expected <- as.raw(as.Splits(Preorder(nasty)))
+  actual <- as.raw(as.Splits(nasty))
+  expect_equal(length(expected), length(actual))
+  expect_equal(length(actual), length(unique(actual)))
+  expect_true(all(actual %in% expected))
+  expect_true(all(expected %in% actual))
 
   expect_equal(c(2L, 1L), dim(as.Splits(PectinateTree(5L))))
   expect_equal(c(2L, 1L), dim(as.Splits(unroot(PectinateTree(5L)))))
@@ -80,6 +91,10 @@ test_that('as.Splits.phylo', {
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 9L), dim(as.Splits(PectinateTree(65L))))
   expect_equal(c(125L, 16L), dim(as.Splits(PectinateTree(128L))))
+  expect_equal(c(16381L, 2048L), dim(as.Splits(PectinateTree(16384L))))
+
+
+
 })
 
 test_that('as.Splits.multiPhylo', {

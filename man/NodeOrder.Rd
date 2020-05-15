@@ -17,7 +17,7 @@ to internal nodes, i.e. to omit leaves. Irrelevant if
 \code{includeAncestor = FALSE}.}
 }
 \value{
-\code{NodeOrder()} returns a table listing the order of each node;
+\code{NodeOrder()} returns an integer listing the order of each node;
 entries are named with the number of each node.
 }
 \description{
@@ -26,9 +26,9 @@ Includes the root edge in rooted trees.
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)
+NodeOrder(tree)
 plot(tree)
-nodelabels()
-NodeOrder(tree, internalOnly = TRUE)
+nodelabels(NodeOrder(tree, internalOnly = TRUE))
 
 }
 \seealso{

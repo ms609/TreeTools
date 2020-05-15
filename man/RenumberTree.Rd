@@ -7,7 +7,7 @@
 \usage{
 RenumberTree(parent, child)
 
-RenumberEdges(parent, child, nEdge = length(parent))
+RenumberEdges(parent, child)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
@@ -20,8 +20,8 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 \code{RenumberTree} returns an edge matrix for a tree of class \code{phylo}
 following the usual preorder convention for edge and node numbering.
 
-\code{RenumberEdges} returns a list whose two entries correspond
-to the new parent and child vectors.
+\code{RenumberEdges} formats the output of \code{RenumberTree()} into a list
+whose two entries correspond to the new parent and child vectors.
 }
 \description{
 Wrapper for the C function \code{preorder_edges_and_nodes}, which
@@ -31,11 +31,10 @@ At each node, child edges are arranged from left to right according to the
 lowest-numbered tip in the subtree subtended by each edge.
 }
 \seealso{
-\code{\link{SortTree}}
+Rotate each node into a consistent orientation with \code{\link[=SortTree]{SortTree()}}.
 
 Other C wrappers: 
 \code{\link{Neworder}},
 \code{\link{Reorder}}
 }
 \concept{C wrappers}
-\keyword{internal}

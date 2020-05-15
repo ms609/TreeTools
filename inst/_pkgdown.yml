@@ -12,7 +12,7 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - AddTip
+      - has_concept('tree manipulation')
       - AllAncestors
       - AncestorEdge
       - CladeSizes

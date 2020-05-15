@@ -24,6 +24,7 @@ plot(SingleTaxonTree('root') + BalancedTree(4))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{DropTip}()},
 \code{\link{Renumber}()},
 \code{\link{Subtree}()}
 

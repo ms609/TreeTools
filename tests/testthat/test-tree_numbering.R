@@ -1,5 +1,13 @@
 context("tree_numbering.R")
 
+test_that("RenumberTree fails safely", {
+  expect_error(RenumberTree(1:3, 1:4))
+
+  Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
+  expect_error(Preorder(PectinateTree(8192)))
+  expect_error(postorder_edges(PectinateTree(16385)$edge))
+})
+
 test_that("RenumberTree handles polytomies", {
   tr <- ape::read.tree(text = '(a, (b, d, c));')
   edge <- tr$edge
@@ -67,20 +75,56 @@ test_that("Replacement reorder functions work correctly", {
                RenumberEdges(edge[, 1], edge[, 2]))
 })
 
-test_that("Preorder handles malformed trees without crashing", {
+test_that("Malformed trees don't cause crashes", {
   treeDoubleNode <- read.tree(text = "((((((1,2)),3),4),5),6);")
   treePolytomy   <- read.tree(text = "((((1,2,3),4),5),6);")
   treeDoublyPoly <- read.tree(text = "(((((1,2,3)),4),5),6);")
-  
+  nasty <- structure(list(edge = structure(
+    c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+      5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+    .Dim = c(12, 2)),
+    Nnode = 5L,
+    tip.label = letters[1:8]),
+    class = 'phylo') # Danger: Do not plot!
+
   reordered <- Preorder(treeDoubleNode)$edge
   expect_equal(11L, dim(reordered)[1])
-  expect_equal(5L, sum(table(reordered[, 1]) == 2L))
-  
+  expect_equal(5L, sum(tabulate(reordered[, 1]) == 2L))
+
+  postordered <- Postorder(treeDoubleNode)$edge
+  expect_equal(11L, dim(postordered)[1])
+  expect_equal(5L, sum(tabulate(postordered[, 1]) == 2L))
+
+
   reordered <- Preorder(treePolytomy)$edge
   expect_equal(9L, dim(reordered)[1])
   expect_equal(c(2L, 2L, 2L, 3L), as.integer(table(reordered[, 1])))
-  
+
+  reordered <- Postorder(treePolytomy)$edge
+  expect_equal(9L, dim(reordered)[1])
+  expect_equal(c(2L, 2L, 2L, 3L), as.integer(table(reordered[, 1])))
+
+
   reordered <- Preorder(treeDoublyPoly)$edge
   expect_equal(10L, dim(reordered)[1])
   expect_equal(c(2L, 2L, 2L, 1L, 3L), as.integer(table(reordered[, 1])))
+
+  reordered <- Postorder(treeDoublyPoly)$edge
+  expect_equal(10L, dim(reordered)[1])
+  expect_equal(c(2L, 2L, 2L, 1L, 3L), as.integer(table(reordered[, 1])))
+
+  #C <- 0
+  #plot(Preorder(nasty)); nodelabels(c(12, 10, 13, 11, 9) - C); tiplabels(1:8 - C)
+  #edgelabels(c(2, 3, 6, 4, 8, 10, 9, 5, 7, 1, 12, 11) - C)
+  reordered <- Preorder(nasty)$edge
+  expect_equal(12L, dim(reordered)[1])
+  # Nodes renumbered
+  expect_equal(c(2L, 3L, 3L, 2L, 2L), tabulate(reordered[, 1])[9:13])
+
+  reordered <- Postorder(nasty)$edge
+  expect_equal(12L, dim(reordered)[1])
+  # Original node numbers retained
+  expect_equal(c(2L, 3L, 2L, 2L, 3L), tabulate(reordered[, 1])[9:13])
+
 })
+

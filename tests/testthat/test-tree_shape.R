@@ -8,6 +8,17 @@ test_that('Tree shapes counted', {
                vapply(1:9, NUnrootedShapes, 0L))
 })
 
+test_that("Nasty node order not fatal", {
+  nastyBinary <- structure(list(edge = structure(
+    c(9, 12, 10, 13, 11, 10, 11, 14, 15, 13, 12, 9, 14, 15,
+      5, 10, 15, 14,  3, 13,  9,  4, 11,  7,  8, 6,  2,  1),
+    .Dim = c(14, 2)),
+    Nnode = 7L,
+    tip.label = letters[1:8]),
+    class = 'phylo') # Danger: Do not plot!
+  expect_equal(RootedTreeShape(Preorder(nastyBinary)), RootedTreeShape(nastyBinary))
+})
+
 test_that('Rooted tree shapes calculated', {
   expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{NDescendants}
 \alias{NDescendants}
-\title{Number of descendants for each node in a tree}
+\title{Count descendants for each node in a tree}
 \usage{
 NDescendants(tree)
 }
@@ -10,17 +10,17 @@ NDescendants(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-\code{NDescendants()} returns a table listing the number of direct
+\code{NDescendants()} returns an integer listing the number of direct
 descendants for each node in a tree.
 }
 \description{
-Number of descendants for each node in a tree
+Count descendants for each node in a tree
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)
-plot(tree)
-nodelabels()
 NDescendants(tree)
+plot(tree)
+nodelabels(NDescendants(tree))
 
 }
 \seealso{

@@ -1,18 +1,19 @@
-# TreeTools 0.1.4.9002 (development)
+# TreeTools 0.2.0
 
-- `NodeDepth()`: discriminate shallow from deep nodes.
-- Experiments with Clustering Information.
+## New functions
 
-# TreeTools 0.1.4.9001 (development)
+- `CladisticInfo()`: Calculate the information content of a tree.
+- `RootNode()`: Which node is a tree's root?
+- `NodeDepth()`: Discriminate shallow from deep nodes.
+- `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
+- `DropTip()`: Remove tip, handling weird node orders.
+
+## Enhancements
 
 - Improve support for unrooted trees in `as.Splits()`.
+- Handle funny node orders.
 - Improve performance of `as.logical.Splits()` and related functions.
-
-# TreeTools 0.1.4.9000 (development)
-
-- `RootNode()`: Which node is a tree's root?
-- `PhylogeneticInfo()`: Calculate the information content of a tree.
-- `NodeOrder()`, `NDescendants()`: Calculate edges incident to each node.
+- Fail nicely when trees are too large for memory.
 - Documentation improvements.
 
 # TreeTools 0.1.4
