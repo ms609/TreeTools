@@ -124,7 +124,7 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
 #'
-#' Calculations follow Cavalli‐Sforza & Edwards (1967) and
+#' Calculations follow Cavalli-Sforza & Edwards (1967) and
 #' Carter _et al._ 1990, Theorem 2.
 #'
 #' @param tips Integer specifying the number of tips.
