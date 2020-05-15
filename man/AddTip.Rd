@@ -22,8 +22,9 @@ new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
 
-\item{includeRoot}{Logical; if \code{TRUE}, the three positions adjacent
-to the root edge are considered to represent distinct edges.}
+\item{includeRoot}{Logical; if \code{TRUE}, each position adjacent
+to the root edge is considered to represent distinct edges; if \code{FALSE},
+they are treated as a single edge.}
 }
 \value{
 \code{AddTip()} returns a tree of class \code{phylo} with an additional tip

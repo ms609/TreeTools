@@ -189,8 +189,9 @@ CollapseNode.phylo <- function (tree, nodes, ...) {
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
   nodes <- unique(nodes)
 
-  if (!all(nodes %in% (nTip + 1L):maxNode)) stop("nodes must be integers between ",
-                                                 nTip + 1L, " and ", maxNode)
+  if (!all(nodes %in% (nTip + 1L):maxNode)) {
+    stop("nodes must be integers between ", nTip + 1L, " and ", maxNode)
+  }
   if (any(nodes == root)) {
     warning("Cannot collapse root node")
     nodes <- nodes[nodes != root]
@@ -240,7 +241,8 @@ CollapseEdge <- function (tree, edges) {
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
 #'
-#' @return A tree of class `phylo`, with the requested leaves removed.
+#' @return A tree of class `phylo`, in [Preorder], with the requested leaves
+#' removed.
 #'
 #' @examples
 #' tree <- BalancedTree(8)
@@ -273,37 +275,54 @@ DropTip <- function (tree, tip) {
       return (NULL)
     }
     edge <- tree$edge
-    edge <- edge[!edge[, 2] %in% which(drop), ]
-    repeat {
-      danglers <- (!edge[, 2] %in% edge[, 1]) & edge[, 2] > nTip
-      edge <- edge[!danglers, ]
+    edge <- RenumberTree(edge[, 1], edge[, 2]) # Necessary to handle 'nasty node ordering'
+    parent <- edge[, 1]
+    child <- edge[, 2]
+    external <- child <= nTip
 
-      descendants <- table(edge[, 1])
-      singleton <- descendants == 1
-      if (any(singleton)) {
-        singleton <- as.integer(names((descendants[singleton])[1]))
-        edgeAbove <- edge[, 2] == singleton
-        edgeBelow <- edge[, 1] == singleton
-        edge[edgeAbove, 2] <- edge[edgeBelow, 2]
-        edge <- edge[!edgeBelow, ]
-      } else {
-        if (!any(danglers)) break
+    # Drop tips:
+    keep <- !child %in% which(drop)
+
+    # Drop dangling nodes:
+    repeat {
+      nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
+      if (all(nonDanglers)) break
+      keep[keep] <- nonDanglers
+    }
+
+    parent <- parent[keep]
+    child <- child[keep]
+
+    # Collapse singles:
+    singletons <- tabulate(parent) == 1
+    if (any(singletons)) {
+      #edgeBelowSingles <- sort(match(which(singletons), parent),
+      #                     decreasing = TRUE) # If cladewise but not nasty ordering
+      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
+      sortedSingles <- parent[edgeBelowSingles]
+      edgeAboveSingles <- match(sortedSingles, child)
+
+      for (i in seq_along(sortedSingles)) {
+        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
       }
+      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
+    } else {
+      edge <- c(parent, child)
     }
 
     newNumbers <- integer(max(edge))
-    uniqueInts <- unique(as.integer(edge))
-    newNumbers[uniqueInts] <- match(uniqueInts, sort(uniqueInts))
+    uniqueInts <- unique(edge)
+    newNumbers[uniqueInts] <- rank(uniqueInts)
     edge <- matrix(newNumbers[edge], ncol = 2L)
     # Return:
     structure(list(
       edge = edge,
       tip.label = labels[!drop],
       Nnode = max(edge) - sum(!drop)
-    ), class = 'phylo')
+    ), class = 'phylo', order = 'preorder')
 
   } else {
     # Return:
-    tree
+    Preorder(tree)
   }
 }

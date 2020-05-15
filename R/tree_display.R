@@ -36,18 +36,18 @@ ConsensusWithout <- function (trees, tip = character(0), ...) {
   UseMethod('ConsensusWithout')
 }
 
-#' @importFrom ape consensus drop.tip
+#' @importFrom ape consensus
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.phylo <- function (trees, tip = character(0), ...) {
-  drop.tip(trees, tip = tip)
+  DropTip(trees, tip = tip)
 }
 
-#' @importFrom ape consensus drop.tip
+#' @importFrom ape consensus
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.multiPhylo <- function (trees, tip = character(0), ...) {
-  consensus(lapply(trees, drop.tip, tip = tip), ...)
+  consensus(lapply(trees, DropTip, tip = tip), ...)
 }
 
 #' @rdname ConsensusWithout

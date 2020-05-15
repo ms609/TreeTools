@@ -34,7 +34,7 @@ tree, meaning the position that will minimise the maximum node depth.
 \examples{
 tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 plot(tree)
-nodelabels(NodeDepth(tree, FALSE))
+nodelabels(NodeDepth(tree, includeTips = FALSE))
 
 
 }

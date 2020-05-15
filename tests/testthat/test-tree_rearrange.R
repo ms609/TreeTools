@@ -120,4 +120,11 @@ test_that("DropTip works", {
   expect_equal(DropTip(Preorder(nasty), c(1, 3)),
                Preorder(DropTip(nasty, c(1, 3))))
 
+
+  bigTree <- RandomTree(1284)
+  set.seed(1284)
+  bigTip <- sample(1:1284, 608)
+  expect_equal(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
+  #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
+  #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })

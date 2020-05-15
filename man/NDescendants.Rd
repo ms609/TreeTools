@@ -10,7 +10,7 @@ NDescendants(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-\code{NDescendants()} returns a table listing the number of direct
+\code{NDescendants()} returns an integer listing the number of direct
 descendants for each node in a tree.
 }
 \description{
@@ -18,9 +18,9 @@ Count descendants for each node in a tree
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)
-plot(tree)
-nodelabels()
 NDescendants(tree)
+plot(tree)
+nodelabels(NDescendants(tree))
 
 }
 \seealso{

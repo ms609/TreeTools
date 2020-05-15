@@ -66,25 +66,29 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
 #'
-#' @seealso [`SortTree`]
+#' @seealso Rotate each node into a consistent orientation with [`SortTree()`].
 #'
 #' @family C wrappers
-#' @keywords internal
 #' @export
 RenumberTree <- function (parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
 #' @rdname RenumberTree
-#' @return `RenumberEdges` returns a list whose two entries correspond
-#' to the new parent and child vectors.
-#' @keywords internal
+#' @return `RenumberEdges` formats the output of `RenumberTree()` into a list
+#' whose two entries correspond to the new parent and child vectors.
 #' @export
-RenumberEdges <- function (parent, child, nEdge = length(parent)) {
+RenumberEdges <- function (parent, child) {
   oenn <- .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 
   # Return:
   list(oenn[, 1], oenn[, 2])
+}
+
+.CheckSize <- function (tree) {
+  if (NTip(tree) > 23170) {
+    stop("Can only preorder trees with < 23171 leaves. Sorry.")
+  }
 }
 
 #' Reorder trees
@@ -235,6 +239,7 @@ Preorder <- function (tree) {
   if (length(startOrder) && startOrder == 'preorder') {
     tree
   } else {
+    .CheckSize(tree)
     edge <- tree$edge
     parent <- edge[, 1]
     child <- edge[, 2]

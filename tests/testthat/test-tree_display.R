@@ -10,7 +10,7 @@ test_that('ConsensusWithout is robust', {
                ConsensusWithout(balAndPec, t25))
   expect_equal(ConsensusWithout(structure(balAndPec, class = 'multiPhylo'), t25),
                ConsensusWithout(balAndPec, t25))
-  expect_warning(ConsensusWithout(BalancedTree(8), paste0('t', 1:8)))
+  expect_null(ConsensusWithout(BalancedTree(8), paste0('t', 1:8)))
 
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
@@ -19,7 +19,7 @@ test_that('ConsensusWithout is robust', {
     Nnode = 5L,
     tip.label = letters[1:8]),
     class = 'phylo') # Danger: Do not plot!
-  expect_equal(nasty, ConsensusWithout(nasty))
-  expect_equal(ape::drop.tip(nasty, 2), ConsensusWithout(nasty, 'b'))
+  expect_equal(Preorder(nasty), ConsensusWithout(nasty))
+  expect_equal(DropTip(nasty, 2), ConsensusWithout(nasty, 'b'))
 
 })

@@ -6,6 +6,7 @@
 - `RootNode()`: Which node is a tree's root?
 - `NodeDepth()`: Discriminate shallow from deep nodes.
 - `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
+- `DropTip()`: Remove tip, handling weird node orders.
 
 ## Enhancements
 
