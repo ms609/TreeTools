@@ -38,7 +38,7 @@ install.packages('TreeTools')
 library('TreeTools')
 ```
 
-Install the very lastest version, which may be under development, with:
+Install the very latest version, which may be under development, with:
 ```r
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github('ms609/TreeTools')

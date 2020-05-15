@@ -37,7 +37,7 @@ multi-state characters in a phylogenetic matrix.
 
 A simple way to characterise trees is to count the number of edges.
 (Edges are almost, but not quite, equivalent to nodes.)
-Counting edges (or nodes) provides a quick measaure of a tree's resolution,
+Counting edges (or nodes) provides a quick measure of a tree's resolution,
 and underpins the Robinson-Foulds tree distance measure.
 Not all edges, however, are created equal.
 

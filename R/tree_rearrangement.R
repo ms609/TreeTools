@@ -239,7 +239,7 @@ CollapseEdge <- function (tree, edges) {
 #'
 #'
 #' @template treeParam
-#' @param tip Characer vector specifying labels of leaves in tree to be dropped,
+#' @param tip Character vector specifying labels of leaves in tree to be dropped,
 #' or integer vector specifying the indices of leaves to be dropped.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.

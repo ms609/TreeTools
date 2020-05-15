@@ -70,7 +70,7 @@ CharacterInformation <- function (tokens) {
   # NUnrootedMult(splits) / NUnrooted(splits)
   # As we are working with large numbers we can use logarithms
   log2P <- Log2UnrootedMult(splits) - Log2Unrooted(sum(splits))
-  
+
   # Return:
   -log2P
 }
@@ -90,7 +90,7 @@ CharacterInformation <- function (tokens) {
 #'
 #' A simple way to characterise trees is to count the number of edges.
 #' (Edges are almost, but not quite, equivalent to nodes.)
-#' Counting edges (or nodes) provides a quick measaure of a tree's resolution,
+#' Counting edges (or nodes) provides a quick measure of a tree's resolution,
 #' and underpins the Robinson-Foulds tree distance measure.
 #' Not all edges, however, are created equal.
 #'
