@@ -6,9 +6,9 @@
 \alias{CollapseEdge}
 \title{Collapse nodes on a phylogenetic tree}
 \usage{
-CollapseNode(tree, nodes, ...)
+CollapseNode(tree, nodes)
 
-\method{CollapseNode}{phylo}(tree, nodes, ...)
+\method{CollapseNode}{phylo}(tree, nodes)
 
 CollapseEdge(tree, edges)
 }

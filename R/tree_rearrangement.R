@@ -168,11 +168,11 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 #'
 #' @author  Martin R. Smith
 #' @export
-CollapseNode <- function (tree, nodes, ...) UseMethod('CollapseNode')
+CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
 
 #' @rdname CollapseNode
 #' @export
-CollapseNode.phylo <- function (tree, nodes, ...) {
+CollapseNode.phylo <- function (tree, nodes) {
   if (length(nodes) == 0) return (tree)
 
   edge <- tree$edge
