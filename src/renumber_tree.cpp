@@ -145,12 +145,16 @@ xint get_subtree_size(xint node, xint *subtree_size, xint *n_children,
 // [[Rcpp::export]]
 IntegerMatrix postorder_edges(IntegerMatrix edge)
 {
+  if (1L + edge.nrow() > XINT_MAX) {
+    throw(std::length_error("Too many edges in tree for postorder_edges: "
+                            "Contact maintainer for advice"));
+  }
   const xint n_edge = edge.nrow(), node_limit = n_edge + 1;
   xint root_node = 0, n_tip = 0;
   xint * parent_of = (xint*) std::calloc(node_limit, sizeof(xint)),
-      * n_children = (xint*) std::calloc(node_limit, sizeof(xint)),
-      * subtree_size = (xint*) std::calloc(node_limit, sizeof(xint)),
-      * children_of = (xint*) std::calloc(n_edge * node_limit, sizeof(xint));
+       * n_children = (xint*) std::calloc(node_limit, sizeof(xint)),
+       * subtree_size = (xint*) std::calloc(node_limit, sizeof(xint)),
+       * children_of = (xint*) std::calloc(n_edge * node_limit, sizeof(xint));
 
   for (xint i = 0; i < n_edge; i++) {
     parent_of[edge(i, 1)] = edge(i, 0);
@@ -163,6 +167,7 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
     if (n_children[i] == 0) ++n_tip;
   }
   std::free(parent_of);
+
   const xint n_node = n_edge - n_tip + 1;
 
   for (xint tip = 0; tip < n_tip; tip++) {

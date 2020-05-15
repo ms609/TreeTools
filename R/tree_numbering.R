@@ -128,6 +128,8 @@ RenumberEdges <- function (parent, child) {
 #' @template nTipParam
 #' @param edge Two-column matrix listing the parent and child of each edge in a
 #' tree, corresponding to `tree$edge`. Optional in `Cladewise()`.
+#' @param renumber Logical specifying whether to renumber nodes such that they
+#' increase in number away from the root.
 #'
 #' @return `ApePostorder()`, `Cladewise()`, `Postorder()`, `Preorder()` and
 #' `Pruningwise()` each return a tree of class `phylo` with nodes following the
@@ -187,13 +189,13 @@ ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge)
 #' @param force Logical specifying whether to rearrange trees already in
 #' postorder, in order to ensure TreeTools edge ordering.
 #' @export
-Postorder <- function (tree, force = FALSE) {
+Postorder <- function (tree, force = FALSE, renumber = FALSE) {
   if (is.null(attr(tree, "order"))
       || attr(tree, "order") != "postorder"
       || (force &&
           (is.null(attr(tree, 'suborder')) ||
            attr(tree, 'suborder') != 'TreeTools'))) {
-    tree$edge <- PostorderEdges(tree$edge)
+    tree$edge <- PostorderEdges(tree$edge, renumber = renumber)
     tree$edge.length <- NULL
     attr(tree, "order") <- "postorder"
     attr(tree, "suborder") <- "TreeTools"
@@ -203,11 +205,21 @@ Postorder <- function (tree, force = FALSE) {
 
 #' @rdname Reorder
 #' @return `PostorderEdges` returns a two-column array corresponding to `edge`,
-#' with edges listed in postorder.
+#' with edges listed in postorder
 #' @template edgeParam
 #' @export
-PostorderEdges <- function (edge) {
-  postorder_edges(edge - 1L)
+PostorderEdges <- function (edge, renumber = FALSE) {
+  ret <- postorder_edges(edge - 1L)
+  if (renumber) {
+    internals <- unique(edge[, 1])
+    nTip <- min(internals) - 1L
+    newNumbers <- c(seq_len(nTip), nTip + rank(-unique(internals)))
+
+    # Return:
+    matrix(newNumbers[ret], ncol = 2L)
+  } else {
+    ret
+  }
 }
 
 #' @describeIn Reorder Reorder tree Pruningwise.

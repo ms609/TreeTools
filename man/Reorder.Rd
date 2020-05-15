@@ -14,9 +14,9 @@ Cladewise(tree, nTip = NULL, edge = tree$edge)
 
 ApePostorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
-Postorder(tree, force = FALSE)
+Postorder(tree, force = FALSE, renumber = FALSE)
 
-PostorderEdges(edge)
+PostorderEdges(edge, renumber = FALSE)
 
 Pruningwise(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
@@ -33,6 +33,9 @@ of class \code{phylo}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
 postorder, in order to ensure TreeTools edge ordering.}
+
+\item{renumber}{Logical specifying whether to renumber nodes such that they
+increase in number away from the root.}
 }
 \value{
 \code{ApePostorder()}, \code{Cladewise()}, \code{Postorder()}, \code{Preorder()} and
@@ -40,7 +43,7 @@ postorder, in order to ensure TreeTools edge ordering.}
 specified numbering scheme.
 
 \code{PostorderEdges} returns a two-column array corresponding to \code{edge},
-with edges listed in postorder.
+with edges listed in postorder
 }
 \description{
 A wrapper for \code{ape:::.reorder_ape}.
