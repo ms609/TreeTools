@@ -16,7 +16,7 @@ test_that("Nasty node order not fatal", {
     Nnode = 7L,
     tip.label = letters[1:8]),
     class = 'phylo') # Danger: Do not plot!
-  expect_equal(9, RootedTreeShape(nastyBinary))
+  expect_equal(RootedTreeShape(Preorder(nastyBinary)), RootedTreeShape(nastyBinary))
 })
 
 test_that('Rooted tree shapes calculated', {

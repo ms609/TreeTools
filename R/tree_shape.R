@@ -63,7 +63,7 @@
 RootedTreeShape <- function (tree) {
   edge <- tree$edge
   nTip <- NTip(tree)
-  edge <- PostorderEdges(edge)
+  edge <- PostorderEdges(edge, renumber = FALSE)
   edge_to_rooted_shape(edge[, 1], edge[, 2], nTip)
 }
 
@@ -121,7 +121,7 @@ UnrootedTreeShape <- function (tree) {
 #' @export
 UnrootedTreeKey <- function (tree) {
   tree <- Preorder(tree) # Guarantee unique representation of tree
-  edge <- PostorderEdges(tree$edge)
+  edge <- PostorderEdges(tree$edge, renumber = FALSE)
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]
