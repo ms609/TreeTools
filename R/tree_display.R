@@ -2,13 +2,14 @@
 #'
 #' Displays a consensus plot with selected taxa excluded.
 #'
-#' A useful way to gain resolution if a few wildcard taxa obscure a consistent
-#' set of relationship.
+#' A useful way to increase the resolution of a consensus tree when a few
+#' wildcard taxa obscure a consistent set of relationships.
 #'
 #' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#'                drop (using ape::drop.tip).
-#' @param \dots Additional parameters to pass on to [ape::consensus] or [legend].
+#' drop (using `ape::drop.tip`).
+#' @param \dots Additional parameters to pass on to [`ape::consensus()`] or
+#' [`legend()`].
 #'
 #' @return `ConsensusWithout` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.

@@ -33,9 +33,11 @@ phangorn::\code{\link[=getRoot]{getRoot()}}
 Other tree navigation: 
 \code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

@@ -40,9 +40,11 @@ Note that the tree's edges must be listed in an order whereby each entry in
 \seealso{
 Other tree navigation: 
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

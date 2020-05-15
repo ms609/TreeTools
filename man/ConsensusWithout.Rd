@@ -22,9 +22,10 @@ MarkMissing(tip, position = "bottomleft", ...)
 \item{trees}{A list of phylogenetic trees, of class \code{multiPhylo} or \code{list}.}
 
 \item{tip}{A character vector specifying the names (or numbers) of tips to
-drop (using ape::drop.tip).}
+drop (using \code{ape::drop.tip}).}
 
-\item{\dots}{Additional parameters to pass on to \link[ape:consensus]{ape::consensus} or \link{legend}.}
+\item{\dots}{Additional parameters to pass on to \code{\link[ape:consensus]{ape::consensus()}} or
+\code{\link[=legend]{legend()}}.}
 
 \item{position}{Where to plot the missing taxa.  See \link{legend} for options.}
 }
@@ -36,8 +37,8 @@ without the excluded taxa.
 Displays a consensus plot with selected taxa excluded.
 }
 \details{
-A useful way to gain resolution if a few wildcard taxa obscure a consistent
-set of relationship.
+A useful way to increase the resolution of a consensus tree when a few
+wildcard taxa obscure a consistent set of relationships.
 }
 \section{Functions}{
 \itemize{

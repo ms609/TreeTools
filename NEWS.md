@@ -6,7 +6,10 @@
 - `RootNode()`: Which node is a tree's root?
 - `NodeDepth()`: Discriminate shallow from deep nodes.
 - `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
+- `CladeSizes()`: Count leaves / nodes descended from each node.
+- `ListAncestors()`: List ancestors of a node.
 - `DropTip()`: Remove tip, handling weird node orders.
+- `TotalCopheneticIndex()` integrated from 'tci' package.
 
 ## Enhancements
 

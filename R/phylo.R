@@ -305,13 +305,65 @@ AllAncestors <- function (parent, child) {
   res
 }
 
+#' List ancestors
+#'
+#' Reports all ancestors of a given node
+#'
+#' To observe the number of a node or tip, use
+#' \code{plot(tree); \link[ape]{nodelabels}(); \link[ape:nodelabels]{tiplabels}();}
+#'
+#' @param parent the 'parent' column of the edges property of a tree of class \code{phylo};
+#' @param child the 'child' column of the edges property of a tree of class \code{phylo};
+#' @param node the number of the node or tip whose ancestors are required.
+#'
+#' @return `ListAncestors()` returns a vector of the numbers of the nodes
+#' ancestral to the given \code{node}, including the root node.
+#'
+#' @template MRS
+#'
+#' @seealso
+#' - \code{phangorn:::Ancestors}, a less efficient implementation on which this
+#' code is based.
+#'
+#' @examples
+#' tree   <- ape::read.tree(text='(1, (2, (3, (4, 5))));')
+#' edge   <- tree$edge
+#' parent <- tree$edge[, 1]
+#' child  <- tree$edge[, 2]
+#' ListAncestors(parent, child, 4L)
+#'
+#' @family tree navigation
+#' @export
+ListAncestors <- function (parent, child, node) {
+  pvector <- integer(max(parent))
+  pvector[child] <- parent
+  anc <- function(pvector, node) {
+    res <- integer(0)
+    repeat {
+      anc <- pvector[node]
+      if (anc == 0)
+        break
+      res <- c(res, anc)
+      node <- anc
+    }
+    res
+  }
+
+  # Return:
+  anc(pvector, node)
+}
+
 #' Clade sizes
 #'
 #' @template treeParam
-#' @param nodes whose descendants should be returned
+#' @param internal Logical specifying whether internal nodes should be counted
+#' towards the size of each clade.
+#' @param nodes Integer specifying indices of nodes whose descendant counts
+#' should be returned.
+#' If unspecified, counts will be provided for all nodes (including leaves).
 #'
-#' @return `CladeSizes()` returns the number of nodes (including tips) that are
-#' descended from each node.
+#' @return `CladeSizes()` returns the number of nodes (including leaves) that
+#' are descended from each node, not including the node itself.
 #'
 #' @examples
 #' tree <- BalancedTree(6)
@@ -319,10 +371,19 @@ AllAncestors <- function (parent, child) {
 #' ape::nodelabels()
 #' CladeSizes(tree, c(8, 9))
 #'
-#' @importFrom phangorn allDescendants
-#' @keywords internal
+#' @family tree navigation
 #' @export
-CladeSizes <- function (tree, nodes) {
-  tree <- Postorder(tree, force = FALSE)
-  vapply(allDescendants(tree)[nodes], length, integer(1))
+CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
+  edge <- PostorderEdges(tree$edge, renumber = FALSE)
+  nTip <- NTip(tree)
+  size <- c(rep(1L, nTip), rep(internal, max(edge[, 1]) - nTip))
+  for (i in seq_len(nrow(edge))) {
+    edgeI <- edge[i, ]
+    parent <- edgeI[1]
+    child <- edgeI[2]
+    size[parent] <- size[parent] + size[child]
+  }
+
+  # Return:
+  (if (is.null(nodes)) size else size[nodes]) - as.integer(internal)
 }
