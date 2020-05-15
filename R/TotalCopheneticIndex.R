@@ -102,7 +102,7 @@ TCIContext <- function (x) UseMethod('TCIContext')
 
 #' @export
 TCIContext.phylo <- function (x) {
-  TCIContext.numeric(Ntip(x))
+  TCIContext.numeric(NTip(x))
 }
 
 .MCI <- function (n) { # Lemma 14 in Mir er al 2013
