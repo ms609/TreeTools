@@ -90,7 +90,7 @@ relationships within the ingroup or within the outgroup." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -187,10 +187,24 @@ outgroup.</p></td>
     <p><code>EnforceOutgroup</code> returns a tree of class <code>phylo</code> where all outgroup
 taxa are sister to all remaining taxa, without modifying the ingroup
 topology.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'>EnforceOutgroup</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>9</span>], <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='img'><img src='EnforceOutgroup-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='img'><img src='EnforceOutgroup-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

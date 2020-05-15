@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
       <h1 data-toc-skip>Loading phylogenetic trees into R</h1>
                         <h4 class="author">Martin R. Smith</h4>
             
-            <h4 class="date">2020-04-17</h4>
+            <h4 class="date">2020-05-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
@@ -120,7 +120,7 @@
 <a href="#manual-entry" class="anchor"></a>Manual entry</h2>
 <p>A straightforward, if cumbersome, way to enter trees into R is by manual text entry:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="no">myTree</span> <span class="kw">&lt;-</span> <span class="kw pkg">ape</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span>(<span class="kw">text</span><span class="kw">=</span><span class="st">'((A, B), ((C, D), (E, F)));'</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">myTree</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">myTree</span>)</pre></body></html></div>
 <p><img src="load-trees_files/figure-html/text-entry-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>Beware common gotchas when entering text:</p>
 <ul>
@@ -129,12 +129,12 @@
 <li><p>Look out for ((double brackets)) or brackets enclosing a single node: the resultant ‘invisible nodes’ can cause R to crash.</p></li>
 </ul>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">badTree</span> <span class="kw">&lt;-</span> <span class="kw pkg">ape</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span>(<span class="kw">text</span><span class="kw">=</span><span class="st">'((A, B), (((C, D), ((E), F))));'</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">badTree</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">badTree</span>)
 <span class="kw pkg">ape</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html">nodelabels</a></span>(<span class="kw">bg</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>))</pre></body></html></div>
 <p><img src="load-trees_files/figure-html/double-bracket-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>The text is expected in Newick format, so can contain edge lengths - but edge lengths must be included for every edge of the tree, or they will be ignored.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="no">myTree</span> <span class="kw">&lt;-</span> <span class="kw pkg">ape</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span>(<span class="kw">text</span><span class="kw">=</span><span class="st">'((A:1, B:1):2, ((C:1, D:1):2, (E:1, F:1):2):4);'</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="no">myTree</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">myTree</span>)</pre></body></html></div>
 <p><img src="load-trees_files/figure-html/branch-lengths-1.png" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div id="from-a-file" class="section level2">

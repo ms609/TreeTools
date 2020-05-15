@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ancestros of an edge — EdgeAncestry • TreeTools</title>
+<title>Ancestors of an edge — EdgeAncestry • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Ancestros of an edge — EdgeAncestry" />
+<meta property="og:title" content="Ancestors of an edge — EdgeAncestry" />
 <meta property="og:description" content="Quickly identify edges that are 'ancestral' to a particular edge in a tree." />
 
 
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ancestros of an edge</h1>
+    <h1>Ancestors of an edge</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>EdgeAncestry.Rd</code></div>
     </div>
@@ -197,14 +197,20 @@ turn is a descendant of the specified edge.</p>
     <div class='dont-index'><p>Other tree navigation: 
 <code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
+<code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
 <code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
+<code><a href='ListAncestors.html'>ListAncestors</a>()</code>,
 <code><a href='MRCA.html'>MRCA</a>()</code>,
-<code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code></p></div>
+<code><a href='NDescendants.html'>NDescendants</a>()</code>,
+<code><a href='NodeDepth.html'>NodeDepth</a>()</code>,
+<code><a href='NodeOrder.html'>NodeOrder</a>()</code>,
+<code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code>,
+<code><a href='RootNode.html'>RootNode</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>6</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='EdgeAncestry-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>1</span>]
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='EdgeAncestry-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>1</span>]
 <span class='no'>child</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>2</span>]
 <span class='fu'>EdgeAncestry</span>(<span class='fl'>7</span>, <span class='no'>parent</span>, <span class='no'>child</span>)</div><div class='output co'>#&gt;  [1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'>EdgeAncestry</span>(<span class='fl'>7</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>stopAt</span> <span class='kw'>=</span> <span class='fl'>4</span>))</div><div class='output co'>#&gt; [1] 4 6</div><div class='input'>
 </div></pre>

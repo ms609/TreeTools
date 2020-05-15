@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
     <p>Clade sizes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>CladeSizes</span>(<span class='no'>tree</span>, <span class='no'>nodes</span>)</pre>
+    <pre class="usage"><span class='fu'>CladeSizes</span>(<span class='no'>tree</span>, <span class='kw'>internal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nodes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,19 +170,41 @@
       <td><p>A tree of class <code>phylo</code>.</p></td>
     </tr>
     <tr>
+      <th>internal</th>
+      <td><p>Logical specifying whether internal nodes should be counted
+towards the size of each clade.</p></td>
+    </tr>
+    <tr>
       <th>nodes</th>
-      <td><p>whose descendants should be returned</p></td>
+      <td><p>Integer specifying indices of nodes whose descendant counts
+should be returned.
+If unspecified, counts will be provided for all nodes (including leaves).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>CladeSizes()</code> returns the number of nodes (including tips) that are
-descended from each node.</p>
+    <p><code>CladeSizes()</code> returns the number of nodes (including leaves) that
+are descended from each node, not including the node itself.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other tree navigation: 
+<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
+<code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
+<code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
+<code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,
+<code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
+<code><a href='ListAncestors.html'>ListAncestors</a>()</code>,
+<code><a href='MRCA.html'>MRCA</a>()</code>,
+<code><a href='NDescendants.html'>NDescendants</a>()</code>,
+<code><a href='NodeDepth.html'>NodeDepth</a>()</code>,
+<code><a href='NodeOrder.html'>NodeOrder</a>()</code>,
+<code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code>,
+<code><a href='RootNode.html'>RootNode</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>6</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='img'><img src='CladeSizes-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>CladeSizes</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>, <span class='fl'>9</span>))</div><div class='output co'>#&gt; [1] 4 2</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='img'><img src='CladeSizes-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>CladeSizes</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>8</span>, <span class='fl'>9</span>))</div><div class='output co'>#&gt;  [1] -7 -8 -7 -8 -7 -8 40 11  2 11  2  0  0  0  0  0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

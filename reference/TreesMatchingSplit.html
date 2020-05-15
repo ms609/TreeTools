@@ -89,7 +89,7 @@ a bipartition split that divides taxa into groups of size A and B." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -164,7 +164,9 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
 
     <pre class="usage"><span class='fu'>TreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)
 
-<span class='fu'>LnTreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)</pre>
+<span class='fu'>LnTreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)
+
+<span class='fu'>Log2TreesMatchingSplit</span>(<span class='no'>A</span>, <span class='no'>B</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,15 +179,10 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TreesMatchingSplit</code> returns a numeric specifying the number of trees
+    <p><code>TreesMatchingSplit()</code> returns a numeric specifying the number of trees
 that are compatible with the given split.</p>
-<p><code>LnTreesMatchingSplit</code> gives the natural logarithm of this number.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>LnTreesMatchingSplit</code>: Logarithm of the number of trees matching a split.</p></li>
-</ul>
+<p><code>LnTreesMatchingSplit()</code> and <code>Log2TreesMatchingSplit()</code> give the natural
+and base-2 logarithms of this number.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other split information functions: 
@@ -194,7 +191,7 @@ that are compatible with the given split.</p>
 <code><a href='UnrootedTreesMatchingSplit.html'>UnrootedTreesMatchingSplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>TreesMatchingSplit</span>(<span class='fl'>5</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 99225</div><div class='input'><span class='fu'>LnTreesMatchingSplit</span>(<span class='fl'>5</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 11.50515</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>TreesMatchingSplit</span>(<span class='fl'>5</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 99225</div><div class='input'><span class='fu'>LnTreesMatchingSplit</span>(<span class='fl'>5</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 11.50515</div><div class='input'><span class='fu'>Log2TreesMatchingSplit</span>(<span class='fl'>5</span>, <span class='fl'>6</span>)</div><div class='output co'>#&gt; [1] 16.59842</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

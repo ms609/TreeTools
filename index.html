@@ -24,7 +24,7 @@
   &lt;doi:10.1093/sysbio/46.4.590&gt;,
   and TNT &lt;http://www.lillo.org.ar/phylogeny/tnt/&gt; formats;
   and
-  analysis of partitions and partition information.">
+  analysis of partitions and cladistic information.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -49,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -116,8 +116,10 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#treetools" class="anchor"></a>TreeTools</h1></div>
 
-<p>‘TreeTools’ is an R package that provides functions for creating, modifying and analysing phylogenetic trees. It complements packages such as <a href="https://cran.r-project.org/package=ape">‘ape’</a>, <a href="https://cran.r-project.org/package=phangorn">‘phangorn’</a> and <a href="https://cran.r-project.org/package=phytools">‘phytools’</a>, aiming for efficient and robust implementations of functions, typically applied to unweighted trees (i.e. those without edge lengths).</p>
-<p>Version 0.1 is a pre-release; some minor functionality may change in version 1.0, due in mid-2020.</p>
+<p>‘TreeTools’ is an R package that provides efficient implementations of functions for the creation, modification and analysis of phylogenetic trees.</p>
+<p>Applications include: generation of trees with specified shapes; rooting of trees and extraction of subtrees; calculation and depiction of node support; calculation of ancestor-descendant relationships; import and export of trees from Newick, Nexus and <a href="http://www.lillo.org.ar/phylogeny/tnt/">TNT</a> formats; and analysis of partitions and cladistic information.</p>
+<p>It complements packages such as <a href="https://cran.r-project.org/package=ape">‘ape’</a>, <a href="https://cran.r-project.org/package=phangorn">‘phangorn’</a> and <a href="https://cran.r-project.org/package=phytools">‘phytools’</a>, aiming for efficient and robust implementations of functions, typically applied to unweighted trees (i.e. those without edge lengths).</p>
+<p>This is a pre-release; some minor functionality may change in version 1.0, due in mid-2020.</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
@@ -125,7 +127,7 @@
 <p>Install and load the library from CRAN as follows:</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('TreeTools')
 library('TreeTools')</a></code></pre>
-<p>If you’re feeling brave, you can install the development version thus:</p>
+<p>Install the very lastest version, which may be under development, with:</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="kw">if</span>(!<span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">devtools</span>)) <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)
 <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">'ms609/TreeTools'</span>)</pre></div>
 <p>Please note that the ‘TreeTools’ project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>

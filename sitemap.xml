@@ -25,6 +25,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/CladeSizes.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/CladisticInfo.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc>
   </url>
   <url>
@@ -34,13 +37,13 @@
     <loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Decoders.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/DescendantEdges.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/DoubleFactorial.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/DropTip.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ListAncestors.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/Lobo.data.html</loc>
@@ -68,6 +74,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/N1Spr.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NDescendants.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NJTree.html</loc>
@@ -89,6 +98,12 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/Neworder.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NodeDepth.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NonDuplicateRoot.html</loc>
@@ -122,6 +137,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/RootNode.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RootTree.html</loc>
@@ -163,6 +181,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TotalCopheneticIndex.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreeIsRooted.html</loc>
   </url>
   <url>
@@ -176,6 +197,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc>

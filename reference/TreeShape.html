@@ -89,7 +89,7 @@ binary tree, ignoring tip labels." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -261,7 +261,7 @@ the position of the root will be ignored.</p>
     <div class='dont-index'><p><code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>RootedTreeShape</span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>RootedTreeWithShape</span>(<span class='fl'>0</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>8L</span>))</div><div class='img'><img src='TreeShape-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>RootedTreeShape</span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>RootedTreeWithShape</span>(<span class='fl'>0</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>8L</span>))</div><div class='img'><img src='TreeShape-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>NRootedShapes</span>(<span class='fl'>8L</span>)</div><div class='output co'>#&gt; [1] 23</div><div class='input'><span class='co'># Shapes are numbered from 0 to NRootedShapes(n) - 1.  The maximum shape is:</span>
 <span class='fu'>RootedTreeShape</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 22</div><div class='input'>
 <span class='co'># Unique shapes of unrooted trees:</span>
@@ -272,7 +272,7 @@ the position of the root will be ignored.</p>
 <span class='co'># For a one-to-one correspondence, use a number instead:</span>
 <span class='no'>allShapes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'>NUnrootedShapes</span>(<span class='fl'>8L</span>)) - <span class='fl'>1L</span>,
                     <span class='no'>UnrootedTreeWithShape</span>, <span class='fl'>8L</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>allShapes</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='img'><img src='TreeShape-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeShape</span>)</div><div class='output co'>#&gt; [1] 0 1 2 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeKey</span>) <span class='co'># Key &gt;= number</span></div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>allShapes</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='img'><img src='TreeShape-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeShape</span>)</div><div class='output co'>#&gt; [1] 0 1 2 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeKey</span>) <span class='co'># Key &gt;= number</span></div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
 
 </div></pre>
   </div>

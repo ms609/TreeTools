@@ -91,7 +91,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -170,9 +170,9 @@ Calling this C function directly is approximately twice as fast as using
 
 <span class='fu'>ApePostorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
-<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>renumber</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>PostorderEdges</span>(<span class='no'>edge</span>)
+<span class='fu'>PostorderEdges</span>(<span class='no'>edge</span>, <span class='kw'>renumber</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
 
@@ -200,6 +200,11 @@ of class <code>phylo</code>.</p></td>
       <td><p>Logical specifying whether to rearrange trees already in
 postorder, in order to ensure TreeTools edge ordering.</p></td>
     </tr>
+    <tr>
+      <th>renumber</th>
+      <td><p>Logical specifying whether to renumber nodes such that they
+increase in number away from the root.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -208,7 +213,7 @@ postorder, in order to ensure TreeTools edge ordering.</p></td>
 <code>Pruningwise()</code> each return a tree of class <code>phylo</code> with nodes following the
 specified numbering scheme.</p>
 <p><code>PostorderEdges</code> returns a two-column array corresponding to <code>edge</code>,
-with edges listed in postorder.</p>
+with edges listed in postorder</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For <code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>, all nodes must be binary;
@@ -227,12 +232,15 @@ of an edge leading to a subtree that contains tip 2.</p>
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.</p>
-<p><code>Postorder</code> is modified from the ape function to return a specific
+<p><code>Postorder()</code> is modified from the ape function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
 in postorder, it will not be rearranged unless <code>force = TRUE</code>, or
-<code>PostorderEdges</code> is employed.</p>
+<code>PostorderEdges()</code> is employed.</p>
+<p>Trees with &gt;8191 leaves require additional memory and are not handled
+at present.  If you require this functionality, please contact the
+maintainer for advice.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
