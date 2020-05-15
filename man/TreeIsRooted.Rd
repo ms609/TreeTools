@@ -20,6 +20,11 @@ Faster alternative to of \code{ape::is.rooted}.
 TreeIsRooted(BalancedTree(6))
 
 }
+\seealso{
+Other tree properties: 
+\code{\link{ConsensusWithout}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree properties}

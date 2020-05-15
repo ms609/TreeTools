@@ -30,6 +30,8 @@
 #' MarkMissing('t2')
 #'
 #' par(oldPar)
+#' @family tree manipulation
+#' @family tree properties
 #'
 #' @template MRS
 #' @export
@@ -78,7 +80,9 @@ MarkMissing <- function (tip, position='bottomleft', ...) {
 #' @return `SortTree` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
-#' @seealso [`RenumberTree`]
+#' @seealso [`RenumberTree()`]
+#'
+#' @family tree manipulation
 #'
 #' @template MRS
 #' @export

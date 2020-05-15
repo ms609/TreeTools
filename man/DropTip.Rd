@@ -37,10 +37,15 @@ plot(DropTip(tree, c('t4', 't5')))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{EnforceOutgroup}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
+\code{\link{RootTree}()},
 \code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
 \code{\link{Subtree}()}
 }
 \author{

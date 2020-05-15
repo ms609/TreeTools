@@ -534,6 +534,8 @@ NSplits.numeric <- function (x) x - 3L
 #' @examples
 #' TreeIsRooted(BalancedTree(6))
 #'
+#' @family tree properties
+#'
 #' @template MRS
 #' @export
 TreeIsRooted <- function (tree) {

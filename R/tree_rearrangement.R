@@ -22,6 +22,8 @@
 #' - [`ape::root()`]
 #' - [`EnforceOutgroup()`]
 #'
+#' @family tree manipulation
+#'
 #' @template MRS
 #' @importFrom phangorn Ancestors Descendants
 #' @importFrom ape root
@@ -166,6 +168,7 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 #'
 #' par(oldPar)
 #'
+#' @family tree manipulation
 #' @author  Martin R. Smith
 #' @export
 CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
