@@ -47,14 +47,14 @@ IntegerVector n_rooted_shapes(IntegerVector nTip) {
 // [[Rcpp::export]]
 NumericVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
                             IntegerVector nTip) {
-  if (parent.size() != child.size()) {
+  if (parent.length() != child.length()) {
     throw std::length_error("Parent and child must be the same length");
   }
   const unsigned int n_tip = nTip[0],
-                     n_edge = parent.size(),
+                     n_edge = parent.length(),
                      r_to_c = 1;
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2");
+    throw std::length_error("nEdge must == nTip + nTip - 2: is tree binary?");
   }
   uint64_t tree_at[MAX_SHAPE_NODE] = {};
   unsigned int tips_below[MAX_SHAPE_NODE] = {};
