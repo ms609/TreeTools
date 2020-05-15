@@ -39,8 +39,16 @@ plot(Subtree(tree, 13))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
-\code{\link{SingleTaxonTree}()}
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

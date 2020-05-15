@@ -20,7 +20,7 @@ include in the outgroup.}
 \item{resolveRoot}{logical specifying whether to resolve the root node.}
 }
 \value{
-\code{RootTree} returns a tree of class \code{phylo}, rooted on the smallest
+\code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
 clade that contains the specified tips.
 
 \code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
@@ -47,10 +47,24 @@ plot(RootOnNode(tree, 2))
 }
 \seealso{
 \itemize{
-\item \link[ape:root]{ape::root}
-\item \code{\link{EnforceOutgroup}}
+\item \code{\link[ape:root]{ape::root()}}
+\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
+
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

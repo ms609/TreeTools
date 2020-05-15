@@ -66,21 +66,20 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
 #' following the usual preorder convention for edge and node numbering.
 #'
-#' @seealso [`SortTree`]
+#' @seealso Rotate each node into a consistent orientation with [`SortTree()`].
 #'
+#' @family tree manipulation
 #' @family C wrappers
-#' @keywords internal
 #' @export
 RenumberTree <- function (parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
 #' @rdname RenumberTree
-#' @return `RenumberEdges` returns a list whose two entries correspond
-#' to the new parent and child vectors.
-#' @keywords internal
+#' @return `RenumberEdges` formats the output of `RenumberTree()` into a list
+#' whose two entries correspond to the new parent and child vectors.
 #' @export
-RenumberEdges <- function (parent, child, nEdge = length(parent)) {
+RenumberEdges <- function (parent, child) {
   oenn <- .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 
   # Return:
@@ -115,17 +114,23 @@ RenumberEdges <- function (parent, child, nEdge = length(parent)) {
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
 #'
-#' `Postorder` is modified from the ape function to return a specific
+#' `Postorder()` is modified from the ape function to return a specific
 #' order: edges are listed from the node that subtends the smallest
 #' subtree to the one that subtends the largest (i.e. the root node), with
 #' all of a node's descendant edges listed adjacently.  If a tree is already
 #' in postorder, it will not be rearranged unless `force = TRUE`, or
-#' `PostorderEdges` is employed.
+#' `PostorderEdges()` is employed.
+#'
+#' Trees with >8191 leaves require additional memory and are not handled
+#' at present.  If you require this functionality, please contact the
+#' maintainer for advice.
 #'
 #' @template treeParam
 #' @template nTipParam
 #' @param edge Two-column matrix listing the parent and child of each edge in a
 #' tree, corresponding to `tree$edge`. Optional in `Cladewise()`.
+#' @param renumber Logical specifying whether to renumber nodes such that they
+#' increase in number away from the root.
 #'
 #' @return `ApePostorder()`, `Cladewise()`, `Postorder()`, `Preorder()` and
 #' `Pruningwise()` each return a tree of class `phylo` with nodes following the
@@ -185,13 +190,13 @@ ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge)
 #' @param force Logical specifying whether to rearrange trees already in
 #' postorder, in order to ensure TreeTools edge ordering.
 #' @export
-Postorder <- function (tree, force = FALSE) {
+Postorder <- function (tree, force = FALSE, renumber = FALSE) {
   if (is.null(attr(tree, "order"))
       || attr(tree, "order") != "postorder"
       || (force &&
           (is.null(attr(tree, 'suborder')) ||
            attr(tree, 'suborder') != 'TreeTools'))) {
-    tree$edge <- PostorderEdges(tree$edge)
+    tree$edge <- PostorderEdges(tree$edge, renumber = renumber)
     tree$edge.length <- NULL
     attr(tree, "order") <- "postorder"
     attr(tree, "suborder") <- "TreeTools"
@@ -201,11 +206,21 @@ Postorder <- function (tree, force = FALSE) {
 
 #' @rdname Reorder
 #' @return `PostorderEdges` returns a two-column array corresponding to `edge`,
-#' with edges listed in postorder.
+#' with edges listed in postorder
 #' @template edgeParam
 #' @export
-PostorderEdges <- function (edge) {
-  postorder_edges(edge - 1L)
+PostorderEdges <- function (edge, renumber = FALSE) {
+  ret <- postorder_edges(edge - 1L)
+  if (renumber) {
+    internals <- unique(edge[, 1])
+    nTip <- min(internals) - 1L
+    newNumbers <- c(seq_len(nTip), nTip + rank(-unique(internals)))
+
+    # Return:
+    matrix(newNumbers[ret], ncol = 2L)
+  } else {
+    ret
+  }
 }
 
 #' @describeIn Reorder Reorder tree Pruningwise.
@@ -264,6 +279,8 @@ Preorder <- function (tree) {
 #' data('Lobo') # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
+#'
+#' @family tree manipulation
 #'
 #' @template MRS
 #' @export

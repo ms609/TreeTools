@@ -1,4 +1,11 @@
-library(ape)
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
 
 context("Tree rearrangements")
 
@@ -62,13 +69,20 @@ test_that("RootOnNode works", {
   expect_equal(urt, RootOnNode(urt, 9L, FALSE))
   expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
                RootOnNode(urt, 9L, TRUE))
+})
 
+test_that("RootOnNode supports nasty node ordering", {
+  expect_equal(Preorder(nasty),
+               RootOnNode(nasty, 12L, resolveRoot = TRUE))
+  expect_equal(RootOnNode(Preorder(nasty), 11L),
+               RootOnNode(nasty, 13L))
 })
 
 test_that("CollapseNodes works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
   expect_error(CollapseNode(tree8, 1))
+  expect_warning(CollapseNode(tree8, 9L))
 
   tree <- as.phylo(123, 7)
   tree$edge.length <- 12:1
@@ -87,4 +101,30 @@ test_that("CollapseNodes works", {
   no11 <- CollapseEdge(tree, c(7, 8))
   expect_equal(exp1213, no11$edge)
 
+  expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
+               Preorder(CollapseNode(nasty, c(11, 13))))
+})
+
+test_that("DropTip works", {
+  bal8 <- BalancedTree(8)
+  expect_null(DropTip(bal8, 1:8))
+  expect_warning(expect_equal(bal8, DropTip(bal8, -1)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 99)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 'MissingTip')))
+  expect_error(DropTip(bal8, list('Invalid format')))
+
+  expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
+  expect_equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8))
+  expect_equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7)))
+
+  expect_equal(DropTip(Preorder(nasty), c(1, 3)),
+               Preorder(DropTip(nasty, c(1, 3))))
+
+
+  bigTree <- RandomTree(1284)
+  set.seed(1284)
+  bigTip <- sample(1:1284, 608)
+  expect_equal(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
+  #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
+  #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })

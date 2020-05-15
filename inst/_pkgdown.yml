@@ -12,26 +12,7 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - AddTip
-      - AllAncestors
-      - AncestorEdge
-      - CladeSizes
-      - CollapseNode
-      - ConsensusWithout
-      - EnforceOutgroup
-      - MRCA
-      - NPartitions
-      - NPartitionPairs
-      - NewickTree
-      - NonDuplicateRoot
-      - Renumber
-      - RootTree
-      - SingleTaxonTree
-      - SortTree
-      - Subtree
-      - RenumberTips
-      - TreeIsRooted
-      - UnshiftTree
+      - has_concept('tree manipulation')
 
   - title: "Tree navigation"
     desc: >
@@ -45,6 +26,15 @@ reference:
     contents:
       - has_concept('tree generation functions')
       - print.TreeNumber
+
+  - title: "Tree properties"
+    desc: >
+      Functions describing properties of trees.
+    contents:
+      - has_concept("tree characterization functions")
+      - NPartitions
+      - NPartitionPairs
+      - TreeIsRooted
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
@@ -102,6 +92,7 @@ reference:
     contents:
       - RightmostCharacter
       - SampleOne
+      - UnshiftTree
 
 template:
   params:

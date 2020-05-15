@@ -49,7 +49,8 @@ Log2TreesMatchingTree <- function (tree) {
 #' phylogenetic object, _sensu_ Thorley _et al._ (1998).
 #'
 #' The CIC is the logarithm of the number of binary trees that include the
-#' specified topology.  A base two logarithm gives an information content in bits.
+#' specified topology.  A base two logarithm gives an information content in
+#' bits.
 #'
 #' The CIC was originally proposed by Rohlf (1982), and formalised as CIC, with
 #' an information-theoretic justification, by Thorley _et al_. (1998).
@@ -76,6 +77,8 @@ Log2TreesMatchingTree <- function (tree) {
 #' \insertRef{Thorley1998}{TreeTools}
 #'
 #' @family tree information functions
+#' @family tree characterization functions
+#'
 #' @template MRS
 #' @export
 CladisticInfo <- function (x) UseMethod('CladisticInfo')

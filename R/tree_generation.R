@@ -145,13 +145,15 @@ NJTree <- function (dataset) {
 #' taxa are sister to all remaining taxa, without modifying the ingroup
 #' topology.
 #'
-#' @template MRS
-#' @importFrom ape rtree
-#' @importFrom ape root drop.tip bind.tree
-#'
 #' @examples
 #' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
 #' plot(tree)
+#'
+#' @template MRS
+#' @family tree manipulation
+#'
+#' @importFrom ape rtree
+#' @importFrom ape root drop.tip bind.tree
 #'
 #' @export
 EnforceOutgroup <- function (tree, outgroup) {

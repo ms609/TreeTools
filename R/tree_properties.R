@@ -56,18 +56,18 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret
 }
 
-#' Number of descendants for each node in a tree
+#' Count descendants for each node in a tree
 #'
 #' @template treeParam
 #'
-#' @return `NDescendants()` returns a table listing the number of direct
+#' @return `NDescendants()` returns an integer listing the number of direct
 #' descendants for each node in a tree.
 #'
 #' @examples
 #' tree <- CollapseNode(BalancedTree(8), 12:15)
-#' plot(tree)
-#' nodelabels()
 #' NDescendants(tree)
+#' plot(tree)
+#' nodelabels(NDescendants(tree))
 #'
 #' @template MRS
 #' @family tree navigation
@@ -106,11 +106,13 @@ NDescendants <- function (tree) {
 #' @examples
 #' tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 #' plot(tree)
-#' nodelabels(NodeDepth(tree, FALSE))
+#' nodelabels(NodeDepth(tree, includeTips = FALSE))
 #'
 #'
 #' @export
-NodeDepth <- function (x, shortest = FALSE, includeTips = TRUE) UseMethod('NodeDepth')
+NodeDepth <- function (x, shortest = FALSE, includeTips = TRUE) {
+  UseMethod('NodeDepth')
+}
 
 #' @export
 NodeDepth.list <- function (x, shortest = FALSE, includeTips = TRUE) {
@@ -246,19 +248,21 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 #' to internal nodes, i.e. to omit leaves. Irrelevant if
 #' `includeAncestor = FALSE`.
 #'
-#' @return `NodeOrder()` returns a table listing the order of each node;
+#' @return `NodeOrder()` returns an integer listing the order of each node;
 #' entries are named with the number of each node.
 #'
 #' @examples
 #' tree <- CollapseNode(BalancedTree(8), 12:15)
+#' NodeOrder(tree)
 #' plot(tree)
-#' nodelabels()
-#' NodeOrder(tree, internalOnly = TRUE)
+#' nodelabels(NodeOrder(tree, internalOnly = TRUE))
 #'
 #' @template MRS
 #' @family tree navigation
 #' @export
-NodeOrder <- function (x, includeAncestor = TRUE, internalOnly = FALSE) UseMethod('NodeOrder')
+NodeOrder <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+  UseMethod('NodeOrder')
+}
 
 
 #' @export
@@ -278,12 +282,12 @@ NodeOrder.phylo <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
 NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
   if (includeAncestor) {
     if (internalOnly) {
-      table(x[x >= min(x[, 1])])
+      tabulate(x)[-seq_len(min(x[, 1]) - 1L)]
     } else {
-      table(x)
+      tabulate(x)
     }
   } else {
-    table(x[, 1])
+    tabulate(x[, 1])[-seq_len(min(x[, 1]) - 1L)]
   }
 }
 
@@ -319,8 +323,10 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @param stopAt Integer or logical vector specifying the edge(s) at which to
 #' terminate the search; defaults to the edges with the smallest parent,
 #' which will be the root edges if nodes are numbered cladewise or in Preorder.
+#'
 #' @return `EdgeAncestry` returns a logical vector stating whether each edge in
 #' turn is a descendant of the specified edge.
+#'
 #' @examples
 #' tree <- PectinateTree(6)
 #' plot(tree)
@@ -333,7 +339,8 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @template MRS
 #' @family tree navigation
 #' @export
-EdgeAncestry <- function (edge, parent, child, stopAt = (parent==min(parent))) {
+EdgeAncestry <- function (edge, parent, child,
+                          stopAt = (parent == min(parent))) {
   ret <- edge <- AncestorEdge(edge, parent, child)
   if (any(ret)) repeat {
     if (any(ret[stopAt])) return(ret)
@@ -390,9 +397,9 @@ MRCA <- function(tip1, tip2, ancestors) {
 EdgeDistances <- function (tree) {
   edge <- tree$edge
   nEdge <- dim(edge)[1]
-  edge <- RenumberEdges(edge[, 1], edge[, 2], nEdge = nEdge)
-  parent <- edge[[1]]
-  child <- edge[[2]]
+  edge <- RenumberTree(edge[, 1], edge[, 2])
+  parent <- edge[, 1]
+  child <- edge[, 2]
   ancs <- AllAncestors(parent, child)
   ret <- matrix(0L, ncol = nEdge, nrow = nEdge)
   for (i in seq_len(nEdge - 1L)) {
@@ -420,7 +427,7 @@ EdgeDistances <- function (tree) {
   }
   ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
 
-  origOrder <- match(tree$edge[, 2], edge[[2]])
+  origOrder <- match(tree$edge[, 2], edge[, 2])
 
   # Return:
   ret[origOrder, origOrder]
@@ -526,6 +533,8 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' @examples
 #' TreeIsRooted(BalancedTree(6))
+#'
+#' @family tree properties
 #'
 #' @template MRS
 #' @export

@@ -2,10 +2,13 @@
 % Please edit documentation in R/tree_rearrangement.R
 \name{CollapseNode}
 \alias{CollapseNode}
+\alias{CollapseNode.phylo}
 \alias{CollapseEdge}
 \title{Collapse nodes on a phylogenetic tree}
 \usage{
 CollapseNode(tree, nodes)
+
+\method{CollapseNode}{phylo}(tree, nodes)
 
 CollapseEdge(tree, edges)
 }
@@ -45,6 +48,21 @@ edgelabels(round(newTree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
 par(oldPar)
 
 }
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith
 }
+\concept{tree manipulation}

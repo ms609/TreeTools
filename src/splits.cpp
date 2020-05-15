@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include "types.h"
 using namespace Rcpp;
 
 const int powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
@@ -12,49 +13,53 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   if (edge.cols() != 2) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
+  if (1L + edge.rows() > INTX_MAX) {
+    throw(std::length_error("Too many edges in tree for edge_to_splits: "
+                              "Contact maintainer for advice"));
+  }
 
-  const int n_edge = edge.rows(),
-    n_node = n_edge + 1,
-    n_tip = nTip[0],
-    n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
+  const intx n_edge = edge.rows(),
+             n_node = n_edge + 1,
+             n_tip = nTip[0],
+             n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
   if (n_edge == n_tip) { /* No internal nodes resolved */
     return RawMatrix (0, n_bin);
   }
 
-  int** splits = new int*[n_node];
-  for (int i = 0; i != n_node; i++) {
-    splits[i] = new int[n_bin];
-    for (int j = 0; j != n_bin; j++) {
+  intx** splits = new intx*[n_node];
+  for (intx i = 0; i != n_node; i++) {
+    splits[i] = new intx[n_bin];
+    for (intx j = 0; j != n_bin; j++) {
       splits[i][j] = 0;
     }
   }
 
-  for (int i = 0; i != n_tip; i++) {
-    splits[i][(int) i / BIN_SIZE] = powers_of_two[i % BIN_SIZE];
+  for (intx i = 0; i != n_tip; i++) {
+    splits[i][(intx) i / BIN_SIZE] = powers_of_two[i % BIN_SIZE];
   }
 
-  for (int i = 0; i != n_edge - 1; i++) { /* final edge is second root edge */
-    for (int j = 0; j != n_bin; j++) {
-      splits[(int) edge(i, 0) - 1][j] |= splits[(int) edge(i, 1) - 1][j];
+  for (intx i = 0; i != n_edge - 1; i++) { /* final edge is second root edge */
+    for (intx j = 0; j != n_bin; j++) {
+      splits[(intx) edge(i, 0) - 1][j] |= splits[(intx) edge(i, 1) - 1][j];
     }
   }
 
-  int n_trivial = 0;
-  const int NOT_TRIVIAL = -1;
-  const int trivial_origin = edge(n_edge - 1, 0) - 1,
+  intx n_trivial = 0;
+  const intx NOT_TRIVIAL = -1;
+  const intx trivial_origin = edge(n_edge - 1, 0) - 1,
     trivial_two = (edge(n_edge - 1, 0) == edge(n_edge - 3, 0) ?
                      NOT_TRIVIAL : (edge(n_edge - 1, 1) - 1L));
 
-  const int n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL);
+  const intx n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL);
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
 
-  for (int i = n_tip; i != n_node; i++) {
+  for (intx i = n_tip; i != n_node; i++) {
     if (i == trivial_origin || i == trivial_two) {
       n_trivial++;
     } else {
-      for (int j = 0; j != n_bin; j++) {
+      for (intx j = 0; j != n_bin; j++) {
         ret(i - n_tip - n_trivial, j) = splits[i][j];
         names[i - n_tip - n_trivial] = (i + 1);
       }

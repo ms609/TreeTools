@@ -2,13 +2,14 @@
 #'
 #' Displays a consensus plot with selected taxa excluded.
 #'
-#' A useful way to gain resolution if a few wildcard taxa obscure a consistent
-#' set of relationship.
+#' A useful way to increase the resolution of a consensus tree when a few
+#' wildcard taxa obscure a consistent set of relationships.
 #'
 #' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#'                drop (using ape::drop.tip).
-#' @param \dots Additional parameters to pass on to [ape::consensus] or [legend].
+#' drop (using `ape::drop.tip`).
+#' @param \dots Additional parameters to pass on to [`ape::consensus()`] or
+#' [`legend()`].
 #'
 #' @return `ConsensusWithout` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.
@@ -29,6 +30,8 @@
 #' MarkMissing('t2')
 #'
 #' par(oldPar)
+#' @family tree manipulation
+#' @family tree properties
 #'
 #' @template MRS
 #' @export
@@ -36,18 +39,18 @@ ConsensusWithout <- function (trees, tip = character(0), ...) {
   UseMethod('ConsensusWithout')
 }
 
-#' @importFrom ape consensus drop.tip
+#' @importFrom ape consensus
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.phylo <- function (trees, tip = character(0), ...) {
-  drop.tip(trees, tip = tip)
+  DropTip(trees, tip = tip)
 }
 
-#' @importFrom ape consensus drop.tip
+#' @importFrom ape consensus
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.multiPhylo <- function (trees, tip = character(0), ...) {
-  consensus(lapply(trees, drop.tip, tip = tip), ...)
+  consensus(lapply(trees, DropTip, tip = tip), ...)
 }
 
 #' @rdname ConsensusWithout
@@ -77,7 +80,9 @@ MarkMissing <- function (tip, position='bottomleft', ...) {
 #' @return `SortTree` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
-#' @seealso [`RenumberTree`]
+#' @seealso [`RenumberTree()`]
+#'
+#' @family tree manipulation
 #'
 #' @template MRS
 #' @export
@@ -90,7 +95,7 @@ SortTree <- function(tree) {
   descendants <- Descendants(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function (tips) min(tipLabels[tips])
-  swaps <- vapply(tree.ntip + 1:tree$Nnode, function(node) {
+  swaps <- vapply(tree.ntip + seq_len(tree$Nnode), function(node) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
     if (all(descs == 1L)) {
