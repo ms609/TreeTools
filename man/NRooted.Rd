@@ -66,7 +66,7 @@ Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow Cavalli‐Sforza & Edwards (1967) and
+Calculations follow Cavalli-Sforza & Edwards (1967) and
 Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
