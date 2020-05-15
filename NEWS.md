@@ -13,6 +13,7 @@
 - Improve support for unrooted trees in `as.Splits()`.
 - Handle funny node orders.
 - Improve performance of `as.logical.Splits()` and related functions.
+- Fail nicely when trees are too large for memory.
 - Documentation improvements.
 
 # TreeTools 0.1.4
