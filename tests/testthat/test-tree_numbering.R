@@ -1,5 +1,12 @@
 context("tree_numbering.R")
 
+test_that("RenumberTree fails safely", {
+  expect_error(RenumberTree(1:3, 1:4))
+
+  Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
+  expect_error(Preorder(RandomTree(8192)))
+})
+
 test_that("RenumberTree handles polytomies", {
   tr <- ape::read.tree(text = '(a, (b, d, c));')
   edge <- tr$edge
@@ -65,11 +72,6 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(star$edge, RenumberTree(edge[, 1], edge[, 2]))
   expect_equal(list(star$edge[, 1], star$edge[, 2]),
                RenumberEdges(edge[, 1], edge[, 2]))
-})
-
-test_that("Preorder handles large trees safely", {
-  Preorder(PectinateTree(16384))
-  expect_error(Preorder(RandomTree(23171)))
 })
 
 test_that("Preorder handles malformed trees without crashing", {

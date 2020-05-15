@@ -397,7 +397,6 @@ MRCA <- function(tip1, tip2, ancestors) {
 EdgeDistances <- function (tree) {
   edge <- tree$edge
   nEdge <- dim(edge)[1]
-  .CheckSize(tree)
   edge <- RenumberTree(edge[, 1], edge[, 2])
   parent <- edge[, 1]
   child <- edge[, 2]

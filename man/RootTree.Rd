@@ -20,7 +20,7 @@ include in the outgroup.}
 \item{resolveRoot}{logical specifying whether to resolve the root node.}
 }
 \value{
-\code{RootTree} returns a tree of class \code{phylo}, rooted on the smallest
+\code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
 clade that contains the specified tips.
 
 \code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
@@ -47,8 +47,8 @@ plot(RootOnNode(tree, 2))
 }
 \seealso{
 \itemize{
-\item \link[ape:root]{ape::root}
-\item \code{\link{EnforceOutgroup}}
+\item \code{\link[ape:root]{ape::root()}}
+\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
 }
 \author{

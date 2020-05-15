@@ -5,7 +5,7 @@
 #' @template treeParam
 #' @template outgroupTipsParam
 #'
-#' @return `RootTree` returns a tree of class `phylo`, rooted on the smallest
+#' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips.
 #'
 #' @examples
@@ -19,8 +19,8 @@
 #' plot(RootOnNode(tree, 2))
 #'
 #' @seealso
-#' - [ape::root]
-#' - [`EnforceOutgroup`]
+#' - [`ape::root()`]
+#' - [`EnforceOutgroup()`]
 #'
 #' @template MRS
 #' @importFrom phangorn Ancestors Descendants

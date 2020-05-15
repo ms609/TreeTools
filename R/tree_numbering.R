@@ -85,12 +85,6 @@ RenumberEdges <- function (parent, child) {
   list(oenn[, 1], oenn[, 2])
 }
 
-.CheckSize <- function (tree) {
-  if (NTip(tree) > 16384) { # 23170 is max on local machine, but fails on Travis.
-    stop("Can only preorder trees with < 16385 leaves. Sorry.")
-  }
-}
-
 #' Reorder trees
 #'
 #' A wrapper for \code{ape:::.reorder_ape}.
@@ -119,12 +113,16 @@ RenumberEdges <- function (parent, child) {
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
 #'
-#' `Postorder` is modified from the ape function to return a specific
+#' `Postorder()` is modified from the ape function to return a specific
 #' order: edges are listed from the node that subtends the smallest
 #' subtree to the one that subtends the largest (i.e. the root node), with
 #' all of a node's descendant edges listed adjacently.  If a tree is already
 #' in postorder, it will not be rearranged unless `force = TRUE`, or
-#' `PostorderEdges` is employed.
+#' `PostorderEdges()` is employed.
+#'
+#' Trees with >8191 leaves require additional memory and are not handled
+#' at present.  If you require this functionality, please contact the
+#' maintainer for advice.
 #'
 #' @template treeParam
 #' @template nTipParam
@@ -239,7 +237,6 @@ Preorder <- function (tree) {
   if (length(startOrder) && startOrder == 'preorder') {
     tree
   } else {
-    .CheckSize(tree)
     edge <- tree$edge
     parent <- edge[, 1]
     child <- edge[, 2]
