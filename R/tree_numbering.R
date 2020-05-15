@@ -68,6 +68,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 #'
 #' @seealso Rotate each node into a consistent orientation with [`SortTree()`].
 #'
+#' @family tree manipulation
 #' @family C wrappers
 #' @export
 RenumberTree <- function (parent, child) {
@@ -278,6 +279,8 @@ Preorder <- function (tree) {
 #' data('Lobo') # Loads the phyDat object Lobo.phy
 #' tree <- RandomTree(Lobo.phy)
 #' tree <- RenumberTips(tree, names(Lobo.phy))
+#'
+#' @family tree manipulation
 #'
 #' @template MRS
 #' @export

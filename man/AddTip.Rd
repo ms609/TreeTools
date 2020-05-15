@@ -73,6 +73,8 @@ par(oldPar)
 
 Other tree manipulation: 
 \code{\link{DropTip}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{SingleTaxonTree}()},
 \code{\link{Subtree}()}

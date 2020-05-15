@@ -37,6 +37,8 @@ plot(DropTip(tree, c('t4', 't5')))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{SingleTaxonTree}()},
 \code{\link{Subtree}()}

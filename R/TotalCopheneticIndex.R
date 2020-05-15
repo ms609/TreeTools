@@ -46,6 +46,8 @@
 #' TCIContext(tree8)
 #' TCIContext(5L) # Context for a tree with 5 leaves.
 #'
+#' @family tree characterization functions
+#'
 #' @template MRS
 #' @export
 TotalCopheneticIndex <- function (x) UseMethod('TotalCopheneticIndex')

@@ -52,8 +52,12 @@ counting the number of edges resolved (Page, 1992).
 \seealso{
 Other tree information functions: 
 \code{\link{TreesMatchingTree}()}
+
+Other tree characterization functions: 
+\code{\link{TotalCopheneticIndex}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree characterization functions}
 \concept{tree information functions}

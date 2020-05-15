@@ -29,7 +29,6 @@ reference:
       - SingleTaxonTree
       - SortTree
       - Subtree
-      - RenumberTips
       - TreeIsRooted
       - UnshiftTree
 
@@ -45,6 +44,12 @@ reference:
     contents:
       - has_concept('tree generation functions')
       - print.TreeNumber
+
+  - title: "Tree properties"
+    desc: >
+      Functions describing properties of trees.trees
+    contents:
+      - has_concept("tree characterization functions")
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."

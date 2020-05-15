@@ -25,6 +25,8 @@ Renumber(tree)
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{DropTip}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{SingleTaxonTree}()},
 \code{\link{Subtree}()}
 }

@@ -37,6 +37,16 @@ tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 
 }
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{DropTip}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

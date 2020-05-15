@@ -33,8 +33,17 @@ lowest-numbered tip in the subtree subtended by each edge.
 \seealso{
 Rotate each node into a consistent orientation with \code{\link[=SortTree]{SortTree()}}.
 
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{DropTip}()},
+\code{\link{RenumberTips}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{Subtree}()}
+
 Other C wrappers: 
 \code{\link{Neworder}},
 \code{\link{Reorder}}
 }
 \concept{C wrappers}
+\concept{tree manipulation}

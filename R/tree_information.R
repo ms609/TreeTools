@@ -77,6 +77,8 @@ Log2TreesMatchingTree <- function (tree) {
 #' \insertRef{Thorley1998}{TreeTools}
 #'
 #' @family tree information functions
+#' @family tree characterization functions
+#'
 #' @template MRS
 #' @export
 CladisticInfo <- function (x) UseMethod('CladisticInfo')
