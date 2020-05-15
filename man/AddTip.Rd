@@ -72,6 +72,7 @@ par(oldPar)
 \code{\link{nodelabels}}
 
 Other tree manipulation: 
+\code{\link{DropTip}()},
 \code{\link{Renumber}()},
 \code{\link{SingleTaxonTree}()},
 \code{\link{Subtree}()}

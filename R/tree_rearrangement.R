@@ -249,6 +249,7 @@ CollapseEdge <- function (tree, edges) {
 #' plot(tree)
 #' plot(DropTip(tree, c('t4', 't5')))
 #'
+#' @family tree manipulation
 #' @template MRS
 #' @export
 DropTip <- function (tree, tip) {

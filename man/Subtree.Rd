@@ -39,6 +39,7 @@ plot(Subtree(tree, 13))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{DropTip}()},
 \code{\link{Renumber}()},
 \code{\link{SingleTaxonTree}()}
 }

@@ -34,6 +34,14 @@ plot(tree)
 plot(DropTip(tree, c('t4', 't5')))
 
 }
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}
