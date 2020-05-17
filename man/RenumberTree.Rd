@@ -7,7 +7,7 @@
 \usage{
 RenumberTree(parent, child)
 
-RenumberEdges(parent, child)
+RenumberEdges(parent, child, ...)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
@@ -15,6 +15,8 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+
+\item{\dots}{Ignored; included for compatibility with previous versions.}
 }
 \value{
 \code{RenumberTree} returns an edge matrix for a tree of class \code{phylo}

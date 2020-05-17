@@ -76,10 +76,11 @@ RenumberTree <- function (parent, child) {
 }
 
 #' @rdname RenumberTree
+#' @param \dots Ignored; included for compatibility with previous versions.
 #' @return `RenumberEdges` formats the output of `RenumberTree()` into a list
 #' whose two entries correspond to the new parent and child vectors.
 #' @export
-RenumberEdges <- function (parent, child) {
+RenumberEdges <- function (parent, child, ...) {
   oenn <- .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 
   # Return:
