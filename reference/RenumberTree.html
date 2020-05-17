@@ -170,7 +170,7 @@ lowest-numbered tip in the subtree subtended by each edge.</p>
 
     <pre class="usage"><span class='fu'>RenumberTree</span>(<span class='no'>parent</span>, <span class='no'>child</span>)
 
-<span class='fu'>RenumberEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>)</pre>
+<span class='fu'>RenumberEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,6 +184,10 @@ matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></
       <th>child</th>
       <td><p>Integer vector corresponding to the second column of the edge
 matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Ignored; included for compatibility with previous versions.</p></td>
     </tr>
     </table>
 
