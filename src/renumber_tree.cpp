@@ -149,11 +149,18 @@ intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
 IntegerMatrix postorder_edges(IntegerMatrix edge)
 {
   if (1L + edge.nrow() > INTX_MAX) {
-    throw(std::length_error("Too many edges in tree for postorder_edges: "
-                            "Contact maintainer for advice"));
+    throw std::length_error("Too many edges in tree for postorder_edges: "
+                            "Contact maintainer for advice");
   }
+
   const intx n_edge = edge.nrow(), node_limit = n_edge + 1;
   intx root_node = 0, n_tip = 0;
+
+  if (n_edge * node_limit * sizeof(intx) > INTPTR_MAX) {
+    throw std::length_error("Tree too large for postorder_edges. "
+                            "Try running 64-bit R?");
+  }
+
   intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
        * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
        * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx)),
