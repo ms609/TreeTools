@@ -80,10 +80,10 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
              node_limit = n_edge + 2;
 
   if (2L * (2L + child.length()) > INTX_MAX) {
-    throw(std::length_error("Too many edges: Contact maintainer for support."));
+    throw std::length_error("Too many edges: Contact maintainer for support.");
   }
   if (child.length() != n_edge) {
-    throw(std::invalid_argument("Length of parent and child must match"));
+    throw std::invalid_argument("Length of parent and child must match");
   }
 
   intx next_edge = 0,
@@ -94,6 +94,10 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
        * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
        * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx)),
        * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
+  if (!children_of) {
+    throw std::length_error("Could not allocate memory in "
+                            "preorder_edges_and_nodes. Try 64-bit R?");
+  }
 
   for (intx i = 0; i < n_edge; i++) {
     parent_of[child[i]] = parent[i];

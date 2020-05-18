@@ -4,7 +4,7 @@ test_that("RenumberTree fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
-  expect_error(Preorder(PectinateTree(8192)))
+  expect_error(Preorder(PectinateTree(8192 * 2)))
   expect_error(postorder_edges(PectinateTree(16385)$edge))
 })
 
