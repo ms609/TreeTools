@@ -17,6 +17,9 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
     throw(std::length_error("Too many edges in tree for edge_to_splits: "
                               "Contact maintainer for advice"));
   }
+  if (nTip[0] < 3) {
+    throw(std::length_error("Tree must contain more than two tips."));
+  }
 
   const intx n_edge = edge.rows(),
              n_node = n_edge + 1,
