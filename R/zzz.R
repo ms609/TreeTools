@@ -20,7 +20,7 @@ release_questions <- function() {
 # run_examples()
 # build_vignettes()
 #
-# check_win_devel(); rhub::check_for_cran()
+# devtools::check_win_devel(); rhub::check_for_cran()
 # rhub::check_with_valgrind() # runs the build and check on Linux, in valgrind to find memory leaks and pointer errors.
 # rhub::check_with_sanitizers() # runs all package package tests, examples and vignettes with Address Sanitizer and Undefined Behavior Sanitizer.
 #
