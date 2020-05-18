@@ -1,4 +1,4 @@
-# TreeTools 0.2.0
+# TreeTools 1.0.0
 
 ## New functions
 
@@ -17,6 +17,7 @@
 - Handle funny node orders.
 - Improve performance of `as.logical.Splits()` and related functions.
 - Fail nicely when trees are too large for memory.
+- Fix memory leak in `as.Splits()`.
 - Documentation improvements.
 
 # TreeTools 0.1.4
