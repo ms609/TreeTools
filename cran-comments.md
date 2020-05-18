@@ -50,7 +50,7 @@ The DOI and URLs are correct.
 
 ## Downstream dependencies
 
-revdepcheck::revdep_check() found no changes to worse in downstream dependencies
+Downstream dependencies R CMD CHECKed locally: No changes to worse in
 
 √ Quartet 1.1.0                          -- E: 0     | W: 0     | N: 0
 √ TreeSearch 0.4.0                       -- E: 0     | W: 0     | N: 0
