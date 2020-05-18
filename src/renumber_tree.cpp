@@ -27,6 +27,9 @@ void swap(intx *a, intx *b) {
   *b = temp;
 }
 
+/* Requires unsigned integers. */
+/* If we chose signed, we'd have to impose a limit on n_children, which
+ * would exclude star trees */
 void quicksort_by_smallest(intx *to_sort, intx *sort_by, intx left, intx right) {
   if (left >= right) return;
   intx pivot = sort_by[to_sort[right]];

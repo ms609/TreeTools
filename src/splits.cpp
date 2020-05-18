@@ -2,9 +2,9 @@
 #include "types.h"
 using namespace Rcpp;
 
-const int powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
-                               2048, 4096, 8192, 16384, 32768};
-const int BIN_SIZE = 8;
+const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
+                                 2048, 4096, 8192, 16384, 32768};
+const intx BIN_SIZE = 8;
 
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
@@ -26,22 +26,26 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   if (n_edge == n_tip) { /* No internal nodes resolved */
     return RawMatrix (0, n_bin);
   }
+  if (n_edge < 3) {
+    /* Cannot calculate trivial_two below. */
+    throw(std::length_error("Not enough edges in tree for edge_to_splits."));
+  }
 
-  intx** splits = new intx*[n_node];
+  uintx** splits = new uintx*[n_node];
   for (intx i = 0; i != n_node; i++) {
-    splits[i] = new intx[n_bin];
+    splits[i] = new uintx[n_bin];
     for (intx j = 0; j != n_bin; j++) {
       splits[i][j] = 0;
     }
   }
 
   for (intx i = 0; i != n_tip; i++) {
-    splits[i][(intx) i / BIN_SIZE] = powers_of_two[i % BIN_SIZE];
+    splits[i][intx(i / BIN_SIZE)] = powers_of_two[i % BIN_SIZE];
   }
 
   for (intx i = 0; i != n_edge - 1; i++) { /* final edge is second root edge */
     for (intx j = 0; j != n_bin; j++) {
-      splits[(intx) edge(i, 0) - 1][j] |= splits[(intx) edge(i, 1) - 1][j];
+      splits[intx(edge(i, 0) - 1)][j] |= splits[intx(edge(i, 1) - 1)][j];
     }
   }
 
@@ -50,8 +54,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   const intx trivial_origin = edge(n_edge - 1, 0) - 1,
     trivial_two = (edge(n_edge - 1, 0) == edge(n_edge - 3, 0) ?
                      NOT_TRIVIAL : (edge(n_edge - 1, 1) - 1L));
-
-  const intx n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL);
+  const intx n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
 
