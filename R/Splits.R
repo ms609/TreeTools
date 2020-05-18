@@ -176,8 +176,12 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   nTip <- attr(x, 'nTip')
-  ret <- matrix(as.logical(rawToBits(t(x))),
-                nrow = nrow(x), byrow = TRUE)[, seq_len(nTip), drop = FALSE]
+  if (dim(x)[1] == 0) {
+    ret <- matrix(logical(0), 0, nTip)
+  } else {
+    ret <- matrix(as.logical(rawToBits(t(x))),
+                  nrow = nrow(x), byrow = TRUE)[, seq_len(nTip), drop = FALSE]
+  }
   dimnames(ret) <- list(rownames(x), attr(x, 'tip.label'))
   ret
 }

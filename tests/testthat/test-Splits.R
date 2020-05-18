@@ -128,6 +128,16 @@ test_that('as.Splits.Splits', {
 })
 
 
+test_that('empty as.X.Splits', {
+  someSplit <- as.Splits(BalancedTree(6))
+  noSplit <- someSplit[[logical(0)]]
+  expect_equal(matrix(logical(0), 0, 6,
+                      dimnames = list(NULL, paste0('t', 1:6))),
+               as.logical(noSplit))
+  expect_equal(character(0), as.character(noSplit))
+})
+
+
 test_that('Renaming splits', {
   tree1 <- PectinateTree(1:8)
   tree2 <- BalancedTree(8:1)
