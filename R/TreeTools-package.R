@@ -9,9 +9,6 @@
 #' aiming for efficient and robust implementations of functions, typically
 #' applied to unweighted trees (i.e. those without edge lengths).
 #'
-#' Version 0.1 is a pre-release; some minor functionality may change in version
-#' 1.0, due in mid-2020.
-#'
 #' @keywords internal
 "_PACKAGE"
 

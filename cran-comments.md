@@ -4,7 +4,7 @@
 * Ubuntu 16.04.6 LTS, R 3.4.0, release and devel, via 
   [Travis CI](https://travis-ci.org/ms609/TreeTools)
 * Mac OS X 10.13.6, R release, via Travis
-* R-hub, with `check_for_cran()`
+* R-hub, with `check_for_cran()` and `check_win_devel()`
 
 ## R CMD check results
 
@@ -19,34 +19,15 @@ There was one NOTE:
 
 Spelling confirmed as correct
 
-> 
 > Found the following (possibly) invalid URLs:
->   URL: http://epubs.siam.org/doi/abs/10.1137/0403005
->     From: man/NRooted.Rd
->           man/UnrootedTreesMatchingSplit.Rd
->     Message: libcurl error code 56:
->       	Recv failure: Connection was reset
->     Status: Error
->   URL: https://doi.org/10.1093/sysbio/46.4.590
->     From: man/ReadCharacters.Rd
->     Status: Error
->     Message: libcurl error code 56:
->       	Recv failure: Connection was reset
->   URL: https://doi.org/10.1137/0403005
->     From: man/NRooted.Rd
->           man/UnrootedTreesMatchingSplit.Rd
->     Status: Error
->     Message: libcurl error code 56:
->       	Recv failure: Connection was reset
-> 
-> Found the following (possibly) invalid DOIs:
->   DOI: 10.1093/sysbio/46.4.590
->     From: DESCRIPTION
->     Status: libcurl error code 56:
->     	Recv failure: Connection was reset
->     Message: Error
+>  URL: https://doi.org/10.1137/0403005
+>    From: man/NRooted.Rd
+>          man/UnrootedTreesMatchingSplit.Rd
+>    Status: Error
+>    Message: libcurl error code 56:
+>      	Recv failure: Connection was reset
 
-The DOI and URLs are correct.
+The DOI and URL are correct, and work in my browser.
 
 ## Downstream dependencies
 
