@@ -1,5 +1,7 @@
-#include <cstdint> /* for uint_fast16_t, int_fast16_t */
+#include <cstdint> /* for uint_fast16_t, int_fast16_t, INTPTR_MAX */
 
 typedef int_fast16_t intx;
-const intx INTX_MAX = INT_FAST16_MAX;
 typedef uint_fast16_t uintx;
+
+const intx INTX_MAX = intx(INT_FAST16_MAX);
+const uintx UINTX_MAX = uintx(UINT_FAST16_MAX);
