@@ -158,6 +158,9 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
        * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
        * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx)),
        * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
+  if (!children_of) {
+    throw std::length_error("Could not allocate memory in postorder_edges.");
+  }
 
   for (intx i = 0; i < n_edge; i++) {
     parent_of[edge(i, 1)] = edge(i, 0);
