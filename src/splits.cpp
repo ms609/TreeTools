@@ -50,7 +50,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   }
 
   for (intx i = 0; i != n_tip; i++) {
-    delete splits[i];
+    delete[] splits[i];
   }
   
   intx n_trivial = 0;
@@ -71,7 +71,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
         names[i - n_tip - n_trivial] = (i + 1);
       }
     }
-    delete splits[i];
+    delete[] splits[i];
   }
   
   delete[] splits;
