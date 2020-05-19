@@ -64,15 +64,8 @@ CharacterInformation <- function (tokens) {
   # ?s and -s are best ignored
   splits <- tokenCounts[!(names(tokenCounts) %in% c('?', '-'))]
 
-  # Information content = -log2(probability)
-  # Probability of a tree being consistent with our character is
-  # n trees consistent with character / n trees with that many tips
-  # NUnrootedMult(splits) / NUnrooted(splits)
-  # As we are working with large numbers we can use logarithms
-  log2P <- Log2UnrootedMult(splits) - Log2Unrooted(sum(splits))
-
   # Return:
-  -log2P
+  MultiSplitInformation(splits)
 }
 
 #' Phylogenetic information content of splitting leaves into two partitions
@@ -187,7 +180,7 @@ SplitInformation <- function (A, B) {
 #'
 #' @export
 MultiSplitInformation <- function (partitionSizes) {
-  -(LnUnrootedMult(partitionSizes) - LnUnrooted.int(sum(partitionSizes))) / log(2)
+  Log2Unrooted.int(sum(partitionSizes)) - Log2UnrootedMult(partitionSizes)
 }
 
 #' Number of trees consistent with split
