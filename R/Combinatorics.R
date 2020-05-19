@@ -189,17 +189,17 @@ Log2Rooted.int <- function (tips) {
 
 #' Number of trees one SPR step away
 #'
-#' `N1Spr` calculates the number of trees one subtree prune-and-regraft
+#' `N1Spr()` calculates the number of trees one subtree prune-and-regraft
 #' operation away from a binary input tree using the formula given by Allen and
 #' Steel (2001).
 #'
-#' `IC1Spr` calculates the information content of trees at this distance: i.e.
+#' `IC1Spr()` calculates the information content of trees at this distance: i.e.
 #' the entropy corresponding to the proportion of all possible _n_-tip trees
 #' whose SPR distance is at most one from a specified tree.
 #'
 #' @param n Integer vector specifying the number of tips in a tree.
 #'
-#' @return `N1SPR` returns an integer vector.
+#' @return `N1Spr()` returns an integer vector.
 #'
 #' @examples
 #' N1Spr(4:6)
@@ -211,11 +211,13 @@ Log2Rooted.int <- function (tips) {
 #' @export
 N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 
-#' @describeIn N1Spr Information content of trees 0 or 1 SPR step from tree
-#'  with n tips.
-#' @return `IC1SPR` returns an numeric vector.
+#' @describeIn N1Spr Information content of trees 0 or 1 SPR step from a tree
+#'  with _n_ leaves.
+#' @return `IC1Spr()` returns an numeric vector giving the phylogenetic
+#' information content of trees 0 or 1 SPR rearrangement from an _n_-leaf tree,
+#' in bits.
 #' @export
-IC1Spr <- function(n) -log2((1L + N1Spr(n)) / NUnrooted(n))
+IC1Spr <- function(n) Log2Unrooted(n) - log2(1L + N1Spr(n))
 
 #' @rdname NRooted
 #' @examples

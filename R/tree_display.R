@@ -99,9 +99,10 @@ SortTree <- function(tree) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
     if (all(descs == 1L)) {
-      order(tipLabels[kids])[1] == 1
+      order(tipLabels[kids], method = 'radix')[1] == 1
     } else if (descs[1] == descs[2]) {
-      order(vapply(descendants[kids], MinKid, character(1)))[1] == 1
+      order(vapply(descendants[kids], MinKid, character(1)),
+            method = 'radix')[1] == 1
     } else {
       descs[1] < descs[2]
     }

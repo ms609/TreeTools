@@ -63,7 +63,7 @@ PectinateTree <- function (tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
     tip.label = tips
-  ), order = 'cladewise', class='phylo')
+  ), order = 'preorder', class = 'phylo')
 }
 
 #' Generate a Balanced Tree
@@ -85,7 +85,7 @@ BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
 
   # Return:
-  read.tree(text=paste0(BalancedBit(tips), ';'))
+  read.tree(text = paste0(BalancedBit(tips), ';'))
 }
 
 BalancedBit <- function (tips, nTips = length(tips)) {

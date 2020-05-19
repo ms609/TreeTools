@@ -186,7 +186,7 @@ CollapseNode.phylo <- function (tree, nodes) {
   root <- RootNode(edge)
   nTip <- NTip(tree)
   maxNode <- max(parent)
-  edgeBelow <- order(child)
+  edgeBelow <- order(child, method = 'radix') # a little faster than 'auto'
   tips <- seq_len(nTip)
   preRoot <- seq_len(root - 1L)
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])

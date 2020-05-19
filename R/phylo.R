@@ -118,7 +118,8 @@ Subtree <- function (tree, node) {
   tips  <- edge2[isTip]
   new.nTip <- length(tips)
   name <- character(new.nTip)
-  tipOrder <- order(tips, method='radix') # method='radix' typically a few % faster than 'auto'
+  # method='radix' typically a few % faster than 'auto'
+  tipOrder <- order(tips, method = 'radix')
   name[tipOrder] <- tipLabel[tips]
   edge2[isTip] <- tipOrder
 
@@ -133,7 +134,7 @@ Subtree <- function (tree, node) {
     tip.label = name,
     Nnode = dim(edge)[1] - new.nTip + 1L,
     edge = edge
-  ), class = 'phylo')
+  ), class = 'phylo', order = 'preorder')
 }
 
 #' Add a tip to a phylogenetic tree
