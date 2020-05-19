@@ -63,7 +63,7 @@ PectinateTree <- function (tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
     tip.label = tips
-  ), order = 'preorder', class = 'phylo')
+  ), order = 'cladewise', class = 'phylo')
 }
 
 #' Generate a Balanced Tree

@@ -35,7 +35,6 @@ test_that("Subtree() works", {
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
   expect_equal(BalancedTree(4), t4)
   expect_equal(SingleTaxonTree('t1'), Subtree(t4, 1))
-  expect_equal(SingleTaxonTree('t1'), Subtree(PectinateTree(1), 1))
 })
 
 
