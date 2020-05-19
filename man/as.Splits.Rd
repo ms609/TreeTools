@@ -6,6 +6,7 @@
 \alias{as.Splits.multiPhylo}
 \alias{as.Splits.Splits}
 \alias{as.Splits.list}
+\alias{as.Splits.matrix}
 \alias{as.Splits.logical}
 \alias{as.logical.Splits}
 \title{Convert object to splits}
@@ -19,6 +20,8 @@ as.Splits(x, tipLabels = NULL, ...)
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{list}(x, tipLabels = NULL, asSplits = TRUE, ...)
+
+\method{as.Splits}{matrix}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 

@@ -136,6 +136,32 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname as.Splits
 #' @export
+as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
+  if (all(c('edge', 'Nnode') %in% rownames(x))) {
+    col1 <- x[, 1]
+    if (inherits(col1, 'list')) {
+      if (is.null(tipLabels)) {
+        tipLabels <- col1$tip.label
+        if (is.null(tipLabels)) {
+          nTip <- dim(col1$edge)[1] - col1$Nnode + 1L
+          tipLabels <- seq_len(nTip)
+          x <- rbind(x, replicate(ncol(x), list(tip.label = tipLabels)))
+          rownames(x)[nrow(x)] <- 'tip.label'
+        }
+      }
+      lapply(seq_len(ncol(x)), function (i) {
+        as.Splits(structure(x[, i], class = 'phylo'), tipLabels = tipLabels)
+      })
+    } else {
+      stop("Unsupported matrix. Columns should correspond to trees.")
+    }
+  } else {
+    NextMethod()
+  }
+}
+
+#' @rdname as.Splits
+#' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)

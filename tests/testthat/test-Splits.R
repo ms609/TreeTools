@@ -127,6 +127,19 @@ test_that('as.Splits.Splits', {
   expect_equal(NSplits(expectedSplits), NSplits(actualSplits))
 })
 
+test_that('as.Splits.matrix', {
+  expect_error(as.Splits(matrix(1, 3, 3)))
+  trees <- list(BalancedTree(8), PectinateTree(8),
+                CollapseNode(BalancedTree(8), 10:13))
+  arr <- sapply(1:3, function (i) trees[[i]])
+
+  expect_error(as.Splits(arr[-2, ]))
+  expect_equal(as.Splits(trees), as.Splits(arr))
+
+  trees <- list(BalancedTree(1:8), PectinateTree(1:8),
+                CollapseNode(BalancedTree(1:8), 10:13))
+  expect_equivalent(as.Splits(trees), as.Splits(arr[-3, ]))
+})
 
 test_that('empty as.X.Splits', {
   someSplit <- as.Splits(BalancedTree(6))
