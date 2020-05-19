@@ -23,6 +23,20 @@ test_that('AddTipEverywhere handles nasty tree', {
                lapply(AddTipEverywhere(nasty), Preorder))
 })
 
+test_that("AddTip() at root", {
+  expect_equal(PectinateTree(8),
+               AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'))
+})
+
+test_that("Subtree() works", {
+  expect_error(Subtree(BalancedTree(8), 10)) # Nodes must be in preorder
+  t4 <- Subtree(Preorder(BalancedTree(8)), 10)
+  expect_equal(BalancedTree(4), t4)
+  expect_equal(SingleTaxonTree('t1'), Subtree(t4, 1))
+  expect_equal(SingleTaxonTree('t1'), Subtree(PectinateTree(1), 1))
+})
+
+
 test_that('ListAncestors works', {
   edge <- nasty$edge
   expect_equal(c(10L, 12L), ListAncestors(edge[, 1], edge[, 2], 11))
