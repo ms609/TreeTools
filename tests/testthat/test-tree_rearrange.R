@@ -128,3 +128,22 @@ test_that("DropTip works", {
   #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
+
+test_that("LeafLabelInterchange works", {
+  expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
+  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
+  expect_equivalent(BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
+  expect_equal(rev(BalancedTree(2)$tip),
+                   LeafLabelInterchange(BalancedTree(2), 2)$tip)
+
+  abcd <- letters[1:4]
+  sapply(1 + seq_len(100), function (i) {
+    # Check all pertubations
+    set.seed(i)
+    expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))
+
+    # Check lots of sizes
+    expect_equal(i, sum(paste0('t', 1:128) !=
+                        LeafLabelInterchange(BalancedTree(128), i)$tip))
+  })
+})

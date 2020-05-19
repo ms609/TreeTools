@@ -330,3 +330,72 @@ DropTip <- function (tree, tip) {
     Preorder(tree)
   }
 }
+
+#' Leaf label interchange
+#'
+#' Exchange the position of leaves within a tree.
+#'
+#' Modifies a tree by switching the positions of _n_ leaves.  To avoid
+#' later swaps undoing earlier exchanges, all _n_ leaves are guaranteed
+#' to change position.  Note, however, that no attempt is made to avoid
+#' swapping equivalent leaves, for example, a pair that are each others'
+#' closest relatives.  As such, the relationships within a tree are not
+#' guaranteed to be changed.
+#'
+#' @template treeParam
+#' @param n Integer specifying number of leaves whose positions should be
+#' exchanged.
+#'
+#' @return `LeafLabelInterchange()` returns a tree of class `phylo` on which
+#' the position of `n` leaves have been exchanged.
+#' The tree's internal topology will not change.
+#'
+#' @examples
+#' tree <- PectinateTree(8)
+#' plot(LeafLabelInterchange(tree, 3L))
+#'
+#' @template MRS
+#' @family tree manipulation
+#' @export
+LeafLabelInterchange <- function (tree, n = 2L) {
+
+  if (n < 2L) return (tree)
+  tipLabel <- tree$tip.label
+  nTip <- length(tipLabel)
+  if (n > nTip) {
+    stop("`n` cannot exceed number of tips in tree (", nTip, ")")
+  }
+
+  from <- sample.int(nTip, n)
+  # We need to ensure that a tip's new position is different from its old one.
+  # A simple way would be to shift each moved tip to the next one in turn:
+  # 1, 2, 3, 4 -> 2, 3, 4, 1
+  # But this cyclicity is non-random: we may wish to introduce some smaller
+  # cycles, e.g.
+  # 1, 2, 3, 4 -> 2, 1, 4, 3.
+
+  cycles <- integer(n / 2L)
+  remaining <- n
+  i <- 1L
+  while (remaining > 0L) {
+    if (remaining == 2L) {
+      cycles[i] <- 2L
+      break
+    }
+    thisCycle <- SampleOne(1L + seq_len(remaining - 2L))
+    if (thisCycle == remaining - 1L) thisCycle <- remaining
+    remaining <- remaining - thisCycle
+    cycles[i] <- thisCycle
+    i <- i + 1L
+  }
+  cycles <- cycles[cycles > 0L]
+  nCycles <- length(cycles)
+  start <- cumsum(c(0L, cycles[-nCycles]))
+  to <- unlist(lapply(seq_along(cycles), function (i) {
+     c(seq_len(cycles[i] - 1L) + 1L, 1L) + start[i]
+  }))
+
+  tree$tip.label[from] <- tipLabel[from[to]]
+  tree
+}
+

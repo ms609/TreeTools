@@ -9,6 +9,7 @@
 - `CladeSizes()`: Count leaves / nodes descended from each node.
 - `ListAncestors()`: List ancestors of a node.
 - `DropTip()`: Remove tip, handling weird node orders.
+- `LeafLabelInterchange()`: Exchange position of _n_ tips.
 - `TotalCopheneticIndex()` integrated from 'tci' package.
 
 ## Enhancements

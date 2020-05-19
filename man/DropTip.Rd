@@ -40,6 +40,7 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
