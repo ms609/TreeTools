@@ -50,4 +50,8 @@ test_that("CladeSizes works", {
   expect_equal(c(3, 8 + 4, 3 + 1, 7 + 3, 2),
                CladeSizes(nasty, internal = TRUE, 13:9))
   expect_equal(c(3, 8, 3, 7, 2), CladeSizes(nasty, internal = FALSE, 13:9))
+
+  # Misspecification:
+  expect_warning(expect_equal(CladeSizes(BalancedTree(7), internal = FALSE),
+                              CladeSizes(BalancedTree(7), internal = 8:9)))
 })

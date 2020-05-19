@@ -370,13 +370,19 @@ ListAncestors <- function (parent, child, node) {
 #' tree <- BalancedTree(6)
 #' plot(tree)
 #' ape::nodelabels()
-#' CladeSizes(tree, c(8, 9))
+#' CladeSizes(tree, nodes = c(8, 9))
 #'
 #' @family tree navigation
 #' @export
 CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
+  if (length(internal) > 1 || !is.logical(internal)) {
+    warning("`internal` should be a single logical value.")
+    internal <- isTRUE(internal)
+  }
+
   edge <- PostorderEdges(tree$edge, renumber = FALSE)
   nTip <- NTip(tree)
+
   size <- c(rep(1L, nTip), rep(internal, max(edge[, 1]) - nTip))
   for (i in seq_len(nrow(edge))) {
     edgeI <- edge[i, ]
@@ -385,6 +391,7 @@ CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
     size[parent] <- size[parent] + size[child]
   }
 
+
   # Return:
-  (if (is.null(nodes)) size else size[nodes]) - as.integer(internal)
+  (if (is.null(nodes)) size else size[nodes]) - internal
 }
