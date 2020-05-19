@@ -1,4 +1,5 @@
 context('tree_generation.R')
+
 test_that('Pectinate trees are generated', {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
@@ -15,4 +16,18 @@ test_that('Balanced trees are generated correctly', {
                BalancedTree(9L))
   expect_equal(integer(0), BalancedBit(seq_len(0)))
   expect_equal('Test', BalancedBit('Test'))
+})
+
+test_that("Random trees are generated correctly", {
+  expect_equal(c(4, 5, 5, 4, 5), RandomTree(3, root = TRUE)$edge[1:5])
+  expect_equal(PectinateTree(c('t2', 't3', 't1')), RandomTree(3, root = 't2'))
+  expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
+})
+
+test_that("EnforceOutgroup() fails nicely", {
+  expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
+  expect_equal(BalancedTree(letters[5:6]),
+               Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15))
+  expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
+               EnforceOutgroup(BalancedTree(8), 't1'))
 })

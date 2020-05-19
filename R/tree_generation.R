@@ -22,9 +22,9 @@
 RandomTree <- function (tips, root = FALSE) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
-  tree <- rtree(nTips, tip.label=tips, br=NULL)
+  tree <- rtree(nTips, rooted = root != FALSE, tip.label = tips, br = NULL)
   if (root != FALSE) {
-    tree <- root(tree, root, resolve.root=TRUE)
+    tree <- root(tree, root, resolve.root = TRUE)
   }
 
   # Return:
@@ -151,23 +151,12 @@ NJTree <- function (dataset) {
 #'
 #' @template MRS
 #' @family tree manipulation
-#'
-#' @importFrom ape rtree
-#' @importFrom ape root drop.tip bind.tree
-#'
 #' @export
-EnforceOutgroup <- function (tree, outgroup) {
-  if (inherits(tree, 'phylo')) {
-    taxa <- tree$tip.label
-  } else if (inherits(tree, 'character')) {
-    taxa <- tree
-    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1],
-                 resolve.root=TRUE)
-  } else {
-    stop ("tree must be of class `phylo` or `character`")
-  }
+EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
-  if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root=TRUE))
+#' @importFrom ape root drop.tip bind.tree
+.EnforceOutgroup <- function (tree, outgroup, taxa) {
+  if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %in% outgroup)]
   if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {
@@ -177,6 +166,23 @@ EnforceOutgroup <- function (tree, outgroup) {
   ingroup.branch <- drop.tip(tree, outgroup)
   outgroup.branch <- drop.tip(tree, ingroup)
 
-  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1), outgroup, resolve.root=TRUE)
+  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
+                 outgroup, resolve.root = TRUE)
   RenumberTips(Renumber(result), taxa)
+}
+
+#' @rdname EnforceOutgroup
+#' @export
+EnforceOutgroup.phylo <- function (tree, outgroup) {
+  .EnforceOutgroup(tree, outgroup, tree$tip.label)
+}
+
+#' @rdname EnforceOutgroup
+#' @importFrom ape root rtree
+#' @export
+EnforceOutgroup.character <- function (tree, outgroup) {
+  taxa <- tree
+  .EnforceOutgroup(root(rtree(length(taxa), tip.label = taxa, br = NULL),
+                        taxa[1], resolve.root = TRUE),
+                   outgroup, taxa)
 }
