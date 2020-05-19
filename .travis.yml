@@ -20,7 +20,6 @@ before_script:
 jobs:
   include:
     - r: 3.4.0
-      arch: x86
       branches:
         only: master
       after_success:
