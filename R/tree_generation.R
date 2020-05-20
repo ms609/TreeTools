@@ -4,7 +4,8 @@
 #' rooting the tree on a given tip.
 #'
 #' @template tipsForTreeGeneration
-#' @param root Tip to use as root (if desired; FALSE otherwise)
+#' @param root Character or integer specifying tip to use as root, if desired;
+#' or `FALSE` for an unrooted tree.
 #'
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
