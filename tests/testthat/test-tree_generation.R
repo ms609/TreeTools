@@ -9,6 +9,7 @@ test_that('Pectinate trees are generated', {
                PectinateTree(ape::read.tree(text = '(a, ((b, c), (d, e)));')))
   expect_equal(ape::read.tree(text = '(Cricocosmia, (Aysheaia, Siberion));'),
                PectinateTree(Lobo.phy[2:4]))
+  expect_true(is.integer(PectinateTree(8)$edge))
 })
 
 test_that('Balanced trees are generated correctly', {
@@ -23,6 +24,7 @@ test_that('Balanced trees are generated correctly', {
   expect_equivalent(PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), BalancedBit(seq_len(0)))
   expect_equal('Test', BalancedBit('Test'))
+  expect_true(is.integer(BalancedTree(8)$edge))
 })
 
 test_that("Random trees are generated correctly", {

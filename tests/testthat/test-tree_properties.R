@@ -120,7 +120,7 @@ test_that("Node depths calculated correctly", {
   expect_equal(c(1,2,1,1,1,2,1,2,1,1,1), NodeDepth(tree, TRUE, FALSE))
 
   tree <- CollapseNode(BalancedTree(20), c(22, 33:35))
-  expect_equal(c(4,3,1,2,1,3,1,2,1,4,1,3,1,2,1),
+  expect_equal(c(4,3,2,1,1,3,2,1,1,4,1,3,2,1,1),
                NodeDepth(tree, FALSE, FALSE))
   expect_equal(c(3,2,1,1,1,2,1,1,1,2,1,2,1,1,1),
                NodeDepth(tree, TRUE, FALSE))

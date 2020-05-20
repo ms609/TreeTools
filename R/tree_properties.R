@@ -577,9 +577,9 @@ RootNode.phylo <- function (x) {
   edgeOrder <- attr(x, "order")
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
-      return(edge[nrow(edge), 1L])
+      return(as.integer(edge[nrow(edge), 1L]))
     } else if (edgeOrder == 'preorder') {
-      return(edge[1L])
+      return(as.integer(edge[1L]))
     }
   }
   RootNode(edge)

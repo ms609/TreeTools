@@ -106,7 +106,7 @@ BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
     }
   } else {
     # Recurse:
-    firstN <- ceiling(nTips / 2L)
+    firstN <- as.integer(ceiling(nTips / 2L))
     firstHalf <- seq_len(firstN)
     root2 <- rootNode + firstN
     rbind(rootNode + 0:1,
