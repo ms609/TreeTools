@@ -62,3 +62,7 @@ test_that('PhyToString works', {
                        type='USER', levels=c(0:6, '-', 7:12))
   expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
 })
+
+test_that('as_newick fails gracefully', {
+  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
+})
