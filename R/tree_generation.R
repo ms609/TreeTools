@@ -69,14 +69,14 @@ PectinateTree <- function (tips) {
 
 #' Generate a Balanced Tree
 #'
-#' Generates a balanced (symmetrical) binary tree with the specified tip labels.
+#' Generates a rooted balanced (symmetrical) binary tree with the specified
+#' tip labels.
 #'
 #' @template tipsForTreeGeneration
 #'
 #' @return A tree of class `phylo`.
 #' @family tree generation functions
 #' @template MRS
-#' @importFrom ape read.tree
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
@@ -84,27 +84,32 @@ PectinateTree <- function (tips) {
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
-  tr <- read.tree(text = paste0(BalancedBit(seq_along(tips)), ';'))
-  tr$tip.label <- tips # Avoids errors parsing apostrophes and spaces
+  nTip <- length(tips)
 
   # Return:
-  tr
+  structure(list(edge = BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
+                       tip.label = as.character(tips)),
+            order = 'paareorder', class = 'phylo')
 }
 
-BalancedBit <- function (tips, nTips = length(tips)) {
+BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
   if (nTips < 4L) {
     if (nTips == 2L) {
-      paste0('(', tips[1L], ',', tips[2L], ')')
+      matrix(c(rootNode, rootNode, tips), 2L, 2L)
     } else if (nTips == 3L) {
-      paste0('(', tips[1L], ',(', tips[2L], ',', tips[3L], '))')
+      matrix(c(rootNode + c(0L, 1L, 1L, 0L, 1L), tips), 4L, 2L)
     } else {
       tips
     }
   } else {
     # Recurse:
-    firstHalf <- seq_len(nTips / 2L)
-    paste0('(', BalancedBit(tips[firstHalf]), ',',
-           BalancedBit(tips[seq_along(tips)[-firstHalf]]), ')')
+    firstN <- ceiling(nTips / 2L)
+    firstHalf <- seq_len(firstN)
+    root2 <- rootNode + firstN
+    rbind(rootNode + 0:1,
+          BalancedBit(tips[firstHalf], rootNode = rootNode + 1L),
+          c(rootNode, root2),
+          BalancedBit(tips[-firstHalf], rootNode = root2))
   }
 }
 
