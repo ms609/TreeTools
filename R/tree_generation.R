@@ -84,9 +84,11 @@ PectinateTree <- function (tips) {
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
+  tr <- read.tree(text = paste0(BalancedBit(seq_along(tips)), ';'))
+  tr$tip.label <- tips # Avoids errors parsing apostrophes and spaces
 
   # Return:
-  read.tree(text = paste0(BalancedBit(tips), ';'))
+  tr
 }
 
 BalancedBit <- function (tips, nTips = length(tips)) {
