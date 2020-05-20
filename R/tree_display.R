@@ -123,21 +123,3 @@ SortTree <- function (tree) {
   attr(tree, 'order') <- NULL
   Cladewise(Renumber(tree))
 }
-
-#' Write Newick Tree
-#'
-#' Writes a tree in Newick format.  This differs from ape's `write.tree`
-#' in the encoding of spaces as spaces, rather than underscores.
-#'
-#' @template treeParam
-#'
-#' @return `NewickTree` returns a character string denoting `tree` in Newick
-#' format.
-#'
-#' @examples
-#' NewickTree(BalancedTree(6))
-#'
-#' @seealso [`as.Newick`]
-#' @importFrom ape write.tree
-#' @export
-NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed=TRUE)
