@@ -14,7 +14,7 @@ test_that('EdgeAncestry works', {
 test_that('Root node can be found', {
   rooted <- BalancedTree(8)
   postorder <- Postorder(rooted)
-  unrooted <- unroot(rooted)
+  unrooted <- Unroot(rooted)
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
   expect_equal(9L, RootNode(rooted$edge))
@@ -29,7 +29,7 @@ test_that('Root node can be found', {
   expect_warning(RootNode(matrix(1:4, 2)))
 })
 
-test_that('NodeOrder works', {
+test_that('NodeOrder() works', {
   expect_equivalent(c(2L, rep(3L, 6)),
                     as.integer(NodeOrder(BalancedTree(8), internalOnly = TRUE)))
   expect_equivalent(c(rep(1L, 8), 2L, rep(3L, 6)),

@@ -1,6 +1,7 @@
-#' Root a phylogenetic tree
+#' Root or unroot a phylogenetic tree
 #'
-#' Roots a tree on the smallest clade containing the specified tips.
+#' `RootTree()` roots a tree on the smallest clade containing the specified
+#' tips; `UnrootTree()` collapses a root node.
 #'
 #' @template treeParam
 #' @template outgroupTipsParam
@@ -133,6 +134,30 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
       Preorder(tree)
     }
   }
+}
+
+#' @rdname RootTree
+#' @return `UnrootTree()` returns a tree of class `phylo`, in preorder,
+#' having collapsed the first child of the root node.
+#' @export
+UnrootTree <- function (tree) {
+  tree <- Preorder(tree)
+  edge <- tree$edge
+  if (dim(edge)[1] < 3) return (tree)
+
+  parent <- edge[, 1]
+  rootNode <- parent[1]
+  rootEdge2 <- parent[-1] == rootNode
+  if (sum(rootEdge2) > 1L) return (tree)
+
+  deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
+  renumber <- edge > rootNode
+  edge[renumber] <- edge[renumber] - 1L
+  tree$edge <- edge[-deleted, ]
+  tree$Nnode <- tree$Nnode - 1L
+
+  # Return:
+  tree
 }
 
 #' Collapse nodes on a phylogenetic tree

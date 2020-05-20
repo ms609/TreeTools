@@ -12,6 +12,10 @@ test_that('Pectinate trees are generated', {
 })
 
 test_that('Balanced trees are generated correctly', {
+  # nTip even
+  expect_equal(ape::read.tree(text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));'),
+               BalancedTree(8L))
+  # nTip odd
   expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));'),
                BalancedTree(9L))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))

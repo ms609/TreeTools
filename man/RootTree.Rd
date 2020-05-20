@@ -3,11 +3,14 @@
 \name{RootTree}
 \alias{RootTree}
 \alias{RootOnNode}
-\title{Root a phylogenetic tree}
+\alias{UnrootTree}
+\title{Root or unroot a phylogenetic tree}
 \usage{
 RootTree(tree, outgroupTips)
 
 RootOnNode(tree, node, resolveRoot = FALSE)
+
+UnrootTree(tree)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
@@ -25,9 +28,13 @@ clade that contains the specified tips.
 
 \code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
 \code{node} and ordered in \code{\link{Preorder}}.
+
+\code{UnrootTree()} returns a tree of class \code{phylo}, in preorder,
+having collapsed the first child of the root node.
 }
 \description{
-Roots a tree on the smallest clade containing the specified tips.
+\code{RootTree()} roots a tree on the smallest clade containing the specified
+tips; \code{UnrootTree()} collapses a root node.
 }
 \section{Functions}{
 \itemize{

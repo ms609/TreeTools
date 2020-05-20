@@ -85,6 +85,9 @@ PectinateTree <- function (tips) {
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
   nTip <- length(tips)
+  if (nTip < 2L) {
+    return(if (nTip == 1L) SingleTaxonTree(tips) else NULL)
+  }
 
   # Return:
   structure(list(edge = BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,

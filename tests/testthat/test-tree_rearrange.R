@@ -71,14 +71,28 @@ test_that("RootOnNode works", {
                RootOnNode(urt, 9L, TRUE))
 })
 
-test_that("RootOnNode supports nasty node ordering", {
+test_that("RootOnNode() supports nasty node ordering", {
   expect_equal(Preorder(nasty),
                RootOnNode(nasty, 12L, resolveRoot = TRUE))
   expect_equal(RootOnNode(Preorder(nasty), 11L),
                RootOnNode(nasty, 13L))
 })
 
-test_that("CollapseNodes works", {
+test_that("Unroot() works", {
+  expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
+                        8, 1, 2, 3, 9, 10, 4,  5, 6), ncol = 2L),
+               UnrootTree(BalancedTree(6))$edge)
+  expect_equal(matrix(c(7, 7, 7, 8, 8, 9, 9, 10, 10,
+                        1, 2, 8, 3, 9, 4, 10, 5,  6), ncol = 2L),
+               UnrootTree(PectinateTree(6))$edge)
+  expect_equal(BalancedTree(2), UnrootTree(BalancedTree(2)))
+  expect_equal(BalancedTree(1), UnrootTree(BalancedTree(1)))
+  expect_equal(matrix(c(9, 9, 10, 10, 10, 9, 11, 11, 12, 12, 9,
+                        1, 10, 2,  4,  7, 11, 3, 12,  5,  6, 8), ncol = 2L),
+               UnrootTree(nasty)$edge)
+})
+
+test_that("CollapseNodes() works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
   expect_error(CollapseNode(tree8, 1))
@@ -105,7 +119,7 @@ test_that("CollapseNodes works", {
                Preorder(CollapseNode(nasty, c(11, 13))))
 })
 
-test_that("DropTip works", {
+test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_null(DropTip(bal8, 1:8))
   expect_warning(expect_equal(bal8, DropTip(bal8, -1)))
@@ -129,7 +143,7 @@ test_that("DropTip works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
-test_that("LeafLabelInterchange works", {
+test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
   expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
   expect_equivalent(BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
