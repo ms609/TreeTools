@@ -37,7 +37,7 @@ SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FA
 #' @export
 UnshiftTree <- function(add, treeList) {
   if (inherits(treeList, 'multiPhylo')) {
-    structure(c(list(add), lapply(treeList, I), class = 'multiPhylo')
+    structure(c(list(add), lapply(treeList, I), class = 'multiPhylo'))
   } else if (inherits(treeList, 'phylo')) {
     treeList <- structure(list(add, treeList), class = 'multiPhylo')
   } else { # including: if (mode(trees) == 'list') {

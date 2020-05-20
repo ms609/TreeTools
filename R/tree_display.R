@@ -63,10 +63,10 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' @importFrom graphics legend
 #' @template MRS
 #' @export
-MarkMissing <- function (tip, position='bottomleft', ...) {
+MarkMissing <- function (tip, position = 'bottomleft', ...) {
   if (length(tip) > 0) {
-    legend(position, legend=gsub('_', ' ', tip, fixed=TRUE),
-         lwd=1, lty=2, bty='n', ...)
+    legend(position, legend = gsub('_', ' ', tip, fixed = TRUE),
+         lwd = 1, lty = 2, bty = 'n', ...)
   }
 }
 
