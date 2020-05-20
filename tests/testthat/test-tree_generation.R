@@ -12,10 +12,9 @@ test_that('Pectinate trees are generated', {
 })
 
 test_that('Balanced trees are generated correctly', {
-  expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9))));'),
+  expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));'),
                BalancedTree(9L))
-  expect_equal(ape::read.tree(text = '((((1, 2), 3), (4, 5)), ((6, 7), (8, 9))));'),
-               BalancedTree(1:9)) # Integer to character
+  expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equivalent(PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), BalancedBit(seq_len(0)))
