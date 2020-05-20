@@ -27,7 +27,6 @@ test_that('ConsensusWithout() is robust', {
 test_that("SortTree() works", {
   expect_equal(matrix(c(6:9, 9:6, 7:9, 1:5), 8, 2),
                SortTree(PectinateTree(5))$edge)
-  expect_identical(BalancedTree(11), SortTree(BalancedTree(11)))
 #  expect_equal(#TODO,
 #               SortTree(ape::unroot(PectinateTree(5))$edge))
   expect_equal('cladewise', attr(SortTree(PectinateTree(5)), 'order'))

@@ -18,7 +18,7 @@ test_that("as.Splits", {
                as.logical(as.Splits(c(A, A, B, B))))
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
-  expect_equal(c('7' = 'a b | c d e', '9' = 'd e | a b c'), as.character(splits1))
+  expect_equal(c('8' = 'a b | c d e', '9' = 'd e | a b c'), as.character(splits1))
   logicalSplits <- as.Splits(matrix(c(B, B, A, A, A,  A, A, A, B, B),
                                     nrow = 2, byrow = TRUE),
                              tipLabels = letters[1:5])
@@ -230,7 +230,7 @@ test_that("Split combination", {
                     c(splits1, as.Splits(RenumberTips(tree3, letters[1:5])))[, 1])
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
 
-  expect_equal(c('7' = 2, '9' = 2), TipsInSplits(splits1))
+  expect_equal(c('8' = 2, '9' = 2), TipsInSplits(splits1))
 
   #TODO: Fully test splits with large (> 8 tip) trees
 })

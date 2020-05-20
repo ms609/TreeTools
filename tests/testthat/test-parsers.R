@@ -64,9 +64,9 @@ test_that('PhyToString works', {
 })
 
 test_that('NewickTree() works', {
-  expect_equal('((Test taxon,Another test),(What`sthis?,Number12.3));',
+  expect_equal("((Test taxon,Another test),(What's this?,Number 12.3));",
                NewickTree(BalancedTree(c('Test taxon', 'Another_test',
-                                             "What`s this?", "Number 12.3"))))
+                                             "What's this?", "Number 12.3"))))
 })
 
 test_that('as_newick fails gracefully', {

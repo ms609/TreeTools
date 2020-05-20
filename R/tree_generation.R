@@ -89,7 +89,7 @@ BalancedTree <- function (tips) {
   # Return:
   structure(list(edge = BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
                        tip.label = as.character(tips)),
-            order = 'paareorder', class = 'phylo')
+            order = 'cladewise', class = 'phylo') # Actually in preorder
 }
 
 BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {

@@ -64,8 +64,8 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(ape::reorder.phylo(tree, 'cladewise'), Cladewise(tree))
   expect_equal(ape::reorder.phylo(tree, 'pruningwise'), Pruningwise(tree))
 
-  expect_equal(matrix(c(9,9,11,11,10,10,8,8,7,7,
-                        2,3,5,6,4,11,1,9,8,10), ncol=2),
+  expect_equal(matrix(c(9,9,11,11,10,10,8,8,7, 7,
+                        1,2, 4, 5, 6,11,3,9,8,10), ncol = 2),
                Postorder(BalancedTree(6))$edge)
 
 
