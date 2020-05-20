@@ -160,9 +160,11 @@ IntegerMatrix postorder_edges(IntegerMatrix edge)
   const intx n_edge = edge.nrow(), node_limit = n_edge + 1;
   intx root_node = 0, n_tip = 0;
 
-  if (n_edge * node_limit * sizeof(intx) > INTPTR_MAX) {
-    throw std::length_error("Tree too large for postorder_edges. "
-                            "Try running 64-bit R?");
+  // 0.9999 leaves room for memory overhead: seems in practice to avoid
+  // attempting a doomed call to calloc.
+  if (long(n_edge * node_limit * sizeof(intx)) > 0.9999L * INTPTR_MAX) {
+    throw std::length_error("Tree too large for postorder_edges. "              // # nocov
+                            "Try running 64-bit R?");                           // # nocov
   }
 
   intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),

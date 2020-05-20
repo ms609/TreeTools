@@ -5,7 +5,10 @@ test_that("RenumberTree fails safely", {
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
   expect_error(Preorder(PectinateTree(8192 * 2)))
-  expect_error(postorder_edges(PectinateTree(16385)$edge))
+
+  bigEdge <- PectinateTree(16385)$edge
+  expect_error(postorder_edges(bigEdge))
+  expect_error(preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2]))
 })
 
 test_that("RenumberTree handles polytomies", {
