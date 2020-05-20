@@ -17,9 +17,16 @@ such that the larger clade is first.
 Sorts each node into a consistent order, so similar trees look visually
 similar.
 }
-\seealso{
-\code{\link[=RenumberTree]{RenumberTree()}}
+\details{
+\code{tree} must (presently) be binary.
+}
+\examples{
+messyTree <- as.phylo(6, 5)
+plot(messyTree)
+plot(SortTree(messyTree))
 
+}
+\seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},

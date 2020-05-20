@@ -63,30 +63,36 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' @importFrom graphics legend
 #' @template MRS
 #' @export
-MarkMissing <- function (tip, position = 'bottomleft', ...) {
+MarkMissing <- function (tip, position = 'bottomleft', ...) {                   # nocov start
   if (length(tip) > 0) {
     legend(position, legend = gsub('_', ' ', tip, fixed = TRUE),
          lwd = 1, lty = 2, bty = 'n', ...)
   }
-}
+}                                                                               # nocov end
 
 #' Sort tree
 #'
 #' Sorts each node into a consistent order, so similar trees look visually
 #' similar.
 #'
+#TODO:
+#' `tree` must (presently) be binary.
+#'
 #' @template treeParam
 #'
 #' @return `SortTree` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
-#' @seealso [`RenumberTree()`]
+#' @examples
+#' messyTree <- as.phylo(6, 5)
+#' plot(messyTree)
+#' plot(SortTree(messyTree))
 #'
 #' @family tree manipulation
 #'
 #' @template MRS
 #' @export
-SortTree <- function(tree) {
+SortTree <- function (tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -108,7 +114,7 @@ SortTree <- function(tree) {
     }
   }, logical(1))
   for (node in tree.ntip + rev(which(swaps))) {
-    childEdges <- parent==node
+    childEdges <- parent == node
     kids <- child[childEdges]
     child[childEdges][2:1] <- kids
   }
