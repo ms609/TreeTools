@@ -25,7 +25,6 @@
 #' @template MRS
 #'
 #' @family tree information functions
-#' @importFrom ape unroot
 #' @export
 TreesMatchingTree <- function (tree) {
   prod(NUnrooted(NodeOrder(tree)))

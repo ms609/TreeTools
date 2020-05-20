@@ -558,7 +558,7 @@ TreeIsRooted <- function (tree) {
 #'
 #' @examples
 #' RootNode(BalancedTree(8))
-#' RootNode(unroot(BalancedTree(8)))
+#' RootNode(UnrootTree(BalancedTree(8)))
 #'
 #'
 #' @family tree navigation

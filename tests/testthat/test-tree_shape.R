@@ -81,7 +81,8 @@ test_that('Rooted tree shapes built', {
 test_that('Unrooted tree shapes built', {
   expect_error(plot(UnrootedTreeWithShape(4, 8))) # Out of range
 
-  expect_equal(UnrootedTreeWithShape(0, 9), unroot(PectinateTree(rep('', 9))))
+  expect_equal(UnrootedTreeWithShape(0, 9),
+               UnrootTree(PectinateTree(rep('', 9))))
   TestSym <- function (tree, shape) {
     expect_equal(shape, UnrootedTreeShape(tree))
     expect_equal(UnrootedTreeKey(tree),

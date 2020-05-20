@@ -1,7 +1,8 @@
 #' Root or unroot a phylogenetic tree
 #'
 #' `RootTree()` roots a tree on the smallest clade containing the specified
-#' tips; `UnrootTree()` collapses a root node.
+#' tips; `UnrootTree()` collapses a root node, without the undefined behaviour
+#' encountered when using [`ape::unroot()`] on trees in preorder.
 #'
 #' @template treeParam
 #' @template outgroupTipsParam
@@ -60,7 +61,6 @@ RootTree <- function (tree, outgroupTips) {
 #' @return `RootOnNode` returns a tree of class `phylo`, rooted on the requested
 #' `node` and ordered in [`Preorder`].
 #'
-#' @importFrom ape unroot
 #' @export
 RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
@@ -127,7 +127,7 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   } else {
     # Root position is already correct
     if (rooted && !resolveRoot) {
-      unroot(tree)
+      UnrootTree(tree)
     } else if (!rooted && resolveRoot) {
       RootOnNode(tree, max(child[rootEdges]), resolveRoot = TRUE)
     } else {

@@ -78,7 +78,7 @@ test_that('as.Splits.phylo', {
   expect_true(all(expected %in% actual))
 
   expect_equal(c(2L, 1L), dim(as.Splits(PectinateTree(5L))))
-  expect_equal(c(2L, 1L), dim(as.Splits(unroot(PectinateTree(5L)))))
+  expect_equal(c(2L, 1L), dim(as.Splits(UnrootTree(PectinateTree(5L)))))
 
   twoCherriesInGrass <- PectinateTree(3) + PectinateTree(3)
   expect_equal(c(2L, 1L), dim(as.Splits(twoCherriesInGrass)))

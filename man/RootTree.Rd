@@ -34,7 +34,8 @@ having collapsed the first child of the root node.
 }
 \description{
 \code{RootTree()} roots a tree on the smallest clade containing the specified
-tips; \code{UnrootTree()} collapses a root node.
+tips; \code{UnrootTree()} collapses a root node, without the undefined behaviour
+encountered when using \code{\link[ape:unroot]{ape::unroot()}} on trees in preorder.
 }
 \section{Functions}{
 \itemize{

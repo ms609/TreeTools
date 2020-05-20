@@ -34,7 +34,7 @@ test_that("RootOnNode works", {
   expect_equal(exp3, RootOnNode(tree, node = 3L, TRUE))
   expect_equal(exp2, RootOnNode(tree, node = 2L, TRUE))
   expect_equal(tree, RootOnNode(tree, node = 1L, TRUE))
-  expect_equal(tree, RootOnNode(unroot(tree), node = 1L, TRUE))
+  expect_equal(tree, RootOnNode(UnrootTree(tree), node = 1L, TRUE))
 
 
   TestTip <- function (tr, node, rr) {
@@ -65,7 +65,8 @@ test_that("RootOnNode works", {
   TestTip(urt, 1, TRUE)
 
   expect_equal(PectinateTree(8), RootOnNode(PectinateTree(8), 9L, TRUE))
-  expect_equal(unroot(PectinateTree(8)), RootOnNode(PectinateTree(8), 9L, FALSE))
+  expect_equal(UnrootTree(PectinateTree(8)),
+               RootOnNode(PectinateTree(8), 9L, FALSE))
   expect_equal(urt, RootOnNode(urt, 9L, FALSE))
   expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
                RootOnNode(urt, 9L, TRUE))

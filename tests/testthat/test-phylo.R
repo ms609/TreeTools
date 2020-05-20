@@ -12,8 +12,7 @@ test_that('AddTipEverywhere correct', {
   backbone <- PectinateTree(5)
 
   expect_equal(7L, length(AddTipEverywhere(backbone, includeRoot = FALSE)))
-  # unroot does not respect 'preorder'
-  expect_equal(7L, length(AddTipEverywhere(unroot(Cladewise(backbone)),
+  expect_equal(7L, length(AddTipEverywhere(UnrootTree(backbone),
                                            includeRoot = FALSE)))
   expect_equal(9L, length(AddTipEverywhere(backbone, includeRoot = TRUE)))
   expect_equal(5L, length(AddTipEverywhere(CollapseNode(backbone, 7:9))))

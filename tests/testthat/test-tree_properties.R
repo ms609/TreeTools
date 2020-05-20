@@ -14,7 +14,7 @@ test_that('EdgeAncestry works', {
 test_that('Root node can be found', {
   rooted <- BalancedTree(8)
   postorder <- Postorder(rooted)
-  unrooted <- Unroot(rooted)
+  unrooted <- UnrootTree(rooted)
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
   expect_equal(9L, RootNode(rooted$edge))
@@ -50,15 +50,15 @@ test_that('Rooting and partition counting', {
 
   tree8 <- ape::rtree(8L)
   expect_true(TreeIsRooted(tree8))
-  expect_false(TreeIsRooted(ape::unroot(tree8)))
+  expect_false(TreeIsRooted(ape::UnrootTree(tree8)))
 
   expect_equal(5L, NPartitions(8))
   expect_equal(5L, NPartitions(tree8))
-  expect_equal(5L, NPartitions(ape::unroot(tree8)))
+  expect_equal(5L, NPartitions(ape::UnrootTree(tree8)))
 
   expect_equal(0L, NPartitions(ape::read.tree(text='(A, ((B, C)));')))
 
-  expect_equal(c(5L, 5L), NPartitions(list(tree8, ape::unroot(tree8))))
+  expect_equal(c(5L, 5L), NPartitions(list(tree8, ape::UnrootTree(tree8))))
   expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
   expect_error(NPartitions('not a tree'))
 })
@@ -88,9 +88,9 @@ test_that("Node depths calculated correctly", {
   expect_equal(c(rep(0, 20), 19:1), NodeDepth(PectinateTree(20)))
   expect_equal(c(rep(0, 20), rep(1, 19)),
                NodeDepth(PectinateTree(20), shortest = TRUE))
-  expect_equal(c(rep(0, 20), 1:9, 9:1), NodeDepth(unroot(PectinateTree(20))))
+  expect_equal(c(rep(0, 20), 1:9, 9:1), NodeDepth(UnrootTree(PectinateTree(20))))
   expect_equal(c(rep(0, 20), rep(1, 18)),
-               NodeDepth(unroot(PectinateTree(20)), shortest = TRUE))
+               NodeDepth(UnrootTree(PectinateTree(20)), shortest = TRUE))
 
   tree <- BalancedTree(20)
   expect_equal(c(5,4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
@@ -98,13 +98,13 @@ test_that("Node depths calculated correctly", {
   expect_equal(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
-  tree <- unroot(tree)
+  tree <- UnrootTree(tree)
   expect_equal(c(4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
-  tree <- unroot(RootTree(BalancedTree(20), 't10'))
+  tree <- UnrootTree(RootTree(BalancedTree(20), 't10'))
   #plot(tree)
   #nodelabels(NodeDepth(tree, T, FALSE))
   #nodelabels(NodeDepth(tree, F, FALSE))
