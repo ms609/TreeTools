@@ -48,17 +48,17 @@ test_that('Rooting and partition counting', {
   expect_false(TreeIsRooted(ape::read.tree(text='(a, b, c);')))
   expect_true(TreeIsRooted(ape::read.tree(text='(a, (b, c));')))
 
-  tree8 <- ape::rtree(8L)
+  tree8 <- RandomTree(8L, TRUE)
   expect_true(TreeIsRooted(tree8))
-  expect_false(TreeIsRooted(ape::UnrootTree(tree8)))
+  expect_false(TreeIsRooted(UnrootTree(tree8)))
 
   expect_equal(5L, NPartitions(8))
   expect_equal(5L, NPartitions(tree8))
-  expect_equal(5L, NPartitions(ape::UnrootTree(tree8)))
+  expect_equal(5L, NPartitions(UnrootTree(tree8)))
 
   expect_equal(0L, NPartitions(ape::read.tree(text='(A, ((B, C)));')))
 
-  expect_equal(c(5L, 5L), NPartitions(list(tree8, ape::UnrootTree(tree8))))
+  expect_equal(c(5L, 5L), NPartitions(list(tree8, UnrootTree(tree8))))
   expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
   expect_error(NPartitions('not a tree'))
 })
@@ -93,30 +93,30 @@ test_that("Node depths calculated correctly", {
                NodeDepth(UnrootTree(PectinateTree(20)), shortest = TRUE))
 
   tree <- BalancedTree(20)
-  expect_equal(c(5,4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
+  expect_equal(c(5,4,3,2,1,1,3,2,1,1,4,3,2,1,1,3,2,1,1),
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
   tree <- UnrootTree(tree)
-  expect_equal(c(4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
+  expect_equal(c(4,3,2,1,1,3,2,1,1,4,3,2,1,1,3,2,1,1),
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
   tree <- UnrootTree(RootTree(BalancedTree(20), 't10'))
   #plot(tree)
-  #nodelabels(NodeDepth(tree, T, FALSE))
   #nodelabels(NodeDepth(tree, F, FALSE))
-  expect_equal(c(1,2,3,4,3,1,2,1,4,3,1,2,1,3,1,2,1,1),
+  #nodelabels(NodeDepth(tree, T, FALSE))
+  expect_equal(c(1,3,2,1,4,4,3,1,2,1,3,1,2,1,3,1,2,1),
                NodeDepth(tree, includeTips = FALSE))
-  expect_equal(c(1,1,2,3,2,1,1,1,3,2,1,1,1,2,1,1,1,1),
+  expect_equal(c(1,2,1,1,3,3,2,1,1,1,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
 
 
   tree <- CollapseNode(BalancedTree(20), c(22:26, 33:35))
-  expect_equal(c(4,3,1,2,1,4,1,3,1,2,1), NodeDepth(tree, FALSE, FALSE))
+  expect_equal(c(4,3,2,1,1,4,1,3,2,1,1), NodeDepth(tree, FALSE, FALSE))
   expect_equal(c(1,2,1,1,1,2,1,2,1,1,1), NodeDepth(tree, TRUE, FALSE))
 
   tree <- CollapseNode(BalancedTree(20), c(22, 33:35))

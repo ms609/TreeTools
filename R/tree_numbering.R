@@ -180,7 +180,7 @@ ApePostorder <- function (tree, nTip = length(tree$tip.label), edge = tree$edge)
   nb.node <- tree$Nnode
   if (nb.node == 1) return(tree)
   if (nb.node >= nTip) stop("`tree` apparently badly conformed")
-  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2)
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2L)
   tree$edge <- edge[neworder, ]
   if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
   attr(tree, "order") <- "postorder"

@@ -594,7 +594,7 @@ RootNode.list <- function (x) {
 RootNode.multiPhylo <- RootNode.list
 
 #' @export
-RootNode.matrix <- function (x) {
+RootNode.numeric <- function (x) {
   parent <- x[, 1]
   child <- x[, 2]
   ret <- unique(parent[!parent %in% child])
@@ -603,5 +603,5 @@ RootNode.matrix <- function (x) {
   }
 
   # Return:
-  ret
+  as.integer(ret)
 }
