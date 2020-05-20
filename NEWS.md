@@ -4,6 +4,7 @@
 
 - `CladisticInfo()`: Calculate the information content of a tree.
 - `RootNode()`: Which node is a tree's root?
+- `UnrootTree()`: Safely remove a root node.
 - `NodeDepth()`: Discriminate shallow from deep nodes.
 - `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
 - `CladeSizes()`: Count leaves / nodes descended from each node.
@@ -19,6 +20,7 @@
 - Improve performance of `as.logical.Splits()` and related functions.
 - Fail nicely when trees are too large for memory.
 - Fix memory leak in `as.Splits()`.
+- Various under-the-hood improvements to functions.
 - Documentation improvements.
 
 # TreeTools 0.1.4
