@@ -91,7 +91,7 @@ TotalCopheneticIndex.phylo <- function (x) {
 }
 
 #'@export
-TotalCopheneticIndex.list <- function(x) lapply(x, TotalCopheneticIndex)
+TotalCopheneticIndex.list <- function(x) vapply(x, TotalCopheneticIndex, integer(1))
 
 #'@export
 TotalCopheneticIndex.multiPhylo <- TotalCopheneticIndex.list
