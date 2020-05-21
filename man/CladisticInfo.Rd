@@ -3,6 +3,7 @@
 \name{CladisticInfo}
 \alias{CladisticInfo}
 \alias{PhylogeneticInfo}
+\alias{CladisticInfo.phylo}
 \alias{PhylogeneticInformation}
 \alias{CladisticInformation}
 \title{Cladistic information content}
@@ -10,6 +11,8 @@
 CladisticInfo(x)
 
 PhylogeneticInfo(x)
+
+\method{CladisticInfo}{phylo}(x)
 
 PhylogeneticInformation(x)
 
