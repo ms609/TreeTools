@@ -10,7 +10,7 @@ SortTree(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-\code{SortTree} returns a tree of class \code{phylo}, with each node sorted
+\code{SortTree()} returns a tree of class \code{phylo}, with each node sorted
 such that the larger clade is first.
 }
 \description{
@@ -18,12 +18,24 @@ Sorts each node into a consistent order, so similar trees look visually
 similar.
 }
 \details{
+At each node, clades will be listed in \code{tree$edge} in decreasing size order.
+
+Clades that contain the same number of leaves are sorted in decreasing order
+of minimum leaf number, so (2, 3) will occur before (1, 4).
+
+As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+bottom of a plotted tree.
+
 \code{tree} must (presently) be binary.
 }
 \examples{
-messyTree <- as.phylo(6, 5)
+messyTree <- as.phylo(10, 6)
 plot(messyTree)
-plot(SortTree(messyTree))
+
+sorted <-SortTree(messyTree)
+plot(sorted)
+ape::nodelabels()
+ape::edgelabels()
 
 }
 \seealso{

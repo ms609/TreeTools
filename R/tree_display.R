@@ -75,18 +75,31 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #' Sorts each node into a consistent order, so similar trees look visually
 #' similar.
 #'
+#' At each node, clades will be listed in `tree$edge` in decreasing size order.
+#'
+#' Clades that contain the same number of leaves are sorted in decreasing order
+#' of minimum leaf number, so (2, 3) will occur before (1, 4).
+#'
+#' As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+#' bottom of a plotted tree.
+#'
 #TODO:
 #' `tree` must (presently) be binary.
 #'
 #' @template treeParam
 #'
-#' @return `SortTree` returns a tree of class `phylo`, with each node sorted
+#' @return `SortTree()` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
+#'
 #' @examples
-#' messyTree <- as.phylo(6, 5)
+#' messyTree <- as.phylo(10, 6)
 #' plot(messyTree)
-#' plot(SortTree(messyTree))
+#'
+#' sorted <-SortTree(messyTree)
+#' plot(sorted)
+#' ape::nodelabels()
+#' ape::edgelabels()
 #'
 #' @family tree manipulation
 #'
@@ -98,6 +111,10 @@ SortTree <- function (tree) {
   child <- edge[, 2]
   tipLabels <- tree$tip.label
   tree.ntip <- length(tipLabels)
+  if (tree.ntip + tree.ntip - 2L != length(parent)) {
+    stop("`tree` must be binary.")
+  }
+
   descendants <- Descendants(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function (tips) min(tipLabels[tips])
