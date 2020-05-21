@@ -13,7 +13,6 @@ test_that("as.TreeNumber()", {
                  " 6 tips: t1 t2 t3 t4 t5 t6"),
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
   expect_equal(1:3, unlist(as.TreeNumber(as.phylo(1:3, 6))))
-  tn <- as.TreeNumber(as.phylo(1, 6))
-  attr(tn, 'tip.label') <- NULL
-  expect_equal(as.phylo(1, 6), as.phylo(tn))
+  tr <- as.TreeNumber(as.phylo(1, 6, letters[1:6]))
+  expect_equal(as.phylo(1, 6), as.phylo(tn, tipLabels = NULL))
 })
