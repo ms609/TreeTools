@@ -148,22 +148,28 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' # 00000 11111 222
 #' NUnrootedMult(c(5,5,3))
 #'
+#' @family tree information functions
 #' @export
 NRooted     <- function (tips)  DoubleFactorial(tips + tips - 3L) # addition faster than 2*
+
 #' @describeIn NRooted Number of unrooted trees
 #' @export
 NUnrooted   <- function (tips)  DoubleFactorial(tips + tips - 5L)
+
 #' @describeIn NRooted  Log Number of unrooted trees
 #' @export
 LnUnrooted  <- function (tips) LnDoubleFactorial(tips + tips - 5L)
+
 #' @describeIn NRooted  Log Number of unrooted trees (as integer)
 #' @export
 LnUnrooted.int <- function (tips) {
   ifelse(tips < 3L, 0, logDoubleFactorials[tips + tips - 5L])
 }
+
 #' @rdname NRooted
 #' @export
 Log2Unrooted  <- function (tips) Log2DoubleFactorial(tips + tips - 5L)
+
 #' @rdname NRooted
 #' @export
 Log2Unrooted.int <- function (tips) {
@@ -229,6 +235,7 @@ LnUnrootedSplits <- function (splits) {
   if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
   return (LnUnrootedMult(splits))
 }
+
 #' @rdname NRooted
 #' @examples
 #' Log2UnrootedSplits(c(2,4))
@@ -239,6 +246,7 @@ Log2UnrootedSplits <- function (splits) {
   if (nSplits == 2) return (Log2Rooted(splits[1]) + Log2Rooted(splits[2]));
   return (Log2UnrootedMult(splits))
 }
+
 #' @describeIn NRooted Number of unrooted trees consistent with a bipartition
 #' split.
 #' @examples
@@ -251,6 +259,7 @@ NUnrootedSplits  <- function (splits) {
   if (nSplits == 2) return (NRooted(splits[1]) * NRooted(splits[2]))
   return (NUnrootedMult(splits))
 }
+
 #' @rdname NRooted
 #' @export
 LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
@@ -261,7 +270,8 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
     LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
     sum(LnDoubleFactorial(splits + splits - 3L))
 
-  }
+}
+
 #' @rdname NRooted
 #' @export
 Log2UnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2

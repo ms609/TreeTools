@@ -138,14 +138,15 @@ CompatibleSplits <- function (splits, splits2) {
 #'
 #' @template split12Params
 #'
-#' @return The proportion of permissible informative splits
-#' splitting the terminals into bipartitions of the sizes given,
-#'  that match as well as `split1` and `split2` do.
+#' @return `SplitMatchProbability()` returns a numeric giving the proportion
+#' of permissible non-trivial splits that divide the terminals into bipartitions
+#' of the sizes given, that match as well as `split1` and `split2` do.
 #'
 #' @examples
 #' SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
 #'                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
 #'
+#' @family split information functions
 #' @template MRS
 #' @export
 SplitMatchProbability <- function (split1, split2) {

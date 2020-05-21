@@ -51,6 +51,7 @@ counting the number of edges resolved (Page, 1992).
 }
 \seealso{
 Other tree information functions: 
+\code{\link{NRooted}()},
 \code{\link{TreesMatchingTree}()}
 
 Other tree characterization functions: 

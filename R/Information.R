@@ -154,11 +154,11 @@ CharacterInformation <- function (tokens) {
 #' @seealso
 #'
 #' Sum the phylogenetic information content of splits within a tree:
-#'  [`TreeDist`](https://ms609.github.io/TreeDist/)`::`[`SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html)
+#'  [`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html)
 #'
 #'
 #' Sum the clustering information content of splits within a tree:
-#'  [`TreeDist`](https://ms609.github.io/TreeDist/)`::`[`ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
+#'  [`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
 #'
 #'
 #'

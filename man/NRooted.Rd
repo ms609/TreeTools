@@ -110,7 +110,13 @@ NUnrootedSplits(c(3,3))
 
 \insertRef{CavalliSforza1967}{TreeTools}
 }
+\seealso{
+Other tree information functions: 
+\code{\link{CladisticInfo}()},
+\code{\link{TreesMatchingTree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information function}
+\concept{tree information functions}

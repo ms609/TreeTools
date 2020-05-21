@@ -23,6 +23,7 @@ Calculates the phylogenetic information content of a given character.
 \seealso{
 Other split information functions: 
 \code{\link{SplitInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()},
 \code{\link{UnrootedTreesMatchingSplit}()}
 }

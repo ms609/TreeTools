@@ -32,8 +32,10 @@ reference:
       Functions describing properties of trees.
     contents:
       - has_concept("tree characterization functions")
+      - NTip
       - NPartitions
       - NPartitionPairs
+      - TipLabels
       - TreeIsRooted
 
   - title: "Phylogenetic data"
@@ -58,14 +60,13 @@ reference:
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
     contents:
-      - matches('Split')
       - has_concept("split manipulation functions")
+      - has_concept("Splits operations")
 
   - title: "Information and combinatorics"
     desc: "Functions to calculate factorial quantities."
     contents:
     - starts_with('IC')
-    - NRooted
     - N1Spr
     - DoubleFactorial
     - has_concept("tree information functions")

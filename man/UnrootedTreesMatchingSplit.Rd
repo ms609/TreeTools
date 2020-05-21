@@ -32,6 +32,7 @@ See Theorem 2 in \insertRef{Carter1990}{TreeTools}
 Other split information functions: 
 \code{\link{CharacterInformation}()},
 \code{\link{SplitInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()}
 }
 \author{

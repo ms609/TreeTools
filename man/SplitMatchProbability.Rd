@@ -15,9 +15,9 @@ each terminal is identified as a member of the ingroup (\code{TRUE}) or outgroup
 (\code{FALSE}) of the respective bipartition split.}
 }
 \value{
-The proportion of permissible informative splits
-splitting the terminals into bipartitions of the sizes given,
-that match as well as \code{split1} and \code{split2} do.
+\code{SplitMatchProbability()} returns a numeric giving the proportion
+of permissible non-trivial splits that divide the terminals into bipartitions
+of the sizes given, that match as well as \code{split1} and \code{split2} do.
 }
 \description{
 Calculates the probability that two random splits of the sizes provided
@@ -33,6 +33,14 @@ SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
 
 }
+\seealso{
+Other split information functions: 
+\code{\link{CharacterInformation}()},
+\code{\link{SplitInformation}()},
+\code{\link{TreesMatchingSplit}()},
+\code{\link{UnrootedTreesMatchingSplit}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{split information functions}

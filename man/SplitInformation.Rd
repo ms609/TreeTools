@@ -106,13 +106,14 @@ MultiSplitInformation(rep(2, 4))
 }
 \seealso{
 Sum the phylogenetic information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{TreeDist::SplitwiseInfo()}}
 
 Sum the clustering information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{TreeDist::ClusteringInfo()}}
 
 Other split information functions: 
 \code{\link{CharacterInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()},
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
