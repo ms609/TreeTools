@@ -188,15 +188,19 @@ MultiSplitInformation <- function (partitionSizes) {
 #' Calculates the number of unrooted bifurcating trees consistent with the
 #' specified multi-partition split, using the formula of Carter _et al_. (1990).
 #'
-#' @template splitsParam
+#' @param \dots A series or vector of integers listing the number of tips in
+#' each of a number of tree splits (e.g. bipartitions).
+#' For example, `3, 5` states that a character divides a set of eight tips into
+#' a group of three and a group of five.
+#TODO Support Splits objects, using a Method.
 #'
-#' @return `UnrootedTreesMatchingSplit` returns an integer specifying the
+#' @return `UnrootedTreesMatchingSplit()` returns an integer specifying the
 #'  number of unrooted bifurcating trees consistent with the specified split.
 #'
 #'
 #' @examples
 #'  UnrootedTreesMatchingSplit(c(3, 5))
-#'  UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
+#'  UnrootedTreesMatchingSplit(3, 2, 1, 2)
 #'
 #' @references
 #' See Theorem 2 in \insertRef{Carter1990}{TreeTools}
@@ -204,7 +208,8 @@ MultiSplitInformation <- function (partitionSizes) {
 #' @template MRS
 #' @family split information functions
 #' @export
-UnrootedTreesMatchingSplit <- function (splits) {
+UnrootedTreesMatchingSplit <- function (...) {
+  splits <- c(...)
   splits <- splits[splits > 0L]
   totalTips <- sum(splits)
   tipsMinusLengthSplits <- totalTips - length(splits)
