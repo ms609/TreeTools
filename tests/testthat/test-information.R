@@ -14,12 +14,16 @@ test_that("Trees matching splits calculated correctly", {
   expect_equal(log(315/10395)/-log(2), SplitInformation(3, 5))
 })
 
-test_that("UnrootedTreesMatchingSplit works", {
+test_that("UnrootedTreesMatchingSplit() correct", {
   expect_equal(NRooted(3) * NRooted(5), UnrootedTreesMatchingSplit(c(3, 5)))
-  expect_equal(NRooted(30) * NRooted(50), UnrootedTreesMatchingSplit(30, 50))
+  expect_equal(LnRooted(30) + LnRooted(50), LnUnrootedTreesMatchingSplit(30, 50))
+  expect_equal(sum(log2DoubleFactorials[15],
+                   Log2DoubleFactorial(1:4 + 1:4 - 3L))
+               - log2DoubleFactorials[11],
+               Log2UnrootedTreesMatchingSplit(1:4))
 })
 
-test_that("MultiSplitInformation works", {
+test_that("MultiSplitInformation() works", {
   expect_equal(12.8323, MultiSplitInformation(3:5), tolerance = 6)
   expect_equal(CharacterInformation(rep(c('-', '?', 0:2), 1:5)),
                MultiSplitInformation(3:5))

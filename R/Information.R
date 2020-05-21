@@ -209,12 +209,29 @@ MultiSplitInformation <- function (partitionSizes) {
 #' @family split information functions
 #' @export
 UnrootedTreesMatchingSplit <- function (...) {
-  splits <- c(...)
+  # use exp and log as it's just as fast, but less likely to overflow to Inf
+  exp(LnUnrootedTreesMatchingSplit(...))
+}
+
+.LogUTMS <- function (LogXDoubleFactorial, splits) {
+
   splits <- splits[splits > 0L]
   totalTips <- sum(splits)
   tipsMinusLengthSplits <- totalTips - length(splits)
-  # use exp and log as it's just as fast, but less likely to overflow to Inf
-  exp(sum(LnDoubleFactorial(totalTips + totalTips - 5L),
-          LnDoubleFactorial(splits + splits - 3L)) -
-        LnDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L))
+
+  sum(LogXDoubleFactorial(totalTips + totalTips - 5L),
+      LogXDoubleFactorial(splits + splits - 3L)) -
+      LogXDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L)
+}
+
+#' @rdname UnrootedTreesMatchingSplit
+#' @export
+LnUnrootedTreesMatchingSplit <- function (...) {
+  .LogUTMS(LnDoubleFactorial, c(...))
+}
+
+#' @rdname UnrootedTreesMatchingSplit
+#' @export
+Log2UnrootedTreesMatchingSplit <- function (...) {
+  .LogUTMS(Log2DoubleFactorial, c(...))
 }

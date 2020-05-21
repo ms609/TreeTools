@@ -2,9 +2,15 @@
 % Please edit documentation in R/Information.R
 \name{UnrootedTreesMatchingSplit}
 \alias{UnrootedTreesMatchingSplit}
+\alias{LnUnrootedTreesMatchingSplit}
+\alias{Log2UnrootedTreesMatchingSplit}
 \title{Number of trees consistent with split}
 \usage{
 UnrootedTreesMatchingSplit(...)
+
+LnUnrootedTreesMatchingSplit(...)
+
+Log2UnrootedTreesMatchingSplit(...)
 }
 \arguments{
 \item{\dots}{A series or vector of integers listing the number of tips in
