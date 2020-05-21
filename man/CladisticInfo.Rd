@@ -4,6 +4,8 @@
 \alias{CladisticInfo}
 \alias{PhylogeneticInfo}
 \alias{CladisticInfo.phylo}
+\alias{CladisticInfo.list}
+\alias{CladisticInfo.multiPhylo}
 \alias{PhylogeneticInformation}
 \alias{CladisticInformation}
 \title{Cladistic information content}
@@ -13,6 +15,10 @@ CladisticInfo(x)
 PhylogeneticInfo(x)
 
 \method{CladisticInfo}{phylo}(x)
+
+\method{CladisticInfo}{list}(x)
+
+\method{CladisticInfo}{multiPhylo}(x)
 
 PhylogeneticInformation(x)
 

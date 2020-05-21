@@ -5,7 +5,8 @@
 #' encountered when using [`ape::unroot()`] on trees in preorder.
 #'
 #' @template treeParam
-#' @template outgroupTipsParam
+#' @param outgroupTips Vector of mode character, integer or logical, specifying
+#' the names or indices of the tips to include in the outgroup.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips.
