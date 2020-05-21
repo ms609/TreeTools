@@ -9,7 +9,7 @@ nasty <- structure(list(edge = structure(
 
 context("Tree rearrangements")
 
-test_that("RootOnNode works", {
+test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
@@ -77,6 +77,19 @@ test_that("RootOnNode() supports nasty node ordering", {
                RootOnNode(nasty, 12L, resolveRoot = TRUE))
   expect_equal(RootOnNode(Preorder(nasty), 11L),
                RootOnNode(nasty, 13L))
+})
+
+test_that("RootTree() works", {
+  bal8 <- BalancedTree(8)
+  expect_error(RootTree(bal8, 1:8 %in% 0))
+  expect_error(RootTree(bal8, character(0)))
+  expect_error(RootTree(bal8, integer(0)))
+  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
+  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
+  expect_equivalent(as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
+                    RootTree(bal8, 't5'))
+  expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
+  expect_equal(EnforceOutgroup(bal8, c('t5', 't6')), RootTree(bal8, c('t5', 't6')))
 })
 
 test_that("Unroot() works", {

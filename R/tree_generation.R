@@ -171,7 +171,7 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
   ingroup <- taxa[!(taxa %in% outgroup)]
   if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {
-    stop ("All outgroup taxa must occur in speficied taxa")
+    stop ("All outgroup taxa must occur in tree")
   }
 
   ingroup.branch <- drop.tip(tree, outgroup)
