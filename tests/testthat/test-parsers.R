@@ -14,6 +14,12 @@ test_that("Nexus file can be parsed", {
   expect_equal(80, nrow(read))
   expect_equal("Wiwaxia", rownames(read)[4])
   expect_equal("(01)", as.character(read[1, 27]))
+
+  filename <- TestFile('continuous.nex')
+  read <- ReadCharacters(filename)
+  expect_equal(1L, unique(as.integer(read[1, ])))
+  expect_equivalent('?', read['B_alienus', 4])
+  expect_equal(3L, unique(as.integer(read[3, ])))
 })
 
 test_that("TNT trees parsed correctly", {
@@ -57,7 +63,7 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
-test_that('PhyToString works', {
+test_that('PhyToString() works', {
   longLevels <- phyDat(rbind(x = c('-', '?', 0:12), y = c(12:0, '-', '?')),
                        type='USER', levels=c(0:6, '-', 7:12))
   expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))

@@ -209,6 +209,8 @@ TNTText2Tree <- function (treeText) {
 #'  (see [`ReadCharacters`] for expected format).
 #' @template characterNumParam
 #' @template sessionParam
+#' @param continuous Logical specifying whether characters are continuous.
+#' Treated as discrete if `FALSE`.
 #'
 #' @return `ExtractTaxa` returns a matrix with _n_ rows, each named for the
 #' relevant taxon, and _c_ columns,
@@ -222,10 +224,11 @@ TNTText2Tree <- function (treeText) {
 #'
 #' @keywords internal
 #' @export
-ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
+ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
+                         continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
 
-  taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl=TRUE) > -1
+  taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
   previousTaxon <- vapply(which(!taxonLines), function (x) {
@@ -233,17 +236,27 @@ ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
   }, integer(1))
 
 
-  taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl=TRUE)
+  taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl = TRUE)
   taxa <- gsub(" ", "_", taxa, fixed=TRUE)
   taxa[!taxonLines] <- taxa[previousTaxon]
   uniqueTaxa <- unique(taxa)
 
-  tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl=TRUE)
-  tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed=TRUE), fixed=TRUE)
-  tokens <- vapply(uniqueTaxa,
-                   function (taxon) paste0(tokens[taxa==taxon], collapse=''),
-                   character(1))
-  tokens <- NexusTokens(tokens, character_num=character_num, session=session)
+  tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
+  if (continuous) {
+    tokens <- strsplit(tokens, "\\s+")
+    lengths <- vapply(tokens, length, 0L)
+    if (length(unique(lengths)) != 1) {
+      stop("Different numbers of tokens in different taxa: ",
+           paste(lengths, collapse = ', '))
+    }
+    tokens <- t(vapply(tokens, I, tokens[[1]]))
+  } else {
+    tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed = TRUE), fixed = TRUE)
+    tokens <- vapply(uniqueTaxa,
+                     function (taxon) paste0(tokens[taxa == taxon], collapse = ''),
+                     character(1))
+    tokens <- NexusTokens(tokens, character_num = character_num, session = session)
+  }
 
   rownames(tokens) <- uniqueTaxa
 
@@ -320,10 +333,10 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #' ReadCharacters(fileName)
 #'
 #' @export
-ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
+ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
-  lines <- readLines(filepath, warn=FALSE) # Missing EOL is quite common, so
-                                           # warning not helpful
+  lines <- readLines(filepath, warn = FALSE) # Missing EOL is quite common, so
+                                             # warning not helpful
   nexusComment.pattern <- "\\[[^\\]*\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
   lines <- trimws(lines)
@@ -332,6 +345,7 @@ ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
   semicolons <- which(RightmostCharacter(lines) == ';')
   upperLines <- toupper(lines)
 
+  continuous <- length(grep('DATATYPE[\\S\\=]+CONTINUOUS', upperLines)) > 0
   matrixStart <- which(upperLines == 'MATRIX')
   if (length(matrixStart) == 0) {
     return(list("MATRIX block not found in Nexus file."))
@@ -342,7 +356,8 @@ ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
     if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
-    tokens <- ExtractTaxa(matrixLines, character_num, session)
+    tokens <- ExtractTaxa(matrixLines, character_num = character_num,
+                          session = session, continuous = continuous)
     if (is.null(character_num)) character_num <- seq_len(ncol(tokens))
 
     ## Written with MorphoBank format in mind: each label on separate line,
