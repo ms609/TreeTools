@@ -14,5 +14,5 @@ test_that("as.TreeNumber()", {
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
   expect_equal(1:3, unlist(as.TreeNumber(as.phylo(1:3, 6))))
   tr <- as.TreeNumber(as.phylo(1, 6, letters[1:6]))
-  expect_equal(as.phylo(1, 6), as.phylo(tn, tipLabels = NULL))
+  expect_equal(as.phylo(1, 6), as.phylo(tr, tipLabels = NULL))
 })
