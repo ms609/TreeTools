@@ -311,6 +311,10 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #' Tested with nexus files downloaded from MorphoBank with the "no notes"
 #' option, but should also work more generally.
 #'
+#' Matrices must contain only continuous or only discrete characters;
+#' maximum one matrix per file.  Continuous characters will be read as strings
+#' (i.e. mode 'character').
+#'
 #' Please [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incorrectly parsed files.
 #'
@@ -331,6 +335,17 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #' fileName <- paste0(system.file(package='TreeTools'),
 #'                    '/extdata/input/dataset.nex')
 #' ReadCharacters(fileName)
+#'
+#' fileName <- paste0(system.file(package='TreeTools'),
+#'                    '/extdata/tests/continuous.nex')
+#' continuous <- ReadCharacters(fileName)
+#'
+#' # To convert from strongs to numbers:
+#' at <- attributes(continuous)
+#' continuous <- suppressWarnings(as.numeric(continuous))
+#' attributes(continuous) <- at
+#' continuous
+#'
 #'
 #' @export
 ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {

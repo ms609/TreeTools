@@ -17,6 +17,7 @@
 
 - Improve support for unrooted trees in `as.Splits()`.
 - Handle funny node orders.
+- Support continuous characters in `ReadCharacters()`.
 - Improve performance of `as.logical.Splits()` and related functions.
 - Fail nicely when trees are too large for memory.
 - Fix memory leak in `as.Splits()`.
