@@ -14,6 +14,8 @@
 ## Enhancements
 
 - Improve support for unrooted trees in `as.Splits()`.
+- Use methods so `Reorder` functions can handle `multiPhylo` objects and edges.
+  Deprecates `PostorderEdges()`.
 - Handle funny node orders.
 - Improve performance of `as.logical.Splits()` and related functions.
 - Fail nicely when trees are too large for memory.

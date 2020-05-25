@@ -96,7 +96,7 @@ test_that('as.Splits.phylo', {
   expect_equal(c(7997L, 1000L), dim(as.Splits(PectinateTree(8000L))))
 
   bigTree <- PectinateTree(16384L) # Max size with int16_t on 64-bit systems
-  bigMemory <- try(PostorderEdges(bigTree$edge), silent = TRUE)
+  bigMemory <- try(Postorder(bigTree$edge), silent = TRUE)
   if (inherits(bigMemory, 'try-error')) {
     expect_error(dim(as.Splits(bigTree))) # Likely on 32-bit systems
   } else {

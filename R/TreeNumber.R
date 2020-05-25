@@ -129,7 +129,7 @@ as.TreeNumber.phylo <- function (x, ...) {
   x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
-  edge <- PostorderEdges(edge)
+  edge <- Postorder(edge)
   structure(edge_to_num(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.labels = TipLabels(x),
