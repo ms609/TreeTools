@@ -149,7 +149,7 @@ Subtree <- function (tree, node) {
 #' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
-#' @param nTip,nNode, Optional integer vectors specifying number of tips and
+#' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips and
 #' nodes in `tree`, and index of root node.
 #' Not checked for correctness: specifying values here trades code safety for a
 #' nominal speed increase.

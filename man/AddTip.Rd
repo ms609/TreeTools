@@ -25,7 +25,7 @@ new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
 
-\item{nTip, nNode, }{Optional integer vectors specifying number of tips and
+\item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips and
 nodes in \code{tree}, and index of root node.
 Not checked for correctness: specifying values here trades code safety for a
 nominal speed increase.}
