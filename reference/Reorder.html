@@ -249,7 +249,7 @@ tree, corresponding to <code>tree$edge</code>. Optional in <code>Cladewise()</co
     <tr>
       <th>force</th>
       <td><p>Logical specifying whether to rearrange trees already in
-postorder, in order to ensure TreeTools edge ordering.</p></td>
+postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.</p></td>
     </tr>
     <tr>
       <th>renumber</th>
@@ -268,9 +268,12 @@ specified numbering scheme.</p>
 corresponding to <code>tree</code>, with edges listed in postorder</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For <code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>, all nodes must be binary;
-<a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> and <a href='https://rdrr.io/pkg/ape/man/multi2di.html'>ape::multi2di</a> may help.</p>
-<p><code>Preorder</code> is more robust: it supports polytomies, nodes can be numbered
+    <p><code>Cladewise()</code>, <code>ApePostorder()</code> and <code>Pruningwise()</code> are convenience
+functions to the corrsponding functions in 'ape'. Single nodes may
+need to be collapsed using <a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> first.  'ape' functions
+can cause crashes if nodes are numbered unconventionally -- sometimes
+encountered after using tree rearrangement functions, e.g. <code>phangorn::SPR</code>.</p>
+<p><code>Preorder()</code> is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.
 It has a unique output for each tree topology, allowing unique trees
 to be detected by comparing sorted edge matrices alone.</p>
@@ -284,7 +287,7 @@ of an edge leading to a subtree that contains tip 2.</p>
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.</p>
-<p><code>Postorder()</code> is modified from the ape function to return a specific
+<p><code>Postorder()</code> is modified from the 'ape' function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
