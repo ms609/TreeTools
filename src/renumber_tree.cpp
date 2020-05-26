@@ -79,7 +79,7 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
   const intx n_edge = parent.length(),
              node_limit = n_edge + 2;
 
-  if (2L * (2L + child.length()) > INTX_MAX) {
+  if (2L * (2L + child.length()) > INTX_CONSERVATIVE_MAX) {
     throw std::length_error("Too many edges: Contact maintainer for support.");
   }
   if (child.length() != n_edge) {
