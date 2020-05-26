@@ -3,36 +3,86 @@
 \name{Reorder}
 \alias{Reorder}
 \alias{Cladewise}
+\alias{Cladewise.phylo}
+\alias{Cladewise.list}
+\alias{Cladewise.multiPhylo}
+\alias{Cladewise.matrix}
 \alias{ApePostorder}
+\alias{ApePostorder.phylo}
+\alias{ApePostorder.list}
+\alias{ApePostorder.multiPhylo}
 \alias{Postorder}
-\alias{PostorderEdges}
+\alias{Postorder.phylo}
+\alias{Postorder.list}
+\alias{Postorder.multiPhylo}
+\alias{Postorder.numeric}
 \alias{Pruningwise}
+\alias{Pruningwise.phylo}
+\alias{Pruningwise.list}
+\alias{Pruningwise.multiPhylo}
 \alias{Preorder}
+\alias{Preorder.phylo}
+\alias{Preorder.numeric}
+\alias{Preorder.multiPhylo}
+\alias{Preorder.list}
 \title{Reorder trees}
 \usage{
-Cladewise(tree, nTip = NULL, edge = tree$edge)
+Cladewise(tree, nTip, edge)
 
-ApePostorder(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Cladewise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+
+\method{Cladewise}{list}(tree, nTip, edge)
+
+\method{Cladewise}{multiPhylo}(tree, nTip, edge)
+
+\method{Cladewise}{matrix}(tree, nTip = min(tree[, 1]) - 1L, edge)
+
+ApePostorder(tree, nTip, edge)
+
+\method{ApePostorder}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+
+\method{ApePostorder}{list}(tree, nTip, edge)
+
+\method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
 Postorder(tree, force = FALSE, renumber = FALSE)
 
-PostorderEdges(edge, renumber = FALSE)
+\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE)
 
-Pruningwise(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE)
+
+\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE)
+
+\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
+
+Pruningwise(tree, nTip, edge)
+
+\method{Pruningwise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+
+\method{Pruningwise}{list}(tree, nTip, edge)
+
+\method{Pruningwise}{multiPhylo}(tree, nTip, edge)
 
 Preorder(tree)
+
+\method{Preorder}{phylo}(tree)
+
+\method{Preorder}{numeric}(tree)
+
+\method{Preorder}{multiPhylo}(tree)
+
+\method{Preorder}{list}(tree)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{nTip}{Integer specifying number of tips (leaves).}
 
-\item{edge}{A matrix with two columns, with each row listing the parent and
-child node of an edge in a phylogenetic tree.  Property \code{edge} of objects
-of class \code{phylo}.}
+\item{edge}{Two-column matrix listing the parent and child of each edge in a
+tree, corresponding to \code{tree$edge}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure TreeTools edge ordering.}
+postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}
 
 \item{renumber}{Logical specifying whether to renumber nodes such that they
 increase in number away from the root.}
@@ -42,8 +92,9 @@ increase in number away from the root.}
 \code{Pruningwise()} each return a tree of class \code{phylo} with nodes following the
 specified numbering scheme.
 
-\code{PostorderEdges} returns a two-column array corresponding to \code{edge},
-with edges listed in postorder
+\code{Postorder.numeric} accepts a numeric matrix corresponding to the
+\code{edge} entry of a tree oc class \code{phylo}, and returns a two-column array
+corresponding to \code{tree}, with edges listed in postorder
 }
 \description{
 A wrapper for \code{ape:::.reorder_ape}.
@@ -52,10 +103,13 @@ Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{postorder}}
 }
 \details{
-For \code{Cladewise}, \code{Postorder} and \code{Pruningwise}, all nodes must be binary;
-\link[ape:collapse.singles]{ape::collapse.singles} and \link[ape:multi2di]{ape::multi2di} may help.
+\code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
+functions to the corrsponding functions in 'ape'. Single nodes may
+need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
+can cause crashes if nodes are numbered unconventionally -- sometimes
+encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR}.
 
-\code{Preorder} is more robust: it supports polytomies, nodes can be numbered
+\code{Preorder()} is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.
 It has a unique output for each tree topology, allowing unique trees
 to be detected by comparing sorted edge matrices alone.
@@ -73,15 +127,18 @@ and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.
 
-\code{Postorder()} is modified from the ape function to return a specific
+\code{Postorder()} is modified from the 'ape' function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
-in postorder, it will not be rearranged unless \code{force = TRUE}, or
-\code{PostorderEdges()} is employed.
+in postorder, it will not be rearranged unless \code{force = TRUE}.
+
+Methods applied to numeric inputs do not check input for sanity, so should
+be used with caution: malformed input may cause undefined results, including
+crashing R.
 
 Trees with >8191 leaves require additional memory and are not handled
-at present.  If you require this functionality, please contact the
+at present.  If you need to process such large trees, please contact the
 maintainer for advice.
 }
 \section{Functions}{

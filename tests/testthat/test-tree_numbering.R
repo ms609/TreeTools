@@ -78,6 +78,25 @@ test_that("Replacement reorder functions work correctly", {
                RenumberEdges(edge[, 1], edge[, 2]))
 })
 
+test_that("Reorder methods work correctly", {
+  bal7 <- BalancedTree(7)
+  pec7 <- PectinateTree(7)
+  list7 <- list(bal7, pec7)
+  mp7 <- structure(list7, class = 'multiPhylo')
+  Test <- function (Method, ...) {
+    expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
+    expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
+    expect_error(Method(10))
+    expect_error(Method(1:2))
+    expect_error(Method(matrix('one')))
+  }
+  Test(ApePostorder)
+  Test(Postorder)
+  Test(Cladewise)
+  Test(Preorder)
+  Test(Pruningwise)
+})
+
 test_that("Malformed trees don't cause crashes", {
   treeDoubleNode <- read.tree(text = "((((((1,2)),3),4),5),6);")
   treePolytomy   <- read.tree(text = "((((1,2,3),4),5),6);")
