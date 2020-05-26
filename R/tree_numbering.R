@@ -94,10 +94,13 @@ RenumberEdges <- function (parent, child, ...) {
 #' \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
 #'
-#' For `Cladewise`, `Postorder` and `Pruningwise`, all nodes must be binary;
-#'  [ape::collapse.singles] and [ape::multi2di] may help.
+#' `Cladewise()`, `ApePostorder()` and `Pruningwise()` are convenience
+#' functions to the corrsponding functions in 'ape'. Single nodes may
+#' need to be collapsed using [ape::collapse.singles] first.  'ape' functions
+#' can cause crashes if nodes are numbered unconventionally -- sometimes
+#' encountered after using tree rearrangement functions, e.g. `phangorn::SPR`.
 #'
-#' `Preorder` is more robust: it supports polytomies, nodes can be numbered
+#' `Preorder()` is more robust: it supports polytomies, nodes can be numbered
 #' in any sequence, and edges can be listed in any order in the input tree.
 #' It has a unique output for each tree topology, allowing unique trees
 #' to be detected by comparing sorted edge matrices alone.
@@ -115,7 +118,7 @@ RenumberEdges <- function (parent, child, ...) {
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
 #'
-#' `Postorder()` is modified from the ape function to return a specific
+#' `Postorder()` is modified from the 'ape' function to return a specific
 #' order: edges are listed from the node that subtends the smallest
 #' subtree to the one that subtends the largest (i.e. the root node), with
 #' all of a node's descendant edges listed adjacently.  If a tree is already
@@ -242,7 +245,7 @@ ApePostorder.multiPhylo <- function (tree, nTip, edge) {
 
 #' @describeIn Reorder Reorder tree in Postorder. Edge lengths are not retained.
 #' @param force Logical specifying whether to rearrange trees already in
-#' postorder, in order to ensure TreeTools edge ordering.
+#' postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.
 #' @export
 Postorder <- function (tree, force = FALSE, renumber = FALSE) {
   UseMethod('Postorder')

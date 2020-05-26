@@ -15,10 +15,6 @@ It complements packages such as
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 }
-\details{
-Version 0.1 is a pre-release; some minor functionality may change in version
-1.0, due in mid-2020.
-}
 \seealso{
 Useful links:
 \itemize{

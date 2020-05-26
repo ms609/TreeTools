@@ -82,7 +82,7 @@ Preorder(tree)
 tree, corresponding to \code{tree$edge}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure TreeTools edge ordering.}
+postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}
 
 \item{renumber}{Logical specifying whether to renumber nodes such that they
 increase in number away from the root.}
@@ -103,10 +103,13 @@ Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{postorder}}
 }
 \details{
-For \code{Cladewise}, \code{Postorder} and \code{Pruningwise}, all nodes must be binary;
-\link[ape:collapse.singles]{ape::collapse.singles} and \link[ape:multi2di]{ape::multi2di} may help.
+\code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
+functions to the corrsponding functions in 'ape'. Single nodes may
+need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
+can cause crashes if nodes are numbered unconventionally -- sometimes
+encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR}.
 
-\code{Preorder} is more robust: it supports polytomies, nodes can be numbered
+\code{Preorder()} is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.
 It has a unique output for each tree topology, allowing unique trees
 to be detected by comparing sorted edge matrices alone.
@@ -124,7 +127,7 @@ and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.
 
-\code{Postorder()} is modified from the ape function to return a specific
+\code{Postorder()} is modified from the 'ape' function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
