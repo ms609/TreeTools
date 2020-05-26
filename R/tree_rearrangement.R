@@ -5,7 +5,7 @@
 #' encountered when using [`ape::unroot()`] on trees in preorder.
 #'
 #' @template treeParam
-#' @param outgroupTips Vector of mode character, integer or logical, specifying
+#' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
@@ -303,7 +303,7 @@ DropTip <- function (tree, tip) {
 
     drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
   } else {
-    stop("`tip` must be of mode character or numeric")
+    stop("`tip` must be of type character or numeric")
   }
 
   if (any(drop)) {

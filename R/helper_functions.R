@@ -40,7 +40,7 @@ UnshiftTree <- function(add, treeList) {
     structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
   } else if (inherits(treeList, 'phylo')) {
     treeList <- structure(list(add, treeList), class = 'multiPhylo')
-  } else { # including: if (mode(trees) == 'list') {
+  } else { # including: if (typeof(trees) == 'list') {
     c(list(add), treeList)
   }
 }
