@@ -16,6 +16,7 @@
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
+\alias{PostorderEdges}
 \alias{Pruningwise}
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
@@ -54,6 +55,8 @@ Postorder(tree, force = FALSE, renumber = FALSE)
 \method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE)
 
 \method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
+
+PostorderEdges(edge, renumber = FALSE)
 
 Pruningwise(tree, nTip, edge)
 

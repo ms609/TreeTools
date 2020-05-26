@@ -2,7 +2,7 @@
 #'
 #' `RootTree()` roots a tree on the smallest clade containing the specified
 #' tips; `UnrootTree()` collapses a root node, without the undefined behaviour
-#' encountered when using [`ape::unroot()`] on trees in preorder.
+#' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in preorder.
 #'
 #' @template treeParam
 #' @param outgroupTips Vector of type character, integer or logical, specifying
