@@ -152,13 +152,24 @@ intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
 // [[Rcpp::export]]
 IntegerMatrix postorder_edges(IntegerMatrix edge)
 {
-  if (1L + edge.nrow() > INTX_MAX) {
+  if (1L + edge.nrow() > INTX_CONSERVATIVE_MAX) {
     throw std::length_error("Too many edges in tree for postorder_edges: "
                             "Contact maintainer for advice");
+    // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
+    // or we could change intx to 32 bit.  The former has caused a seg fault
+    // with invalid permissions on linux builds, possibly related to callocing
+    // children_of?
+    // Rather than attempt to debug now, I've chosen to place a hard limit on
+    // edge.nrow for the time being.  --MS, 2020-05-26
   }
 
-  const intx n_edge = edge.nrow(), node_limit = n_edge + 1;
-  intx root_node = 0, n_tip = 0;
+  const intx
+    n_edge = edge.nrow(),
+    node_limit = n_edge + 1;
+
+  intx
+    root_node = 0,
+    n_tip = 0;
 
   // 0.9999 leaves room for memory overhead: seems in practice to avoid
   // attempting a doomed call to calloc.
