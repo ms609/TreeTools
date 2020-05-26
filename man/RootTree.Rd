@@ -15,7 +15,7 @@ UnrootTree(tree)
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
-\item{outgroupTips}{Vector of mode character, integer or logical, specifying
+\item{outgroupTips}{Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}

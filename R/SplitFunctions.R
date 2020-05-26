@@ -24,12 +24,12 @@
 #' @family split manipulation functions
 #' @export
 Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
-  if (typeof(splits) == 'list') {
+  if (is.list(splits)) {
     lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
   } else if (length(splits) == 0) {
     ret <- splits
     attr(ret, 'nTip') <- length(tips)
-    attr(ret, 'tip.label') <- if (typeof(tips) == 'character') {
+    attr(ret, 'tip.label') <- if (is.character(tips)) {
       tips
     } else {
       attr(splits, 'tip.label')[tips]

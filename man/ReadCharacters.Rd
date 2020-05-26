@@ -28,7 +28,7 @@ PhyDat(dataset)
 \code{character_num} whose maximum should be updated.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
-a list of sequences each made of a single vector of mode character,
+a list of sequences each made of a single character vector,
 and named with the taxon name.}
 }
 \value{
@@ -46,7 +46,7 @@ option, but should also work more generally.
 
 Matrices must contain only continuous or only discrete characters;
 maximum one matrix per file.  Continuous characters will be read as strings
-(i.e. mode 'character').
+(i.e. base type 'character').
 
 Please \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incorrectly parsed files.
