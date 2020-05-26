@@ -8,7 +8,10 @@
 AddTip(
   tree,
   where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
-  label = "New tip"
+  label = "New tip",
+  nTip = NTip(tree),
+  nNode = tree$Nnode,
+  rootNode = RootNode(tree)
 )
 
 AddTipEverywhere(tree, label = "New tip", includeRoot = FALSE)
@@ -21,6 +24,11 @@ node.  To add a new tip at the root, use \code{where = 0}.  By default, the
 new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
+
+\item{nTip, nNode, }{Optional integer vectors specifying number of tips and
+nodes in \code{tree}, and index of root node.
+Not checked for correctness: specifying values here trades code safety for a
+nominal speed increase.}
 
 \item{includeRoot}{Logical; if \code{TRUE}, each position adjacent
 to the root edge is considered to represent distinct edges; if \code{FALSE},

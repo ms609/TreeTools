@@ -19,14 +19,19 @@ test_that('AddTipEverywhere correct', {
 
 })
 
-test_that('AddTipEverywhere handles nasty tree', {
-  expect_equal(AddTipEverywhere(Preorder(nasty)),
-               lapply(AddTipEverywhere(nasty), Preorder))
-})
 
 test_that("AddTip() at root", {
   expect_equal(PectinateTree(8),
                AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'))
+  AddTip(nasty, 1L)
+  AddTip(nasty, 12L)
+})
+
+test_that('AddTipEverywhere() handles nasty tree', {
+  added <- AddTipEverywhere(nasty)
+  lapply(added, function (tr) expect_true(all(tr$edge > 0)))
+  expect_equal(AddTipEverywhere(Preorder(nasty)),
+               lapply(added, Preorder))
 })
 
 test_that("Subtree() works", {
