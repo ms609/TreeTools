@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
                                  2048, 4096, 8192, 16384, 32768};
-const uintx BIN_SIZE = 8;
+const intx BIN_SIZE = 8;
 
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
@@ -37,10 +37,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
 
   uintx** splits = new uintx*[n_node];
   for (uintx i = 0; i != n_node; i++) {
-    splits[i] = new uintx[n_bin];
-    for (uintx j = 0; j != n_bin; j++) {
-      splits[i][j] = 0;
-    }
+    splits[i] = new uintx[n_bin](); // () zero-initializes
   }
 
   for (uintx i = 0; i != n_tip; i++) {
