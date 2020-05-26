@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
                                  2048, 4096, 8192, 16384, 32768};
-const intx BIN_SIZE = 8;
+const uintx BIN_SIZE = 8;
 
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
