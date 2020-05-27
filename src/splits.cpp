@@ -55,7 +55,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   }
 
   uintx n_trivial = 0;
-  const uintx NOT_TRIVIAL = uintx(UINT_MAX),
+  const uintx NOT_TRIVIAL = UINTX_MAX,
               trivial_origin = edge(n_edge - 1, 0) - 1,
               trivial_two = (edge(n_edge - 1, 0) == edge(n_edge - 3, 0) ?
                             NOT_TRIVIAL : (edge(n_edge - 1, 1) - 1L)),
