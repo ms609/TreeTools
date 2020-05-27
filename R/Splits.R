@@ -50,16 +50,23 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
-  edge <- Postorder(x$edge, renumber = FALSE)
-  nTip <- length(x$tip.label)
-  splits <- cpp_edge_to_splits(edge, nTip)
+  edge <- Postorder(x, renumber = FALSE)$edge # In case tree already postordered
 
+  # Return:
+  .as.Splits.edge(edge, tipLabels = x$tip.label, asSplits = asSplits,
+                  nTip = NTip(x), ...)
+}
+
+.as.Splits.edge <- function (edge, tipLabels = NULL, asSplits = TRUE,
+                             nTip = NTip(edge), ...) {
+  splits <- cpp_edge_to_splits(edge, nTip)
   nSplits <- dim(splits)[1]
+
   # Return:
   if (asSplits) {
     structure(splits,
               nTip = nTip,
-              tip.label = x$tip.label,
+              tip.label = tipLabels,
               class = 'Splits')
   }
   else {
@@ -155,6 +162,8 @@ as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
     } else {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
+  } else if (dim(x)[2] == 2) {
+    .as.Splits.edge(x, tipLabels = NULL, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }
@@ -280,7 +289,7 @@ as.character.Splits <- function (x, ...) {
 #' Number of tips in a phylogenetic tree
 #'
 #' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
-#' class `Splits` and `list`.
+#' class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
 #'
 #' @param phy Object to count.
 #'
@@ -313,6 +322,20 @@ NTip.multiPhylo <- function (phy) {
     vapply(phy, NTip.phylo, integer(1))
   } else {
     rep(length(ret), length(phy))
+  }
+}
+
+#' @rdname NTip
+#' @export
+NTip.matrix <- function (phy) {
+  if (is.numeric(phy)) {
+    parent <- phy[, 1]
+    child <- phy[, 2]
+
+    # Return:
+    max(child[!child %in% parent])
+  } else {
+    NextMethod()
   }
 }
 

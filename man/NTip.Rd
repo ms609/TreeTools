@@ -6,6 +6,7 @@
 \alias{NTip.list}
 \alias{NTip.phylo}
 \alias{NTip.multiPhylo}
+\alias{NTip.matrix}
 \title{Number of tips in a phylogenetic tree}
 \usage{
 NTip(phy)
@@ -17,6 +18,8 @@ NTip(phy)
 \method{NTip}{phylo}(phy)
 
 \method{NTip}{multiPhylo}(phy)
+
+\method{NTip}{matrix}(phy)
 }
 \arguments{
 \item{phy}{Object to count.}
@@ -27,7 +30,7 @@ object in \code{phy}.
 }
 \description{
 Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects of
-class \code{Splits} and \code{list}.
+class \code{Splits} and \code{list}, and edge matrices (equivalent to \code{phylo$edge}).
 }
 \seealso{
 Other Splits operations: 
