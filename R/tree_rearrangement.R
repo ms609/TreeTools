@@ -86,6 +86,15 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 
       rootChildren <- child[rootEdges]
       if (node %in% rootChildren) {
+        if (!resolveRoot) {
+          deletedEdge  <- child == node
+          parent[parent == node] <- parent[deletedEdge]
+          parent <- parent[!deletedEdge]
+          child <- child[!deletedEdge]
+          parent[parent > node] <- parent[parent > node] - 1L
+          child[child > node] <- child[child > node] - 1L
+          tree$Nnode <- tree$Nnode - 1L
+        }
         inverters <- logical(length(parent))
       } else {
         spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
