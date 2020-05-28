@@ -50,6 +50,13 @@ test_that('Rooted tree shapes calculated', {
   BalancedTest <- function (i) expect_equal(NRootedShapes(i) - 1L,
                                             RootedTreeShape(BalancedTree(i)))
   lapply(c(2^(1:4), 10), BalancedTest)
+
+  expect_equal(0L, .UnrootedKeys(4))
+  expect_equal(0L, .UnrootedKeys(5))
+  expect_equal(0:1, .UnrootedKeys(6))
+  expect_equal(0:1, .UnrootedKeys(7))
+  expect_equal(c(0:2, 4), .UnrootedKeys(8))
+  expect_equal(c(0:2, 4:5, 7), .UnrootedKeys(9))
 })
 
 
