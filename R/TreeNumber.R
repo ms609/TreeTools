@@ -108,7 +108,6 @@
 #'
 #' @seealso [`TreeShape`]
 #' @family tree generation functions
-#' @exportClass TreeNumber
 #' @name TreeNumber
 #
 
