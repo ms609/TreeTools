@@ -36,9 +36,11 @@ test_that("RootOnNode() works", {
   expect_equal(tree, RootOnNode(tree, node = 1L, TRUE))
   expect_equal(tree, RootOnNode(UnrootTree(tree), node = 1L, TRUE))
 
-  exp6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3), 1:2, 4:6, 10, 3, 8:9), .Dim = c(9L, 2L)), tip.label = paste0('t', 1:6), Nnode = 4L), class = "phylo", order = "preorder")
+  expb6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3), 1:2, 4:6, 10, 3, 8:9), .Dim = c(9L, 2L)), tip.label = paste0('t', 1:6), Nnode = 4L), class = "phylo", order = "preorder")
+  expp6_8 <- structure(list(edge = structure(c(7, rep(7:10, each = 2), 1:2, 8, 3, 9, 4, 10, 5:6), .Dim = c(9L, 2L)), tip.label = paste0('t', 1:6), Nnode = 4L), class = "phylo", order = "preorder")
 
-  expect_equal(exp6_8, Preorder(RootOnNode(BalancedTree(6L), 8L)))
+  expect_equal(expb6_8, Preorder(RootOnNode(BalancedTree(6L), 8L)))
+  expect_equal(expp6_8, Preorder(RootOnNode(PectinateTree(6L), 8L)))
 
   TestTip <- function (tr, node, rr) {
     expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),

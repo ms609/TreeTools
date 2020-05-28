@@ -87,6 +87,9 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
       rootChildren <- child[rootEdges]
       if (node %in% rootChildren) {
         if (!resolveRoot) {
+          if (node < NTip(tree)) {
+            node <- rootChildren[rootChildren != node]
+          }
           deletedEdge  <- child == node
           parent[parent == node] <- parent[deletedEdge]
           parent <- parent[!deletedEdge]
