@@ -1,5 +1,11 @@
 context("tree_numbering.R")
 
+nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+                         5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+                       .Dim = c(12, 2))
+nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
+                   class = 'phylo')
+
 test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
@@ -39,13 +45,6 @@ test_that("RenumberTree() handles polytomies", {
   expect_equal(expectation,
                RenumberTree(edge[, 1], edge[, 2]))
 
-  nasty <- structure(list(edge = structure(
-    c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
-      5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-                                 .Dim = c(12, 2)),
-                Nnode = 5L,
-                tip.label = letters[1:8]),
-                class = 'phylo')
   expect_equal(c(9, 10, 10, 11, 11, 11, 10, 12, 12, 13, 13, 9,
                  10, 1, 11,  2,  4,  7, 12,  3, 13,  5,  6, 8),
                as.integer(RenumberTree(nasty$edge[, 1], nasty$edge[, 2])))
@@ -104,6 +103,7 @@ test_that("RenumberTips() works correctly", {
 test_that("Reorder methods work correctly", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12
+  attr(bal7, 'order') <- NULL
   pec7 <- PectinateTree(7)
   list7 <- list(bal7, pec7)
   stt <- SingleTaxonTree(1)
@@ -111,23 +111,31 @@ test_that("Reorder methods work correctly", {
   bad$Nnode <- 100
   attr(bad, 'order') <- NULL
   mp7 <- structure(list7, class = 'multiPhylo')
-  Test <- function (Method, ...) {
+  Test <- function (Method, ..., testEdges = TRUE) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
     expect_equal(stt, Method(stt))
-    expect_equal(Cladewise(bal7)$edge, Cladewise(bal7$edge))
+    expect_identical(Method(bal7), Method(Method(bal7)))
+    if (testEdges) expect_equal(Method(bal7)$edge, Method(bal7$edge))
     expect_error(Method(10))
     expect_error(Method(1:2))
     expect_error(Method(matrix('one')))
   }
-  Test(ApePostorder)
+  Test(ApePostorder, testEdges = FALSE)
   expect_error(ApePostorder(bad))
+
   Test(Postorder)
+  expect_equal(c(rep(13:11, each = 2), 11, 10, 10, 10, 9, 9),
+               Postorder(nastyEdge, renumber = TRUE)[, 1])
+
   Test(Cladewise)
   expect_error(Cladewise(bad))
+
   Test(Preorder)
-  Test(Pruningwise)
+
+  Test(Pruningwise, testEdges = FALSE)
   expect_error(Pruningwise(bad))
+
 })
 
 test_that("Malformed trees don't cause crashes", {
