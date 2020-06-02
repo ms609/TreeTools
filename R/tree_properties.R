@@ -461,13 +461,13 @@ EdgeDistances <- function (tree) {
 #' Identify, for each edge, whether it denotes a different partition from
 #' the root edge.
 #' The first edge of the input tree must be a root edge; this can be
-#' accomplished using `Preorder`.
+#' accomplished using `Preorder()`.
 #'
 #' @template treeParent
 #' @template treeChild
 #' @template treeNEdgeOptional
 #'
-#' @return `NonDuplicateRoot` returns a logical vector of length `nEdge`,
+#' @return `NonDuplicateRoot()` returns a logical vector of length `nEdge`,
 #' specifying `TRUE` unless an edge identifies the same partition as
 #' the root edge.
 #'
@@ -482,8 +482,8 @@ EdgeDistances <- function (tree) {
 #' @keywords internal
 #' @template MRS
 #' @family tree navigation
-#' @export
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
+  .Deprecated("Unused?")
   notDuplicateRoot <- !logical(nEdge)
   rightSide <- DescendantEdges(1, parent, child, nEdge)
   nEdgeRight <- sum(rightSide)
