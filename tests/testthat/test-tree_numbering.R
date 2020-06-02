@@ -87,10 +87,12 @@ test_that("RenumberTips() works correctly", {
   pec7b <- PectinateTree(dcba)
 
   l7 <- list(bal7b, bal7f, pec7f)
+  f7 <- list(bal7f, bal7f, pec7f)
+  b7 <- list(bal7b, bal7b, pec7b)
   mp7 <- structure(l7, class = 'multiPhylo')
 
-  expect_equal(list(bal7f, bal7f, pec7f), RenumberTips(l7, abcd))
-  expect_equal(list(bal7b, bal7b, pec7b), RenumberTips(l7, dcba))
+  expect_equal(f7, RenumberTips(l7, abcd))
+  expect_equal(b7, RenumberTips(l7, dcba))
 
   expect_equal(structure(f7, class = 'multiPhylo'), RenumberTips(mp7, abcd))
   expect_equal(structure(b7, class = 'multiPhylo'), RenumberTips(mp7, dcba))
@@ -107,6 +109,7 @@ test_that("Reorder methods work correctly", {
   stt <- SingleTaxonTree(1)
   bad <- bal7
   bad$Nnode <- 100
+  attr(bad, 'order') <- NULL
   mp7 <- structure(list7, class = 'multiPhylo')
   Test <- function (Method, ...) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
@@ -115,14 +118,16 @@ test_that("Reorder methods work correctly", {
     expect_equal(Cladewise(bal7)$edge, Cladewise(bal7$edge))
     expect_error(Method(10))
     expect_error(Method(1:2))
-    expect_error(Method(bad))
     expect_error(Method(matrix('one')))
   }
   Test(ApePostorder)
+  expect_error(ApePostorder(bad))
   Test(Postorder)
   Test(Cladewise)
+  expect_error(Cladewise(bad))
   Test(Preorder)
   Test(Pruningwise)
+  expect_error(Pruningwise(bad))
 })
 
 test_that("Malformed trees don't cause crashes", {
