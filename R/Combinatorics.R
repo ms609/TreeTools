@@ -299,9 +299,9 @@ Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
   totalTips <- sum(splits)
 
   # Return:
-  Log2DoubleFactorial(totalTips +  totalTips - 5L) -
-    Log2DoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
-    sum(Log2DoubleFactorial(splits + splits - 3L))
+  sum(Log2DoubleFactorial(totalTips +  totalTips - 5L),
+      -Log2DoubleFactorial(2L * (totalTips - length(splits)) - 1L),
+      Log2DoubleFactorial(splits + splits - 3L))
 }
 
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
@@ -314,12 +314,6 @@ NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
 
   # Return:
 
-  #round(DoubleFactorial(totalTips + totalTips - 5L) /
-  #        doubleFactorials[2L * (totalTips - length(splits)) - 1L]
-  #      * prod(DoubleFactorial(splits + splits - 3L)))
-  #
-  # More accurate?:
-  #
   prod(seq(totalTips + totalTips - 5L,
            2L * (totalTips - length(splits)) + 1L,
            -2L),
