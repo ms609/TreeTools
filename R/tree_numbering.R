@@ -300,12 +300,13 @@ Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE) {
   }
 }
 
+# nocov start
 #' @rdname Reorder
 #' @export
 PostorderEdges <- function (edge, renumber = FALSE) {
   .Deprecated('Postorder')
   Postorder(edge, renumber = renumber)
-}
+} # nocov end
 
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
@@ -435,7 +436,7 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
-  lapply(tree, RenumberTips.phylo, tipOrder)
+  structure(lapply(tree, RenumberTips.phylo, tipOrder), class = 'multiPhylo')
 }
 
 #' @rdname RenumberTips

@@ -1,6 +1,6 @@
 context("tree_numbering.R")
 
-test_that("RenumberTree fails safely", {
+test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
@@ -11,7 +11,7 @@ test_that("RenumberTree fails safely", {
   expect_error(preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2]))
 })
 
-test_that("RenumberTree handles polytomies", {
+test_that("RenumberTree() handles polytomies", {
   tr <- ape::read.tree(text = '(a, (b, d, c));')
   edge <- tr$edge
   parent <- edge[, 1]
@@ -51,7 +51,7 @@ test_that("RenumberTree handles polytomies", {
                as.integer(RenumberTree(nasty$edge[, 1], nasty$edge[, 2])))
 })
 
-test_that("RenumberTree handles singles", {
+test_that("RenumberTree() handles singles", {
   withSingles <- ape::read.tree(text='(a, (b, (c), (((d), (e)))));')
   expect_equal(c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
                  1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5),
@@ -76,6 +76,27 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(star$edge, RenumberTree(edge[, 1], edge[, 2]))
   expect_equal(list(star$edge[, 1], star$edge[, 2]),
                RenumberEdges(edge[, 1], edge[, 2]))
+})
+
+test_that("RenumberTips() works correctly", {
+  abcd <- letters[1:4]
+  dcba <- letters[4:1]
+  bal7b <- BalancedTree(dcba)
+  bal7f <- BalancedTree(abcd)
+  pec7f <- PectinateTree(abcd)
+  pec7b <- PectinateTree(dcba)
+
+  l7 <- list(bal7b, bal7f, pec7f)
+  mp7 <- structure(l7, class = 'multiPhylo')
+
+  expect_equal(list(bal7f, bal7f, pec7f), RenumberTips(l7, abcd))
+  expect_equal(list(bal7b, bal7b, pec7b), RenumberTips(l7, dcba))
+
+  expect_equal(structure(f7, class = 'multiPhylo'), RenumberTips(mp7, abcd))
+  expect_equal(structure(b7, class = 'multiPhylo'), RenumberTips(mp7, dcba))
+
+  expect_error(RenumberTips(l7, letters[1:5]))
+  expect_error(RenumberTips(l7, letters[2:5]))
 })
 
 test_that("Reorder methods work correctly", {
