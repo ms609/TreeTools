@@ -23,7 +23,7 @@ test_that("as.Splits", {
                                     nrow = 2, byrow = TRUE),
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
-  expect_equal(splits1, logicalSplits)
+  expect_equal(splits1, logicalSplits)N
   expect_equal(splits1, as.Splits(splits1))
 
   splitsC <- as.Splits(ape::read.tree(text="(((a, d), e), (b, (f, c)));"))
@@ -205,6 +205,9 @@ test_that("Split operations", {
 
   namedSplits <- as.Splits(BalancedTree(8))
   expect_equal(c('12', '14'), rownames(namedSplits[[c(3, 4)]]))
+
+  expect_equal(split1[], `[[.Splits`(split1))
+  expect_error(c(split1, notSplit1)[[2:1, 1]])
 })
 
 test_that("Split subtraction", {

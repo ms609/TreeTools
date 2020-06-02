@@ -474,7 +474,53 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot
 }
 
-#' Number of distinct partitions
+#' Number of tips in a phylogenetic tree
+#'
+#' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
+#' class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
+#'
+#' @param phy Object to count.
+#'
+#' @return `NTip` returns an integer specifying the number of tips in each
+#' object in `phy`.
+#'
+#' @export
+NTip <- function (phy) UseMethod('NTip')
+
+#' @rdname NTip
+#' @family Splits operations
+#' @export
+NTip.Splits <- function (phy) attr(phy, 'nTip')
+
+#' @rdname NTip
+#' @export
+NTip.list <- function (phy) vapply(phy, NTip, integer(1))
+
+#' @rdname NTip
+#' @export
+NTip.phylo <- function (phy) length(phy$tip.label)
+
+#' @rdname NTip
+#' @export
+NTip.multiPhylo <- function (phy) {
+  vapply(phy, NTip.phylo, integer(1))
+}
+
+#' @rdname NTip
+#' @export
+NTip.matrix <- function (phy) {
+  if (is.numeric(phy)) {
+    parent <- phy[, 1]
+    child <- phy[, 2]
+
+    # Return:
+    max(child[!child %in% parent])
+  } else {
+    NextMethod()
+  }
+}
+
+#' Number of distinct splits
 #'
 #' How many unique bipartition splits occur in a tree or object?
 #'
