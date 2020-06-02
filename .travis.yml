@@ -19,7 +19,7 @@ before_script:
 
 jobs:
   include:
-    - r: 3.4.0
+    - r: 3.6.0 # Phangorn requires R 3.6.0
       branches:
         only: master
       after_success:
