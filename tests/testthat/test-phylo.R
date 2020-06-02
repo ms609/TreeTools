@@ -8,7 +8,7 @@ nasty <- structure(list(edge = structure(
   tip.label = letters[1:8]),
   class = 'phylo') # Danger: Do not plot!
 
-test_that('AddTipEverywhere correct', {
+test_that('AddTipEverywhere() correct', {
   backbone <- PectinateTree(5)
 
   expect_equal(7L, length(AddTipEverywhere(backbone, includeRoot = FALSE)))
@@ -38,16 +38,17 @@ test_that("Subtree() works", {
   expect_error(Subtree(BalancedTree(8), 10)) # Nodes must be in preorder
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
   expect_equal(BalancedTree(4), t4)
+  expect_equal(BalancedTree(4), Subtree(t4, 5))
   expect_equal(SingleTaxonTree('t1'), Subtree(t4, 1))
 })
 
 
-test_that('ListAncestors works', {
+test_that('ListAncestors() works', {
   edge <- nasty$edge
   expect_equal(c(10L, 12L), ListAncestors(edge[, 1], edge[, 2], 11))
 })
 
-test_that("CladeSizes works", {
+test_that("CladeSizes() works", {
   #plot(Preorder(nasty)); nodelabels(c(12, 10, 13, 11, 9)); tiplabels(1:8)
   #edgelabels(c(2, 3, 6, 4, 8, 10, 9, 5, 7, 1, 12, 11))
 
