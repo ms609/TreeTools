@@ -2,9 +2,15 @@
 % Please edit documentation in R/tree_generation.R
 \name{EnforceOutgroup}
 \alias{EnforceOutgroup}
+\alias{EnforceOutgroup.phylo}
+\alias{EnforceOutgroup.character}
 \title{Force taxa to form an outgroup}
 \usage{
 EnforceOutgroup(tree, outgroup)
+
+\method{EnforceOutgroup}{phylo}(tree, outgroup)
+
+\method{EnforceOutgroup}{character}(tree, outgroup)
 }
 \arguments{
 \item{tree}{Either: a tree of class \code{phylo}; or a character vector
@@ -35,6 +41,7 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
+\code{\link{LeafLabelInterchange}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},

@@ -108,7 +108,6 @@
 #'
 #' @seealso [`TreeShape`]
 #' @family tree generation functions
-#' @exportClass TreeNumber
 #' @name TreeNumber
 #
 
@@ -139,9 +138,7 @@ as.TreeNumber.phylo <- function (x, ...) {
 #' @rdname TreeNumber
 #' @export
 as.TreeNumber.multiPhylo <- function (x, ...) {
-  vapply(x, as.TreeNumber.phylo, structure(0, nTip = 0,
-                                           tip.labels = '0',
-                                           class = 'TreeNumber'))
+  lapply(x, as.TreeNumber.phylo)
 }
 
 #' @rdname TreeNumber

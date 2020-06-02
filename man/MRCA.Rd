@@ -4,20 +4,40 @@
 \alias{MRCA}
 \title{Most recent common ancestor}
 \usage{
-MRCA(tip1, tip2, ancestors)
+MRCA(x1, x2, ancestors)
 }
 \arguments{
-\item{tip1, tip2}{Integer specifying index of tips whose most recent common
-ancestor should be found.}
+\item{x1, x2}{Integer specifying index of leaves or nodes whose most
+recent common ancestor should be found.}
 
-\item{ancestors}{Output of \code{\link{AllAncestors}} for the tree in question}
+\item{ancestors}{Output of \code{\link[=AllAncestors]{AllAncestors()}} for the tree in question.}
 }
 \value{
-\code{MRCA} returns an integer specifying the node number of the last
-common ancestor of \code{tip1} and \code{tip2}.
+\code{MRCA()} returns an integer specifying the node number of the last
+common ancestor of \code{x1} and \code{x2}.
 }
 \description{
-What is the last common ancestor of the specified tips?
+What is the last common ancestor of the specified nodes?
+}
+\details{
+Note that besides satisfying the requirements of \code{AllAncestors()}, \code{MRCA()}
+expects node values to increase away from the root.  No warnings will be
+given if trees do not fulfil this requirement.
+}
+\examples{
+tree <- BalancedTree(7)
+
+# Verify that node numbering increases away from root
+plot(tree)
+nodelabels()
+
+# Guarantee that tree edges are sensibly numbered
+# tree <- Postorder(tree) will give erroneous output.
+tree <- Preorder(tree)
+edge <- tree$edge
+ancestors <- AllAncestors(edge[, 1], edge[, 2])
+MRCA(1, 4, ancestors)
+
 }
 \seealso{
 Other tree navigation: 

@@ -1,6 +1,6 @@
 context('tree_display')
 
-test_that('ConsensusWithout is robust', {
+test_that('ConsensusWithout() is robust', {
   expect_equal(BalancedTree(8), ConsensusWithout(BalancedTree(8)))
   expect_equal(BalancedTree(4),
                ConsensusWithout(BalancedTree(8), paste0('t', 5:8)))
@@ -22,4 +22,12 @@ test_that('ConsensusWithout is robust', {
   expect_equal(Preorder(nasty), ConsensusWithout(nasty))
   expect_equal(DropTip(nasty, 2), ConsensusWithout(nasty, 'b'))
 
+})
+
+test_that("SortTree() works", {
+  expect_equal(matrix(c(7:10, 10, 9, 11, 11, 8, 7:10, 3:4, 11, 1:2, 5:6), 10),
+               SortTree(as.phylo(10, 6))$edge)
+  expect_error(#TODO sort unrooted trees,
+               SortTree(UnrootTree(PectinateTree(5)))$edge)
+  expect_equal('cladewise', attr(SortTree(PectinateTree(5)), 'order'))
 })

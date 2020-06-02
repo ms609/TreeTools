@@ -3,11 +3,12 @@ context("tree_write.R")
 test_that("Write is successful", {
   Test <- function (tree) expect_equal(ape::write.tree(tree), as.Newick(tree))
   Test(BalancedTree(0:7))
-  Test(unroot(BalancedTree(0:7)))
+  Test(UnrootTree(BalancedTree(0:7)))
   Test(PectinateTree(0:7))
-  Test(unroot(PectinateTree(0:7)))
+  Test(UnrootTree(PectinateTree(0:7)))
   Test(ape::read.tree(text='(0,1,2,3,4);'))
   Test(ape::read.tree(text='((0,1,2,3,4), ((5, 6), (7, 8, 9)), 10, 11);'))
+  Test(as.phylo(1:4, 5, 0:4))
 
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,

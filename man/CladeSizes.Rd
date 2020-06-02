@@ -27,7 +27,7 @@ Clade sizes
 tree <- BalancedTree(6)
 plot(tree)
 ape::nodelabels()
-CladeSizes(tree, c(8, 9))
+CladeSizes(tree, nodes = c(8, 9))
 
 }
 \seealso{

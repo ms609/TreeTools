@@ -25,7 +25,6 @@
 #' @template MRS
 #'
 #' @family tree information functions
-#' @importFrom ape unroot
 #' @export
 TreesMatchingTree <- function (tree) {
   prod(NUnrooted(NodeOrder(tree)))
@@ -85,17 +84,21 @@ CladisticInfo <- function (x) UseMethod('CladisticInfo')
 
 #' @rdname CladisticInfo
 #' @export
-PhylogeneticInfo <- function (x) {
+PhylogeneticInfo <- function (x) {                                              # nocov start
   .Deprecated('CladisticInfo()')
   UseMethod('CladisticInfo')
-}
+}                                                                               # nocov end
 
+#' @rdname CladisticInfo
+#' @export
 CladisticInfo.phylo <- function (x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
 }
 
+#' @rdname CladisticInfo
 #' @export
 CladisticInfo.list <- function (x) vapply(x, CladisticInfo, 0)
+#' @rdname CladisticInfo
 #' @export
 CladisticInfo.multiPhylo <- CladisticInfo.list
 

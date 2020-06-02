@@ -16,8 +16,6 @@
 #' @export
 SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FALSE)]
 
-Assert <- function (statement) if (!statement) stop(deparse(statement), " is FALSE")
-
 #' Add tree to start of list
 #'
 #' `UnshiftTree` adds a phylogenetic tree to the start of a list of trees.
@@ -39,10 +37,10 @@ Assert <- function (statement) if (!statement) stop(deparse(statement), " is FAL
 #' @export
 UnshiftTree <- function(add, treeList) {
   if (inherits(treeList, 'multiPhylo')) {
-    structure(c(list(add), lapply(treeList, function (X) X)), class= 'multiPhylo')
+    structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
   } else if (inherits(treeList, 'phylo')) {
-    treeList <- structure(list(add, treeList), class='multiPhylo')
-  } else { # including: if (mode(trees) == 'list') {
+    treeList <- structure(list(add, treeList), class = 'multiPhylo')
+  } else { # including: if (is.list(trees)) {
     c(list(add), treeList)
   }
 }

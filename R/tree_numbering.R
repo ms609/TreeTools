@@ -95,7 +95,7 @@ RenumberEdges <- function (parent, child, ...) {
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
 #'
 #' `Cladewise()`, `ApePostorder()` and `Pruningwise()` are convenience
-#' functions to the corrsponding functions in 'ape'. Single nodes may
+#' functions to the corresponding functions in 'ape'. Single nodes may
 #' need to be collapsed using [ape::collapse.singles] first.  'ape' functions
 #' can cause crashes if nodes are numbered unconventionally -- sometimes
 #' encountered after using tree rearrangement functions, e.g. `phangorn::SPR`.
@@ -195,7 +195,7 @@ Cladewise.multiPhylo <- function (tree, nTip, edge) {
 #' @rdname Reorder
 #' @export
 Cladewise.matrix <- function (tree, nTip = min(tree[, 1]) - 1L, edge) {
-  if (inherits(tree, 'numeric')) {
+  if (is.numeric(tree)) {
     newOrder <- NeworderPhylo(nTip, tree[, 1], tree[, 2], dim(tree)[1], 1L)
 
     # Return:
@@ -222,7 +222,7 @@ ApePostorder.phylo <- function (tree, nTip = length(tree$tip.label),
   nb.node <- tree$Nnode
   if (nb.node == 1) return(tree)
   if (nb.node >= nTip) stop("`tree` apparently badly conformed")
-  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2)
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2L)
   tree$edge <- edge[neworder, ]
   if (!is.null(tree$edge.length)) tree$edge.length <- tree$edge.length[neworder]
   attr(tree, "order") <- "postorder"
@@ -283,7 +283,7 @@ Postorder.multiPhylo <- function (tree, force = FALSE, renumber = FALSE) {
 
 #' @rdname Reorder
 #' @return `Postorder.numeric` accepts a numeric matrix corresponding to the
-#' `edge` entry of a tree oc class `phylo`, and returns a two-column array
+#' `edge` entry of a tree of class `phylo`, and returns a two-column array
 #' corresponding to `tree`, with edges listed in postorder
 #' @export
 Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE) {
@@ -300,10 +300,13 @@ Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE) {
   }
 }
 
+# nocov start
+#' @rdname Reorder
+#' @export
 PostorderEdges <- function (edge, renumber = FALSE) {
   .Deprecated('Postorder')
   Postorder(edge, renumber = renumber)
-}
+} # nocov end
 
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
@@ -433,7 +436,7 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
-  lapply(tree, RenumberTips.phylo, tipOrder)
+  structure(lapply(tree, RenumberTips.phylo, tipOrder), class = 'multiPhylo')
 }
 
 #' @rdname RenumberTips

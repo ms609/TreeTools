@@ -25,8 +25,8 @@ with the exception of the entry for the root node itself, which is \code{NULL}.
 }
 \details{
 Note that the tree's edges must be listed in an order whereby each entry in
-\code{tr$edge[, 1]} (with the exception of the root) has appeared already in
-\code{tr$edge[, 2]}.
+\code{tr$edge[n, 1]} (with the exception of the root) occurs in
+\code{tr$edge[i < n, 2]}.
 }
 \examples{
   tr <- PectinateTree(4)

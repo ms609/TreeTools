@@ -14,8 +14,8 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
   if (1L + edge.rows() > UINTX_MAX - 1) { /* UINT_MAX denotes NOT_TRIVAL */
-    throw(std::length_error("Too many edges in tree for edge_to_splits: "
-                              "Contact maintainer for advice"));
+    throw(std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
+                              "Contact maintainer for advice"));                // # nocov
   }
   if (nTip[0] < 1) {
     throw(std::length_error("Tree must contain tips."));
@@ -55,7 +55,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   }
 
   uintx n_trivial = 0;
-  const uintx NOT_TRIVIAL = uintx(UINT_MAX),
+  const uintx NOT_TRIVIAL = UINTX_MAX,
               trivial_origin = edge(n_edge - 1, 0) - 1,
               trivial_two = (edge(n_edge - 1, 0) == edge(n_edge - 3, 0) ?
                             NOT_TRIVIAL : (edge(n_edge - 1, 1) - 1L)),

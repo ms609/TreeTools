@@ -63,35 +63,58 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' @importFrom graphics legend
 #' @template MRS
 #' @export
-MarkMissing <- function (tip, position='bottomleft', ...) {
+MarkMissing <- function (tip, position = 'bottomleft', ...) {                   # nocov start
   if (length(tip) > 0) {
-    legend(position, legend=gsub('_', ' ', tip, fixed=TRUE),
-         lwd=1, lty=2, bty='n', ...)
+    legend(position, legend = gsub('_', ' ', tip, fixed = TRUE),
+         lwd = 1, lty = 2, bty = 'n', ...)
   }
-}
+}                                                                               # nocov end
 
 #' Sort tree
 #'
 #' Sorts each node into a consistent order, so similar trees look visually
 #' similar.
 #'
+#' At each node, clades will be listed in `tree$edge` in decreasing size order.
+#'
+#' Clades that contain the same number of leaves are sorted in decreasing order
+#' of minimum leaf number, so (2, 3) will occur before (1, 4).
+#'
+#' As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+#' bottom of a plotted tree.
+#'
+#TODO:
+#' `tree` must (presently) be binary.
+#'
 #' @template treeParam
 #'
-#' @return `SortTree` returns a tree of class `phylo`, with each node sorted
+#' @return `SortTree()` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
-#' @seealso [`RenumberTree()`]
+#'
+#' @examples
+#' messyTree <- as.phylo(10, 6)
+#' plot(messyTree)
+#'
+#' sorted <-SortTree(messyTree)
+#' plot(sorted)
+#' ape::nodelabels()
+#' ape::edgelabels()
 #'
 #' @family tree manipulation
 #'
 #' @template MRS
 #' @export
-SortTree <- function(tree) {
+SortTree <- function (tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
   tipLabels <- tree$tip.label
   tree.ntip <- length(tipLabels)
+  if (tree.ntip + tree.ntip - 2L != length(parent)) {
+    stop("`tree` must be binary.")
+  }
+
   descendants <- Descendants(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function (tips) min(tipLabels[tips])
@@ -99,15 +122,16 @@ SortTree <- function(tree) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
     if (all(descs == 1L)) {
-      order(tipLabels[kids])[1] == 1
+      order(tipLabels[kids], method = 'radix')[1] == 1
     } else if (descs[1] == descs[2]) {
-      order(vapply(descendants[kids], MinKid, character(1)))[1] == 1
+      order(vapply(descendants[kids], MinKid, character(1)),
+            method = 'radix')[1] == 1
     } else {
       descs[1] < descs[2]
     }
   }, logical(1))
   for (node in tree.ntip + rev(which(swaps))) {
-    childEdges <- parent==node
+    childEdges <- parent == node
     kids <- child[childEdges]
     child[childEdges][2:1] <- kids
   }
@@ -116,21 +140,3 @@ SortTree <- function(tree) {
   attr(tree, 'order') <- NULL
   Cladewise(Renumber(tree))
 }
-
-#' Write Newick Tree
-#'
-#' Writes a tree in Newick format.  This differs from ape's `write.tree`
-#' in the encoding of spaces as spaces, rather than underscores.
-#'
-#' @template treeParam
-#'
-#' @return `NewickTree` returns a character string denoting `tree` in Newick
-#' format.
-#'
-#' @examples
-#' NewickTree(BalancedTree(6))
-#'
-#' @seealso [`as.Newick`]
-#' @importFrom ape write.tree
-#' @export
-NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed=TRUE)

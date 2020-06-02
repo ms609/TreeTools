@@ -36,6 +36,7 @@ Log2TreesMatchingSplit(5, 6)
 Other split information functions: 
 \code{\link{CharacterInformation}()},
 \code{\link{SplitInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{

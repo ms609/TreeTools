@@ -352,22 +352,45 @@ EdgeAncestry <- function (edge, parent, child,
 
 #' Most recent common ancestor
 #'
-#' What is the last common ancestor of the specified tips?
+#' What is the last common ancestor of the specified nodes?
 #'
-#' @param tip1,tip2 Integer specifying index of tips whose most recent common
-#' ancestor should be found.
-#' @param ancestors Output of [`AllAncestors`] for the tree in question
+#' Note that besides satisfying the requirements of `AllAncestors()`, `MRCA()`
+#' expects node values to increase away from the root.  No warnings will be
+#' given if trees do not fulfil this requirement.
 #'
-#' @return `MRCA` returns an integer specifying the node number of the last
-#' common ancestor of `tip1` and `tip2`.
+#' @param x1,x2 Integer specifying index of leaves or nodes whose most
+#' recent common ancestor should be found.
+#' @param ancestors Output of [`AllAncestors()`] for the tree in question.
+#'
+#' @return `MRCA()` returns an integer specifying the node number of the last
+#' common ancestor of `x1` and `x2`.
 #'
 #' @family tree navigation
 #' @template MRS
+#'
+#' @examples
+#' tree <- BalancedTree(7)
+#'
+#' # Verify that node numbering increases away from root
+#' plot(tree)
+#' nodelabels()
+#'
+#' # Guarantee that tree edges are sensibly numbered
+#' # tree <- Postorder(tree) will give erroneous output.
+#' tree <- Preorder(tree)
+#' edge <- tree$edge
+#' ancestors <- AllAncestors(edge[, 1], edge[, 2])
+#' MRCA(1, 4, ancestors)
+#'
 #' @export
-MRCA <- function(tip1, tip2, ancestors) {
-  anc1 <- ancestors[[tip1]]
-  anc2 <- ancestors[[tip2]]
-  max(intersect(anc1, anc2))
+MRCA <- function(x1, x2, ancestors) {
+  if (x1 == x2) {
+    x1
+  } else {
+    anc1 <- ancestors[[x1]]
+    anc2 <- ancestors[[x2]]
+    max(intersect(anc1, anc2))
+  }
 }
 
 #' Distance between edges
@@ -433,18 +456,21 @@ EdgeDistances <- function (tree) {
   ret[origOrder, origOrder]
 }
 
+# nocov start
 #' Non-duplicate root
+#'
+#' DEPRECATED.
 #'
 #' Identify, for each edge, whether it denotes a different partition from
 #' the root edge.
 #' The first edge of the input tree must be a root edge; this can be
-#' accomplished using `Preorder`.
+#' accomplished using `Preorder()`.
 #'
 #' @template treeParent
 #' @template treeChild
 #' @template treeNEdgeOptional
 #'
-#' @return `NonDuplicateRoot` returns a logical vector of length `nEdge`,
+#' @return `NonDuplicateRoot()` returns a logical vector of length `nEdge`,
 #' specifying `TRUE` unless an edge identifies the same partition as
 #' the root edge.
 #'
@@ -454,13 +480,13 @@ EdgeDistances <- function (tree) {
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
 #'
-#' which(!NonDuplicateRoot(parent, child))
+#' #which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
 #' @template MRS
 #' @family tree navigation
-#' @export
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
+  .Deprecated("Unused?")
   notDuplicateRoot <- !logical(nEdge)
   rightSide <- DescendantEdges(1, parent, child, nEdge)
   nEdgeRight <- sum(rightSide)
@@ -472,9 +498,55 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
     notDuplicateRoot[1] <- FALSE
   }
   notDuplicateRoot
+} # nocov end
+
+#' Number of tips in a phylogenetic tree
+#'
+#' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
+#' class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
+#'
+#' @param phy Object to count.
+#'
+#' @return `NTip` returns an integer specifying the number of tips in each
+#' object in `phy`.
+#'
+#' @export
+NTip <- function (phy) UseMethod('NTip')
+
+#' @rdname NTip
+#' @family Splits operations
+#' @export
+NTip.Splits <- function (phy) attr(phy, 'nTip')
+
+#' @rdname NTip
+#' @export
+NTip.list <- function (phy) vapply(phy, NTip, integer(1))
+
+#' @rdname NTip
+#' @export
+NTip.phylo <- function (phy) length(phy$tip.label)
+
+#' @rdname NTip
+#' @export
+NTip.multiPhylo <- function (phy) {
+  vapply(phy, NTip.phylo, integer(1))
 }
 
-#' Number of distinct partitions
+#' @rdname NTip
+#' @export
+NTip.matrix <- function (phy) {
+  if (is.numeric(phy)) {
+    parent <- phy[, 1]
+    child <- phy[, 2]
+
+    # Return:
+    max(child[!child %in% parent])
+  } else {
+    NextMethod()
+  }
+}
+
+#' Number of distinct splits
 #'
 #' How many unique bipartition splits occur in a tree or object?
 #'
@@ -558,7 +630,7 @@ TreeIsRooted <- function (tree) {
 #'
 #' @examples
 #' RootNode(BalancedTree(8))
-#' RootNode(unroot(BalancedTree(8)))
+#' RootNode(UnrootTree(BalancedTree(8)))
 #'
 #'
 #' @family tree navigation
@@ -577,9 +649,9 @@ RootNode.phylo <- function (x) {
   edgeOrder <- attr(x, "order")
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
-      return(edge[nrow(edge), 1L])
+      return(as.integer(edge[nrow(edge), 1L]))
     } else if (edgeOrder == 'preorder') {
-      return(edge[1L])
+      return(as.integer(edge[1L]))
     }
   }
   RootNode(edge)
@@ -594,7 +666,7 @@ RootNode.list <- function (x) {
 RootNode.multiPhylo <- RootNode.list
 
 #' @export
-RootNode.matrix <- function (x) {
+RootNode.numeric <- function (x) {
   parent <- x[, 1]
   child <- x[, 2]
   ret <- unique(parent[!parent %in% child])
@@ -603,5 +675,5 @@ RootNode.matrix <- function (x) {
   }
 
   # Return:
-  ret
+  as.integer(ret)
 }

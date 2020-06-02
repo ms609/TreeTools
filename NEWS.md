@@ -1,24 +1,33 @@
-# TreeTools 0.2.0
+# TreeTools 1.0.0
 
 ## New functions
 
 - `CladisticInfo()`: Calculate the information content of a tree.
 - `RootNode()`: Which node is a tree's root?
+- `UnrootTree()`: Safely remove a root node.
 - `NodeDepth()`: Discriminate shallow from deep nodes.
 - `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
 - `CladeSizes()`: Count leaves / nodes descended from each node.
 - `ListAncestors()`: List ancestors of a node.
 - `DropTip()`: Remove tip, handling weird node orders.
+- `LeafLabelInterchange()`: Exchange position of _n_ tips.
 - `TotalCopheneticIndex()` integrated from 'tci' package.
+
+## Deprecations
+
+- `PostorderEdges()`: use `Postorder()` instead.
+- `NonDuplicateRoot()`: unused internal function.
 
 ## Enhancements
 
 - Improve support for unrooted trees in `as.Splits()`.
 - Use methods so `Reorder` functions can handle `multiPhylo` objects and edges.
-  Deprecates `PostorderEdges()`.
 - Handle funny node orders.
+- Support continuous characters in `ReadCharacters()`.
 - Improve performance of `as.logical.Splits()` and related functions.
 - Fail nicely when trees are too large for memory.
+- Fix memory leak in `as.Splits()`.
+- Various under-the-hood improvements to functions.
 - Documentation improvements.
 
 # TreeTools 0.1.4

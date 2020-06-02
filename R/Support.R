@@ -52,7 +52,7 @@ SplitFrequency <- function(reference, forest) {
 #' @param powersOf2 Integer vector of same length as `tipIndex`, specifying a
 #' power of 2 to be associated with each tip in turn.
 #' @export
-SplitNumber <- function (tips, tree, tipIndex, powersOf2) {
+SplitNumber <- function (tips, tree, tipIndex, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
   included <- tipIndex %in% tree$tip.label[tips]
   as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
@@ -79,7 +79,7 @@ ForestSplits <- function (forest, powersOf2) {
 #' @export
 TreeSplits <- function (tree) {
   .Deprecated("as.Splits")
-}
+} # nocov end
 
 #' Colour for node support value
 #'

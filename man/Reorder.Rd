@@ -16,6 +16,7 @@
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
+\alias{PostorderEdges}
 \alias{Pruningwise}
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
@@ -55,6 +56,8 @@ Postorder(tree, force = FALSE, renumber = FALSE)
 
 \method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
 
+PostorderEdges(edge, renumber = FALSE)
+
 Pruningwise(tree, nTip, edge)
 
 \method{Pruningwise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
@@ -93,7 +96,7 @@ increase in number away from the root.}
 specified numbering scheme.
 
 \code{Postorder.numeric} accepts a numeric matrix corresponding to the
-\code{edge} entry of a tree oc class \code{phylo}, and returns a two-column array
+\code{edge} entry of a tree of class \code{phylo}, and returns a two-column array
 corresponding to \code{tree}, with edges listed in postorder
 }
 \description{
@@ -104,7 +107,7 @@ Calling this C function directly is approximately twice as fast as using
 }
 \details{
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
-functions to the corrsponding functions in 'ape'. Single nodes may
+functions to the corresponding functions in 'ape'. Single nodes may
 need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
 can cause crashes if nodes are numbered unconventionally -- sometimes
 encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR}.

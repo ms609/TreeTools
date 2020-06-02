@@ -18,6 +18,7 @@ vignettes/.RData
 ^\.Rproj\.user$
 \.yml$
 ^\.Rdata$
+^\.covrignore$
 ^\.?R+prof.*$
 ^CODE_OF_CONDUCT\.md$
 ^_pkgdown\.yml$

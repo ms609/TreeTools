@@ -4,7 +4,8 @@
 #' rooting the tree on a given tip.
 #'
 #' @template tipsForTreeGeneration
-#' @param root Tip to use as root (if desired; FALSE otherwise)
+#' @param root Character or integer specifying tip to use as root, if desired;
+#' or `FALSE` for an unrooted tree.
 #'
 #' @return `RandomTree` returns a random tree of class `phylo`, with the
 #'  specified tips, and no branch lengths specified.
@@ -22,9 +23,9 @@
 RandomTree <- function (tips, root = FALSE) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
-  tree <- rtree(nTips, tip.label=tips, br=NULL)
+  tree <- rtree(nTips, rooted = root != FALSE, tip.label = tips, br = NULL)
   if (root != FALSE) {
-    tree <- root(tree, root, resolve.root=TRUE)
+    tree <- root(tree, root, resolve.root = TRUE)
   }
 
   # Return:
@@ -63,19 +64,19 @@ PectinateTree <- function (tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
     tip.label = tips
-  ), order = 'cladewise', class='phylo')
+  ), order = 'cladewise', class = 'phylo')
 }
 
 #' Generate a Balanced Tree
 #'
-#' Generates a balanced (symmetrical) binary tree with the specified tip labels.
+#' Generates a rooted balanced (symmetrical) binary tree with the specified
+#' tip labels.
 #'
 #' @template tipsForTreeGeneration
 #'
 #' @return A tree of class `phylo`.
 #' @family tree generation functions
 #' @template MRS
-#' @importFrom ape read.tree
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
@@ -83,25 +84,35 @@ PectinateTree <- function (tips) {
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
+  nTip <- length(tips)
+  if (nTip < 2L) {
+    return(if (nTip == 1L) SingleTaxonTree(tips) else NULL)
+  }
 
   # Return:
-  read.tree(text=paste0(BalancedBit(tips), ';'))
+  structure(list(edge = BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
+                       tip.label = as.character(tips)),
+            order = 'cladewise', class = 'phylo') # Actually in preorder
 }
 
-BalancedBit <- function (tips, nTips = length(tips)) {
+BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
   if (nTips < 4L) {
     if (nTips == 2L) {
-      paste0('(', tips[1L], ',', tips[2L], ')')
+      matrix(c(rootNode, rootNode, tips), 2L, 2L)
     } else if (nTips == 3L) {
-      paste0('(', tips[1L], ',(', tips[2L], ',', tips[3L], '))')
+      matrix(c(rootNode + c(0L, 1L, 1L, 0L, 1L), tips), 4L, 2L)
     } else {
       tips
     }
   } else {
     # Recurse:
-    firstHalf <- seq_len(nTips / 2L)
-    paste0('(', BalancedBit(tips[firstHalf]), ',',
-           BalancedBit(tips[seq_along(tips)[-firstHalf]]), ')')
+    firstN <- as.integer(ceiling(nTips / 2L))
+    firstHalf <- seq_len(firstN)
+    root2 <- rootNode + firstN
+    rbind(rootNode + 0:1,
+          BalancedBit(tips[firstHalf], rootNode = rootNode + 1L),
+          c(rootNode, root2),
+          BalancedBit(tips[-firstHalf], rootNode = root2))
   }
 }
 
@@ -151,32 +162,38 @@ NJTree <- function (dataset) {
 #'
 #' @template MRS
 #' @family tree manipulation
-#'
-#' @importFrom ape rtree
-#' @importFrom ape root drop.tip bind.tree
-#'
 #' @export
-EnforceOutgroup <- function (tree, outgroup) {
-  if (inherits(tree, 'phylo')) {
-    taxa <- tree$tip.label
-  } else if (inherits(tree, 'character')) {
-    taxa <- tree
-    tree <- root(rtree(length(taxa), tip.label=taxa, br=NULL), taxa[1],
-                 resolve.root=TRUE)
-  } else {
-    stop ("tree must be of class `phylo` or `character`")
-  }
+EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
-  if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root=TRUE))
+#' @importFrom ape root drop.tip bind.tree
+.EnforceOutgroup <- function (tree, outgroup, taxa) {
+  if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %in% outgroup)]
   if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {
-    stop ("All outgroup taxa must occur in speficied taxa")
+    stop ("All outgroup taxa must occur in tree")
   }
 
   ingroup.branch <- drop.tip(tree, outgroup)
   outgroup.branch <- drop.tip(tree, ingroup)
 
-  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1), outgroup, resolve.root=TRUE)
+  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
+                 outgroup, resolve.root = TRUE)
   RenumberTips(Renumber(result), taxa)
+}
+
+#' @rdname EnforceOutgroup
+#' @export
+EnforceOutgroup.phylo <- function (tree, outgroup) {
+  .EnforceOutgroup(tree, outgroup, tree$tip.label)
+}
+
+#' @rdname EnforceOutgroup
+#' @importFrom ape root rtree
+#' @export
+EnforceOutgroup.character <- function (tree, outgroup) {
+  taxa <- tree
+  .EnforceOutgroup(root(rtree(length(taxa), tip.label = taxa, br = NULL),
+                        taxa[1], resolve.root = TRUE),
+                   outgroup, taxa)
 }

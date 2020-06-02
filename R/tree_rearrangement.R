@@ -1,9 +1,12 @@
-#' Root a phylogenetic tree
+#' Root or unroot a phylogenetic tree
 #'
-#' Roots a tree on the smallest clade containing the specified tips.
+#' `RootTree()` roots a tree on the smallest clade containing the specified
+#' tips; `UnrootTree()` collapses a root node, without the undefined behaviour
+#' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in preorder.
 #'
 #' @template treeParam
-#' @template outgroupTipsParam
+#' @param outgroupTips Vector of type character, integer or logical, specifying
+#' the names or indices of the tips to include in the outgroup.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips.
@@ -30,11 +33,17 @@
 #' @export
 RootTree <- function (tree, outgroupTips) {
   tipLabels <- tree$tip.label
-  if (!all(outgroupTips %in% tipLabels)) {
-    stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
-         "] not found in tree's tip labels.")
+  if (is.character(outgroupTips)) {
+    if (!all(outgroupTips %in% tipLabels)) {
+      stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
+           "] not found in tree's tip labels.")
+    }
+  } else {
+    outgroupTips <- tipLabels[outgroupTips]
   }
-  if (length(outgroupTips) == 1) {
+  if (length(outgroupTips) == 0) {
+    stop("No outgroup tips selected")
+  } else if (length(outgroupTips) == 1) {
     outgroup <- outgroupTips
   } else {
     tipNos <- which(tipLabels %in% outgroupTips)
@@ -59,7 +68,6 @@ RootTree <- function (tree, outgroupTips) {
 #' @return `RootOnNode` returns a tree of class `phylo`, rooted on the requested
 #' `node` and ordered in [`Preorder`].
 #'
-#' @importFrom ape unroot
 #' @export
 RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
@@ -78,6 +86,18 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 
       rootChildren <- child[rootEdges]
       if (node %in% rootChildren) {
+        if (!resolveRoot) {
+          if (node < NTip(tree)) {
+            node <- rootChildren[rootChildren != node]
+          }
+          deletedEdge  <- child == node
+          parent[parent == node] <- parent[deletedEdge]
+          parent <- parent[!deletedEdge]
+          child <- child[!deletedEdge]
+          parent[parent > node] <- parent[parent > node] - 1L
+          child[child > node] <- child[child > node] - 1L
+          tree$Nnode <- tree$Nnode - 1L
+        }
         inverters <- logical(length(parent))
       } else {
         spareRoot <- rootChildren == min(rootChildren) # Hit tip if present
@@ -126,13 +146,37 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   } else {
     # Root position is already correct
     if (rooted && !resolveRoot) {
-      unroot(tree)
+      UnrootTree(tree)
     } else if (!rooted && resolveRoot) {
       RootOnNode(tree, max(child[rootEdges]), resolveRoot = TRUE)
     } else {
       Preorder(tree)
     }
   }
+}
+
+#' @rdname RootTree
+#' @return `UnrootTree()` returns a tree of class `phylo`, in preorder,
+#' having collapsed the first child of the root node.
+#' @export
+UnrootTree <- function (tree) {
+  tree <- Preorder(tree)
+  edge <- tree$edge
+  if (dim(edge)[1] < 3) return (tree)
+
+  parent <- edge[, 1]
+  rootNode <- parent[1]
+  rootEdge2 <- parent[-1] == rootNode
+  if (sum(rootEdge2) > 1L) return (tree)
+
+  deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
+  renumber <- edge > rootNode
+  edge[renumber] <- edge[renumber] - 1L
+  tree$edge <- edge[-deleted, ]
+  tree$Nnode <- tree$Nnode - 1L
+
+  # Return:
+  tree
 }
 
 #' Collapse nodes on a phylogenetic tree
@@ -186,7 +230,7 @@ CollapseNode.phylo <- function (tree, nodes) {
   root <- RootNode(edge)
   nTip <- NTip(tree)
   maxNode <- max(parent)
-  edgeBelow <- order(child)
+  edgeBelow <- order(child, method = 'radix') # a little faster than 'auto'
   tips <- seq_len(nTip)
   preRoot <- seq_len(root - 1L)
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
@@ -271,7 +315,7 @@ DropTip <- function (tree, tip) {
 
     drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
   } else {
-    stop("`tip` must be of mode character or numeric")
+    stop("`tip` must be of type character or numeric")
   }
 
   if (any(drop)) {
@@ -330,3 +374,72 @@ DropTip <- function (tree, tip) {
     Preorder(tree)
   }
 }
+
+#' Leaf label interchange
+#'
+#' Exchange the position of leaves within a tree.
+#'
+#' Modifies a tree by switching the positions of _n_ leaves.  To avoid
+#' later swaps undoing earlier exchanges, all _n_ leaves are guaranteed
+#' to change position.  Note, however, that no attempt is made to avoid
+#' swapping equivalent leaves, for example, a pair that are each others'
+#' closest relatives.  As such, the relationships within a tree are not
+#' guaranteed to be changed.
+#'
+#' @template treeParam
+#' @param n Integer specifying number of leaves whose positions should be
+#' exchanged.
+#'
+#' @return `LeafLabelInterchange()` returns a tree of class `phylo` on which
+#' the position of `n` leaves have been exchanged.
+#' The tree's internal topology will not change.
+#'
+#' @examples
+#' tree <- PectinateTree(8)
+#' plot(LeafLabelInterchange(tree, 3L))
+#'
+#' @template MRS
+#' @family tree manipulation
+#' @export
+LeafLabelInterchange <- function (tree, n = 2L) {
+
+  if (n < 2L) return (tree)
+  tipLabel <- tree$tip.label
+  nTip <- length(tipLabel)
+  if (n > nTip) {
+    stop("`n` cannot exceed number of tips in tree (", nTip, ")")
+  }
+
+  from <- sample.int(nTip, n)
+  # We need to ensure that a tip's new position is different from its old one.
+  # A simple way would be to shift each moved tip to the next one in turn:
+  # 1, 2, 3, 4 -> 2, 3, 4, 1
+  # But this cyclicity is non-random: we may wish to introduce some smaller
+  # cycles, e.g.
+  # 1, 2, 3, 4 -> 2, 1, 4, 3.
+
+  cycles <- integer(n / 2L)
+  remaining <- n
+  i <- 1L
+  while (remaining > 0L) {
+    if (remaining == 2L) {
+      cycles[i] <- 2L
+      break
+    }
+    thisCycle <- SampleOne(1L + seq_len(remaining - 2L))
+    if (thisCycle == remaining - 1L) thisCycle <- remaining
+    remaining <- remaining - thisCycle
+    cycles[i] <- thisCycle
+    i <- i + 1L
+  }
+  cycles <- cycles[cycles > 0L]
+  nCycles <- length(cycles)
+  start <- cumsum(c(0L, cycles[-nCycles]))
+  to <- unlist(lapply(seq_along(cycles), function (i) {
+     c(seq_len(cycles[i] - 1L) + 1L, 1L) + start[i]
+  }))
+
+  tree$tip.label[from] <- tipLabel[from[to]]
+  tree
+}
+

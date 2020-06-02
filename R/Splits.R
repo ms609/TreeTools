@@ -37,7 +37,6 @@
 #'
 #' @family Splits operations
 #' @importFrom ape reorder.phylo
-#' @exportClass Splits
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
@@ -50,16 +49,23 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
-  edge <- Postorder(x$edge, renumber = FALSE)
-  nTip <- length(x$tip.label)
-  splits <- cpp_edge_to_splits(edge, nTip)
+  edge <- Postorder(x, renumber = FALSE)$edge # In case tree already postordered
 
+  # Return:
+  .as.Splits.edge(edge, tipLabels = x$tip.label, asSplits = asSplits,
+                  nTip = NTip(x), ...)
+}
+
+.as.Splits.edge <- function (edge, tipLabels = NULL, asSplits = TRUE,
+                             nTip = NTip(edge), ...) {
+  splits <- cpp_edge_to_splits(Postorder(edge), nTip)
   nSplits <- dim(splits)[1]
+
   # Return:
   if (asSplits) {
     structure(splits,
               nTip = nTip,
-              tip.label = x$tip.label,
+              tip.label = tipLabels,
               class = 'Splits')
   }
   else {
@@ -92,8 +98,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
       } else {
         stop (length(tipLabels), " labels provided; expecting ", nTip)
       }
-    }
-    if (!identical(oldLabels, tipLabels)) {
+    } else if (!identical(oldLabels, tipLabels)) {
       nTip <- attr(x, 'nTip')
       if (length(x) == 0) {
         attr(x, 'tip.label') <- tipLabels
@@ -131,6 +136,34 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
     stop("Unsupported list type.")
+  }
+}
+
+#' @rdname as.Splits
+#' @export
+as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
+  if (all(c('edge', 'Nnode') %in% rownames(x))) {
+    col1 <- x[, 1]
+    if (is.list(col1)) {
+      if (is.null(tipLabels)) {
+        tipLabels <- col1$tip.label
+        if (is.null(tipLabels)) {
+          nTip <- dim(col1$edge)[1] - col1$Nnode + 1L
+          tipLabels <- seq_len(nTip)
+          x <- rbind(x, replicate(ncol(x), list(tip.label = tipLabels)))
+          rownames(x)[nrow(x)] <- 'tip.label'
+        }
+      }
+      lapply(seq_len(ncol(x)), function (i) {
+        as.Splits(structure(x[, i], class = 'phylo'), tipLabels = tipLabels)
+      })
+    } else {
+      stop("Unsupported matrix. Columns should correspond to trees.")
+    }
+  } else if (dim(x)[2] == 2) {
+    .as.Splits.edge(x, tipLabels = NULL, asSplits = TRUE, ...)
+  } else {
+    NextMethod()
   }
 }
 
@@ -248,46 +281,6 @@ as.character.Splits <- function (x, ...) {
            paste(tipLabels[!inSplit], collapse=' '))
   })
 
-}
-
-
-#' Number of tips in a phylogenetic tree
-#'
-#' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
-#' class `Splits` and `list`.
-#'
-#' @param phy Object to count.
-#'
-#' @return `NTip` returns an integer specifying the number of tips in each
-#' object in `phy`.
-#'
-#' @export
-NTip <- function (phy) UseMethod('NTip')
-
-NTip.default <- function (phy) UseMethod('Ntip')
-
-#' @rdname NTip
-#' @family Splits operations
-#' @export
-NTip.Splits <- function (phy) attr(phy, 'nTip')
-
-#' @rdname NTip
-#' @export
-NTip.list <- function (phy) vapply(phy, NTip, integer(1))
-
-#' @rdname NTip
-#' @export
-NTip.phylo <- function (phy) length(phy$tip.label)
-
-#' @rdname NTip
-#' @export
-NTip.multiPhylo <- function (phy) {
-  ret <- attr(phy, 'TipLabel')
-  if (is.null(ret)) {
-    vapply(phy, NTip.phylo, integer(1))
-  } else {
-    rep(length(ret), length(phy))
-  }
 }
 
 #' Tips contained within splits

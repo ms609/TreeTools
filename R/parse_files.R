@@ -12,16 +12,19 @@
 #' @export
 #' @template MRS
 #'
-ApeTime <- function (filename, format='double') {
-  if (length(filename) > 1L) stop("`filename` must be a character string of length 1")
-  comment <- readLines(filename, n=2)[2]
+ApeTime <- function (filename, format = 'double') {
+  if (length(filename) > 1L) {
+    stop("`filename` must be a character string of length 1")
+  }
+  comment <- readLines(filename, n = 2)[2]
   Month <- function (month) {
-    months <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    months <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     whichMonth <- months == month
     if (any(whichMonth)) {
-      formatC(which (whichMonth), width=2, flag="0")
+      formatC(which(whichMonth), width = 2, flag = "0")
     } else {
-      month
+      month                                                                     # nocov
     }
   }
   DATEEXP <- ".*? (\\w+)\\s(\\d+)\\s(\\d+\\:\\d\\d\\:\\d\\d)\\s(\\d\\d\\d\\d).*"
@@ -30,7 +33,7 @@ ApeTime <- function (filename, format='double') {
                  gsub(DATEEXP, "-\\2 \\3", comment))
 
   # Return:
-  ifelse(format=='double', as.numeric(as.POSIXct(time, tz = "GMT")), time)
+  ifelse(format == 'double', as.numeric(as.POSIXct(time, tz = "GMT")), time)
 }
 
 #' Parse TNT Tree
@@ -42,7 +45,7 @@ ApeTime <- function (filename, format='double') {
 #' analysis of results in TNT is made difficult by its esoteric and scantly
 #' documented scripting language.
 #'
-#' `ReadTNTTree` aims to aid the user by facilitating the import of trees
+#' `ReadTNTTree()` aims to aid the user by facilitating the import of trees
 #' generated in TNT into R for further analysis.
 #'
 #' The function depends on tree files being saved by TNT in parenthetical
@@ -52,9 +55,9 @@ ApeTime <- function (filename, format='double') {
 #' contains tip labels and can be parsed directly.  The downside is that the
 #' uncompressed `.tre` files will have a larger file size.
 #'
-#' `ReadTNTTree` can also read `.tre` files in which taxa have been saved using
-#' their numbers (`taxname-`).  Such files contain a hard-coded link to the
-#' matrix file that was used to generate the trees, in the first line of the
+#' `ReadTNTTree()` can also read `.tre` files in which taxa have been saved
+#' using their numbers (`taxname-`).  Such files contain a hard-coded link to
+#' the matrix file that was used to generate the trees, in the first line of the
 #' `.tre` file.  This poses problems for portability: if the matrix file is
 #' moved, or the `.tre` file is accessed on another computer, the taxon names
 #' may be lost.  As such, it is important to check that the matrix file
@@ -75,53 +78,53 @@ ApeTime <- function (filename, format='double') {
 #' taxon names will be loaded from the data file linked in the first line of the
 #'  `.tre` file specified in `filename`.
 #'
-#' @return `ReadTNTTree` returns a tree of class \code{phylo}, corresponding
+#' @return `ReadTNTTree()` returns a tree of class \code{phylo}, corresponding
 #' to the tree in `filename`.
 #'
 #' @examples
-#'   # In the examples below, TNT has read a matrix from
-#'   # "c:/TreeTools/input/dataset.nex"
-#'   # The results of an analysis were written to
-#'   # "c:/TreeTools/output/results1.tnt"
-#'   #
-#'   # results1.tnt will contain a hard-coded reference to
-#'   # "c:/TreeTools/input/dataset.nex".
+#' # In the examples below, TNT has read a matrix from
+#' # "c:/TreeTools/input/dataset.nex"
+#' # The results of an analysis were written to
+#' # "c:/TreeTools/output/results1.tnt"
+#' #
+#' # results1.tnt will contain a hard-coded reference to
+#' # "c:/TreeTools/input/dataset.nex".
 #'
-#'   # On the original machine (but not elsewhere), it would be possible to read
-#'   # this hard-coded reference from results.tnt:
-#'   # ReadTntTree('output/results1.tnt')
+#' # On the original machine (but not elsewhere), it would be possible to read
+#' # this hard-coded reference from results.tnt:
+#' # ReadTntTree('output/results1.tnt')
 #'
-#'   # These datasets are provided with the `TreeTools` package, which will
-#'   # probably not be located at c:/TreeTools on your machine:
+#' # These datasets are provided with the `TreeTools` package, which will
+#' # probably not be located at c:/TreeTools on your machine:
 #'
-#'   oldWD <- getwd() # Remember the current working directory
-#'   setwd(system.file(package = 'TreeTools'))
+#' oldWD <- getwd() # Remember the current working directory
+#' setwd(system.file(package = 'TreeTools'))
 #'
-#'   # If taxon names were saved within the file (using `taxname=` in TNT),
-#'   # then our job is easy:
-#'   ReadTntTree('extdata/output/named.tre')
+#' # If taxon names were saved within the file (using `taxname=` in TNT),
+#' # then our job is easy:
+#' ReadTntTree('extdata/output/named.tre')
 #'
-#'   # But if taxa were compressed to numbers (using `taxname-`), we need to
-#'   # look up the original matrix in order to dereference the tip names.
-#'   #
-#'   # We need to extract the relevant file path from the end of the
-#'   # hard-coded path in the original file.
-#'   #
-#'   # We are interested in the last two elements of
-#'   # c:/TreeTools/input/dataset.nex
-#'   #                2      1
-#'   #
-#'   # '.' means "relative to the current directory"
-#'   ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
+#' # But if taxa were compressed to numbers (using `taxname-`), we need to
+#' # look up the original matrix in order to dereference the tip names.
+#' #
+#' # We need to extract the relevant file path from the end of the
+#' # hard-coded path in the original file.
+#' #
+#' # We are interested in the last two elements of
+#' # c:/TreeTools/input/dataset.nex
+#' #                2      1
+#' #
+#' # '.' means "relative to the current directory"
+#' ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
 #'
-#'   # If working in a lower subdirectory
-#'   setwd('./extdata/otherfolder')
+#' # If working in a lower subdirectory
+#' setwd('./extdata/otherfolder')
 #'
-#'   # then it will be necessary to navigate up the directory path with '..':
-#'   ReadTntTree('../output/numbered.tre', '..', 2)
+#' # then it will be necessary to navigate up the directory path with '..':
+#' ReadTntTree('../output/numbered.tre', '..', 2)
 #'
 #'
-#'   setwd(oldWD) # Restore original working directory
+#' setwd(oldWD) # Restore original working directory
 #'
 #' @template MRS
 #' @importFrom ape read.tree
@@ -141,8 +144,8 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
         taxonFileParts <- strsplit(taxonFile, '/')[[1]]
         nParts <- length(taxonFileParts)
         if (nParts < keepEnd) {
-          stop("Taxon file path (", taxonFile, ") contains fewer than keepEnd (",
-               keepEnd, ") components.")
+          stop("Taxon file path (", taxonFile,                                  # nocov
+               ") contains fewer than keepEnd (", keepEnd, ") components.")     # nocov
         }
         taxonFile <- paste0(c(relativePath,
                               taxonFileParts[(nParts + 1L - keepEnd):nParts]),
@@ -150,7 +153,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
       }
 
       if (!file.exists(taxonFile)) {
-        warning("Cannot find linked data file:\n  ", taxonFile)
+        warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
       } else {
         tipLabels <- rownames(ReadTntCharacters(taxonFile, 1))
         if (is.null(tipLabels)) {
@@ -158,11 +161,10 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
           tipLabels <- rownames(ReadCharacters(taxonFile, 1))
         }
         if (is.null(tipLabels)) {
-          warning("Could not read taxon names from linked TNT file:\n  ",
-                  taxonFile,
-                  "\nIs the file in TNT or Nexus format?",
-                  " If failing inexplicably, please report:",
-                  "\n  https://github.com/ms609/TreeTools/issues/new")
+          warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
+                  taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
+                  " If failing inexplicably, please report:",                   # nocov
+                  "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
         }
       }
     }
@@ -177,7 +179,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
   if (length(trees) == 1) {
     trees[[1]]
   } else if (length(trees) == 0) {
-    NULL
+    NULL                                                                        # nocov
   } else {
     class(trees) <- 'multiPhylo'
     trees
@@ -209,8 +211,10 @@ TNTText2Tree <- function (treeText) {
 #'  (see [`ReadCharacters`] for expected format).
 #' @template characterNumParam
 #' @template sessionParam
+#' @param continuous Logical specifying whether characters are continuous.
+#' Treated as discrete if `FALSE`.
 #'
-#' @return `ExtractTaxa` returns a matrix with _n_ rows, each named for the
+#' @return `ExtractTaxa()` returns a matrix with _n_ rows, each named for the
 #' relevant taxon, and _c_ columns,
 #' each corresponding to the respective character specified in `character_num`.
 #'
@@ -222,10 +226,11 @@ TNTText2Tree <- function (treeText) {
 #'
 #' @keywords internal
 #' @export
-ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
+ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
+                         continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
 
-  taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl=TRUE) > -1
+  taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
   previousTaxon <- vapply(which(!taxonLines), function (x) {
@@ -233,17 +238,29 @@ ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
   }, integer(1))
 
 
-  taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl=TRUE)
+  taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl = TRUE)
   taxa <- gsub(" ", "_", taxa, fixed=TRUE)
   taxa[!taxonLines] <- taxa[previousTaxon]
   uniqueTaxa <- unique(taxa)
 
-  tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl=TRUE)
-  tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed=TRUE), fixed=TRUE)
-  tokens <- vapply(uniqueTaxa,
-                   function (taxon) paste0(tokens[taxa==taxon], collapse=''),
-                   character(1))
-  tokens <- NexusTokens(tokens, character_num=character_num, session=session)
+  tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
+  if (continuous) {
+    tokens <- strsplit(tokens, "\\s+")
+    lengths <- vapply(tokens, length, 0L)
+    if (length(unique(lengths)) != 1) {
+      stop("Different numbers of tokens in different taxa: ",                   # nocov
+           paste(lengths, collapse = ', '))                                     # nocov
+    }
+    tokens <- t(vapply(tokens, I, tokens[[1]]))
+  } else {
+    tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed = TRUE), fixed = TRUE)
+    tokens <- vapply(uniqueTaxa,
+                     function (taxon) paste0(tokens[taxa == taxon],
+                                             collapse = ''),
+                     character(1))
+    tokens <- NexusTokens(tokens, character_num = character_num,
+                          session = session)
+  }
 
   rownames(tokens) <- uniqueTaxa
 
@@ -255,27 +272,28 @@ ExtractTaxa <- function (matrixLines, character_num=NULL, session=NULL) {
 #'  tokens.
 #' @describeIn ExtractTaxa Converts a Nexus string to a vector of character
 #'  states.
-#' @return `NexusTokens` returns a character vector in which each entry
-#' corresponds to the states of a phylogenetic character.
+#' @return `NexusTokens()` returns a character vector in which each entry
+#' corresponds to the states of a phylogenetic character, or a list containing
+#' an error message if input is invalid.
 #' @examples
 #' NexusTokens('01[01]-?')
 #' @export
-NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
+NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
   tokens.pattern <- "\\([^\\)]+\\)|\\[[^\\]]+\\]|\\{[^\\}]+\\}|\\S"
   matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
 
   nChar <- length(matches[[1]])
 
   if (!is.null(session) && requireNamespace('shiny', quietly = TRUE)) {
-    shiny::updateNumericInput(session, 'character_num', max = nChar)
+    shiny::updateNumericInput(session, 'character_num', max = nChar)            # nocov
   }
 
   if (!exists("character_num") || is.null(character_num)) {
     character_num <- seq_len(nChar)
   } else if (any(character_num > nChar) || any(character_num < 1)) {
-    return(list("Character number must be between 1 and ", nChar, "."))
-    character_num[character_num < 1] <- 1
+    character_num[character_num < 1] <- 1L
     character_num[character_num > nChar] <- nChar
+    return(list(paste0("Character number must be between 1 and ", nChar, ".")))
   }
 
   tokens <- t(vapply(regmatches(tokens, matches),
@@ -298,6 +316,10 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #' Tested with nexus files downloaded from MorphoBank with the "no notes"
 #' option, but should also work more generally.
 #'
+#' Matrices must contain only continuous or only discrete characters;
+#' maximum one matrix per file.  Continuous characters will be read as strings
+#' (i.e. base type 'character').
+#'
 #' Please [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incorrectly parsed files.
 #'
@@ -307,8 +329,9 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #'
 #' @return A matrix whose row names correspond to tip labels, and column names
 #'         correspond to character labels, with the attribute `state.labels`
-#'         listing the state labels for each character; or a character string
-#'         explaining why the character cannot be returned.
+#'         listing the state labels for each character; or a list of length
+#'         one containing a character string
+#'         explaining why the function was unsuccesful.
 #'
 #' @template MRS
 #' @references
@@ -319,11 +342,22 @@ NexusTokens <- function (tokens, character_num=NULL, session=NULL) {
 #'                    '/extdata/input/dataset.nex')
 #' ReadCharacters(fileName)
 #'
+#' fileName <- paste0(system.file(package='TreeTools'),
+#'                    '/extdata/tests/continuous.nex')
+#' continuous <- ReadCharacters(fileName)
+#'
+#' # To convert from strongs to numbers:
+#' at <- attributes(continuous)
+#' continuous <- suppressWarnings(as.numeric(continuous))
+#' attributes(continuous) <- at
+#' continuous
+#'
+#'
 #' @export
-ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
+ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
-  lines <- readLines(filepath, warn=FALSE) # Missing EOL is quite common, so
-                                           # warning not helpful
+  lines <- readLines(filepath, warn = FALSE) # Missing EOL is quite common, so
+                                             # warning not helpful
   nexusComment.pattern <- "\\[[^\\]*\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
   lines <- trimws(lines)
@@ -332,17 +366,19 @@ ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
   semicolons <- which(RightmostCharacter(lines) == ';')
   upperLines <- toupper(lines)
 
+  continuous <- length(grep('DATATYPE[\\S\\=]+CONTINUOUS', upperLines)) > 0
   matrixStart <- which(upperLines == 'MATRIX')
   if (length(matrixStart) == 0) {
     return(list("MATRIX block not found in Nexus file."))
   } else if (length (matrixStart) > 1) {
-    return(list("Multiple MATRIX blocks found in Nexus file."))
+    return(list("Multiple MATRIX blocks found in Nexus file."))                 # nocov
   } else {
     matrixEnd <- semicolons[semicolons > matrixStart][1]
     if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
-    tokens <- ExtractTaxa(matrixLines, character_num, session)
+    tokens <- ExtractTaxa(matrixLines, character_num = character_num,
+                          session = session, continuous = continuous)
     if (is.null(character_num)) character_num <- seq_len(ncol(tokens))
 
     ## Written with MorphoBank format in mind: each label on separate line,
@@ -386,7 +422,7 @@ ReadCharacters <- function (filepath, character_num=NULL, session=NULL) {
 
 #' @describeIn ReadCharacters Read characters from TNT file
 #' @export
-ReadTntCharacters <- function (filepath, character_num=NULL, session=NULL) {
+ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
   lines <- readLines(filepath, warn=FALSE) # Missing EOL might occur in user-
                                            # generated file, so warning not helpful
@@ -521,7 +557,7 @@ ReadTntAsPhyDat <- function (filepath) {
 #' instead.
 #'
 #' @param dataset list of taxa and characters, in the format produced by [read.nexus.data]:
-#'                a list of sequences each made of a single vector of mode character,
+#'                a list of sequences each made of a single character vector,
 #'                and named with the taxon name.
 #'
 #' @export
@@ -679,3 +715,21 @@ PhydatToString <- PhyToString
 RightmostCharacter <- function (string, len=nchar(string)) {
   substr(string, len, len)
 }
+
+#' Write Newick Tree
+#'
+#' Writes a tree in Newick format.  This differs from ape's `write.tree`
+#' in the encoding of spaces as spaces, rather than underscores.
+#'
+#' @template treeParam
+#'
+#' @return `NewickTree` returns a character string denoting `tree` in Newick
+#' format.
+#'
+#' @examples
+#' NewickTree(BalancedTree(6))
+#'
+#' @seealso [`as.Newick`]
+#' @importFrom ape write.tree
+#' @export
+NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed = TRUE)

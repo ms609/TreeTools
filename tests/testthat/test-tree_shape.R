@@ -16,13 +16,18 @@ test_that("Nasty node order not fatal", {
     Nnode = 7L,
     tip.label = letters[1:8]),
     class = 'phylo') # Danger: Do not plot!
-  expect_equal(RootedTreeShape(Preorder(nastyBinary)), RootedTreeShape(nastyBinary))
+  expect_equal(RootedTreeShape(Preorder(nastyBinary)),
+               RootedTreeShape(nastyBinary))
+
+  expect_error(edge_to_rooted_shape(1:10, 1:11, 6))
+  expect_error(edge_to_rooted_shape(1:10, 1:10, 5))
 })
 
 test_that('Rooted tree shapes calculated', {
   expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
 
   expect_equal(0L, RootedTreeShape(PectinateTree(0:3)))
+  expect_equal(0L, RootedTreeShape(SortTree(PectinateTree(0:3))))
   expect_equal(0L, UnrootedTreeShape(PectinateTree(0:3)))
   expect_equal(1L, RootedTreeShape(BalancedTree(0:3)))
 
@@ -45,6 +50,13 @@ test_that('Rooted tree shapes calculated', {
   BalancedTest <- function (i) expect_equal(NRootedShapes(i) - 1L,
                                             RootedTreeShape(BalancedTree(i)))
   lapply(c(2^(1:4), 10), BalancedTest)
+
+  expect_equal(0L, .UnrootedKeys(4))
+  expect_equal(0L, .UnrootedKeys(5))
+  expect_equal(0:1, .UnrootedKeys(6))
+  expect_equal(0:1, .UnrootedKeys(7))
+  expect_equal(c(0:2, 4), .UnrootedKeys(8))
+  expect_equal(c(0:2, 4:5, 7), .UnrootedKeys(9))
 })
 
 
@@ -76,7 +88,8 @@ test_that('Rooted tree shapes built', {
 test_that('Unrooted tree shapes built', {
   expect_error(plot(UnrootedTreeWithShape(4, 8))) # Out of range
 
-  expect_equal(UnrootedTreeWithShape(0, 9), unroot(PectinateTree(rep('', 9))))
+  expect_equal(UnrootedTreeWithShape(0, 9),
+               UnrootTree(PectinateTree(rep('', 9))))
   TestSym <- function (tree, shape) {
     expect_equal(shape, UnrootedTreeShape(tree))
     expect_equal(UnrootedTreeKey(tree),

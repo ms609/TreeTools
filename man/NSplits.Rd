@@ -8,7 +8,7 @@
 \alias{NSplits.list}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
-\title{Number of distinct partitions}
+\title{Number of distinct splits}
 \usage{
 NSplits(x)
 

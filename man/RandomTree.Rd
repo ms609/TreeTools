@@ -11,7 +11,8 @@ RandomTree(tips, root = FALSE)
 naming the tips, or any other object from which tip labels can be extracted
 with function \code{TipLabels}.}
 
-\item{root}{Tip to use as root (if desired; FALSE otherwise)}
+\item{root}{Character or integer specifying tip to use as root, if desired;
+or \code{FALSE} for an unrooted tree.}
 }
 \value{
 \code{RandomTree} returns a random tree of class \code{phylo}, with the

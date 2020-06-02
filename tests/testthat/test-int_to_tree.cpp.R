@@ -1,4 +1,4 @@
-context('int_to_tree.cpp')
+context("int_to_tree.cpp")
 
 test_that('Trees generated okay', {
   expect_equal(as.phylo.numeric(10, 6, 0:5),
@@ -17,4 +17,11 @@ test_that('Trees generated okay', {
   nTip <- 14L
   treeNumber <- as.TreeNumber('123456789876', nTip, seq_len(nTip) - 1L)
   expect_equal(treeNumber, as.TreeNumber(as.phylo(treeNumber)))
+})
+
+test_that("Failures are graceful", {
+  expect_error(num_to_parent(10, 1))
+  expect_error(num_to_parent(10, -1))
+  expect_error(edge_to_num(1:10, 1:11, 6))
+  expect_error(edge_to_num(1:10, 1:10, 5))
 })

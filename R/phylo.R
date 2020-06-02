@@ -118,7 +118,8 @@ Subtree <- function (tree, node) {
   tips  <- edge2[isTip]
   new.nTip <- length(tips)
   name <- character(new.nTip)
-  tipOrder <- order(tips, method='radix') # method='radix' typically a few % faster than 'auto'
+  # method='radix' typically a few % faster than 'auto'
+  tipOrder <- order(tips, method = 'radix')
   name[tipOrder] <- tipLabel[tips]
   edge2[isTip] <- tipOrder
 
@@ -133,7 +134,7 @@ Subtree <- function (tree, node) {
     tip.label = name,
     Nnode = dim(edge)[1] - new.nTip + 1L,
     edge = edge
-  ), class = 'phylo')
+  ), class = 'phylo', order = 'preorder')
 }
 
 #' Add a tip to a phylogenetic tree
@@ -148,6 +149,10 @@ Subtree <- function (tree, node) {
 #' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
+#' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips and
+#' nodes in `tree`, and index of root node.
+#' Not checked for correctness: specifying values here trades code safety for a
+#' nominal speed increase.
 #'
 #' @return `AddTip()` returns a tree of class \code{phylo} with an additional tip
 #' at the desired location.
@@ -171,56 +176,76 @@ Subtree <- function (tree, node) {
 #' @export
 AddTip <- function (tree,
                     where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
-                    label = "New tip") {
-  nTip <- length(tree$tip.label)
-  nNode <- tree$Nnode
-  ROOT <- nTip + 1L
-  if (where < 1L) where <- ROOT
-  new.tip.number <- nTip + 1L
-  tree.edge <- tree$edge
+                    label = "New tip",
+                    nTip = NTip(tree),
+                    nNode = tree$Nnode,
+                    rootNode = RootNode(tree)
+                    ) {
+  if (where < 1L) where <- nTip + 1L
+  newTipNumber <- nTip + 1L
+  treeEdge <- tree$edge
 
   ## find the row of 'where' before renumbering
-  if (where == ROOT) case <- 1L else {
-      insertion.edge <- which(tree.edge[, 2] == where)
+  if (where == rootNode) {
+    case <- 1L
+  } else {
+      insertionEdge <- which(treeEdge[, 2] == where)
       case <- if (where <= nTip) 2L else 3L
   }
-  ## case = 1 -> y is bound on the root of x
-  ## case = 2 -> y is bound on a tip of x
-  ## case = 3 -> y is bound on a node of x
+  # case = 1 -> y is bound on the root of x
+  # case = 2 -> y is bound on a tip of x
+  # case = 3 -> y is bound on a node of x
 
-### because in all situations internal nodes need to be
-### renumbered, they are changed to negatives first, and
-### nodes eventually added will be numbered sequentially
-  nodes <- tree.edge > nTip
-  tree.edge[nodes] <- -(tree.edge[nodes] - nTip)  # -1, ..., -nTip
-  next.node <- -nNode - 1L
-  ROOT <- -1L # This may change later
+  # Because in all situations internal nodes need to be
+  # renumbered, they are changed to negatives first, and
+  # nodes eventually added will be numbered sequentially
+  nodes <- treeEdge > nTip
+  treeEdge[nodes] <- nTip - treeEdge[nodes]  # -1, ..., -nTip
+  nextNode <- -nNode - 1L
+  rootNode <- nTip - rootNode
 
   switch(case, { # case = 1 -> y is bound on the root of x
-      tree.edge <- rbind(c(next.node, tree.edge[1]), tree.edge, c(next.node, new.tip.number))
-      ROOT <- next.node
+      treeEdge <- rbind(c(nextNode, treeEdge[1]), treeEdge, c(nextNode, newTipNumber))
+      rootNode <- nextNode
     }, { # case = 2 -> y is bound on a tip of x
-      tree.edge[insertion.edge, 2] <- next.node
-      tree.edge <- rbind(tree.edge[1:insertion.edge, ], c(next.node, where), c(next.node, new.tip.number), tree.edge[-(1:insertion.edge), ])
+      beforeInsertion <- seq_len(insertionEdge)
+      treeEdge[insertionEdge, 2] <- nextNode
+      treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(nextNode, where),
+                        c(nextNode, newTipNumber),
+                        treeEdge[-beforeInsertion, ])
     }, { # case = 3 -> y is bound on a node of x
-      tree.edge <- rbind(tree.edge[1:insertion.edge, ], c(next.node, tree.edge[insertion.edge, 2]), tree.edge[-(1:insertion.edge), ])
-      tree.edge[insertion.edge, 2] <- next.node
-      insertion.edge <- insertion.edge + 1L
-      tree.edge <- rbind(tree.edge[1:insertion.edge, ], c(next.node, new.tip.number), tree.edge[-(1:insertion.edge), ])
+      beforeInsertion <- seq_len(insertionEdge)
+
+      treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(nextNode, treeEdge[insertionEdge, 2]),
+                        treeEdge[-beforeInsertion, ])
+      treeEdge[insertionEdge, 2] <- nextNode
+
+      insertionEdge <- insertionEdge + 1L
+      beforeInsertion <- seq_len(insertionEdge)
+      treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(nextNode, newTipNumber),
+                        treeEdge[-beforeInsertion, ])
     }
   )
   tree$tip.label <- c(tree$tip.label, label)
-  tree$Nnode <- nNode <- nNode + 1L
+
+  nNode <- nNode + 1L
+  tree$Nnode <- nNode
 
   ## renumber nodes:
-  new.numbering <- integer(nNode)
-  new.numbering[-ROOT] <- new.tip.number + 1L
-  second.col.nodes <- tree.edge[, 2] < 0L
-  ## executed from right to left, so newNb is modified before x$edge:
-  tree.edge[second.col.nodes, 2] <- new.numbering[-tree.edge[second.col.nodes, 2]] <- new.tip.number + 2:nNode
-  tree.edge[, 1] <- new.numbering[-tree.edge[, 1]]
+  newNumbering <- integer(nNode)
+  newNumbering[-rootNode] <- newTipNumber + 1L
+  childNodes <- treeEdge[, 2] < 0L
 
-  tree$edge <- tree.edge
+  ## executed from right to left, so newNb is modified before x$edge:
+  treeEdge[childNodes, 2] <-
+    newNumbering[-treeEdge[childNodes, 2]] <-
+    newTipNumber + 2:nNode
+  treeEdge[, 1] <- newNumbering[-treeEdge[, 1]]
+
+  tree$edge <- treeEdge
 
   # Return:
   tree
@@ -251,9 +276,9 @@ AddTip <- function (tree,
 AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
   nTip <- NTip(tree)
   whichNodes <- seq_len(nTip + tree$Nnode)
+  edge <- tree$edge
+  root <- RootNode(edge)
   if (!includeRoot) {
-    root <- RootNode(tree)
-    edge <- tree$edge
     parent <- edge[, 1]
     child <- edge[, 2]
     rootChildren <- child[parent == root]
@@ -265,7 +290,8 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
       whichNodes[-root]
     }
   }
-  lapply(whichNodes, AddTip, tree = tree, label = label)
+  lapply(whichNodes, AddTip, tree = tree, label = label, nTip = nTip,
+         rootNode = root)
 }
 
 #' List all ancestral nodes
@@ -273,8 +299,8 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' \code{AllAncestors} lists ancestors of each parent node in a tree.
 #'
 #' Note that the tree's edges must be listed in an order whereby each entry in
-#' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in
-#' \code{tr$edge[, 2]}.
+#' \code{tr$edge[n, 1]} (with the exception of the root) occurs in
+#' \code{tr$edge[i < n, 2]}.
 #'
 #' @template treeParent
 #' @template treeChild
@@ -369,7 +395,7 @@ ListAncestors <- function (parent, child, node) {
 #' tree <- BalancedTree(6)
 #' plot(tree)
 #' ape::nodelabels()
-#' CladeSizes(tree, c(8, 9))
+#' CladeSizes(tree, nodes = c(8, 9))
 #'
 #' @family tree navigation
 #' @export
@@ -381,6 +407,7 @@ CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
 
   edge <- Postorder(tree$edge, renumber = FALSE)
   nTip <- NTip(tree)
+
   size <- c(rep(1L, nTip), rep(internal, max(edge[, 1]) - nTip))
   for (i in seq_len(nrow(edge))) {
     edgeI <- edge[i, ]
@@ -389,6 +416,7 @@ CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
     size[parent] <- size[parent] + size[child]
   }
 
+
   # Return:
-  (if (is.null(nodes)) size else size[nodes]) - as.integer(internal)
+  (if (is.null(nodes)) size else size[nodes]) - internal
 }

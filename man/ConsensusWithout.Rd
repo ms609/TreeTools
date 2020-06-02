@@ -69,6 +69,7 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},

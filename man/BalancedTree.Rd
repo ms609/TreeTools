@@ -15,7 +15,8 @@ with function \code{TipLabels}.}
 A tree of class \code{phylo}.
 }
 \description{
-Generates a balanced (symmetrical) binary tree with the specified tip labels.
+Generates a rooted balanced (symmetrical) binary tree with the specified
+tip labels.
 }
 \examples{
 plot(BalancedTree(LETTERS[1:10]))
