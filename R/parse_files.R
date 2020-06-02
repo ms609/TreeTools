@@ -330,8 +330,8 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' @return A matrix whose row names correspond to tip labels, and column names
 #'         correspond to character labels, with the attribute `state.labels`
 #'         listing the state labels for each character; or a list of length
-#'         one containing a character string
-#'         explaining why the function was unsuccesful.
+#'         one containing a character string explaining why the function was
+#'         unsuccessful.
 #'
 #' @template MRS
 #' @references
