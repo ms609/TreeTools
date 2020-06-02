@@ -17,15 +17,18 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 class \code{\link{phylo}}, i.e. \code{dim(tree$edge)[1]}}
 }
 \value{
-\code{NonDuplicateRoot} returns a logical vector of length \code{nEdge},
+\code{NonDuplicateRoot()} returns a logical vector of length \code{nEdge},
 specifying \code{TRUE} unless an edge identifies the same partition as
 the root edge.
 }
 \description{
+DEPRECATED.
+}
+\details{
 Identify, for each edge, whether it denotes a different partition from
 the root edge.
 The first edge of the input tree must be a root edge; this can be
-accomplished using \code{Preorder}.
+accomplished using \code{Preorder()}.
 }
 \examples{
 tree <- Preorder(BalancedTree(8))

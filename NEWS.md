@@ -13,11 +13,15 @@
 - `LeafLabelInterchange()`: Exchange position of _n_ tips.
 - `TotalCopheneticIndex()` integrated from 'tci' package.
 
+## Deprecations
+
+- `PostorderEdges()`: use `Postorder()` instead.
+- `NonDuplicateRoot()`: unused internal function.
+
 ## Enhancements
 
 - Improve support for unrooted trees in `as.Splits()`.
 - Use methods so `Reorder` functions can handle `multiPhylo` objects and edges.
-  Deprecates `PostorderEdges()`.
 - Handle funny node orders.
 - Support continuous characters in `ReadCharacters()`.
 - Improve performance of `as.logical.Splits()` and related functions.

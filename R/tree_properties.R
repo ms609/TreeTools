@@ -458,6 +458,8 @@ EdgeDistances <- function (tree) {
 
 #' Non-duplicate root
 #'
+#' DEPRECATED.
+#'
 #' Identify, for each edge, whether it denotes a different partition from
 #' the root edge.
 #' The first edge of the input tree must be a root edge; this can be
