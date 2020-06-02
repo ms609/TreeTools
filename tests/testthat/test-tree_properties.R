@@ -1,5 +1,13 @@
 context("tree_properties.R")
 
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
 test_that('EdgeAncestry works', {
   tree <- BalancedTree(10)
   edge <- tree$edge
@@ -80,7 +88,16 @@ test_that("NTip() works", {
   Test(8L)
   Test(64L)
   Test(2000L)
+})
 
+test_that("MRCA() works", {
+  bal7 <- BalancedTree(7)
+  allAnc <- AllAncestors(bal7$edge[, 1], bal7$edge[, 2])
+  expect_equal(9, MRCA(1, 4, allAnc))
+  expect_equal(8, MRCA(1, 6, allAnc))
+  expect_equal(8, MRCA(1, 7, allAnc))
+  expect_equal(1, MRCA(1, 1, allAnc))
+  expect_equal(9, MRCA(1, 11, allAnc))
 })
 
 test_that('Edge distances are calculated correctly', {

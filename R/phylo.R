@@ -299,8 +299,8 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' \code{AllAncestors} lists ancestors of each parent node in a tree.
 #'
 #' Note that the tree's edges must be listed in an order whereby each entry in
-#' \code{tr$edge[, 1]} (with the exception of the root) has appeared already in
-#' \code{tr$edge[, 2]}.
+#' \code{tr$edge[n, 1]} (with the exception of the root) occurs in
+#' \code{tr$edge[i < n, 2]}.
 #'
 #' @template treeParent
 #' @template treeChild

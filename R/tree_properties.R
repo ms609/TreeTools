@@ -352,22 +352,45 @@ EdgeAncestry <- function (edge, parent, child,
 
 #' Most recent common ancestor
 #'
-#' What is the last common ancestor of the specified tips?
+#' What is the last common ancestor of the specified nodes?
 #'
-#' @param tip1,tip2 Integer specifying index of tips whose most recent common
-#' ancestor should be found.
-#' @param ancestors Output of [`AllAncestors`] for the tree in question
+#' Note that besides satisfying the requirements of `AllAncestors()`, `MRCA()`
+#' expects node values to increase away from the root.  No warnings will be
+#' given if trees do not fulfil this requirement.
 #'
-#' @return `MRCA` returns an integer specifying the node number of the last
-#' common ancestor of `tip1` and `tip2`.
+#' @param x1,x2 Integer specifying index of leaves or nodes whose most
+#' recent common ancestor should be found.
+#' @param ancestors Output of [`AllAncestors()`] for the tree in question.
+#'
+#' @return `MRCA()` returns an integer specifying the node number of the last
+#' common ancestor of `x1` and `x2`.
 #'
 #' @family tree navigation
 #' @template MRS
+#'
+#' @examples
+#' tree <- BalancedTree(7)
+#'
+#' # Verify that node numbering increases away from root
+#' plot(tree)
+#' nodelabels()
+#'
+#' # Guarantee that tree edges are sensibly numbered
+#' # tree <- Postorder(tree) will give erroneous output.
+#' tree <- Preorder(tree)
+#' edge <- tree$edge
+#' ancestors <- AllAncestors(edge[, 1], edge[, 2])
+#' MRCA(1, 4, ancestors)
+#'
 #' @export
-MRCA <- function(tip1, tip2, ancestors) {
-  anc1 <- ancestors[[tip1]]
-  anc2 <- ancestors[[tip2]]
-  max(intersect(anc1, anc2))
+MRCA <- function(x1, x2, ancestors) {
+  if (x1 == x2) {
+    x1
+  } else {
+    anc1 <- ancestors[[x1]]
+    anc2 <- ancestors[[x2]]
+    max(intersect(anc1, anc2))
+  }
 }
 
 #' Distance between edges
