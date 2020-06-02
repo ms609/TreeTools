@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add a tip to a phylogenetic tree — AddTip • TreeTools</title>
+<title>Leaf label interchange — LeafLabelInterchange • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Add a tip to a phylogenetic tree — AddTip" />
-<meta property="og:description" content="AddTip adds a tip to a phylogenetic tree at a specified location." />
+<meta property="og:title" content="Leaf label interchange — LeafLabelInterchange" />
+<meta property="og:description" content="Exchange the position of leaves within a tree." />
 
 
 
@@ -151,25 +151,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add a tip to a phylogenetic tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/phylo.R'><code>R/phylo.R</code></a></small>
-    <div class="hidden name"><code>AddTip.Rd</code></div>
+    <h1>Leaf label interchange</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_rearrangement.R'><code>R/tree_rearrangement.R</code></a></small>
+    <div class="hidden name"><code>LeafLabelInterchange.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>AddTip</code> adds a tip to a phylogenetic tree at a specified location.</p>
+    <p>Exchange the position of leaves within a tree.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>AddTip</span>(
-  <span class='no'>tree</span>,
-  <span class='kw'>where</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample.int</a></span>(<span class='no'>tree</span>$<span class='no'>Nnode</span> * <span class='fl'>2</span> + <span class='fl'>2L</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>1</span>) - <span class='fl'>1L</span>,
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"New tip"</span>,
-  <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='NTip.html'>NTip</a></span>(<span class='no'>tree</span>),
-  <span class='kw'>nNode</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>Nnode</span>,
-  <span class='kw'>rootNode</span> <span class='kw'>=</span> <span class='fu'><a href='RootNode.html'>RootNode</a></span>(<span class='no'>tree</span>)
-)
-
-<span class='fu'>AddTipEverywhere</span>(<span class='no'>tree</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"New tip"</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>LeafLabelInterchange</span>(<span class='no'>tree</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2L</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,56 +170,33 @@
       <td><p>A tree of class <code>phylo</code>.</p></td>
     </tr>
     <tr>
-      <th>where</th>
-      <td><p>The node or tip that should form the sister taxon to the new
-node.  To add a new tip at the root, use <code>where = 0</code>.  By default, the
-new tip is added to a random edge.</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>Character string providing the label to apply to the new tip.</p></td>
-    </tr>
-    <tr>
-      <th>nTip, nNode, rootNode</th>
-      <td><p>Optional integer vectors specifying number of tips and
-nodes in <code>tree</code>, and index of root node.
-Not checked for correctness: specifying values here trades code safety for a
-nominal speed increase.</p></td>
-    </tr>
-    <tr>
-      <th>includeRoot</th>
-      <td><p>Logical; if <code>TRUE</code>, each position adjacent
-to the root edge is considered to represent distinct edges; if <code>FALSE</code>,
-they are treated as a single edge.</p></td>
+      <th>n</th>
+      <td><p>Integer specifying number of leaves whose positions should be
+exchanged.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>AddTip()</code> returns a tree of class <code>phylo</code> with an additional tip
-at the desired location.</p>
-<p><code>AddTipEverywhere()</code> returns a list of class <code>multiPhylo</code> containing
-the trees produced by adding <code>label</code> to each edge of <code>tree</code> in turn.</p>
+    <p><code>LeafLabelInterchange()</code> returns a tree of class <code>phylo</code> on which
+the position of <code>n</code> leaves have been exchanged.
+The tree's internal topology will not change.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>AddTip</code> extends <code>bind.tree</code>, which cannot handle
-single-taxon trees.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>AddTipEverywhere</code>: Add a tip to each edge in turn.</p></li>
-</ul>
+    <p>Modifies a tree by switching the positions of <em>n</em> leaves.  To avoid
+later swaps undoing earlier exchanges, all <em>n</em> leaves are guaranteed
+to change position.  Note, however, that no attempt is made to avoid
+swapping equivalent leaves, for example, a pair that are each others'
+closest relatives.  As such, the relationships within a tree are not
+guaranteed to be changed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>bind.tree</code></p>
-<p><code>nodelabels</code></p>
-<p>Other tree manipulation: 
+    <div class='dont-index'><p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
-<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
 <code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
@@ -238,19 +206,8 @@ single-taxon trees.</p>
 <code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>10</span>))</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>15</span>, <span class='fl'>15</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'green'</span>)</div><div class='img'><img src='AddTip-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='fl'>15</span>, <span class='st'>'NEW_TIP'</span>))</div><div class='img'><img src='AddTip-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.3</span>, <span class='fl'>4</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.9</span>)
-
-<span class='no'>backbone</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>4</span>)
-<span class='no'>additions</span> <span class='kw'>&lt;-</span> <span class='fu'>AddTipEverywhere</span>(<span class='no'>backbone</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>additions</span>, <span class='no'>plot</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='img'><img src='AddTip-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>additions</span> <span class='kw'>&lt;-</span> <span class='fu'>AddTipEverywhere</span>(<span class='no'>backbone</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>additions</span>, <span class='no'>plot</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div><div class='img'><img src='AddTip-4.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>LeafLabelInterchange</span>(<span class='no'>tree</span>, <span class='fl'>3L</span>))</div><div class='img'><img src='LeafLabelInterchange-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

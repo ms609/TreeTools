@@ -46,10 +46,7 @@
 
 
 <meta property="og:title" content="Non-duplicate root — NonDuplicateRoot" />
-<meta property="og:description" content="Identify, for each edge, whether it denotes a different partition from
-the root edge.
-The first edge of the input tree must be a root edge; this can be
-accomplished using Preorder." />
+<meta property="og:description" content="DEPRECATED." />
 
 
 
@@ -91,7 +88,7 @@ accomplished using Preorder." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -160,10 +157,7 @@ accomplished using Preorder." />
     </div>
 
     <div class="ref-description">
-    <p>Identify, for each edge, whether it denotes a different partition from
-the root edge.
-The first edge of the input tree must be a root edge; this can be
-accomplished using <code>Preorder</code>.</p>
+    <p>DEPRECATED.</p>
     </div>
 
     <pre class="usage"><span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))</pre>
@@ -190,9 +184,15 @@ class <code>phylo</code>, i.e. <code>dim(tree$edge)[1]</code></p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NonDuplicateRoot</code> returns a logical vector of length <code>nEdge</code>,
+    <p><code>NonDuplicateRoot()</code> returns a logical vector of length <code>nEdge</code>,
 specifying <code>TRUE</code> unless an edge identifies the same partition as
 the root edge.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Identify, for each edge, whether it denotes a different partition from
+the root edge.
+The first edge of the input tree must be a root edge; this can be
+accomplished using <code><a href='Reorder.html'>Preorder()</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
@@ -215,8 +215,7 @@ the root edge.</p>
 <span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>1</span>]
 <span class='no'>child</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>2</span>]
 
-<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(!<span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>))</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
-</div></pre>
+<span class='co'>#which(!NonDuplicateRoot(parent, child))</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

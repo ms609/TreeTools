@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -206,6 +206,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="LeafLabelInterchange.html">LeafLabelInterchange()</a></code> </p>
+        </td>
+        <td><p>Leaf label interchange</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="Renumber.html">Renumber()</a></code> </p>
         </td>
         <td><p>Renumber a tree's nodes and tips</p></td>
@@ -224,9 +230,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="RootTree.html">RootTree()</a></code> <code><a href="RootTree.html">RootOnNode()</a></code> </p>
+          <p><code><a href="RootTree.html">RootTree()</a></code> <code><a href="RootTree.html">RootOnNode()</a></code> <code><a href="RootTree.html">UnrootTree()</a></code> </p>
         </td>
-        <td><p>Root a phylogenetic tree</p></td>
+        <td><p>Root or unroot a phylogenetic tree</p></td>
       </tr><tr>
         
         <td>
@@ -407,15 +413,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="NTip.html">NTip()</a></code> </p>
+        </td>
+        <td><p>Number of tips in a phylogenetic tree</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="NSplits.html">NSplits()</a></code> <code><a href="NSplits.html">NPartitions()</a></code> </p>
         </td>
-        <td><p>Number of distinct partitions</p></td>
+        <td><p>Number of distinct splits</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="NPartitionPairs.html">NPartitionPairs()</a></code> </p>
         </td>
         <td><p>Distributions of tips consistent with a partition pair</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="TipLabels.html">TipLabels()</a></code> </p>
+        </td>
+        <td><p>Extract tip labels</p></td>
       </tr><tr>
         
         <td>
@@ -518,39 +536,27 @@
       <tr>
         
         <td>
-          <p><code><a href="NRooted.html">NRooted()</a></code> <code><a href="NRooted.html">NUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted.int()</a></code> <code><a href="NRooted.html">Log2Unrooted()</a></code> <code><a href="NRooted.html">Log2Unrooted.int()</a></code> <code><a href="NRooted.html">LnRooted()</a></code> <code><a href="NRooted.html">LnRooted.int()</a></code> <code><a href="NRooted.html">Log2Rooted()</a></code> <code><a href="NRooted.html">Log2Rooted.int()</a></code> <code><a href="NRooted.html">LnUnrootedSplits()</a></code> <code><a href="NRooted.html">Log2UnrootedSplits()</a></code> <code><a href="NRooted.html">NUnrootedSplits()</a></code> <code><a href="NRooted.html">LnUnrootedMult()</a></code> <code><a href="NRooted.html">Log2UnrootedMult()</a></code> <code><a href="NRooted.html">NUnrootedMult()</a></code> </p>
+          <p><code><a href="Subsplit.html">Subsplit()</a></code> </p>
         </td>
-        <td><p>Number of rooted/unrooted trees</p></td>
+        <td><p>Subset of a split on fewer taxa</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="TrivialSplits.html">TrivialSplits()</a></code> <code><a href="TrivialSplits.html">WithoutTrivialSplits()</a></code> </p>
+        </td>
+        <td><p>Are splits trivial?</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="NSplits.html">NSplits()</a></code> <code><a href="NSplits.html">NPartitions()</a></code> </p>
         </td>
-        <td><p>Number of distinct partitions</p></td>
+        <td><p>Number of distinct splits</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="NTip.html">NTip()</a></code> </p>
         </td>
         <td><p>Number of tips in a phylogenetic tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitFrequency.html">SplitFrequency()</a></code> <code><a href="SplitFrequency.html">SplitNumber()</a></code> <code><a href="SplitFrequency.html">ForestSplits()</a></code> <code><a href="SplitFrequency.html">TreeSplits()</a></code> </p>
-        </td>
-        <td><p>Frequency of splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitInformation.html">SplitInformation()</a></code> <code><a href="SplitInformation.html">MultiSplitInformation()</a></code> </p>
-        </td>
-        <td><p>Phylogenetic information content of splitting leaves into two partitions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SplitMatchProbability.html">SplitMatchProbability()</a></code> <code><a href="SplitMatchProbability.html">LnSplitMatchProbability()</a></code> </p>
-        </td>
-        <td><p>Probability of matching this well</p></td>
       </tr><tr>
         
         <td>
@@ -563,24 +569,6 @@
           <p><code><a href="TipsInSplits.html">TipsInSplits()</a></code> </p>
         </td>
         <td><p>Tips contained within splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TreesMatchingSplit.html">TreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">LnTreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">Log2TreesMatchingSplit()</a></code> </p>
-        </td>
-        <td><p>Number of trees matching a bipartition split</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="TrivialSplits.html">TrivialSplits()</a></code> <code><a href="TrivialSplits.html">WithoutTrivialSplits()</a></code> </p>
-        </td>
-        <td><p>Are splits trivial?</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="UnrootedTreesMatchingSplit.html">UnrootedTreesMatchingSplit()</a></code> </p>
-        </td>
-        <td><p>Number of trees consistent with split</p></td>
       </tr><tr>
         
         <td>
@@ -599,12 +587,6 @@
           <p><code><a href="match.Splits.html">match.Splits()</a></code> </p>
         </td>
         <td><p>Match splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Subsplit.html">Subsplit()</a></code> </p>
-        </td>
-        <td><p>Subset of a split on fewer taxa</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -627,12 +609,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="NRooted.html">NRooted()</a></code> <code><a href="NRooted.html">NUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted.int()</a></code> <code><a href="NRooted.html">Log2Unrooted()</a></code> <code><a href="NRooted.html">Log2Unrooted.int()</a></code> <code><a href="NRooted.html">LnRooted()</a></code> <code><a href="NRooted.html">LnRooted.int()</a></code> <code><a href="NRooted.html">Log2Rooted()</a></code> <code><a href="NRooted.html">Log2Rooted.int()</a></code> <code><a href="NRooted.html">LnUnrootedSplits()</a></code> <code><a href="NRooted.html">Log2UnrootedSplits()</a></code> <code><a href="NRooted.html">NUnrootedSplits()</a></code> <code><a href="NRooted.html">LnUnrootedMult()</a></code> <code><a href="NRooted.html">Log2UnrootedMult()</a></code> <code><a href="NRooted.html">NUnrootedMult()</a></code> </p>
-        </td>
-        <td><p>Number of rooted/unrooted trees</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="DoubleFactorial.html">DoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">LnDoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">Log2DoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">LogDoubleFactorial()</a></code> <code><a href="DoubleFactorial.html">LnDoubleFactorial.int()</a></code> <code><a href="DoubleFactorial.html">LogDoubleFactorial.int()</a></code> </p>
         </td>
         <td><p>Double factorial</p></td>
@@ -642,6 +618,12 @@
           <p><code><a href="CladisticInfo.html">CladisticInfo()</a></code> <code><a href="CladisticInfo.html">PhylogeneticInfo()</a></code> <code><a href="CladisticInfo.html">PhylogeneticInformation()</a></code> <code><a href="CladisticInfo.html">CladisticInformation()</a></code> </p>
         </td>
         <td><p>Cladistic information content</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="NRooted.html">NRooted()</a></code> <code><a href="NRooted.html">NUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted()</a></code> <code><a href="NRooted.html">LnUnrooted.int()</a></code> <code><a href="NRooted.html">Log2Unrooted()</a></code> <code><a href="NRooted.html">Log2Unrooted.int()</a></code> <code><a href="NRooted.html">LnRooted()</a></code> <code><a href="NRooted.html">LnRooted.int()</a></code> <code><a href="NRooted.html">Log2Rooted()</a></code> <code><a href="NRooted.html">Log2Rooted.int()</a></code> <code><a href="NRooted.html">LnUnrootedSplits()</a></code> <code><a href="NRooted.html">Log2UnrootedSplits()</a></code> <code><a href="NRooted.html">NUnrootedSplits()</a></code> <code><a href="NRooted.html">LnUnrootedMult()</a></code> <code><a href="NRooted.html">Log2UnrootedMult()</a></code> <code><a href="NRooted.html">NUnrootedMult()</a></code> </p>
+        </td>
+        <td><p>Number of trees</p></td>
       </tr><tr>
         
         <td>
@@ -663,13 +645,19 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="SplitMatchProbability.html">SplitMatchProbability()</a></code> <code><a href="SplitMatchProbability.html">LnSplitMatchProbability()</a></code> </p>
+        </td>
+        <td><p>Probability of matching this well</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="TreesMatchingSplit.html">TreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">LnTreesMatchingSplit()</a></code> <code><a href="TreesMatchingSplit.html">Log2TreesMatchingSplit()</a></code> </p>
         </td>
         <td><p>Number of trees matching a bipartition split</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="UnrootedTreesMatchingSplit.html">UnrootedTreesMatchingSplit()</a></code> </p>
+          <p><code><a href="UnrootedTreesMatchingSplit.html">UnrootedTreesMatchingSplit()</a></code> <code><a href="UnrootedTreesMatchingSplit.html">LnUnrootedTreesMatchingSplit()</a></code> <code><a href="UnrootedTreesMatchingSplit.html">Log2UnrootedTreesMatchingSplit()</a></code> </p>
         </td>
         <td><p>Number of trees consistent with split</p></td>
       </tr>

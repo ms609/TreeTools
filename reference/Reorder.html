@@ -91,7 +91,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -205,6 +205,8 @@ Calling this C function directly is approximately twice as fast as using
 <span class='co'># S3 method for numeric</span>
 <span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>renumber</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
+<span class='fu'>PostorderEdges</span>(<span class='no'>edge</span>, <span class='kw'>renumber</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
 <span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='no'>nTip</span>, <span class='no'>edge</span>)
 
 <span class='co'># S3 method for phylo</span>
@@ -264,12 +266,12 @@ increase in number away from the root.</p></td>
 <code>Pruningwise()</code> each return a tree of class <code>phylo</code> with nodes following the
 specified numbering scheme.</p>
 <p><code>Postorder.numeric</code> accepts a numeric matrix corresponding to the
-<code>edge</code> entry of a tree oc class <code>phylo</code>, and returns a two-column array
+<code>edge</code> entry of a tree of class <code>phylo</code>, and returns a two-column array
 corresponding to <code>tree</code>, with edges listed in postorder</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>Cladewise()</code>, <code>ApePostorder()</code> and <code>Pruningwise()</code> are convenience
-functions to the corrsponding functions in 'ape'. Single nodes may
+functions to the corresponding functions in 'ape'. Single nodes may
 need to be collapsed using <a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> first.  'ape' functions
 can cause crashes if nodes are numbered unconventionally -- sometimes
 encountered after using tree rearrangement functions, e.g. <code>phangorn::SPR</code>.</p>

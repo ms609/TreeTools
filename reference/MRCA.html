@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Most recent common ancestor — MRCA" />
-<meta property="og:description" content="What is the last common ancestor of the specified tips?" />
+<meta property="og:description" content="What is the last common ancestor of the specified nodes?" />
 
 
 
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -157,29 +157,34 @@
     </div>
 
     <div class="ref-description">
-    <p>What is the last common ancestor of the specified tips?</p>
+    <p>What is the last common ancestor of the specified nodes?</p>
     </div>
 
-    <pre class="usage"><span class='fu'>MRCA</span>(<span class='no'>tip1</span>, <span class='no'>tip2</span>, <span class='no'>ancestors</span>)</pre>
+    <pre class="usage"><span class='fu'>MRCA</span>(<span class='no'>x1</span>, <span class='no'>x2</span>, <span class='no'>ancestors</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tip1, tip2</th>
-      <td><p>Integer specifying index of tips whose most recent common
-ancestor should be found.</p></td>
+      <th>x1, x2</th>
+      <td><p>Integer specifying index of leaves or nodes whose most
+recent common ancestor should be found.</p></td>
     </tr>
     <tr>
       <th>ancestors</th>
-      <td><p>Output of <code><a href='AllAncestors.html'>AllAncestors</a></code> for the tree in question</p></td>
+      <td><p>Output of <code><a href='AllAncestors.html'>AllAncestors()</a></code> for the tree in question.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>MRCA</code> returns an integer specifying the node number of the last
-common ancestor of <code>tip1</code> and <code>tip2</code>.</p>
+    <p><code>MRCA()</code> returns an integer specifying the node number of the last
+common ancestor of <code>x1</code> and <code>x2</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that besides satisfying the requirements of <code><a href='AllAncestors.html'>AllAncestors()</a></code>, <code>MRCA()</code>
+expects node values to increase away from the root.  No warnings will be
+given if trees do not fulfil this requirement.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
@@ -196,6 +201,18 @@ common ancestor of <code>tip1</code> and <code>tip2</code>.</p>
 <code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code>,
 <code><a href='RootNode.html'>RootNode</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>7</span>)
+
+<span class='co'># Verify that node numbering increases away from root</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'>nodelabels</span>()</div><div class='img'><img src='MRCA-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Guarantee that tree edges are sensibly numbered</span>
+<span class='co'># tree &lt;- Postorder(tree) will give erroneous output.</span>
+<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Reorder.html'>Preorder</a></span>(<span class='no'>tree</span>)
+<span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
+<span class='no'>ancestors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AllAncestors.html'>AllAncestors</a></span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>])
+<span class='fu'>MRCA</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='no'>ancestors</span>)</div><div class='output co'>#&gt; [1] 9</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

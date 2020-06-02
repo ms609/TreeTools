@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -160,7 +160,12 @@
     <p>Reads the character information from a Nexus-formatted matrix into R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ExtractTaxa</span>(<span class='no'>matrixLines</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>ExtractTaxa</span>(
+  <span class='no'>matrixLines</span>,
+  <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>continuous</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 
 <span class='fu'>NexusTokens</span>(<span class='no'>tokens</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
@@ -183,6 +188,11 @@
 <code>character_num</code> whose maximum should be updated.</p></td>
     </tr>
     <tr>
+      <th>continuous</th>
+      <td><p>Logical specifying whether characters are continuous.
+Treated as discrete if <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
       <th>tokens</th>
       <td><p>Vector of character strings corresponding to phylogenetic
 tokens.</p></td>
@@ -191,11 +201,12 @@ tokens.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ExtractTaxa</code> returns a matrix with <em>n</em> rows, each named for the
+    <p><code>ExtractTaxa()</code> returns a matrix with <em>n</em> rows, each named for the
 relevant taxon, and <em>c</em> columns,
 each corresponding to the respective character specified in <code>character_num</code>.</p>
-<p><code>NexusTokens</code> returns a character vector in which each entry
-corresponds to the states of a phylogenetic character.</p>
+<p><code>NexusTokens()</code> returns a character vector in which each entry
+corresponds to the states of a phylogenetic character, or a list containing
+an error message if input is invalid.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Extracts the names of tips from the matrix block of a Nexus file.</p>

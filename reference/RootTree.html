@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Root a phylogenetic tree — RootTree • TreeTools</title>
+<title>Root or unroot a phylogenetic tree — RootTree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,10 @@
 
 
 
-<meta property="og:title" content="Root a phylogenetic tree — RootTree" />
-<meta property="og:description" content="Roots a tree on the smallest clade containing the specified tips." />
+<meta property="og:title" content="Root or unroot a phylogenetic tree — RootTree" />
+<meta property="og:description" content="RootTree() roots a tree on the smallest clade containing the specified
+tips; UnrootTree() collapses a root node, without the undefined behaviour
+encountered when using ape::unroot() on trees in preorder." />
 
 
 
@@ -88,7 +90,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -151,18 +153,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Root a phylogenetic tree</h1>
+    <h1>Root or unroot a phylogenetic tree</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_rearrangement.R'><code>R/tree_rearrangement.R</code></a></small>
     <div class="hidden name"><code>RootTree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Roots a tree on the smallest clade containing the specified tips.</p>
+    <p><code>RootTree()</code> roots a tree on the smallest clade containing the specified
+tips; <code>UnrootTree()</code> collapses a root node, without the undefined behaviour
+encountered when using <code><a href='https://rdrr.io/pkg/ape/man/root.html'>ape::unroot</a>()</code> on trees in preorder.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RootTree</span>(<span class='no'>tree</span>, <span class='no'>outgroupTips</span>)
 
-<span class='fu'>RootOnNode</span>(<span class='no'>tree</span>, <span class='no'>node</span>, <span class='kw'>resolveRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>RootOnNode</span>(<span class='no'>tree</span>, <span class='no'>node</span>, <span class='kw'>resolveRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>UnrootTree</span>(<span class='no'>tree</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,8 +179,8 @@
     </tr>
     <tr>
       <th>outgroupTips</th>
-      <td><p>Character vector specifying the names of the tips to
-include in the outgroup.</p></td>
+      <td><p>Vector of type character, integer or logical, specifying
+the names or indices of the tips to include in the outgroup.</p></td>
     </tr>
     <tr>
       <th>node</th>
@@ -192,6 +198,8 @@ include in the outgroup.</p></td>
 clade that contains the specified tips.</p>
 <p><code>RootOnNode</code> returns a tree of class <code>phylo</code>, rooted on the requested
 <code>node</code> and ordered in <code><a href='Reorder.html'>Preorder</a></code>.</p>
+<p><code>UnrootTree()</code> returns a tree of class <code>phylo</code>, in preorder,
+having collapsed the first child of the root node.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -212,6 +220,7 @@ clade that contains the specified tips.</p>
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
 <code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,

@@ -89,7 +89,7 @@ similar." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -175,17 +175,25 @@ similar.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SortTree</code> returns a tree of class <code>phylo</code>, with each node sorted
+    <p><code>SortTree()</code> returns a tree of class <code>phylo</code>, with each node sorted
 such that the larger clade is first.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>At each node, clades will be listed in <code>tree$edge</code> in decreasing size order.</p>
+<p>Clades that contain the same number of leaves are sorted in decreasing order
+of minimum leaf number, so (2, 3) will occur before (1, 4).</p>
+<p>As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+bottom of a plotted tree.</p>
+<p><code>tree</code> must (presently) be binary.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='RenumberTree.html'>RenumberTree()</a></code></p>
-<p>Other tree manipulation: 
+    <div class='dont-index'><p>Other tree manipulation: 
 <code><a href='AddTip.html'>AddTip</a>()</code>,
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
 <code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
@@ -193,6 +201,12 @@ such that the larger clade is first.</p>
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
 <code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>messyTree</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fl'>10</span>, <span class='fl'>6</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>messyTree</span>)</div><div class='img'><img src='SortTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='no'>sorted</span> <span class='kw'>&lt;-</span><span class='fu'>SortTree</span>(<span class='no'>messyTree</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sorted</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='SortTree-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

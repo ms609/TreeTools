@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -154,9 +154,9 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="treetools-0-2-0" class="section level1">
-<h1 class="page-header" data-toc-text="0.2.0">
-<a href="#treetools-0-2-0" class="anchor"></a>TreeTools 0.2.0<small> Unreleased </small>
+    <div id="treetools-1-0-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#treetools-1-0-0" class="anchor"></a>TreeTools 1.0.0<small> Unreleased </small>
 </h1>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -166,6 +166,8 @@
 <code><a href="../reference/CladisticInfo.html">CladisticInfo()</a></code>: Calculate the information content of a tree.</li>
 <li>
 <code><a href="../reference/RootNode.html">RootNode()</a></code>: Which node is a tree’s root?</li>
+<li>
+<code><a href="../reference/RootTree.html">UnrootTree()</a></code>: Safely remove a root node.</li>
 <li>
 <code><a href="../reference/NodeDepth.html">NodeDepth()</a></code>: Discriminate shallow from deep nodes.</li>
 <li>
@@ -177,7 +179,19 @@
 <li>
 <code><a href="../reference/DropTip.html">DropTip()</a></code>: Remove tip, handling weird node orders.</li>
 <li>
+<code><a href="../reference/LeafLabelInterchange.html">LeafLabelInterchange()</a></code>: Exchange position of <em>n</em> tips.</li>
+<li>
 <code><a href="../reference/TotalCopheneticIndex.html">TotalCopheneticIndex()</a></code> integrated from ‘tci’ package.</li>
+</ul>
+</div>
+<div id="deprecations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deprecations" class="anchor"></a>Deprecations</h2>
+<ul>
+<li>
+<code><a href="../reference/Reorder.html">PostorderEdges()</a></code>: use <code><a href="../reference/Reorder.html">Postorder()</a></code> instead.</li>
+<li>
+<code><a href="../reference/NonDuplicateRoot.html">NonDuplicateRoot()</a></code>: unused internal function.</li>
 </ul>
 </div>
 <div id="enhancements" class="section level2">
@@ -185,10 +199,13 @@
 <a href="#enhancements" class="anchor"></a>Enhancements</h2>
 <ul>
 <li>Improve support for unrooted trees in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
-<li>Use methods so <code>Reorder</code> functions can handle <code>multiPhylo</code> objects and edges. Deprecates <code>PostorderEdges()</code>.</li>
+<li>Use methods so <code>Reorder</code> functions can handle <code>multiPhylo</code> objects and edges.</li>
 <li>Handle funny node orders.</li>
+<li>Support continuous characters in <code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code>.</li>
 <li>Improve performance of <code><a href="../reference/as.Splits.html">as.logical.Splits()</a></code> and related functions.</li>
 <li>Fail nicely when trees are too large for memory.</li>
+<li>Fix memory leak in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
+<li>Various under-the-hood improvements to functions.</li>
 <li>Documentation improvements.</li>
 </ul>
 </div>

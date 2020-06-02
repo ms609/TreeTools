@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Number of trees one SPR step away — N1Spr" />
-<meta property="og:description" content="N1Spr calculates the number of trees one subtree prune-and-regraft
+<meta property="og:description" content="N1Spr() calculates the number of trees one subtree prune-and-regraft
 operation away from a binary input tree using the formula given by Allen and
 Steel (2001)." />
 
@@ -90,7 +90,7 @@ Steel (2001)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@ Steel (2001)." />
     </div>
 
     <div class="ref-description">
-    <p><code>N1Spr</code> calculates the number of trees one subtree prune-and-regraft
+    <p><code>N1Spr()</code> calculates the number of trees one subtree prune-and-regraft
 operation away from a binary input tree using the formula given by Allen and
 Steel (2001).</p>
     </div>
@@ -179,19 +179,21 @@ Steel (2001).</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>N1SPR</code> returns an integer vector.</p>
-<p><code>IC1SPR</code> returns an numeric vector.</p>
+    <p><code>N1Spr()</code> returns an integer vector.</p>
+<p><code>IC1Spr()</code> returns an numeric vector giving the phylogenetic
+information content of trees 0 or 1 SPR rearrangement from an <em>n</em>-leaf tree,
+in bits.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>IC1Spr</code> calculates the information content of trees at this distance: i.e.
+    <p><code>IC1Spr()</code> calculates the information content of trees at this distance: i.e.
 the entropy corresponding to the proportion of all possible <em>n</em>-tip trees
 whose SPR distance is at most one from a specified tree.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
-<li><p><code>IC1Spr</code>: Information content of trees 0 or 1 SPR step from tree
-with n tips.</p></li>
+<li><p><code>IC1Spr</code>: Information content of trees 0 or 1 SPR step from a tree
+with <em>n</em> leaves.</p></li>
 </ul>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

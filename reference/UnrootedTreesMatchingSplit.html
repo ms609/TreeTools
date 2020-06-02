@@ -89,7 +89,7 @@ specified multi-partition split, using the formula of Carter et al. (1990)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -162,23 +162,27 @@ specified multi-partition split, using the formula of Carter et al. (1990)." />
 specified multi-partition split, using the formula of Carter <em>et al</em>. (1990).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='no'>splits</span>)</pre>
+    <pre class="usage"><span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='no'>...</span>)
+
+<span class='fu'>LnUnrootedTreesMatchingSplit</span>(<span class='no'>...</span>)
+
+<span class='fu'>Log2UnrootedTreesMatchingSplit</span>(<span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>splits</th>
-      <td><p>A vector of integers listing the number of tips in each of a number of
-tree splits (e.g. bipartitions).  For example, <code><a href='https://rdrr.io/r/base/c.html'>c(3, 5)</a></code> states that
-a character divides a set of eight tips into a group of three and a group
-of five.</p></td>
+      <th>...</th>
+      <td><p>A series or vector of integers listing the number of tips in
+each of a number of tree splits (e.g. bipartitions).
+For example, <code>3, 5</code> states that a character divides a set of eight tips into
+a group of three and a group of five.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>UnrootedTreesMatchingSplit</code> returns an integer specifying the
+    <p><code>UnrootedTreesMatchingSplit()</code> returns an integer specifying the
 number of unrooted bifurcating trees consistent with the specified split.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -192,10 +196,11 @@ doi: <a href='https://doi.org/10.1137/0403005'>10.1137/0403005</a>
     <div class='dont-index'><p>Other split information functions: 
 <code><a href='CharacterInformation.html'>CharacterInformation</a>()</code>,
 <code><a href='SplitInformation.html'>SplitInformation</a>()</code>,
+<code><a href='SplitMatchProbability.html'>SplitMatchProbability</a>()</code>,
 <code><a href='TreesMatchingSplit.html'>TreesMatchingSplit</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>5</span>))</div><div class='output co'>#&gt; [1] 315</div><div class='input'> <span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>))</div><div class='output co'>#&gt; [1] 297</div><div class='input'>
+    <pre class="examples"><div class='input'> <span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>5</span>))</div><div class='output co'>#&gt; [1] 315</div><div class='input'> <span class='fu'>UnrootedTreesMatchingSplit</span>(<span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] 297</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
