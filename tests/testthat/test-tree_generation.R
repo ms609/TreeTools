@@ -33,8 +33,15 @@ test_that("Random trees are generated correctly", {
   expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
 })
 
+test_that("NJTree() works", {
+  a..f <- letters[1:6]
+  bal6 <- StringToPhyDat('111100 111000 110000', letters[1:6], byTaxon = FALSE)
+  expect_equal(BalancedTree(letters[c(1:3, 6:4)]), RootTree(NJTree(bal6), a..f[1:3]))
+})
+
 test_that("EnforceOutgroup() fails nicely", {
   expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
+  expect_error(EnforceOutgroup(BalancedTree(6), c('t1', 'Non-taxon')))
   expect_equal(BalancedTree(letters[5:6]),
                Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15))
   expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
