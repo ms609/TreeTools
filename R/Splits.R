@@ -145,7 +145,7 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
   if (all(c('edge', 'Nnode') %in% rownames(x))) {
     col1 <- x[, 1]
-    if (inherits(col1, 'list')) {
+    if (is.list(col1)) {
       if (is.null(tipLabels)) {
         tipLabels <- col1$tip.label
         if (is.null(tipLabels)) {

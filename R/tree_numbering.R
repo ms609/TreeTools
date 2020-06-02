@@ -195,7 +195,7 @@ Cladewise.multiPhylo <- function (tree, nTip, edge) {
 #' @rdname Reorder
 #' @export
 Cladewise.matrix <- function (tree, nTip = min(tree[, 1]) - 1L, edge) {
-  if (inherits(tree, 'numeric')) {
+  if (is.numeric(tree)) {
     newOrder <- NeworderPhylo(nTip, tree[, 1], tree[, 2], dim(tree)[1], 1L)
 
     # Return:

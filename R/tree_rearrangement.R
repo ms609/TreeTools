@@ -33,7 +33,7 @@
 #' @export
 RootTree <- function (tree, outgroupTips) {
   tipLabels <- tree$tip.label
-  if (inherits(outgroupTips, 'character')) {
+  if (is.character(outgroupTips)) {
     if (!all(outgroupTips %in% tipLabels)) {
       stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
            "] not found in tree's tip labels.")
