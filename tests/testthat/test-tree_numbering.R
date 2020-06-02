@@ -101,14 +101,21 @@ test_that("RenumberTips() works correctly", {
 
 test_that("Reorder methods work correctly", {
   bal7 <- BalancedTree(7)
+  bal7$edge.length <- 1:12
   pec7 <- PectinateTree(7)
   list7 <- list(bal7, pec7)
+  stt <- SingleTaxonTree(1)
+  bad <- bal7
+  bad$Nnode <- 100
   mp7 <- structure(list7, class = 'multiPhylo')
   Test <- function (Method, ...) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
+    expect_equal(stt, Method(stt))
+    expect_equal(Cladewise(bal7)$edge, Cladewise(bal7$edge))
     expect_error(Method(10))
     expect_error(Method(1:2))
+    expect_error(Method(bad))
     expect_error(Method(matrix('one')))
   }
   Test(ApePostorder)
