@@ -161,10 +161,9 @@ test_that('as.Splits.edge()', {
 test_that('as.Splits.logical()', {
   FFTT <- c(FALSE, FALSE, TRUE, TRUE)
   a..d <- letters[1:4]
-  expect_equivalent(as.Splits(BalancedTree(a..d)),
-                    as.Splits(!FFTT, a..d))
-  expect_equivalent(as.Splits(FFTT, a..d),
-                    as.Splits(t(matrix(FFTT)), a..d))
+  expect_equivalent(as.Splits(BalancedTree(a..d)), as.Splits(!FFTT, a..d))
+  expect_equivalent(as.Splits(FFTT, a..d), as.Splits(t(matrix(FFTT)), a..d))
+  expect_equivalent(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
 test_that('empty as.X.Splits()', {
