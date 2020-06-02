@@ -23,7 +23,7 @@ test_that("as.Splits", {
                                     nrow = 2, byrow = TRUE),
                              tipLabels = letters[1:5])
   rownames(logicalSplits) <- rownames(splits1)
-  expect_equal(splits1, logicalSplits)N
+  expect_equal(splits1, logicalSplits)
   expect_equal(splits1, as.Splits(splits1))
 
   splitsC <- as.Splits(ape::read.tree(text="(((a, d), e), (b, (f, c)));"))
