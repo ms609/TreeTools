@@ -95,8 +95,8 @@ IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
        * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx)),
        * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
   if (!children_of) {
-    throw std::length_error("Could not allocate memory in "
-                            "preorder_edges_and_nodes. Try 64-bit R?");
+    throw std::length_error("Could not allocate memory in "                     // # nocov
+                            "preorder_edges_and_nodes. Try 64-bit R?");         // # nocov
   }
 
   for (intx i = 0; i != n_edge; i++) {
