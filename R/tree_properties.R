@@ -456,6 +456,7 @@ EdgeDistances <- function (tree) {
   ret[origOrder, origOrder]
 }
 
+# nocov start
 #' Non-duplicate root
 #'
 #' DEPRECATED.
@@ -497,7 +498,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
     notDuplicateRoot[1] <- FALSE
   }
   notDuplicateRoot
-}
+} # nocov end
 
 #' Number of tips in a phylogenetic tree
 #'

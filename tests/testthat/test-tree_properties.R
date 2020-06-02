@@ -8,7 +8,20 @@ nasty <- structure(list(edge = structure(
   tip.label = letters[1:8]),
   class = 'phylo') # Danger: Do not plot!
 
-test_that('EdgeAncestry works', {
+test_that("AllDescendantEdges() works", {
+  pec5 <- UnrootTree(PectinateTree(5))
+  V <- TRUE; x <- FALSE
+  expect_equal(matrix(c(V, x, x, x, x, x, x,
+                        x, V, x, x, x, x, x,
+                        x, x, V, V, V, V, V,
+                        x, x, x, V, x, x, x,
+                        x, x, x, x, V, V, V,
+                        x, x, x, x, x, V, x,
+                        x, x, x, x, x, x, V), 7, 7, byrow = T),
+               AllDescendantEdges(pec5$edge[, 1], pec5$edge[, 2]))
+})
+
+test_that('EdgeAncestry() works', {
   tree <- BalancedTree(10)
   edge <- tree$edge
   parent <- edge[, 1]
@@ -48,6 +61,8 @@ test_that('NodeOrder() works', {
                     as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
   expect_equal(list(NodeOrder(tree), NodeOrder(tree)), NodeOrder(c(tree, tree)))
   expect_equal(NodeOrder(c(tree, tree)), NodeOrder(list(tree, tree)))
+
+  expect_equal(c(3, 2, 2), NDescendants(UnrootTree(PectinateTree(5))))
 })
 
 test_that('Rooting and partition counting', {
@@ -134,6 +149,8 @@ test_that("Node depths calculated correctly", {
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
+  expect_equal(list(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1)),
+               NodeDepth(list(tree), shortest = TRUE, includeTips = FALSE))
 
   tree <- UnrootTree(tree)
   expect_equal(c(4,3,2,1,1,3,2,1,1,4,3,2,1,1,3,2,1,1),
