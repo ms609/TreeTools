@@ -1,13 +1,20 @@
 context("parse_files.R")
+
 TestFile <- function (filename = '') {
   paste0(system.file(package='TreeTools'), '/extdata/tests/', filename)
 }
+
 test_that("File time is read correctly", {
   fileName <- TestFile('ape-tree.nex')
   expect_equal('2018-07-18 13:47:46', ApeTime(fileName, 'string'))
+  expect_error(ApeTime(rep(fileName, 2)))
 })
 
 test_that("Nexus file can be parsed", {
+  # Errors as lists:
+  expect_equal("MATRIX block not found in Nexus file.",
+               ReadCharacters(TestFile('ape-tree.nex'))[[1]])
+
   filename <- TestFile('parse-nexus.nexus')
   read <- ReadCharacters(filename)
   expect_equal(192, ncol(read))
@@ -54,6 +61,11 @@ test_that("TNT trees parsed correctly", {
   expect_equal(paste0('taxon_', letters[1:5]),
     ReadTntTree('extdata/output/named.tre')$tip.label)
   setwd(oldWD)
+})
+
+test_that("NexusTokens() fails gracefully", {
+  expect_error(NexusTokens("0123012301230123", integer(0)))
+  expect_error(NexusTokens("0123012301230123", 0))
 })
 
 test_that("Matrix converts to phyDat", {

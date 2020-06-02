@@ -95,7 +95,7 @@ RenumberEdges <- function (parent, child, ...) {
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
 #'
 #' `Cladewise()`, `ApePostorder()` and `Pruningwise()` are convenience
-#' functions to the corrsponding functions in 'ape'. Single nodes may
+#' functions to the corresponding functions in 'ape'. Single nodes may
 #' need to be collapsed using [ape::collapse.singles] first.  'ape' functions
 #' can cause crashes if nodes are numbered unconventionally -- sometimes
 #' encountered after using tree rearrangement functions, e.g. `phangorn::SPR`.
@@ -283,7 +283,7 @@ Postorder.multiPhylo <- function (tree, force = FALSE, renumber = FALSE) {
 
 #' @rdname Reorder
 #' @return `Postorder.numeric` accepts a numeric matrix corresponding to the
-#' `edge` entry of a tree oc class `phylo`, and returns a two-column array
+#' `edge` entry of a tree of class `phylo`, and returns a two-column array
 #' corresponding to `tree`, with edges listed in postorder
 #' @export
 Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE) {
