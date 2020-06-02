@@ -14,10 +14,18 @@ test_that('Subsplits', {
 
   noSplit <- Subsplit(splits - splits, letters[5:8])
   expect_equal(attributes(noSplit)[3:5], attributes(efghF)[3:5])
-  expect_equivalent(noSplit[1], raw(1))
+  expect_equivalent(raw(1), noSplit[1])
+  expect_equal(noSplit[1], Subsplit(splits - splits, 5:8)[1])
 
-  splits <- as.Splits(PectinateTree(32+32+10))
-  sub <- Subsplit(splits, tips = c('t32', 't33', 't64', 't65'))
+
+  splits <- as.Splits(PectinateTree(32 + 32 + 10))
+  fourTips <- c('t32', 't33', 't64', 't65')
+  sub <- Subsplit(splits, tips = fourTips)
+  expect_equivalent(as.Splits(c('t32' = FALSE, 't33' = FALSE,
+                           't64' = TRUE, 't65' = TRUE)),
+                    sub)
+
+
 })
 
 test_that('Bitwise logic works', {
@@ -169,10 +177,24 @@ test_that('Tip labels are found', {
   expect_equal(t1..4, TipLabels(as.Splits(pt4)))
   expect_equal(t1..4, TipLabels(list(pt4, bt4)))
   expect_equal(t1..4, TipLabels(structure(list(pt4, bt4),
-                                                    class='multiPhylo')))
-  atList <- list()
-  attr(atList, 'tip.label') <- t1..4
-  expect_equal(t1..4, TipLabels(atList))
+                                          class='multiPhylo')))
+  expect_equal(t1..4, TipLabels(structure(list(pt4, BalancedTree(letters[1:4])),
+                                          class='multiPhylo'), single = TRUE))
+  expect_equal(t1..4, TipLabels(structure(list(pt4, bt4,
+                                               tip.label = t1..4),
+                                          class='multiPhylo')))
+  expect_equal(t1..4, TipLabels(as.TreeNumber(pt4)))
+
+  expect_equal(t1..4, TipLabels(structure(list(), tip.label = t1..4)))
+  expect_equal(t1..4, TipLabels(list(tip.label = t1..4)))
   expect_null(TipLabels(list()))
   expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4))))
+  expect_equal(TipLabels(pt4, single = TRUE),
+               TipLabels(list(as.Splits(pt4)), single = TRUE))
+  expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4), as.Splits(bt4))))
+  expect_equal(list(t1..4, c(t1..4, 't5')),
+                    TipLabels(list(as.Splits(pt4),
+                                   as.Splits(BalancedTree(5)))))
+
+  expect_equal(t1..4, TipLabels(c(t1 = 1, t2 = 3, t3 = 3, t4 = 4)))
 })

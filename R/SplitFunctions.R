@@ -230,7 +230,7 @@ TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.TreeNumber <- function (x, single = TRUE) x$tip.label
+TipLabels.TreeNumber <- function (x, single = TRUE) attr(x, 'tip.label')
 
 #' @rdname TipLabels
 #' @family Splits operations
