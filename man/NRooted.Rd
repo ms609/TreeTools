@@ -17,7 +17,7 @@
 \alias{LnUnrootedMult}
 \alias{Log2UnrootedMult}
 \alias{NUnrootedMult}
-\title{Number of rooted/unrooted trees}
+\title{Number of trees}
 \usage{
 NRooted(tips)
 
@@ -39,23 +39,23 @@ Log2Rooted(tips)
 
 Log2Rooted.int(tips)
 
-LnUnrootedSplits(splits)
+LnUnrootedSplits(...)
 
-Log2UnrootedSplits(splits)
+Log2UnrootedSplits(...)
 
-NUnrootedSplits(splits)
+NUnrootedSplits(...)
 
-LnUnrootedMult(splits)
+LnUnrootedMult(...)
 
-Log2UnrootedMult(splits)
+Log2UnrootedMult(...)
 
-NUnrootedMult(splits)
+NUnrootedMult(...)
 }
 \arguments{
-\item{tips}{Integer specifying the number of tips.}
+\item{tips}{Integer specifying the number of leaves.}
 
-\item{splits}{Integer vector listing the number of taxa in each tree
-bipartition.}
+\item{\dots}{Integer vector, or series of integers, listing the number of
+leaves in each split.}
 }
 \description{
 These functions return the number of rooted or unrooted binary trees
@@ -99,11 +99,11 @@ Log2Unrooted(10)
 NUnrootedMult(c(5,5,3))
 
 LnUnrootedSplits(c(2,4))
-LnUnrootedSplits(c(3,3))
+LnUnrootedSplits(3, 3)
 Log2UnrootedSplits(c(2,4))
-Log2UnrootedSplits(c(3,3))
+Log2UnrootedSplits(3, 3)
 NUnrootedSplits(c(2,4))
-NUnrootedSplits(c(3,3))
+NUnrootedSplits(3, 3)
 }
 \references{
 \insertRef{Carter1990}{TreeTools}

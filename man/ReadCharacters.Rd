@@ -34,8 +34,9 @@ and named with the taxon name.}
 \value{
 A matrix whose row names correspond to tip labels, and column names
 correspond to character labels, with the attribute \code{state.labels}
-listing the state labels for each character; or a character string
-explaining why the character cannot be returned.
+listing the state labels for each character; or a list of length
+one containing a character string
+explaining why the function was unsuccesful.
 }
 \description{
 Parses a Nexus file, reading character states and names.

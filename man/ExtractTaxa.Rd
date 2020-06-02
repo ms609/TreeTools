@@ -31,12 +31,13 @@ Treated as discrete if \code{FALSE}.}
 tokens.}
 }
 \value{
-\code{ExtractTaxa} returns a matrix with \emph{n} rows, each named for the
+\code{ExtractTaxa()} returns a matrix with \emph{n} rows, each named for the
 relevant taxon, and \emph{c} columns,
 each corresponding to the respective character specified in \code{character_num}.
 
-\code{NexusTokens} returns a character vector in which each entry
-corresponds to the states of a phylogenetic character.
+\code{NexusTokens()} returns a character vector in which each entry
+corresponds to the states of a phylogenetic character, or a list containing
+an error message if input is invalid.
 }
 \description{
 Reads the character information from a Nexus-formatted matrix into R.
