@@ -65,7 +65,8 @@ test_that("TNT trees parsed correctly", {
 
 test_that("NexusTokens() fails gracefully", {
   expect_error(NexusTokens("0123012301230123", integer(0)))
-  expect_error(NexusTokens("0123012301230123", 0))
+  expect_equal("Character number must be between 1 and 16.",
+               NexusTokens("0123012301230123", 0)[[1]])
 })
 
 test_that("Matrix converts to phyDat", {
