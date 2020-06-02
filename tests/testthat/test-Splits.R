@@ -105,7 +105,7 @@ test_that('as.Splits.phylo', {
 
 })
 
-test_that('as.Splits.multiPhylo', {
+test_that('as.Splits.multiPhylo()', {
   randomTreeIds <- c(30899669, 9149275, 12823175, 19740197, 31296318,
                      6949843, 30957991, 32552966, 22770711, 21678908)
   randomTrees <- as.phylo(randomTreeIds, 11L, seq_len(11L))
@@ -114,7 +114,7 @@ test_that('as.Splits.multiPhylo', {
                as.Splits(randomTrees)[[1]])
 })
 
-test_that('as.Splits.Splits', {
+test_that('as.Splits.Splits()', {
   # n tip > 8L
   splitsA <- as.Splits(ape::read.tree(text="((((a, b, c, c2), g), h), (d, (e, f)));"))
   splitsB <- as.Splits(ape::read.tree(text="(((((a, b), (c, c2)), h), g), (d, e, f));"))
@@ -125,9 +125,14 @@ test_that('as.Splits.Splits', {
   expect_true(all(in.Splits(expectedSplits, actualSplits)))
   expect_true(all(in.Splits(actualSplits, expectedSplits)))
   expect_equal(NSplits(expectedSplits), NSplits(actualSplits))
+
+  splitsABare <- splitsA
+  attr(splitsABare, 'tip.label') <- NULL
+  expect_error(as.Splits(splitsABare, 1:2))
+  expect_equal(splitsA, as.Splits(splitsABare, splitsA))
 })
 
-test_that('as.Splits.matrix', {
+test_that('as.Splits.matrix()', {
   expect_error(as.Splits(matrix(1, 3, 3)))
   trees <- list(BalancedTree(8), PectinateTree(8),
                 CollapseNode(BalancedTree(8), 10:13))
@@ -139,6 +144,11 @@ test_that('as.Splits.matrix', {
   trees <- list(BalancedTree(1:8), PectinateTree(1:8),
                 CollapseNode(BalancedTree(1:8), 10:13))
   expect_equivalent(as.Splits(trees), as.Splits(arr[-3, ]))
+})
+
+test_that('as.Splits.edge()', {
+  expect_equivalent(matrix(as.raw(0x03)),
+                    as.Splits(BalancedTree(4), asSplits = FALSE))
 })
 
 test_that('empty as.X.Splits', {

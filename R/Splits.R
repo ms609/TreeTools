@@ -98,8 +98,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
       } else {
         stop (length(tipLabels), " labels provided; expecting ", nTip)
       }
-    }
-    if (!identical(oldLabels, tipLabels)) {
+    } else if (!identical(oldLabels, tipLabels)) {
       nTip <- attr(x, 'nTip')
       if (length(x) == 0) {
         attr(x, 'tip.label') <- tipLabels
