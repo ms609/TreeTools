@@ -479,7 +479,7 @@ EdgeDistances <- function (tree) {
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
 #'
-#' which(!NonDuplicateRoot(parent, child))
+#' #which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
 #' @template MRS
