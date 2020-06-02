@@ -16,6 +16,29 @@ test_that("Factorials are calculated correctly", {
   expect_error(DoubleFactorial(301))
 })
 
+test_that("N consistent with splits calculated correctly", {
+  expect_equal(NUnrooted(8), NUnrootedSplits(8))
+  expect_equal(NRooted(3) * NRooted(5), NUnrootedSplits(3, 5))
+  expect_equal(doubleFactorials[12 + 12 - 5] /
+    doubleFactorials[17] * doubleFactorials[4 + 4 - 3] ^ 3,
+         NUnrootedSplits(c(4, 4, 4)))
+
+  OldNUS <- function (...) {
+    splits <- c(...)
+    splits <- splits[splits > 0]
+    totalTips <- sum(splits)
+    round(DoubleFactorial(totalTips + totalTips - 5L) /
+            DoubleFactorial(2L * (totalTips - length(splits)) - 1L)
+            * prod(DoubleFactorial(splits + splits - 3L)))
+  }
+  expect_equal(OldNUS(49:51), NUnrootedSplits(49:51))
+  expect_equal(OldNUS(29:32), NUnrootedSplits(29:32))
+  expect_equal(OldNUS(1:10), NUnrootedSplits(1:10))
+  expect_error(NUnrootedSplits(c(10, 152)))
+
+
+})
+
 test_that("Log rooted calculated correctly", {
   expect_equal(Log2Rooted(10:30), LnRooted(10:30) / log(2))
   expect_equal(Log2Rooted(10:30), Log2Rooted.int(10:30))

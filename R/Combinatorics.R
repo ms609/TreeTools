@@ -115,7 +115,7 @@ LnDoubleFactorial.int <- function (n) {
 #' @export
 LogDoubleFactorial.int <- LnDoubleFactorial.int
 
-#' Number of rooted/unrooted trees
+#' Number of trees
 #'
 #' These functions return the number of rooted or unrooted binary trees
 #' consistent with a given pattern of splits.
@@ -127,9 +127,9 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Calculations follow Cavalli-Sforza & Edwards (1967) and
 #' Carter _et al._ 1990, Theorem 2.
 #'
-#' @param tips Integer specifying the number of tips.
-#' @param splits Integer vector listing the number of taxa in each tree
-#' bipartition.
+#' @param tips Integer specifying the number of leaves.
+#' @param \dots Integer vector, or series of integers, listing the number of
+#' leaves in each split.
 #'
 #' @template MRS
 #'
@@ -228,43 +228,62 @@ IC1Spr <- function(n) Log2Unrooted(n) - log2(1L + N1Spr(n))
 #' @rdname NRooted
 #' @examples
 #' LnUnrootedSplits(c(2,4))
-#' LnUnrootedSplits(c(3,3))
+#' LnUnrootedSplits(3, 3)
 #' @export
-LnUnrootedSplits <- function (splits) {
-  if ((nSplits <- length(splits)) < 2) return (LnUnrooted(splits));
-  if (nSplits == 2) return (LnRooted(splits[1]) + LnRooted(splits[2]));
-  return (LnUnrootedMult(splits))
+LnUnrootedSplits <- function (...) {
+  splits <- c(...)
+
+  if ((nSplits <- length(splits)) < 2L) {
+    LnUnrooted(splits)
+  } else if (nSplits == 2L) {
+    LnRooted(splits[1]) + LnRooted(splits[2])
+  } else {
+    LnUnrootedMult(splits)
+  }
 }
 
 #' @rdname NRooted
 #' @examples
 #' Log2UnrootedSplits(c(2,4))
-#' Log2UnrootedSplits(c(3,3))
+#' Log2UnrootedSplits(3, 3)
 #' @export
-Log2UnrootedSplits <- function (splits) {
-  if ((nSplits <- length(splits)) < 2) return (Log2Unrooted(splits));
-  if (nSplits == 2) return (Log2Rooted(splits[1]) + Log2Rooted(splits[2]));
-  return (Log2UnrootedMult(splits))
+Log2UnrootedSplits <- function (...) {
+  splits <- c(...)
+
+  if ((nSplits <- length(splits)) < 2L) {
+    Log2Unrooted(splits)
+  } else if (nSplits == 2L) {
+    Log2Rooted(splits[1]) + Log2Rooted(splits[2])
+  } else {
+    Log2UnrootedMult(splits)
+  }
 }
 
 #' @describeIn NRooted Number of unrooted trees consistent with a bipartition
 #' split.
 #' @examples
 #' NUnrootedSplits(c(2,4))
-#' NUnrootedSplits(c(3,3))
+#' NUnrootedSplits(3, 3)
 #' @family split information function
 #' @export
-NUnrootedSplits  <- function (splits) {
-  if ((nSplits <- length(splits)) < 2) return (NUnrooted(splits));
-  if (nSplits == 2) return (NRooted(splits[1]) * NRooted(splits[2]))
-  return (NUnrootedMult(splits))
+NUnrootedSplits  <- function (...) {
+  splits <- c(...)
+  if ((nSplits <- length(splits)) < 2L) {
+    NUnrooted(splits)
+  } else if (nSplits == 2L) {
+    NRooted(splits[1]) * NRooted(splits[2])
+  } else {
+    NUnrootedMult(splits)
+  }
 }
 
 #' @rdname NRooted
 #' @export
-LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
+LnUnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
+  splits <- c(...)
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
+
   # Return:
   LnDoubleFactorial(totalTips +  totalTips - 5L) -
     LnDoubleFactorial(2L * (totalTips - length(splits)) - 1L) +
@@ -274,7 +293,8 @@ LnUnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
 
 #' @rdname NRooted
 #' @export
-Log2UnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
+Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
+  splits <- c(...)
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
 
@@ -287,12 +307,21 @@ Log2UnrootedMult <- function (splits) {  # Carter et al. 1990, Theorem 2
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
 #' split.
 #' @export
-NUnrootedMult  <- function (splits) {  # Carter et al. 1990, Theorem 2
+NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
+  splits <- c(...)
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
 
   # Return:
-  round(DoubleFactorial(totalTips + totalTips - 5L) /
-          DoubleFactorial(2L * (totalTips - length(splits)) - 1L)
-        * prod(DoubleFactorial(splits + splits - 3L)))
+
+  #round(DoubleFactorial(totalTips + totalTips - 5L) /
+  #        doubleFactorials[2L * (totalTips - length(splits)) - 1L]
+  #      * prod(DoubleFactorial(splits + splits - 3L)))
+  #
+  # More accurate?:
+  #
+  prod(seq(totalTips + totalTips - 5L,
+           2L * (totalTips - length(splits)) + 1L,
+           -2L),
+       DoubleFactorial(splits + splits - 3L))
 }
