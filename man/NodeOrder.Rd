@@ -21,7 +21,7 @@ to internal nodes, i.e. to omit leaves. Irrelevant if
 entries are named with the number of each node.
 }
 \description{
-Calculate the number of edges incident to each node in a tree.
+\code{NodeOrder()} calculates the number of edges incident to each node in a tree.
 Includes the root edge in rooted trees.
 }
 \examples{

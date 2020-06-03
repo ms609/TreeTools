@@ -11,10 +11,11 @@ NDescendants(tree)
 }
 \value{
 \code{NDescendants()} returns an integer listing the number of direct
-descendants for each node in a tree.
+descendants (leaves or internal nodes) for each node in a tree.
 }
 \description{
-Count descendants for each node in a tree
+\code{NDescendants()} counts the number of nodes (including leaves) directly
+descended from each node in a tree.
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)

@@ -11,7 +11,7 @@ MRCA(x1, x2, ancestors)
 recent common ancestor should be found.}
 
 \item{ancestors}{List of ancestors for each node in a tree. Perhaps
-produced by \code{\link{ListAncestors(node = NULL)}}.}
+produced by \code{\link[=ListAncestors]{ListAncestors()}}.}
 }
 \value{
 \code{MRCA()} returns an integer specifying the node number of the last

@@ -19,11 +19,6 @@ before_script:
 
 jobs:
   include:
-    - r: 3.6.0 # Phangorn requires R 3.6.0
-      branches:
-        only: master
-      after_success:
-        - Rscript -e "covr::codecov()"
     - r: release
       before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
 #      r_binary_packages:
@@ -40,6 +35,11 @@ jobs:
         keep-history: true
         on:
           branch: master
+    - r: 3.6.0 # Phangorn requires R 3.6.0
+      branches:
+        only: master
+      after_success:
+        - Rscript -e "covr::codecov()"
     - r: devel
       r_check_args: --as-cran --no-manual
       env:

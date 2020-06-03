@@ -373,7 +373,7 @@ EdgeAncestry <- function (edge, parent, child,
 #' @param x1,x2 Integer specifying index of leaves or nodes whose most
 #' recent common ancestor should be found.
 #' @param ancestors List of ancestors for each node in a tree. Perhaps
-#' produced by [`ListAncestors(node = NULL)`].
+#' produced by [`ListAncestors()`].
 #'
 #' @return `MRCA()` returns an integer specifying the node number of the last
 #' common ancestor of `x1` and `x2`.
