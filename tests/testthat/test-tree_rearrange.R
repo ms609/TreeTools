@@ -178,6 +178,8 @@ test_that("CollapseNodes() works", {
 
   expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
                Preorder(CollapseNode(nasty, c(11, 13))))
+
+  expect_error(CollapseEdge(tree, 9))
 })
 
 test_that("DropTip() works", {

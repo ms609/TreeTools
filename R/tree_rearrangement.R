@@ -187,28 +187,36 @@ UnrootTree <- function (tree) {
 #' @template treeParam
 #' @param nodes,edges Integer vector specifying the nodes or edges in the tree
 #'  to be dropped.
-#' (Use \code{\link[ape]{nodelabels}} or \code{\link[ape:nodelabels]{edgelabels}}
+#' (Use \code{\link[ape]{nodelabels}()} or
+#' \code{\link[ape:nodelabels]{edgelabels}()}
 #' to view numbers on a plotted tree.)
 #'
-#' @return `CollapseNode` and `CollapseEdge` return a tree of class `phylo`,
+#' @return `CollapseNode()` and `CollapseEdge()` return a tree of class `phylo`,
 #' corresponding to `tree` with the specified nodes or edges collapsed.
 #' The length of each dropped edge will (naively) be added to each descendant
 #' edge.
 #'
 #' @examples
-#' library(ape)
 #' set.seed(1)
-#' oldPar <- par(mfrow=c(2, 1), mar=rep(0.5, 4))
+#' oldPar <- par(mfrow=c(3, 1), mar=rep(0.5, 4))
 #'
-#' tree <- rtree(7)
+#' tree <- ape::rtree(7)
 #' plot(tree)
 #' nodelabels()
-#' edgelabels(round(tree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
+#' edgelabels()
+#' edgelabels(round(tree$edge.length, 2),
+#'            cex = 0.6, frame = 'n', adj = c(1, -1))
 #'
+#' # Collapse by node number
 #' newTree <- CollapseNode(tree, c(12, 13))
 #' plot(newTree)
 #' nodelabels()
-#' edgelabels(round(newTree$edge.length, 2), cex=0.6, frame='n', adj=c(1, -1))
+#' edgelabels(round(newTree$edge.length, 2),
+#'            cex = 0.6, frame = 'n', adj = c(1, -1))
+#'
+#' # Collapse by edge number
+#' newTree <- CollapseEdge(tree, c(2, 4))
+#' plot(newTree)
 #'
 #' par(oldPar)
 #'
@@ -268,7 +276,12 @@ CollapseNode.phylo <- function (tree, nodes) {
 #' @rdname CollapseNode
 #' @export
 CollapseEdge <- function (tree, edges) {
-  CollapseNode(tree, tree$edge[edges, 2])
+  nodesToCollapse <- tree$edge[edges, 2]
+  if (any(nodesToCollapse < NTip(tree))) {
+    stop("Cannot collapse external edges: ",
+         paste(edges[nodesToCollapse <= NTip(tree)], collapse = ', '))
+  }
+  CollapseNode(tree, nodesToCollapse)
 }
 
 #' Drop tips from tree
