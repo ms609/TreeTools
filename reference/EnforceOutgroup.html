@@ -46,9 +46,9 @@
 
 
 <meta property="og:title" content="Force taxa to form an outgroup — EnforceOutgroup" />
-<meta property="og:description" content="Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-that the two are sister taxa across the root, without changing the
-relationships within the ingroup or within the outgroup." />
+<meta property="og:description" content="Given a tree or a list of taxa, EnforceOutgroup() rearranges the ingroup
+and outgroup taxa such that the two are sister taxa across the root, without
+changing the relationships within the ingroup or within the outgroup." />
 
 
 
@@ -159,9 +159,9 @@ relationships within the ingroup or within the outgroup." />
     </div>
 
     <div class="ref-description">
-    <p>Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-that the two are sister taxa across the root, without changing the
-relationships within the ingroup or within the outgroup.</p>
+    <p>Given a tree or a list of taxa, <code>EnforceOutgroup()</code> rearranges the ingroup
+and outgroup taxa such that the two are sister taxa across the root, without
+changing the relationships within the ingroup or within the outgroup.</p>
     </div>
 
     <pre class="usage"><span class='fu'>EnforceOutgroup</span>(<span class='no'>tree</span>, <span class='no'>outgroup</span>)
@@ -177,7 +177,7 @@ relationships within the ingroup or within the outgroup.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>Either: a tree of class <code>phylo</code>; or a character vector
+      <td><p>Either a tree of class <code>phylo</code>; or a character vector
 listing the names of all the taxa in the tree, from which a random tree will
 be generated.</p></td>
     </tr>
@@ -190,7 +190,7 @@ outgroup.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>EnforceOutgroup</code> returns a tree of class <code>phylo</code> where all outgroup
+    <p><code>EnforceOutgroup()</code> returns a tree of class <code>phylo</code> where all outgroup
 taxa are sister to all remaining taxa, without modifying the ingroup
 topology.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

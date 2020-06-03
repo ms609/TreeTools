@@ -175,10 +175,20 @@ phylo standards." />
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>Renumber()</code> returns a tree of class <code>phylo</code>.</p>
+    <p><code>Renumber()</code> returns a tree of class <code>phylo</code>, numbered in a
+<a href='Reorder.html'>Cladewise</a> fashion consistent with the expectations of 'ape' functions.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The 'ape' class <code>phylo</code> is not formally defined, but expects trees' internal
+representation to conform to certain principles: for example, nodes should
+be numbered sequentially, with values increasing away from the root.</p>
+<p><code>Renumber()</code> attempts to reformat any tree into a representation that will
+not cause 'ape' functions to produce unwanted results or to crash R.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree manipulation: 
+    <div class='dont-index'><p><code><a href='Reorder.html'>Preorder()</a></code> provides a faster and simpler alternative, but may
+rotate nodes.</p>
+<p>Other tree manipulation: 
 <code><a href='AddTip.html'>AddTip</a>()</code>,
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,

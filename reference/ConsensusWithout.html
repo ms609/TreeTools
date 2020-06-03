@@ -46,7 +46,10 @@
 
 
 <meta property="og:title" content="Consensus without taxa — ConsensusWithout" />
-<meta property="og:description" content="Displays a consensus plot with selected taxa excluded." />
+<meta property="og:description" content="ConsensusWithout() displays a consensus plot with specified taxa excluded,
+which can be a useful way to increase the resolution of a consensus tree
+when a few wildcard taxa obscure a consistent set of relationships.
+MarkMissing() adds missing taxa as loose leaves on the plot." />
 
 
 
@@ -157,7 +160,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Displays a consensus plot with selected taxa excluded.</p>
+    <p><code>ConsensusWithout()</code> displays a consensus plot with specified taxa excluded,
+which can be a useful way to increase the resolution of a consensus tree
+when a few wildcard taxa obscure a consistent set of relationships.
+<code>MarkMissing()</code> adds missing taxa as loose leaves on the plot.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ConsensusWithout</span>(<span class='no'>trees</span>, <span class='kw'>tip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>), <span class='no'>...</span>)
@@ -183,7 +189,7 @@
     <tr>
       <th>tip</th>
       <td><p>A character vector specifying the names (or numbers) of tips to
-drop (using <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip</a></code>).</p></td>
+drop (using <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip()</a></code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -192,25 +198,16 @@ drop (using <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.
     </tr>
     <tr>
       <th>position</th>
-      <td><p>Where to plot the missing taxa.  See <a href='https://rdrr.io/r/graphics/legend.html'>legend</a> for options.</p></td>
+      <td><p>Where to plot the missing taxa.
+See <code><a href='https://rdrr.io/r/graphics/legend.html'>legend()</a></code> for options.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ConsensusWithout</code> returns a consensus tree (of class <code>phylo</code>)
+    <p><code>ConsensusWithout()</code> returns a consensus tree (of class <code>phylo</code>)
 without the excluded taxa.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>A useful way to increase the resolution of a consensus tree when a few
-wildcard taxa obscure a consistent set of relationships.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>MarkMissing</code>: Adds labels for taxa omitted from a plotted
-consensus tree.</p></li>
-</ul>
+<p>``MarkMissing()<code>provides a null return, after plotting the specified</code>tip`s as a legend.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree manipulation: 
@@ -236,10 +233,10 @@ consensus tree.</p></li>
 <span class='no'>trees</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>53</span>), <span class='fl'>6</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>trees</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>trees</span><span class='kw'>[[</span><span class='fl'>2</span>]])</div><div class='img'><img src='ConsensusWithout-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Strict consensus lacks resolution:</span>
+<span class='co'># Strict consensus (left panel) lacks resolution:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/consensus.html'>consensus</a></span>(<span class='no'>trees</span>))
 
-<span class='co'># But omitting tip two reveals shared structure in common:</span>
+<span class='co'># But omitting tip two (right panel) reveals shared structure in common:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>ConsensusWithout</span>(<span class='no'>trees</span>, <span class='st'>'t2'</span>))</div><div class='input'><span class='fu'>MarkMissing</span>(<span class='st'>'t2'</span>)</div><div class='img'><img src='ConsensusWithout-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div></pre>
   </div>

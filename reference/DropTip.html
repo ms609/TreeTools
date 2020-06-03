@@ -46,7 +46,8 @@
 
 
 <meta property="og:title" content="Drop tips from tree — DropTip" />
-<meta property="og:description" content="Remove specified tips from a phylogenetic tree, collapsing incident branches." />
+<meta property="og:description" content="DropTip() removes specified tips from a phylogenetic tree, collapsing
+incident branches." />
 
 
 
@@ -157,7 +158,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Remove specified tips from a phylogenetic tree, collapsing incident branches.</p>
+    <p><code>DropTip()</code> removes specified tips from a phylogenetic tree, collapsing
+incident branches.</p>
     </div>
 
     <pre class="usage"><span class='fu'>DropTip</span>(<span class='no'>tree</span>, <span class='no'>tip</span>)</pre>
@@ -180,8 +182,8 @@ node.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tree of class <code>phylo</code>, in <a href='Reorder.html'>Preorder</a>, with the requested leaves
-removed.</p>
+    <p><code>DropTip()</code> returns a tree of class <code>phylo</code>, in <a href='Reorder.html'>Preorder</a>, with the
+requested leaves removed.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is more robust than <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip()</a></code> as it does not

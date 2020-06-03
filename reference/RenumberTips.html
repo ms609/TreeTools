@@ -46,9 +46,9 @@
 
 
 <meta property="og:title" content="Renumber a tree's tips — RenumberTips" />
-<meta property="og:description" content="RenumberTips(tree, tipOrder) sorts the tips of a phylogenetic tree
+<meta property="og:description" content="RenumberTips(tree, tipOrder) sorts the tips of a phylogenetic tree tree
 such that the indices in tree$edge[, 2] correspond to the order of
-tips given in tipOrder." />
+leaves given in tipOrder." />
 
 
 
@@ -159,9 +159,9 @@ tips given in tipOrder." />
     </div>
 
     <div class="ref-description">
-    <p><code>RenumberTips(tree, tipOrder)</code> sorts the tips of a phylogenetic tree
+    <p><code>RenumberTips(tree, tipOrder)</code> sorts the tips of a phylogenetic tree <code>tree</code>
 such that the indices in <code>tree$edge[, 2]</code> correspond to the order of
-tips given in <code>tipOrder</code>.</p>
+leaves given in <code>tipOrder</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RenumberTips</span>(<span class='no'>tree</span>, <span class='no'>tipOrder</span>)
@@ -192,7 +192,7 @@ tips given in <code>tipOrder</code>.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>RenumberTips</code> returns <code>tree1</code>, with the tips' internal
+    <p><code>RenumberTips()</code> returns <code>tree</code>, with the tips' internal
 representation numbered to match <code>tipOrder</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
