@@ -13,6 +13,10 @@ EnforceOutgroup(tree, outgroup)
 \method{EnforceOutgroup}{character}(tree, outgroup)
 }
 \arguments{
+\item{tree}{Either a tree of class \code{phylo}; or (for \code{EnforceOutgroup()})
+a character vector listing the names of all the taxa in the tree, from which
+a random tree will be generated.}
+
 \item{outgroup}{Character vector containing the names of taxa to include in the
 outgroup.}
 }

@@ -13,9 +13,7 @@ RootOnNode(tree, node, resolveRoot = FALSE)
 UnrootTree(tree)
 }
 \arguments{
-\item{tree}{Either a tree of class \code{phylo}; or (for \code{EnforceOutgroup()})
-a character vector listing the names of all the taxa in the tree, from which
-a random tree will be generated.}
+\item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.}
