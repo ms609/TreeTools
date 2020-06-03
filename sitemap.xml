@@ -13,9 +13,6 @@
     <loc>https://ms609.github.io/TreeTools/reference/ApeTime.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/BalancedTree.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/CharacterInformation.html</loc>
   </url>
   <url>
@@ -53,6 +50,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/LeafLabelInterchange.html</loc>
@@ -109,13 +109,7 @@
     <loc>https://ms609.github.io/TreeTools/reference/NonDuplicateRoot.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PectinateTree.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RandomTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc>

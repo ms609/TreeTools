@@ -203,19 +203,19 @@ in a tree, perhaps obtained using <code><a href='TipLabels.html'>TipLabels()</a>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>as.phylo.numeric</code> returns a tree of class <code>phylo</code>.</p>
-<p><code>as.TreeNumber</code> returns an object of class <code>TreeNumber</code>,
+    <p><code>as.TreeNumber()</code> returns an object of class <code>TreeNumber</code>,
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The <code>TreeNumber</code> object has attributes
 <code>nTip</code> and <code>tip.labels</code>.</p>
+<p><code>as.phylo.numeric()</code> returns a tree of class <code>phylo</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>There are <code><a href='NRooted.html'>NUnrooted(n)</a></code> unrooted trees with <em>n</em> leaves.
 As such, each <em>n</em>-leaf tree can be uniquely identified by a non-negative
 integer <em>x</em> &lt; <code><a href='NRooted.html'>NUnrooted(n)</a></code>.</p>
-<p>This integer can be converted by a tree by treating it as a mixed-base number,
-with bases 1, 3, 5, 7, ... (2_n_ - 5).</p>
+<p>This integer can be converted by a tree by treating it as a mixed-base
+number, with bases 1, 3, 5, 7, ..., (2 <em>n</em> - 5).</p>
 <p>Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.</p>
 <p>We start with a two-leaf tree, and treat 0 as the origin of the tree.</p><pre>
@@ -282,12 +282,11 @@ ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/
 .</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='TreeShape.html'>TreeShape</a></code></p>
+    <div class='dont-index'><p>Describe the shape of a tree topology, independent of leaf labels:
+<code><a href='TreeShape.html'>TreeShape()</a></code></p>
 <p>Other tree generation functions: 
-<code><a href='BalancedTree.html'>BalancedTree</a>()</code>,
+<code><a href='GenerateTree.html'>GenerateTree</a></code>,
 <code><a href='NJTree.html'>NJTree</a>()</code>,
-<code><a href='PectinateTree.html'>PectinateTree</a>()</code>,
-<code><a href='RandomTree.html'>RandomTree</a>()</code>,
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -295,7 +294,7 @@ ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='img'><img src='TreeNumber-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>as.TreeNumber</span>(<span class='no'>tree</span>)</div><div class='output co'>#&gt; Phylogenetic tree number 10 of 105 
 #&gt;  6 tips: t1 t2 t3 t4 t5 t6</div><div class='input'>
 <span class='co'># Larger trees:</span>
-<span class='fu'>as.TreeNumber</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>19</span>))</div><div class='output co'>#&gt; Phylogenetic tree number 32592792130732796827 of 6.33266e+18 
+<span class='fu'>as.TreeNumber</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>19</span>))</div><div class='output co'>#&gt; Phylogenetic tree number 32592792130732796827 of 6.33266e+18 
 #&gt;  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</div><div class='input'>
 <span class='co'># If &gt; 9 digits, represent the tree number as a string.</span>
 <span class='no'>treeNumber</span> <span class='kw'>&lt;-</span> <span class='fu'>as.TreeNumber</span>(<span class='st'>"1234567890123"</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>14</span>)

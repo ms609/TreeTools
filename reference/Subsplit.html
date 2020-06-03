@@ -194,7 +194,7 @@ splits (i.e. splits of zero or one tip) on the subset of tips.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>9</span>]))
+<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>9</span>]))
 <span class='no'>efgh</span> <span class='kw'>&lt;-</span> <span class='fu'>Subsplit</span>(<span class='no'>splits</span>, <span class='kw'>tips</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>5</span>:<span class='fl'>8</span>], <span class='kw'>keepAll</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>efgh</span>)</div><div class='output co'>#&gt; 4 bipartition splits (3 trivial) dividing 4 tips, e .. h
 #&gt;      1234

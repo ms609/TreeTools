@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Non-duplicate root — NonDuplicateRoot • TreeTools</title>
+<title>Generate pectinate, balanced or random trees — GenerateTree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,11 +45,9 @@
 
 
 
-<meta property="og:title" content="Non-duplicate root — NonDuplicateRoot" />
-<meta property="og:description" content="Identify, for each edge, whether it denotes a different partition from
-the root edge.
-The first edge of the input tree must be a root edge; this can be
-accomplished using Preorder()." />
+<meta property="og:title" content="Generate pectinate, balanced or random trees — GenerateTree" />
+<meta property="og:description" content="RandomTree(), BalancedTree() and PectinateTree() generate trees
+with the specified shapes and leaf labels." />
 
 
 
@@ -154,73 +152,71 @@ accomplished using Preorder()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Non-duplicate root</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
-    <div class="hidden name"><code>NonDuplicateRoot.Rd</code></div>
+    <h1>Generate pectinate, balanced or random trees</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_generation.R'><code>R/tree_generation.R</code></a></small>
+    <div class="hidden name"><code>GenerateTree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Identify, for each edge, whether it denotes a different partition from
-the root edge.
-The first edge of the input tree must be a root edge; this can be
-accomplished using <code><a href='Reorder.html'>Preorder()</a></code>.</p>
+    <p><code>RandomTree()</code>, <code>BalancedTree()</code> and <code>PectinateTree()</code> generate trees
+with the specified shapes and leaf labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))</pre>
+    <pre class="usage"><span class='fu'>RandomTree</span>(<span class='no'>tips</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>PectinateTree</span>(<span class='no'>tips</span>)
+
+<span class='fu'>BalancedTree</span>(<span class='no'>tips</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>parent</th>
-      <td><p>Integer vector corresponding to the first column of the edge
-matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
+      <th>tips</th>
+      <td><p>An integer specifying the number of tips, or a character vector
+naming the tips, or any other object from which <code><a href='TipLabels.html'>TipLabels()</a></code> can
+extract leaf labels.</p></td>
     </tr>
     <tr>
-      <th>child</th>
-      <td><p>Integer vector corresponding to the second column of the edge
-matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
-    </tr>
-    <tr>
-      <th>nEdge</th>
-      <td><p>(optional) integer specifying the number of edges of a tree of
-class <code>phylo</code>, i.e. <code>dim(tree$edge)[1]</code></p></td>
+      <th>root</th>
+      <td><p>Character or integer specifying tip to use as root, if desired;
+or <code>FALSE</code> for an unrooted tree.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NonDuplicateRoot()</code> returns a logical vector of length <code>nEdge</code>,
-specifying <code>TRUE</code> unless an edge identifies the same partition as
-the root edge.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function is deprecated; if you use it, please
-<a href='https://github.com/ms609/TreeTools/issues/32'>comment (#32)</a>
-so that a suitable replacement can be guaranteed.</p>
+    <p>Each function returns an unweighted binary tree of class <code>phylo</code> with
+the specified leaf labels. Trees are rooted unless <code>root = FALSE</code>.</p>
+<p><code>RandomTree()</code> returns a random topology, optionally rooting the
+tree on a given tip.</p>
+<p><code>PectinateTree()</code> returns a pectinate (caterpillar) tree.</p>
+<p><code>BalancedTree()</code> returns a balanced (symmetrical) tree.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree navigation: 
-<code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
-<code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
-<code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
-<code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,
-<code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
-<code><a href='ListAncestors.html'>ListAncestors</a>()</code>,
-<code><a href='MRCA.html'>MRCA</a>()</code>,
-<code><a href='NDescendants.html'>NDescendants</a>()</code>,
-<code><a href='NodeDepth.html'>NodeDepth</a>()</code>,
-<code><a href='NodeOrder.html'>NodeOrder</a>()</code>,
-<code><a href='RootNode.html'>RootNode</a>()</code></p></div>
+    <div class='dont-index'><p>Other tree generation functions: 
+<code><a href='NJTree.html'>NJTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Reorder.html'>Preorder</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))
-<span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
-<span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>1</span>]
-<span class='no'>child</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>2</span>]
-
-<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(!<span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>))</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>RandomTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>])</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 10 tips and 8 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; 	I, G, F, A, D, J, ...
+#&gt; 
+#&gt; Unrooted; no branch lengths.</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'Lobo'</span>)
+<span class='fu'>RandomTree</span>(<span class='no'>Lobo.phy</span>)</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 48 tips and 46 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; 	Peytoia_nathorsti, Collins_monster_Burgess_Shale, Paucipodia, Hurdia_victoria, Antennacanthopodia, Acinocrinus, ...
+#&gt; 
+#&gt; Unrooted; no branch lengths.</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>PectinateTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>BalancedTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -228,7 +228,7 @@ Splits are named according to the node that defines them.</p>
 <code><a href='match.Splits.html'>match.Splits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>]))
+    <pre class="examples"><div class='input'><span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>]))
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
 #&gt;      123456
 #&gt;  8   ***...
@@ -256,7 +256,7 @@ Splits are named according to the node that defines them.</p>
 #&gt; 
 #&gt;  Tip 1: a	 Tip 2: b	 Tip 3: c	 Tip 4: d	 Tip 5: e	
 #&gt;  Tip 6: f	</div><div class='input'>
-<span class='no'>moreSplits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>6</span>:<span class='fl'>1</span>]), <span class='kw'>tipLabel</span> <span class='kw'>=</span> <span class='no'>splits</span>)
+<span class='no'>moreSplits</span> <span class='kw'>&lt;-</span> <span class='fu'>as.Splits</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>6</span>:<span class='fl'>1</span>]), <span class='kw'>tipLabel</span> <span class='kw'>=</span> <span class='no'>splits</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>moreSplits</span>, <span class='kw'>details</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 3 bipartition splits dividing 6 tips, a .. f
 #&gt;      123456
 #&gt;  9   ****..
