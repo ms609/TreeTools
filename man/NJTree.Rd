@@ -4,17 +4,20 @@
 \alias{NJTree}
 \title{Generate a neighbour joining tree}
 \usage{
-NJTree(dataset)
+NJTree(dataset, edgeLengths = FALSE)
 }
 \arguments{
 \item{dataset}{A phylogenetic data matrix of class \code{\link[phangorn]{phyDat}},
 whose names correspond to the labels of any accompanying tree.}
+
+\item{edgeLengths}{Logical specifying whether to include edge lengths.}
 }
 \value{
 \code{NJTree} returns an object of class \code{phylo}.
 }
 \description{
-Generates a rooted neighbour joining tree, with no edge lengths.
+\code{NJTree()} generates a rooted neighbour joining tree from a phylogenetic
+dataset.
 }
 \examples{
 data('Lobo')

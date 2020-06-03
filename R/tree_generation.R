@@ -116,9 +116,11 @@ BalancedTree <- function (tips) {
 
 #' Generate a neighbour joining tree
 #'
-#' Generates a rooted neighbour joining tree, with no edge lengths.
+#' `NJTree()` generates a rooted neighbour joining tree from a phylogenetic
+#' dataset.
 #'
 #' @template datasetParam
+#' @param edgeLengths Logical specifying whether to include edge lengths.
 #'
 #' @return `NJTree` returns an object of class \code{phylo}.
 #'
@@ -127,14 +129,14 @@ BalancedTree <- function (tips) {
 #' NJTree(Lobo.phy)
 #'
 #' @template MRS
-#' @importFrom ape nj root
+#' @importFrom ape nj
 #' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
-NJTree <- function (dataset) {
+NJTree <- function (dataset, edgeLengths = FALSE) {
   nj.tree <- nj(dist.hamming(dataset))
-  nj.tree <- root(nj.tree, outgroup=names(dataset)[1], resolve.root=TRUE)
-  nj.tree$edge.length <- NULL
+  nj.tree <- RootTree(nj.tree, names(dataset)[1])
+  if (!edgeLengths) nj.tree$edge.length <- NULL
   nj.tree
 }
 

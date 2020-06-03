@@ -35,8 +35,11 @@ test_that("Random trees are generated correctly", {
 
 test_that("NJTree() works", {
   a..f <- letters[1:6]
-  bal6 <- StringToPhyDat('111100 111000 110000', letters[1:6], byTaxon = FALSE)
+  bal6 <- StringToPhyDat('111100 111000 111000 110000', letters[1:6],
+                         byTaxon = FALSE)
   expect_equal(BalancedTree(letters[c(1:3, 6:4)]), RootTree(NJTree(bal6), a..f[1:3]))
+  expect_equal(c(0, 1, 2, 1, rep(0, 6)),
+               Preorder(NJTree(bal6, TRUE))$edge.length * 4L)
 })
 
 test_that("EnforceOutgroup() fails nicely", {
