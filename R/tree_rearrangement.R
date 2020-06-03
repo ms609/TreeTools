@@ -1,10 +1,13 @@
 #' Root or unroot a phylogenetic tree
 #'
 #' `RootTree()` roots a tree on the smallest clade containing the specified
-#' tips; `UnrootTree()` collapses a root node, without the undefined behaviour
-#' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in preorder.
+#' tips;
+#' `RootOnNode()` roots a tree on a specified internal node;
+#' `UnrootTree()` collapses a root node, without the undefined behaviour
+#' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
+#' preorder.
 #'
-#' @template treeParam
+# @template treeParam # Restore when EnforceOutgroup() goes
 #' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.
 #'
@@ -61,12 +64,12 @@ RootTree <- function (tree, outgroupTips) {
   Renumber(root(tree, outgroup, resolve.root = TRUE))
 }
 
-#' @describeIn RootTree Roots a tree on a specified internal node.
+#' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
 #' @param resolveRoot logical specifying whether to resolve the root node.
 #'
-#' @return `RootOnNode` returns a tree of class `phylo`, rooted on the requested
-#' `node` and ordered in [`Preorder`].
+#' @return `RootOnNode()` returns a tree of class `phylo`, rooted on the
+#' requested `node` and ordered in [`Preorder`].
 #'
 #' @export
 RootOnNode <- function (tree, node, resolveRoot = FALSE) {
