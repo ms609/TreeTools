@@ -23,13 +23,13 @@ RenumberTips(tree, tipOrder)
 (perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
 }
 \value{
-\code{RenumberTips} returns \code{tree1}, with the tips' internal
+\code{RenumberTips()} returns \code{tree}, with the tips' internal
 representation numbered to match \code{tipOrder}.
 }
 \description{
-\code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
+\code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree \code{tree}
 such that the indices in \code{tree$edge[, 2]} correspond to the order of
-tips given in \code{tipOrder}.
+leaves given in \code{tipOrder}.
 }
 \examples{
 data('Lobo') # Loads the phyDat object Lobo.phy

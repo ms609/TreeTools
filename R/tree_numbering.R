@@ -389,16 +389,16 @@ Preorder.list <- function (tree) {
 
 #' Renumber a tree's tips
 #'
-#' `RenumberTips(tree, tipOrder)` sorts the tips of a phylogenetic tree
+#' `RenumberTips(tree, tipOrder)` sorts the tips of a phylogenetic tree `tree`
 #' such that the indices in `tree$edge[, 2]` correspond to the order of
-#' tips given in `tipOrder`.
+#' leaves given in `tipOrder`.
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
 #'        \code{tree$tip.label} in the desired sort order, or an object
 #'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
-#' @return `RenumberTips` returns `tree1`, with the tips' internal
+#' @return `RenumberTips()` returns `tree`, with the tips' internal
 #' representation numbered to match `tipOrder`.
 #'
 #' @examples

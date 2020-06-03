@@ -18,7 +18,7 @@ the position of \code{n} leaves have been exchanged.
 The tree's internal topology will not change.
 }
 \description{
-Exchange the position of leaves within a tree.
+\code{LeafLabelInterchange()} exchanges the position of leaves within a tree.
 }
 \details{
 Modifies a tree by switching the positions of \emph{n} leaves.  To avoid

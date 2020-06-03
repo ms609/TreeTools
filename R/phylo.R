@@ -3,13 +3,24 @@
 #' `Renumber()` numbers the nodes and tips in a tree to conform with the
 #' `phylo` standards.
 #'
+#' The 'ape' class `phylo` is not formally defined, but expects trees' internal
+#' representation to conform to certain principles: for example, nodes should
+#' be numbered sequentially, with values increasing away from the root.
+#'
+#' `Renumber()` attempts to reformat any tree into a representation that will
+#' not cause 'ape' functions to produce unwanted results or to crash R.
+#'
 #' @template treeParam
 #'
 #' @examples
 #' tree <- RandomTree(letters[1:10])
 #' Renumber(tree)
 #'
-#' @return `Renumber()` returns a tree of class `phylo`.
+#' @return `Renumber()` returns a tree of class `phylo`, numbered in a
+#' [Cladewise] fashion consistent with the expectations of 'ape' functions.
+#'
+#' @seealso `Preorder()` provides a faster and simpler alternative, but may
+#' rotate nodes.
 #'
 #' @template MRS
 #' @family tree manipulation
