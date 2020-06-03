@@ -723,7 +723,7 @@ RightmostCharacter <- function (string, len=nchar(string)) {
 #'
 #' @template treeParam
 #'
-#' @return `NewickTree` returns a character string denoting `tree` in Newick
+#' @return `NewickTree()` returns a character string denoting `tree` in Newick
 #' format.
 #'
 #' @examples

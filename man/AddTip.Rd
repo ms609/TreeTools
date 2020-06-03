@@ -42,19 +42,15 @@ at the desired location.
 the trees produced by adding \code{label} to each edge of \code{tree} in turn.
 }
 \description{
-\code{AddTip} adds a tip to a phylogenetic tree at a specified location.
+\code{AddTip()} adds a tip to a phylogenetic tree at a specified location.
 }
 \details{
-\code{AddTip} extends \code{\link{bind.tree}}, which cannot handle
+\code{AddTip()} extends \code{\link{bind.tree}}, which cannot handle
 single-taxon trees.
+
+\code{AddTipEverywhere()} adds a tip to each edge in turn.
 }
-\section{Functions}{
-\itemize{
-\item \code{AddTipEverywhere}: Add a tip to each edge in turn.
-}}
-
 \examples{
-
 plot(tree <- BalancedTree(10))
 ape::nodelabels()
 ape::nodelabels(15, 15, bg='green')
@@ -64,10 +60,12 @@ plot(AddTip(tree, 15, 'NEW_TIP'))
 oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 
 backbone <- BalancedTree(4)
+# Treating the position of the root as instructive:
 additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 xx <- lapply(additions, plot)
 
 par(mfrow=c(2, 3))
+# Don't treat root edges as distinct:
 additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 xx <- lapply(additions, plot)
 
@@ -75,9 +73,7 @@ par(oldPar)
 
 }
 \seealso{
-\code{\link{bind.tree}}
-
-\code{\link{nodelabels}}
+Add one tree to another: \code{\link{bind.tree}()}
 
 Other tree manipulation: 
 \code{\link{CollapseNode}()},

@@ -139,9 +139,9 @@ Subtree <- function (tree, node) {
 
 #' Add a tip to a phylogenetic tree
 #'
-#' `AddTip` adds a tip to a phylogenetic tree at a specified location.
+#' `AddTip()` adds a tip to a phylogenetic tree at a specified location.
 #'
-#'`AddTip` extends \code{\link{bind.tree}}, which cannot handle
+#' `AddTip()` extends \code{\link{bind.tree}}, which cannot handle
 #'   single-taxon trees.
 #'
 #' @template treeParam
@@ -159,11 +159,9 @@ Subtree <- function (tree, node) {
 #'
 #' @template MRS
 #'
-#' @seealso \code{\link{bind.tree}}
-#' @seealso \code{\link{nodelabels}}
+#' @seealso Add one tree to another: \code{\link{bind.tree}()}
 #'
 #' @examples
-#'
 #' plot(tree <- BalancedTree(10))
 #' ape::nodelabels()
 #' ape::nodelabels(15, 15, bg='green')
@@ -251,7 +249,10 @@ AddTip <- function (tree,
   tree
 }
 
-#' @describeIn AddTip Add a tip to each edge in turn.
+#' @rdname AddTip
+#'
+#' @details `AddTipEverywhere()` adds a tip to each edge in turn.
+#'
 #' @param includeRoot Logical; if `TRUE`, each position adjacent
 #' to the root edge is considered to represent distinct edges; if `FALSE`,
 #' they are treated as a single edge.
@@ -262,10 +263,12 @@ AddTip <- function (tree,
 #' oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 #'
 #' backbone <- BalancedTree(4)
+#' # Treating the position of the root as instructive:
 #' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 #' xx <- lapply(additions, plot)
 #'
 #' par(mfrow=c(2, 3))
+#' # Don't treat root edges as distinct:
 #' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 #' xx <- lapply(additions, plot)
 #'
