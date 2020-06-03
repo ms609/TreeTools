@@ -180,14 +180,15 @@ polytomies.</p>
       <th>nodes, edges</th>
       <td><p>Integer vector specifying the nodes or edges in the tree
 to be dropped.
-(Use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></code> or <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></code>
+(Use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a>()</code> or
+<code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a>()</code>
 to view numbers on a plotted tree.)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>CollapseNode</code> and <code>CollapseEdge</code> return a tree of class <code>phylo</code>,
+    <p><code>CollapseNode()</code> and <code>CollapseEdge()</code> return a tree of class <code>phylo</code>,
 corresponding to <code>tree</code> with the specified nodes or edges collapsed.
 The length of each dropped edge will (naively) be added to each descendant
 edge.</p>
@@ -208,17 +209,26 @@ edge.</p>
 <code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ape</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.5</span>, <span class='fl'>4</span>))
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.5</span>, <span class='fl'>4</span>))
 
-<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
+<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()
-<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>tree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.6</span>, <span class='kw'>frame</span><span class='kw'>=</span><span class='st'>'n'</span>, <span class='kw'>adj</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))
+<span class='fu'>nodelabels</span>()
+<span class='fu'>edgelabels</span>()
+<span class='fu'>edgelabels</span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>tree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>),
+           <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'n'</span>, <span class='kw'>adj</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))
 
+<span class='co'># Collapse by node number</span>
 <span class='no'>newTree</span> <span class='kw'>&lt;-</span> <span class='fu'>CollapseNode</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>13</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>newTree</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>newTree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.6</span>, <span class='kw'>frame</span><span class='kw'>=</span><span class='st'>'n'</span>, <span class='kw'>adj</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))</div><div class='img'><img src='CollapseNode-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>newTree</span>)
+<span class='fu'>nodelabels</span>()
+<span class='fu'>edgelabels</span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>newTree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>),
+           <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'n'</span>, <span class='kw'>adj</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))
+
+<span class='co'># Collapse by edge number</span>
+<span class='no'>newTree</span> <span class='kw'>&lt;-</span> <span class='fu'>CollapseEdge</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>newTree</span>)</div><div class='img'><img src='CollapseNode-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
