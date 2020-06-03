@@ -15,16 +15,18 @@
 #' @template treeChild
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
-#' @return `DescendantEdges()` returns a logical vector stating whether each edge
-#' in turn is a descendant of the specified edge (or the edge itself).
+#' @return `DescendantEdges()` returns a logical vector stating whether each
+#' edge in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
-DescendantEdges <- function (edge = NULL, parent, child, nEdge = length(parent)) {
+DescendantEdges <- function (edge = NULL, parent, child,
+                             nEdge = length(parent)) {
   if (is.null(edge)) return(AllDescendantEdges(parent, child, nEdge))
   ret <- logical(nEdge)
   edgeSister <- match(parent[edge], parent[-edge])
   if (edgeSister >= edge) {
-    # edgeSister is really 1 higher than you think, because we knocked out edge 'edge' in the match
+    # edgeSister is really 1 higher than you think, because we knocked out
+    # edge 'edge' in the match
     ret[edge:edgeSister] <- TRUE
 
     # Return:
@@ -156,7 +158,8 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 
     while(any(is.na(depths))) {
       for (node in rev(which(is.na(depths)))) {
-        incident <- c(depths[child[parent == node]], depths[parent[child == node]])
+        incident <- c(depths[child[parent == node]],
+                      depths[parent[child == node]])
         na <- is.na(incident)
         nNa <- sum(na)
         if (nNa == 0L) {
@@ -184,7 +187,8 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 
     while(any(is.na(depths))) {
       for (node in rev(which(is.na(depths)))) {
-        incident <- c(depths[child[parent == node]], depths[parent[child == node]])
+        incident <- c(depths[child[parent == node]],
+                      depths[parent[child == node]])
         na <- is.na(incident)
         nNa <- sum(na)
         if (nNa == 0L) {
@@ -336,8 +340,8 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' which will be the root edges if nodes are numbered [Cladewise] or in
 #' [Preorder].
 #'
-#' @return `EdgeAncestry()` returns a logical vector stating whether each edge in
-#' turn is a descendant of the specified edge.
+#' @return `EdgeAncestry()` returns a logical vector stating whether each edge
+#' in turn is a descendant of the specified edge.
 #'
 #' @examples
 #' tree <- PectinateTree(6)
