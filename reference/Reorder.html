@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reorder trees — Reorder • TreeTools</title>
+<title>Reorder trees — RenumberTree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Reorder trees — Reorder" />
-<meta property="og:description" content="A wrapper for ape:::.reorder_ape.
+<meta property="og:title" content="Reorder trees — RenumberTree" />
+<meta property="og:description" content="Reorder() is a wrapper for ape:::.reorder_ape.
 Calling this C function directly is approximately twice as fast as using
 ape::cladewise or
 ape::postorder" />
@@ -160,13 +160,17 @@ ape::postorder" />
     </div>
 
     <div class="ref-description">
-    <p>A wrapper for <code>ape:::.reorder_ape</code>.
+    <p><code>Reorder()</code> is a wrapper for <code>ape:::.reorder_ape</code>.
 Calling this C function directly is approximately twice as fast as using
 <code>ape::<a href='https://rdrr.io/pkg/ape/man/reorder.phylo.html'>cladewise</a></code> or
 <code>ape::<a href='https://rdrr.io/pkg/ape/man/reorder.phylo.html'>postorder</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='no'>nTip</span>, <span class='no'>edge</span>)
+    <pre class="usage"><span class='fu'>RenumberTree</span>(<span class='no'>parent</span>, <span class='no'>child</span>)
+
+<span class='fu'>RenumberEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='no'>...</span>)
+
+<span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='no'>nTip</span>, <span class='no'>edge</span>)
 
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
@@ -236,6 +240,20 @@ Calling this C function directly is approximately twice as fast as using
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>parent</th>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
+    </tr>
+    <tr>
+      <th>child</th>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Deprecated; included for compatibility with previous versions.</p></td>
+    </tr>
+    <tr>
       <th>tree</th>
       <td><p>A tree of class <code>phylo</code>.</p></td>
     </tr>
@@ -262,7 +280,11 @@ increase in number away from the root.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ApePostorder()</code>, <code>Cladewise()</code>, <code>Postorder()</code>, <code>Preorder()</code> and
+    <p><code>RenumberTree()</code> returns an edge matrix for a tree of class <code>phylo</code>
+following the preorder convention for edge and node numbering.</p>
+<p><code>RenumberEdges()</code> formats the output of <code>RenumberTree()</code> into a list
+whose two entries correspond to the new parent and child vectors.</p>
+<p><code>ApePostorder()</code>, <code>Cladewise()</code>, <code>Postorder()</code>, <code>Preorder()</code> and
 <code>Pruningwise()</code> each return a tree of class <code>phylo</code> with nodes following the
 specified numbering scheme.</p>
 <p><code>Postorder.numeric</code> accepts a numeric matrix corresponding to the
@@ -277,18 +299,23 @@ can cause crashes if nodes are numbered unconventionally -- sometimes
 encountered after using tree rearrangement functions, e.g. <code>phangorn::SPR</code>.</p>
 <p><code>Preorder()</code> is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.
-It has a unique output for each tree topology, allowing unique trees
-to be detected by comparing sorted edge matrices alone.</p>
+Its output is guaranteed to be identical for any tree of an equivalent
+topology, allowing unique trees to be detected by comparing sorted edge
+matrices alone.</p>
 <p>A tree in preorder is numbered starting from the root node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.</p>
-<p>Child edges of a node are sorted from left to right in order of the
-smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
-of an edge leading to a subtree that contains tip 2.</p>
+<p>At each node, child edges are sorted from left to right in order of the
+lowest-numbered leaf in the subtree subtended by each edge; i.e. an edge
+that leads eventually to tip 1 will be to the left of an edge leading to a
+subtree containing tip 2.</p>
 <p>Numbering begins by following the leftmost edge of the root node,
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.</p>
+<p><code>RenumberTree()</code> and <code>RenumberEdges()</code> are wrappers for the C function
+<code>preorder_edges_and_nodes()</code>; they do not perform the same checks on input
+as <code>Preorder()</code> and are intended for use where performance is at a premium.</p>
 <p><code>Postorder()</code> is modified from the 'ape' function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
@@ -313,9 +340,24 @@ function, which is robust to unconventional node numbering.</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other C wrappers: 
-<code><a href='Neworder.html'>Neworder</a></code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code></p></div>
+    <div class='dont-index'><p>Rotate each node into a consistent orientation with <code><a href='SortTree.html'>SortTree()</a></code>.</p>
+<p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p>
+<p>Other C wrappers: 
+<code><a href='Neworder.html'>Neworder</a></code></p>
+<p>Other C wrappers: 
+<code><a href='Neworder.html'>Neworder</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

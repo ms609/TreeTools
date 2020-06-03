@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Sort tree — SortTree" />
-<meta property="og:description" content="Sorts each node into a consistent order, so similar trees look visually
-similar." />
+<meta property="og:description" content="SortTree() sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees." />
 
 
 
@@ -158,8 +158,8 @@ similar." />
     </div>
 
     <div class="ref-description">
-    <p>Sorts each node into a consistent order, so similar trees look visually
-similar.</p>
+    <p><code>SortTree()</code> sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees.</p>
     </div>
 
     <pre class="usage"><span class='fu'>SortTree</span>(<span class='no'>tree</span>)</pre>
@@ -184,10 +184,12 @@ such that the larger clade is first.</p>
 of minimum leaf number, so (2, 3) will occur before (1, 4).</p>
 <p>As trees are plotted from 'bottom up', the largest clades will 'sink' to the
 bottom of a plotted tree.</p>
-<p><code>tree</code> must (presently) be binary.</p>
+<p><code>tree</code> must (presently) be binary (<a href='https://github.com/ms609/TreeTools/issues/25'>#25</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree manipulation: 
+    <div class='dont-index'><p><code><a href='Reorder.html'>Preorder()</a></code> also rearranges trees into a consistent shape, but
+based on the index of leaves rather than the size of subtrees.</p>
+<p>Other tree manipulation: 
 <code><a href='AddTip.html'>AddTip</a>()</code>,
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
@@ -195,7 +197,7 @@ bottom of a plotted tree.</p>
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Reorder.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
 <code><a href='RootTree.html'>RootTree</a>()</code>,
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
@@ -204,7 +206,7 @@ bottom of a plotted tree.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>messyTree</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fl'>10</span>, <span class='fl'>6</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>messyTree</span>)</div><div class='img'><img src='SortTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='no'>sorted</span> <span class='kw'>&lt;-</span><span class='fu'>SortTree</span>(<span class='no'>messyTree</span>)
+<span class='no'>sorted</span> <span class='kw'>&lt;-</span> <span class='fu'>SortTree</span>(<span class='no'>messyTree</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>sorted</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()</div><div class='img'><img src='SortTree-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>

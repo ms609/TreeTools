@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Force taxa to form an outgroup — EnforceOutgroup • TreeTools</title>
+<title>Generate a tree with a specific outgroup — EnforceOutgroup • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Force taxa to form an outgroup — EnforceOutgroup" />
+<meta property="og:title" content="Generate a tree with a specific outgroup — EnforceOutgroup" />
 <meta property="og:description" content="Given a tree or a list of taxa, EnforceOutgroup() rearranges the ingroup
 and outgroup taxa such that the two are sister taxa across the root, without
 changing the relationships within the ingroup or within the outgroup." />
@@ -153,7 +153,7 @@ changing the relationships within the ingroup or within the outgroup." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Force taxa to form an outgroup</h1>
+    <h1>Generate a tree with a specific outgroup</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_generation.R'><code>R/tree_generation.R</code></a></small>
     <div class="hidden name"><code>EnforceOutgroup.Rd</code></div>
     </div>
@@ -177,9 +177,9 @@ changing the relationships within the ingroup or within the outgroup.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>Either a tree of class <code>phylo</code>; or a character vector
-listing the names of all the taxa in the tree, from which a random tree will
-be generated.</p></td>
+      <td><p>Either a tree of class <code>phylo</code>; or (for <code>EnforceOutgroup()</code>)
+a character vector listing the names of all the taxa in the tree, from which
+a random tree will be generated.</p></td>
     </tr>
     <tr>
       <th>outgroup</th>
@@ -195,14 +195,17 @@ taxa are sister to all remaining taxa, without modifying the ingroup
 topology.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree manipulation: 
+    <div class='dont-index'><p>For a more robust implementation, see <code><a href='RootTree.html'>RootTree()</a></code>, which will
+eventually replace this function
+(<a href='https://github.com/ms609/TreeTools/issues/30'>#30</a>).</p>
+<p>Other tree manipulation: 
 <code><a href='AddTip.html'>AddTip</a>()</code>,
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Reorder.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
 <code><a href='RootTree.html'>RootTree</a>()</code>,
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,

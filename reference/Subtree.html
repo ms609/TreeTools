@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract subtree — Subtree • TreeTools</title>
+<title>Extract a subtree — Subtree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Extract subtree — Subtree" />
-<meta property="og:description" content="Safely extracts a clade from a phylogenetic tree." />
+<meta property="og:title" content="Extract a subtree — Subtree" />
+<meta property="og:description" content="Subtree() safely extracts a clade from a phylogenetic tree." />
 
 
 
@@ -151,13 +151,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract subtree</h1>
+    <h1>Extract a subtree</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/phylo.R'><code>R/phylo.R</code></a></small>
     <div class="hidden name"><code>Subtree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Safely extracts a clade from a phylogenetic tree.</p>
+    <p><code>Subtree()</code> safely extracts a clade from a phylogenetic tree.</p>
     </div>
 
     <pre class="usage"><span class='fu'>Subtree</span>(<span class='no'>tree</span>, <span class='no'>node</span>)</pre>
@@ -179,7 +179,7 @@ in cladewise order (use <code><a href='Reorder.html'>Preorder</a>(tree)</code> o
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function returns a tree of class <code>phylo</code> that represents a
+    <p><code>Subtree()</code> returns a tree of class <code>phylo</code> that represents a
 clade extracted from the original tree.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -197,7 +197,7 @@ that constitute a single tip.</p>
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Reorder.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
 <code><a href='RootTree.html'>RootTree</a>()</code>,
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
@@ -207,7 +207,6 @@ that constitute a single tip.</p>
     <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Reorder.html'>Preorder</a></span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>13</span>, <span class='fl'>13</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'yellow'</span>)</div><div class='img'><img src='Subtree-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>Subtree</span>(<span class='no'>tree</span>, <span class='fl'>13</span>))</div><div class='img'><img src='Subtree-2.png' alt='' width='700' height='433' /></div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

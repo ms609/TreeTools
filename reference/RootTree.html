@@ -47,8 +47,11 @@
 
 <meta property="og:title" content="Root or unroot a phylogenetic tree — RootTree" />
 <meta property="og:description" content="RootTree() roots a tree on the smallest clade containing the specified
-tips; UnrootTree() collapses a root node, without the undefined behaviour
-encountered when using ape::unroot() on trees in preorder." />
+tips;
+RootOnNode() roots a tree on a specified internal node;
+UnrootTree() collapses a root node, without the undefined behaviour
+encountered when using ape::unroot() on trees in
+preorder." />
 
 
 
@@ -160,8 +163,11 @@ encountered when using ape::unroot() on trees in preorder." />
 
     <div class="ref-description">
     <p><code>RootTree()</code> roots a tree on the smallest clade containing the specified
-tips; <code>UnrootTree()</code> collapses a root node, without the undefined behaviour
-encountered when using <code><a href='https://rdrr.io/pkg/ape/man/root.html'>ape::unroot</a>()</code> on trees in preorder.</p>
+tips;
+<code>RootOnNode()</code> roots a tree on a specified internal node;
+<code>UnrootTree()</code> collapses a root node, without the undefined behaviour
+encountered when using <code><a href='https://rdrr.io/pkg/ape/man/root.html'>ape::unroot</a>()</code> on trees in
+preorder.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RootTree</span>(<span class='no'>tree</span>, <span class='no'>outgroupTips</span>)
@@ -196,16 +202,10 @@ the names or indices of the tips to include in the outgroup.</p></td>
 
     <p><code>RootTree()</code> returns a tree of class <code>phylo</code>, rooted on the smallest
 clade that contains the specified tips.</p>
-<p><code>RootOnNode</code> returns a tree of class <code>phylo</code>, rooted on the requested
-<code>node</code> and ordered in <code><a href='Reorder.html'>Preorder</a></code>.</p>
+<p><code>RootOnNode()</code> returns a tree of class <code>phylo</code>, rooted on the
+requested <code>node</code> and ordered in <code><a href='Reorder.html'>Preorder</a></code>.</p>
 <p><code>UnrootTree()</code> returns a tree of class <code>phylo</code>, in preorder,
 having collapsed the first child of the root node.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>RootOnNode</code>: Roots a tree on a specified internal node.</p></li>
-</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -222,7 +222,7 @@ having collapsed the first child of the root node.</p>
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Reorder.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
 <code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
 <code><a href='SortTree.html'>SortTree</a>()</code>,

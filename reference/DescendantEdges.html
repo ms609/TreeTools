@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Identify descendant edges — DescendantEdges" />
-<meta property="og:description" content="Quickly identify edges that are 'descended' from a particular edge in a tree." />
+<meta property="og:description" content="Quickly identify edges that are 'descended' from edges in a tree." />
 
 
 
@@ -157,10 +157,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Quickly identify edges that are 'descended' from a particular edge in a tree.</p>
+    <p>Quickly identify edges that are 'descended' from edges in a tree.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DescendantEdges</span>(<span class='no'>edge</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))
+    <pre class="usage"><span class='fu'>DescendantEdges</span>(<span class='kw'>edge</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))
 
 <span class='fu'>AllDescendantEdges</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))</pre>
 
@@ -170,7 +170,7 @@
     <tr>
       <th>edge</th>
       <td><p>Integer specifying the number of the edge whose child edges are
-required (see <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></code>).</p></td>
+required (see <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a>()</code>).</p></td>
     </tr>
     <tr>
       <th>parent</th>
@@ -191,21 +191,22 @@ supplied).</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DescendantEdges</code> returns a logical vector stating whether each edge
+    <p><code>DescendantEdges()</code> returns a logical vector stating whether each edge
 in turn is a descendant of the specified edge (or the edge itself).</p>
-<p><code>AllDescendantEdges</code> returns a matrix of class logical, with row N
-specifying whether each edge is a descendant of edge N (or the edge itself).</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+<p><code>AllDescendantEdges()</code> returns a matrix of class logical, with row
+<em>N</em> specifying whether each edge is a descendant of edge <em>N</em>
+(or the edge itself).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    
-<ul>
-<li><p><code>AllDescendantEdges</code>: Quickly identifies edges that are 'descended'
-from each edge in a tree.</p></li>
-</ul>
+    <p>The order of parameters in <code>DescendantEdges()</code> will change in the future,
+to allow <code>AllDescendantEdges()</code> to be merged into this function
+<a href='https://github.com/ms609/TreeTools/issues/31'>#31</a>.
+Please explicitly name the <code>edge</code> parameter in <code>DescendantEdges()</code>, and
+replace <code>AllDesdendantEdges()</code> with <code>DescendantEdges(edge = NULL)</code>,
+to future-proof your code.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
 <code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,

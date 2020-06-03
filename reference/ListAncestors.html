@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="List ancestors — ListAncestors" />
-<meta property="og:description" content="Reports all ancestors of a given node" />
+<meta property="og:description" content="ListAncestors() reports all ancestors of a given node." />
 
 
 
@@ -157,46 +157,72 @@
     </div>
 
     <div class="ref-description">
-    <p>Reports all ancestors of a given node</p>
+    <p><code>ListAncestors()</code> reports all ancestors of a given node.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ListAncestors</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='no'>node</span>)</pre>
+    <pre class="usage"><span class='fu'>ListAncestors</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>node</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>AllAncestors</span>(<span class='no'>parent</span>, <span class='no'>child</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>parent</th>
-      <td><p>the 'parent' column of the edges property of a tree of class <code>phylo</code>;</p></td>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
     </tr>
     <tr>
       <th>child</th>
-      <td><p>the 'child' column of the edges property of a tree of class <code>phylo</code>;</p></td>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
     </tr>
     <tr>
       <th>node</th>
-      <td><p>the number of the node or tip whose ancestors are required.</p></td>
+      <td><p>Integer giving the index of the node or tip whose ancestors are
+required, or <code>NULL</code> to return ancestors of all nodes.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ListAncestors()</code> returns a vector of the numbers of the nodes
-ancestral to the given <code>node</code>, including the root node.</p>
+    <p>If <code>node = NULL</code>, <code>ListAncestors()</code> returns a list. Each entry <em>i</em> contains
+a vector containing, in order, the nodes encountered when traversing the tree
+from node <em>i</em> to the root node.
+The last entry of each member of the list is therefore the root node,
+with the exception of the entry for the root node itself, which is a
+zero-length integer.</p>
+<p>If <code>node</code> is an integer, <code>ListAncestors()</code> returns a vector of the numbers of
+the nodes ancestral to the given <code>node</code>, including the root node.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>To observe the number of a node or tip, use
-<code>plot(tree); <a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a>(); <a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>tiplabels</a>();</code></p>
+    <p>Note that if <code>node = NULL</code>, the tree's edges must be listed such that each
+internal node (except the root) is listed as a child before it is listed
+as a parent, i.e. its index in <code>child</code> is less than its index in <code>parent</code>.
+This will be true of trees listed in <a href='Reorder.html'>Preorder</a>.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>AllAncestors</code>: Alias for <code>ListAncestors(node = NULL)</code>.</p></li>
+</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'>
-<ul>
-<li><p><code>phangorn:::Ancestors</code>, a less efficient implementation on which this
-code is based.</p></li>
-</ul>
-
+    <div class='dont-index'><p>Implemented less efficiently in <code>phangorn:::Ancestors</code>, on which this
+code is based.</p>
 <p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
+<code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
+<code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
+<code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
+<code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,
+<code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
+<code><a href='MRCA.html'>MRCA</a>()</code>,
+<code><a href='NDescendants.html'>NDescendants</a>()</code>,
+<code><a href='NodeDepth.html'>NodeDepth</a>()</code>,
+<code><a href='NodeOrder.html'>NodeOrder</a>()</code>,
+<code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code>,
+<code><a href='RootNode.html'>RootNode</a>()</code></p>
+<p>Other tree navigation: 
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
 <code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
@@ -210,11 +236,98 @@ code is based.</p></li>
 <code><a href='RootNode.html'>RootNode</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tree</span>   <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'(1, (2, (3, (4, 5))));'</span>)
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>5</span>)
 <span class='no'>edge</span>   <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
-<span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>1</span>]
-<span class='no'>child</span>  <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[, <span class='fl'>2</span>]
-<span class='fu'>ListAncestors</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='fl'>4L</span>)</div><div class='output co'>#&gt; [1] 9 8 7 6</div><div class='input'>
+
+<span class='co'># Identify desired node with:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'>nodelabels</span>()</div><div class='input'><span class='fu'>tiplabels</span>()</div><div class='img'><img src='ListAncestors-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Ancestors of specific nodes:</span>
+<span class='fu'>ListAncestors</span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>], <span class='fl'>4L</span>)</div><div class='output co'>#&gt; [1] 9 8 7 6</div><div class='input'><span class='fu'>ListAncestors</span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>], <span class='fl'>8L</span>)</div><div class='output co'>#&gt; [1] 7 6</div><div class='input'>
+<span class='co'># Ancestors of each node, if tree numbering system is uncertain:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>edge</span>)), <span class='no'>ListAncestors</span>,
+       <span class='kw'>parent</span> <span class='kw'>=</span> <span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>child</span> <span class='kw'>=</span> <span class='no'>edge</span>[, <span class='fl'>2</span>])</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
+<span class='co'># Ancestors of each node, if tree is in preorder:</span>
+<span class='fu'>ListAncestors</span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>])</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
+<span class='co'># Alias:</span>
+<span class='fu'>AllAncestors</span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>])</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

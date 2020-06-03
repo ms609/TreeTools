@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Most recent common ancestor — MRCA" />
-<meta property="og:description" content="What is the last common ancestor of the specified nodes?" />
+<meta property="og:description" content="MRCA() calculates the last common ancestor of specified nodes." />
 
 
 
@@ -157,7 +157,7 @@
     </div>
 
     <div class="ref-description">
-    <p>What is the last common ancestor of the specified nodes?</p>
+    <p><code>MRCA()</code> calculates the last common ancestor of specified nodes.</p>
     </div>
 
     <pre class="usage"><span class='fu'>MRCA</span>(<span class='no'>x1</span>, <span class='no'>x2</span>, <span class='no'>ancestors</span>)</pre>
@@ -172,7 +172,8 @@ recent common ancestor should be found.</p></td>
     </tr>
     <tr>
       <th>ancestors</th>
-      <td><p>Output of <code><a href='AllAncestors.html'>AllAncestors()</a></code> for the tree in question.</p></td>
+      <td><p>List of ancestors for each node in a tree. Perhaps
+produced by <code><a href='ListAncestors.html'>ListAncestors()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -182,13 +183,12 @@ recent common ancestor should be found.</p></td>
 common ancestor of <code>x1</code> and <code>x2</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that besides satisfying the requirements of <code><a href='AllAncestors.html'>AllAncestors()</a></code>, <code>MRCA()</code>
-expects node values to increase away from the root.  No warnings will be
-given if trees do not fulfil this requirement.</p>
+    <p><code>MRCA()</code> requires that node values within a tree increase away from the root,
+which will be true of trees listed in <code>Preorder</code>.
+No warnings will be given if trees do not fulfil this requirement.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
 <code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
@@ -206,13 +206,16 @@ given if trees do not fulfil this requirement.</p>
 
 <span class='co'># Verify that node numbering increases away from root</span>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'>nodelabels</span>()</div><div class='img'><img src='MRCA-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Guarantee that tree edges are sensibly numbered</span>
-<span class='co'># tree &lt;- Postorder(tree) will give erroneous output.</span>
+<span class='co'># ListAncestors expects a tree in Preorder</span>
 <span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Reorder.html'>Preorder</a></span>(<span class='no'>tree</span>)
 <span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
-<span class='no'>ancestors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AllAncestors.html'>AllAncestors</a></span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>])
+<span class='no'>ancestors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ListAncestors.html'>ListAncestors</a></span>(<span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>])
 <span class='fu'>MRCA</span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='no'>ancestors</span>)</div><div class='output co'>#&gt; [1] 9</div><div class='input'>
-</div></pre>
+<span class='co'># If a tree must be in postorder, use:</span>
+<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Reorder.html'>Postorder</a></span>(<span class='no'>tree</span>)
+<span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
+<span class='no'>ancestors</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>edge</span>)), <span class='no'>ListAncestors</span>,
+                    <span class='kw'>parent</span> <span class='kw'>=</span> <span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>child</span> <span class='kw'>=</span> <span class='no'>edge</span>[, <span class='fl'>2</span>])</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

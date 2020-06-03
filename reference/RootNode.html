@@ -46,9 +46,10 @@
 
 
 <meta property="og:title" content="Which node is a tree's root? — RootNode" />
-<meta property="og:description" content="Identify the root node of a (rooted or unrooted) phylogenetic tree.
-Unrooted trees are represented internally by a rooted tree with an
-unresolved root node." />
+<meta property="og:description" content="RootNode() identifies the root node of a (rooted or unrooted) phylogenetic
+tree.
+Unrooted trees are represented internally by a rooted tree with a polytomy
+at the root." />
 
 
 
@@ -159,9 +160,10 @@ unresolved root node." />
     </div>
 
     <div class="ref-description">
-    <p>Identify the root node of a (rooted or unrooted) phylogenetic tree.
-Unrooted trees are represented internally by a rooted tree with an
-unresolved root node.</p>
+    <p><code>RootNode()</code> identifies the root node of a (rooted or unrooted) phylogenetic
+tree.
+Unrooted trees are represented internally by a rooted tree with a polytomy
+at the root.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RootNode</span>(<span class='no'>x</span>)</pre>
@@ -182,10 +184,9 @@ unresolved root node.</p>
 Badly conformed trees trigger an error.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='TreeIsRooted.html'>TreeIsRooted()</a></code></p>
+    <div class='dont-index'><p>Test whether a tree is rooted: <code><a href='TreeIsRooted.html'>TreeIsRooted()</a></code></p>
 <p>phangorn::<code>getRoot()</code></p>
 <p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
 <code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
