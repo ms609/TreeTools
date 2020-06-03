@@ -2,7 +2,7 @@
 % Please edit documentation in R/phylo.R
 \name{Subtree}
 \alias{Subtree}
-\title{Extract subtree}
+\title{Extract a subtree}
 \usage{
 Subtree(tree, node)
 }
@@ -14,11 +14,11 @@ in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
 \item{node}{The number of the node at the base of the clade to be extracted.}
 }
 \value{
-This function returns a tree of class \code{phylo} that represents a
+\code{Subtree()} returns a tree of class \code{phylo} that represents a
 clade extracted from the original tree.
 }
 \description{
-Safely extracts a clade from a phylogenetic tree.
+\code{Subtree()} safely extracts a clade from a phylogenetic tree.
 }
 \details{
 Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
@@ -33,7 +33,6 @@ ape::nodelabels()
 ape::nodelabels(13, 13, bg='yellow')
 
 plot(Subtree(tree, 13))
-
 
 }
 \seealso{

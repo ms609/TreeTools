@@ -77,21 +77,19 @@ SingleTaxonTree <- function (label) {
             class = 'phylo')
 }
 
-#' Extract subtree
+#' Extract a subtree
 #'
-#' @description Safely extracts a clade from a phylogenetic tree.
-#' @usage Subtree(tree, node)
+#' `Subtree()` safely extracts a clade from a phylogenetic tree.
 #'
-#' @template preorderTreeParam
-#' @param node The number of the node at the base of the clade to be extracted.
-#'
-#' @details
 #' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
 #' sometimes behaves erratically.
 #' Unlike extract.clade, this function supports the extraction of 'clades'
 #' that constitute a single tip.
 #'
-#' @return This function returns a tree of class \code{phylo} that represents a
+#' @template preorderTreeParam
+#' @param node The number of the node at the base of the clade to be extracted.
+#'
+#' @return `Subtree()` returns a tree of class \code{phylo} that represents a
 #' clade extracted from the original tree.
 #'
 #' @examples
@@ -101,7 +99,6 @@ SingleTaxonTree <- function (label) {
 #' ape::nodelabels(13, 13, bg='yellow')
 #'
 #' plot(Subtree(tree, 13))
-#'
 #'
 #' @template MRS
 #' @family tree manipulation
