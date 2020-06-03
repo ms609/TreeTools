@@ -13,7 +13,7 @@ EnforceOutgroup(tree, outgroup)
 \method{EnforceOutgroup}{character}(tree, outgroup)
 }
 \arguments{
-\item{tree}{Either: a tree of class \code{phylo}; or a character vector
+\item{tree}{Either a tree of class \code{phylo}; or a character vector
 listing the names of all the taxa in the tree, from which a random tree will
 be generated.}
 
@@ -21,14 +21,14 @@ be generated.}
 outgroup.}
 }
 \value{
-\code{EnforceOutgroup} returns a tree of class \code{phylo} where all outgroup
+\code{EnforceOutgroup()} returns a tree of class \code{phylo} where all outgroup
 taxa are sister to all remaining taxa, without modifying the ingroup
 topology.
 }
 \description{
-Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-that the two are sister taxa across the root, without changing the
-relationships within the ingroup or within the outgroup.
+Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup
+and outgroup taxa such that the two are sister taxa across the root, without
+changing the relationships within the ingroup or within the outgroup.
 }
 \examples{
 tree <- EnforceOutgroup(letters[1:9], letters[1:3])

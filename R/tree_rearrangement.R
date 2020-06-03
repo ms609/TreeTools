@@ -391,7 +391,7 @@ DropTip <- function (tree, tip) {
 
 #' Leaf label interchange
 #'
-#' Exchange the position of leaves within a tree.
+#' `LeafLabelInterchange()` exchanges the position of leaves within a tree.
 #'
 #' Modifies a tree by switching the positions of _n_ leaves.  To avoid
 #' later swaps undoing earlier exchanges, all _n_ leaves are guaranteed
