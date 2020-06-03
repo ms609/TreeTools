@@ -140,5 +140,5 @@ SortTree <- function (tree) {
   tree$edge[, 1] <- parent
   tree$edge[, 2] <- child
   attr(tree, 'order') <- NULL
-  Cladewise(Renumber(tree))
+  Renumber(tree)
 }
