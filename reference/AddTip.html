@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Add a tip to a phylogenetic tree — AddTip" />
-<meta property="og:description" content="AddTip adds a tip to a phylogenetic tree at a specified location." />
+<meta property="og:description" content="AddTip() adds a tip to a phylogenetic tree at a specified location." />
 
 
 
@@ -157,7 +157,7 @@
     </div>
 
     <div class="ref-description">
-    <p><code>AddTip</code> adds a tip to a phylogenetic tree at a specified location.</p>
+    <p><code>AddTip()</code> adds a tip to a phylogenetic tree at a specified location.</p>
     </div>
 
     <pre class="usage"><span class='fu'>AddTip</span>(
@@ -211,18 +211,12 @@ at the desired location.</p>
 the trees produced by adding <code>label</code> to each edge of <code>tree</code> in turn.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>AddTip</code> extends <code>bind.tree</code>, which cannot handle
+    <p><code>AddTip()</code> extends <code>bind.tree</code>, which cannot handle
 single-taxon trees.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>AddTipEverywhere</code>: Add a tip to each edge in turn.</p></li>
-</ul>
+<p><code>AddTipEverywhere()</code> adds a tip to each edge in turn.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>bind.tree</code></p>
-<p><code>nodelabels</code></p>
+    <div class='dont-index'><p>Add one tree to another: <code>bind.tree()</code></p>
 <p>Other tree manipulation: 
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
@@ -238,16 +232,17 @@ single-taxon trees.</p>
 <code><a href='Subtree.html'>Subtree</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>10</span>))</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>15</span>, <span class='fl'>15</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'green'</span>)</div><div class='img'><img src='AddTip-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>10</span>))</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>(<span class='fl'>15</span>, <span class='fl'>15</span>, <span class='kw'>bg</span><span class='kw'>=</span><span class='st'>'green'</span>)</div><div class='img'><img src='AddTip-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>AddTip</span>(<span class='no'>tree</span>, <span class='fl'>15</span>, <span class='st'>'NEW_TIP'</span>))</div><div class='img'><img src='AddTip-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.3</span>, <span class='fl'>4</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.9</span>)
 
 <span class='no'>backbone</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>4</span>)
+<span class='co'># Treating the position of the root as instructive:</span>
 <span class='no'>additions</span> <span class='kw'>&lt;-</span> <span class='fu'>AddTipEverywhere</span>(<span class='no'>backbone</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>additions</span>, <span class='no'>plot</span>)
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='img'><img src='AddTip-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='no'>additions</span> <span class='kw'>&lt;-</span> <span class='fu'>AddTipEverywhere</span>(<span class='no'>backbone</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>))</div><div class='img'><img src='AddTip-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Don't treat root edges as distinct:</span>
+<span class='no'>additions</span> <span class='kw'>&lt;-</span> <span class='fu'>AddTipEverywhere</span>(<span class='no'>backbone</span>, <span class='kw'>includeRoot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>xx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>additions</span>, <span class='no'>plot</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div><div class='img'><img src='AddTip-4.png' alt='' width='700' height='433' /></div><div class='input'>
