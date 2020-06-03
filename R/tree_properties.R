@@ -4,7 +4,7 @@
 #'
 #' The order of parameters in `DescendantEdges()` will change in the future,
 #' to allow `AllDescendantEdges()` to be merged into this function
-#' (#31)[https://github.com/ms609/TreeTools/issues/31].
+#' [#31](https://github.com/ms609/TreeTools/issues/31).
 #' Please explicitly name the `edge` parameter in `DescendantEdges()`, and
 #' replace `AllDesdendantEdges()` with `DescendantEdges(edge = NULL)`,
 #' to future-proof your code.

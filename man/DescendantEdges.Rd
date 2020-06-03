@@ -36,7 +36,7 @@ Quickly identify edges that are 'descended' from edges in a tree.
 \details{
 The order of parameters in \code{DescendantEdges()} will change in the future,
 to allow \code{AllDescendantEdges()} to be merged into this function
-(#31)\link{https://github.com/ms609/TreeTools/issues/31}.
+\href{https://github.com/ms609/TreeTools/issues/31}{#31}.
 Please explicitly name the \code{edge} parameter in \code{DescendantEdges()}, and
 replace \code{AllDesdendantEdges()} with \code{DescendantEdges(edge = NULL)},
 to future-proof your code.
