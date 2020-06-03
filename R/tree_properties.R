@@ -1,18 +1,26 @@
 #' Identify descendant edges
 #'
-#' Quickly identify edges that are 'descended' from a particular edge in a tree.
+#' Quickly identify edges that are 'descended' from edges in a tree.
+#'
+#' The order of parameters in `DescendantEdges()` will change in the future,
+#' to allow `AllDescendantEdges()` to be merged into this function
+#' (#31)[https://github.com/ms609/TreeTools/issues/31].
+#' Please explicitly name the `edge` parameter in `DescendantEdges()`, and
+#' replace `AllDesdendantEdges()` with `DescendantEdges(edge = NULL)`,
+#' to future-proof your code.
 #'
 #' @param edge Integer specifying the number of the edge whose child edges are
-#' required (see \code{\link[ape:nodelabels]{edgelabels}}).
+#' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @template treeParent
 #' @template treeChild
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
-#' @return `DescendantEdges` returns a logical vector stating whether each edge
+#' @return `DescendantEdges()` returns a logical vector stating whether each edge
 #' in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
-DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
+DescendantEdges <- function (edge = NULL, parent, child, nEdge = length(parent)) {
+  if (is.null(edge)) return(AllDescendantEdges(parent, child, nEdge))
   ret <- logical(nEdge)
   edgeSister <- match(parent[edge], parent[-edge])
   if (edgeSister >= edge) {
@@ -36,12 +44,12 @@ DescendantEdges <- function (edge, parent, child, nEdge = length(parent)) {
   }
 }
 
-#' All Descendant Edges
+#' @rdname DescendantEdges
 #'
-#' @return `AllDescendantEdges` returns a matrix of class logical, with row N
-#' specifying whether each edge is a descendant of edge N (or the edge itself).
-#' @describeIn DescendantEdges Quickly identifies edges that are 'descended'
-#' from each edge in a tree.
+#' @return `AllDescendantEdges()` returns a matrix of class logical, with row
+#' _N_ specifying whether each edge is a descendant of edge _N_
+#' (or the edge itself).
+#'
 #' @export
 AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1

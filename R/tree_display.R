@@ -100,7 +100,7 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #' messyTree <- as.phylo(10, 6)
 #' plot(messyTree)
 #'
-#' sorted <-SortTree(messyTree)
+#' sorted <- SortTree(messyTree)
 #' plot(sorted)
 #' ape::nodelabels()
 #' ape::edgelabels()

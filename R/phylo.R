@@ -308,7 +308,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 
 #' List all ancestral nodes
 #'
-#' \code{AllAncestors} lists ancestors of each parent node in a tree.
+#' `AllAncestors()` lists ancestors of each parent node in a tree.
 #'
 #' Note that the tree's edges must be listed in an order whereby each entry in
 #' \code{tr$edge[n, 1]} (with the exception of the root) occurs in
@@ -316,20 +316,19 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'
 #' @template treeParent
 #' @template treeChild
-#'
-#' @examples
-#'   tr <- PectinateTree(4)
-#'   plot(tr)
-#'   ape::tiplabels()
-#'   ape::nodelabels()
-#'   edge <- tr$edge
-#'   AllAncestors(edge[, 1], edge[, 2])
-#'
 #' @return `AllAncestors()` returns a list. Entry _i_ contains a vector containing,
 #' in order, the nodes encountered when traversing the tree from node _i_ to the
 #' root node.
 #' The last entry of each member of the list is therefore the root node,
 #' with the exception of the entry for the root node itself, which is `NULL`.
+#'
+#' @examples
+#' tr <- PectinateTree(4)
+#' plot(tr)
+#' tiplabels()
+#' nodelabels()
+#' edge <- tr$edge
+#' AllAncestors(edge[, 1], edge[, 2])
 #'
 #' @template MRS
 #' @family tree navigation
@@ -393,11 +392,13 @@ ListAncestors <- function (parent, child, node) {
 
 #' Clade sizes
 #'
+#' `CladeSizes()` reports the number of nodes in each clade in a tree.
+#'
 #' @template treeParam
 #' @param internal Logical specifying whether internal nodes should be counted
 #' towards the size of each clade.
-#' @param nodes Integer specifying indices of nodes whose descendant counts
-#' should be returned.
+#' @param nodes Integer specifying indices of nodes at the base of clades
+#' whose sizes should be returned.
 #' If unspecified, counts will be provided for all nodes (including leaves).
 #'
 #' @return `CladeSizes()` returns the number of nodes (including leaves) that
@@ -407,7 +408,7 @@ ListAncestors <- function (parent, child, node) {
 #' tree <- BalancedTree(6)
 #' plot(tree)
 #' ape::nodelabels()
-#' CladeSizes(tree, nodes = c(8, 9))
+#' CladeSizes(tree, nodes = c(1, 8, 9))
 #'
 #' @family tree navigation
 #' @export

@@ -12,8 +12,8 @@ CladeSizes(tree, internal = FALSE, nodes = NULL)
 \item{internal}{Logical specifying whether internal nodes should be counted
 towards the size of each clade.}
 
-\item{nodes}{Integer specifying indices of nodes whose descendant counts
-should be returned.
+\item{nodes}{Integer specifying indices of nodes at the base of clades
+whose sizes should be returned.
 If unspecified, counts will be provided for all nodes (including leaves).}
 }
 \value{
@@ -21,13 +21,13 @@ If unspecified, counts will be provided for all nodes (including leaves).}
 are descended from each node, not including the node itself.
 }
 \description{
-Clade sizes
+\code{CladeSizes()} reports the number of nodes in each clade in a tree.
 }
 \examples{
 tree <- BalancedTree(6)
 plot(tree)
 ape::nodelabels()
-CladeSizes(tree, nodes = c(8, 9))
+CladeSizes(tree, nodes = c(1, 8, 9))
 
 }
 \seealso{

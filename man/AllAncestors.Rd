@@ -21,7 +21,7 @@ The last entry of each member of the list is therefore the root node,
 with the exception of the entry for the root node itself, which is \code{NULL}.
 }
 \description{
-\code{AllAncestors} lists ancestors of each parent node in a tree.
+\code{AllAncestors()} lists ancestors of each parent node in a tree.
 }
 \details{
 Note that the tree's edges must be listed in an order whereby each entry in
@@ -29,12 +29,12 @@ Note that the tree's edges must be listed in an order whereby each entry in
 \code{tr$edge[i < n, 2]}.
 }
 \examples{
-  tr <- PectinateTree(4)
-  plot(tr)
-  ape::tiplabels()
-  ape::nodelabels()
-  edge <- tr$edge
-  AllAncestors(edge[, 1], edge[, 2])
+tr <- PectinateTree(4)
+plot(tr)
+tiplabels()
+nodelabels()
+edge <- tr$edge
+AllAncestors(edge[, 1], edge[, 2])
 
 }
 \seealso{
