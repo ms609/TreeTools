@@ -63,7 +63,6 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' @return ``MarkMissing()` provides a null return, after plotting the specified
 #' `tip`s as a legend.
 #' @importFrom graphics legend
-#' @template MRS
 #' @export
 MarkMissing <- function (tip, position = 'bottomleft', ...) {                   # nocov start
   if (length(tip) > 0) {

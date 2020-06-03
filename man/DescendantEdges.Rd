@@ -23,8 +23,8 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 supplied).}
 }
 \value{
-\code{DescendantEdges()} returns a logical vector stating whether each edge
-in turn is a descendant of the specified edge (or the edge itself).
+\code{DescendantEdges()} returns a logical vector stating whether each
+edge in turn is a descendant of the specified edge (or the edge itself).
 
 \code{AllDescendantEdges()} returns a matrix of class logical, with row
 \emph{N} specifying whether each edge is a descendant of edge \emph{N}

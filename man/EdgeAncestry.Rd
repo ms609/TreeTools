@@ -22,8 +22,8 @@ which will be the root edges if nodes are numbered \link{Cladewise} or in
 \link{Preorder}.}
 }
 \value{
-\code{EdgeAncestry()} returns a logical vector stating whether each edge in
-turn is a descendant of the specified edge.
+\code{EdgeAncestry()} returns a logical vector stating whether each edge
+in turn is a descendant of the specified edge.
 }
 \description{
 Quickly identify edges that are 'ancestral' to a particular edge in a tree.
