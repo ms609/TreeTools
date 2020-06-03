@@ -46,7 +46,10 @@
 
 
 <meta property="og:title" content="Non-duplicate root — NonDuplicateRoot" />
-<meta property="og:description" content="DEPRECATED." />
+<meta property="og:description" content="Identify, for each edge, whether it denotes a different partition from
+the root edge.
+The first edge of the input tree must be a root edge; this can be
+accomplished using Preorder()." />
 
 
 
@@ -157,7 +160,10 @@
     </div>
 
     <div class="ref-description">
-    <p>DEPRECATED.</p>
+    <p>Identify, for each edge, whether it denotes a different partition from
+the root edge.
+The first edge of the input tree must be a root edge; this can be
+accomplished using <code><a href='Reorder.html'>Preorder()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>, <span class='kw'>nEdge</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>parent</span>))</pre>
@@ -189,10 +195,9 @@ specifying <code>TRUE</code> unless an edge identifies the same partition as
 the root edge.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Identify, for each edge, whether it denotes a different partition from
-the root edge.
-The first edge of the input tree must be a root edge; this can be
-accomplished using <code><a href='Reorder.html'>Preorder()</a></code>.</p>
+    <p>This function is deprecated; if you use it, please
+<a href='https://github.com/ms609/TreeTools/issues/32'>comment (#32)</a>
+so that a suitable replacement can be guaranteed.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
@@ -214,7 +219,8 @@ accomplished using <code><a href='Reorder.html'>Preorder()</a></code>.</p>
 <span class='no'>parent</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>1</span>]
 <span class='no'>child</span> <span class='kw'>&lt;-</span> <span class='no'>edge</span>[, <span class='fl'>2</span>]
 
-<span class='co'>#which(!NonDuplicateRoot(parent, child))</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(!<span class='fu'>NonDuplicateRoot</span>(<span class='no'>parent</span>, <span class='no'>child</span>))</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

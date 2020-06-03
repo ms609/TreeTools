@@ -191,8 +191,8 @@ supplied).</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DescendantEdges()</code> returns a logical vector stating whether each edge
-in turn is a descendant of the specified edge (or the edge itself).</p>
+    <p><code>DescendantEdges()</code> returns a logical vector stating whether each
+edge in turn is a descendant of the specified edge (or the edge itself).</p>
 <p><code>AllDescendantEdges()</code> returns a matrix of class logical, with row
 <em>N</em> specifying whether each edge is a descendant of edge <em>N</em>
 (or the edge itself).</p>
@@ -200,7 +200,7 @@ in turn is a descendant of the specified edge (or the edge itself).</p>
 
     <p>The order of parameters in <code>DescendantEdges()</code> will change in the future,
 to allow <code>AllDescendantEdges()</code> to be merged into this function
-<a href='https://github.com/ms609/TreeTools/issues/31'>#31</a>.
+(<a href='https://github.com/ms609/TreeTools/issues/31'>#31</a>).
 Please explicitly name the <code>edge</code> parameter in <code>DescendantEdges()</code>, and
 replace <code>AllDesdendantEdges()</code> with <code>DescendantEdges(edge = NULL)</code>,
 to future-proof your code.</p>
