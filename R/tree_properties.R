@@ -514,7 +514,6 @@ EdgeDistances <- function (tree) {
 #' @family tree navigation
 #' @export
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
-  .Deprecated("Unused?")
   notDuplicateRoot <- !logical(nEdge)
   rightSide <- DescendantEdges(1, parent, child, nEdge)
   nEdgeRight <- sum(rightSide)
