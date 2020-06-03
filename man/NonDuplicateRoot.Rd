@@ -22,13 +22,15 @@ specifying \code{TRUE} unless an edge identifies the same partition as
 the root edge.
 }
 \description{
-DEPRECATED.
-}
-\details{
 Identify, for each edge, whether it denotes a different partition from
 the root edge.
 The first edge of the input tree must be a root edge; this can be
 accomplished using \code{Preorder()}.
+}
+\details{
+This function is deprecated; if you use it, please
+\href{https://github.com/ms609/TreeTools/issues/32}{comment (#32)}
+so that a suitable replacement can be guaranteed.
 }
 \examples{
 tree <- Preorder(BalancedTree(8))
@@ -36,7 +38,7 @@ edge <- tree$edge
 parent <- edge[, 1]
 child <- edge[, 2]
 
-#which(!NonDuplicateRoot(parent, child))
+which(!NonDuplicateRoot(parent, child))
 
 }
 \seealso{

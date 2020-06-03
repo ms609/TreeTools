@@ -4,7 +4,7 @@
 #'
 #' The order of parameters in `DescendantEdges()` will change in the future,
 #' to allow `AllDescendantEdges()` to be merged into this function
-#' [#31](https://github.com/ms609/TreeTools/issues/31).
+#' ([#31](https://github.com/ms609/TreeTools/issues/31)).
 #' Please explicitly name the `edge` parameter in `DescendantEdges()`, and
 #' replace `AllDesdendantEdges()` with `DescendantEdges(edge = NULL)`,
 #' to future-proof your code.
@@ -480,15 +480,18 @@ EdgeDistances <- function (tree) {
   ret[origOrder, origOrder]
 }
 
-# nocov start
+# Used by TreeSearch::SPR
+# Deprecate once SPR replaced with a function in C.
 #' Non-duplicate root
-#'
-#' DEPRECATED.
 #'
 #' Identify, for each edge, whether it denotes a different partition from
 #' the root edge.
 #' The first edge of the input tree must be a root edge; this can be
 #' accomplished using `Preorder()`.
+#'
+#' This function is deprecated; if you use it, please
+#' [comment (#32)](https://github.com/ms609/TreeTools/issues/32)
+#' so that a suitable replacement can be guaranteed.
 #'
 #' @template treeParent
 #' @template treeChild
@@ -504,11 +507,12 @@ EdgeDistances <- function (tree) {
 #' parent <- edge[, 1]
 #' child <- edge[, 2]
 #'
-#' #which(!NonDuplicateRoot(parent, child))
+#' which(!NonDuplicateRoot(parent, child))
 #'
 #' @keywords internal
 #' @template MRS
 #' @family tree navigation
+#' @export
 NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   .Deprecated("Unused?")
   notDuplicateRoot <- !logical(nEdge)
@@ -522,7 +526,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
     notDuplicateRoot[1] <- FALSE
   }
   notDuplicateRoot
-} # nocov end
+}
 
 #' Number of tips in a phylogenetic tree
 #'
