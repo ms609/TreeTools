@@ -161,7 +161,8 @@ NJTree <- function (dataset) {
 #' plot(tree)
 #'
 #' @seealso For a more robust implementation, see [`RootTree()`], which will
-#' eventually replace this function.
+#' eventually replace this function
+#' ([#30](https://github.com/ms609/TreeTools/issues/30)).
 #'
 #' @template MRS
 #' @family tree manipulation

@@ -53,6 +53,7 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
 }
 
 #' @rdname Reorder
+#'
 #' @template treeParent
 #' @template treeChild
 #'
@@ -66,7 +67,7 @@ RenumberTree <- function (parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
-#' @rdname RenumberTree
+#' @rdname Reorder
 #' @param \dots Deprecated; included for compatibility with previous versions.
 #' @return `RenumberEdges()` formats the output of `RenumberTree()` into a list
 #' whose two entries correspond to the new parent and child vectors.

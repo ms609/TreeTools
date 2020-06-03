@@ -13,8 +13,6 @@ RootOnNode(tree, node, resolveRoot = FALSE)
 UnrootTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
-
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.}
 
@@ -26,22 +24,20 @@ the names or indices of the tips to include in the outgroup.}
 \code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
 clade that contains the specified tips.
 
-\code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
-\code{node} and ordered in \code{\link{Preorder}}.
+\code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
+requested \code{node} and ordered in \code{\link{Preorder}}.
 
 \code{UnrootTree()} returns a tree of class \code{phylo}, in preorder,
 having collapsed the first child of the root node.
 }
 \description{
 \code{RootTree()} roots a tree on the smallest clade containing the specified
-tips; \code{UnrootTree()} collapses a root node, without the undefined behaviour
-encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in preorder.
+tips;
+\code{RootOnNode()} roots a tree on a specified internal node;
+\code{UnrootTree()} collapses a root node, without the undefined behaviour
+encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
+preorder.
 }
-\section{Functions}{
-\itemize{
-\item \code{RootOnNode}: Roots a tree on a specified internal node.
-}}
-
 \examples{
 tree <- PectinateTree(8)
 plot(tree)

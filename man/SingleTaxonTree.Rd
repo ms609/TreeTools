@@ -14,7 +14,8 @@ SingleTaxonTree(label)
 tip with the specified label.
 }
 \description{
-Create a phylogenetic 'tree' that comprises a single taxon.
+\code{SingleTaxonTree()} creates a phylogenetic 'tree' that contains a single
+taxon.
 }
 \examples{
 SingleTaxonTree('Homo_sapiens')

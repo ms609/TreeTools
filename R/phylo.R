@@ -56,7 +56,8 @@ Renumber <- function (tree) {
 
 #' Generate a single taxon tree
 #'
-#' Create a phylogenetic 'tree' that comprises a single taxon.
+#' `SingleTaxonTree()` creates a phylogenetic 'tree' that contains a single
+#' taxon.
 #'
 #' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.

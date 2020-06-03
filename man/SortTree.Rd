@@ -14,8 +14,8 @@ SortTree(tree)
 such that the larger clade is first.
 }
 \description{
-Sorts each node into a consistent order, so similar trees look visually
-similar.
+\code{SortTree()} sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees.
 }
 \details{
 At each node, clades will be listed in \code{tree$edge} in decreasing size order.
@@ -26,7 +26,7 @@ of minimum leaf number, so (2, 3) will occur before (1, 4).
 As trees are plotted from 'bottom up', the largest clades will 'sink' to the
 bottom of a plotted tree.
 
-\code{tree} must (presently) be binary.
+\code{tree} must (presently) be binary (\href{https://github.com/ms609/TreeTools/issues/25}{#25}).
 }
 \examples{
 messyTree <- as.phylo(10, 6)

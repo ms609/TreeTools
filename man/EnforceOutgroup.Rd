@@ -4,7 +4,7 @@
 \alias{EnforceOutgroup}
 \alias{EnforceOutgroup.phylo}
 \alias{EnforceOutgroup.character}
-\title{Force taxa to form an outgroup}
+\title{Generate a tree with a specific outgroup}
 \usage{
 EnforceOutgroup(tree, outgroup)
 
@@ -13,9 +13,9 @@ EnforceOutgroup(tree, outgroup)
 \method{EnforceOutgroup}{character}(tree, outgroup)
 }
 \arguments{
-\item{tree}{Either a tree of class \code{phylo}; or a character vector
-listing the names of all the taxa in the tree, from which a random tree will
-be generated.}
+\item{tree}{Either a tree of class \code{phylo}; or (for \code{EnforceOutgroup()})
+a character vector listing the names of all the taxa in the tree, from which
+a random tree will be generated.}
 
 \item{outgroup}{Character vector containing the names of taxa to include in the
 outgroup.}
@@ -36,6 +36,10 @@ plot(tree)
 
 }
 \seealso{
+For a more robust implementation, see \code{\link[=RootTree]{RootTree()}}, which will
+eventually replace this function
+(\href{https://github.com/ms609/TreeTools/issues/30}{#30}).
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},

@@ -2,6 +2,7 @@
 % Please edit documentation in R/tree_numbering.R
 \name{RenumberTree}
 \alias{RenumberTree}
+\alias{RenumberEdges}
 \alias{Reorder}
 \alias{Cladewise}
 \alias{Cladewise.phylo}
@@ -30,6 +31,8 @@
 \title{Reorder trees}
 \usage{
 RenumberTree(parent, child)
+
+RenumberEdges(parent, child, ...)
 
 Cladewise(tree, nTip, edge)
 
@@ -86,6 +89,8 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
+\item{\dots}{Deprecated; included for compatibility with previous versions.}
+
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
 \item{nTip}{Integer specifying number of tips (leaves).}
@@ -102,6 +107,9 @@ increase in number away from the root.}
 \value{
 \code{RenumberTree()} returns an edge matrix for a tree of class \code{phylo}
 following the preorder convention for edge and node numbering.
+
+\code{RenumberEdges()} formats the output of \code{RenumberTree()} into a list
+whose two entries correspond to the new parent and child vectors.
 
 \code{ApePostorder()}, \code{Cladewise()}, \code{Postorder()}, \code{Preorder()} and
 \code{Pruningwise()} each return a tree of class \code{phylo} with nodes following the

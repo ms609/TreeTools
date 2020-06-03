@@ -74,8 +74,8 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 
 #' Sort tree
 #'
-#' Sorts each node into a consistent order, so similar trees look visually
-#' similar.
+#' `SortTree()` sorts each node into a consistent order, so that node rotation
+#' does not obscure similarities between similar trees.
 #'
 #' At each node, clades will be listed in `tree$edge` in decreasing size order.
 #'
@@ -86,7 +86,7 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #' bottom of a plotted tree.
 #'
 #TODO:
-#' `tree` must (presently) be binary.
+#' `tree` must (presently) be binary ([#25](https://github.com/ms609/TreeTools/issues/25)).
 #'
 #' @template treeParam
 #'
