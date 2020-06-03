@@ -100,6 +100,8 @@ test_that('as.Splits.phylo()', {
   if (inherits(bigMemory, 'try-error')) {
     expect_error(dim(as.Splits(bigTree))) # Likely on 32-bit systems
   } else {
+    rm(bigMemory)
+    gc()
     expect_equal(c(16381L, 2048L), dim(as.Splits(bigTree)))
   }
 
