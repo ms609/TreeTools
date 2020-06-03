@@ -10,19 +10,20 @@ MRCA(x1, x2, ancestors)
 \item{x1, x2}{Integer specifying index of leaves or nodes whose most
 recent common ancestor should be found.}
 
-\item{ancestors}{Output of \code{\link[=AllAncestors]{AllAncestors()}} for the tree in question.}
+\item{ancestors}{List of ancestors for each node in a tree. Perhaps
+produced by \code{\link{ListAncestors(node = NULL)}}.}
 }
 \value{
 \code{MRCA()} returns an integer specifying the node number of the last
 common ancestor of \code{x1} and \code{x2}.
 }
 \description{
-What is the last common ancestor of the specified nodes?
+\code{MRCA()} calculates the last common ancestor of specified nodes.
 }
 \details{
-Note that besides satisfying the requirements of \code{AllAncestors()}, \code{MRCA()}
-expects node values to increase away from the root.  No warnings will be
-given if trees do not fulfil this requirement.
+\code{MRCA()} requires that node values within a tree increase away from the root,
+which will be true of trees listed in \code{Preorder}.
+No warnings will be given if trees do not fulfil this requirement.
 }
 \examples{
 tree <- BalancedTree(7)
@@ -31,17 +32,21 @@ tree <- BalancedTree(7)
 plot(tree)
 nodelabels()
 
-# Guarantee that tree edges are sensibly numbered
-# tree <- Postorder(tree) will give erroneous output.
+# ListAncestors expects a tree in Preorder
 tree <- Preorder(tree)
 edge <- tree$edge
-ancestors <- AllAncestors(edge[, 1], edge[, 2])
+ancestors <- ListAncestors(edge[, 1], edge[, 2])
 MRCA(1, 4, ancestors)
+
+# If a tree must be in postorder, use:
+tree <- Postorder(tree)
+edge <- tree$edge
+ancestors <- lapply(seq_len(max(edge)), ListAncestors,
+                    parent = edge[, 1], child = edge[, 2])
 
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
 \code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},

@@ -31,7 +31,6 @@ RootNode(UnrootTree(BalancedTree(8)))
 phangorn::\code{\link[=getRoot]{getRoot()}}
 
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
 \code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},

@@ -40,7 +40,6 @@ which(EdgeAncestry(7, parent, child, stopAt = 4))
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
 \code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},

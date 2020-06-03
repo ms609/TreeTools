@@ -32,7 +32,6 @@ EdgeDistances(tree)
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
 \code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
