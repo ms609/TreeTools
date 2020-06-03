@@ -310,9 +310,10 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'
 #' `ListAncestors()` reports all ancestors of a given node.
 #'
-#' Note that if `node = NULL`, the tree's edges must be listed in an order
-#' whereby each entry in \code{tr$edge[n, 1]} (with the exception of the root)
-#' occurs in \code{tr$edge[i < n, 2]}.
+#' Note that if `node = NULL`, the tree's edges must be listed such that each
+#' internal node (except the root) is listed as a child before it is listed
+#' as a parent, i.e. its index in `child` is less than its index in `parent`.
+#' This will be true of trees listed in [Preorder].
 #'
 #'
 #' @template treeParent
@@ -325,27 +326,36 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #' a vector containing, in order, the nodes encountered when traversing the tree
 #' from node _i_ to the root node.
 #' The last entry of each member of the list is therefore the root node,
-#' with the exception of the entry for the root node itself, which is `NULL`.
+#' with the exception of the entry for the root node itself, which is a
+#' zero-length integer.
 #'
 #' If `node` is an integer, `ListAncestors()` returns a vector of the numbers of
 #' the nodes ancestral to the given \code{node}, including the root node.
 #' @template MRS
 #'
 #' @seealso
-#' - \code{phangorn:::Ancestors}, a less efficient implementation on which this
+#' Implemented less efficiently in \code{phangorn:::Ancestors}, on which this
 #' code is based.
 #'
 #' @examples
 #' tree <- PectinateTree(5)
+#' edge   <- tree$edge
 #'
 #' # Identify desired node with:
 #' plot(tree)
 #' nodelabels()
 #' tiplabels()
 #'
-#' edge   <- tree$edge
+#' # Ancestors of specific nodes:
 #' ListAncestors(edge[, 1], edge[, 2], 4L)
 #' ListAncestors(edge[, 1], edge[, 2], 8L)
+#'
+#' # Ancestors of each node, if tree numbering system is uncertain:
+#' lapply(seq_len(max(edge)), ListAncestors,
+#'        parent = edge[, 1], child = edge[, 2])
+#'
+#' # Ancestors of each node, if tree is in preorder:
+#' ListAncestors(edge[, 1], edge[, 2])
 #'
 #' @family tree navigation
 #' @export
@@ -375,13 +385,14 @@ ListAncestors <- function (parent, child, node = NULL) {
 #' @describeIn ListAncestors Alias for `ListAncestors(node = NULL)`.
 #'
 #' @examples
+#' # Alias:
 #' AllAncestors(edge[, 1], edge[, 2])
 #'
 #' @template MRS
 #' @family tree navigation
 #' @export
 AllAncestors <- function (parent, child) {
-  res <- vector("list", max(parent))
+  res <- lapply(rep(0L, max(parent)), integer)
   for (i in seq_along(parent)) {
     pa <- parent[i]
     res[[child[i]]] <- c(pa, res[[pa]])

@@ -46,6 +46,10 @@ test_that("Subtree() works", {
 test_that('ListAncestors() works', {
   edge <- nasty$edge
   expect_equal(c(10L, 12L), ListAncestors(edge[, 1], edge[, 2], 11))
+  tr <- PectinateTree(4)
+  expect_equal(list(5, 6:5, 7:5, 7:5, integer(0), 5, 6:5),
+               ListAncestors(tr$edge[, 1], tr$edge[, 2]))
+  expect_equal(integer(0), ListAncestors(tr$edge[, 1], tr$edge[, 2], 5))
 })
 
 test_that("CladeSizes() works", {
