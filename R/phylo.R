@@ -306,28 +306,75 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
          rootNode = root)
 }
 
-#' List all ancestral nodes
+#' List ancestors
 #'
-#' `AllAncestors()` lists ancestors of each parent node in a tree.
+#' `ListAncestors()` reports all ancestors of a given node.
 #'
-#' Note that the tree's edges must be listed in an order whereby each entry in
-#' \code{tr$edge[n, 1]} (with the exception of the root) occurs in
-#' \code{tr$edge[i < n, 2]}.
+#' Note that if `node = NULL`, the tree's edges must be listed in an order
+#' whereby each entry in \code{tr$edge[n, 1]} (with the exception of the root)
+#' occurs in \code{tr$edge[i < n, 2]}.
+#'
 #'
 #' @template treeParent
 #' @template treeChild
-#' @return `AllAncestors()` returns a list. Entry _i_ contains a vector containing,
-#' in order, the nodes encountered when traversing the tree from node _i_ to the
-#' root node.
+#' @param node Integer giving the index of the node or tip whose ancestors are
+#'  required, or `NULL` to return ancestors of all nodes.
+#'
+#' @return
+#' If `node = NULL`, `ListAncestors()` returns a list. Each entry _i_ contains
+#' a vector containing, in order, the nodes encountered when traversing the tree
+#' from node _i_ to the root node.
 #' The last entry of each member of the list is therefore the root node,
 #' with the exception of the entry for the root node itself, which is `NULL`.
 #'
+#' If `node` is an integer, `ListAncestors()` returns a vector of the numbers of
+#' the nodes ancestral to the given \code{node}, including the root node.
+#' @template MRS
+#'
+#' @seealso
+#' - \code{phangorn:::Ancestors}, a less efficient implementation on which this
+#' code is based.
+#'
 #' @examples
-#' tr <- PectinateTree(4)
-#' plot(tr)
-#' tiplabels()
+#' tree <- PectinateTree(5)
+#'
+#' # Identify desired node with:
+#' plot(tree)
 #' nodelabels()
-#' edge <- tr$edge
+#' tiplabels()
+#'
+#' edge   <- tree$edge
+#' ListAncestors(edge[, 1], edge[, 2], 4L)
+#' ListAncestors(edge[, 1], edge[, 2], 8L)
+#'
+#' @family tree navigation
+#' @export
+ListAncestors <- function (parent, child, node = NULL) {
+  if (is.null(node)) {
+    AllAncestors(parent, child)
+  } else {
+    pvector <- integer(max(parent))
+    pvector[child] <- parent
+    anc <- function(pvector, node) {
+      res <- integer(0)
+      repeat {
+        anc <- pvector[node]
+        if (anc == 0)
+          break
+        res <- c(res, anc)
+        node <- anc
+      }
+      res
+    }
+
+    # Return:
+    anc(pvector, node)
+  }
+}
+
+#' @describeIn ListAncestors Alias for `ListAncestors(node = NULL)`.
+#'
+#' @examples
 #' AllAncestors(edge[, 1], edge[, 2])
 #'
 #' @template MRS
@@ -340,54 +387,6 @@ AllAncestors <- function (parent, child) {
     res[[child[i]]] <- c(pa, res[[pa]])
   }
   res
-}
-
-#' List ancestors
-#'
-#' Reports all ancestors of a given node
-#'
-#' To observe the number of a node or tip, use
-#' \code{plot(tree); \link[ape]{nodelabels}(); \link[ape:nodelabels]{tiplabels}();}
-#'
-#' @param parent the 'parent' column of the edges property of a tree of class \code{phylo};
-#' @param child the 'child' column of the edges property of a tree of class \code{phylo};
-#' @param node the number of the node or tip whose ancestors are required.
-#'
-#' @return `ListAncestors()` returns a vector of the numbers of the nodes
-#' ancestral to the given \code{node}, including the root node.
-#'
-#' @template MRS
-#'
-#' @seealso
-#' - \code{phangorn:::Ancestors}, a less efficient implementation on which this
-#' code is based.
-#'
-#' @examples
-#' tree   <- ape::read.tree(text='(1, (2, (3, (4, 5))));')
-#' edge   <- tree$edge
-#' parent <- tree$edge[, 1]
-#' child  <- tree$edge[, 2]
-#' ListAncestors(parent, child, 4L)
-#'
-#' @family tree navigation
-#' @export
-ListAncestors <- function (parent, child, node) {
-  pvector <- integer(max(parent))
-  pvector[child] <- parent
-  anc <- function(pvector, node) {
-    res <- integer(0)
-    repeat {
-      anc <- pvector[node]
-      if (anc == 0)
-        break
-      res <- c(res, anc)
-      node <- anc
-    }
-    res
-  }
-
-  # Return:
-  anc(pvector, node)
 }
 
 #' Clade sizes

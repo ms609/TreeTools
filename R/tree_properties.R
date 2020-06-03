@@ -330,9 +330,10 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @template treeChild
 #' @param stopAt Integer or logical vector specifying the edge(s) at which to
 #' terminate the search; defaults to the edges with the smallest parent,
-#' which will be the root edges if nodes are numbered cladewise or in Preorder.
+#' which will be the root edges if nodes are numbered [Cladewise] or in
+#' [Preorder].
 #'
-#' @return `EdgeAncestry` returns a logical vector stating whether each edge in
+#' @return `EdgeAncestry()` returns a logical vector stating whether each edge in
 #' turn is a descendant of the specified edge.
 #'
 #' @examples
@@ -408,10 +409,11 @@ MRCA <- function(x1, x2, ancestors) {
 #'
 #' @template treeParam
 #'
-#' @return A symmetrical matrix listing the number of edges that must be
-#' traversed to travel from each numbered edge to each other.
+#' @return `EdgeDistances()` returns a symmetrical matrix listing the number
+#' of edges that must be traversed to travel from each numbered edge to each
+#' other.
 #' The two edges straddling the root of a rooted tree
-#' are counted as a single edge.  Add a 'root' tip using [`AddTip`] if the
+#' are treated as a single edge.  Add a 'root' tip using [`AddTip()`] if the
 #' position of the root is significant.
 #'
 #' @examples

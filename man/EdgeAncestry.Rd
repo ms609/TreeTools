@@ -18,10 +18,11 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
 \item{stopAt}{Integer or logical vector specifying the edge(s) at which to
 terminate the search; defaults to the edges with the smallest parent,
-which will be the root edges if nodes are numbered cladewise or in Preorder.}
+which will be the root edges if nodes are numbered \link{Cladewise} or in
+\link{Preorder}.}
 }
 \value{
-\code{EdgeAncestry} returns a logical vector stating whether each edge in
+\code{EdgeAncestry()} returns a logical vector stating whether each edge in
 turn is a descendant of the specified edge.
 }
 \description{

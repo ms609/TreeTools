@@ -10,10 +10,11 @@ EdgeDistances(tree)
 \item{tree}{A tree of class \code{\link{phylo}}.}
 }
 \value{
-A symmetrical matrix listing the number of edges that must be
-traversed to travel from each numbered edge to each other.
+\code{EdgeDistances()} returns a symmetrical matrix listing the number
+of edges that must be traversed to travel from each numbered edge to each
+other.
 The two edges straddling the root of a rooted tree
-are counted as a single edge.  Add a 'root' tip using \code{\link{AddTip}} if the
+are treated as a single edge.  Add a 'root' tip using \code{\link[=AddTip]{AddTip()}} if the
 position of the root is significant.
 }
 \description{
