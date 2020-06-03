@@ -31,8 +31,8 @@ Renumber(tree)
 
 }
 \seealso{
-\code{Preorder()} provides a faster and simpler alternative, but may
-rotate nodes.
+\code{Preorder()} provides a faster and simpler alternative, but also
+rotates nodes.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},

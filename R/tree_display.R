@@ -93,6 +93,8 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #' @return `SortTree()` returns a tree of class `phylo`, with each node sorted
 #' such that the larger clade is first.
 #'
+#' @seealso `Preorder()` also rearranges trees into a consistent shape, but
+#' based on the index of leaves rather than the size of subtrees.
 #'
 #' @examples
 #' messyTree <- as.phylo(10, 6)

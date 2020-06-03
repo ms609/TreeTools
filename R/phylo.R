@@ -19,8 +19,8 @@
 #' @return `Renumber()` returns a tree of class `phylo`, numbered in a
 #' [Cladewise] fashion consistent with the expectations of 'ape' functions.
 #'
-#' @seealso `Preorder()` provides a faster and simpler alternative, but may
-#' rotate nodes.
+#' @seealso `Preorder()` provides a faster and simpler alternative, but also
+#' rotates nodes.
 #'
 #' @template MRS
 #' @family tree manipulation

@@ -39,6 +39,9 @@ ape::edgelabels()
 
 }
 \seealso{
+\code{Preorder()} also rearranges trees into a consistent shape, but
+based on the index of leaves rather than the size of subtrees.
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},

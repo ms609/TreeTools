@@ -52,21 +52,12 @@ NeworderPhylo <- function (nTip, parent, child, nb.edge, whichwise) {
      as.integer(whichwise), NAOK = TRUE)[[5]]
 }
 
-#' Renumber a tree in preorder
-#'
-#' Wrapper for the C function `preorder_edges_and_nodes`, which
-#' renumbers internal nodes and orders edges in preorder, in an order
-#' guaranteed to be identical for any tree of an equivalent topology.
-#' At each node, child edges are arranged from left to right according to the
-#' lowest-numbered tip in the subtree subtended by each edge.
-#'
+#' @rdname Reorder
 #' @template treeParent
 #' @template treeChild
 #'
-#' @return `RenumberTree` returns an edge matrix for a tree of class `phylo`
-#' following the usual preorder convention for edge and node numbering.
-#'
-#' @seealso Rotate each node into a consistent orientation with [`SortTree()`].
+#' @return `RenumberTree()` returns an edge matrix for a tree of class `phylo`
+#' following the preorder convention for edge and node numbering.
 #'
 #' @family tree manipulation
 #' @family C wrappers
@@ -76,8 +67,8 @@ RenumberTree <- function (parent, child) {
 }
 
 #' @rdname RenumberTree
-#' @param \dots Ignored; included for compatibility with previous versions.
-#' @return `RenumberEdges` formats the output of `RenumberTree()` into a list
+#' @param \dots Deprecated; included for compatibility with previous versions.
+#' @return `RenumberEdges()` formats the output of `RenumberTree()` into a list
 #' whose two entries correspond to the new parent and child vectors.
 #' @export
 RenumberEdges <- function (parent, child, ...) {
@@ -89,7 +80,7 @@ RenumberEdges <- function (parent, child, ...) {
 
 #' Reorder trees
 #'
-#' A wrapper for \code{ape:::.reorder_ape}.
+#' `Reorder()` is a wrapper for \code{ape:::.reorder_ape}.
 #' Calling this C function directly is approximately twice as fast as using
 #' \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 #' \code{ape::\link[ape:reorder.phylo]{postorder}}
@@ -102,21 +93,28 @@ RenumberEdges <- function (parent, child, ...) {
 #'
 #' `Preorder()` is more robust: it supports polytomies, nodes can be numbered
 #' in any sequence, and edges can be listed in any order in the input tree.
-#' It has a unique output for each tree topology, allowing unique trees
-#' to be detected by comparing sorted edge matrices alone.
+#' Its output is guaranteed to be identical for any tree of an equivalent
+#' topology, allowing unique trees to be detected by comparing sorted edge
+#' matrices alone.
 #'
 #' A tree in preorder is numbered starting from the root node.
 #' Each node is numbered in the sequence in which it is encountered, and
 #' each edge is listed in the sequence in which it is visited.
 #'
-#' Child edges of a node are sorted from left to right in order of the
-#' smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
-#' of an edge leading to a subtree that contains tip 2.
+#' At each node, child edges are sorted from left to right in order of the
+#' lowest-numbered leaf in the subtree subtended by each edge; i.e. an edge
+#' that leads eventually to tip 1 will be to the left of an edge leading to a
+#' subtree containing tip 2.
 #'
 #' Numbering begins by following the leftmost edge of the root node,
 #' and sorting its descendant subtree into preorder.
 #' Then, the next edge at the root node is followed, and its descendants
 #' sorted into preorder, until each edge has been visited.
+#'
+#' `RenumberTree()` and `RenumberEdges()` are wrappers for the C function
+#' `preorder_edges_and_nodes()`; they do not perform the same checks on input
+#' as `Preorder()` and are intended for use where performance is at a premium.
+#'
 #'
 #' `Postorder()` is modified from the 'ape' function to return a specific
 #' order: edges are listed from the node that subtends the smallest
@@ -147,6 +145,9 @@ RenumberEdges <- function (parent, child, ...) {
 #'
 #' `Cladewise()`, `ApePostorder()` and `Pruningwise()`: modified by Martin R.
 #' Smith from \code{.reorder_ape()} in \pkg{ape} (Emmanuel Paradis).
+#'
+#'
+#' @seealso Rotate each node into a consistent orientation with [`SortTree()`].
 #'
 #' @family C wrappers
 #' @keywords internal
