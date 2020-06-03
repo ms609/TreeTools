@@ -23,9 +23,7 @@ NJTree(Lobo.phy)
 }
 \seealso{
 Other tree generation functions: 
-\code{\link{BalancedTree}()},
-\code{\link{PectinateTree}()},
-\code{\link{RandomTree}()},
+\code{\link{GenerateTree}},
 \code{\link{SingleTaxonTree}()},
 \code{\link{TreeNumber}}
 }

@@ -1,6 +1,6 @@
 #' Frequency of splits
 #'
-#' `SplitFrequency` provides a simple way to count the number of times that
+#' `SplitFrequency()` provides a simple way to count the number of times that
 #' bipartition splits, as defined by a reference tree, occur in a forest of trees.
 #'
 #' If multiple calculations are required, some time can be saved by using the
@@ -26,7 +26,7 @@
 #' SplitFrequency(forest[[2]], forest)
 #'
 #' plot(forest[[1]])
-#' ape::nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
+#' ape::nodelabels(tree1Freqs, node = as.integer(names(tree1Freqs)))
 #'
 #' @template MRS
 #' @export

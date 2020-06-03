@@ -7,8 +7,8 @@
 #' As such, each _n_-leaf tree can be uniquely identified by a non-negative
 #' integer _x_ < `NUnrooted(n)`.
 #'
-#' This integer can be converted by a tree by treating it as a mixed-base number,
-#' with bases 1, 3, 5, 7, ... (2_n_ - 5).
+#' This integer can be converted by a tree by treating it as a mixed-base
+#' number, with bases 1, 3, 5, 7, ..., (2&nbsp;_n_ - 5).
 #'
 #' Each digit of this mixed base number corresponds to a leaf, and determines
 #' the location on a growing tree to which that leaf should be added.
@@ -92,8 +92,6 @@
 #' @template tipLabelsParam
 #' @param \dots Additional parameters for consistency with S3 methods (unused).
 #'
-#' @return `as.phylo.numeric` returns a tree of class `phylo`.
-#'
 #' @examples
 #' tree <- as.phylo(10, nTip = 6)
 #' plot(tree)
@@ -106,14 +104,15 @@
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 #' tree <- as.phylo(treeNumber)
 #'
-#' @seealso [`TreeShape`]
+#' @seealso Describe the shape of a tree topology, independent of leaf labels:
+#' [`TreeShape()`]
 #' @family tree generation functions
 #' @name TreeNumber
 #
 
 #' @rdname TreeNumber
 #'
-#' @return `as.TreeNumber` returns an object of class `TreeNumber`,
+#' @return `as.TreeNumber()` returns an object of class `TreeNumber`,
 #' which comprises a numeric vector, whose elements represent successive
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
@@ -157,6 +156,7 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 
 #' @rdname TreeNumber
 #' @template MRS
+#' @return `as.phylo.numeric()` returns a tree of class `phylo`.
 #' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
 #'
 #' \insertRef{Li1996}{TreeTools}

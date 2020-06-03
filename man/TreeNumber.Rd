@@ -33,13 +33,13 @@ as.TreeNumber(x, ...)
 in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 }
 \value{
-\code{as.phylo.numeric} returns a tree of class \code{phylo}.
-
-\code{as.TreeNumber} returns an object of class \code{TreeNumber},
+\code{as.TreeNumber()} returns an object of class \code{TreeNumber},
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The \code{TreeNumber} object has attributes
 \code{nTip} and \code{tip.labels}.
+
+\code{as.phylo.numeric()} returns a tree of class \code{phylo}.
 }
 \description{
 Functions converting between phylogenetic trees and their unique decimal
@@ -50,8 +50,8 @@ There are \code{NUnrooted(n)} unrooted trees with \emph{n} leaves.
 As such, each \emph{n}-leaf tree can be uniquely identified by a non-negative
 integer \emph{x} < \code{NUnrooted(n)}.
 
-This integer can be converted by a tree by treating it as a mixed-base number,
-with bases 1, 3, 5, 7, ... (2_n_ - 5).
+This integer can be converted by a tree by treating it as a mixed-base
+number, with bases 1, 3, 5, 7, ..., (2 \emph{n} - 5).
 
 Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.
@@ -143,13 +143,12 @@ Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
 \insertRef{Li1996}{TreeTools}
 }
 \seealso{
-\code{\link{TreeShape}}
+Describe the shape of a tree topology, independent of leaf labels:
+\code{\link[=TreeShape]{TreeShape()}}
 
 Other tree generation functions: 
-\code{\link{BalancedTree}()},
+\code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{PectinateTree}()},
-\code{\link{RandomTree}()},
 \code{\link{SingleTaxonTree}()}
 }
 \author{

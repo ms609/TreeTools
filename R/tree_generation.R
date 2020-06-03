@@ -1,24 +1,36 @@
-#' Generate a random tree topology
+#' Generate pectinate, balanced or random trees
 #'
-#' Generates a binary tree with a random topology on specified tips, optionally
-#' rooting the tree on a given tip.
+#' `RandomTree()`, `BalancedTree()` and `PectinateTree()` generate trees
+#' with the specified shapes and leaf labels.
+#'
 #'
 #' @template tipsForTreeGeneration
+#'
+#' @return
+#' Each function returns an unweighted binary tree of class `phylo` with
+#' the specified leaf labels. Trees are rooted unless `root = FALSE`.
+#'
+#' @family tree generation functions
+#'
+#' @template MRS
+#' @name GenerateTree
+NULL
+
+#' @rdname GenerateTree
+#'
 #' @param root Character or integer specifying tip to use as root, if desired;
 #' or `FALSE` for an unrooted tree.
 #'
-#' @return `RandomTree` returns a random tree of class `phylo`, with the
-#'  specified tips, and no branch lengths specified.
+#' @return `RandomTree()` returns a random topology, optionally rooting the
+#' tree on a given tip.
 #'
 #' @examples
-#' RandomTree(letters[1:5])
+#' RandomTree(LETTERS[1:10])
 #'
 #' data('Lobo')
 #' RandomTree(Lobo.phy)
 #'
-#' @template MRS
 #' @importFrom ape rtree root
-#' @family tree generation functions
 #' @export
 RandomTree <- function (tips, root = FALSE) {
   tips <- TipLabels(tips)
@@ -32,19 +44,11 @@ RandomTree <- function (tips, root = FALSE) {
   tree
 }
 
-#' Generate a Pectinate Tree
-#'
-#' Generates a pectinate (caterpillar) tree with the specified tip labels.
-#'
-#' @template tipsForTreeGeneration
-#'
-#' @return `PectinateTree` and `BalancedTree` each return a binary tree of
-#'  class `phylo` of the specified shape.
-#' @family tree generation functions
+#' @rdname GenerateTree
+#' @return `PectinateTree()` returns a pectinate (caterpillar) tree.
 #' @examples
 #' plot(PectinateTree(LETTERS[1:10]))
 #'
-#' @template MRS
 #' @export
 PectinateTree <- function (tips) {
   tips <- TipLabels(tips)
@@ -67,20 +71,13 @@ PectinateTree <- function (tips) {
   ), order = 'cladewise', class = 'phylo')
 }
 
-#' Generate a Balanced Tree
+
+#' @rdname GenerateTree
 #'
-#' Generates a rooted balanced (symmetrical) binary tree with the specified
-#' tip labels.
-#'
-#' @template tipsForTreeGeneration
-#'
-#' @return A tree of class `phylo`.
-#' @family tree generation functions
-#' @template MRS
+#' @return `BalancedTree()` returns a balanced (symmetrical) tree.
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
-
 #' @export
 BalancedTree <- function (tips) {
   tips <- TipLabels(tips)
@@ -90,12 +87,13 @@ BalancedTree <- function (tips) {
   }
 
   # Return:
-  structure(list(edge = BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
+  structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
                        tip.label = as.character(tips)),
             order = 'cladewise', class = 'phylo') # Actually in preorder
 }
 
-BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
+#' @keywords internal
+.BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
   if (nTips < 4L) {
     if (nTips == 2L) {
       matrix(c(rootNode, rootNode, tips), 2L, 2L)
@@ -110,9 +108,9 @@ BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
     firstHalf <- seq_len(firstN)
     root2 <- rootNode + firstN
     rbind(rootNode + 0:1,
-          BalancedBit(tips[firstHalf], rootNode = rootNode + 1L),
+          .BalancedBit(tips[firstHalf], rootNode = rootNode + 1L),
           c(rootNode, root2),
-          BalancedBit(tips[-firstHalf], rootNode = root2))
+          .BalancedBit(tips[-firstHalf], rootNode = root2))
   }
 }
 
