@@ -66,10 +66,13 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 
 #' Count descendants for each node in a tree
 #'
+#' `NDescendants()` counts the number of nodes (including leaves) directly
+#' descended from each node in a tree.
+#'
 #' @template treeParam
 #'
 #' @return `NDescendants()` returns an integer listing the number of direct
-#' descendants for each node in a tree.
+#' descendants (leaves or internal nodes) for each node in a tree.
 #'
 #' @examples
 #' tree <- CollapseNode(BalancedTree(8), 12:15)
@@ -246,7 +249,7 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 
 #' Order of each node in a tree
 #'
-#' Calculate the number of edges incident to each node in a tree.
+#' `NodeOrder()` calculates the number of edges incident to each node in a tree.
 #' Includes the root edge in rooted trees.
 #'
 #' @template xPhylo
@@ -635,9 +638,10 @@ TreeIsRooted <- function (tree) {
 
 #' Which node is a tree's root?
 #'
-#' Identify the root node of a (rooted or unrooted) phylogenetic tree.
-#' Unrooted trees are represented internally by a rooted tree with an
-#' unresolved root node.
+#' `RootNode()` identifies the root node of a (rooted or unrooted) phylogenetic
+#' tree.
+#' Unrooted trees are represented internally by a rooted tree with a polytomy
+#' at the root.
 #'
 #' @param x A tree of class `phylo`, or its edge matrix; or a list or
 #' `multiPhylo` object containing multiple trees.
@@ -653,9 +657,9 @@ TreeIsRooted <- function (tree) {
 #' @family tree navigation
 #' @seealso
 #'
-#' [`TreeIsRooted()`]
+#' Test whether a tree is rooted: [`TreeIsRooted()`]
 #'
-#'  phangorn::[`getRoot()`]
+#' phangorn::[`getRoot()`]
 #'
 #' @export
 RootNode <- function (x) UseMethod('RootNode')

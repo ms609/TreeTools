@@ -146,9 +146,6 @@ NJTree <- function (dataset) {
 #' and outgroup taxa such that the two are sister taxa across the root, without
 #' changing the relationships within the ingroup or within the outgroup.
 #'
-#' @param tree Either a tree of class \code{phylo}; or (for `EnforceOutgroup()`)
-#' a character vector listing the names of all the taxa in the tree, from which
-#' a random tree will be generated.
 #' @param outgroup Character vector containing the names of taxa to include in the
 #' outgroup.
 #'
@@ -171,7 +168,7 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape root drop.tip bind.tree
 .EnforceOutgroup <- function (tree, outgroup, taxa) {
-  if (length(outgroup) == 1) return (root(tree, outgroup, resolve.root = TRUE))
+  if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %in% outgroup)]
   if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {

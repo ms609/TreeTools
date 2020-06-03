@@ -7,7 +7,11 @@
 #' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 #' preorder.
 #'
-# @template treeParam # Restore when EnforceOutgroup() goes
+#'
+#' @param tree Either a tree of class \code{phylo}; or (for `EnforceOutgroup()`)
+#' a character vector listing the names of all the taxa in the tree, from which
+#' a random tree will be generated.
+# @template treeParam # Restore when EnforceOutgroup() is removed (#30)
 #' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.
 #'

@@ -68,6 +68,7 @@ RenumberTree <- function (parent, child) {
 }
 
 #' @rdname Reorder
+#'
 #' @param \dots Deprecated; included for compatibility with previous versions.
 #' @return `RenumberEdges()` formats the output of `RenumberTree()` into a list
 #' whose two entries correspond to the new parent and child vectors.
