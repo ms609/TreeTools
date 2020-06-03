@@ -1,17 +1,15 @@
 #' Consensus without taxa
 #'
-#' Displays a consensus plot with selected taxa excluded.
-#'
-#' A useful way to increase the resolution of a consensus tree when a few
-#' wildcard taxa obscure a consistent set of relationships.
+#' `ConsensusWithout()` displays a consensus plot with specified taxa excluded,
+#' which can be a useful way to increase the resolution of a consensus tree
+#' when a few wildcard taxa obscure a consistent set of relationships.
+#' `MarkMissing()` adds missing taxa as loose leaves on the plot.
 #'
 #' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#' drop (using `ape::drop.tip`).
-#' @param \dots Additional parameters to pass on to [`ape::consensus()`] or
-#' [`legend()`].
+#' drop (using `ape::drop.tip()`).
 #'
-#' @return `ConsensusWithout` returns a consensus tree (of class `phylo`)
+#' @return `ConsensusWithout()` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.
 #'
 #' @examples
@@ -22,10 +20,10 @@
 #' plot(trees[[1]])
 #' plot(trees[[2]])
 #'
-#' # Strict consensus lacks resolution:
+#' # Strict consensus (left panel) lacks resolution:
 #' plot(ape::consensus(trees))
 #'
-#' # But omitting tip two reveals shared structure in common:
+#' # But omitting tip two (right panel) reveals shared structure in common:
 #' plot(ConsensusWithout(trees, 't2'))
 #' MarkMissing('t2')
 #'
@@ -57,9 +55,13 @@ ConsensusWithout.multiPhylo <- function (trees, tip = character(0), ...) {
 #' @export
 ConsensusWithout.list <- ConsensusWithout.multiPhylo
 
-#' @describeIn ConsensusWithout Adds labels for taxa omitted from a plotted
-#' consensus tree.
-#' @param position Where to plot the missing taxa.  See [legend] for options.
+#' @rdname ConsensusWithout
+#' @param position Where to plot the missing taxa.
+#' See [`legend()`] for options.
+#' @param \dots Additional parameters to pass on to [`ape::consensus()`] or
+#' [`legend()`].
+#' @return ``MarkMissing()` provides a null return, after plotting the specified
+#' `tip`s as a legend.
 #' @importFrom graphics legend
 #' @template MRS
 #' @export

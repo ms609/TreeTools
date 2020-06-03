@@ -286,7 +286,8 @@ CollapseEdge <- function (tree, edges) {
 
 #' Drop tips from tree
 #'
-#' Remove specified tips from a phylogenetic tree, collapsing incident branches.
+#' `DropTip()` removes specified tips from a phylogenetic tree, collapsing
+#' incident branches.
 #'
 #' This function is more robust than [`ape::drop.tip()`] as it does not
 #' require any particular internal node numbering schema.  It is not presently
@@ -301,8 +302,8 @@ CollapseEdge <- function (tree, edges) {
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
 #'
-#' @return A tree of class `phylo`, in [Preorder], with the requested leaves
-#' removed.
+#' @return `DropTip()` returns a tree of class `phylo`, in [Preorder], with the
+#' requested leaves removed.
 #'
 #' @examples
 #' tree <- BalancedTree(8)

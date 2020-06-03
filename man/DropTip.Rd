@@ -15,11 +15,12 @@ Specifying the index of an internal node will drop all descendants of that
 node.}
 }
 \value{
-A tree of class \code{phylo}, in \link{Preorder}, with the requested leaves
-removed.
+\code{DropTip()} returns a tree of class \code{phylo}, in \link{Preorder}, with the
+requested leaves removed.
 }
 \description{
-Remove specified tips from a phylogenetic tree, collapsing incident branches.
+\code{DropTip()} removes specified tips from a phylogenetic tree, collapsing
+incident branches.
 }
 \details{
 This function is more robust than \code{\link[ape:drop.tip]{ape::drop.tip()}} as it does not
