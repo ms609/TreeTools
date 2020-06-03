@@ -52,6 +52,12 @@ Extracts tip labels from an object.  If the object is a single integer,
 the default of \code{ape::\link{rtree}}.
 }
 \seealso{
+Other tree properties: 
+\code{\link{ConsensusWithout}()},
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TreeIsRooted}()}
+
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
@@ -64,3 +70,4 @@ Other Splits operations:
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
+\concept{tree properties}

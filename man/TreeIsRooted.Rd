@@ -14,15 +14,19 @@ TreeIsRooted(tree)
 resolved.
 }
 \description{
-Faster alternative to of \code{ape::is.rooted}.
+\code{TreeIsRooted()} is a fast alternative to \code{ape::is.rooted()}.
 }
 \examples{
 TreeIsRooted(BalancedTree(6))
+TreeIsRooted(UnrootTree(BalancedTree(6)))
 
 }
 \seealso{
 Other tree properties: 
-\code{\link{ConsensusWithout}()}
+\code{\link{ConsensusWithout}()},
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TipLabels}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

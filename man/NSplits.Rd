@@ -44,6 +44,12 @@ NSplits(as.Splits(BalancedTree(8)))
 
 }
 \seealso{
+Other tree properties: 
+\code{\link{ConsensusWithout}()},
+\code{\link{NTip}()},
+\code{\link{TipLabels}()},
+\code{\link{TreeIsRooted}()}
+
 Other Splits operations: 
 \code{\link{NTip}()},
 \code{\link{TipLabels}()},
@@ -56,3 +62,4 @@ Other Splits operations:
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
+\concept{tree properties}

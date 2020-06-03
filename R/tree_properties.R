@@ -534,9 +534,10 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #'
 #' @param phy Object to count.
 #'
-#' @return `NTip` returns an integer specifying the number of tips in each
+#' @return `NTip()` returns an integer specifying the number of tips in each
 #' object in `phy`.
 #'
+#' @family tree properties
 #' @export
 NTip <- function (phy) UseMethod('NTip')
 
@@ -592,6 +593,7 @@ NTip.matrix <- function (phy) {
 #'
 #' @template MRS
 #'
+#' @family tree properties
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
@@ -624,7 +626,7 @@ NSplits.numeric <- function (x) x - 3L
 
 #' Is tree rooted?
 #'
-#' Faster alternative to of `ape::is.rooted`.
+#' `TreeIsRooted()` is a fast alternative to `ape::is.rooted()`.
 #'
 #' @param tree A phylogenetic tree of class `phylo`.
 #' @return `TreeIsRooted()` returns a logical specifying whether a root node is
@@ -632,6 +634,7 @@ NSplits.numeric <- function (x) x - 3L
 #'
 #' @examples
 #' TreeIsRooted(BalancedTree(6))
+#' TreeIsRooted(UnrootTree(BalancedTree(6)))
 #'
 #' @family tree properties
 #'

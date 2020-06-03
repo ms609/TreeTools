@@ -25,7 +25,7 @@ NTip(phy)
 \item{phy}{Object to count.}
 }
 \value{
-\code{NTip} returns an integer specifying the number of tips in each
+\code{NTip()} returns an integer specifying the number of tips in each
 object in \code{phy}.
 }
 \description{
@@ -33,6 +33,12 @@ Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects o
 class \code{Splits} and \code{list}, and edge matrices (equivalent to \code{phylo$edge}).
 }
 \seealso{
+Other tree properties: 
+\code{\link{ConsensusWithout}()},
+\code{\link{NSplits}()},
+\code{\link{TipLabels}()},
+\code{\link{TreeIsRooted}()}
+
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{TipLabels}()},
@@ -42,3 +48,4 @@ Other Splits operations:
 \code{\link{match.Splits}()}
 }
 \concept{Splits operations}
+\concept{tree properties}

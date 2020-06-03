@@ -75,6 +75,9 @@ Other tree manipulation:
 \code{\link{Subtree}()}
 
 Other tree properties: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 }
 \author{

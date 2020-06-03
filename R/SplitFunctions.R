@@ -216,6 +216,7 @@ SplitMatchProbability <- function (split1, split2) {
 #' @return `TipLabels` returns a character vector listing the tip labels for the
 #' specified object.
 #'
+#' @family tree properties
 #' @template MRS
 #' @export
 TipLabels <- function (x, single = TRUE) UseMethod('TipLabels')
