@@ -25,7 +25,7 @@
 #' `TotalCopheneticIndex()` returns an integer denoting the total cophenetic index.
 #'
 #' `TCIContext()` returns a data frame detailing the maximum and minimum value
-#' obtainable for the Total Cophenetic Index for binary trees with the
+#' obtainable for the Total Cophenetic Index for rooted binary trees with the
 #' number of leaves of the given tree, and the expected value under the Yule
 #' and Uniform models.
 #' The variance of the expected value is given under the Yule model, but cannot
@@ -44,7 +44,7 @@
 #' TCIContext(8)
 #' TotalCopheneticIndex(PectinateTree(8))
 #' TotalCopheneticIndex(BalancedTree(8))
-#' TotalCopheneticIndex(RandomTree(8, root = FALSE))
+#' TotalCopheneticIndex(StarTree(8))
 #'
 #'
 #' # Examples from Mir et al. (2013):

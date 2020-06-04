@@ -27,6 +27,12 @@ test_that('Balanced trees are generated correctly', {
   expect_true(is.integer(BalancedTree(8)$edge))
 })
 
+test_that("StarTree() works", {
+  expect_equal(ape::read.tree(text = '(t1, t2, t3, t4, t5, t6, t7, t8);'),
+               StarTree(8L))
+  expect_true(is.integer(StarTree(8)$edge))
+})
+
 test_that("Random trees are generated correctly", {
   expect_equal(c(4, 5, 5, 4, 5), RandomTree(3, root = TRUE)$edge[1:5])
   expect_equal(PectinateTree(c('t2', 't3', 't1')), RandomTree(3, root = 't2'))

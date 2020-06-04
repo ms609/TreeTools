@@ -11,6 +11,7 @@
 - `ListAncestors()`: List ancestors of a node.
 - `DropTip()`: Remove tip, handling weird node orders.
 - `LeafLabelInterchange()`: Exchange position of _n_ tips.
+- `StarTree()`: Generate unresolved tree.
 - `TotalCopheneticIndex()` integrated from 'tci' package.
 
 ## Deprecations

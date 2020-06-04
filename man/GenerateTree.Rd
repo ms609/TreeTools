@@ -5,6 +5,7 @@
 \alias{RandomTree}
 \alias{PectinateTree}
 \alias{BalancedTree}
+\alias{StarTree}
 \title{Generate pectinate, balanced or random trees}
 \usage{
 RandomTree(tips, root = FALSE)
@@ -12,6 +13,8 @@ RandomTree(tips, root = FALSE)
 PectinateTree(tips)
 
 BalancedTree(tips)
+
+StarTree(tips)
 }
 \arguments{
 \item{tips}{An integer specifying the number of tips, or a character vector
@@ -31,10 +34,12 @@ tree on a given tip.
 \code{PectinateTree()} returns a pectinate (caterpillar) tree.
 
 \code{BalancedTree()} returns a balanced (symmetrical) tree.
+
+\code{StarTree()} returns a completely unresolved (star) tree.
 }
 \description{
-\code{RandomTree()}, \code{BalancedTree()} and \code{PectinateTree()} generate trees
-with the specified shapes and leaf labels.
+\code{RandomTree()}, \code{PectinateTree()}, \code{BalancedTree()} and \code{StarTree()}
+generate trees with the specified shapes and leaf labels.
 }
 \examples{
 RandomTree(LETTERS[1:10])
@@ -45,6 +50,8 @@ RandomTree(Lobo.phy)
 plot(PectinateTree(LETTERS[1:10]))
 
 plot(BalancedTree(LETTERS[1:10]))
+plot(StarTree(LETTERS[1:10]))
+
 }
 \seealso{
 Other tree generation functions: 

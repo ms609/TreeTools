@@ -1,7 +1,7 @@
 #' Generate pectinate, balanced or random trees
 #'
-#' `RandomTree()`, `BalancedTree()` and `PectinateTree()` generate trees
-#' with the specified shapes and leaf labels.
+#' `RandomTree()`, `PectinateTree()`, `BalancedTree()` and `StarTree()`
+#' generate trees with the specified shapes and leaf labels.
 #'
 #'
 #' @template tipsForTreeGeneration
@@ -112,6 +112,26 @@ BalancedTree <- function (tips) {
           c(rootNode, root2),
           .BalancedBit(tips[-firstHalf], rootNode = root2))
   }
+}
+
+#' @rdname GenerateTree
+#' @return `StarTree()` returns a completely unresolved (star) tree.
+#' @examples
+#' plot(StarTree(LETTERS[1:10]))
+#'
+#' @export
+StarTree <- function (tips) {
+  tips <- TipLabels(tips)
+  nTips <- length(tips)
+
+  parent <- rep(nTips + 1L, nTips)
+  child <- seq_len(nTips)
+
+  structure(list(
+    edge = matrix(c(parent, child), ncol = 2L),
+    Nnode = 1L,
+    tip.label = tips
+  ), order = 'cladewise', class = 'phylo')
 }
 
 #' Generate a neighbour joining tree

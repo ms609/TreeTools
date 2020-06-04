@@ -179,6 +179,6 @@ test_that("Node depths calculated correctly", {
   expect_equal(c(3,2,1,1,1,2,1,1,1,2,1,2,1,1,1),
                NodeDepth(tree, TRUE, FALSE))
 
-  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), FALSE, FALSE))
-  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), TRUE, FALSE))
+  expect_equal(1L, NodeDepth(StarTree(8), FALSE, FALSE))
+  expect_equal(1L, NodeDepth(StarTree(8), TRUE, FALSE))
 })
