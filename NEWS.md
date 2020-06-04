@@ -9,6 +9,7 @@
 - `NodeOrder()`, `NDescendants()`: Count edges incident to each node.
 - `CladeSizes()`: Count leaves / nodes descended from each node.
 - `ListAncestors()`: List ancestors of a node.
+- `LabelSplits()`: Label splits on plotted tree.
 - `DropTip()`: Remove tip, handling weird node orders.
 - `LeafLabelInterchange()`: Exchange position of _n_ tips.
 - `StarTree()`: Generate unresolved tree.
