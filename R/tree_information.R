@@ -44,8 +44,8 @@ Log2TreesMatchingTree <- function (tree) {
 
 #' Cladistic information content
 #'
-#' Calculate the cladistic (phylogenetic) information content of a
-#' phylogenetic object, _sensu_ Thorley _et al._ (1998).
+#' `CladisticInfo()` calculates the cladistic (phylogenetic) information
+#' content of a phylogenetic object, _sensu_ Thorley _et al._ (1998).
 #'
 #' The \acronym{CIC} is the logarithm of the number of binary trees that include the
 #' specified topology.  A base two logarithm gives an information content in
@@ -62,8 +62,8 @@ Log2TreesMatchingTree <- function (tree) {
 #'
 #' @param x Tree of class `phylo`, or a list thereof.
 #'
-#' @return Returns the phylogenetic or clustering information content
-#' of the input tree(s).
+#' @return `CladisticInfo()` returns a numeric giving the clustering information
+#' content of the input tree(s), in bits.
 #'
 #' @references
 #'

@@ -34,7 +34,6 @@ reference:
       - has_concept("tree characterization functions")
       - NTip
       - NPartitions
-      - NPartitionPairs
       - TipLabels
       - TreeIsRooted
 
@@ -69,6 +68,7 @@ reference:
     - starts_with('IC')
     - N1Spr
     - DoubleFactorial
+    - NPartitionPairs
     - has_concept("tree information functions")
     - has_concept("split information functions")
 
