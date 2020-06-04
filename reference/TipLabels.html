@@ -46,9 +46,8 @@
 
 
 <meta property="og:title" content="Extract tip labels — TipLabels" />
-<meta property="og:description" content="Extracts tip labels from an object.  If the object is a single integer,
-TipLabels will return a vector t1, t2 ... tn, to match
-the default of ape::rtree." />
+<meta property="og:description" content="TipLabels() extracts labels from an object: for example, names of taxa in
+a phylogenetic tree or data matrix." />
 
 
 
@@ -159,9 +158,8 @@ the default of ape::rtree." />
     </div>
 
     <div class="ref-description">
-    <p>Extracts tip labels from an object.  If the object is a single integer,
-<code>TipLabels</code> will return a vector <code>t1</code>, <code>t2</code> ... <code>tn</code>, to match
-the default of <code><a href='https://rdrr.io/pkg/ape/man/rtree.html'>ape::rtree</a></code>.</p>
+    <p><code>TipLabels()</code> extracts labels from an object: for example, names of taxa in
+a phylogenetic tree or data matrix.</p>
     </div>
 
     <pre class="usage"><span class='fu'>TipLabels</span>(<span class='no'>x</span>, <span class='kw'>single</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
@@ -212,8 +210,9 @@ object only (<code>TRUE</code>), or for each object in a list (<code>FALSE</code
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TipLabels</code> returns a character vector listing the tip labels for the
-specified object.</p>
+    <p><code>TipLabels()</code> returns a character vector listing the tip labels
+appropriate to <code>x</code>. If <code>x</code> is a single integer, this will be a vector
+<code>t1</code>, <code>t2</code> ... <code>tx</code>, to match the default of <code><a href='https://rdrr.io/pkg/ape/man/rtree.html'>ape::rtree()</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree properties: 

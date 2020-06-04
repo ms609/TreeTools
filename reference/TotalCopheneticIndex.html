@@ -46,8 +46,9 @@
 
 
 <meta property="og:title" content="Total Cophenetic Index — TotalCopheneticIndex" />
-<meta property="og:description" content="Calculate the total cophenetic index (Mir et al. 2013) for any tree, and
-its possible values." />
+<meta property="og:description" content="TotalCopheneticIndex() calculates the total cophenetic index
+(Mir et al. 2013) for any tree, a measure of its balance;
+TCIContext() lists its possible values." />
 
 
 
@@ -158,8 +159,9 @@ its possible values." />
     </div>
 
     <div class="ref-description">
-    <p>Calculate the total cophenetic index (Mir <em>et al</em>. 2013) for any tree, and
-its possible values.</p>
+    <p><code>TotalCopheneticIndex()</code> calculates the total cophenetic index
+(Mir <em>et al</em>. 2013) for any tree, a measure of its balance;
+<code>TCIContext()</code> lists its possible values.</p>
     </div>
 
     <pre class="usage"><span class='fu'>TotalCopheneticIndex</span>(<span class='no'>x</span>)
@@ -180,10 +182,9 @@ its possible values.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TotalCopheneticIndex()</code> returns the Total Cophenetic Index,
-a measure of the balance of the tree.</p>
+    <p><code>TotalCopheneticIndex()</code> returns an integer denoting the total cophenetic index.</p>
 <p><code>TCIContext()</code> returns a data frame detailing the maximum and minimum value
-obtainable for the Total Cophenetic Index for binary trees with the
+obtainable for the Total Cophenetic Index for rooted binary trees with the
 number of leaves of the given tree, and the expected value under the Yule
 and Uniform models.
 The variance of the expected value is given under the Yule model, but cannot
@@ -218,7 +219,13 @@ provides an alternative implementation of this index and its predecessors.</p>
 <code><a href='CladisticInfo.html'>CladisticInfo</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tree12</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'(1, (2, (3, (4, 5))));'</span>)  <span class='co'>#Fig. 4, tree 12</span>
+    <pre class="examples"><div class='input'><span class='co'># Balanced trees have the minimum index for a binary tree;</span>
+<span class='co'># Pectinate trees the maximum:</span>
+<span class='fu'>TCIContext</span>(<span class='fl'>8</span>)</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
+#&gt; 1      56      16          38.8345      28.51429      90.52281</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 56</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 16</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>StarTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
+
+<span class='co'># Examples from Mir et al. (2013):</span>
+<span class='no'>tree12</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'(1, (2, (3, (4, 5))));'</span>)  <span class='co'>#Fig. 4, tree 12</span>
 <span class='fu'>TotalCopheneticIndex</span>(<span class='no'>tree12</span>) <span class='co'># 10</span></div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='no'>tree8</span>  <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'((1, 2, 3, 4), 5);'</span>)      <span class='co'>#Fig. 4, tree 8</span>
 <span class='fu'>TotalCopheneticIndex</span>(<span class='no'>tree8</span>)  <span class='co'># 6</span></div><div class='output co'>#&gt; [1] 6</div><div class='input'><span class='fu'>TCIContext</span>(<span class='no'>tree8</span>)</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
 #&gt; 1      10       4         8.285714      7.166667      5.138889</div><div class='input'><span class='fu'>TCIContext</span>(<span class='fl'>5L</span>) <span class='co'># Context for a tree with 5 leaves.</span></div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance

@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Generate pectinate, balanced or random trees — GenerateTree" />
-<meta property="og:description" content="RandomTree(), BalancedTree() and PectinateTree() generate trees
-with the specified shapes and leaf labels." />
+<meta property="og:description" content="RandomTree(), PectinateTree(), BalancedTree() and StarTree()
+generate trees with the specified shapes and leaf labels." />
 
 
 
@@ -158,15 +158,17 @@ with the specified shapes and leaf labels." />
     </div>
 
     <div class="ref-description">
-    <p><code>RandomTree()</code>, <code>BalancedTree()</code> and <code>PectinateTree()</code> generate trees
-with the specified shapes and leaf labels.</p>
+    <p><code>RandomTree()</code>, <code>PectinateTree()</code>, <code>BalancedTree()</code> and <code>StarTree()</code>
+generate trees with the specified shapes and leaf labels.</p>
     </div>
 
     <pre class="usage"><span class='fu'>RandomTree</span>(<span class='no'>tips</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>PectinateTree</span>(<span class='no'>tips</span>)
 
-<span class='fu'>BalancedTree</span>(<span class='no'>tips</span>)</pre>
+<span class='fu'>BalancedTree</span>(<span class='no'>tips</span>)
+
+<span class='fu'>StarTree</span>(<span class='no'>tips</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,6 +194,7 @@ the specified leaf labels. Trees are rooted unless <code>root = FALSE</code>.</p
 tree on a given tip.</p>
 <p><code>PectinateTree()</code> returns a pectinate (caterpillar) tree.</p>
 <p><code>BalancedTree()</code> returns a balanced (symmetrical) tree.</p>
+<p><code>StarTree()</code> returns a completely unresolved (star) tree.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree generation functions: 
@@ -216,7 +219,8 @@ tree on a given tip.</p>
 #&gt; 
 #&gt; Unrooted; no branch lengths.</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>PectinateTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>BalancedTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>BalancedTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>StarTree</span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]))</div><div class='img'><img src='GenerateTree-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

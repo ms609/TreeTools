@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of tips in a phylogenetic tree — NTip • TreeTools</title>
+<title>Number of leaves in a phylogenetic tree — NTip • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,9 @@
 
 
 
-<meta property="og:title" content="Number of tips in a phylogenetic tree — NTip" />
-<meta property="og:description" content="Extends ape's function Ntip to handle objects of
-class Splits and list, and edge matrices (equivalent to phylo$edge)." />
+<meta property="og:title" content="Number of leaves in a phylogenetic tree — NTip" />
+<meta property="og:description" content="Extends the 'ape' function Ntip() to handle objects
+of class Splits and list, and edge matrices (equivalent to phylo$edge)." />
 
 
 
@@ -152,14 +152,14 @@ class Splits and list, and edge matrices (equivalent to phylo$edge)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of tips in a phylogenetic tree</h1>
+    <h1>Number of leaves in a phylogenetic tree</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>NTip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extends ape's function <code><a href='https://rdrr.io/pkg/ape/man/summary.phylo.html'>Ntip</a></code> to handle objects of
-class <code>Splits</code> and <code>list</code>, and edge matrices (equivalent to <code>phylo$edge</code>).</p>
+    <p>Extends the 'ape' function <code><a href='https://rdrr.io/pkg/ape/man/summary.phylo.html'>Ntip()</a></code> to handle objects
+of class <code>Splits</code> and <code>list</code>, and edge matrices (equivalent to <code>phylo$edge</code>).</p>
     </div>
 
     <pre class="usage"><span class='fu'>NTip</span>(<span class='no'>phy</span>)
@@ -184,7 +184,7 @@ class <code>Splits</code> and <code>list</code>, and edge matrices (equivalent t
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>phy</th>
-      <td><p>Object to count.</p></td>
+      <td><p>Object representing one or more phylogenetic trees.</p></td>
     </tr>
     </table>
 
