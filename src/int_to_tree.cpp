@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <Rcpp.h>
+#include "types.h"
 using namespace Rcpp;
 
 const unsigned int MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
@@ -10,10 +11,12 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
   if (nTip[0] < 2) {
     throw std::range_error("nTip must be > 1");
   }
-  const unsigned int n_tip = nTip[0],
-                     root_node = n_tip + n_tip - 1,
-                     c_to_r = 1,
-                     prime = n_tip - 2;
+  const unsigned int
+    n_tip = nTip[0],
+    root_node = n_tip + n_tip - 1,
+    c_to_r = 1,
+    prime = n_tip - 2
+  ;
   uint64_t tree_id = n[0];
   for (int i = 1; i < n.length(); i++) {
     tree_id *= MAX_INT;

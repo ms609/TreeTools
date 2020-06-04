@@ -66,7 +66,7 @@ SplitFrequency <- function(reference, forest) {
 #'
 #' @template exampleNodeSupport
 #'
-#' @seealso Calculate split support: [`SplitSupport()`]
+#' @seealso Calculate split support: [`SplitFrequency()`]
 #'
 #' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
@@ -134,7 +134,7 @@ TreeSplits <- function (tree) {
 #' @template exampleNodeSupport
 #'
 #' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
-#' possibly calculated using [`SplitSupport()`].
+#' possibly calculated using [`SplitFrequency()`].
 #'
 #' @importFrom colorspace diverge_hcl
 #' @export
