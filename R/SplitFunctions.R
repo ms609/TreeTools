@@ -205,16 +205,16 @@ SplitMatchProbability <- function (split1, split2) {
 
 #' Extract tip labels
 #'
-#' Extracts tip labels from an object.  If the object is a single integer,
-#' `TipLabels` will return a vector `t1`, `t2` ... `tn`, to match
-#' the default of \code{ape::\link{rtree}}.
+#' `TipLabels()` extracts labels from an object: for example, names of taxa in
+#' a phylogenetic tree or data matrix.
 #'
 #' @param x An object of a supported class (see Usage section).
 #' @param single Logical specifying whether to report the labels for the first
 #' object only (`TRUE`), or for each object in a list (`FALSE`).
 #'
-#' @return `TipLabels` returns a character vector listing the tip labels for the
-#' specified object.
+#' @return `TipLabels()` returns a character vector listing the tip labels
+#' appropriate to `x`. If `x` is a single integer, this will be a vector
+#' `t1`, `t2` ... `tx`, to match the default of \code{ape::\link{rtree}()}.
 #'
 #' @family tree properties
 #' @template MRS
@@ -309,10 +309,10 @@ TipLabels.default <- function (x, single = TRUE) {
 
 #' Distributions of tips consistent with a partition pair
 #'
-#' Number of terminal arrangements matching a specified configuration of
-#' two partitions.
+#' `NPartitionPairs()` calculates the number of terminal arrangements matching
+#' a specified configuration of two splits.
 #'
-#' Consider partitions that divide eight terminals, labelled A to H.
+#' Consider splits that divide eight terminals, labelled A to H.
 #'
 #' \tabular{rcll}{
 #'   Bipartition 1:\tab ABCD:EFGH\tab A1 = ABCD\tab B1 = EFGH \cr
@@ -350,6 +350,7 @@ NPartitionPairs <- function (configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *
     choose(sum(configuration[c(2, 4)]), configuration[2])
 }
+
 #' @describeIn SplitMatchProbability The natural logarithm of the probability
 LnSplitMatchProbability <- function(split1, split2) {
   log(SplitMatchProbability(split1, split2))

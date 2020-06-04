@@ -1,7 +1,8 @@
 #' Total Cophenetic Index
 #'
-#' Calculate the total cophenetic index (Mir _et al_. 2013) for any tree, and
-#' its possible values.
+#' `TotalCopheneticIndex()` calculates the total cophenetic index
+#' (Mir _et al_. 2013) for any tree, a measure of its balance;
+#' `TCIContext()` lists its possible values.
 #'
 #' The Total Cophenetic Index is a measure of tree balance -- i.e. whether
 #' a (phylogenetic) tree comprises symmetric pairs of nodes, or has a pectinate
@@ -21,8 +22,7 @@
 #' @template xPhylo
 #'
 #' @return
-#' `TotalCopheneticIndex()` returns the Total Cophenetic Index,
-#' a measure of the balance of the tree.
+#' `TotalCopheneticIndex()` returns an integer denoting the total cophenetic index.
 #'
 #' `TCIContext()` returns a data frame detailing the maximum and minimum value
 #' obtainable for the Total Cophenetic Index for binary trees with the
@@ -39,6 +39,15 @@
 #' @references \insertRef{Mir2013}{TreeTools}
 #'
 #' @examples
+#' # Balanced trees have the minimum index for a binary tree;
+#' # Pectinate trees the maximum:
+#' TCIContext(8)
+#' TotalCopheneticIndex(PectinateTree(8))
+#' TotalCopheneticIndex(BalancedTree(8))
+#' TotalCopheneticIndex(RandomTree(8, root = FALSE))
+#'
+#'
+#' # Examples from Mir et al. (2013):
 #' tree12 <- ape::read.tree(text='(1, (2, (3, (4, 5))));')  #Fig. 4, tree 12
 #' TotalCopheneticIndex(tree12) # 10
 #' tree8  <- ape::read.tree(text='((1, 2, 3, 4), 5);')      #Fig. 4, tree 8

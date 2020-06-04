@@ -527,12 +527,12 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
   notDuplicateRoot
 }
 
-#' Number of tips in a phylogenetic tree
+#' Number of leaves in a phylogenetic tree
 #'
-#' Extends ape's function [`Ntip`][ape::summary.phylo] to handle objects of
-#' class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
+#' Extends the 'ape' function [`Ntip()`][ape::summary.phylo] to handle objects
+#' of class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
 #'
-#' @param phy Object to count.
+#' @param phy Object representing one or more phylogenetic trees.
 #'
 #' @return `NTip()` returns an integer specifying the number of tips in each
 #' object in `phy`.
@@ -576,14 +576,14 @@ NTip.matrix <- function (phy) {
 
 #' Number of distinct splits
 #'
-#' How many unique bipartition splits occur in a tree or object?
+#' `NSplits()` counts the unique bipartition splits in a tree or object.
 #'
 #' @param x A phylogenetic tree of class `phylo`, or a list of such trees
 #' (of class `list` or `multiPhylo`), or a `Splits` object,
 #' or a vector of integers.
 #'
-#' @return `NSplits` returns an integer specifying the number of partitions in
-#'  the specified objects, or in a rooted tree with `n` tips.
+#' @return `NSplits` returns an integer specifying the number of bipartitions in
+#' the specified objects, or in a binary tree with `x` tips.
 #'
 #' @examples
 #' NSplits(8L)
