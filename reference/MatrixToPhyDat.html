@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Matrix to <code>phyDat</code> — MatrixToPhyDat • TreeTools</title>
+<title>Convert between matrices and <code>phyDat</code> objects — MatrixToPhyDat • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,9 @@
 
 
 
-<meta property="og:title" content="Matrix to <code>phyDat</code> — MatrixToPhyDat" />
-<meta property="og:description" content="Converts a matrix of tokens to a phyDat object." />
+<meta property="og:title" content="Convert between matrices and <code>phyDat</code> objects — MatrixToPhyDat" />
+<meta property="og:description" content="MatrixToPhyDat() converts a matrix of tokens to a phyDat object;
+PhyDatToMatrix() convertns a phyDat object to a matrix of tokens." />
 
 
 
@@ -151,13 +152,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Matrix to <code>phyDat</code></h1>
+    <h1>Convert between matrices and <code>phyDat</code> objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/parse_files.R'><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>MatrixToPhyDat.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Converts a matrix of tokens to a <code>phyDat</code> object.</p>
+    <p><code>MatrixToPhyDat()</code> converts a matrix of tokens to a <code>phyDat</code> object;
+<code>PhyDatToMatrix()</code> convertns a <code>phyDat</code> object to a matrix of tokens.</p>
     </div>
 
     <pre class="usage"><span class='fu'>MatrixToPhyDat</span>(<span class='no'>tokens</span>)
@@ -169,8 +171,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tokens</th>
-      <td><p>matrix of tokens, probably created with <code><a href='ReadCharacters.html'>ReadCharacters</a></code>
-or <code><a href='ReadCharacters.html'>ReadTntCharacters</a></code>. Row names should correspond to tip
+      <td><p>matrix of tokens, probably created with <code><a href='ReadCharacters.html'>ReadCharacters()</a></code>
+or <code><a href='ReadCharacters.html'>ReadTntCharacters()</a></code>. Row names should correspond to tip
 labels; column names may optionally correspond to
 character labels.</p></td>
     </tr>
@@ -182,15 +184,13 @@ character labels.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an object of class <code>phyDat</code>.</p>
+    <p><code>MatrixToPhyDat()</code> returns an object of class <code>phyDat</code>.</p>
 <p><code>PhyDatToMatrix()</code> returns a matrix corresponding to the
 uncompressed character states within a <code>phyDat</code> object.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    
-<ul>
-<li><p><code>PhyDatToMatrix</code>: Converts a <code>phyDat</code> object to a matrix of tokens.</p></li>
-</ul>
+    <div class='dont-index'><p>Other phylogenetic metrix conversion functions: 
+<code><a href='PhyToString.html'>StringToPhyDat</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
