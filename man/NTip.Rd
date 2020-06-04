@@ -7,7 +7,7 @@
 \alias{NTip.phylo}
 \alias{NTip.multiPhylo}
 \alias{NTip.matrix}
-\title{Number of tips in a phylogenetic tree}
+\title{Number of leaves in a phylogenetic tree}
 \usage{
 NTip(phy)
 
@@ -22,15 +22,15 @@ NTip(phy)
 \method{NTip}{matrix}(phy)
 }
 \arguments{
-\item{phy}{Object to count.}
+\item{phy}{Object representing one or more phylogenetic trees.}
 }
 \value{
 \code{NTip()} returns an integer specifying the number of tips in each
 object in \code{phy}.
 }
 \description{
-Extends ape's function \code{\link[ape:summary.phylo]{Ntip}} to handle objects of
-class \code{Splits} and \code{list}, and edge matrices (equivalent to \code{phylo$edge}).
+Extends the 'ape' function \code{\link[ape:summary.phylo]{Ntip()}} to handle objects
+of class \code{Splits} and \code{list}, and edge matrices (equivalent to \code{phylo$edge}).
 }
 \seealso{
 Other tree properties: 

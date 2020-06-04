@@ -30,11 +30,11 @@ NPartitions(x)
 or a vector of integers.}
 }
 \value{
-\code{NSplits} returns an integer specifying the number of partitions in
-the specified objects, or in a rooted tree with \code{n} tips.
+\code{NSplits} returns an integer specifying the number of bipartitions in
+the specified objects, or in a binary tree with \code{x} tips.
 }
 \description{
-How many unique bipartition splits occur in a tree or object?
+\code{NSplits()} counts the unique bipartition splits in a tree or object.
 }
 \examples{
 NSplits(8L)

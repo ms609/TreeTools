@@ -43,13 +43,13 @@ TipLabels(x, single = TRUE)
 object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 }
 \value{
-\code{TipLabels} returns a character vector listing the tip labels for the
-specified object.
+\code{TipLabels()} returns a character vector listing the tip labels
+appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
+\code{t1}, \code{t2} ... \code{tx}, to match the default of \code{ape::\link{rtree}()}.
 }
 \description{
-Extracts tip labels from an object.  If the object is a single integer,
-\code{TipLabels} will return a vector \code{t1}, \code{t2} ... \code{tn}, to match
-the default of \code{ape::\link{rtree}}.
+\code{TipLabels()} extracts labels from an object: for example, names of taxa in
+a phylogenetic tree or data matrix.
 }
 \seealso{
 Other tree properties: 
