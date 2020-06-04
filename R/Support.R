@@ -21,18 +21,7 @@
 #' Note that the three nodes at the root of the tree correspond to a single
 #' split; see the example for how these might be plotted on a tree.
 #'
-#' @examples
-#' # An example forest of 100 trees, some identical
-#' forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
-#'
-#' # Generate an 80% consensus tree
-#' cons <- ape::consensus(forest, p = 0.8)
-#' plot(cons)
-#'
-#' splitFreqs <- SplitFrequency(cons, forest)
-#' LabelSplits(cons, splitFreqs, unit = '%',
-#'             col = SupportColor(splitFreqs / 100),
-#'             frame = 'none', pos = 3L)
+#' @template exampleNodeSupport
 #'
 #' @template MRS
 #' @export
@@ -75,18 +64,11 @@ SplitFrequency <- function(reference, forest) {
 #' plot(tree)
 #' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
 #'
-#' # An example forest of 100 trees, some identical
-#' forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
+#' @template exampleNodeSupport
 #'
-#' # Generate an 80% consensus tree
-#' cons <- ape::consensus(forest, p = 0.8)
-#' plot(cons)
+#' @seealso Calculate split support: [`SplitSupport()`]
 #'
-#' splitFreqs <- SplitFrequency(cons, forest)
-#' LabelSplits(cons, splitFreqs, unit = '%',
-#'             col = SupportColor(splitFreqs / 100),
-#'             frame = 'none', pos = 3L)
-#'
+#' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
 #' @export
 LabelSplits <- function (tree, labels, units = '', ...) {
@@ -148,6 +130,12 @@ TreeSplits <- function (tree) {
 #' or `outOfRange` if a value is outwith the valid range.
 #' @examples
 #' SupportColour((-1):4 / 4, show1 = FALSE)
+#'
+#' @template exampleNodeSupport
+#'
+#' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
+#' possibly calculated using [`SplitSupport()`].
+#'
 #' @importFrom colorspace diverge_hcl
 #' @export
 SupportColour <- function (support,
