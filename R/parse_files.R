@@ -484,17 +484,19 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
   tokens
 }
 
-#' Matrix to `phyDat`
+#' Convert between matrices and `phyDat` objects
 #'
-#' Converts a matrix of tokens to a `phyDat` object.
+#' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
+#' `PhyDatToMatrix()` convertns a `phyDat` object to a matrix of tokens.
 #'
-#' @param tokens matrix of tokens, probably created with [`ReadCharacters`]
-#'               or [`ReadTntCharacters`]. Row names should correspond to tip
+#' @param tokens matrix of tokens, probably created with [`ReadCharacters()`]
+#'               or [`ReadTntCharacters()`]. Row names should correspond to tip
 #'               labels; column names may optionally correspond to
 #'               character labels.
 #'
-#' @return an object of class `phyDat`.
+#' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
+#' @family phylogenetic metrix conversion functions
 #' @template MRS
 #' @keywords internal
 #' @export
@@ -516,7 +518,7 @@ MatrixToPhyDat <- function (tokens) {
   dat
 }
 
-#' @describeIn MatrixToPhyDat Converts a `phyDat` object to a matrix of tokens.
+#' @rdname MatrixToPhyDat
 #' @param dataset A dataset of class `phyDat`.
 ## @param parentheses Character vector specifying style of parentheses
 ## with which to enclose ambiguous characters, e.g, `c('[', ']')` will render
@@ -571,31 +573,24 @@ PhyDat <- function (dataset) {
   MatrixToPhyDat(mat)
 }
 
-#' String to `phyDat`
-#'
-#' Converts a character string to a `phyDat` object.
+#' @rdname PhyToString
 #'
 #' @param string String of tokens, optionally containing whitespace, with no
 #'   terminating semi-colon.
 #' @param tips Character vector corresponding to the names (in order)
 #' of each taxon in the matrix.
 #' @param byTaxon Logical; if `TRUE`, string is one **taxon's** coding at a
-#' time; if `FALSE`, string is interpreted as one ***character's** coding at a
+#' time; if `FALSE`, string is interpreted as one **character's** coding at a
 #' time.
 #'
+#' @return `StringToPhyDat()` returns an object of class `phyDat`.
+#'
 #' @examples
-#' morphy <- StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
+#' StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
 #' # encodes the following matrix:
 #' # Lion     -?0123
 #' # Gazelle  1230?-
 #'
-#' @template returnPhydat
-#' @seealso \code{\link{phyDat}}
-#'
-#' @template MRS
-#' @aliases StringToPhydat
-#' @seealso
-#' - [`PhyToString`]
 #' @importFrom phangorn phyDat
 #' @export
 StringToPhyDat <-
@@ -604,26 +599,29 @@ StringToPhyDat <-
     rownames(tokens) <- tips
     MatrixToPhyDat(tokens)
   }
-#' @rdname StringToPhyDat
+#' @rdname PhyToString
 StringToPhydat <- StringToPhyDat
 
-#' `phyDat` to String
+#' Convert between strings and `phyDat` objects
 #'
-#' Extract character data from a `phyDat` object as a string.
+#' `PhyDatToString()` converts a [`phyDat`][phangorn::phyDat] object as a
+#' string;
+#' `StringToPhyDat()` converts a string of character data to a `phyDat` object.
 #'
-#' @param phy An object of class \code{\link{phyDat}}
-#' @param parentheses Character specifying format of parentheses with which
-#' to surround ambiguous tokens.  Choose from: `\{` (default), `[`, `(`, `<`.
+#' @param phy An object of class [`phyDat`][phangorn::phyDat].
+#' @param parentheses Character specifying format of parentheses with which to
+#' surround ambiguous tokens.  Choose from: \code{\{} (default), `[`, `(`, `<`.
 #' @param collapse Character specifying text, perhaps `,`, with which to
-#' separate multiple tokens within parentheses
-#' @param ps Character specifying text, perhaps `;`, to append to the end of the string
+#' separate multiple tokens within parentheses.
+#' @param ps Character specifying text, perhaps `;`, to append to the end of
+#' the string.
 #' @param useIndex Logical (default: `TRUE`) specifying whether to print
-#' duplicate characters multiple times, as they appeared in the original matrix
+#' duplicate characters multiple times, as they appeared in the original matrix.
 #' @param byTaxon Logical. If `TRUE`, write one taxon followed by the next.
-#'                If `FALSE`, write one character followed by the next.
-#' @param concatenate Logical specifying whether to concatenate all characters/taxa
-#'                    into a single string, or to return a separate string
-#'                    for each entry.
+#' If `FALSE`, write one character followed by the next.
+#' @param concatenate Logical specifying whether to concatenate all
+#' characters/taxa into a single string, or to return a separate string for
+#' each entry.
 #'
 #' @examples
 #' fileName <- paste0(system.file(package='TreeTools'),
@@ -631,11 +629,10 @@ StringToPhydat <- StringToPhyDat
 #' phyDat <- ReadAsPhyDat(fileName)
 #' PhyToString(phyDat, concatenate = FALSE)
 #'
-#' @return `PhyToString` returns a character vector listing a text
+#' @return `PhyToString()` returns a character vector listing a text
 #' representation of the phylogenetic character state for each taxon in turn.
 #'
-#' @seealso
-#' - [`StringToPhyDat`]
+#' @family phylogenetic metrix conversion functions
 #' @template MRS
 #' @importFrom phangorn phyDat
 #' @export

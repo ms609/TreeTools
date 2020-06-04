@@ -28,12 +28,12 @@ CladisticInformation(x)
 \item{x}{Tree of class \code{phylo}, or a list thereof.}
 }
 \value{
-Returns the phylogenetic or clustering information content
-of the input tree(s).
+\code{CladisticInfo()} returns a numeric giving the clustering information
+content of the input tree(s), in bits.
 }
 \description{
-Calculate the cladistic (phylogenetic) information content of a
-phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
+\code{CladisticInfo()} calculates the cladistic (phylogenetic) information
+content of a phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
 The \acronym{CIC} is the logarithm of the number of binary trees that include the
