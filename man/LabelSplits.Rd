@@ -4,19 +4,19 @@
 \alias{LabelSplits}
 \title{Label splits}
 \usage{
-LabelSplits(tree, labels, units = "", ...)
+LabelSplits(tree, labels, unit = "", ...)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link{phylo}}.}
 
-\item{\dots}{Additional parameters to \code{\link[ape:nodelabels]{ape::edgelabels()}}.}
-
-\item{frequencies}{Named vector listing annotations for each split. Names
+\item{labels}{Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see
 \code{\link[=as.Splits]{as.Splits()}} for details.}
 
 \item{unit}{Character specifying units of \code{labels}, if desired. Include a
 leading space if necessary.}
+
+\item{\dots}{Additional parameters to \code{\link[ape:nodelabels]{ape::edgelabels()}}.}
 }
 \value{
 \code{LabelSplits()} returns \code{invisible()}, after plotting \code{labels} on
@@ -50,4 +50,9 @@ LabelSplits(cons, splitFreqs, unit = '\%',
             col = SupportColor(splitFreqs / 100),
             frame = 'none', pos = 3L)
 
+}
+\seealso{
+Calculate split support: \code{\link[=SplitSupport]{SplitSupport()}}
+
+Colour labels according to value: \code{\link[=SupportColour]{SupportColour()}}
 }

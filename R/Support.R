@@ -48,7 +48,7 @@ SplitFrequency <- function(reference, forest) {
 #' [`AddTip()`].
 #'
 #' @template treeParam
-#' @param frequencies Named vector listing annotations for each split. Names
+#' @param labels Named vector listing annotations for each split. Names
 #' should correspond to the node associated with each split; see
 #' [`as.Splits()`] for details.
 #' @param unit Character specifying units of `labels`, if desired. Include a
@@ -71,8 +71,8 @@ SplitFrequency <- function(reference, forest) {
 #' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
 #' @export
-LabelSplits <- function (tree, labels, units = '', ...) {
-  edgelabels(paste0(labels, units),
+LabelSplits <- function (tree, labels, unit = '', ...) {
+  edgelabels(paste0(labels, unit),
              edge = match(as.integer(names(labels)), tree$edge[, 2]),
              ...)
   # Return:
