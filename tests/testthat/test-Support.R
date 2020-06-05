@@ -22,5 +22,5 @@ test_that("Node support colours consistent", {
   expect_equal('red', SupportColour(NA))
   expect_equal('red', SupportColour(2))
   expect_equal('red', SupportColor(-2)) # Check alternative spelling
-  expect_equal('#ffffff00', SupportColour(1, show1=FALSE))
+  expect_equal('#ffffff00', SupportColour(1, show1 = FALSE))
 })

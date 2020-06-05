@@ -2,6 +2,7 @@
 % Please edit documentation in R/Combinatorics.R
 \name{DoubleFactorial}
 \alias{DoubleFactorial}
+\alias{DoubleFactorial64}
 \alias{LnDoubleFactorial}
 \alias{Log2DoubleFactorial}
 \alias{LogDoubleFactorial}
@@ -10,6 +11,8 @@
 \title{Double factorial}
 \usage{
 DoubleFactorial(n)
+
+DoubleFactorial64(n)
 
 LnDoubleFactorial(n)
 
@@ -32,6 +35,9 @@ Double factorial
 }
 \section{Functions}{
 \itemize{
+\item \code{DoubleFactorial64}: Returns the exact double factorial as a 64-bit
+\code{integer64}, for \code{n} < 34.
+
 \item \code{LnDoubleFactorial}: Returns the logarithm of the double factorial.
 
 \item \code{Log2DoubleFactorial}: Returns the logarithm of the double factorial.
@@ -41,13 +47,11 @@ and below 50001
 }}
 
 \examples{
-{
 DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2
 DoubleFactorial (5) # 1 x 3 x 5
 exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 
-}
 
 }
 \seealso{

@@ -31,6 +31,7 @@ SystemRequirements: C++11
 Depends: R (>= 3.4.0),
     ape (>= 5.0)
 Imports:
+    bit64,
     colorspace,
     phangorn (>= 2.2.1),
     R.cache

@@ -10,19 +10,18 @@ utils::globalVariables(c('doubleFactorials',
 #'
 #' @return Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
 #'
-#' @examples {
+#' @examples
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
 #' DoubleFactorial (2) # 2
 #' DoubleFactorial (5) # 1 x 3 x 5
 #' exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
 #'
-#' }
 #'
 #' @template MRS
 #' @family Double factorial
 #' @export
 DoubleFactorial <- function (n) {
-  if (any(n > 300)) stop("301!! is too large to store as an integer. Use LnDoubleFactorial instead.")
+  if (any(n > 300)) stop("301!! is too large to represent. Use LnDoubleFactorial instead.")
 
   n[n < 2] <- 1
   doubleFactorials[n]
@@ -41,6 +40,13 @@ DoubleFactorial <- function (n) {
   #
   ## Return:
   #ret
+}
+
+#' @describeIn DoubleFactorial Returns the exact double factorial as a 64-bit
+#' `integer64`, for `n` < 34.
+#' @export
+DoubleFactorial64 <- function (n) {
+  if (n < 2) 1 else as.integer64(n * DoubleFactorial64(n - 2L))
 }
 
 # Memoizing this function makes it MUCH slower...
@@ -150,11 +156,19 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @family tree information functions
 #' @export
-NRooted     <- function (tips)  DoubleFactorial(tips + tips - 3L) # addition faster than 2*
+NRooted     <- function (tips) DoubleFactorial(tips + tips - 3L) # addition faster than 2*
 
 #' @describeIn NRooted Number of unrooted trees
 #' @export
-NUnrooted   <- function (tips)  DoubleFactorial(tips + tips - 5L)
+NUnrooted   <- function (tips) DoubleFactorial(tips + tips - 5L)
+
+#' @describeIn NRooted Exact number of rooted trees as 64-bit integer
+#' (13 < `nTip` < 19)
+NRooted64 <- function (tips) DoubleFactorial64(tips + tips - 3L)
+
+#' @describeIn NRooted Exact number of unrooted trees as 64-bit integer
+#' (14 < `nTip` < 20)
+NUnrooted64 <- function (tips) DoubleFactorial64(tips + tips - 5L)
 
 #' @describeIn NRooted  Log Number of unrooted trees
 #' @export

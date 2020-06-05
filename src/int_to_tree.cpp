@@ -3,7 +3,6 @@
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
-const uint64_t MAX_INT = 1000000000U;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
@@ -18,7 +17,7 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
   ;
   uint64_t tree_id = n[0];
   for (intx i = 1; i < n.length(); i++) {
-    tree_id *= MAX_INT;
+    tree_id *= INT_MAX;
     tree_id += n[i];
   }
   intx base;
@@ -34,7 +33,7 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
       i_prime_r = i_prime + c_to_r
     ;
 
-    uint64_t where = (tree_id % base) + 1;
+    intx where = (tree_id % base) + 1;
     if (where >= i) {
       where += prime + 2 - i;
     }
@@ -59,7 +58,7 @@ intx maximum (const intx x, const intx y) {
 
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
-NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
+IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
                    IntegerVector nTip) {
   if (parent.size() != child.size()) {
     throw std::length_error("Parent and child must be the same length");
@@ -72,7 +71,7 @@ NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
     r_to_c = 1
   ;
   if (n_tip < 4) {
-    return NumericVector(1); // A length one, zero initialized vector
+    return IntegerVector(1); // A length one, zero initialized vector
   }
   if (n_edge != n_tip + n_tip - 2) {
     throw std::length_error("nEdge must == nTip + nTip - 2");
@@ -121,9 +120,9 @@ NumericVector edge_to_num(IntegerVector parent, IntegerVector child,
     multiplier *= (i + i - 3);
   }
 
-  if (num >= MAX_INT) {
-    return NumericVector{num / MAX_INT, num % MAX_INT};
+  if (num >= INT_MAX) {
+    return IntegerVector{int(num / INT_MAX), int(num % INT_MAX)};
   } else {
-    return NumericVector{num};
+    return IntegerVector{int(num)};
   }
 }

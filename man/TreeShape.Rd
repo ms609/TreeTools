@@ -16,7 +16,7 @@
 \usage{
 RootedTreeShape(tree)
 
-RootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
+RootedTreeWithShape(shape, nTip, tipLabels)
 
 UnrootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
 
@@ -70,11 +70,11 @@ It is a wrapper to \code{.UnrootedKeys()}, with memoization, meaning that result
 once calculated are cached and need not be calculated on future calls to
 the function.
 
-\code{TreeShapes()} returns an integer specifying the number of unique
-unrooted tree shapes with \code{nTip} tips.
+\code{NUnrootedShapes()} returns an integer specifying the number of
+unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once nTips > 14.
 
-\code{RootedTreeShapes()} returns an integer specifying the number of
-unique rooted tree shapes with \code{nTip} (< 201) tips.
+\code{NRootedShapes()} returns an object of class \code{integer64} specifying
+the number of unique rooted tree shapes with \code{nTip} (< 56) tips.
 }
 \description{
 Returns an integer that uniquely represents the shape of an \emph{n}-tip
