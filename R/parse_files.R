@@ -205,6 +205,7 @@ TntText2Tree <- function (treeText) {
   read.tree(text=gsub(", )", ")", treeText, fixed=TRUE))
 }
 
+#' @rdname ReadTntTree
 #' @export
 TNTText2Tree <- TntText2Tree
 

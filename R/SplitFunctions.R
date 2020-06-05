@@ -13,12 +13,13 @@
 #'
 #' @examples
 #' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' splits
 #' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 #' summary(efgh)
 #'
 #' TrivialSplits(efgh)
 #'
-#' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
+#' summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 #' @template MRS
 #'
 #' @family split manipulation functions

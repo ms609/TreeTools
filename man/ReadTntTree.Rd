@@ -3,11 +3,14 @@
 \name{ReadTntTree}
 \alias{ReadTntTree}
 \alias{TntText2Tree}
+\alias{TNTText2Tree}
 \title{Parse TNT Tree}
 \usage{
 ReadTntTree(filename, relativePath = NULL, keepEnd = 1L, tipLabels = NULL)
 
 TntText2Tree(treeText)
+
+TNTText2Tree(treeText)
 }
 \arguments{
 \item{filename}{character string specifying path to TNT \code{.tre} file,

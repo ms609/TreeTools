@@ -421,9 +421,6 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' a logical vector indicating whether there is a match or not for each
 #' split in its left operand.
 #'
-#' @usage
-#' match(x, table, nomatch = NA_integer_)
-#'
 #' @param x,table Object of class `Splits`.
 #' @param \dots Specify `nomatch =` to provide an integer value that will be
 #' used in place of `NA` in the case where no match is found.

@@ -5,7 +5,7 @@
 \alias{\%in\%.Splits}
 \title{Split matching}
 \usage{
-match(x, table, nomatch = NA_integer_)
+\method{match}{Splits}(x, table, ...)
 
 \method{\%in\%}{Splits}(x, table)
 }
