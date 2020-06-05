@@ -55,5 +55,5 @@ LabelSplits(cons, splitFreqs, unit = '\%',
 }
 \seealso{
 Use in conjunction with \code{\link[=LabelSplits]{LabelSplits()}} to colour split labels,
-possibly calculated using \code{\link[=SplitSupport]{SplitSupport()}}.
+possibly calculated using \code{\link[=SplitFrequency]{SplitFrequency()}}.
 }

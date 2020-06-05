@@ -404,9 +404,17 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
   x
 }
 
-#' Match splits
+#' Split matching
 #'
-#' Equivalent of `match` for `Splits` objects.
+#' `match` returns a vector of the positions of (first) matches of splits in
+#' its first argument in its second.
+#'
+#' `%in%` is a more intuitive interface as a binary operator, which returns
+#' a logical vector indicating whether there is a match or not for each
+#' split in its left operand.
+#'
+#' @usage
+#' match(x, table, nomatch = NA_integer_)
 #'
 #' @param x,table Object of class `Splits`.
 #' @param \dots Specify `nomatch =` to provide an integer value that will be
@@ -415,8 +423,8 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 # `x` matching a value in this vector is assigned the `nomatch` value.
 # For historical reasons, `FALSE` is equivalent to `NULL`.
 #'
-#' @return An integer vector specifying the position in `table` that matches
-#' each element in `x`, or `nomatch` if no match is found.
+#' @return `match()` returns an integer vector specifying the position in
+#' `table` that matches each element in `x`, or `nomatch` if no match is found.
 #'
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(7))
@@ -442,25 +450,14 @@ match.Splits <- function (x, table, ...) {
   }, integer(1))
 }
 
-#' `%in%` equivalent for splits objects
+#' @rdname match.Splits
 #'
-#' @param x,table Object of class `Splits`.
-# @param incomparables A vector of values that cannot be matched. Any value in
-# `x` matching a value in this vector is assigned the `nomatch` value.
-# For historical reasons, `FALSE` is equivalent to `NULL`.
-#'
-#' @return A logical vector specifying which of the splits in `x` are present
-#' in `table`.
-#'
-#' @template MRS
+#' @return `%in%` returns a logical vector specifying which of the splits in
+#' `x` are present in `table`.
 #'
 #' @examples
-#' splits1 <- as.Splits(BalancedTree(7))
-#' splits2 <- as.Splits(PectinateTree(7))
-#'
 #' splits1 %in% splits2
 #'
-#' @family Splits operations
 #' @importFrom bit64 %in%
 #' @method %in% Splits
 #' @export

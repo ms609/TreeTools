@@ -43,7 +43,6 @@ Other Splits operations:
 \code{\link{NSplits}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{\%in\%.Splits}()},
 \code{\link{as.Splits}()},
 \code{\link{match.Splits}()}
 }

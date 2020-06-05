@@ -52,7 +52,7 @@ LabelSplits(cons, splitFreqs, unit = '\%',
 
 }
 \seealso{
-Calculate split support: \code{\link[=SplitSupport]{SplitSupport()}}
+Calculate split support: \code{\link[=SplitFrequency]{SplitFrequency()}}
 
 Colour labels according to value: \code{\link[=SupportColour]{SupportColour()}}
 }

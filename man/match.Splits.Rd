@@ -2,9 +2,12 @@
 % Please edit documentation in R/Splits.R
 \name{match.Splits}
 \alias{match.Splits}
-\title{Match splits}
+\alias{\%in\%.Splits}
+\title{Split matching}
 \usage{
-\method{match}{Splits}(x, table, ...)
+match(x, table, nomatch = NA_integer_)
+
+\method{\%in\%}{Splits}(x, table)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}
@@ -13,17 +16,28 @@
 used in place of \code{NA} in the case where no match is found.}
 }
 \value{
-An integer vector specifying the position in \code{table} that matches
-each element in \code{x}, or \code{nomatch} if no match is found.
+\code{match()} returns an integer vector specifying the position in
+\code{table} that matches each element in \code{x}, or \code{nomatch} if no match is found.
+
+\code{\%in\%} returns a logical vector specifying which of the splits in
+\code{x} are present in \code{table}.
 }
 \description{
-Equivalent of \code{match} for \code{Splits} objects.
+\code{match} returns a vector of the positions of (first) matches of splits in
+its first argument in its second.
+}
+\details{
+\code{\%in\%} is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(7))
 splits2 <- as.Splits(PectinateTree(7))
 
 match(splits1, splits2)
+
+splits1 \%in\% splits2
 
 }
 \seealso{
@@ -32,7 +46,6 @@ Other Splits operations:
 \code{\link{NTip}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{\%in\%.Splits}()},
 \code{\link{as.Splits}()}
 }
 \concept{Splits operations}
