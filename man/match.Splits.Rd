@@ -9,7 +9,8 @@
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}
 
-\item{nomatch}{The value to be returned in the case where no match is found.}
+\item{\dots}{Specify \verb{nomatch =} to provide an integer value that will be
+used in place of \code{NA} in the case where no match is found.}
 }
 \value{
 An integer vector specifying the position in \code{table} that matches

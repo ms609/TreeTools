@@ -407,8 +407,8 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' Equivalent of `match` for `Splits` objects.
 #'
 #' @param x,table Object of class `Splits`.
-#' @param nomatch Integer value to be returned in the case where no match
-#'  is found.
+#' @param \dots Specify `nomatch =` to provide an integer value that will be
+#' used in place of `NA` in the case where no match is found.
 # @param incomparables A vector of values that cannot be matched. Any value in
 # `x` matching a value in this vector is assigned the `nomatch` value.
 # For historical reasons, `FALSE` is equivalent to `NULL`.
@@ -443,9 +443,9 @@ match.Splits <- function (x, table, ...) {
 #' `%in%` equivalent for splits objects
 #'
 #' @param x,table Object of class `Splits`.
-#' @param incomparables A vector of values that cannot be matched. Any value in
-#' `x` matching a value in this vector is assigned the `nomatch` value.
-#' For historical reasons, `FALSE` is equivalent to `NULL`.
+# @param incomparables A vector of values that cannot be matched. Any value in
+# `x` matching a value in this vector is assigned the `nomatch` value.
+# For historical reasons, `FALSE` is equivalent to `NULL`.
 #'
 #' @return A logical vector specifying which of the splits in `x` are present
 #' in `table`.

@@ -25,10 +25,10 @@ SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FA
 #' to all trees, for example trees read from a Nexus file, causes data to be
 #' lost.
 #'
-#' @param add Tree to add to the list, of class [`phylo`][ape:read.tree].
+#' @param add Tree to add to the list, of class [`phylo`][ape::read.tree].
 #' @param treeList A list of trees, of class `list`,
-#' [`multiPhylo`][ape:multiphylo], or, if a single tree,
-#' [`phylo`][ape:read.tree].
+#' [`multiPhylo`][ape::multiphylo], or, if a single tree,
+#' [`phylo`][ape::read.tree].
 #'
 #' @return `UnshiftTree()` returns a list of class `list` or `multiPhylo`
 #' (following the original class of `treeList`), whose first element is the

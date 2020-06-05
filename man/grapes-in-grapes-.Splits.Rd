@@ -8,10 +8,6 @@
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}
-
-\item{incomparables}{A vector of values that cannot be matched. Any value in
-\code{x} matching a value in this vector is assigned the \code{nomatch} value.
-For historical reasons, \code{FALSE} is equivalent to \code{NULL}.}
 }
 \value{
 A logical vector specifying which of the splits in \code{x} are present
