@@ -176,16 +176,20 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
     }
   }
   if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  if (length(x) > 1) {
-    structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
-              tip.label = tipLabels, class='multiPhylo')
+  if (nTip == 1) {
+    SingleTaxonTree(tipLabels)
   } else {
-    edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
-    structure(list(edge = do.call(cbind, edge),
-                   tip.label = tipLabels,
-                   Nnode = nTip - 1L),
-              order = 'preorder',
-              class = 'phylo')
+    if (length(x) > 1) {
+      structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
+                tip.label = tipLabels, class='multiPhylo')
+    } else {
+      edge <- RenumberEdges(num_to_parent(x, nTip), seq_len(nTip + nTip - 2L))
+      structure(list(edge = do.call(cbind, edge),
+                     tip.label = tipLabels,
+                     Nnode = nTip - 1L),
+                order = 'preorder',
+                class = 'phylo')
+    }
   }
 }
 

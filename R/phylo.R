@@ -72,8 +72,8 @@ Renumber <- function (tree) {
 #' @family tree manipulation
 #' @family tree generation functions
 #' @export
-SingleTaxonTree <- function (label) {
-  structure(list(edge=matrix(c(2L,1L), 1, 2), tip.label=label, Nnode=1L),
+SingleTaxonTree <- function (label = 't1') {
+  structure(list(edge = matrix(c(2L,1L), 1, 2), tip.label = label, Nnode = 1L),
             class = 'phylo')
 }
 
