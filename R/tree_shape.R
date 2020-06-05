@@ -225,8 +225,10 @@ UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
 #' unique unrooted tree shapes with `nTip` (< 29) tips. Slow once `nTip` > 14.
 #' @export
 NUnrootedShapes <- function (nTip) {
-  precalculated <- c(rep(1L, 5), 2L, 2L, 4L, 6L, 11L, 18L, 37L, 66L, 135L,
-                     265L, 552L)
+  precalculated <- c(rep(1L, 5),
+                     2L, 2L, 4L, 6L, 11L,
+                     18L, 37L, 66L, 135L, 265L,
+                     552L, 1132L, 2410L)
   if (nTip > length(precalculated)) {
     length(UnrootedKeys(nTip))
   } else {
