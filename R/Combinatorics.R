@@ -6,9 +6,13 @@ utils::globalVariables(c('doubleFactorials',
 
 #' Double factorial
 #'
+#' Calculate the double factorial of a number, or its logarithm.
+#'
 #' @param n Vector of integers.
 #'
-#' @return Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
+#' @encoding UTF-8
+#' @return Returns the double factorial, _n_ × (_n_ − 2) × (_n_ − 4) ×
+#' (_n_ − 6) × ...
 #'
 #' @examples
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
@@ -211,15 +215,14 @@ Log2Rooted.int <- function (tips) {
 #'
 #' `N1Spr()` calculates the number of trees one subtree prune-and-regraft
 #' operation away from a binary input tree using the formula given by Allen and
-#' Steel (2001).
-#'
-#' `IC1Spr()` calculates the information content of trees at this distance: i.e.
-#' the entropy corresponding to the proportion of all possible _n_-tip trees
-#' whose SPR distance is at most one from a specified tree.
+#' Steel (2001); `IC1Spr()` calculates the information content of trees at this
+#' distance: i.e. the entropy corresponding to the proportion of all possible
+#' _n_-tip trees whose SPR distance is at most one from a specified tree.
 #'
 #' @param n Integer vector specifying the number of tips in a tree.
 #'
-#' @return `N1Spr()` returns an integer vector.
+#' @return `N1Spr()` returns an integer vector denoting the number of trees one
+#' SPR rearrangement away from the input tree..
 #'
 #' @examples
 #' N1Spr(4:6)
@@ -231,8 +234,7 @@ Log2Rooted.int <- function (tips) {
 #' @export
 N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 
-#' @describeIn N1Spr Information content of trees 0 or 1 SPR step from a tree
-#'  with _n_ leaves.
+#' @rdname N1Spr
 #' @return `IC1Spr()` returns an numeric vector giving the phylogenetic
 #' information content of trees 0 or 1 SPR rearrangement from an _n_-leaf tree,
 #' in bits.

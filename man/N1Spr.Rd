@@ -13,7 +13,8 @@ IC1Spr(n)
 \item{n}{Integer vector specifying the number of tips in a tree.}
 }
 \value{
-\code{N1Spr()} returns an integer vector.
+\code{N1Spr()} returns an integer vector denoting the number of trees one
+SPR rearrangement away from the input tree..
 
 \code{IC1Spr()} returns an numeric vector giving the phylogenetic
 information content of trees 0 or 1 SPR rearrangement from an \emph{n}-leaf tree,
@@ -22,19 +23,10 @@ in bits.
 \description{
 \code{N1Spr()} calculates the number of trees one subtree prune-and-regraft
 operation away from a binary input tree using the formula given by Allen and
-Steel (2001).
+Steel (2001); \code{IC1Spr()} calculates the information content of trees at this
+distance: i.e. the entropy corresponding to the proportion of all possible
+\emph{n}-tip trees whose SPR distance is at most one from a specified tree.
 }
-\details{
-\code{IC1Spr()} calculates the information content of trees at this distance: i.e.
-the entropy corresponding to the proportion of all possible \emph{n}-tip trees
-whose SPR distance is at most one from a specified tree.
-}
-\section{Functions}{
-\itemize{
-\item \code{IC1Spr}: Information content of trees 0 or 1 SPR step from a tree
-with \emph{n} leaves.
-}}
-
 \examples{
 N1Spr(4:6)
 IC1Spr(5)
