@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read modification time from ape Nexus file — ApeTime • TreeTools</title>
+<title>Read modification time from 'ape' Nexus file — ApeTime • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,9 @@
 
 
 
-<meta property="og:title" content="Read modification time from ape Nexus file — ApeTime" />
-<meta property="og:description" content="Reads the time that an ape tree was modified from the comment in the Nexus
-file." />
+<meta property="og:title" content="Read modification time from 'ape' Nexus file — ApeTime" />
+<meta property="og:description" content="ApeTime() reads the time that a tree written with 'ape' was modified,
+based on the comment in the Nexus file." />
 
 
 
@@ -152,14 +152,14 @@ file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read modification time from ape Nexus file</h1>
+    <h1>Read modification time from 'ape' Nexus file</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/parse_files.R'><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>ApeTime.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Reads the time that an ape tree was modified from the comment in the Nexus
-file.</p>
+    <p><code>ApeTime()</code> reads the time that a tree written with 'ape' was modified,
+based on the comment in the Nexus file.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ApeTime</span>(<span class='no'>filename</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"double"</span>)</pre>
@@ -169,18 +169,19 @@ file.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filename</th>
-      <td><p>Character string specifying path to the file</p></td>
+      <td><p>Character string specifying path to the file.</p></td>
     </tr>
     <tr>
       <th>format</th>
       <td><p>Format in which to return the time: 'double' as a sortable numeric;
-any other value to return a string in the format YYYY-MM-DD hh:mm:ss</p></td>
+any other value to return a string in the format
+<code>YYYY-MM-DD hh:mm:ss</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ApeTime</code> returns the time that the specified file was created by
+    <p><code>ApeTime()</code> returns the time that the specified file was created by
 ape, in the format specified by <code>format</code>.</p>
 
   </div>

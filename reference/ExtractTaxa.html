@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Extract taxa from a matrix block — ExtractTaxa" />
-<meta property="og:description" content="Reads the character information from a Nexus-formatted matrix into R." />
+<meta property="og:description" content="Extract leaf labels and character states from a Nexus-formatted matrix." />
 
 
 
@@ -157,7 +157,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Reads the character information from a Nexus-formatted matrix into R.</p>
+    <p>Extract leaf labels and character states from a Nexus-formatted matrix.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ExtractTaxa</span>(
@@ -174,8 +174,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>matrixLines</th>
-      <td><p>lines of a file containing a phylogenetic matrix
-(see <code><a href='ReadCharacters.html'>ReadCharacters</a></code> for expected format).</p></td>
+      <td><p>Character vector containing lines of a file that include
+a phylogenetic matrix. See <code><a href='ReadCharacters.html'>ReadCharacters()</a></code> for expected format.</p></td>
     </tr>
     <tr>
       <th>character_num</th>
@@ -184,7 +184,7 @@
     </tr>
     <tr>
       <th>session</th>
-      <td><p>(optionally) a Shiny session with a <code>numericInput</code> named
+      <td><p>(Optional) A Shiny session with a <code>numericInput</code> named
 <code>character_num</code> whose maximum should be updated.</p></td>
     </tr>
     <tr>
@@ -207,16 +207,6 @@ each corresponding to the respective character specified in <code>character_num<
 <p><code>NexusTokens()</code> returns a character vector in which each entry
 corresponds to the states of a phylogenetic character, or a list containing
 an error message if input is invalid.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Extracts the names of tips from the matrix block of a Nexus file.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>NexusTokens</code>: Converts a Nexus string to a vector of character
-states.</p></li>
-</ul>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),

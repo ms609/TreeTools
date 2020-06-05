@@ -46,8 +46,9 @@
 
 
 <meta property="og:title" content="Write Newick Tree — NewickTree" />
-<meta property="og:description" content="Writes a tree in Newick format.  This differs from ape's write.tree
-in the encoding of spaces as spaces, rather than underscores." />
+<meta property="og:description" content="NewickTree() encodes a tree as a Newick-format string.
+This differs from write.tree() in the encoding of
+spaces as spaces, rather than underscores." />
 
 
 
@@ -158,8 +159,9 @@ in the encoding of spaces as spaces, rather than underscores." />
     </div>
 
     <div class="ref-description">
-    <p>Writes a tree in Newick format.  This differs from ape's <code>write.tree</code>
-in the encoding of spaces as spaces, rather than underscores.</p>
+    <p><code>NewickTree()</code> encodes a tree as a Newick-format string.
+This differs from <code><a href='https://rdrr.io/pkg/ape/man/write.tree.html'>write.tree()</a></code> in the encoding of
+spaces as spaces, rather than underscores.</p>
     </div>
 
     <pre class="usage"><span class='fu'>NewickTree</span>(<span class='no'>tree</span>)</pre>
@@ -179,10 +181,10 @@ in the encoding of spaces as spaces, rather than underscores.</p>
 format.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.Newick.html'>as.Newick</a></code></p></div>
+    <div class='dont-index'><p>Use tip numbers, rather than leaf labels: <code><a href='as.Newick.html'>as.Newick</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>NewickTree</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>6</span>))</div><div class='output co'>#&gt; [1] "(((t1,t2),t3),((t4,t5),t6));"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>NewickTree</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>4</span>:<span class='fl'>9</span>]))</div><div class='output co'>#&gt; [1] "(((D,E),F),((G,H),I));"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

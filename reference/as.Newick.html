@@ -46,9 +46,10 @@
 
 
 <meta property="og:title" content="Write a phylogenetic tree in Newick format — as.Newick" />
-<meta property="og:description" content="Creates a character string describing a phylogenetic tree in Newick format,
-using R's internal tip numbering.  Use RenumberTips to ensure that the
-internal numbering follows the order you expect." />
+<meta property="og:description" content="as.Newick() creates a character string representation of a phylogenetic
+tree, in the Newick format, using R's internal tip numbering.
+Use RenumberTips() to ensure that the internal numbering follows the
+order you expect." />
 
 
 
@@ -159,9 +160,10 @@ internal numbering follows the order you expect." />
     </div>
 
     <div class="ref-description">
-    <p>Creates a character string describing a phylogenetic tree in Newick format,
-using R's internal tip numbering.  Use <code><a href='RenumberTips.html'>RenumberTips</a></code> to ensure that the
-internal numbering follows the order you expect.</p>
+    <p><code>as.Newick()</code> creates a character string representation of a phylogenetic
+tree, in the Newick format, using R's internal tip numbering.
+Use <code><a href='RenumberTips.html'>RenumberTips()</a></code> to ensure that the internal numbering follows the
+order you expect.</p>
     </div>
 
     <pre class="usage"><span class='fu'>as.Newick</span>(<span class='no'>x</span>)
@@ -187,15 +189,15 @@ See Usage section for supported classes.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>as.Newick</code> returns a character string representing <code>tree</code> in Newick
+    <p><code>as.Newick()</code> returns a character string representing <code>tree</code> in Newick
 format.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
 <ul>
-<li><p><code><a href='NewickTree.html'>NewickTree</a></code></p></li>
-<li><p><code><a href='RenumberTips.html'>RenumberTips</a></code></p></li>
-<li><p><code><a href='https://rdrr.io/pkg/ape/man/write.tree.html'>ape::write.tree</a></code></p></li>
+<li><p>Retain leaf labels: <code><a href='NewickTree.html'>NewickTree()</a></code></p></li>
+<li><p>Change R's internal numbering of leaves: <code><a href='RenumberTips.html'>RenumberTips()</a></code></p></li>
+<li><p>Write tree to text or file: <code><a href='https://rdrr.io/pkg/ape/man/write.tree.html'>ape::write.tree()</a></code></p></li>
 </ul>
 </div>
 

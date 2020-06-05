@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Parse TNT Tree — ReadTntTree" />
-<meta property="og:description" content="Reads a tree from TNT's parenthetical output." />
+<meta property="og:description" content="Read a tree from TNT's parenthetical output." />
 
 
 
@@ -157,10 +157,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Reads a tree from TNT's parenthetical output.</p>
+    <p>Read a tree from TNT's parenthetical output.</p>
     </div>
 
     <pre class="usage"><span class='fu'>ReadTntTree</span>(<span class='no'>filename</span>, <span class='kw'>relativePath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keepEnd</span> <span class='kw'>=</span> <span class='fl'>1L</span>, <span class='kw'>tipLabels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>TntText2Tree</span>(<span class='no'>treeText</span>)
 
 <span class='fu'>TNTText2Tree</span>(<span class='no'>treeText</span>)</pre>
 
@@ -200,7 +202,7 @@ format output by TNT.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ReadTNTTree()</code> returns a tree of class <code>phylo</code>, corresponding
+    <p><code>ReadTntTree()</code> returns a tree of class <code>phylo</code>, corresponding
 to the tree in <code>filename</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -208,7 +210,7 @@ to the tree in <code>filename</code>.</p>
 analysis.  Whilst its implementation of tree search is extremely rapid,
 analysis of results in TNT is made difficult by its esoteric and scantly
 documented scripting language.</p>
-<p><code>ReadTNTTree()</code> aims to aid the user by facilitating the import of trees
+<p><code>ReadTntTree()</code> aims to aid the user by facilitating the import of trees
 generated in TNT into R for further analysis.</p>
 <p>The function depends on tree files being saved by TNT in parenthetical
 notation, using the TNT command <code>tsav*</code>.
@@ -216,7 +218,7 @@ Trees are easiest to load into R if taxa have been saved using their names
 (TNT command <code>taxname=</code>).  In this case, the TNT <code>.tre</code> file
 contains tip labels and can be parsed directly.  The downside is that the
 uncompressed <code>.tre</code> files will have a larger file size.</p>
-<p><code>ReadTNTTree()</code> can also read <code>.tre</code> files in which taxa have been saved
+<p><code>ReadTntTree()</code> can also read <code>.tre</code> files in which taxa have been saved
 using their numbers (<code>taxname-</code>).  Such files contain a hard-coded link to
 the matrix file that was used to generate the trees, in the first line of the
 <code>.tre</code> file.  This poses problems for portability: if the matrix file is
@@ -225,13 +227,8 @@ may be lost.  As such, it is important to check that the matrix file
 exists in the expected location -- if it does not,
 either use the <code>relativePath</code> argument to point to its new location, or
 specify <code>tipLabels</code> to manually specify the tip labels.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>TNTText2Tree</code>: Converts text representation of a tree in TNT to an
-object of class <code>phylo</code>.</p></li>
-</ul>
+<p><code>TntText2Tree()</code> converts text representation of a tree in TNT to an
+object of class <code>phylo</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># In the examples below, TNT has read a matrix from</span>
@@ -246,7 +243,7 @@ object of class <code>phylo</code>.</p></li>
 <span class='co'># this hard-coded reference from results.tnt:</span>
 <span class='co'># ReadTntTree('output/results1.tnt')</span>
 
-<span class='co'># These datasets are provided with the `TreeTools` package, which will</span>
+<span class='co'># These datasets are provided with the 'TreeTools' package, which will</span>
 <span class='co'># probably not be located at c:/TreeTools on your machine:</span>
 
 <span class='no'>oldWD</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>() <span class='co'># Remember the current working directory</span>
@@ -279,7 +276,16 @@ object of class <code>phylo</code>.</p></li>
 <span class='co'># then it will be necessary to navigate up the directory path with '..':</span>
 <span class='fu'>ReadTntTree</span>(<span class='st'>'../output/numbered.tre'</span>, <span class='st'>'..'</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
 
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>oldWD</span>) <span class='co'># Restore original working directory</span></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>oldWD</span>) <span class='co'># Restore original working directory</span>
+
+<span class='fu'>TNTText2Tree</span>(<span class='st'>"(A (B (C (D E ))));"</span>)</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; [1] "A" "B" "C" "D" "E"
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

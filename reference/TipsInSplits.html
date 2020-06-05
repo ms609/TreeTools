@@ -183,14 +183,16 @@ number of tips contained within each split in <code>splits</code>.</p>
 <code><a href='NSplits.html'>NSplits</a>()</code>,
 <code><a href='NTip.html'>NTip</a>()</code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
-<code><a href='grapes-in-grapes-.Splits.html'>%in%.Splits</a>()</code>,
 <code><a href='as.Splits.html'>as.Splits</a>()</code>,
 <code><a href='match.Splits.html'>match.Splits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>)<span class='co'>#'</span>
+<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='no'>tree</span>)
 <span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; 11 12 13 14 15 
 #&gt;  6  5  4  3  2 </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>splits</span>), <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.7</span>)</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='no'>tree</span>, <span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>), <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>' tips'</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>,
+            <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</div><div class='img'><img src='TipsInSplits-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

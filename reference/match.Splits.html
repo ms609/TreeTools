@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Match splits — match.Splits • TreeTools</title>
+<title>Split matching — match.Splits • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,9 @@
 
 
 
-<meta property="og:title" content="Match splits — match.Splits" />
-<meta property="og:description" content="Equivalent of match for Splits objects." />
+<meta property="og:title" content="Split matching — match.Splits" />
+<meta property="og:description" content="match returns a vector of the positions of (first) matches of splits in
+its first argument in its second." />
 
 
 
@@ -151,17 +152,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Match splits</h1>
+    <h1>Split matching</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Splits.R'><code>R/Splits.R</code></a></small>
     <div class="hidden name"><code>match.Splits.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Equivalent of <code>match</code> for <code>Splits</code> objects.</p>
+    <p><code>match</code> returns a vector of the positions of (first) matches of splits in
+its first argument in its second.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for Splits</span>
-<span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span>(<span class='no'>x</span>, <span class='no'>table</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"># S3 method for Splits
+match(x, table, ...)
+
+# S3 method for Splits
+%in%(x, table)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,8 +184,15 @@ used in place of <code>NA</code> in the case where no match is found.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An integer vector specifying the position in <code>table</code> that matches
-each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
+    <p><code><a href='https://rdrr.io/r/base/match.html'>match()</a></code> returns an integer vector specifying the position in
+<code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
+<p><code>%in%</code> returns a logical vector specifying which of the splits in
+<code>x</code> are present in <code>table</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>%in%</code> is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: 
@@ -188,7 +200,6 @@ each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p
 <code><a href='NTip.html'>NTip</a>()</code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
 <code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
-<code><a href='grapes-in-grapes-.Splits.html'>%in%.Splits</a>()</code>,
 <code><a href='as.Splits.html'>as.Splits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -196,6 +207,7 @@ each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p
 <span class='no'>splits2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>7</span>))
 
 <span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span>(<span class='no'>splits1</span>, <span class='no'>splits2</span>)</div><div class='output co'>#&gt; [1]  1 NA  3 NA</div><div class='input'>
+<span class='no'>splits1</span> <span class='kw'>%in%</span> <span class='no'>splits2</span></div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
