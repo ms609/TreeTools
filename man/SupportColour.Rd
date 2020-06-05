@@ -26,7 +26,7 @@ SupportColor(
 A transparent white will be returned if \code{FALSE}.}
 
 \item{scale}{101-element vector listing colours in sequence. Defaults to
-a diverging HCL scale.}
+a diverging \acronym{HCL} scale.}
 
 \item{outOfRange}{Colour to use if results are outside the range 0--1.}
 }

@@ -85,7 +85,7 @@ continuous
 \insertRef{Maddison1997}{TreeTools}
 }
 \seealso{
-MatrixToPhyDat
+Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

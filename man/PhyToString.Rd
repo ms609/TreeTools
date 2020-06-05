@@ -94,10 +94,10 @@ PhyToString(phyDat, concatenate = FALSE)
 
 }
 \seealso{
-Other phylogenetic metrix conversion functions: 
+Other phylogenetic matrix conversion functions: 
 \code{\link{MatrixToPhyDat}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
-\concept{phylogenetic metrix conversion functions}
+\concept{phylogenetic matrix conversion functions}

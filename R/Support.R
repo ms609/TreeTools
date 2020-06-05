@@ -127,7 +127,7 @@ TreeSplits <- function (tree) {
 #' @param show1 Logical specifying whether to display values of 1.
 #' A transparent white will be returned if `FALSE`.
 #' @param scale 101-element vector listing colours in sequence. Defaults to
-#' a diverging HCL scale.
+#' a diverging \acronym{HCL} scale.
 #' @param outOfRange Colour to use if results are outside the range 0--1.
 #' @return `SupportColour()` returns the appropriate value from `scale`,
 #' or `outOfRange` if a value is outwith the valid range.

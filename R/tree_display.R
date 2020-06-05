@@ -60,7 +60,7 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' See [`legend()`] for options.
 #' @param \dots Additional parameters to pass on to [`ape::consensus()`] or
 #' [`legend()`].
-#' @return ``MarkMissing()` provides a null return, after plotting the specified
+#' @return `MarkMissing()` provides a null return, after plotting the specified
 #' `tip`s as a legend.
 #' @importFrom graphics legend
 #' @export

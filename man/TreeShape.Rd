@@ -71,7 +71,7 @@ once calculated are cached and need not be calculated on future calls to
 the function.
 
 \code{NUnrootedShapes()} returns an integer specifying the number of
-unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once nTips > 14.
+unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once \code{nTip} > 14.
 
 \code{NRootedShapes()} returns an object of class \code{integer64} specifying
 the number of unique rooted tree shapes with \code{nTip} (< 56) tips.

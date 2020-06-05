@@ -34,7 +34,8 @@ See \code{\link[=legend]{legend()}} for options.}
 \code{ConsensusWithout()} returns a consensus tree (of class \code{phylo})
 without the excluded taxa.
 
-``MarkMissing()\verb{provides a null return, after plotting the specified}tip`s as a legend.
+\code{MarkMissing()} provides a null return, after plotting the specified
+\code{tip}s as a legend.
 }
 \description{
 \code{ConsensusWithout()} displays a consensus plot with specified taxa excluded,

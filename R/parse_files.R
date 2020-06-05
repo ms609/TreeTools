@@ -360,7 +360,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' attributes(continuous) <- at
 #' continuous
 #'
-#' @seealso MatrixToPhyDat
+#' @seealso Convert between matrices and `phyDat` objects: [`MatrixToPhyDat()`]
 #' @export
 ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
@@ -495,7 +495,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 #' Convert between matrices and `phyDat` objects
 #'
 #' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
-#' `PhyDatToMatrix()` convertns a `phyDat` object to a matrix of tokens.
+#' `PhyDatToMatrix()` converts a `phyDat` object to a matrix of tokens.
 #'
 #' @param tokens matrix of tokens, probably created with [`ReadCharacters()`]
 #'               or [`ReadTntCharacters()`]. Row names should correspond to tip
@@ -504,7 +504,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 #'
 #' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
-#' @family phylogenetic metrix conversion functions
+#' @family phylogenetic matrix conversion functions
 #' @template MRS
 #' @keywords internal
 #' @export
@@ -640,7 +640,7 @@ StringToPhydat <- StringToPhyDat
 #' @return `PhyToString()` returns a character vector listing a text
 #' representation of the phylogenetic character state for each taxon in turn.
 #'
-#' @family phylogenetic metrix conversion functions
+#' @family phylogenetic matrix conversion functions
 #' @template MRS
 #' @importFrom phangorn phyDat
 #' @export
