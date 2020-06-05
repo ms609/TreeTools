@@ -32,7 +32,7 @@
 #'
 #' moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 #' print(moreSplits, details = TRUE)
-#' match(splits, moreSplits)
+#' match.Splits(splits, moreSplits)
 #' in.Splits(moreSplits, splits)
 #'
 #' @family Splits operations
@@ -419,7 +419,7 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' splits1 <- as.Splits(BalancedTree(7))
 #' splits2 <- as.Splits(PectinateTree(7))
 #'
-#' match(splits1, splits2)
+#' match.Splits(splits1, splits2)
 #'
 #' @family Splits operations
 #' @method match Splits
