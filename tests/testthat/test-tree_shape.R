@@ -4,8 +4,8 @@ test_that('Tree shapes counted', {
   expect_equal(as.integer64(c(1, 1, 1, 2, 3, 6, 11, 23)),
                as.integer64(vapply(1:8, NRootedShapes, bit64::integer64(1L))))
 
-  expect_equal(c(1, 1, 1, 1, 1, 2, 2, 4, 6),
-               vapply(1:9, NUnrootedShapes, 0L))
+  expect_equal(vapply(unrootedKeys, length, 0L),
+               vapply(seq_along(unrootedKeys), NUnrootedShapes, 0L))
 
   expect_error(NUnrootedShapes(29L))
 })

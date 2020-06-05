@@ -45,6 +45,12 @@
 #' @export
 "logDoubleFactorials"
 
+#' @rdname TreeShape
+#' @format `unrootedKeys` is a list of length `r length(unrootedKeys)`; each
+#' entry is a vector of integers corresponding to they keys (not shape numbers)
+#' of the different unrooted tree shapes with `nTip` leaves.
+"unrootedKeys"
+
 #' Raw data from Zhang et al. 2016
 #'
 #' @template LoboMods

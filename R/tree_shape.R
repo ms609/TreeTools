@@ -192,7 +192,7 @@ UnrootedTreeKey <- function (tree) {
 .UnrootedKeys <- function (nTip) {
   if (nTip > 28L) {
     stop("Too many shapes to calculate with ", nTip, " tips.")
-  } else if (nTip > 5L) {
+  } else if (nTip > length(unrootedKeys)) {
     #TODO make efficient - this is horrible!
     shapes <- as.integer(structure(
       vapply(seq_len(as.integer(NRootedShapes(nTip))) - 1L,
@@ -201,7 +201,7 @@ UnrootedTreeKey <- function (tree) {
       class = 'integer64'))
     uniqueShapes <- unique(shapes)
   } else {
-    uniqueShapes <- 0
+    uniqueShapes <- unrootedKeys[[nTip]]
   }
 
   # Return:
@@ -222,17 +222,19 @@ UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
 
 #' @rdname TreeShape
 #' @return `NUnrootedShapes()` returns an integer specifying the number of
-#' unique unrooted tree shapes with `nTip` (< 29) tips. Slow once `nTip` > 14.
+#' unique unrooted tree shapes with `nTip` (< 29) tips. Slow once `nTip` >
+#' `r length(unrootedTrees)`.
 #' @export
 NUnrootedShapes <- function (nTip) {
-  precalculated <- c(rep(1L, 5),
+  nUnrootedKeys <- c(rep(1L, 5),
                      2L, 2L, 4L, 6L, 11L,
                      18L, 37L, 66L, 135L, 265L,
-                     552L, 1132L, 2410L)
-  if (nTip > length(precalculated)) {
+                     552L, 1132L, 2410L, 5098L, 11020L)
+  if (nTip > length(nUnrootedKeys)) {
+    warning("Calculation will take some time...")
     length(UnrootedKeys(nTip))
   } else {
-    precalculated[nTip]
+    nUnrootedKeys[nTip]
   }
 }
 
