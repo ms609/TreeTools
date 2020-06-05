@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Frequency of splits — SplitFrequency • TreeTools</title>
+<title>Label splits — LabelSplits • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,11 +45,8 @@
 
 
 
-<meta property="og:title" content="Frequency of splits — SplitFrequency" />
-<meta property="og:description" content="SplitFrequency() provides a simple way to count the number of times that
-bipartition splits, as defined by a reference tree, occur in a forest of
-trees. May be used to calculate edge (&quot;node&quot;) support for majority consensus
-or bootstrap trees." />
+<meta property="og:title" content="Label splits — LabelSplits" />
+<meta property="og:description" content="Labels the edges associated with each split on a plotted tree." />
 
 
 
@@ -154,93 +151,71 @@ or bootstrap trees." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Frequency of splits</h1>
+    <h1>Label splits</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Support.R'><code>R/Support.R</code></a></small>
-    <div class="hidden name"><code>SplitFrequency.Rd</code></div>
+    <div class="hidden name"><code>LabelSplits.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>SplitFrequency()</code> provides a simple way to count the number of times that
-bipartition splits, as defined by a reference tree, occur in a forest of
-trees. May be used to calculate edge ("node") support for majority consensus
-or bootstrap trees.</p>
+    <p>Labels the edges associated with each split on a plotted tree.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SplitFrequency</span>(<span class='no'>reference</span>, <span class='no'>forest</span>)
-
-<span class='fu'>SplitNumber</span>(<span class='no'>tips</span>, <span class='no'>tree</span>, <span class='no'>tipIndex</span>, <span class='no'>powersOf2</span>)
-
-<span class='fu'>ForestSplits</span>(<span class='no'>forest</span>, <span class='no'>powersOf2</span>)
-
-<span class='fu'>TreeSplits</span>(<span class='no'>tree</span>)</pre>
+    <pre class="usage"><span class='fu'>LabelSplits</span>(<span class='no'>tree</span>, <span class='no'>labels</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>""</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>reference</th>
-      <td><p>A tree of class <code>phylo</code>, a <code>Splits</code> object.</p></td>
-    </tr>
-    <tr>
-      <th>forest</th>
-      <td><p>a list of trees of class <code>phylo</code>, or a <code>multiPhylo</code> object; or a
-<code>Splits</code> object. See
-<a href='https://ms609.github.io/TreeTools/articles/load-trees.html'>vignette</a> for
-possible methods of loading trees into R.</p></td>
-    </tr>
-    <tr>
-      <th>tips</th>
-      <td><p>Integer vector specifying the tips of the tree within the chosen
-split.</p></td>
-    </tr>
-    <tr>
       <th>tree</th>
       <td><p>A tree of class <code>phylo</code>.</p></td>
     </tr>
     <tr>
-      <th>tipIndex</th>
-      <td><p>Character vector of tip names, in a fixed order.</p></td>
+      <th>labels</th>
+      <td><p>Named vector listing annotations for each split. Names
+should correspond to the node associated with each split; see
+<code><a href='as.Splits.html'>as.Splits()</a></code> for details.</p></td>
     </tr>
     <tr>
-      <th>powersOf2</th>
-      <td><p>Integer vector of same length as <code>tipIndex</code>, specifying a
-power of 2 to be associated with each tip in turn.</p></td>
+      <th>unit</th>
+      <td><p>Character specifying units of <code>labels</code>, if desired. Include a
+leading space if necessary.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters to <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>ape::edgelabels()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SplitFrequency()</code> returns the number of trees in <code>forest</code> that
-contain each split in <code>reference</code>.
-If <code>reference</code> is a tree of class <code>phylo</code>, then the sequence will correspond
-to the order of nodes (use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>ape::nodelabels()</a></code> to view).
-Note that the three nodes at the root of the tree correspond to a single
-split; see the example for how these might be plotted on a tree.</p>
+    <p><code>LabelSplits()</code> returns <code><a href='https://rdrr.io/r/base/invisible.html'>invisible()</a></code>, after plotting <code>labels</code> on
+each relevant edge of a plot (which should already have been produced using
+<code><a href='https://rdrr.io/r/base/plot.html'>plot(tree)</a></code>).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>If multiple calculations are required, some time can be saved by using the
-constituent functions (see examples)</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <p>As the two root edges of a rooted tree denote the same split, only the
+rightmost (plotted at the bottom, by default) edge will be labelled.
+If the position of the root is significant, add a tip at the root using
+<code><a href='AddTip.html'>AddTip()</a></code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    
-<ul>
-<li><p><code>SplitNumber</code>: Assign a unique integer to each split</p></li>
-<li><p><code>ForestSplits</code>: Frequency of splits in a given forest of trees</p></li>
-<li><p><code>TreeSplits</code>: Deprecated. Listed the splits in a given tree.
-Use as.Splits instead.</p></li>
-</ul>
+    <div class='dont-index'><p>Calculate split support: <code><a href='SplitFrequency.html'>SplitFrequency()</a></code></p>
+<p>Colour labels according to value: <code><a href='SupportColour.html'>SupportColour()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># An example forest of 100 trees, some identical</span>
+    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>])
+<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='no'>tree</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'>LabelSplits</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>splits</span>), <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</div><div class='img'><img src='LabelSplits-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># An example forest of 100 trees, some identical</span>
 <span class='no'>forest</span> <span class='kw'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>10</span>, <span class='fl'>79</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>100</span>, <span class='fl'>15</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>1000</span>, <span class='fl'>5</span>)), <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fl'>9</span>)
 
 <span class='co'># Generate an 80% consensus tree</span>
 <span class='no'>cons</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/consensus.html'>consensus</a></span>(<span class='no'>forest</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>0.8</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cons</span>)</div><div class='input'>
-<span class='no'>splitFreqs</span> <span class='kw'>&lt;-</span> <span class='fu'>SplitFrequency</span>(<span class='no'>cons</span>, <span class='no'>forest</span>)
-<span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='no'>cons</span>, <span class='no'>splitFreqs</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>'%'</span>,
+<span class='no'>splitFreqs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='SplitFrequency.html'>SplitFrequency</a></span>(<span class='no'>cons</span>, <span class='no'>forest</span>)
+<span class='fu'>LabelSplits</span>(<span class='no'>cons</span>, <span class='no'>splitFreqs</span>, <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>'%'</span>,
             <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='SupportColour.html'>SupportColor</a></span>(<span class='no'>splitFreqs</span> / <span class='fl'>100</span>),
-            <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</div><div class='img'><img src='SplitFrequency-1.png' alt='' width='700' height='433' /></div><div class='input'>
+            <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</div><div class='img'><img src='LabelSplits-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -216,7 +216,9 @@ paramount).</p></td>
     <p><code>as.Splits</code> returns an object of class <code>Splits</code>, or
 (if <code>asSplits = FALSE</code>) a two-dimensional array of 32-bit integers, which
 each bit specifying whether a tip is a member of the split.
-Splits are named according to the node that defines them.</p>
+Splits are named according to the node at the non-root end of the edge that
+defines them. In rooted trees, the child of the rightmost root edge names
+the split.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: 
