@@ -1,4 +1,5 @@
 library('testthat')
+library('ape')
 library('TreeTools')
 
-test_check("TreeTools")
+suppressPackageStartupMessages(test_check("TreeTools"))
