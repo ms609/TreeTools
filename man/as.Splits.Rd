@@ -66,8 +66,8 @@ summary(c(splits[[2:3]], !splits[[1:2]]))
 
 moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 print(moreSplits, details = TRUE)
-match.Splits(splits, moreSplits)
-in.Splits(moreSplits, splits)
+match(splits, moreSplits)
+moreSplits \%in\% splits
 
 }
 \seealso{

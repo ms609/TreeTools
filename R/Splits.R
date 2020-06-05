@@ -32,8 +32,8 @@
 #'
 #' moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 #' print(moreSplits, details = TRUE)
-#' match.Splits(splits, moreSplits)
-#' in.Splits(moreSplits, splits)
+#' match(splits, moreSplits)
+#' moreSplits %in% splits
 #'
 #' @family Splits operations
 #' @importFrom ape reorder.phylo
