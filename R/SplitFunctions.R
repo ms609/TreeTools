@@ -153,7 +153,7 @@ CompatibleSplits <- function (splits, splits2) {
 #'
 #' @examples
 #' split1 <- as.Splits(c(rep(TRUE, 4), rep(FALSE, 4)))
-#' split2 <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
+#' split2 <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 5)))
 #' SplitMatchProbability(split1, split2)
 #' @family split information functions
 #' @template MRS
