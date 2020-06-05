@@ -414,9 +414,8 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 
 #' Split matching
 #'
-#' `match` returns a vector of the positions of (first) matches of splits in
+#' `match()` returns a vector of the positions of (first) matches of splits in
 #' its first argument in its second.
-#'
 #' `%in%` is a more intuitive interface as a binary operator, which returns
 #' a logical vector indicating whether there is a match or not for each
 #' split in its left operand.
