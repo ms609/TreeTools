@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Number of trees containing a tree — TreesMatchingTree" />
-<meta property="og:description" content="Calculates the number of unrooted binary trees that are consistent with
-a tree topology on the same leaves." />
+<meta property="og:description" content="TreesMatchingTree() calculates the number of unrooted binary trees that
+are consistent with a tree topology on the same leaves." />
 
 
 
@@ -158,8 +158,8 @@ a tree topology on the same leaves." />
     </div>
 
     <div class="ref-description">
-    <p>Calculates the number of unrooted binary trees that are consistent with
-a tree topology on the same leaves.</p>
+    <p><code>TreesMatchingTree()</code> calculates the number of unrooted binary trees that
+are consistent with a tree topology on the same leaves.</p>
     </div>
 
     <pre class="usage"><span class='fu'>TreesMatchingTree</span>(<span class='no'>tree</span>)
@@ -173,7 +173,7 @@ a tree topology on the same leaves.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>A tree of class <code>phylo</code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     </table>
 
@@ -196,8 +196,7 @@ unrooted binary trees that contain all the edges present in the input tree.</p>
 <span class='fu'>TreesMatchingTree</span>(<span class='no'>partiallyResolvedTree</span>)</div><div class='output co'>#&gt; [1] 45</div><div class='input'><span class='fu'>LnTreesMatchingTree</span>(<span class='no'>partiallyResolvedTree</span>)</div><div class='output co'>#&gt; [1] 3.806662</div><div class='input'>
 <span class='co'># Number of rooted trees:</span>
 <span class='no'>rootedTree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='AddTip.html'>AddTip</a></span>(<span class='no'>partiallyResolvedTree</span>, <span class='kw'>where</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-<span class='fu'>TreesMatchingTree</span>(<span class='no'>partiallyResolvedTree</span>)</div><div class='output co'>#&gt; [1] 45</div><div class='input'>
-</div></pre>
+<span class='fu'>TreesMatchingTree</span>(<span class='no'>partiallyResolvedTree</span>)</div><div class='output co'>#&gt; [1] 45</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
