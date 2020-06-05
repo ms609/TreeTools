@@ -124,8 +124,8 @@ test_that('as.Splits.Splits()', {
                                               0, 0, 0, 0)), ncol=2), nTip = 9,
                               tip.labels = TipLabels(splitsA), class='Splits')
   actualSplits <- as.Splits(splitsB, splitsA)
-  expect_true(all(in.Splits(expectedSplits, actualSplits)))
-  expect_true(all(in.Splits(actualSplits, expectedSplits)))
+  expect_true(all(expectedSplits %in% actualSplits))
+  expect_true(all(actualSplits %in% expectedSplits))
   expect_equal(NSplits(expectedSplits), NSplits(actualSplits))
 
   splitsABare <- splitsA
@@ -203,9 +203,9 @@ test_that('match.Splits()', {
   tree2 <- PectinateTree(8:1)
   col2 <- as.Splits(CollapseNode(tree2, 13))
 
-  expect_equal(5:1, match.Splits(as.Splits(tree1), as.Splits(tree2, tree1)))
-  expect_equal(c(4, 3, NA, 2, 1), match.Splits(as.Splits(tree1, tree2), col2))
-  expect_equal(c(5, 4, 2, 1), match.Splits(col2, as.Splits(tree1, tree2)))
+  expect_equal(5:1, match(as.Splits(tree1), as.Splits(tree2, tree1)))
+  expect_equal(c(4, 3, NA, 2, 1), match(as.Splits(tree1, tree2), col2))
+  expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
 })
 
 test_that("print.Splits()", {

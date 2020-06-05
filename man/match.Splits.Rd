@@ -4,7 +4,7 @@
 \alias{match.Splits}
 \title{Match splits}
 \usage{
-match.Splits(x, table, nomatch = NA_integer_, incomparables = NULL)
+\method{match}{Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}
@@ -26,7 +26,7 @@ Equivalent of \code{match} for \code{Splits} objects.
 splits1 <- as.Splits(BalancedTree(7))
 splits2 <- as.Splits(PectinateTree(7))
 
-match.Splits(splits1, splits2)
+match(splits1, splits2)
 
 }
 \seealso{
@@ -35,7 +35,7 @@ Other Splits operations:
 \code{\link{NTip}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{in.Splits}()}
+\code{\link{\%in\%.Splits}()},
+\code{\link{as.Splits}()}
 }
 \concept{Splits operations}

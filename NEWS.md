@@ -19,6 +19,8 @@
 
 - `PostorderEdges()`: use `Postorder()` instead.
 - `NonDuplicateRoot()`: unused internal function.
+- `match.Splits()`: use `match()` instead.
+- `in.Splits()`: use `%in%.Splits()` instead.
 
 ## Enhancements
 

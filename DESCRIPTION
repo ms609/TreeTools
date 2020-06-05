@@ -29,6 +29,7 @@ URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
 BugReports: https://github.com/ms609/TreeTools/issues/
 SystemRequirements: C++11
 Depends: R (>= 3.4.0),
+    bit64,
     ape (>= 5.0)
 Imports:
     colorspace,

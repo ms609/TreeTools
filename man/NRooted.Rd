@@ -3,6 +3,8 @@
 \name{NRooted}
 \alias{NRooted}
 \alias{NUnrooted}
+\alias{NRooted64}
+\alias{NUnrooted64}
 \alias{LnUnrooted}
 \alias{LnUnrooted.int}
 \alias{Log2Unrooted}
@@ -22,6 +24,10 @@
 NRooted(tips)
 
 NUnrooted(tips)
+
+NRooted64(tips)
+
+NUnrooted64(tips)
 
 LnUnrooted(tips)
 
@@ -72,6 +78,12 @@ Carter \emph{et al.} 1990, Theorem 2.
 \section{Functions}{
 \itemize{
 \item \code{NUnrooted}: Number of unrooted trees
+
+\item \code{NRooted64}: Exact number of rooted trees as 64-bit integer
+(13 < \code{nTip} < 19)
+
+\item \code{NUnrooted64}: Exact number of unrooted trees as 64-bit integer
+(14 < \code{nTip} < 20)
 
 \item \code{LnUnrooted}: Log Number of unrooted trees
 

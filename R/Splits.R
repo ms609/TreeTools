@@ -341,7 +341,7 @@ c.Splits <- function (...) {
 #' @family Splits operations
 #' @export
 `-.Splits` <- function (x, y) {
-  x[[!in.Splits(x, y)]]
+  x[[!x %in% y]]
 }
 
 #' @family Splits operations
@@ -421,23 +421,23 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' splits1 <- as.Splits(BalancedTree(7))
 #' splits2 <- as.Splits(PectinateTree(7))
 #'
-#' match.Splits(splits1, splits2)
+#' match(splits1, splits2)
 #'
 #' @family Splits operations
+# Import `match` method from bit64
+#' @importFrom bit64 match
+#' @method match Splits
 #' @export
 match.Splits <- function (x, table, nomatch = NA_integer_,
                           incomparables = NULL) {
   vapply(seq_along(x), function (i) {
-    ret <- which(in.Splits(table, x[[i]], incomparables))
+    ret <- which(`%in%.Splits`(table, x[[i]], incomparables))
     if (length(ret) == 0) ret <- nomatch
     ret
   }, integer(1))
 }
 
 #' `%in%` equivalent for splits objects
-#'
-#' `in.Splits` is an equivalent to `%in%` that can be applied to objects
-#' of class `Splits`.
 #'
 #' @param x,table Object of class `Splits`.
 #' @param incomparables A vector of values that cannot be matched. Any value in
@@ -453,11 +453,13 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' splits1 <- as.Splits(BalancedTree(7))
 #' splits2 <- as.Splits(PectinateTree(7))
 #'
-#' in.Splits(splits1, splits2)
+#' splits1 %in% splits2
 #'
 #' @family Splits operations
+#' @importFrom bit64 %in%
+#' @method %in% Splits
 #' @export
-in.Splits <- function (x, table, incomparables = NULL) {
+`%in%.Splits` <- function (x, table, incomparables = NULL) {
   duplicated(c(x, table), fromLast = TRUE,
              incomparables = incomparables)[seq_along(x)]
 }

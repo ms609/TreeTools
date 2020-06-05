@@ -52,22 +52,23 @@ of each taxon in the matrix.}
 \item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
 If \code{FALSE}, write one character followed by the next.}
 
-\item{phy}{An object of class \code{\link{phyDat}}}
+\item{phy}{An object of class \code{\link[phangorn:phyDat]{phyDat}}.}
 
-\item{parentheses}{Character specifying format of parentheses with which
-to surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}, \code{<}.}
+\item{parentheses}{Character specifying format of parentheses with which to
+surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}, \code{<}.}
 
 \item{collapse}{Character specifying text, perhaps \verb{,}, with which to
-separate multiple tokens within parentheses}
+separate multiple tokens within parentheses.}
 
-\item{ps}{Character specifying text, perhaps \verb{;}, to append to the end of the string}
+\item{ps}{Character specifying text, perhaps \verb{;}, to append to the end of
+the string.}
 
 \item{useIndex}{Logical (default: \code{TRUE}) specifying whether to print
-duplicate characters multiple times, as they appeared in the original matrix}
+duplicate characters multiple times, as they appeared in the original matrix.}
 
-\item{concatenate}{Logical specifying whether to concatenate all characters/taxa
-into a single string, or to return a separate string
-for each entry.}
+\item{concatenate}{Logical specifying whether to concatenate all
+characters/taxa into a single string, or to return a separate string for
+each entry.}
 }
 \value{
 \code{StringToPhyDat()} returns an object of class \code{phyDat}.

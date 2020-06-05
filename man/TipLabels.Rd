@@ -62,8 +62,8 @@ Other Splits operations:
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{TipsInSplits}()},
+\code{\link{\%in\%.Splits}()},
 \code{\link{as.Splits}()},
-\code{\link{in.Splits}()},
 \code{\link{match.Splits}()}
 }
 \author{

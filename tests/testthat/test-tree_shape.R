@@ -1,11 +1,13 @@
 context('tree_shape.cpp')
 
 test_that('Tree shapes counted', {
-  expect_equal(c(1, 1, 1, 2, 3, 6, 11, 23),
-               vapply(1:8, NRootedShapes, 0L))
+  expect_equal(as.integer64(c(1, 1, 1, 2, 3, 6, 11, 23)),
+               as.integer64(vapply(1:8, NRootedShapes, bit64::integer64(1L))))
 
   expect_equal(c(1, 1, 1, 1, 1, 2, 2, 4, 6),
                vapply(1:9, NUnrootedShapes, 0L))
+
+  expect_error(NUnrootedShapes(29L))
 })
 
 test_that("Nasty node order not fatal", {
@@ -25,30 +27,39 @@ test_that("Nasty node order not fatal", {
 
 test_that('Rooted tree shapes calculated', {
   expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
+  # MAX_SHAPE_TIP = 200
+  expect_equal(NRootedShapes(54) - 1L, RootedTreeShape(BalancedTree(54)))
+  expect_equal(NRootedShapes(55), RootedTreeShape(BalancedTree(55)))
+  expect_error(NRootedShapes(56))
+  expect_error(RootedTreeShape(BalancedTree(56)))
 
-  expect_equal(0L, RootedTreeShape(PectinateTree(0:3)))
-  expect_equal(0L, RootedTreeShape(SortTree(PectinateTree(0:3))))
+  expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(0:3)))
+  expect_equal(as.integer64(0L), RootedTreeShape(SortTree(PectinateTree(0:3))))
   expect_equal(0L, UnrootedTreeShape(PectinateTree(0:3)))
-  expect_equal(1L, RootedTreeShape(BalancedTree(0:3)))
+  expect_equal(as.integer64(1L), RootedTreeShape(BalancedTree(0:3)))
 
-  expect_equal(0L, RootedTreeShape(PectinateTree(0:4)))
+  expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(0:4)))
   expect_equal(0L, UnrootedTreeShape(PectinateTree(0:4)))
-  expect_equal(1L, RootedTreeShape(as.phylo(1, 5)))
-  expect_equal(2L, RootedTreeShape(BalancedTree(0:4)))
+  expect_equal(as.integer64(1L), RootedTreeShape(as.phylo(1, 5)))
+  expect_equal(as.integer64(2L), RootedTreeShape(BalancedTree(0:4)))
 
-  expect_equal(0L, RootedTreeShape(PectinateTree(0:5)))
+  expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(0:5)))
   expect_equal(0L, UnrootedTreeShape(PectinateTree(0:5)))
-  expect_equal(1L, RootedTreeShape(as.phylo(58, 6)))
-  expect_equal(2L, RootedTreeShape(as.phylo(1, 6)))
-  expect_equal(3L, RootedTreeShape(ape::read.tree(text='((a, b), (c, (d, (e, f))));')))
-  expect_equal(4L, RootedTreeShape(ape::read.tree(text='((a, b), ((c, d), (e, f)));')))
-  expect_equal(5L, RootedTreeShape(BalancedTree(0:5)))
+  expect_equal(as.integer64(1L), RootedTreeShape(as.phylo(58, 6)))
+  expect_equal(as.integer64(2L), RootedTreeShape(as.phylo(1, 6)))
+  expect_equal(as.integer64(3L), RootedTreeShape(ape::read.tree(text='((a, b), (c, (d, (e, f))));')))
+  expect_equal(as.integer64(4L), RootedTreeShape(ape::read.tree(text='((a, b), ((c, d), (e, f)));')))
+  expect_equal(as.integer64(5L), RootedTreeShape(BalancedTree(0:5)))
 
-  PectinateTest <- function (i) expect_equal(0L, RootedTreeShape(PectinateTree(i)))
+  PectinateTest <- function (i) {
+    expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(i)))
+  }
   lapply(4:16, PectinateTest)
 
-  BalancedTest <- function (i) expect_equal(NRootedShapes(i) - 1L,
-                                            RootedTreeShape(BalancedTree(i)))
+  BalancedTest <- function (i) {
+    expect_equal(NRootedShapes(i) - 1L,
+                 RootedTreeShape(BalancedTree(i)))
+  }
   lapply(c(2^(1:4), 10), BalancedTest)
 
   expect_equal(0L, .UnrootedKeys(4))
@@ -61,6 +72,8 @@ test_that('Rooted tree shapes calculated', {
 
 
 test_that('Rooted tree shapes built', {
+  expect_error(RootedTreeShape(-1, 5))
+
   expect_equal(RootedTreeWithShape(0, 4), PectinateTree(rep('', 4)))
   expect_equal(RootedTreeWithShape(1, 4), BalancedTree(rep('', 4)))
 

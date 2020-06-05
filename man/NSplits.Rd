@@ -54,8 +54,8 @@ Other Splits operations:
 \code{\link{NTip}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
+\code{\link{\%in\%.Splits}()},
 \code{\link{as.Splits}()},
-\code{\link{in.Splits}()},
 \code{\link{match.Splits}()}
 }
 \author{
