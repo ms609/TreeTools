@@ -46,8 +46,11 @@
 
 
 <meta property="og:title" content="Split matching — match.Splits" />
-<meta property="og:description" content="match returns a vector of the positions of (first) matches of splits in
-its first argument in its second." />
+<meta property="og:description" content="match() returns a vector of the positions of (first) matches of splits in
+its first argument in its second.
+%in% is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand." />
 
 
 
@@ -158,8 +161,11 @@ its first argument in its second." />
     </div>
 
     <div class="ref-description">
-    <p><code>match</code> returns a vector of the positions of (first) matches of splits in
-its first argument in its second.</p>
+    <p><code><a href='https://rdrr.io/r/base/match.html'>match()</a></code> returns a vector of the positions of (first) matches of splits in
+its first argument in its second.
+<code>%in%</code> is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand.</p>
     </div>
 
     <pre class="usage"># S3 method for Splits
@@ -188,11 +194,6 @@ used in place of <code>NA</code> in the case where no match is found.</p></td>
 <code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
 <p><code>%in%</code> returns a logical vector specifying which of the splits in
 <code>x</code> are present in <code>table</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p><code>%in%</code> is a more intuitive interface as a binary operator, which returns
-a logical vector indicating whether there is a match or not for each
-split in its left operand.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: 
