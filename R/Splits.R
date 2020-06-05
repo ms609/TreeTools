@@ -407,10 +407,11 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' Equivalent of `match` for `Splits` objects.
 #'
 #' @param x,table Object of class `Splits`.
-#' @param nomatch The value to be returned in the case where no match is found.
-#' @param incomparables A vector of values that cannot be matched. Any value in
-#' `x` matching a value in this vector is assigned the `nomatch` value.
-#' For historical reasons, `FALSE` is equivalent to `NULL`.
+#' @param nomatch Integer value to be returned in the case where no match
+#'  is found.
+# @param incomparables A vector of values that cannot be matched. Any value in
+# `x` matching a value in this vector is assigned the `nomatch` value.
+# For historical reasons, `FALSE` is equivalent to `NULL`.
 #'
 #' @return An integer vector specifying the position in `table` that matches
 #' each element in `x`, or `nomatch` if no match is found.
@@ -426,10 +427,14 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' @importFrom bit64 match
 #' @method match Splits
 #' @export
-match.Splits <- function (x, table, nomatch = NA_integer_,
-                          incomparables = NULL) {
+match.Splits <- function (x, table, ...) {
+  nomatch <- as.integer(c(...)['nomatch'])
+  if (length(nomatch) != 1L) {
+    nomatch <- NA_integer_
+  }
+
   vapply(seq_along(x), function (i) {
-    ret <- which(`%in%.Splits`(table, x[[i]], incomparables))
+    ret <- which(table %in% x[[i]])
     if (length(ret) == 0) ret <- nomatch
     ret
   }, integer(1))
@@ -457,7 +462,6 @@ match.Splits <- function (x, table, nomatch = NA_integer_,
 #' @importFrom bit64 %in%
 #' @method %in% Splits
 #' @export
-`%in%.Splits` <- function (x, table, incomparables = NULL) {
-  duplicated(c(x, table), fromLast = TRUE,
-             incomparables = incomparables)[seq_along(x)]
+`%in%.Splits` <- function (x, table) {
+  duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }

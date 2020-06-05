@@ -4,7 +4,7 @@
 \alias{\%in\%.Splits}
 \title{\code{\%in\%} equivalent for splits objects}
 \usage{
-\method{\%in\%}{Splits}(x, table, incomparables = NULL)
+\method{\%in\%}{Splits}(x, table)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}

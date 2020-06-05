@@ -205,6 +205,8 @@ test_that('match.Splits()', {
 
   expect_equal(5:1, match(as.Splits(tree1), as.Splits(tree2, tree1)))
   expect_equal(c(4, 3, NA, 2, 1), match(as.Splits(tree1, tree2), col2))
+  expect_equal(c(4, 3, 999, 2, 1),
+               match(as.Splits(tree1, tree2), col2, nomatch = 999))
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
 })
 
