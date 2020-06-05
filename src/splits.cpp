@@ -15,7 +15,7 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   }
   if (1L + edge.rows() > UINTX_MAX - 1) { /* UINT_MAX denotes NOT_TRIVAL */
     throw(std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
-                              "Contact maintainer for advice"));                // # nocov
+                            "Contact maintainer for advice"));                  // # nocov
   }
   if (nTip[0] < 1) {
     throw(std::length_error("Tree must contain tips."));

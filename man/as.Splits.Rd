@@ -47,7 +47,9 @@ paramount).}
 \code{as.Splits} returns an object of class \code{Splits}, or
 (if \code{asSplits = FALSE}) a two-dimensional array of 32-bit integers, which
 each bit specifying whether a tip is a member of the split.
-Splits are named according to the node that defines them.
+Splits are named according to the node at the non-root end of the edge that
+defines them. In rooted trees, the child of the rightmost root edge names
+the split.
 }
 \description{
 Converts a phylogenetic tree to an array of bipartition splits.

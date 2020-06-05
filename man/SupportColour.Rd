@@ -5,23 +5,55 @@
 \alias{SupportColor}
 \title{Colour for node support value}
 \usage{
-SupportColour(support, show1 = TRUE)
+SupportColour(
+  support,
+  show1 = TRUE,
+  scale = rev(diverge_hcl(101, h = c(260, 0), c = 100, l = c(50, 90), power = 1)),
+  outOfRange = "red"
+)
 
-SupportColor(support, show1 = TRUE)
+SupportColor(
+  support,
+  show1 = TRUE,
+  scale = rev(diverge_hcl(101, h = c(260, 0), c = 100, l = c(50, 90), power = 1)),
+  outOfRange = "red"
+)
 }
 \arguments{
 \item{support}{A numeric vector of values in the range 0--1.}
 
 \item{show1}{Logical specifying whether to display values of 1.
 A transparent white will be returned if \code{FALSE}.}
+
+\item{scale}{101-element vector listing colours in sequence. Defaults to
+a diverging HCL scale.}
+
+\item{outOfRange}{Colour to use if results are outside the range 0--1.}
 }
 \value{
-\code{SupportColour()} returns a string containing the hexadecimal code
-for a colour picked from a diverging scale, or \code{red} if a value is invalid.
+\code{SupportColour()} returns the appropriate value from \code{scale},
+or \code{outOfRange} if a value is outwith the valid range.
 }
 \description{
 Colour value with which to display node support.
 }
 \examples{
-SupportColour(0:4 / 4, show1 = FALSE)
+SupportColour((-1):4 / 4, show1 = FALSE)
+
+# An example forest of 100 trees, some identical
+forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
+
+# Generate an 80\% consensus tree
+cons <- ape::consensus(forest, p = 0.8)
+plot(cons)
+
+splitFreqs <- SplitFrequency(cons, forest)
+LabelSplits(cons, splitFreqs, unit = '\%',
+            col = SupportColor(splitFreqs / 100),
+            frame = 'none', pos = 3L)
+
+}
+\seealso{
+Use in conjunction with \code{\link[=LabelSplits]{LabelSplits()}} to colour split labels,
+possibly calculated using \code{\link[=SplitSupport]{SplitSupport()}}.
 }

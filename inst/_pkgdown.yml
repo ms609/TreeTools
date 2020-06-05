@@ -69,9 +69,10 @@ reference:
     - has_concept("tree information functions")
     - has_concept("split information functions")
 
-  - title: "Node support"
-    desc: "Functions that describe support for nodes in trees."
+  - title: "Split support"
+    desc: "Calculate and depict support for splits ('edges' / 'nodes') in trees."
     contents:
+      - LabelSplits
       - SplitFrequency
       - SupportColour
 
