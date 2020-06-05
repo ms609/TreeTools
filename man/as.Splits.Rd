@@ -9,7 +9,7 @@
 \alias{as.Splits.matrix}
 \alias{as.Splits.logical}
 \alias{as.logical.Splits}
-\title{Convert object to splits}
+\title{Convert object to \code{Splits}}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
 
@@ -44,15 +44,17 @@ or an unannotated two-dimensional array (useful where performance is
 paramount).}
 }
 \value{
-\code{as.Splits} returns an object of class \code{Splits}, or
-(if \code{asSplits = FALSE}) a two-dimensional array of 32-bit integers, which
-each bit specifying whether a tip is a member of the split.
+\code{as.Splits()} returns an object of class \code{Splits}, or
+(if \code{asSplits = FALSE}) a two-dimensional array of \code{raw} objects, with
+each bit specifying whether or not the leaf corresponding to the respective
+bit position is a member of the split.
 Splits are named according to the node at the non-root end of the edge that
 defines them. In rooted trees, the child of the rightmost root edge names
 the split.
 }
 \description{
-Converts a phylogenetic tree to an array of bipartition splits.
+\code{as.Splits()} converts a phylogenetic tree to a \code{Splits} object representing
+its constituent bipartition splits.
 }
 \examples{
 splits <- as.Splits(BalancedTree(letters[1:6]))

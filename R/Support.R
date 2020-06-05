@@ -64,6 +64,8 @@ SplitFrequency <- function(reference, forest) {
 #' splits <- as.Splits(tree)
 #' plot(tree)
 #' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
+#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+#'             pos = 1L)
 #'
 #' @template exampleNodeSupport
 #'

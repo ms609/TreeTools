@@ -18,8 +18,14 @@ number of tips contained within each split in \code{splits}.
 bipartition split in a \code{Splits} object.
 }
 \examples{
-splits <- as.Splits(PectinateTree(8))
+tree <- PectinateTree(8)#'
+splits <- as.Splits(tree)
 TipsInSplits(splits)
+
+plot(tree)
+LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L, cex = 0.7)
+LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+            pos = 1L)
 
 }
 \seealso{

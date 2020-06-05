@@ -1,7 +1,7 @@
-#' Convert object to splits
+#' Convert object to `Splits`
 #'
-#' Converts a phylogenetic tree to an array of bipartition splits.
-#'
+#' `as.Splits()` converts a phylogenetic tree to a `Splits` object representing
+#' its constituent bipartition splits.
 #'
 #' @param x Object to convert into splits: perhaps a tree of class
 #'  \code{\link[ape:read.tree]{phylo}}.
@@ -11,9 +11,11 @@
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
 #' @param \dots Presently unused.
-#' @return `as.Splits` returns an object of class `Splits`, or
-#' (if `asSplits = FALSE`) a two-dimensional array of 32-bit integers, which
-#' each bit specifying whether a tip is a member of the split.
+#'
+#' @return `as.Splits()` returns an object of class `Splits`, or
+#' (if `asSplits = FALSE`) a two-dimensional array of `raw` objects, with
+#' each bit specifying whether or not the leaf corresponding to the respective
+#' bit position is a member of the split.
 #' Splits are named according to the node at the non-root end of the edge that
 #' defines them. In rooted trees, the child of the rightmost root edge names
 #' the split.
@@ -296,8 +298,14 @@ as.character.Splits <- function (x, ...) {
 #' number of tips contained within each split in `splits`.
 #'
 #' @examples
-#' splits <- as.Splits(PectinateTree(8))
+#' tree <- PectinateTree(8)#'
+#' splits <- as.Splits(tree)
 #' TipsInSplits(splits)
+#'
+#' plot(tree)
+#' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L, cex = 0.7)
+#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+#'             pos = 1L)
 #'
 #' @family Splits operations
 #' @export

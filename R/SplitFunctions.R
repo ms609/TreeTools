@@ -208,13 +208,20 @@ SplitMatchProbability <- function (split1, split2) {
 #' `TipLabels()` extracts labels from an object: for example, names of taxa in
 #' a phylogenetic tree or data matrix.
 #'
-#' @param x An object of a supported class (see Usage section).
+#' @param x An object of a supported class (see Usage section above).
 #' @param single Logical specifying whether to report the labels for the first
 #' object only (`TRUE`), or for each object in a list (`FALSE`).
 #'
 #' @return `TipLabels()` returns a character vector listing the tip labels
 #' appropriate to `x`. If `x` is a single integer, this will be a vector
 #' `t1`, `t2` ... `tx`, to match the default of \code{ape::\link{rtree}()}.
+#'
+#' @examples
+#' TipLabels(BalancedTree(letters[5:1]))
+#' TipLabels(5)
+#'
+#' data('Lobo')
+#' head(TipLabels(Lobo.phy))
 #'
 #' @family tree properties
 #' @template MRS

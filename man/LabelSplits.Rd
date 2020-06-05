@@ -37,6 +37,8 @@ tree <- BalancedTree(LETTERS[1:5])
 splits <- as.Splits(tree)
 plot(tree)
 LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
+LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+            pos = 1L)
 
 # An example forest of 100 trees, some identical
 forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)

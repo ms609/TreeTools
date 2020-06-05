@@ -37,7 +37,7 @@ TipLabels(x, single = TRUE)
 \method{TipLabels}{default}(x, single = TRUE)
 }
 \arguments{
-\item{x}{An object of a supported class (see Usage section).}
+\item{x}{An object of a supported class (see Usage section above).}
 
 \item{single}{Logical specifying whether to report the labels for the first
 object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
@@ -50,6 +50,14 @@ appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
 \description{
 \code{TipLabels()} extracts labels from an object: for example, names of taxa in
 a phylogenetic tree or data matrix.
+}
+\examples{
+TipLabels(BalancedTree(letters[5:1]))
+TipLabels(5)
+
+data('Lobo')
+head(TipLabels(Lobo.phy))
+
 }
 \seealso{
 Other tree properties: 
