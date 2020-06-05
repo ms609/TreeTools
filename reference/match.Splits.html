@@ -160,7 +160,8 @@
     <p>Equivalent of <code>match</code> for <code>Splits</code> objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>match.Splits</span>(<span class='no'>x</span>, <span class='no'>table</span>, <span class='kw'>nomatch</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>incomparables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for Splits</span>
+<span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span>(<span class='no'>x</span>, <span class='no'>table</span>, <span class='kw'>nomatch</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>, <span class='kw'>incomparables</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +200,7 @@ each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p
     <pre class="examples"><div class='input'><span class='no'>splits1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>7</span>))
 <span class='no'>splits2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>7</span>))
 
-<span class='fu'>match.Splits</span>(<span class='no'>splits1</span>, <span class='no'>splits2</span>)</div><div class='output co'>#&gt; [1]  1 NA  3 NA</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span>(<span class='no'>splits1</span>, <span class='no'>splits2</span>)</div><div class='output co'>#&gt; [1] NA NA  3 NA</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
