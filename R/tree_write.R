@@ -1,14 +1,15 @@
 #' Write a phylogenetic tree in Newick format
 #'
-#' Creates a character string describing a phylogenetic tree in Newick format,
-#' using R's internal tip numbering.  Use [`RenumberTips`] to ensure that the
-#' internal numbering follows the order you expect.
+#' `as.Newick()` creates a character string representation of a phylogenetic
+#' tree, in the Newick format, using R's internal tip numbering.
+#' Use [`RenumberTips()`] to ensure that the internal numbering follows the
+#' order you expect.
 #'
 #'
 #' @param x Object to convert to Newick format.
 #' See Usage section for supported classes.
 #'
-#' @return `as.Newick` returns a character string representing `tree` in Newick
+#' @return `as.Newick()` returns a character string representing `tree` in Newick
 #' format.
 #'
 #' @examples
@@ -17,11 +18,11 @@
 #' as.Newick(trees)
 #'
 #' @seealso
-#' - [`NewickTree`]
+#' - Retain leaf labels: [`NewickTree()`]
 #'
-#' - [`RenumberTips`]
+#' - Change R's internal numbering of leaves: [`RenumberTips()`]
 #'
-#' - [`ape::write.tree`]
+#' - Write tree to text or file: [`ape::write.tree()`]
 #'
 #' @template MRS
 #' @export

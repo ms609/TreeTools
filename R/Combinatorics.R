@@ -18,7 +18,7 @@ utils::globalVariables(c('doubleFactorials',
 #'
 #'
 #' @template MRS
-#' @family Double factorial
+#' @family double factorials
 #' @export
 DoubleFactorial <- function (n) {
   if (any(n > 300)) stop("301!! is too large to represent. Use LnDoubleFactorial instead.")

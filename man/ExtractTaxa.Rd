@@ -15,13 +15,13 @@ ExtractTaxa(
 NexusTokens(tokens, character_num = NULL, session = NULL)
 }
 \arguments{
-\item{matrixLines}{lines of a file containing a phylogenetic matrix
-(see \code{\link{ReadCharacters}} for expected format).}
+\item{matrixLines}{Character vector containing lines of a file that include
+a phylogenetic matrix. See \code{\link[=ReadCharacters]{ReadCharacters()}} for expected format.}
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(optionally) a Shiny session with a \code{numericInput} named
+\item{session}{(Optional) A Shiny session with a \code{numericInput} named
 \code{character_num} whose maximum should be updated.}
 
 \item{continuous}{Logical specifying whether characters are continuous.
@@ -40,17 +40,8 @@ corresponds to the states of a phylogenetic character, or a list containing
 an error message if input is invalid.
 }
 \description{
-Reads the character information from a Nexus-formatted matrix into R.
+Extract leaf labels and character states from a Nexus-formatted matrix.
 }
-\details{
-Extracts the names of tips from the matrix block of a Nexus file.
-}
-\section{Functions}{
-\itemize{
-\item \code{NexusTokens}: Converts a Nexus string to a vector of character
-states.
-}}
-
 \examples{
 fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')

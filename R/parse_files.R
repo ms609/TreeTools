@@ -1,13 +1,14 @@
-#' Read modification time from ape Nexus file
+#' Read modification time from 'ape' Nexus file
 #'
-#' Reads the time that an ape tree was modified from the comment in the Nexus
-#' file.
+#' `ApeTime()` reads the time that a tree written with 'ape' was modified,
+#' based on the comment in the Nexus file.
 #'
-#' @param filename Character string specifying path to the file
+#' @param filename Character string specifying path to the file.
 #' @param format Format in which to return the time: 'double' as a sortable numeric;
-#'               any other value to return a string in the format YYYY-MM-DD hh:mm:ss
+#'               any other value to return a string in the format
+#'               `YYYY-MM-DD hh:mm:ss`.
 #'
-#' @return `ApeTime` returns the time that the specified file was created by
+#' @return `ApeTime()` returns the time that the specified file was created by
 #' ape, in the format specified by `format`.
 #' @export
 #' @template MRS
@@ -38,14 +39,14 @@ ApeTime <- function (filename, format = 'double') {
 
 #' Parse TNT Tree
 #'
-#' Reads a tree from TNT's parenthetical output.
+#' Read a tree from TNT's parenthetical output.
 #'
 #' [TNT](http://www.lillo.org.ar/phylogeny/tnt/) is software for parsimony
 #' analysis.  Whilst its implementation of tree search is extremely rapid,
 #' analysis of results in TNT is made difficult by its esoteric and scantly
 #' documented scripting language.
 #'
-#' `ReadTNTTree()` aims to aid the user by facilitating the import of trees
+#' `ReadTntTree()` aims to aid the user by facilitating the import of trees
 #' generated in TNT into R for further analysis.
 #'
 #' The function depends on tree files being saved by TNT in parenthetical
@@ -55,7 +56,7 @@ ApeTime <- function (filename, format = 'double') {
 #' contains tip labels and can be parsed directly.  The downside is that the
 #' uncompressed `.tre` files will have a larger file size.
 #'
-#' `ReadTNTTree()` can also read `.tre` files in which taxa have been saved
+#' `ReadTntTree()` can also read `.tre` files in which taxa have been saved
 #' using their numbers (`taxname-`).  Such files contain a hard-coded link to
 #' the matrix file that was used to generate the trees, in the first line of the
 #' `.tre` file.  This poses problems for portability: if the matrix file is
@@ -64,6 +65,9 @@ ApeTime <- function (filename, format = 'double') {
 #' exists in the expected location -- if it does not,
 #' either use the `relativePath` argument to point to its new location, or
 #' specify `tipLabels` to manually specify the tip labels.
+#'
+#' `TntText2Tree()` converts text representation of a tree in TNT to an
+#'  object of class `phylo`.
 #'
 #' @param filename character string specifying path to TNT `.tre` file,
 #' relative to the R working directory (visible with `getwd()`).
@@ -78,7 +82,7 @@ ApeTime <- function (filename, format = 'double') {
 #' taxon names will be loaded from the data file linked in the first line of the
 #'  `.tre` file specified in `filename`.
 #'
-#' @return `ReadTNTTree()` returns a tree of class \code{phylo}, corresponding
+#' @return `ReadTntTree()` returns a tree of class \code{phylo}, corresponding
 #' to the tree in `filename`.
 #'
 #' @examples
@@ -94,7 +98,7 @@ ApeTime <- function (filename, format = 'double') {
 #' # this hard-coded reference from results.tnt:
 #' # ReadTntTree('output/results1.tnt')
 #'
-#' # These datasets are provided with the `TreeTools` package, which will
+#' # These datasets are provided with the 'TreeTools' package, which will
 #' # probably not be located at c:/TreeTools on your machine:
 #'
 #' oldWD <- getwd() # Remember the current working directory
@@ -125,6 +129,8 @@ ApeTime <- function (filename, format = 'double') {
 #'
 #'
 #' setwd(oldWD) # Restore original working directory
+#'
+#' TNTText2Tree("(A (B (C (D E ))));")
 #'
 #' @template MRS
 #' @importFrom ape read.tree
@@ -187,13 +193,11 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
 
 }
 
-#' @describeIn ReadTntTree Converts text representation of a tree in TNT to an
-#'  object of class `phylo`.
+#' @rdname ReadTntTree
 #' @param treeText Character string describing a tree, in the parenthetical
 #'                 format output by TNT.
-#' @template MRS
 #' @export
-TNTText2Tree <- function (treeText) {
+TntText2Tree <- function (treeText) {
   treeText <- gsub("([\\w']+)", "\\1,", treeText, perl = TRUE)
   treeText <- gsub(")(", "),(", treeText, fixed = TRUE)
   treeText <- gsub("*", ";", treeText, fixed = TRUE)
@@ -201,14 +205,15 @@ TNTText2Tree <- function (treeText) {
   read.tree(text=gsub(", )", ")", treeText, fixed=TRUE))
 }
 
+#' @export
+TNTText2Tree <- TntText2Tree
+
 #' Extract taxa from a matrix block
 #'
-#' Reads the character information from a Nexus-formatted matrix into R.
+#' Extract leaf labels and character states from a Nexus-formatted matrix.
 #'
-#' Extracts the names of tips from the matrix block of a Nexus file.
-#'
-#' @param matrixLines lines of a file containing a phylogenetic matrix
-#'  (see [`ReadCharacters`] for expected format).
+#' @param matrixLines Character vector containing lines of a file that include
+#' a phylogenetic matrix. See [`ReadCharacters()`] for expected format.
 #' @template characterNumParam
 #' @template sessionParam
 #' @param continuous Logical specifying whether characters are continuous.
@@ -268,10 +273,9 @@ ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
   tokens
 }
 
+#' @rdname ExtractTaxa
 #' @param tokens Vector of character strings corresponding to phylogenetic
 #'  tokens.
-#' @describeIn ExtractTaxa Converts a Nexus string to a vector of character
-#'  states.
 #' @return `NexusTokens()` returns a character vector in which each entry
 #' corresponds to the states of a phylogenetic character, or a list containing
 #' an error message if input is invalid.
@@ -309,29 +313,32 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
   tokens
 }
 
-#' Read characters from Nexus file
+#' Read phylogenetic characters from file
 #'
-#' Parses a Nexus file, reading character states and names.
+#' Parse a Nexus or TNT file, reading character states and names.
 #'
-#' Tested with nexus files downloaded from MorphoBank with the "no notes"
-#' option, but should also work more generally.
+#' Tested with matrices downloaded from [MorphoBank](https://morphobank.org),
+#' but should also work more widely; please
+#' [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
+#' incorrectly parsed files.
 #'
 #' Matrices must contain only continuous or only discrete characters;
 #' maximum one matrix per file.  Continuous characters will be read as strings
 #' (i.e. base type 'character').
 #'
-#' Please [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
-#' incorrectly parsed files.
-#'
 #' @param filepath character string specifying location of file
 #' @template characterNumParam
 #' @template sessionParam
 #'
-#' @return A matrix whose row names correspond to tip labels, and column names
-#'         correspond to character labels, with the attribute `state.labels`
-#'         listing the state labels for each character; or a list of length
-#'         one containing a character string explaining why the function was
-#'         unsuccessful.
+#' @return `ReadCharacters()` and `ReadTNTCharacters()` return a matrix whose
+#' row names correspond to
+#' tip labels, and column names correspond to character labels, with the
+#' attribute `state.labels` listing the state labels for each character; or
+#' a list of length one containing a character string explaining why the
+#' function call was unsuccessful.
+#'
+#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
+#' [`phyDat`][phangorn::phyDat] object.
 #'
 #' @template MRS
 #' @references
@@ -346,13 +353,13 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #'                    '/extdata/tests/continuous.nex')
 #' continuous <- ReadCharacters(fileName)
 #'
-#' # To convert from strongs to numbers:
+#' # To convert from strings to numbers:
 #' at <- attributes(continuous)
 #' continuous <- suppressWarnings(as.numeric(continuous))
 #' attributes(continuous) <- at
 #' continuous
 #'
-#'
+#' @seealso MatrixToPhyDat
 #' @export
 ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
@@ -420,7 +427,7 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 }
 
 
-#' @describeIn ReadCharacters Read characters from TNT file
+#' @rdname ReadCharacters
 #' @export
 ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
@@ -535,7 +542,7 @@ PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   t(vapply(dataset, function (x) allLevels[x[index]], character(length(index))))
 }
 
-#' @describeIn ReadCharacters Read Nexus characters as `phyDat` object.
+#' @rdname ReadCharacters
 #' @importFrom phangorn phyDat
 #' @export
 ReadAsPhyDat <- function (filepath) {
@@ -543,7 +550,7 @@ ReadAsPhyDat <- function (filepath) {
 }
 
 
-#' @describeIn ReadCharacters Read TNT characters as `phyDat` object.
+#' @rdname ReadCharacters
 #' @importFrom phangorn phyDat
 #' @export
 ReadTntAsPhyDat <- function (filepath) {
@@ -552,10 +559,10 @@ ReadTntAsPhyDat <- function (filepath) {
 
 
 #' @describeIn ReadCharacters A convenient wrapper for \pkg{phangorn}'s
-#' `phyDat()`, which converts a *list* of morphological characters into a
+#' `phyDat()`, which converts a **list** of morphological characters into a
 #' `phyDat` object.
-#' If your morphological characters are in the form of a *matrix*, perhaps
-#' because they have been read using `read.table`, try [`MatrixToPhyDat()`]
+#' If your morphological characters are in the form of a **matrix**, perhaps
+#' because they have been read using [`read.table()`], try [`MatrixToPhyDat()`]
 #' instead.
 #'
 #' @param dataset list of taxa and characters, in the format produced by [read.nexus.data]:
@@ -718,8 +725,9 @@ RightmostCharacter <- function (string, len = nchar(string)) {
 
 #' Write Newick Tree
 #'
-#' Writes a tree in Newick format.  This differs from ape's `write.tree`
-#' in the encoding of spaces as spaces, rather than underscores.
+#' `NewickTree()` encodes a tree as a Newick-format string.
+#' This differs from [`write.tree()`][ape::write.tree] in the encoding of
+#' spaces as spaces, rather than underscores.
 #'
 #' @template treeParam
 #'
@@ -727,9 +735,9 @@ RightmostCharacter <- function (string, len = nchar(string)) {
 #' format.
 #'
 #' @examples
-#' NewickTree(BalancedTree(6))
+#' NewickTree(BalancedTree(LETTERS[4:9]))
 #'
-#' @seealso [`as.Newick`]
+#' @seealso Use tip numbers, rather than leaf labels: [`as.Newick`]
 #' @importFrom ape write.tree
 #' @export
 NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed = TRUE)

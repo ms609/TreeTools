@@ -4,7 +4,7 @@
 #' are readily distinguished by colourblind viewers, followed by a twelfth
 #' 12-colour palette adapted for colour blindness.
 #'
-#' @source {
+#' @source{
 #'
 #' * [ColourBrewer2.org](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
 #'
@@ -28,7 +28,7 @@
 #'
 #' 301!! is too large to store as an integer; use `logDoubleFactorials` instead.
 #'
-#' @family Double factorial
+#' @family double factorials
 #' @keywords datasets
 #' @name doubleFactorials
 #' @export
@@ -36,9 +36,10 @@
 
 #' Natural logarithms of double factorials
 #'
-#' A vector with pre-calculated values of double factorials up to 50 000!!.
+#' `logDoubleFactorials` is a numeric vector with pre-calculated values of
+#' double factorials up to 50 000!!.
 #'
-#' @family Double factorial
+#' @family double factorials
 #' @keywords datasets
 #' @name logDoubleFactorials
 #' @export
