@@ -7,7 +7,7 @@ test_that('Tree shapes counted', {
   expect_equal(vapply(unrootedKeys, length, 0L),
                vapply(seq_along(unrootedKeys), NUnrootedShapes, 0L))
 
-  expect_error(NUnrootedShapes(29L))
+  expect_warning(expect_error(NUnrootedShapes(29L)))
 })
 
 test_that("Nasty node order not fatal", {
@@ -23,6 +23,19 @@ test_that("Nasty node order not fatal", {
 
   expect_error(edge_to_rooted_shape(1:10, 1:11, 6))
   expect_error(edge_to_rooted_shape(1:10, 1:10, 5))
+})
+
+test_that('Rooted tree shapes counted', {
+  # https://oeis.org/A001190
+  expect_equal(as.integer64(c(1, 1, 1, 2, 3, 6, 11, 23, 46, 98, 207, 451, 983,
+                              2179, 4850, 10905, 24631, 56011, 127912, 293547,
+                              676157, 1563372, 3626149, 8436379, 19680277,
+                              46026618, 107890609, 253450711, 596572387,
+                              1406818759, '3323236238',
+                              '7862958391', '18632325319', '44214569100')),
+               structure(vapply(1:34, NRootedShapes, integer64(1)),
+                                           class = 'integer64'))
+
 })
 
 test_that('Rooted tree shapes calculated', {

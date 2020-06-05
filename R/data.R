@@ -51,6 +51,15 @@
 #' of the different unrooted tree shapes with `nTip` leaves.
 "unrootedKeys"
 
+#' Number of rooted shapes
+#'
+#' `nRootedShapes` gives the nUmber of binary rooted trees on _n_ unlabeled
+#' leaves.
+#'
+#' @source Wedderburn–Etherington numbers,
+#' [OEIS A001190](https://oeis.org/A001190/b001190.txt)
+"nRootedShapes"
+
 #' Raw data from Zhang et al. 2016
 #'
 #' @template LoboMods

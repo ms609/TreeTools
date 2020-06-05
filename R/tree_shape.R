@@ -27,6 +27,10 @@
 #' If `UnrootedTreeShape()` or `UnrootedTreeKey()` is passed a rooted tree,
 #' the position of the root will be ignored.
 #'
+#' The number of unlabelled bunary rooted trees corresponds to the
+#' [Wedderburn-Etherington numbers](https://oeis.org/A001190).
+#'
+#'
 #' @template treeParam
 #'
 #' @return `TreeShape()` returns an integer specifying the shape of a tree,
@@ -223,7 +227,7 @@ UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
 #' @rdname TreeShape
 #' @return `NUnrootedShapes()` returns an integer specifying the number of
 #' unique unrooted tree shapes with `nTip` (< 29) tips. Slow once `nTip` >
-#' `r length(unrootedTrees)`.
+#' `r length(unrootedKeys)`.
 #' @export
 NUnrootedShapes <- function (nTip) {
   nUnrootedKeys <- c(rep(1L, 5),
@@ -240,8 +244,13 @@ NUnrootedShapes <- function (nTip) {
 
 #' @rdname TreeShape
 #' @return `NRootedShapes()` returns an object of class `integer64` specifying
-#' the number of unique rooted tree shapes with `nTip` (< 56) tips.
+#' the number of unique rooted tree shapes with `nTip` (< 56) leaves.
+#'
 #' @export
 NRootedShapes <- function (nTip) {
-  .Int64(n_rooted_shapes(as.integer(nTip)))
+  if (nTip > 55L) {
+    stop("Too many shapes to represent as a 64-bit integer. ",
+         "Consult OEIS A0011900 for value: https://oeis.org/A001190/b001190.txt")
+  }
+  nRootedShapes[nTip]
 }

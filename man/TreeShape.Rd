@@ -16,7 +16,7 @@
 \alias{NRootedShapes}
 \title{Integer representing shape of a tree}
 \format{
-\code{unrootedKeys} is a list of length 279; each
+\code{unrootedKeys} is a list of length 18; each
 entry is a vector of integers corresponding to they keys (not shape numbers)
 of the different unrooted tree shapes with \code{nTip} leaves.
 }
@@ -80,10 +80,11 @@ once calculated are cached and need not be calculated on future calls to
 the function.
 
 \code{NUnrootedShapes()} returns an integer specifying the number of
-unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once \code{nTip} > 20.
+unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once \code{nTip} >
+18.
 
 \code{NRootedShapes()} returns an object of class \code{integer64} specifying
-the number of unique rooted tree shapes with \code{nTip} (< 56) tips.
+the number of unique rooted tree shapes with \code{nTip} (< 56) leaves.
 }
 \description{
 Returns an integer that uniquely represents the shape of an \emph{n}-tip
@@ -113,6 +114,9 @@ zero.
 
 If \code{UnrootedTreeShape()} or \code{UnrootedTreeKey()} is passed a rooted tree,
 the position of the root will be ignored.
+
+The number of unlabelled bunary rooted trees corresponds to the
+\href{https://oeis.org/A001190}{Wedderburn-Etherington numbers}.
 }
 \examples{
 RootedTreeShape(PectinateTree(8))

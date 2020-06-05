@@ -8,26 +8,70 @@ const intx
   MAX_SHAPE_NODE = MAX_SHAPE_TIP + MAX_SHAPE_TIP - 1
 ;
 
-uint64_t n_shapes_cache[MAX_SHAPE_TIP + 1] = {};
+const uint64_t n_shapes_cache[MAX_SHAPE_TIP + 1] = {
+  // https://oeis.org/A001190/b001190.txt
+  0,
+  1,
+  1,
+  1,
+  2,
+  3,
+  6,
+  11,
+  23,
+  46,
+  98,
+  207,
+  451,
+  983,
+  2179,
+  4850,
+  10905,
+  24631,
+  56011,
+  127912,
+  293547,
+  676157,
+  1563372,
+  3626149,
+  8436379,
+  19680277,
+  46026618,
+  107890609,
+  253450711,
+  596572387,
+  1406818759,
+  3323236238,
+  7862958391,
+  18632325319,
+  44214569100,
+  105061603969,
+  249959727972,
+  595405363473,
+  1419855914607,
+  3389524479050,
+  8099766813570,
+  19374186136140,
+  46384328517112,
+  111146809165122,
+  266552682265118,
+  639754054803187,
+  1536638374367584,
+  3693555574543651,
+  8884204649055027,
+  21383602613828364,
+  51501493576783437,
+  124115016908960463,
+  299284329327592851,
+  722086038540594854,
+  1743130822668362889,
+  4210157426126929793
+};
 
 uint64_t n_shapes(intx n_tips) {
   if (n_tips > 55) {
     throw std::length_error("64 bit integers cannot represent number of shapes"
                             "for > 55 tips");
-  }
-  if (!n_shapes_cache[n_tips]) {
-    if (n_tips < 4) {
-      n_shapes_cache[n_tips] = 1;
-    } else {
-      for (intx n_smaller = 1; n_smaller != ((n_tips + 1) / 2); n_smaller++) {
-        const intx n_larger = n_tips - n_smaller;
-        n_shapes_cache[n_tips] += (n_shapes(n_larger) * n_shapes(n_smaller));
-      }
-      if (n_tips % 2 == 0) {
-        n_shapes_cache[n_tips] += ((n_shapes(n_tips / 2) *
-          (n_shapes(n_tips / 2) + 1)) / 2);
-      }
-    }
   }
   return n_shapes_cache[n_tips];
 }
@@ -43,16 +87,6 @@ uint64_t triangular_number(const uint64_t n) {
 uint64_t triangle_row (const uint64_t x) {
   // Solve x = (n)(n+1) / 2 for n
   return uint64_t((sqrt((long double)(8 * x) + 1) - 1) / 2);
-}
-
-// [[Rcpp::export]]
-IntegerVector n_rooted_shapes(IntegerVector nTip) {
-  const uint64_t n = n_shapes(nTip[0]);
-  if (n >= INT_MAX) {
-    return IntegerVector{int(n / INT_MAX), int(n % INT_MAX)};
-  } else {
-    return IntegerVector{int(n)};
-  }
 }
 
 // Parent and child must be in postorder, with tree rooted.
