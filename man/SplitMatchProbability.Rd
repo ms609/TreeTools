@@ -18,16 +18,15 @@ each terminal is identified as a member of the ingroup (\code{TRUE}) or outgroup
 \code{SplitMatchProbability()} returns a numeric giving the proportion
 of permissible non-trivial splits that divide the terminals into bipartitions
 of the sizes given, that match as well as \code{split1} and \code{split2} do.
+
+`LnSplitMatchProbability() returns the natural logarithm of the
+probability.
 }
 \description{
-Calculates the probability that two random splits of the sizes provided
-will be at least as similar as the two specified.
+(\code{Ln})\code{SplitMatchProbability()}calculates the probability that two random
+splits of the sizes provided will be at least as similar as the two
+specified.
 }
-\section{Functions}{
-\itemize{
-\item \code{LnSplitMatchProbability}: The natural logarithm of the probability
-}}
-
 \examples{
 SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))

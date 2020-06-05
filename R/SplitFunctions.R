@@ -141,8 +141,9 @@ CompatibleSplits <- function (splits, splits2) {
 
 #' Probability of matching this well
 #'
-#' Calculates the probability that two random splits of the sizes provided
-#' will be at least as similar as the two specified.
+#' (`Ln`)`SplitMatchProbability()`calculates the probability that two random
+#' splits of the sizes provided will be at least as similar as the two
+#' specified.
 #'
 #' @template split12Params
 #'
@@ -151,9 +152,9 @@ CompatibleSplits <- function (splits, splits2) {
 #' of the sizes given, that match as well as `split1` and `split2` do.
 #'
 #' @examples
-#' SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
-#'                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
-#'
+#' split1 <- as.Splits(c(rep(TRUE, 4), rep(FALSE, 4)))
+#' split2 <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
+#' SplitMatchProbability(split1, split2)
 #' @family split information functions
 #' @template MRS
 #' @export
@@ -210,6 +211,17 @@ SplitMatchProbability <- function (split1, split2) {
   # Return:
   sum(choices[ranking <= ranking[partitions[3] + 1L - minA1B2]]) / choose(n, A1)
 }
+
+#' @rdname SplitMatchProbability
+#' @return `LnSplitMatchProbability()` returns the natural logarithm of the
+#' probability.
+#' @examples
+#' LnSplitMatchProbability(split1, split2)
+#' @export
+LnSplitMatchProbability <- function (split1, split2) {
+  log(SplitMatchProbability(split1, split2))
+}
+
 
 #' Extract tip labels
 #'
@@ -364,9 +376,4 @@ TipLabels.default <- function (x, single = TRUE) {
 NPartitionPairs <- function (configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *
     choose(sum(configuration[c(2, 4)]), configuration[2])
-}
-
-#' @describeIn SplitMatchProbability The natural logarithm of the probability
-LnSplitMatchProbability <- function(split1, split2) {
-  log(SplitMatchProbability(split1, split2))
 }

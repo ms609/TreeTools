@@ -23,10 +23,8 @@ used in place of \code{NA} in the case where no match is found.}
 \code{x} are present in \code{table}.
 }
 \description{
-\code{match} returns a vector of the positions of (first) matches of splits in
+\code{match()} returns a vector of the positions of (first) matches of splits in
 its first argument in its second.
-}
-\details{
 \code{\%in\%} is a more intuitive interface as a binary operator, which returns
 a logical vector indicating whether there is a match or not for each
 split in its left operand.
