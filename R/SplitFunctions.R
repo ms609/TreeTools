@@ -1,15 +1,17 @@
-#' Subset of a split on fewer taxa
+#' Subset of a split on fewer leaves
+#'
+#' `Subsplit()` removes leaves from a `Splits` object.
 #'
 #' @template splitsObjectParam
-#' @param tips A vector specifying a subset of the tip labels applied to `split`.
+#' @param tips A vector specifying a subset of the leaf labels applied to `split`.
 #' @param keepAll logical specifying whether to keep entries that define trivial
-#' splits (i.e. splits of zero or one tip) on the subset of tips.
+#' splits (i.e. splits of zero or one leaf) on the subset of leaves.
 #' @param unique logical specifying whether to remove duplicate splits.
 #'
-#' @return An object of class `Splits`, defined on `tips`.
+#' @return `Subsplit()` returns an object of class `Splits`, defined on the
+#' leaves `tips`.
 #'
 #' @examples
-#'
 #' splits <- as.Splits(PectinateTree(letters[1:9]))
 #' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 #' summary(efgh)
@@ -17,8 +19,6 @@
 #' TrivialSplits(efgh)
 #'
 #' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-#'
-#'
 #' @template MRS
 #'
 #' @family split manipulation functions
@@ -44,31 +44,38 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
   }
 }
 
-#' Are splits trivial?
+#' Identify and remove trivial splits
+#'
+#' `TrivialSplits()` identifies trivial splits (which separate one or zero
+#' leaves from all others); `WithoutTrivialSplits()` removes them from a
+#' `Splits` object.
 #'
 #' @template splitsObjectParam
 #' @template nTipParam
 #'
-#' @return Logical vector specifying whether each split in `splits` is trivial,
-#' i.e. includes or excludes only a single tip or no tips at all.
+#' @return `TrivialSplits()` returns a logical vector specifying whether each
+#' split in `splits` is trivial, i.e. includes or excludes only a single tip or
+#' no tips at all.
 #'
 #' @template MRS
 #' @family split manipulation functions
 #' @examples
-#'
 #' splits <- as.Splits(PectinateTree(letters[1:9]))
 #' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 #' summary(efgh)
 #'
 #' TrivialSplits(efgh)
-#'
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   inSplit <- TipsInSplits(splits)
   inSplit < 2L | inSplit > nTip - 2L
 }
 
-#' @describeIn TrivialSplits Remove trivial splits from a splits object
+#' @rdname TrivialSplits
+#' @return `WithoutTrivialSplits()` returns a `Splits` object with trivial
+#' splits removed.
+#' @examples
+#' summary(WithoutTrivialSplits(efgh))
 #' @export
 WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   splits[[!TrivialSplits(splits, nTip)]]

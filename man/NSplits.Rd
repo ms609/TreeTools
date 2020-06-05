@@ -30,7 +30,7 @@ NPartitions(x)
 or a vector of integers.}
 }
 \value{
-\code{NSplits} returns an integer specifying the number of bipartitions in
+\code{NSplits()} returns an integer specifying the number of bipartitions in
 the specified objects, or in a binary tree with \code{x} tips.
 }
 \description{
@@ -40,8 +40,6 @@ the specified objects, or in a binary tree with \code{x} tips.
 NSplits(8L)
 NSplits(PectinateTree(8))
 NSplits(as.Splits(BalancedTree(8)))
-
-
 }
 \seealso{
 Other tree properties: 

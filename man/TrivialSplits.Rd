@@ -3,7 +3,7 @@
 \name{TrivialSplits}
 \alias{TrivialSplits}
 \alias{WithoutTrivialSplits}
-\title{Are splits trivial?}
+\title{Identify and remove trivial splits}
 \usage{
 TrivialSplits(splits, nTip = attr(splits, "nTip"))
 
@@ -15,25 +15,25 @@ WithoutTrivialSplits(splits, nTip = attr(splits, "nTip"))
 \item{nTip}{Integer specifying number of tips (leaves).}
 }
 \value{
-Logical vector specifying whether each split in \code{splits} is trivial,
-i.e. includes or excludes only a single tip or no tips at all.
+\code{TrivialSplits()} returns a logical vector specifying whether each
+split in \code{splits} is trivial, i.e. includes or excludes only a single tip or
+no tips at all.
+
+\code{WithoutTrivialSplits()} returns a \code{Splits} object with trivial
+splits removed.
 }
 \description{
-Are splits trivial?
+\code{TrivialSplits()} identifies trivial splits (which separate one or zero
+leaves from all others); \code{WithoutTrivialSplits()} removes them from a
+\code{Splits} object.
 }
-\section{Functions}{
-\itemize{
-\item \code{WithoutTrivialSplits}: Remove trivial splits from a splits object
-}}
-
 \examples{
-
 splits <- as.Splits(PectinateTree(letters[1:9]))
 efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 summary(efgh)
 
 TrivialSplits(efgh)
-
+summary(WithoutTrivialSplits(efgh))
 }
 \seealso{
 Other split manipulation functions: 

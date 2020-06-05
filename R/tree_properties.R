@@ -529,8 +529,9 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 
 #' Number of leaves in a phylogenetic tree
 #'
-#' Extends the 'ape' function [`Ntip()`][ape::summary.phylo] to handle objects
-#' of class `Splits` and `list`, and edge matrices (equivalent to `phylo$edge`).
+#' `NTip()` extends [`ape::Ntip()`][ape::summary.phylo] to handle
+#' objects of class `Splits` and `list`, and edge matrices
+#' (equivalent to `tree$edge`).
 #'
 #' @param phy Object representing one or more phylogenetic trees.
 #'
@@ -582,15 +583,13 @@ NTip.matrix <- function (phy) {
 #' (of class `list` or `multiPhylo`), or a `Splits` object,
 #' or a vector of integers.
 #'
-#' @return `NSplits` returns an integer specifying the number of bipartitions in
+#' @return `NSplits()` returns an integer specifying the number of bipartitions in
 #' the specified objects, or in a binary tree with `x` tips.
 #'
 #' @examples
 #' NSplits(8L)
 #' NSplits(PectinateTree(8))
 #' NSplits(as.Splits(BalancedTree(8)))
-#'
-#'
 #' @template MRS
 #'
 #' @family tree properties

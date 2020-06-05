@@ -29,8 +29,9 @@ NTip(phy)
 object in \code{phy}.
 }
 \description{
-Extends the 'ape' function \code{\link[ape:summary.phylo]{Ntip()}} to handle objects
-of class \code{Splits} and \code{list}, and edge matrices (equivalent to \code{phylo$edge}).
+\code{NTip()} extends \code{\link[ape:summary.phylo]{ape::Ntip()}} to handle
+objects of class \code{Splits} and \code{list}, and edge matrices
+(equivalent to \code{tree$edge}).
 }
 \seealso{
 Other tree properties: 
