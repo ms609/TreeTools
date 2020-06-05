@@ -83,6 +83,7 @@ Carter \emph{et al.} 1990, Theorem 2.
 (13 < \code{nTip} < 19)
 
 \item \code{NUnrooted64}: Exact number of unrooted trees as 64-bit integer
+(14 < \code{nTip} < 20)
 
 \item \code{LnUnrooted}: Log Number of unrooted trees
 
@@ -110,7 +111,6 @@ Log2Unrooted(10)
 NUnrootedMult(c(5,5,3))
 
 NUnrooted64(18)
-(14 < `nTip` < 20)
 LnUnrootedSplits(c(2,4))
 LnUnrootedSplits(3, 3)
 Log2UnrootedSplits(c(2,4))

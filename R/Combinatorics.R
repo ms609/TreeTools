@@ -168,12 +168,14 @@ NUnrooted   <- function (tips) DoubleFactorial(tips + tips - 5L)
 
 #' @describeIn NRooted Exact number of rooted trees as 64-bit integer
 #' (13 < `nTip` < 19)
+#' @export
 NRooted64 <- function (tips) DoubleFactorial64(tips + tips - 3L)
 
 #' @describeIn NRooted Exact number of unrooted trees as 64-bit integer
+#' (14 < `nTip` < 20)
 #' @examples
 #' NUnrooted64(18)
-#' (14 < `nTip` < 20)
+#' @export
 NUnrooted64 <- function (tips) DoubleFactorial64(tips + tips - 5L)
 
 #' @describeIn NRooted  Log Number of unrooted trees
