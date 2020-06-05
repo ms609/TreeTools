@@ -699,17 +699,20 @@ PhydatToString <- PhyToString
 
 #' Rightmost character of string
 #'
-#' @param string Character string.
-#' @param len Integer specifying number of characters in `string`.
+#' `RightmostCharacter()` is a convenience function that returns the final
+#' character of a string.
 #'
-#' @return Rightmost character of `string`.
+#' @param string Character string.
+#' @param len (Optional) Integer specifying number of characters in `string`.
+#'
+#' @return `RightmostCharacter()` returns the rightmost character of a string.
 #' @examples
 #' RightmostCharacter("Hello, World!")
 #'
 #' @template MRS
 #' @export
 #' @keywords internal
-RightmostCharacter <- function (string, len=nchar(string)) {
+RightmostCharacter <- function (string, len = nchar(string)) {
   substr(string, len, len)
 }
 

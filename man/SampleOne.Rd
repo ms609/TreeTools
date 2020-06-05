@@ -2,20 +2,20 @@
 % Please edit documentation in R/helper_functions.R
 \name{SampleOne}
 \alias{SampleOne}
-\title{Quick sample}
+\title{Quickly sample}
 \usage{
 SampleOne(x, len = length(x))
 }
 \arguments{
 \item{x}{A vector to sample.}
 
-\item{len}{(optionally) integer specifying length of \code{x}.}
+\item{len}{(Optional) Integer specifying length of \code{x}.}
 }
 \value{
-A vector of length one, randomly sampled from \code{x}.
+\code{SampleOne()} returns a length one vector, randomly sampled from \code{x}.
 }
 \description{
-Faster than inbuilt \code{\link{sample}} because it avoids some checks.
+\code{SampleOne()} is a fast alternative to  \code{\link[=sample]{sample()}} that avoids some checks.
 }
 \examples{
 SampleOne(9:10)

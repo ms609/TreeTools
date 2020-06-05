@@ -7,22 +7,33 @@
 UnshiftTree(add, treeList)
 }
 \arguments{
-\item{add}{Tree to add to the list, of class \code{\link[ape:read.tree]{phylo}}.}
+\item{add}{Tree to add to the list, of class \code{\link[=ape:read.tree]{phylo}}.}
 
 \item{treeList}{A list of trees, of class \code{list},
-\code{\link[ape:multiphylo]{multiPhylo}},
-or, if a single tree, \code{\link[ape:read.tree]{phylo}}.}
+\code{\link[=ape:multiphylo]{multiPhylo}}, or, if a single tree,
+\code{\link[=ape:read.tree]{phylo}}.}
 }
 \value{
-A list of class \code{list} or \code{multiPhylo} (following the
-original class of \code{treeList}), whose first element is the tree specified
-as \code{add}.
+\code{UnshiftTree()} returns a list of class \code{list} or \code{multiPhylo}
+(following the original class of \code{treeList}), whose first element is the
+tree specified as `add.
 }
 \description{
-\code{UnshiftTree} adds a phylogenetic tree to the start of a list of trees.
+\code{UnshiftTree()} adds a phylogenetic tree to the start of a list of trees.
 This is useful where the class of a list of trees is unknown.
-Adding a tree to a \code{multiPhylo} object whose own attributes apply to all trees,
-for example trees read from a Nexus file, causes data to be lost.
+}
+\details{
+Caution: adding a tree to a \code{multiPhylo} object whose own attributes apply
+to all trees, for example trees read from a Nexus file, causes data to be
+lost.
+}
+\examples{
+forest <- as.phylo(0:5, 6)
+tree <- BalancedTree(6)
+
+UnshiftTree(tree, forest)
+UnshiftTree(tree, tree)
+
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
