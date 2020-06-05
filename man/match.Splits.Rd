@@ -4,7 +4,7 @@
 \alias{match.Splits}
 \title{Match splits}
 \usage{
-match.Splits(x, table, nomatch = NA_integer_, incomparables = NULL)
+\method{match}{Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}

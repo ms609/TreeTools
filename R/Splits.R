@@ -422,6 +422,7 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' match.Splits(splits1, splits2)
 #'
 #' @family Splits operations
+#' @method match Splits
 #' @export
 match.Splits <- function (x, table, nomatch = NA_integer_,
                           incomparables = NULL) {
