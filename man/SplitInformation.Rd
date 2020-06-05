@@ -91,7 +91,6 @@ SplitInformation(2, 6)
 # that seven maximally uneven splits on the same leaves:
 SplitInformation(25, 25)
 7 * SplitInformation(2, 48)
-
 # Three ways to split eight leaves into multiple partitions:
 MultiSplitInformation(c(2, 2, 4))
 MultiSplitInformation(c(2, 3, 3))

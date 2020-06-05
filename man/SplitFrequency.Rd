@@ -26,7 +26,7 @@ possible methods of loading trees into R.}
 \item{tips}{Integer vector specifying the tips of the tree within the chosen
 split.}
 
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tipIndex}{Character vector of tip names, in a fixed order.}
 

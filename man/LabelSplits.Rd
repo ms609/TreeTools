@@ -7,7 +7,7 @@
 LabelSplits(tree, labels, unit = "", ...)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{labels}{Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see

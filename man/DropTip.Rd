@@ -7,7 +7,7 @@
 DropTip(tree, tip)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tip}{Character vector specifying labels of leaves in tree to be dropped,
 or integer vector specifying the indices of leaves to be dropped.

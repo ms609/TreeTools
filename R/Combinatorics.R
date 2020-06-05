@@ -19,8 +19,6 @@ utils::globalVariables(c('doubleFactorials',
 #' DoubleFactorial (2) # 2
 #' DoubleFactorial (5) # 1 x 3 x 5
 #' exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
-#'
-#'
 #' @template MRS
 #' @family double factorials
 #' @export
@@ -48,6 +46,8 @@ DoubleFactorial <- function (n) {
 
 #' @describeIn DoubleFactorial Returns the exact double factorial as a 64-bit
 #' `integer64`, for `n` < 34.
+#' @examples
+#' DoubleFactorial64(31)
 #' @export
 DoubleFactorial64 <- function (n) {
   if (n < 2) 1 else as.integer64(n * DoubleFactorial64(n - 2L))
@@ -171,6 +171,8 @@ NUnrooted   <- function (tips) DoubleFactorial(tips + tips - 5L)
 NRooted64 <- function (tips) DoubleFactorial64(tips + tips - 3L)
 
 #' @describeIn NRooted Exact number of unrooted trees as 64-bit integer
+#' @examples
+#' NUnrooted64(18)
 #' (14 < `nTip` < 20)
 NUnrooted64 <- function (tips) DoubleFactorial64(tips + tips - 5L)
 

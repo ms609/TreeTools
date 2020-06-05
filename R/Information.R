@@ -44,17 +44,21 @@ Log2TreesMatchingSplit <- function (A, B) {
 
 #' Character information content
 #'
-#' Calculates the phylogenetic information content of a given character.
+#' `CharacterInformation()` calculates the phylogenetic information content
+#' of a given character.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
 #' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
 #'
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
-#' replaced with `?`.`
+#' replaced with `?`.
 #'
-#' @return `CharacterInformation` returns a numeric specifying the
-#' phylogenetic information content of the character, in bits.
+#' @return `CharacterInformation()` returns a numeric specifying the
+#' phylogenetic information content of the character (_sensu_ Steel & Penny
+#' 2006), in bits.
 #'
+#' @references
+#' - \insertRef{Steel2006}{TreeTools}
 #' @family split information functions
 #' @template MRS
 #' @export
@@ -144,9 +148,7 @@ CharacterInformation <- function (tokens) {
 #' # that seven maximally uneven splits on the same leaves:
 #' SplitInformation(25, 25)
 #' 7 * SplitInformation(2, 48)
-#'
 #' @references
-#'
 #' - \insertRef{Steel2006}{TreeTools}
 #'
 #' @family split information functions

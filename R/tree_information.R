@@ -1,7 +1,7 @@
 #' Number of trees containing a tree
 #'
-#' Calculates the number of unrooted binary trees that are consistent with
-#' a tree topology on the same leaves.
+#' `TreesMatchingTree()` calculates the number of unrooted binary trees that
+#' are consistent with a tree topology on the same leaves.
 #'
 #' Remember to unroot a tree first if the position of its root is arbitrary.
 #'
@@ -21,7 +21,6 @@
 #' # Number of rooted trees:
 #' rootedTree <- AddTip(partiallyResolvedTree, where = 0)
 #' TreesMatchingTree(partiallyResolvedTree)
-#'
 #' @template MRS
 #'
 #' @family tree information functions

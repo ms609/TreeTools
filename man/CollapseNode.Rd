@@ -13,7 +13,7 @@ CollapseNode(tree, nodes)
 CollapseEdge(tree, edges)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{nodes, edges}{Integer vector specifying the nodes or edges in the tree
 to be dropped.

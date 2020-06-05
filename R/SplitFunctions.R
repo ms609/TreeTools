@@ -370,7 +370,6 @@ TipLabels.default <- function (x, single = TRUE) {
 #'
 #' @examples
 #' NPartitionPairs(c(2, 1, 1, 3))
-#'
 #' @template MRS
 #' @export
 NPartitionPairs <- function (configuration) {

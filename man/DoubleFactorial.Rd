@@ -53,8 +53,7 @@ DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2
 DoubleFactorial (5) # 1 x 3 x 5
 exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
-
-
+DoubleFactorial64(31)
 }
 \seealso{
 Other double factorials: 

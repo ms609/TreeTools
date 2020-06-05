@@ -7,7 +7,7 @@
 EdgeDistances(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
 \code{EdgeDistances()} returns a symmetrical matrix listing the number

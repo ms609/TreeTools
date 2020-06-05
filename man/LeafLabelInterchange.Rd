@@ -7,7 +7,7 @@
 LeafLabelInterchange(tree, n = 2L)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{n}{Integer specifying number of leaves whose positions should be
 exchanged.}

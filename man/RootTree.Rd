@@ -13,7 +13,7 @@ RootOnNode(tree, node, resolveRoot = FALSE)
 UnrootTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.}

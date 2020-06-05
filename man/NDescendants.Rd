@@ -7,7 +7,7 @@
 NDescendants(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
 \code{NDescendants()} returns an integer listing the number of direct

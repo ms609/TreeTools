@@ -19,7 +19,7 @@ each terminal is identified as a member of the ingroup (\code{TRUE}) or outgroup
 of permissible non-trivial splits that divide the terminals into bipartitions
 of the sizes given, that match as well as \code{split1} and \code{split2} do.
 
-`LnSplitMatchProbability() returns the natural logarithm of the
+\code{LnSplitMatchProbability()} returns the natural logarithm of the
 probability.
 }
 \description{
@@ -28,9 +28,10 @@ splits of the sizes provided will be at least as similar as the two
 specified.
 }
 \examples{
-SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
-                      split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
-
+split1 <- as.Splits(c(rep(TRUE, 4), rep(FALSE, 4)))
+split2 <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
+SplitMatchProbability(split1, split2)
+LnSplitMatchProbability(split1, split2)
 }
 \seealso{
 Other split information functions: 

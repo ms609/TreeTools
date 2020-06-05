@@ -91,7 +91,7 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 
 \item{\dots}{Deprecated; included for compatibility with previous versions.}
 
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{nTip}{Integer specifying number of tips (leaves).}
 

@@ -17,7 +17,7 @@ AddTip(
 AddTipEverywhere(tree, label = "New tip", includeRoot = FALSE)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{where}{The node or tip that should form the sister taxon to the new
 node.  To add a new tip at the root, use \code{where = 0}.  By default, the
