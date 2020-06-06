@@ -16,7 +16,7 @@
 \alias{NRootedShapes}
 \title{Integer representing shape of a tree}
 \format{
-\code{unrootedKeys} is a list of length 18; each
+\code{unrootedKeys} is a list of length 20; each
 entry is a vector of integers corresponding to they keys (not shape numbers)
 of the different unrooted tree shapes with \code{nTip} leaves.
 }
@@ -79,9 +79,8 @@ It is a wrapper to \code{.UnrootedKeys()}, with memoization, meaning that result
 once calculated are cached and need not be calculated on future calls to
 the function.
 
-\code{NUnrootedShapes()} returns an integer specifying the number of
-unique unrooted tree shapes with \code{nTip} (< 29) tips. Slow once \code{nTip} >
-18.
+\code{NUnrootedShapes()} returns an object of class \code{integer64} specifying
+the number of unique unrooted tree shapes with \code{nTip} (< 59) tips.
 
 \code{NRootedShapes()} returns an object of class \code{integer64} specifying
 the number of unique rooted tree shapes with \code{nTip} (< 56) leaves.
