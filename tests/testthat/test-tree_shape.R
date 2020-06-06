@@ -89,7 +89,7 @@ test_that('Rooted tree shapes calculated', {
 
 
 test_that('Rooted tree shapes built', {
-  expect_error(RootedTreeShape(-1, 5))
+  expect_error(RootedTreeWithShape(-1, 5))
 
   expect_equal(RootedTreeWithShape(0, 4), PectinateTree(rep('', 4)))
   expect_equal(RootedTreeWithShape(1, 4), BalancedTree(rep('', 4)))
