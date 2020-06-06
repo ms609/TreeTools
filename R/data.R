@@ -68,7 +68,10 @@
 #' @rdname nRootedShapes
 "nUnrootedShapes"
 
-#' Data from Zhang et al. 2016 in `phyDat` format
+#' Data from Zhang et al. 2016
+#'
+#' Phylogenetic data from Zhang _et al._ (2016) in raw (`Lobo.data`) and
+#' `phyDat` (`Lobo.phy`) formats.
 #'
 #' @template LoboMods
 #'
@@ -77,3 +80,6 @@
 #'
 #' @keywords datasets
 "Lobo.phy"
+
+#' @rdname Lobo.phy
+"Lobo.data"
