@@ -117,6 +117,7 @@
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
 #' `nTip` and `tip.labels`.
+#' @encoding UTF-8
 #' @export
 as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 
