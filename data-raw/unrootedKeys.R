@@ -24,4 +24,4 @@ message("Calculating unrootedKeys for ", length(unrootedKeys) + 1L, " tips.")
 unrootedKeys <- c(unrootedKeys, list(.UnrootedKeys(length(unrootedKeys) + 1L)))
 message(length(unrootedKeys[[length(unrootedKeys)]]), " keys found.")
 
-usethis::use_data(unrootedKeys, overwrite = TRUE)
+usethis::use_data(unrootedKeys, overwrite = TRUE, compress = 'xz')
