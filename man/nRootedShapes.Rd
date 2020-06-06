@@ -3,19 +3,26 @@
 \docType{data}
 \name{nRootedShapes}
 \alias{nRootedShapes}
-\title{Number of rooted shapes}
+\alias{nUnrootedShapes}
+\title{Number of rooted / unrooted tree shapes}
 \format{
 An object of class \code{integer64} of length 55.
+
+An object of class \code{integer64} of length 58.
 }
 \source{
-Wedderburn–Etherington numbers,
-\href{https://oeis.org/A001190/b001190.txt}{OEIS A001190}
+\code{nRootedShapes} corresponds to the Wedderburn–Etherington numbers,
+\href{https://oeis.org/A001190}{OEIS A001190}
+
+\code{nUnrootedShapes} is \href{https://oeis.org/A000672}{OEIS A000672}
 }
 \usage{
 nRootedShapes
+
+nUnrootedShapes
 }
 \description{
-\code{nRootedShapes} gives the nUmber of binary rooted trees on \emph{n} unlabeled
-leaves.
+\code{nRootedShapes} and \code{nUnrootedShapes} give the nUmber of (un)rooted binary
+trees on \emph{n} unlabeled leaves.
 }
 \keyword{datasets}

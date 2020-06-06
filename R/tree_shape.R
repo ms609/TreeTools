@@ -225,21 +225,15 @@ UnrootedTreeKey <- function (tree) {
 UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
 
 #' @rdname TreeShape
-#' @return `NUnrootedShapes()` returns an integer specifying the number of
-#' unique unrooted tree shapes with `nTip` (< 29) tips. Slow once `nTip` >
-#' `r length(unrootedKeys)`.
+#' @return `NUnrootedShapes()` returns an object of class `integer64` specifying
+#' the number of unique unrooted tree shapes with `nTip` (< 59) tips.
 #' @export
 NUnrootedShapes <- function (nTip) {
-  nUnrootedKeys <- c(rep(1L, 5),
-                     2L, 2L, 4L, 6L, 11L,
-                     18L, 37L, 66L, 135L, 265L,
-                     552L, 1132L, 2410L, 5098L, 11020L)
-  if (nTip > length(nUnrootedKeys)) {
-    warning("Calculation will take some time...")
-    length(UnrootedKeys(nTip))
-  } else {
-    nUnrootedKeys[nTip]
+  if (nTip > 58L) {
+    stop("Too many shapes to represent as a 64-bit integer. ",
+         "Consult OEIS for value: https://oeis.org/A000672/b000672.txt")
   }
+  nRootedShapes[nTip]
 }
 
 #' @rdname TreeShape
@@ -250,7 +244,7 @@ NUnrootedShapes <- function (nTip) {
 NRootedShapes <- function (nTip) {
   if (nTip > 55L) {
     stop("Too many shapes to represent as a 64-bit integer. ",
-         "Consult OEIS A0011900 for value: https://oeis.org/A001190/b001190.txt")
+         "Consult OEIS for value: https://oeis.org/A001190/b001190.txt")
   }
   nRootedShapes[nTip]
 }

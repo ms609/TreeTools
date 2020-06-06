@@ -51,24 +51,22 @@
 #' of the different unrooted tree shapes with `nTip` leaves.
 "unrootedKeys"
 
-#' Number of rooted shapes
+#' Number of rooted / unrooted tree shapes
 #'
-#' `nRootedShapes` gives the nUmber of binary rooted trees on _n_ unlabeled
-#' leaves.
-#'
-#' @source Wedderburn–Etherington numbers,
-#' [OEIS A001190](https://oeis.org/A001190/b001190.txt)
-"nRootedShapes"
-
-#' Raw data from Zhang et al. 2016
-#'
-#' @template LoboMods
+#' `nRootedShapes` and `nUnrootedShapes` give the nUmber of (un)rooted binary
+#' trees on _n_ unlabeled leaves.
 #'
 #' @source
-#'  \insertRef{Zhang2016}{TreeTools}
+#' `nRootedShapes` corresponds to the Wedderburn–Etherington numbers,
+#' [OEIS A001190](https://oeis.org/A001190)
+#'
+#' `nUnrootedShapes` is [OEIS A000672](https://oeis.org/A000672)
 #'
 #' @keywords datasets
-"Lobo.data"
+"nRootedShapes"
+
+#' @rdname nRootedShapes
+"nUnrootedShapes"
 
 #' Data from Zhang et al. 2016 in `phyDat` format
 #'
