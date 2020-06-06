@@ -80,7 +80,7 @@
 #'  \insertRef{Zhang2016}{TreeTools}
 #'
 #' @keywords datasets
-"Lobo.phy"
-
-#' @rdname Lobo.phy
 "Lobo.data"
+
+#' @rdname Lobo.data
+"Lobo.phy"

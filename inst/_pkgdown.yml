@@ -40,7 +40,7 @@ reference:
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
     contents:
-      - has_concept("phylogenetic metrix conversion functions")
+      - has_concept("phylogenetic matrix conversion functions")
 
   - title: "Parsers"
     desc: "Functions to parse files."
@@ -51,6 +51,7 @@ reference:
       - NewickTree
       - ReadCharacters
       - ReadTntTree
+      - StringToPhyDat
       - TNTText2Tree
 
   - title: "Split manipulation"
@@ -82,8 +83,8 @@ reference:
       - brewer
       - doubleFactorials
       - Lobo.data
-      - Lobo.phy
       - logDoubleFactorials
+      - nRootedShapes
      #- has_concept('datasets') # Not yet implemented by pkgdown
 
   - title: "Utility functions"

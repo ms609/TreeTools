@@ -601,8 +601,7 @@ PhyDat <- function (dataset) {
 #'
 #' @importFrom phangorn phyDat
 #' @export
-StringToPhyDat <-
-  function (string, tips, byTaxon = TRUE) {
+StringToPhyDat <- function (string, tips, byTaxon = TRUE) {
     tokens <- matrix(NexusTokens(string), nrow = length(tips), byrow = byTaxon)
     rownames(tokens) <- tips
     MatrixToPhyDat(tokens)
