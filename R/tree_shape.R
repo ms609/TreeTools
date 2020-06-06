@@ -135,7 +135,7 @@ UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
   if (nTip > 30) {
     stop("Only trees with < 31 tips are presently handled")
   }
-  nShapes <- NUnrootedShapes(nTip)
+  nShapes <- nUnrootedShapes[nTip]
   if (shape >= as.integer(nShapes)) {
     stop("Shape must be between 0 and ", nShapes)
   }
@@ -216,7 +216,7 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
 #' @export
 .UnrootedKeys <- function (nTip) {
   if (nTip > 28L) {
-    stop("Too many shapes to calculate with ", nTip, " tips.")
+    stop("Too many shapes to calculate with ", nTip, " leaves.")
   } else if (nTip > length(unrootedKeys)) {
     #TODO make efficient - this is horrible!
     shapes <- as.integer(structure(

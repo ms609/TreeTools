@@ -56,6 +56,7 @@
 #' `nRootedShapes` and `nUnrootedShapes` give the nUmber of (un)rooted binary
 #' trees on _n_ unlabeled leaves.
 #'
+#' @encoding UTF-8
 #' @source
 #' `nRootedShapes` corresponds to the Wedderburn–Etherington numbers,
 #' [OEIS A001190](https://oeis.org/A001190)
