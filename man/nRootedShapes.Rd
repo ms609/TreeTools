@@ -13,9 +13,9 @@ An object of class \code{integer64} of length 60.
 }
 \source{
 \code{nRootedShapes} corresponds to the Wedderburn–Etherington numbers,
-\href{https://oeis.org/A001190}{OEIS A001190}
+\href{https://oeis.org/A001190}{\acronym{OEIS} A001190}
 
-\code{nUnrootedShapes} is \href{https://oeis.org/A000672}{OEIS A000672}
+\code{nUnrootedShapes} is \href{https://oeis.org/A000672}{\acronym{OEIS} A000672}
 }
 \usage{
 nRootedShapes
@@ -23,7 +23,7 @@ nRootedShapes
 nUnrootedShapes
 }
 \description{
-\code{nRootedShapes} and \code{nUnrootedShapes} give the nUmber of (un)rooted binary
-trees on \emph{n} unlabeled leaves.
+\code{nRootedShapes} and \code{nUnrootedShapes} give the number of (un)rooted binary
+trees on \emph{n} unlabelled leaves.
 }
 \keyword{datasets}

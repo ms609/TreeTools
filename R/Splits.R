@@ -439,7 +439,7 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 # (as well as `integer64`s).  This follows equivalent functions in the
 # '\pkg{bit64}' package.
 #
-#' @seealso Corresponding base functions ar edocumented in
+#' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
 #' @export

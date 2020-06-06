@@ -33,7 +33,7 @@ utils::globalVariables(c('nRootedShapes',
 #' If `UnrootedTreeShape()` or `UnrootedTreeKey()` is passed a rooted tree,
 #' the position of the root will be ignored.
 #'
-#' The number of unlabelled bunary rooted trees corresponds to the
+#' The number of unlabelled binary rooted trees corresponds to the
 #' [Wedderburn-Etherington numbers](https://oeis.org/A001190).
 #'
 #'

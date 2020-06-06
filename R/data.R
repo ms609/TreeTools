@@ -53,15 +53,15 @@
 
 #' Number of rooted / unrooted tree shapes
 #'
-#' `nRootedShapes` and `nUnrootedShapes` give the nUmber of (un)rooted binary
-#' trees on _n_ unlabeled leaves.
+#' `nRootedShapes` and `nUnrootedShapes` give the number of (un)rooted binary
+#' trees on _n_ unlabelled leaves.
 #'
 #' @encoding UTF-8
 #' @source
 #' `nRootedShapes` corresponds to the Wedderburn–Etherington numbers,
-#' [OEIS A001190](https://oeis.org/A001190)
+#' [\acronym{OEIS} A001190](https://oeis.org/A001190)
 #'
-#' `nUnrootedShapes` is [OEIS A000672](https://oeis.org/A000672)
+#' `nUnrootedShapes` is [\acronym{OEIS} A000672](https://oeis.org/A000672)
 #'
 #' @keywords datasets
 "nRootedShapes"

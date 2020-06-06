@@ -44,7 +44,7 @@ splits1 \%in\% splits2
 
 }
 \seealso{
-Corresponding base functions ar edocumented in
+Corresponding base functions are documented in
 \code{\link[base:match]{match()}}.
 
 Other Splits operations: 

@@ -118,7 +118,7 @@ zero.
 If \code{UnrootedTreeShape()} or \code{UnrootedTreeKey()} is passed a rooted tree,
 the position of the root will be ignored.
 
-The number of unlabelled bunary rooted trees corresponds to the
+The number of unlabelled binary rooted trees corresponds to the
 \href{https://oeis.org/A001190}{Wedderburn-Etherington numbers}.
 }
 \examples{
