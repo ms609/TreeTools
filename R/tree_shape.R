@@ -1,6 +1,7 @@
 #' @importFrom utils globalVariables
 utils::globalVariables(c('nRootedShapes',
-                         'nUnrootedShapes'),
+                         'nUnrootedShapes',
+                         'unrootedKeys'),
                        'TreeTools')
 
 #' Integer representing shape of a tree
