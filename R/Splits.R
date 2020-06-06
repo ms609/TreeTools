@@ -453,14 +453,37 @@ match.Splits <- function (x, table, ...) {
 }
 
 # Following https://github.com/cran/bit64/blob/master/R/patch64.R
-if (!exists("match.default")){
-  "match" <- function(x, table, ...) UseMethod("match")
-  "match.default" <- function(x, table, ...) base::"match"(x, table, ...)
+
+#' @export
+#' @keywords methods
+"match" <- if (!exists("match.default")) {
+  function(x, table, ...) UseMethod("match")
+} else {
+  match
 }
 
-if (!exists("%in%.default")){
-  "%in%" <- function(x, table) UseMethod("%in%")
-  "%in%.default" <- function(x, table) base::"%in%"(x, table)
+#' @method match default
+#' @export
+"match.default" <- if (!exists("match.default")) {
+  function(x, table, ...) base::"match"(x, table, ...)
+} else {
+  match.default
+}
+
+#' @export
+#' @keywords methods
+`%in%` <- if (!exists("%in%.default")) {
+  function(x, table) UseMethod("%in%")
+} else {
+  `%in%`
+}
+
+#' @method %in% default
+#' @export
+"%in%.default" <- if (!exists("%in%.default")) {
+  function(x, table) base::"%in%"(x, table)
+} else {
+  `%in%.default`
 }
 
 #' @rdname match.Splits
