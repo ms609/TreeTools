@@ -435,7 +435,31 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' splits2 <- as.Splits(PectinateTree(7))
 #'
 #' match(splits1, splits2)
+# Turns base functions into S3 generics that can handle `Splits` objects
+# (as well as `integer64`s).  This follows equivalent functions in the
+# '\pkg{bit64}' package.
+#
+#' @seealso Corresponding base functions ar edocumented in
+#' [`match()`][base::match].
 #'
+#' @export
+#' @keywords methods
+# Following https://github.com/cran/bit64/blob/master/R/patch64.R
+"match" <- if (!exists("match.default")) {
+  function(x, table, ...) UseMethod("match")
+} else {
+  match
+}
+
+#' @method match default
+#' @export
+"match.default" <- if (!exists("match.default")) {
+  function(x, table, ...) base::"match"(x, table, ...)
+} else {
+  match.default
+}
+
+#' @rdname match
 #' @family Splits operations
 #' @method match Splits
 #' @export
@@ -452,24 +476,7 @@ match.Splits <- function (x, table, ...) {
   }, integer(1))
 }
 
-# Following https://github.com/cran/bit64/blob/master/R/patch64.R
-
-#' @export
-#' @keywords methods
-"match" <- if (!exists("match.default")) {
-  function(x, table, ...) UseMethod("match")
-} else {
-  match
-}
-
-#' @method match default
-#' @export
-"match.default" <- if (!exists("match.default")) {
-  function(x, table, ...) base::"match"(x, table, ...)
-} else {
-  match.default
-}
-
+#' @rdname match
 #' @export
 #' @keywords methods
 `%in%` <- if (!exists("%in%.default")) {
@@ -486,7 +493,7 @@ match.Splits <- function (x, table, ...) {
   `%in%.default`
 }
 
-#' @rdname match.Splits
+#' @rdname match
 #'
 #' @return `%in%` returns a logical vector specifying which of the splits in
 #' `x` are present in `table`.

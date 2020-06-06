@@ -34,6 +34,6 @@ Other Splits operations:
 \code{\link{NTip}()},
 \code{\link{TipLabels}()},
 \code{\link{as.Splits}()},
-\code{\link{match.Splits}()}
+\code{\link{match}()}
 }
 \concept{Splits operations}
