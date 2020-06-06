@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Data from Zhang et al. 2016 — Lobo.phy • TreeTools</title>
+<title>Split matching — match • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,12 @@
 
 
 
-<meta property="og:title" content="Data from Zhang et al. 2016 — Lobo.phy" />
-<meta property="og:description" content="Phylogenetic data from Zhang et al. (2016) in raw (Lobo.data) and
-phyDat (Lobo.phy) formats." />
+<meta property="og:title" content="Split matching — match" />
+<meta property="og:description" content="match() returns a vector of the positions of (first) matches of splits in
+its first argument in its second.
+%in% is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand." />
 
 
 
@@ -152,33 +155,66 @@ phyDat (Lobo.phy) formats." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Data from Zhang et al. 2016</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>Lobo.phy.Rd</code></div>
+    <h1>Split matching</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Splits.R'><code>R/Splits.R</code></a></small>
+    <div class="hidden name"><code>match.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Phylogenetic data from Zhang <em>et al.</em> (2016) in raw (<code>Lobo.data</code>) and
-<code>phyDat</code> (<code>Lobo.phy</code>) formats.</p>
+    <p><code>match()</code> returns a vector of the positions of (first) matches of splits in
+its first argument in its second.
+<code>%in%</code> is a more intuitive interface as a binary operator, which returns
+a logical vector indicating whether there is a match or not for each
+split in its left operand.</p>
     </div>
 
-    <pre class="usage"><span class='no'>Lobo.phy</span>
+    <pre class="usage">match(x, table, ...)
 
-<span class='no'>Lobo.data</span></pre>
+# S3 method for Splits
+match(x, table, ...)
 
+x %in% table
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+# S3 method for Splits
+%in%(x, table)</pre>
 
-    <p>An object of class <code>phyDat</code> of length 48.</p>
-<p>An object of class <code>list</code> of length 48.</p>
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x, table</th>
+      <td><p>Object of class <code>Splits</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Specify <code>nomatch =</code> to provide an integer value that will be
+used in place of <code>NA</code> in the case where no match is found.</p></td>
+    </tr>
+    </table>
 
-    <p>Zhang X, Smith MR, Yang J, Hou J (2016).
-&#8220;Onychophoran-like musculature in a phosphatized Cambrian lobopodian.&#8221;
-<em>Biology Letters</em>, <b>12</b>(9), 20160492.
-doi: <a href='https://doi.org/10.1098/rsbl.2016.0492'>10.1098/rsbl.2016.0492</a>
-, <a href='http://rsbl.royalsocietypublishing.org/content/12/9/20160492'>http://rsbl.royalsocietypublishing.org/content/12/9/20160492</a>.</p>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p><code>match()</code> returns an integer vector specifying the position in
+<code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
+<p><code>%in%</code> returns a logical vector specifying which of the splits in
+<code>x</code> are present in <code>table</code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Corresponding base functions ar edocumented in
+<code><a href='https://rdrr.io/r/base/match.html'>match()</a></code>.</p>
+<p>Other Splits operations: 
+<code><a href='NSplits.html'>NSplits</a>()</code>,
+<code><a href='NTip.html'>NTip</a>()</code>,
+<code><a href='TipLabels.html'>TipLabels</a>()</code>,
+<code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
+<code><a href='as.Splits.html'>as.Splits</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>splits1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>7</span>))
+<span class='no'>splits2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>7</span>))
+
+<span class='fu'>match</span>(<span class='no'>splits1</span>, <span class='no'>splits2</span>)</div><div class='output co'>#&gt; [1]  1 NA  3 NA</div><div class='input'><span class='no'>splits1</span> <span class='kw'>%in%</span> <span class='no'>splits2</span></div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

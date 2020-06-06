@@ -174,7 +174,7 @@ binary tree, ignoring tip labels.</p>
 
 <span class='fu'>UnrootedTreeShape</span>(<span class='no'>tree</span>)
 
-<span class='fu'>UnrootedTreeKey</span>(<span class='no'>tree</span>)
+<span class='fu'>UnrootedTreeKey</span>(<span class='no'>tree</span>, <span class='kw'>asInteger</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>.UnrootedKeys</span>(<span class='no'>nTip</span>)
 
@@ -210,6 +210,12 @@ in a tree, perhaps obtained using <code><a href='TipLabels.html'>TipLabels()</a>
       <td><p>Integer specifying the <em>key</em> (not number) of an unrooted tree.</p></td>
     </tr>
     <tr>
+      <th>asInteger</th>
+      <td><p>Logical specifying whether to coerce the return value to
+mode <code>integer</code>: only possible for values &lt; 2^31.
+If <code>FALSE</code>, values will have class <code>integer64</code>.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Value of <code>nTip</code>, to pass to memoized <code>.UnrootedKeys</code>.</p></td>
     </tr>
@@ -221,17 +227,17 @@ in a tree, perhaps obtained using <code><a href='TipLabels.html'>TipLabels()</a>
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><code>unrootedKeys</code> is a list of length 18; each
+    <p><code>unrootedKeys</code> is a list of length 21; each
 entry is a vector of integers corresponding to they keys (not shape numbers)
 of the different unrooted tree shapes with <code>nTip</code> leaves.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>TreeShape()</code> returns an integer specifying the shape of a tree,
 ignoring tip labels.</p>
-<p><code>RootedTreeWithShape()</code> returns a tree of class <code>phylo</code> corresponding to the
-shape provided.  Tips are unlabelled.</p>
-<p><code>UnrootedTreeWithShape()</code> returns a tree of class <code>phylo</code> corresponding
-to the shape provided.  Tips are unlabelled.</p>
+<p><code>RootedTreeWithShape()</code> returns a tree of class <code>phylo</code>
+corresponding to the shape provided.  Tips are unlabelled.</p>
+<p><code>UnrootedTreeWithShape()</code> returns a tree of class <code>phylo</code>
+corresponding to the shape provided.  Tips are unlabelled.</p>
 <p><code>UnrootedTreeWithKey()</code> returns a tree of class <code>phylo</code> corresponding
 to the key provided.  Tips are unlabelled.</p>
 <p><code>UnrootedKeys()</code> returns a vector of integers corresponding to the
@@ -239,9 +245,8 @@ keys (not shape numbers) of unrooted tree shapes with <code>nTip</code> tips.
 It is a wrapper to <code>.UnrootedKeys()</code>, with memoization, meaning that results
 once calculated are cached and need not be calculated on future calls to
 the function.</p>
-<p><code>NUnrootedShapes()</code> returns an integer specifying the number of
-unique unrooted tree shapes with <code>nTip</code> (&lt; 29) tips. Slow once <code>nTip</code> &gt;
-18.</p>
+<p><code>NUnrootedShapes()</code> returns an object of class <code>integer64</code> specifying
+the number of unique unrooted tree shapes with <code>nTip</code> (&lt; 61) tips.</p>
 <p><code>NRootedShapes()</code> returns an object of class <code>integer64</code> specifying
 the number of unique rooted tree shapes with <code>nTip</code> (&lt; 56) leaves.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -278,14 +283,20 @@ the position of the root will be ignored.</p>
 <span class='fu'>RootedTreeShape</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; integer64
 #&gt; [1] 22</div><div class='input'>
 <span class='co'># Unique shapes of unrooted trees:</span>
-<span class='fu'>NUnrootedShapes</span>(<span class='fl'>8L</span>)</div><div class='output co'>#&gt; [1] 4</div><div class='input'>
+<span class='fu'>NUnrootedShapes</span>(<span class='fl'>8L</span>)</div><div class='output co'>#&gt; integer64
+#&gt; [1] 4</div><div class='input'>
 <span class='co'># Keys of these trees:</span>
 <span class='fu'>UnrootedKeys</span>(<span class='fl'>8L</span>)</div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
 <span class='co'># A tree may be represented by multiple keys.</span>
 <span class='co'># For a one-to-one correspondence, use a number instead:</span>
-<span class='no'>allShapes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fu'>NUnrootedShapes</span>(<span class='fl'>8L</span>)) - <span class='fl'>1L</span>,
+<span class='no'>unrootedShapes8</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fu'>NUnrootedShapes</span>(<span class='fl'>8L</span>))
+<span class='no'>allShapes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='no'>unrootedShapes8</span>) - <span class='fl'>1L</span>,
                     <span class='no'>UnrootedTreeWithShape</span>, <span class='fl'>8L</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>allShapes</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='img'><img src='TreeShape-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeShape</span>)</div><div class='output co'>#&gt; [1] 0 1 2 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeKey</span>) <span class='co'># Key &gt;= number</span></div><div class='output co'>#&gt; [1]  0.000000e+00 4.940656e-324 9.881313e-324 1.976263e-323</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>allShapes</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='img'><img src='TreeShape-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeShape</span>)</div><div class='output co'>#&gt; [1] 0 1 2 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeKey</span>, <span class='kw'>asInteger</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># Key &gt;= number</span></div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
+<span class='co'># If numbers larger than 2&gt;31 are required, sapply needs a little help</span>
+<span class='co'># with 64-bit integers:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>allShapes</span>, <span class='no'>UnrootedTreeKey</span>), <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'integer64'</span>)</div><div class='output co'>#&gt; integer64
+#&gt; [1] 0 1 2 4</div><div class='input'>
 
 </div></pre>
   </div>
