@@ -261,6 +261,7 @@ IntegerMatrix rooted_shape_to_edge(NumericVector shape, IntegerVector nTip) {
     next_edge = 0,
     next_tip = 1,
     next_node = n_tip + 1;
+  if (shape[0] < 0) throw std::range_error("Shape may not be negative.");
   uint64_t n = shape[0];
   fill_edges(parent, child, n, n_tip, &next_edge, &next_tip, &next_node);
 
