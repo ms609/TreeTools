@@ -437,8 +437,6 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' match(splits1, splits2)
 #'
 #' @family Splits operations
-# Import `match` method from bit64
-#' @importFrom bit64 match
 #' @method match Splits
 #' @export
 match.Splits <- function (x, table, ...) {
@@ -454,6 +452,17 @@ match.Splits <- function (x, table, ...) {
   }, integer(1))
 }
 
+# Following https://github.com/cran/bit64/blob/master/R/patch64.R
+if (!exists("match.default")){
+  "match" <- function(x, table, ...) UseMethod("match")
+  "match.default" <- function(x, table, ...) base::"match"(x, table, ...)
+}
+
+if (!exists("%in%.default")){
+  "%in%" <- function(x, table) UseMethod("%in%")
+  "%in%.default" <- function(x, table) base::"%in%"(x, table)
+}
+
 #' @rdname match.Splits
 #'
 #' @return `%in%` returns a logical vector specifying which of the splits in
@@ -462,7 +471,6 @@ match.Splits <- function (x, table, ...) {
 #' @examples
 #' splits1 %in% splits2
 #'
-#' @importFrom bit64 %in%
 #' @method %in% Splits
 #' @export
 `%in%.Splits` <- function (x, table) {
