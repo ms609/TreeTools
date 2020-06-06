@@ -16,7 +16,7 @@
 \alias{NRootedShapes}
 \title{Integer representing shape of a tree}
 \format{
-\code{unrootedKeys} is a list of length 20; each
+\code{unrootedKeys} is a list of length 21; each
 entry is a vector of integers corresponding to they keys (not shape numbers)
 of the different unrooted tree shapes with \code{nTip} leaves.
 }
@@ -33,7 +33,7 @@ UnrootedTreeWithKey(key, nTip, tipLabels = rep("", nTip))
 
 UnrootedTreeShape(tree)
 
-UnrootedTreeKey(tree)
+UnrootedTreeKey(tree, asInteger = FALSE)
 
 .UnrootedKeys(nTip)
 
@@ -55,6 +55,10 @@ NRootedShapes(nTip)
 in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 
 \item{key}{Integer specifying the \emph{key} (not number) of an unrooted tree.}
+
+\item{asInteger}{Logical specifying whether to coerce the return value to
+mode \code{integer}: only possible for values < 2^31.
+If \code{FALSE}, values will have class \code{integer64}.}
 
 \item{\dots}{Value of \code{nTip}, to pass to memoized \code{.UnrootedKeys}.}
 
@@ -133,11 +137,16 @@ UnrootedKeys(8L)
 
 # A tree may be represented by multiple keys.
 # For a one-to-one correspondence, use a number instead:
-allShapes <- lapply(seq_len(NUnrootedShapes(8L)) - 1L,
+unrootedShapes8 <- as.integer(NUnrootedShapes(8L))
+allShapes <- lapply(seq_len(unrootedShapes8) - 1L,
                     UnrootedTreeWithShape, 8L)
 plot(allShapes[[1]])
 sapply(allShapes, UnrootedTreeShape)
-sapply(allShapes, UnrootedTreeKey) # Key >= number
+sapply(allShapes, UnrootedTreeKey, asInteger = TRUE) # Key >= number
+
+# If numbers larger than 2>31 are required, sapply needs a little help
+# with 64-bit integers:
+structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
 
 
 }

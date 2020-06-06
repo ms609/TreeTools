@@ -1,3 +1,8 @@
+#' @importFrom utils globalVariables
+utils::globalVariables(c('nRootedShapes',
+                         'nUnrootedShapes'),
+                       'TreeTools')
+
 #' Integer representing shape of a tree
 #'
 #' Returns an integer that uniquely represents the shape of an _n_-tip
@@ -52,11 +57,16 @@
 #'
 #' # A tree may be represented by multiple keys.
 #' # For a one-to-one correspondence, use a number instead:
-#' allShapes <- lapply(seq_len(NUnrootedShapes(8L)) - 1L,
+#' unrootedShapes8 <- as.integer(NUnrootedShapes(8L))
+#' allShapes <- lapply(seq_len(unrootedShapes8) - 1L,
 #'                     UnrootedTreeWithShape, 8L)
 #' plot(allShapes[[1]])
 #' sapply(allShapes, UnrootedTreeShape)
-#' sapply(allShapes, UnrootedTreeKey) # Key >= number
+#' sapply(allShapes, UnrootedTreeKey, asInteger = TRUE) # Key >= number
+#'
+#' # If numbers larger than 2>31 are required, sapply needs a little help
+#' # with 64-bit integers:
+#' structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
 #'
 #'
 #' @seealso Unique number for a labelled tree: [`TreeNumber()`]
@@ -156,10 +166,13 @@ UnrootedTreeShape <- function (tree) {
 }
 
 #' @rdname TreeShape
+#' @param asInteger Logical specifying whether to coerce the return value to
+#' mode `integer`: only possible for values < 2^31.
+#' If `FALSE`, values will have class `integer64`.
 #' @importFrom ape drop.tip root
 #' @importFrom bit64 integer64
 #' @export
-UnrootedTreeKey <- function (tree) {
+UnrootedTreeKey <- function (tree, asInteger = FALSE) {
   tree <- Preorder(tree) # Guarantee unique representation of tree
   edge <- Postorder(tree$edge, renumber = FALSE)
   nTip <- NTip(tree)
@@ -193,7 +206,7 @@ UnrootedTreeKey <- function (tree) {
   }, integer64(1)), rootCandidate), class = 'integer64')
 
   # Return:
-  min(allKeys)
+  min(if (asInteger) as.integer(allKeys) else allKeys)
 }
 
 #' @rdname TreeShape
