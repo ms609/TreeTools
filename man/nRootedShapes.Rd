@@ -8,7 +8,7 @@
 \format{
 An object of class \code{integer64} of length 55.
 
-An object of class \code{integer64} of length 58.
+An object of class \code{integer64} of length 60.
 }
 \source{
 \code{nRootedShapes} corresponds to the Wedderburn–Etherington numbers,

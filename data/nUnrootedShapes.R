@@ -3,6 +3,8 @@ nUnrootedShapes <- bit64::as.integer64(c(
   '1',
   '1',
   '1',
+  '1',
+  '1',
   '2',
   '2',
   '4',

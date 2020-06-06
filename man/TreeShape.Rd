@@ -64,11 +64,11 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 \code{TreeShape()} returns an integer specifying the shape of a tree,
 ignoring tip labels.
 
-\code{RootedTreeWithShape()} returns a tree of class \code{phylo} corresponding to the
-shape provided.  Tips are unlabelled.
+\code{RootedTreeWithShape()} returns a tree of class \code{phylo}
+corresponding to the shape provided.  Tips are unlabelled.
 
-\code{UnrootedTreeWithShape()} returns a tree of class \code{phylo} corresponding
-to the shape provided.  Tips are unlabelled.
+\code{UnrootedTreeWithShape()} returns a tree of class \code{phylo}
+corresponding to the shape provided.  Tips are unlabelled.
 
 \code{UnrootedTreeWithKey()} returns a tree of class \code{phylo} corresponding
 to the key provided.  Tips are unlabelled.
@@ -80,7 +80,7 @@ once calculated are cached and need not be calculated on future calls to
 the function.
 
 \code{NUnrootedShapes()} returns an object of class \code{integer64} specifying
-the number of unique unrooted tree shapes with \code{nTip} (< 59) tips.
+the number of unique unrooted tree shapes with \code{nTip} (< 61) tips.
 
 \code{NRootedShapes()} returns an object of class \code{integer64} specifying
 the number of unique rooted tree shapes with \code{nTip} (< 56) leaves.
