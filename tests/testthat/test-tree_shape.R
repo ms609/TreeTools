@@ -11,7 +11,7 @@ test_that('Tree shapes counted', {
                          class = 'integer64'))
 
   expect_error(NRootedShapes(56L))
-  expect_error(NUnrootedShapes(59L))
+  expect_error(NUnrootedShapes(61L))
 })
 
 test_that("Nasty node order not fatal", {
@@ -116,7 +116,7 @@ test_that('Rooted tree shapes built', {
 })
 
 test_that('Unrooted tree shapes built', {
-  expect_error(plot(UnrootedTreeWithShape(4, 8))) # Out of range
+  expect_error(UnrootedTreeWithShape(4, 8)) # Out of range
 
   expect_equal(UnrootedTreeWithShape(0, 9),
                UnrootTree(PectinateTree(rep('', 9))))
