@@ -11,14 +11,14 @@ utils::globalVariables(c('doubleFactorials',
 #' @param n Vector of integers.
 #'
 #' @encoding UTF-8
-#' @return Returns the double factorial, _n_ × (_n_ − 2) × (_n_ − 4) ×
-#' (_n_ − 6) × ...
+#' @return Returns the double factorial, _n_ &times; (_n_ &minus; 2) &times;
+#' (_n_ &minus; 4) &times; (_n_ &minus; 6) &times; ...
 #'
 #' @examples
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
 #' DoubleFactorial (2) # 2
-#' DoubleFactorial (5) # 1 x 3 x 5
-#' exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
+#' DoubleFactorial (5) # 1 * 3 * 5
+#' exp(LnDoubleFactorial.int (8)) # log(2 * 4 * 6 * 8)
 #' @template MRS
 #' @family double factorials
 #' @export

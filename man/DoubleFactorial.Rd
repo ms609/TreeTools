@@ -29,8 +29,8 @@ LogDoubleFactorial.int(n)
 \item{n}{Vector of integers.}
 }
 \value{
-Returns the double factorial, \emph{n} × (\emph{n} − 2) × (\emph{n} − 4) ×
-(\emph{n} − 6) × ...
+Returns the double factorial, \emph{n} × (\emph{n} − 2) ×
+(\emph{n} − 4) × (\emph{n} − 6) × ...
 }
 \description{
 Calculate the double factorial of a number, or its logarithm.
@@ -51,8 +51,8 @@ and below 50001
 \examples{
 DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2
-DoubleFactorial (5) # 1 x 3 x 5
-exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
+DoubleFactorial (5) # 1 * 3 * 5
+exp(LnDoubleFactorial.int (8)) # log(2 * 4 * 6 * 8)
 DoubleFactorial64(31)
 }
 \seealso{
