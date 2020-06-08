@@ -420,6 +420,9 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' a logical vector indicating whether there is a match or not for each
 #' split in its left operand.
 #'
+#' `in.Splits()` is an alias for `%in%`, included for backwards compatability.
+#' It will be deprecated in a future release.
+#'
 #' @param x,table Object of class `Splits`.
 #' @param \dots Specify `nomatch =` to provide an integer value that will be
 #' used in place of `NA` in the case where no match is found.
@@ -506,3 +509,7 @@ match.Splits <- function (x, table, ...) {
 `%in%.Splits` <- function (x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
+
+#' @rdname match
+#' @export
+in.Splits <- `%in%.Splits`

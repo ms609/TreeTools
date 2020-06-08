@@ -5,6 +5,7 @@
 \alias{match.Splits}
 \alias{\%in\%}
 \alias{\%in\%.Splits}
+\alias{in.Splits}
 \title{Split matching}
 \usage{
 match(x, table, ...)
@@ -14,6 +15,8 @@ match(x, table, ...)
 x \%in\% table
 
 \method{\%in\%}{Splits}(x, table)
+
+in.Splits(x, table)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}
@@ -34,6 +37,10 @@ its first argument in its second.
 \code{\%in\%} is a more intuitive interface as a binary operator, which returns
 a logical vector indicating whether there is a match or not for each
 split in its left operand.
+}
+\details{
+\code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatability.
+It will be deprecated in a future release.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(7))
