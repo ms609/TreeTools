@@ -307,7 +307,7 @@ Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE) {
 #' @rdname Reorder
 #' @export
 PostorderEdges <- function (edge, renumber = FALSE) {
-  .Deprecated('Postorder')
+#  .Deprecated('Postorder') #TODO (#35)
   Postorder(edge, renumber = renumber)
 } # nocov end
 
