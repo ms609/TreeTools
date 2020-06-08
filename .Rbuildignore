@@ -1,4 +1,3 @@
-CRAN-RELEASE
 CONTRIBUTING.md
 README.md
 cran-comments.md
@@ -20,6 +19,7 @@ vignettes/.RData
 /^src\-/
 ^CODE_OF_CONDUCT\.md$
 ^codemeta\.json$
+^CRAN-RELEASE$
 ^docs$
 ^doc$
 ^data-raw$
