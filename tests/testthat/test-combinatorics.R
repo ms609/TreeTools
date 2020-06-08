@@ -1,4 +1,4 @@
-context("combinatorics.R")
+context("Combinatorics.R")
 
 test_that("Factorials are calculated correctly", {
   expect_equal(c(1L, 1L, 1L, 2L, 3L, 2L * 4L, 3L * 5L,
@@ -45,6 +45,28 @@ test_that("N consistent with splits calculated correctly", {
   Test(1:10)
   expect_error(NUnrootedSplits(c(10, 152)))
 
+})
+
+test_that("N[Un]RootedMult() works", {
+  Test <- function (...) {
+    splits <- c(...)
+    splits <- splits[splits > 0]
+    totalTips <- sum(splits)
+    # Carter et al. 1990, Theorem 2 in full
+    expect_equal(1, NUnrootedMult(...) /
+                   round(DoubleFactorial(totalTips + totalTips - 5L) /
+                         DoubleFactorial(2L * (totalTips - length(splits)) - 1L)
+                       * prod(DoubleFactorial(splits + splits - 3L))),
+                 tolerance = 1e-7)
+  }
+  expect_equal(NUnrootedMult(c(5, 10)), NUnrootedMult(5, 10))
+  Test(5, 10)
+  Test(5, 0, 10)
+  Test(5, 5, 10)
+  expect_equal(0L, NUnrootedMult(0, 0))
+  Test(0:5)
+  Test(c(0, 10))
+  Test(10)
 })
 
 test_that("Log rooted calculated correctly", {

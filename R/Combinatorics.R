@@ -329,12 +329,23 @@ Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
 NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
   splits <- c(...)
   splits <- splits[splits > 0]
-  totalTips <- sum(splits)
+  nSplits <- length(splits)
+  if (nSplits < 1L) {
+    # Return:
+    0L
+  } else if (nSplits == 1L) {
+    # Return:
+    NUnrooted(splits)
+  } else if (nSplits == 2L) {
+    prod(DoubleFactorial(splits + splits - 3L))
+  } else {
+    totalTips <- sum(splits)
 
-  # Return:
+    numerator <- totalTips + totalTips - 5L
+    denominator <- 2L * (totalTips - length(splits)) + 1L
 
-  prod(seq(totalTips + totalTips - 5L,
-           2L * (totalTips - length(splits)) + 1L,
-           -2L),
-       DoubleFactorial(splits + splits - 3L))
+    # Return:
+    prod(seq(numerator, denominator, -2L),
+         DoubleFactorial(splits + splits - 3L))
+  }
 }
