@@ -70,13 +70,13 @@
 #' If we chose option 0 for the next two additions, we could specify this tree
 #' with the mixed-base number 0021.  We can convert this into decimal:
 #'
-#' 0 &times; (1 &times; 3 &times; 5 &times; 9) +
+#' 0 * (1 * 3 * 5 * 9) +
 #'
-#' 0 &times; (1 &times; 3 &times; 5) +
+#' 0 * (1 * 3 * 5) +
 #'
-#' 3 &times; (1 &times; 3) +
+#' 3 * (1 * 3) +
 #'
-#' 1 &times; (1)
+#' 1 * (1)
 #'
 #' = 10
 #'
@@ -117,7 +117,6 @@
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
 #' `nTip` and `tip.labels`.
-#' @encoding UTF-8
 #' @export
 as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 

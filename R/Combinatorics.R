@@ -10,9 +10,8 @@ utils::globalVariables(c('doubleFactorials',
 #'
 #' @param n Vector of integers.
 #'
-#' @encoding UTF-8
-#' @return Returns the double factorial, _n_ &times; (_n_ &minus; 2) &times;
-#' (_n_ &minus; 4) &times; (_n_ &minus; 6) &times; ...
+#' @return Returns the double factorial, _n_ * (_n_ - 2) * (_n_ - 4) *
+#' (_n_ - 6) * ...
 #'
 #' @examples
 #' DoubleFactorial (-4:0) # Return 1 if n < 2
