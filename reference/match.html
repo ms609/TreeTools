@@ -176,7 +176,9 @@ match(x, table, ...)
 x %in% table
 
 # S3 method for Splits
-%in%(x, table)</pre>
+%in%(x, table)
+
+in.Splits(x, table)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,6 +200,10 @@ used in place of <code>NA</code> in the case where no match is found.</p></td>
 <code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
 <p><code>%in%</code> returns a logical vector specifying which of the splits in
 <code>x</code> are present in <code>table</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>in.Splits()</code> is an alias for <code>%in%</code>, included for backwards compatability.
+It will be deprecated in a future release.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Corresponding base functions are documented in
