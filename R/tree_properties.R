@@ -622,6 +622,52 @@ NSplits.Splits <- function (x) nrow(x)
 #' @export
 NSplits.numeric <- function (x) x - 3L
 
+#' Maximum splits in an _n_-leaf tree
+#'
+#' `SplitsInBinaryTree()` is a convenience function to calculate the number of splits
+#' in a fully-resolved (binary) tree with _n_ leaves.
+#'
+#TODO port to TreeTools
+#' This function will be moved to the 'TreeTools' package
+#'
+#' @param tree An object of a supported format that represents a tree or
+#' set of trees, from which the number of leaves will be calculated.
+#'
+#' @return `SplitsInBinaryTree()` returns an integer vector detailing the number of
+#' unique non-trivial splits in a binary tree with _n_ leaves.
+#'
+#' @examples
+#' tree <- TreeTools::BalancedTree(8)
+#' SplitsInBinaryTree(tree)
+#' SplitsInBinaryTree(TreeTools::as.Splits(tree))
+#' SplitsInBinaryTree(8)
+#' SplitsInBinaryTree(list(tree, tree))
+#' @template MRS
+#'
+#' @family tree properties
+#' @family Splits operations
+#' @export
+SplitsInBinaryTree <- function (tree) UseMethod('SplitsInBinaryTree')
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.phylo <- function (tree) NTip(tree) - 3L
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.Splits <- SplitsInBinaryTree.phylo
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.list <- function (tree) vapply(tree, SplitsInBinaryTree, 0L)
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.multiPhylo <- SplitsInBinaryTree.list
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.numeric <- function (tree) as.integer(tree) - 3L
 
 #' Is tree rooted?
 #'

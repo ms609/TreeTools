@@ -26,6 +26,7 @@ Other tree properties:
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()}
 }
 \author{

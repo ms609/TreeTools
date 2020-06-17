@@ -1,3 +1,7 @@
+# TreeTools 1.0.0.9000 (development)
+
+ - `SplitsInBinaryTree()`: How many splits occur in an _n_-leaf binary tree?
+
 # TreeTools 1.0.0
 
 ## New functions

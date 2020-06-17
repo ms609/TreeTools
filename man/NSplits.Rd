@@ -45,11 +45,13 @@ NSplits(as.Splits(BalancedTree(8)))
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
 \code{\link{as.Splits}()},

@@ -182,3 +182,9 @@ test_that("Node depths calculated correctly", {
   expect_equal(1L, NodeDepth(StarTree(8), FALSE, FALSE))
   expect_equal(1L, NodeDepth(StarTree(8), TRUE, FALSE))
 })
+
+test_that('SplitsInBinaryTree() works', {
+  expect_identical(5L, SplitsInBinaryTree(8))
+  expect_identical(5L, SplitsInBinaryTree(as.phylo(0, 8)))
+  expect_identical(rep(5L, 4), SplitsInBinaryTree(as.phylo(0:3, 8)))
+})

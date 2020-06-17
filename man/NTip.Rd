@@ -37,11 +37,13 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
 \code{\link{NSplits}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
 \code{\link{as.Splits}()},

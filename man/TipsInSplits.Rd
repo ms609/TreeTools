@@ -32,6 +32,7 @@ LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{as.Splits}()},
 \code{\link{match}()}
