@@ -481,6 +481,16 @@ match.Splits <- function (x, table, ...) {
 
 #' @rdname match
 #' @export
+match.list <- function (x, table) {
+  if (inherits(x, 'Splits')) {
+    match.Splits(x, table, ...)
+  } else {
+    NextMethod()
+  }
+}
+
+#' @rdname match
+#' @export
 #' @keywords methods
 `%in%` <- if (!exists("%in%.default")) {
   function(x, table) UseMethod("%in%")

@@ -1,5 +1,6 @@
 # TreeTools 1.0.0.9000 (development)
 
+ - `match.list()` method for lists of splits.
  - `SplitsInBinaryTree()`: How many splits occur in an _n_-leaf binary tree?
 
 # TreeTools 1.0.0
