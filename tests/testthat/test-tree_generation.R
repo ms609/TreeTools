@@ -56,3 +56,16 @@ test_that("EnforceOutgroup() fails nicely", {
   expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
                EnforceOutgroup(BalancedTree(8), 't1'))
 })
+
+test_that("Random trees drawn from uniform distribution", {
+  nSamples <- 100
+  # Ape's trees are not uniformly distributed:
+  expect_lt(chisq.test(table(vapply(lapply(rep(5, nSamples), ape::rtree),
+                    as.TreeNumber, 1)))$p.value,
+            0.001)
+
+  # Our trees are:
+  expect_gt(chisq.test(table(vapply(lapply(rep(5, nSamples), RandomTree),
+                    as.TreeNumber, 1)))$p.value,
+            0.001)
+})

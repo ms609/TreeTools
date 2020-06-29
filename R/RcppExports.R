@@ -9,6 +9,10 @@ num_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_num_to_parent`, n, nTip)
 }
 
+random_parent <- function(nTip, seed) {
+    .Call(`_TreeTools_random_parent`, nTip, seed)
+}
+
 edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }

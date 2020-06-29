@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include <random>
 #include "types.h"
 using namespace Rcpp;
 
@@ -43,6 +44,46 @@ IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
     edge(where) = i_prime_r;
 
     tree_id /= base;
+  }
+
+  return edge;
+}
+
+// [[Rcpp::export]]
+IntegerVector random_parent(const IntegerVector nTip, const NumericVector seed) {
+  if (nTip[0] < 2) {
+    throw std::range_error("nTip must be > 1");
+  }
+  const intx
+    n_tip = nTip[0],
+    root_node = n_tip + n_tip - 1,
+    c_to_r = 1,
+    prime = n_tip - 2
+  ;
+  intx base;
+
+  std::mt19937 rng(seed[0]);
+
+  IntegerVector edge(n_tip + n_tip - 2);
+  edge(0) = root_node;
+  edge(1) = root_node;
+
+  for (intx i = 2; i != n_tip; i++) {
+    base = (i + i - 3);
+    const intx
+      i_prime = i + prime,
+      i_prime_r = i_prime + c_to_r
+    ;
+
+    std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
+    intx where = place(rng);
+    if (where >= i) {
+      where += prime + 2 - i;
+    }
+
+    edge(i_prime) = edge(where);
+    edge(i) = i_prime_r;
+    edge(where) = i_prime_r;
   }
 
   return edge;
