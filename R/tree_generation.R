@@ -224,11 +224,9 @@ EnforceOutgroup.phylo <- function (tree, outgroup) {
 }
 
 #' @rdname EnforceOutgroup
-#' @importFrom ape root rtree
+#' @importFrom ape root
 #' @export
 EnforceOutgroup.character <- function (tree, outgroup) {
   taxa <- tree
-  .EnforceOutgroup(root(rtree(length(taxa), tip.label = taxa, br = NULL),
-                        taxa[1], resolve.root = TRUE),
-                   outgroup, taxa)
+  .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
 }
