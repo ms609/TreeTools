@@ -34,7 +34,7 @@ test_that("StarTree() works", {
 })
 
 test_that("Random trees are generated correctly", {
-  expect_equal(c(4, 5, 5, 4, 5), RandomTree(3, root = TRUE)$edge[1:5])
+  expect_equal(c(4, 4, 5, 5, 1, 5, 2, 3), RandomTree(3, root = TRUE)$edge[1:8])
   expect_equal(PectinateTree(c('t2', 't3', 't1')), RandomTree(3, root = 't2'))
   expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
 })
