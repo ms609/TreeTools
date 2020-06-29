@@ -8,7 +8,7 @@
 #' integer _x_ < `NUnrooted(n)`.
 #'
 #' This integer can be converted by a tree by treating it as a mixed-base
-#' number, with bases 1, 3, 5, 7, ..., (2&nbsp;_n_ - 5).
+#' number, with bases 1, 3, 5, 7, &hellip; (2&nbsp;_n_ &minus; 5).
 #'
 #' Each digit of this mixed base number corresponds to a leaf, and determines
 #' the location on a growing tree to which that leaf should be added.
@@ -38,8 +38,11 @@
 #' ```
 #'
 #' There are now three edges on which leaf 3 can be added.  Our options are:
+#'
 #' Option 0: the edge leading to 1;
+#'
 #' Option 1: the edge leading to 2;
+#'
 #' Option 2: the edge leading to 7.
 #'
 #' If we select option 1, we produce:
@@ -58,10 +61,15 @@
 #' `1` is now the final digit of our mixed-base number
 #'
 #' There are five places to add leaf 4:
+#'
 #' Option 0: the edge leading to 1;
+#'
 #' Option 1: the edge leading to 2;
+#'
 #' Option 2: the edge leading to 3;
+#'
 #' Option 3: the edge leading to 7;
+#'
 #' Option 4: the edge leading to 8.
 #'
 #' If we chose option 3, then `3` would be the penultimate digit of our
@@ -70,13 +78,13 @@
 #' If we chose option 0 for the next two additions, we could specify this tree
 #' with the mixed-base number 0021.  We can convert this into decimal:
 #'
-#' 0 * (1 * 3 * 5 * 9) +
+#' 0 &times; (1 &times; 3 &times; 5 &times; 9) +
 #'
-#' 0 * (1 * 3 * 5) +
+#' 0 &times; (1 &times; 3 &times; 5) +
 #'
-#' 3 * (1 * 3) +
+#' 3 &times; (1 &times; 3) +
 #'
-#' 1 * (1)
+#' 1 &times; (1)
 #'
 #' = 10
 #'
@@ -103,7 +111,7 @@
 #' # If > 9 digits, represent the tree number as a string.
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 #' tree <- as.phylo(treeNumber)
-#'
+#' @encoding UTF-8
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
 #' @family tree generation functions
