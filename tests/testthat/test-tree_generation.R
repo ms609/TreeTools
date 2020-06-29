@@ -68,4 +68,7 @@ test_that("Random trees drawn from uniform distribution", {
   expect_gt(chisq.test(table(vapply(lapply(rep(5, nSamples), RandomTree),
                     as.TreeNumber, 1)))$p.value,
             0.001)
+
+  expect_false(is.rooted(RandomTree(6, root = FALSE)))
+  expect_true(is.rooted(RandomTree(6, root = TRUE)))
 })
