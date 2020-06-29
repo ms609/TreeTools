@@ -481,7 +481,7 @@ match.Splits <- function (x, table, ...) {
 
 #' @rdname match
 #' @export
-match.list <- function (x, table) {
+match.list <- function (x, table, ...) {
   if (inherits(x, 'Splits')) {
     match.Splits(x, table, ...)
   } else {
