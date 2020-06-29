@@ -70,8 +70,8 @@ RandomTree <- function (tips, root = FALSE) {
 #' where the 'child' entry, i.e. column 2, is numbered sequentially from `1:n`.
 #' @template MRS
 #' @keywords internal
+#' @importFrom stats runif
 #' @export
-
 .RandomParent <- function (n, seed = runif(1, -2147483647L, 2147483647L)) {
   random_parent(n, seed)
 }
