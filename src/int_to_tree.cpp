@@ -6,7 +6,7 @@ using namespace Rcpp;
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
 
 // [[Rcpp::export]]
-IntegerVector num_to_parent(NumericVector n, IntegerVector nTip) {
+IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
   if (nTip[0] < 2) {
     throw std::range_error("nTip must be > 1");
   }
