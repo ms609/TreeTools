@@ -466,7 +466,9 @@ MakeTreeBinary.phylo <- function (tree) {
 MakeTreeBinary.list <- function (tree) lapply(tree, MakeTreeBinary)
 
 #' @export
-MakeTreeBinary.multiPhylo <- MakeTreeBinary.list
+MakeTreeBinary.multiPhylo <- function (tree) {
+  structure(MakeTreeBinary.list(tree), class = 'multiPhylo')
+}
 
 
 #' Leaf label interchange

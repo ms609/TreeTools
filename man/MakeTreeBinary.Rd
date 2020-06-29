@@ -21,7 +21,7 @@ with equal probability.
 }
 \examples{
 MakeTreeBinary(CollapseNode(PectinateTree(7), c(9, 11, 13)))
-Unroot(MakeTreeBinary(StarTree(5)))
+UnrootTree(MakeTreeBinary(StarTree(5)))
 }
 \seealso{
 Resolve polytomies such that some resolutions are more probable
