@@ -26,15 +26,12 @@ SplitsInBinaryTree(tree)
 set of trees, from which the number of leaves will be calculated.}
 }
 \value{
-\code{SplitsInBinaryTree()} returns an integer vector detailing the number of
-unique non-trivial splits in a binary tree with \emph{n} leaves.
+\code{SplitsInBinaryTree()} returns an integer vector detailing the number
+of unique non-trivial splits in a binary tree with \emph{n} leaves.
 }
 \description{
-\code{SplitsInBinaryTree()} is a convenience function to calculate the number of splits
-in a fully-resolved (binary) tree with \emph{n} leaves.
-}
-\details{
-This function will be moved to the 'TreeTools' package
+\code{SplitsInBinaryTree()} is a convenience function to calculate the number of
+splits in a fully-resolved (binary) tree with \emph{n} leaves.
 }
 \examples{
 tree <- TreeTools::BalancedTree(8)

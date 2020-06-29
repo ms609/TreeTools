@@ -624,17 +624,14 @@ NSplits.numeric <- function (x) x - 3L
 
 #' Maximum splits in an _n_-leaf tree
 #'
-#' `SplitsInBinaryTree()` is a convenience function to calculate the number of splits
-#' in a fully-resolved (binary) tree with _n_ leaves.
-#'
-#TODO port to TreeTools
-#' This function will be moved to the 'TreeTools' package
+#' `SplitsInBinaryTree()` is a convenience function to calculate the number of
+#' splits in a fully-resolved (binary) tree with _n_ leaves.
 #'
 #' @param tree An object of a supported format that represents a tree or
 #' set of trees, from which the number of leaves will be calculated.
 #'
-#' @return `SplitsInBinaryTree()` returns an integer vector detailing the number of
-#' unique non-trivial splits in a binary tree with _n_ leaves.
+#' @return `SplitsInBinaryTree()` returns an integer vector detailing the number
+#' of unique non-trivial splits in a binary tree with _n_ leaves.
 #'
 #' @examples
 #' tree <- TreeTools::BalancedTree(8)
