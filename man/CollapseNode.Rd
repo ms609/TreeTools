@@ -35,7 +35,7 @@ polytomies.
 set.seed(1)
 oldPar <- par(mfrow=c(3, 1), mar=rep(0.5, 4))
 
-tree <- RandomTree(7)
+tree <- ape::rtree(7)
 plot(tree)
 nodelabels()
 edgelabels()
