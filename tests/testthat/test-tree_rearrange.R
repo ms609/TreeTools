@@ -231,6 +231,14 @@ test_that("Binarification is uniform", {
   Test(CollapseNode(PectinateTree(6), c(8, 10)))
   Test(CollapseNode(BalancedTree(8), c(10:12)))
   Test(CollapseNode(BalancedTree(7), c(10, 13)))
+
+  bal7 <- BalancedTree(7)
+  expect_equal(bal7, MakeTreeBinary(bal7))
+  expect_equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7)))
+  expect_equal(structure(list(bal7, bal7), class = 'multiPhylo'),
+               MakeTreeBinary(structure(list(bal7, bal7),
+                                        class = 'multiPhylo')))
+
 })
 
 test_that("LeafLabelInterchange() works", {
