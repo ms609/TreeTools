@@ -431,8 +431,8 @@ MakeTreeBinary.phylo <- function (tree) {
   for (i in seq_len(sum(polytomies))) {
     n <- polytomyN[i]
     nKids <- degree[i] - 1L
-    newParent <- .RandomParent(nKids)
-    newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids - 2L))
+    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the 'root'
+    newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids))
 
     nNewNodes <- nKids - 2L
 
@@ -448,8 +448,12 @@ MakeTreeBinary.phylo <- function (tree) {
 
     polytomyN <- polytomyN + nNewNodes
 
-    add <- cbind(newEdges[[1]] + n - nKids - 1L,
-                 c(children, n + seq_len(nNewNodes + 1L) - 1L)[newEdges[[2]]])
+    newEdges2 <- newEdges[[2]][c(-1, -2)] - 1L
+    decrease <- newEdges2 > nKids
+    newEdges2[decrease] <- newEdges2[decrease] - 2L
+
+    add <- cbind(newEdges[[1]][-(1:2)] + n - nKids - 3L,
+                 c(children, n + seq_len(nNewNodes))[newEdges2])
 
     edge <- rbind(keep, add)
   }
