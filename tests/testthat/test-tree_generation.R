@@ -57,11 +57,31 @@ test_that("EnforceOutgroup() fails nicely", {
                EnforceOutgroup(BalancedTree(8), 't1'))
 })
 
+test_that("Random trees are set by R seed", {
+
+  set.seed(0)
+  tr1 <- RandomTree(123)
+  tr2 <- RandomTree(123)
+  set.seed(0)
+  tr3 <- RandomTree(123)
+  tr4 <- RandomTree(123)
+  expect_identical(tr1, tr3)
+  expect_identical(tr2, tr4)
+  expect_false(identical(tr1, tr2))
+
+  set.seed(1)
+  tr5 <- RandomTree(123)
+  set.seed(1)
+  tr6 <- RandomTree(123)
+  expect_identical(tr5, tr6)
+  expect_false(identical(tr1, tr5))
+
+})
+
 test_that("Random trees drawn from uniform distribution", {
   expect_error(.RandomParent(1))
   expect_error(.RandomParent(0))
   expect_error(.RandomParent(-1))
-
 
   nSamples <- 100
   # Ape's trees are not uniformly distributed:
