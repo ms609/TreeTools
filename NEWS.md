@@ -1,5 +1,8 @@
 # TreeTools 1.0.0.9000 (development)
 
+ - `RandomTree()`: Draw tree from uniform distribution, instead of using
+ `ape::rtree()`.
+ - `MakeTreeBinary()`: Uniform equivalent of `ape::multi2di()`.
  - `match.list()` method for lists of splits.
  - `SplitsInBinaryTree()`: How many splits occur in an _n_-leaf binary tree?
 

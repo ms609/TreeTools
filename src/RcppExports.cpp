@@ -28,6 +28,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// random_parent
+IntegerVector random_parent(const IntegerVector nTip, const NumericVector seed);
+RcppExport SEXP _TreeTools_random_parent(SEXP nTipSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(random_parent(nTip, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // edge_to_num
 IntegerVector edge_to_num(IntegerVector parent, IntegerVector child, IntegerVector nTip);
 RcppExport SEXP _TreeTools_edge_to_num(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {

@@ -206,6 +206,33 @@ test_that("DropTip() works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
+test_that("Binarification is uniform", {
+  set.seed(0)
+  Test <- function (tree, nSamples = 200L, ape = FALSE) {
+
+    if (ape) {
+      # Ape's trees are not uniformly distributed:
+      expect_lt(chisq.test(table(replicate(
+        nSamples, as.TreeNumber(multi2di(tree)))))$p.value,
+        0.001)
+    }
+
+    # Our trees are:
+    expect_gt(chisq.test(table(replicate(
+      nSamples, as.TreeNumber(MakeTreeBinary(tree)))))$p.value,
+      0.001)
+
+  }
+
+  Test(CollapseNode(PectinateTree(5), 8:9), nSamples = 300L,
+       ape = TRUE) # Rooted four-star
+  Test(CollapseNode(PectinateTree(6), 8:9))
+  Test(CollapseNode(PectinateTree(6), 9:10))
+  Test(CollapseNode(PectinateTree(6), c(8, 10)))
+  Test(CollapseNode(BalancedTree(8), c(10:12)))
+  Test(CollapseNode(BalancedTree(7), c(10, 13)))
+})
+
 test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
   expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many

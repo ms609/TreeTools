@@ -392,6 +392,83 @@ DropTip <- function (tree, tip) {
   }
 }
 
+#' Generate binary tree by collapsing polytomies
+#'
+#' `MakeTreeBinary()` resolves, at random, all polytomies in a tree or set of
+#' trees, such that all trees compatible with the input topology are drawn
+#' with equal probability.
+#'
+#'
+#' @seealso Resolve polytomies such that some resolutions are more probable
+#' than others using [`ape::multi2di()`].
+#'
+#' @return `MakeTreeBinary()` returns a rooted binary tree of class `phylo`,
+#' corresponding to tree uniformly selected from all those compatible with
+#' the input tree topologies.
+#'
+#' @examples
+#' MakeTreeBinary(CollapseNode(PectinateTree(7), c(9, 11, 13)))
+#' UnrootTree(MakeTreeBinary(StarTree(5)))
+#' @template MRS
+#' @template treeParam
+#' @export
+MakeTreeBinary <- function (tree) {
+  UseMethod('MakeTreeBinary')
+}
+
+#' @export
+MakeTreeBinary.phylo <- function (tree) {
+  tree <- Preorder(tree)
+  degree <- NodeOrder(tree, internalOnly = TRUE)
+  degree[1] <- degree[1] + 1L # Root node
+  polytomies <- degree > 3L
+  if (!any(polytomies)) return(tree)
+  edge <- tree$edge
+
+  nTip <- edge[1] - 1L
+  polytomyN <- which(polytomies) + nTip
+  degree <- degree[polytomies]
+  for (i in seq_len(sum(polytomies))) {
+    n <- polytomyN[i]
+    nKids <- degree[i] - 1L
+    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the 'root'
+    newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids))
+
+    nNewNodes <- nKids - 2L
+
+    childEdges <- edge[, 1] == n
+
+    keep <- edge[!childEdges, ]
+    increase <- keep > n
+    keep[increase] <- keep[increase] + nNewNodes
+
+    children <- edge[childEdges, 2L]
+    increase <- children > n
+    children[increase] <- children[increase] + nNewNodes
+
+    polytomyN <- polytomyN + nNewNodes
+
+    newEdges2 <- newEdges[[2]][c(-1, -2)] - 1L
+    decrease <- newEdges2 > nKids
+    newEdges2[decrease] <- newEdges2[decrease] - 2L
+
+    add <- cbind(newEdges[[1]][-(1:2)] + n - nKids - 3L,
+                 c(children, n + seq_len(nNewNodes))[newEdges2])
+
+    edge <- rbind(keep, add)
+  }
+  tree$edge <- edge
+  tree$Nnode <- nTip - 1L
+  tree
+}
+
+#' @export
+MakeTreeBinary.list <- function (tree) lapply(tree, MakeTreeBinary)
+
+#' @export
+MakeTreeBinary.multiPhylo <- MakeTreeBinary.list
+
+
 #' Leaf label interchange
 #'
 #' `LeafLabelInterchange()` exchanges the position of leaves within a tree.

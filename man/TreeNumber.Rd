@@ -52,7 +52,7 @@ As such, each \emph{n}-leaf tree can be uniquely identified by a non-negative
 integer \emph{x} < \code{NUnrooted(n)}.
 
 This integer can be converted by a tree by treating it as a mixed-base
-number, with bases 1, 3, 5, 7, …, (2 \emph{n} − 5).
+number, with bases 1, 3, 5, 7, … (2 \emph{n} − 5).
 
 Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.

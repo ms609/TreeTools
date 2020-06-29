@@ -12,6 +12,7 @@ extern SEXP _TreeTools_postorder_edges(SEXP);
 extern SEXP _TreeTools_num_to_parent(SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
+extern SEXP _TreeTools_random_parent(SEXP, SEXP);
 extern SEXP _TreeTools_rooted_shape_to_edge(SEXP, SEXP);
 extern SEXP _TreeTools_as_newick(SEXP);
 
@@ -26,6 +27,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
   {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
   {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
+  {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
   {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
   {"_TreeTools_phangorn_bipCPP", (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},

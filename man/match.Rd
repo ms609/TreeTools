@@ -13,7 +13,7 @@ match(x, table, ...)
 
 \method{match}{Splits}(x, table, ...)
 
-\method{match}{list}(x, table)
+\method{match}{list}(x, table, ...)
 
 x \%in\% table
 

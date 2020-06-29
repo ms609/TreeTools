@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
-  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of partitions and cladistic information.",
+  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of splits and cladistic information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "relatedLink": [
@@ -15,14 +15,14 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.0.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
+    "version": "4.0.2",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "author": [
     {
       "@type": "Person",
@@ -242,5 +242,6 @@
     "@type": "Organization",
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
-  }
+  },
+  "keywords": "phylogenetics"
 }
