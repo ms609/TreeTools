@@ -58,6 +58,11 @@ test_that("EnforceOutgroup() fails nicely", {
 })
 
 test_that("Random trees drawn from uniform distribution", {
+  expect_error(.RandomParent(1))
+  expect_error(.RandomParent(0))
+  expect_error(.RandomParent(-1))
+
+
   nSamples <- 100
   # Ape's trees are not uniformly distributed:
   expect_lt(chisq.test(table(vapply(lapply(rep(5, nSamples), ape::rtree),
