@@ -408,7 +408,7 @@ DropTip <- function (tree, tip) {
 #'
 #' @examples
 #' MakeTreeBinary(CollapseNode(PectinateTree(7), c(9, 11, 13)))
-#' Unroot(MakeTreeBinary(StarTree(5)))
+#' UnrootTree(MakeTreeBinary(StarTree(5)))
 #' @template MRS
 #' @template treeParam
 #' @export
