@@ -38,9 +38,8 @@ NULL
 RandomTree <- function (tips, root = FALSE) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
-  seed <- runif(1, -2147483647L, 2147483647L)
   edge <- do.call(cbind,
-                  RenumberEdges(random_parent(nTips, seed),
+                  RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,
@@ -53,6 +52,22 @@ RandomTree <- function (tips, root = FALSE) {
 
   # Return:
   tree
+}
+
+#' Random parent vector
+#'
+#' @param n Integer specifying number of leaves.
+#' @param seed (Optional) Integer with which to seed Mersenne Twister random
+#' number generator in C++.
+#'
+#' @return Integer vector corresponding to the 'parent' entry of `tree$edge`,
+#' where the 'child' entry, i.e. column 2, is numbered sequentially from `1:n`.
+#' @template MRS
+#' @keywords internal
+#' @export
+
+.RandomParent <- function (n, seed = runif(1, -2147483647L, 2147483647L)) {
+  random_parent(n, seed)
 }
 
 #' @rdname GenerateTree

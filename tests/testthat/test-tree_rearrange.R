@@ -9,6 +9,27 @@ nasty <- structure(list(edge = structure(
 
 context("Tree rearrangements")
 
+#TODO move to bottom
+test_that("Binarification is uniform", {
+  nSamples <- 100
+
+  Test <- function (tree) {
+    # Ape's trees are not uniformly distributed:
+    expect_lt(chisq.test(table(replicate(nSamples, as.TreeNumber(multi2di(tree)))))$p.value,
+              0.001)
+
+    # Our trees are:
+    expect_gt(chisq.test(table(replicate(nSamples, as.TreeNumber(MakeTreeBinary(tree)))))$p.value,
+              0.001)
+
+  }
+
+  Test(CollapseNode(PectinateTree(6), 9))
+  Test(CollapseNode(PectinateTree(6), 7))
+  Test(CollapseNode(PectinateTree(6), 8:9))
+  Test(CollapseNode(PectinateTree(6), c(7, 9)))
+})
+
 test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
