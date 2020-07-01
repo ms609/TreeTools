@@ -228,7 +228,7 @@ test_that("Binarification is uniform", {
        ape = TRUE) # Rooted four-star
   Test(CollapseNode(PectinateTree(6), 8:9), NUnrooted(4))
   Test(CollapseNode(PectinateTree(6), 9:10), NRooted(4))
-  Test(CollapseNode(PectinateTree(6), c(8, 10)), NUnooted(3) * NRooted(3))
+  Test(CollapseNode(PectinateTree(6), c(8, 10)), NUnrooted(3) * NRooted(3))
   Test(CollapseNode(BalancedTree(8), c(10:12)), NUnrooted(5))
   Test(CollapseNode(BalancedTree(7), c(10, 13)), NRooted(3) * NRooted(3))
 
