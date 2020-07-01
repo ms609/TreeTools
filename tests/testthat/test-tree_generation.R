@@ -85,14 +85,13 @@ test_that("Random trees drawn from uniform distribution", {
 
   nSamples <- 100
   # Ape's trees are not uniformly distributed:
-  expect_lt(chisq.test(table(vapply(lapply(rep(5, nSamples), ape::rtree),
-                    as.TreeNumber, 1)))$p.value,
-            0.001)
+  counts <- table(vapply64(lapply(rep(5, nSamples), ape::rtree),
+                           as.TreeNumber, 1))
+  expect_lt(chisq.test(counts)$p.value, 0.001)
 
   # Our trees are:
-  expect_gt(chisq.test(table(vapply(lapply(rep(5, nSamples), RandomTree),
-                    as.TreeNumber, 1)))$p.value,
-            0.001)
+  counts <- table(sapply64(lapply(rep(5, nSamples), RandomTree), as.TreeNumber))
+  expect_gt(chisq.test(counts)$p.value, 0.001)
 
   expect_false(is.rooted(RandomTree(6, root = FALSE)))
   expect_true(is.rooted(RandomTree(6, root = TRUE)))

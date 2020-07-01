@@ -44,7 +44,7 @@ SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FA
 #' @template MRS
 #'
 #' @export
-UnshiftTree <- function(add, treeList) {
+UnshiftTree <- function (add, treeList) {
   if (inherits(treeList, 'multiPhylo')) {
     structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
   } else if (inherits(treeList, 'phylo')) {
@@ -52,4 +52,34 @@ UnshiftTree <- function(add, treeList) {
   } else { # including: if (is.list(trees)) {
     c(list(add), treeList)
   }
+}
+
+#' Apply a function that returns 64-bit integers over a list or vector
+#'
+#' Wrappers for members of the [`lapply()`] family intented for use when a
+#' function `FUN` returns a vector of `integer64` objects.
+#' `vapply()`, `sapply()` or `replicate()` drop the `integer64` class,
+#' resulting in a vector of numerics that require conversion back to
+#' 64-bit integers.  These functions restore the missing `class` attribute.
+#'
+#' @inheritParams base::lapply
+#' @param FUN.LEN Integer specifying the length of the output of `FUN`.
+#' @details For details of the underlying functions, see [`base::lapply()`].
+#' @template MRS
+#' @export
+vapply64 <- function (X, FUN, FUN.LEN = 1, ...) {
+  structure(vapply(X, FUN, FUN.VALUE = numeric(FUN.LEN), ...),
+            class = 'integer64')
+}
+
+#' @rdname vapply64
+#' @export
+sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
+  structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')
+}
+
+#' @rdname vapply64
+#' @export
+replicate64 <- function (n, expr, simplify = "array") {
+  structure(replicate(n, expr, simplify), class = 'integer64')
 }

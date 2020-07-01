@@ -212,17 +212,13 @@ test_that("Binarification is uniform", {
 
     if (ape) {
       # Ape's trees are not uniformly distributed:
-      counts <- table(structure(replicate(nSamples,
-                                          as.TreeNumber(multi2di(tree))),
-                                class = 'integer64'))
+      counts <- table(replicate64(nSamples, as.TreeNumber(multi2di(tree))))
       expect_equal(nTree, length(counts))
       expect_lt(chisq.test(counts)$p.value, 0.001)
     }
 
     # Our trees are:
-    counts <- table(structure(replicate(nSamples,
-                                        as.TreeNumber(MakeTreeBinary(tree))),
-                              class = 'integer64'))
+    counts <- table(replicate64(nSamples, as.TreeNumber(MakeTreeBinary(tree))))
     expect_equal(nTree, length(counts))
     expect_gt(chisq.test(counts)$p.value, 0.001)
 

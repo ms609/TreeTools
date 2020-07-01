@@ -58,7 +58,7 @@
 #'        3
 #'
 #' ```
-#' `1` is now the final digit of our mixed-base number
+#' `1` is now the final digit of our mixed-base number.
 #'
 #' There are five places to add leaf 4:
 #'
@@ -73,7 +73,7 @@
 #' Option 4: the edge leading to 8.
 #'
 #' If we chose option 3, then `3` would be the penultimate digit of our
-#' mixed-base number
+#' mixed-base number.
 #'
 #' If we chose option 0 for the next two additions, we could specify this tree
 #' with the mixed-base number 0021.  We can convert this into decimal:
