@@ -14,7 +14,9 @@
 #' @template MRS
 #' @keywords internal
 #' @export
-SampleOne <- function (x, len = length(x)) x[sample.int(len, 1L, FALSE, NULL, FALSE)]
+SampleOne <- function (x, len = length(x)) {
+  x[sample.int(len, 1L, FALSE, NULL, FALSE)]
+}
 
 #' Add tree to start of list
 #'
