@@ -208,29 +208,33 @@ test_that("DropTip() works", {
 
 test_that("Binarification is uniform", {
   set.seed(0)
-  Test <- function (tree, nSamples = 200L, ape = FALSE) {
+  Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
 
     if (ape) {
       # Ape's trees are not uniformly distributed:
-      expect_lt(chisq.test(table(replicate(
-        nSamples, as.TreeNumber(multi2di(tree)))))$p.value,
-        0.001)
+      counts <- table(structure(replicate(nSamples,
+                                          as.TreeNumber(multi2di(tree))),
+                                class = 'integer64'))
+      expect_equal(nTree, length(counts))
+      expect_lt(chisq.test(counts)$p.value, 0.001)
     }
 
     # Our trees are:
-    expect_gt(chisq.test(table(replicate(
-      nSamples, as.TreeNumber(MakeTreeBinary(tree)))))$p.value,
-      0.001)
+    counts <- table(structure(replicate(nSamples,
+                                        as.TreeNumber(MakeTreeBinary(tree))),
+                              class = 'integer64'))
+    expect_equal(nTree, length(counts))
+    expect_gt(chisq.test(counts)$p.value, 0.001)
 
   }
 
-  Test(CollapseNode(PectinateTree(5), 8:9), nSamples = 300L,
+  Test(CollapseNode(PectinateTree(5), 8:9), NUnrooted(5), nSamples = 300L,
        ape = TRUE) # Rooted four-star
-  Test(CollapseNode(PectinateTree(6), 8:9))
-  Test(CollapseNode(PectinateTree(6), 9:10))
-  Test(CollapseNode(PectinateTree(6), c(8, 10)))
-  Test(CollapseNode(BalancedTree(8), c(10:12)))
-  Test(CollapseNode(BalancedTree(7), c(10, 13)))
+  Test(CollapseNode(PectinateTree(6), 8:9), NUnrooted(4))
+  Test(CollapseNode(PectinateTree(6), 9:10), NRooted(4))
+  Test(CollapseNode(PectinateTree(6), c(8, 10)), NUnooted(3) * NRooted(3))
+  Test(CollapseNode(BalancedTree(8), c(10:12)), NUnrooted(5))
+  Test(CollapseNode(BalancedTree(7), c(10, 13)), NRooted(3) * NRooted(3))
 
   bal7 <- BalancedTree(7)
   expect_equal(bal7, MakeTreeBinary(bal7))
