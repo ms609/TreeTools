@@ -67,6 +67,10 @@ UnshiftTree <- function (add, treeList) {
 #' @inheritParams base::lapply
 #' @param FUN.LEN Integer specifying the length of the output of `FUN`.
 #' @details For details of the underlying functions, see [`base::lapply()`].
+#' @examples
+#' sapply64(as.phylo(1:10, 6), as.TreeNumber)
+#' vapply64(as.phylo(1:10, 6), as.TreeNumber, 1)
+#' replicate64(10, as.TreeNumber(RandomTree(6)))
 #' @template MRS
 #' @export
 vapply64 <- function (X, FUN, FUN.LEN = 1, ...) {
@@ -83,5 +87,6 @@ sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
 #' @rdname vapply64
 #' @export
 replicate64 <- function (n, expr, simplify = "array") {
-  structure(replicate(n, expr, simplify), class = 'integer64')
+  sapply64(integer(n), eval.parent(substitute(function (...) expr)),
+           simplify = simplify)
 }
