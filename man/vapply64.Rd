@@ -54,6 +54,12 @@ resulting in a vector of numerics that require conversion back to
 \details{
 For details of the underlying functions, see \code{\link[base:lapply]{base::lapply()}}.
 }
+\examples{
+sapply64(as.phylo(1:6, 6), as.TreeNumber)
+vapply64(as.phylo(1:6, 6), as.TreeNumber, 1)
+set.seed(0)
+replicate64(6, as.TreeNumber(RandomTree(6)))
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
