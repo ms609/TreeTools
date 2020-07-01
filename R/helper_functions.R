@@ -73,19 +73,20 @@ UnshiftTree <- function (add, treeList) {
 #' set.seed(0)
 #' replicate64(6, as.TreeNumber(RandomTree(6)))
 #' @template MRS
+#' @seealso [`bit64::integer64()`]
+#' @export
+sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
+  structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')
+}
+
+#' @rdname sapply64
 #' @export
 vapply64 <- function (X, FUN, FUN.LEN = 1, ...) {
   structure(vapply(X, FUN, FUN.VALUE = numeric(FUN.LEN), ...),
             class = 'integer64')
 }
 
-#' @rdname vapply64
-#' @export
-sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
-  structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')
-}
-
-#' @rdname vapply64
+#' @rdname sapply64
 #' @export
 replicate64 <- function (n, expr, simplify = "array") {
   sapply64(integer(n), eval.parent(substitute(function (...) expr)),
