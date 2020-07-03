@@ -77,6 +77,9 @@ RootTree.multiPhylo <- function (tree, outgroupTips) {
   structure(RootTree.list(tree, outgroupTips), class = 'multiPhylo')
 }
 
+#' @export
+RootTree.NULL <- function (tree, outgroupTips) NULL
+
 #' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
 #' @param resolveRoot logical specifying whether to resolve the root node.
@@ -184,6 +187,9 @@ RootOnNode.multiPhylo <- function (tree, node, resolveRoot = FALSE) {
   structure(RootOnNode.list(tree, node, resolveRoot), class = 'multiPhylo')
 }
 
+#' @export
+RootOnNode.NULL <- function (tree, node, resolveRoot = FALSE) NULL
+
 #' @rdname RootTree
 #' @return `UnrootTree()` returns `tree`, in preorder,
 #' having collapsed the first child of the root node in each tree.
@@ -218,6 +224,9 @@ UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
 UnrootTree.multiPhylo <- function (tree) {
   structure(UnrootTree.list(tree), class = 'multiPhylo')
 }
+
+#' @export
+UnrootTree.NULL <- function (tree) NULL
 
 #' Collapse nodes on a phylogenetic tree
 #'
