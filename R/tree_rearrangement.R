@@ -457,6 +457,7 @@ DropTip <- function (tree, tip) {
 #' UnrootTree(MakeTreeBinary(StarTree(5)))
 #' @template MRS
 #' @template treeParam
+#' @family tree manipulation
 #' @export
 MakeTreeBinary <- function (tree) {
   UseMethod('MakeTreeBinary')
