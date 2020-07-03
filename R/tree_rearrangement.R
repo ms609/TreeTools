@@ -7,7 +7,7 @@
 #' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 #' preorder.
 #'
-#' @template treeParam
+#' @template tree(s)Param
 #' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.
 #'
@@ -159,10 +159,13 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
 }
 
 #' @rdname RootTree
-#' @return `UnrootTree()` returns a tree of class `phylo`, in preorder,
-#' having collapsed the first child of the root node.
+#' @return `UnrootTree()` returns `tree`, in preorder,
+#' having collapsed the first child of the root node in each tree.
 #' @export
-UnrootTree <- function (tree) {
+UnrootTree <- function (tree) UseMethod('UnrootTree')
+
+#' @export
+UnrootTree.phylo <- function(tree) {
   tree <- Preorder(tree)
   edge <- tree$edge
   if (dim(edge)[1] < 3) return (tree)
@@ -181,6 +184,14 @@ UnrootTree <- function (tree) {
   # Return:
   tree
 }
+
+#' @export
+UnrootTree.multiPhylo <- function (tree) {
+  structure(UnrootTree.list(tree), class = 'multiPhylo')
+}
+
+#' @export
+UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
 
 #' Collapse nodes on a phylogenetic tree
 #'

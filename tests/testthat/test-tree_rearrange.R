@@ -151,6 +151,11 @@ test_that("UnrootTree() works", {
   # Unrooting when already unrooted
   expect_equal(UnrootTree(PectinateTree(6)),
                UnrootTree(UnrootTree(PectinateTree(6))))
+
+  expList <- list(UnrootTree(as.phylo(1, 5)), UnrootTree(as.phylo(2, 5)))
+  expect_equal(expList, UnrootTree(list(as.phylo(1, 5), as.phylo(2, 5))))
+  expect_equal(structure(expList, class = 'multiPhylo'),
+                    UnrootTree(as.phylo(1:2, 5)))
 })
 
 test_that("CollapseNodes() works", {

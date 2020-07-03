@@ -1,4 +1,4 @@
-# TreeTools 1.0.0.9001 (development)
+# TreeTools 1.0.0.9002 (development)
 
  - `RandomTree()`: Draw tree from uniform distribution, instead of via
  `ape::rtree()`.
@@ -7,6 +7,8 @@
  - `SplitsInBinaryTree()`: How many splits occur in an _n_-leaf binary tree?
  - `vapply64()`, `sapply64()`, `replicate64()`: helper functions when a function
  returns a 64-bit integer.
+ - Use methods for `UnrootTree()`, `RootTree()`, `RootOnNode()` to support
+ lists of trees.
 
 # TreeTools 1.0.0
 

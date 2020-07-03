@@ -13,7 +13,8 @@ RootOnNode(tree, node, resolveRoot = FALSE)
 UnrootTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}, or a list of trees
+of class \code{list} or \code{multiPhylo}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.}
@@ -29,8 +30,8 @@ clade that contains the specified tips.
 \code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
 requested \code{node} and ordered in \code{\link{Preorder}}.
 
-\code{UnrootTree()} returns a tree of class \code{phylo}, in preorder,
-having collapsed the first child of the root node.
+\code{UnrootTree()} returns \code{tree}, in preorder,
+having collapsed the first child of the root node in each tree.
 }
 \description{
 \code{RootTree()} roots a tree on the smallest clade containing the specified
