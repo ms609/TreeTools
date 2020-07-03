@@ -113,6 +113,14 @@ test_that("RootOnNode() works", {
 
 })
 
+test_that("RootOnNode() supports lists of trees", {
+  rootOn <- 8L
+  expect_equal(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
+                              RootOnNode(as.phylo(2, 5), rootOn)),
+                         class = 'multiPhylo'),
+               RootOnNode(as.phylo(1:2, 5), rootOn))
+})
+
 test_that("RootOnNode() supports nasty node ordering", {
   expect_equal(Preorder(nasty),
                RootOnNode(nasty, 12L, resolveRoot = TRUE))
@@ -134,6 +142,12 @@ test_that("RootTree() works", {
   expect_equal(EnforceOutgroup(bal8, c('t5', 't6')),
                RootTree(bal8, c('t5', 't6')))
   expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
+
+  expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
+                              RootTree(as.phylo(2, 5), 't5')),
+                         class = 'multiPhylo'),
+               RootTree(as.phylo(1:2, 5), 't5'))
+
 })
 
 test_that("UnrootTree() works", {

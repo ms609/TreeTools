@@ -34,7 +34,10 @@
 #' @importFrom phangorn Ancestors Descendants
 #' @importFrom ape root
 #' @export
-RootTree <- function (tree, outgroupTips) {
+RootTree <- function (tree, outgroupTips) UseMethod('RootTree')
+
+#' @export
+RootTree.phylo <- function (tree, outgroupTips) {
   tipLabels <- tree$tip.label
   if (is.character(outgroupTips)) {
     if (!all(outgroupTips %in% tipLabels)) {
@@ -64,6 +67,16 @@ RootTree <- function (tree, outgroupTips) {
   Renumber(root(tree, outgroup, resolve.root = TRUE))
 }
 
+#' @export
+RootTree.list <- function (tree, outgroupTips) {
+  lapply(tree, RootTree, outgroupTips)
+}
+
+#' @export
+RootTree.multiPhylo <- function (tree, outgroupTips) {
+  structure(RootTree.list(tree, outgroupTips), class = 'multiPhylo')
+}
+
 #' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
 #' @param resolveRoot logical specifying whether to resolve the root node.
@@ -72,7 +85,10 @@ RootTree <- function (tree, outgroupTips) {
 #' requested `node` and ordered in [`Preorder`].
 #'
 #' @export
-RootOnNode <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode <- function (tree, node, resolveRoot = FALSE) UseMethod('RootOnNode')
+
+#' @export
+RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -158,6 +174,16 @@ RootOnNode <- function (tree, node, resolveRoot = FALSE) {
   }
 }
 
+#' @export
+RootOnNode.list <- function (tree, node, resolveRoot = FALSE) {
+  lapply(tree, RootOnNode, node, resolveRoot)
+}
+
+#' @export
+RootOnNode.multiPhylo <- function (tree, node, resolveRoot = FALSE) {
+  structure(RootOnNode.list(tree, node, resolveRoot), class = 'multiPhylo')
+}
+
 #' @rdname RootTree
 #' @return `UnrootTree()` returns `tree`, in preorder,
 #' having collapsed the first child of the root node in each tree.
@@ -186,12 +212,12 @@ UnrootTree.phylo <- function(tree) {
 }
 
 #' @export
+UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
+
+#' @export
 UnrootTree.multiPhylo <- function (tree) {
   structure(UnrootTree.list(tree), class = 'multiPhylo')
 }
-
-#' @export
-UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
 
 #' Collapse nodes on a phylogenetic tree
 #'
