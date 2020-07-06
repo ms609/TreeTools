@@ -61,7 +61,7 @@ set.seed(0)
 replicate64(6, as.TreeNumber(RandomTree(6)))
 }
 \seealso{
-\code{\link[bit64:integer64]{bit64::integer64()}}
+\code{\link[=bit64-package]{bit64::integer64()}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

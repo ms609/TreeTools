@@ -73,7 +73,7 @@ UnshiftTree <- function (add, treeList) {
 #' set.seed(0)
 #' replicate64(6, as.TreeNumber(RandomTree(6)))
 #' @template MRS
-#' @seealso [`bit64::integer64()`]
+#' @seealso [`bit64::integer64()`][bit64-package]
 #' @export
 sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
   structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')

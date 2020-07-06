@@ -4,7 +4,7 @@
 \alias{.RandomParent}
 \title{Random parent vector}
 \usage{
-.RandomParent(n, seed = runif(1, -2147483647L, 2147483647L))
+.RandomParent(n, seed = sample.int(2147483647L, 1L))
 }
 \arguments{
 \item{n}{Integer specifying number of leaves.}
