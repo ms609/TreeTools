@@ -48,6 +48,7 @@ ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
 LinkingTo: Rcpp
+SystemRequirements: C++11
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
