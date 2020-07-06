@@ -22,6 +22,7 @@ test_that("Random trees are set by R seed", {
 })
 
 test_that("Random trees drawn from uniform distribution", {
+  # NB We're also testing sapply64 and vapply64 in this chunk
   expect_error(.RandomParent(1))
   expect_error(.RandomParent(0))
   expect_error(.RandomParent(-1))
@@ -36,7 +37,7 @@ test_that("Random trees drawn from uniform distribution", {
   counts <- table(sapply64(lapply(rep(5, nSamples), RandomTree), as.TreeNumber))
   expect_gt(chisq.test(counts)$p.value, 0.001)
 
-  if (FALSE) { # Takes many seconds - but worth checking?
+  if (FALSE) { # Takes many seconds - but worth checking manually?
     counts <- table(sapply64(lapply(rep(8, 200000), RandomTree), as.TreeNumber))
     expect_gt(chisq.test(counts)$p.value, 0.001)
   }
