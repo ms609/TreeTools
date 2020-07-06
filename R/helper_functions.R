@@ -58,7 +58,7 @@ UnshiftTree <- function (add, treeList) {
 
 #' Apply a function that returns 64-bit integers over a list or vector
 #'
-#' Wrappers for members of the [`lapply()`] family intented for use when a
+#' Wrappers for members of the [`lapply()`] family intended for use when a
 #' function `FUN` returns a vector of `integer64` objects.
 #' `vapply()`, `sapply()` or `replicate()` drop the `integer64` class,
 #' resulting in a vector of numerics that require conversion back to

@@ -45,7 +45,7 @@ replicate64(n, expr, simplify = "array")
     to evaluate repeatedly.}
 }
 \description{
-Wrappers for members of the \code{\link[=lapply]{lapply()}} family intented for use when a
+Wrappers for members of the \code{\link[=lapply]{lapply()}} family intended for use when a
 function \code{FUN} returns a vector of \code{integer64} objects.
 \code{vapply()}, \code{sapply()} or \code{replicate()} drop the \code{integer64} class,
 resulting in a vector of numerics that require conversion back to

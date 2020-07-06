@@ -42,7 +42,7 @@ a logical vector indicating whether there is a match or not for each
 split in its left operand.
 }
 \details{
-\code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatability.
+\code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatibility.
 It will be deprecated in a future release.
 }
 \examples{
