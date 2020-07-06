@@ -72,7 +72,7 @@ RandomTree <- function (tips, root = FALSE) {
 #' @keywords internal
 #' @importFrom stats runif
 #' @export
-.RandomParent <- function (n, seed = runif(1, -2147483647L, 2147483647L)) {
+.RandomParent <- function (n, seed = sample.int(2147483647L, 1L)) {
   random_parent(n, seed)
 }
 

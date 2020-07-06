@@ -29,13 +29,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // random_parent
-IntegerVector random_parent(const IntegerVector nTip, const NumericVector seed);
+IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed);
 RcppExport SEXP _TreeTools_random_parent(SEXP nTipSEXP, SEXP seedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type seed(seedSEXP);
     rcpp_result_gen = Rcpp::wrap(random_parent(nTip, seed));
     return rcpp_result_gen;
 END_RCPP

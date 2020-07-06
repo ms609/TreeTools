@@ -50,7 +50,7 @@ IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
 }
 
 // [[Rcpp::export]]
-IntegerVector random_parent(const IntegerVector nTip, const NumericVector seed) {
+IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) {
   if (nTip[0] < 2) {
     throw std::range_error("nTip must be > 1");
   }
