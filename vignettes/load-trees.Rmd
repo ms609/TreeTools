@@ -93,7 +93,7 @@ The TNT command `taxname-` saves just the numbers of the terminals.
 In order for the trees to be reunited with the names of their tips, terminal 
 labels will be read from the linked matrix file listed in the first line of the
 .tre file. 
-Ensure that this file exists in the expected location – if it does not, use 
+Ensure that this file exists in the expected location.  If it does not, use 
 `ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')`, or
 `tipLabels` to manually specify the names of the tips (e.g.
 `ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])`).
