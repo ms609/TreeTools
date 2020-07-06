@@ -1,4 +1,6 @@
-# TreeTools 1.0.0.9002 (development)
+# TreeTools 1.1.0
+
+## New functions
 
  - `RandomTree()`: Draw tree from uniform distribution, instead of via
  `ape::rtree()`.
@@ -7,8 +9,12 @@
  - `SplitsInBinaryTree()`: How many splits occur in an _n_-leaf binary tree?
  - `vapply64()`, `sapply64()`, `replicate64()`: helper functions when a function
  returns a 64-bit integer.
+
+## Enhancements
+
  - Use methods for `UnrootTree()`, `RootTree()`, `RootOnNode()` to support
  lists of trees.
+
 
 # TreeTools 1.0.0
 
@@ -46,6 +52,7 @@
 - Various under-the-hood improvements to functions.
 - Documentation improvements.
 
+
 # TreeTools 0.1.4
 
 - Catch hang-inducing bugs in `RootOnNode()`.
@@ -53,21 +60,25 @@
 - Support unrooted trees in `AddTipEverywhere()`.
 - Documentation improvements.
 
+
 # TreeTools 0.1.3
 
 - `RootOnNode()`: Quickly root a tree on a specified node.
 - Improve portability of C++ code.
+
 
 # TreeTools 0.1.2
  
 - `as.Newick`: Fast conversion to Newick format.
 - `as.TreeNumber`: Tree shape enumeration.
 
+
 # TreeTools 0.1.1
  
 - Add functions to translate trees to mixed base integers.
 - `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
 - Documentation changes to attempt to satisfy CRAN submission requirements.
+
 
 # TreeTools 0.1.0
 
