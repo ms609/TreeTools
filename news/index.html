@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -154,13 +154,41 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="treetools-1-0-0" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0">
-<a href="#treetools-1-0-0" class="anchor"></a>TreeTools 1.0.0<small> Unreleased </small>
+    <div id="treetools-1-1-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#treetools-1-1-0" class="anchor"></a>TreeTools 1.1.0<small> Unreleased </small>
 </h1>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/GenerateTree.html">RandomTree()</a></code>: Draw tree from uniform distribution, instead of via <code><a href="https://rdrr.io/pkg/ape/man/rtree.html">ape::rtree()</a></code>.</li>
+<li>
+<code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code>: Uniform equivalent of <code><a href="https://rdrr.io/pkg/ape/man/multi2di.html">ape::multi2di()</a></code>.</li>
+<li>
+<code><a href="../reference/match.html">match.list()</a></code> method for lists of splits.</li>
+<li>
+<code><a href="../reference/SplitsInBinaryTree.html">SplitsInBinaryTree()</a></code>: How many splits occur in an <em>n</em>-leaf binary tree?</li>
+<li>
+<code><a href="../reference/sapply64.html">vapply64()</a></code>, <code><a href="../reference/sapply64.html">sapply64()</a></code>, <code><a href="../reference/sapply64.html">replicate64()</a></code>: helper functions when a function returns a 64-bit integer.</li>
+</ul>
+</div>
+<div id="enhancements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#enhancements" class="anchor"></a>Enhancements</h2>
+<ul>
+<li>Use methods for <code><a href="../reference/RootTree.html">UnrootTree()</a></code>, <code><a href="../reference/RootTree.html">RootTree()</a></code>, <code><a href="../reference/RootTree.html">RootOnNode()</a></code> to support lists of trees.</li>
+</ul>
+</div>
+</div>
+    <div id="treetools-1-0-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#treetools-1-0-0" class="anchor"></a>TreeTools 1.0.0<small> 2020-06-08 </small>
+</h1>
+<div id="new-functions-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/CladisticInfo.html">CladisticInfo()</a></code>: Calculate the information content of a tree.</li>
@@ -202,9 +230,9 @@
 <code><a href="../reference/match.html">in.Splits()</a></code>: use <code>%in%.Splits()</code> instead.</li>
 </ul>
 </div>
-<div id="enhancements" class="section level2">
+<div id="enhancements-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#enhancements" class="anchor"></a>Enhancements</h2>
+<a href="#enhancements-1" class="anchor"></a>Enhancements</h2>
 <ul>
 <li>Improve support for unrooted trees in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
 <li>Use methods so <code>Reorder</code> functions can handle <code>multiPhylo</code> objects and edges.</li>

@@ -70,6 +70,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/MakeTreeBinary.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.html</loc>
   </url>
   <url>
@@ -154,6 +157,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/Subsplit.html</loc>
   </url>
   <url>
@@ -208,6 +214,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/brewer.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/dot-RandomParent.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
   </url>
   <url>
@@ -221,6 +230,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/print.TreeNumber.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>

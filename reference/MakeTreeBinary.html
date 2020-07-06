@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • TreeTools</title>
+<title>Generate binary tree by collapsing polytomies — MakeTreeBinary • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,10 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Generate binary tree by collapsing polytomies — MakeTreeBinary" />
+<meta property="og:description" content="MakeTreeBinary() resolves, at random, all polytomies in a tree or set of
+trees, such that all trees compatible with the input topology are drawn
+with equal probability." />
 
 
 
@@ -74,7 +77,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -150,22 +153,71 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Generate binary tree by collapsing polytomies</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_rearrangement.R'><code>R/tree_rearrangement.R</code></a></small>
+    <div class="hidden name"><code>MakeTreeBinary.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <dl>
-        <dt><a href="filesystem-navigation.html">File system navigation in R</a></dt>
-        <dd></dt>
-        <dt><a href="load-data.html">Loading phylogenetic data into R</a></dt>
-        <dd></dt>
-        <dt><a href="load-trees.html">Loading phylogenetic trees into R</a></dt>
-        <dd></dt>
-      </dl>
+    <div class="ref-description">
+    <p><code>MakeTreeBinary()</code> resolves, at random, all polytomies in a tree or set of
+trees, such that all trees compatible with the input topology are drawn
+with equal probability.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>MakeTreeBinary</span>(<span class='no'>tree</span>)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>tree</th>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>MakeTreeBinary()</code> returns a rooted binary tree of class <code>phylo</code>,
+corresponding to tree uniformly selected from all those compatible with
+the input tree topologies.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Resolve polytomies such that some resolutions are more probable
+than others using <code><a href='https://rdrr.io/pkg/ape/man/multi2di.html'>ape::multi2di()</a></code>.</p>
+<p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='Reorder.html'>RenumberTree</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>MakeTreeBinary</span>(<span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>7</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>9</span>, <span class='fl'>11</span>, <span class='fl'>13</span>)))</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 7 tips and 6 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; 	t1, t2, t3, t4, t5, t6, ...
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'><span class='fu'><a href='RootTree.html'>UnrootTree</a></span>(<span class='fu'>MakeTreeBinary</span>(<span class='fu'><a href='GenerateTree.html'>StarTree</a></span>(<span class='fl'>5</span>)))</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 5 tips and 3 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt; [1] "t1" "t2" "t3" "t4" "t5"
+#&gt; 
+#&gt; Unrooted; no branch lengths.</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 

@@ -93,7 +93,7 @@ preorder." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -181,7 +181,8 @@ preorder.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>, or a list of trees
+of class <code>list</code> or <code>multiPhylo</code>.</p></td>
     </tr>
     <tr>
       <th>outgroupTips</th>
@@ -204,8 +205,8 @@ the names or indices of the tips to include in the outgroup.</p></td>
 clade that contains the specified tips.</p>
 <p><code>RootOnNode()</code> returns a tree of class <code>phylo</code>, rooted on the
 requested <code>node</code> and ordered in <code><a href='Reorder.html'>Preorder</a></code>.</p>
-<p><code>UnrootTree()</code> returns a tree of class <code>phylo</code>, in preorder,
-having collapsed the first child of the root node.</p>
+<p><code>UnrootTree()</code> returns <code>tree</code>, in preorder,
+having collapsed the first child of the root node in each tree.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -221,6 +222,7 @@ having collapsed the first child of the root node.</p>
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
 <code><a href='Reorder.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
