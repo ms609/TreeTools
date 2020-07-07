@@ -65,11 +65,6 @@ UnshiftTree <- function (add, treeList) {
 #' 64-bit integers.  These functions restore the missing `class` attribute.
 #'
 #' @inheritParams base::lapply
-#' @param X a vector (atomic or list) or an [`expression`][base::expression]
-#' object.  Other objects (including classed objects) will be coerced
-#' by [`base::as.list()`][base::list].
-#' @param expr the expression (a [language object][base::is.language],
-#' usually a call) to evaluate repeatedly.
 #' @param FUN.LEN Integer specifying the length of the output of `FUN`.
 #' @details For details of the underlying functions, see [`base::lapply()`].
 #' @examples

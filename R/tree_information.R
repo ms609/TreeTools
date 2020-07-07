@@ -61,7 +61,7 @@ Log2TreesMatchingTree <- function (tree) {
 #'
 #' @param x Tree of class `phylo`, or a list thereof.
 #'
-#' @return `CladisticInfo()` returns a numeric giving the clustering information
+#' @return `CladisticInfo()` returns a numeric giving the cladistic information
 #' content of the input tree(s), in bits.
 #'
 #' @references
