@@ -8,7 +8,7 @@
 \alias{CladisticInfo.multiPhylo}
 \alias{PhylogeneticInformation}
 \alias{CladisticInformation}
-\title{Cladistic information content}
+\title{Cladistic information content of a tree}
 \usage{
 CladisticInfo(x)
 

@@ -41,7 +41,7 @@ Log2TreesMatchingTree <- function (tree) {
   sum(Log2Unrooted(NodeOrder(tree)))
 }
 
-#' Cladistic information content
+#' Cladistic information content of a tree
 #'
 #' `CladisticInfo()` calculates the cladistic (phylogenetic) information
 #' content of a phylogenetic object, _sensu_ Thorley _et al._ (1998).
