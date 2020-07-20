@@ -432,24 +432,30 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 #' @export
 ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
-  lines <- readLines(filepath, warn=FALSE) # Missing EOL might occur in user-
-                                           # generated file, so warning not helpful
+  lines <- readLines(filepath,
+                     warn = FALSE) # Missing EOL might occur in user-generated
+                                   # file, so warning not helpful
   tntComment.pattern <- "'[^']*']"
   lines <- gsub(tntComment.pattern, "", lines)
   lines <- trimws(lines)
   lines <- lines[lines != ""]
 
   semicolons <- which(RightmostCharacter(lines) == ';')
+  ampersands <- which(substr(lines, 0, 1) == '&')
+  possibleEnds <- sort(c(semicolons, ampersands))
   upperLines <- toupper(lines)
 
   matrixStart <- which(upperLines == '&[NUM]')
-  if (length(matrixStart) == 0) {
+  if (length(matrixStart) == 0L) {
     return(list("&[num] entry not found in TNT file."))
-  } else if (length (matrixStart) > 1) {
+  } else if (length (matrixStart) > 1L) {
     return(list("Multiple &[num] entries found in TNT file."))
   } else {
-    matrixEnd <- semicolons[semicolons > matrixStart][1]
-    if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
+    matrixEnd <- possibleEnds[possibleEnds > matrixStart][1]
+    if (lines[matrixEnd] == ';'
+        || substr(lines[matrixEnd], 0, 1) == '&') {
+      matrixEnd <- matrixEnd - 1
+    }
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
     tokens <- ExtractTaxa(matrixLines, character_num, session)
