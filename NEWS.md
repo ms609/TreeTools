@@ -1,6 +1,7 @@
 # TreeTools 1.1.0.9000
 
  - Documentation improvements.
+ - Improve TNT dataset parsing.
 
 # TreeTools 1.1.0
 
