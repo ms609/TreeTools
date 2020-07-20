@@ -15,13 +15,49 @@
 
 #' @rdname CharacterMI
 #' @param char,char1,char2 Character vector listing character tokens.
-#' Ambiguity not yet supported, except `?` / `-`.
+#' For handling of ambiguous tokens, see section 'Ambiguity'.
 #' @param ignore Character vector listing tokens to treat as ambiguous,
 #' besides `?` and `-`.
+#' @section Ambiguity:
+#' Ambiguous characters should be specified as a string containing all possible
+#' characters states (and, optionally, parentheses): e.g. `[01]`.
+#' `?` and `-` will be interpreted as 'any possible value'.
+#' Each token is assigned a probability according to its number of
+#' *non-ambiguous* occurrences in the character.
+#' Example: in `000000 1111 [01] [02] ?`, `[01]` and `?` will be taken to have
+#' a 6/10 chance of being token `0`;
+#' `[02]` will be treated as having a 100% chance of being state `0`.
+#' @examples
+#' char <- c(rep('0', 6), rep('1', 4), '[01]', '[02]', '?')
+#' ShareAmbiguity(char)
+#' ShareAmbiguity(char, ignore = '[02]')
+#' CharacterEntropy(char)
 #' @export
 CharacterEntropy <- function (char, ignore = character(0)) {
+  FrequencyToEntropy(ApportionAmbiguity(char))
+}
+
+#' @rdname CharacterMI
+ApportionAmbiguity <- function (char, ignore = character(0)) {
   char <- char[!char %in% c('?', '-', ignore)]
-  FrequencyToEntropy(table(char))
+  tab <- table(char)
+  tokens <- names(table(char))
+  singles <- nchar(tokens) == 1L
+  unambiguous <- tokens[singles]
+  nUnambiguous <- sum(tab[unambiguous])
+
+  ambigs <- vapply(tokens[!singles],
+                   function (string) {
+                     ret <- tab[unambiguous] * 0
+                     x <- tab[strsplit(string, '')[[1]]]
+                     x <- tab[string] * x / sum(x, na.rm = TRUE)
+                     ret[unambiguous] <- x[unambiguous]
+                     ret
+                   },
+                   as.double(tab[unambiguous]))
+
+  # Return:
+  tab[unambiguous] + rowSums(ambigs, na.rm = TRUE)
 }
 
 
