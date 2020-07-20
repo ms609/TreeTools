@@ -13,6 +13,8 @@
 #' @export
 
 
+
+
 #' @rdname CharacterMI
 #' @param char,char1,char2 Character vector listing character tokens.
 #' For handling of ambiguous tokens, see section 'Ambiguity'.
@@ -54,24 +56,34 @@ ApportionAmbiguity <- function (char, ignore = character(0)) {
                      ret[unambiguous] <- x[unambiguous]
                      ret
                    },
-                   as.double(tab[unambiguous]))
+                   tab[unambiguous] * 1)
 
   # Return:
   tab[unambiguous] + rowSums(ambigs, na.rm = TRUE)
 }
 
 
-#' @rdname CharacterNI
-#' @param char
+#' @rdname CharacterMI
 JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
+
   ignore <- c('?', '-', ignore)
   ignore1 <- char1 %in% ignore
   ignore2 <- char2 %in% ignore
   oneIgnored <- ignore1 | ignore2
-  states1 <- unique(char1[!ignore1])
-  states2 <- unique(char2[!ignore2])
+  bothIgnored <- ignore1 & ignore2
+
+  char1 <- char1[!bothIgnored]
+  char2 <- char2[!bothIgnored]
+  char1[ignore1] <- '?'
+  char2[ignore2] <- '?'
+
+  states1 <- table(char1[!ignore1])
+  states2 <- table(char2[!ignore2])
   tokens1 <- sort(unique(char1))
   tokens2 <- sort(unique(char2))
+
+  ambigTokens1 <- tokens1 %in% ignore | nchar(tokens1) != 1L
+  ambigTokens2 <- tokens2 %in% ignore | nchar(tokens2) != 1L
 
   confusion <- vapply(tokens1, function (x1) {
     vapply(tokens2,
@@ -79,25 +91,54 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
            integer(1))
   }, integer(length(unique(char2))))
 
-  confusionKnown <- confusion[tokens1[!tokens1 %in% ignore],
-                              tokens2[!tokens2 %in% ignore], drop = FALSE]
+  unambigConfusion <- confusion[!ambigTokens2, !ambigTokens1, drop = FALSE]
 
-  rowSums(confusion[tokens1, ignore[ignore %in% tokens2], drop = FALSE])
+  known1 <- colSums(confusion[, !ambigTokens1, drop = FALSE])
+  known2 <- rowSums(confusion[!ambigTokens2, , drop = FALSE])
 
-  unlist(lapply(states1, function (state) {
-    states2 <- table(char2[char1 == state])
-    ambiguous <- names(states2) %in% ignore
-    set2 <- states2[!ambiguous]
-    nSet <- sum(set2)
+  ambig1 <- vapply(tokens1[ambigTokens1], function (token) {
+    couldBe <- if (token == '?') names(known1) else strsplit(token, '')[[1]]
+    x <- known1[couldBe[couldBe %in% names(known1)]]
+    x <- outer(confusion[!ambigTokens2, token], x / sum(x, na.rm = TRUE))
+  }, unambigConfusion * 1)
 
+  ambig2 <- vapply(tokens2[ambigTokens2], function (token) {
+    couldBe <- if (token == '?') names(known2) else strsplit(token, '')[[1]]
+    x <- known2[couldBe[couldBe %in% names(known2)]]
+    x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens1])
+  }, unambigConfusion * 1)
 
-    set2 + (sum(states2[ambiguous]) * set2 / nSet)
-  }))
+  FrequencyToEntropy(unambigConfusion +
+                     rowSums(ambig1, dims = 2) +
+                     rowSums(ambig2, dims = 2))
 
 }
 
+
+#' @rdname CharacterMI
+CharacterEntropy <- function (characters) {
+  nChar <- ncol(characters)
+  n <- matrix(seq_len(nChar), nChar, nChar)
+
+  is <- t(n)[lower.tri(n)]
+  js <- n[lower.tri(n)]
+
+  char1 <- characters[, 1]
+  char2 <- characters[, 8]
+
+  JointCharacterEntropy(char1, char2)
+
+  mapply(function (i, j) JointCharacterEntropy(characters[, i], characters[, j]),
+                                               is, js)
+}
+
 #' Entropy of a table of frequencies
+#' @param \dots Frequencies  of observations
+#' @return `FrequencyToEntropy()` returns the entropy of the input observations.
+#' @template MRS
+#' @export
 FrequencyToEntropy <- function (...) {
   p <- c(...) / sum (...)
+  p <- p[p > 0]
   -sum(p * log2(p))
 }
