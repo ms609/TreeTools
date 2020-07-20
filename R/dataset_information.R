@@ -44,7 +44,7 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
   }, integer(length(unique(char2))))
 
   confusionKnown <- confusion[tokens1[!tokens1 %in% ignore],
-                              tokens2[!tokens2 %in% ignore] drop = FALSE]
+                              tokens2[!tokens2 %in% ignore], drop = FALSE]
 
   rowSums(confusion[tokens1, ignore[ignore %in% tokens2], drop = FALSE])
 
