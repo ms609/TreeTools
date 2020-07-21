@@ -2,10 +2,12 @@
 #' @references \insertRef{Dunn2008}{TreeTools}
 #' @examples
 #' data('Lobo', package = 'TreeTools')
-#' dat <- PhyDatToMatrix(Lobo.phy)
+#' dat <- PhyDatToMatrix(Lobo.phy)[, 1:6]
 #'
-#' characterEntropies <- apply(dat, 2, CharacterEntropy)
-#' head(characterEntropies)
+#' CharacterEntropies(dat)
+#' apply(dat, 2, CharacterEntropy)
+#' JointCharacterEntropies(dat)
+#' MutualCharacterInformation(dat)
 #'
 #'
 #' @template MRS
@@ -40,6 +42,13 @@ CharacterEntropy <- function (char, ignore = character(0)) {
 }
 
 #' @rdname CharacterMI
+#' @export
+CharacterEntropies <- function (chars, ignore = character(0)) {
+  apply(chars, 2, CharacterEntropy, ignore = ignore)
+}
+
+#' @rdname CharacterMI
+#' @export
 ApportionAmbiguity <- function (char, ignore = character(0)) {
   char <- char[!char %in% c('?', '-', ignore)]
   tab <- table(char)
@@ -58,22 +67,28 @@ ApportionAmbiguity <- function (char, ignore = character(0)) {
                    },
                    tab[unambiguous] * 1)
 
+  ambigSum <- if (!is.null(dim(ambigs))) rowSums(ambigs, na.rm = TRUE) else 0L
+
   # Return:
-  tab[unambiguous] + rowSums(ambigs, na.rm = TRUE)
+  tab[unambiguous] + ambigSum
 }
 
 
 #' @rdname CharacterMI
+#' @export
 JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
 
   ignore <- c('?', '-', ignore)
   ignore1 <- char1 %in% ignore
   ignore2 <- char2 %in% ignore
-  oneIgnored <- ignore1 | ignore2
   bothIgnored <- ignore1 & ignore2
 
   char1 <- char1[!bothIgnored]
   char2 <- char2[!bothIgnored]
+
+  ignore1 <- ignore1[!bothIgnored]
+  ignore2 <- ignore2[!bothIgnored]
+
   char1[ignore1] <- '?'
   char2[ignore2] <- '?'
 
@@ -90,6 +105,13 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
            function (x2) sum(char1 == x1 & char2 == x2),
            integer(1))
   }, integer(length(unique(char2))))
+  if (is.null(dim(confusion))) {
+    confusion <- if (length(tokens1) == 1L) {
+      cbind(confusion)
+    } else {
+      rbind(confusion)
+    }
+  }
 
   unambigConfusion <- confusion[!ambigTokens2, !ambigTokens1, drop = FALSE]
 
@@ -101,36 +123,86 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
     x <- known1[couldBe[couldBe %in% names(known1)]]
     x <- outer(confusion[!ambigTokens2, token], x / sum(x, na.rm = TRUE))
   }, unambigConfusion * 1)
+  if (!is.null(dim(ambig1))) {
+    ambig1 <- rowSums(ambig1, dims = 2)
+  }
 
   ambig2 <- vapply(tokens2[ambigTokens2], function (token) {
     couldBe <- if (token == '?') names(known2) else strsplit(token, '')[[1]]
     x <- known2[couldBe[couldBe %in% names(known2)]]
     x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens1])
   }, unambigConfusion * 1)
+  if (!is.null(dim(ambig2))) {
+    ambig2 <- rowSums(ambig2, dims = 2)
+  }
 
-  FrequencyToEntropy(unambigConfusion +
-                     rowSums(ambig1, dims = 2) +
-                     rowSums(ambig2, dims = 2))
+  FrequencyToEntropy(unambigConfusion + ambig1 + ambig2)
 
+}
+
+#' @rdname CharacterMI
+#' @export
+JointCharacterEntropies <- function (characters, ignore = character(0)) {
+  nChar <- ncol(characters)
+  n <- matrix(seq_len(nChar), nChar, nChar)
+
+  ret <- mapply(function (i, j) JointCharacterEntropy(characters[, i],
+                                                      characters[, j],
+                                                      ignore = ignore),
+                t(n)[lower.tri(n)], n[lower.tri(n)])
+
+  # Return:
+  structure(ret, Size = nChar, Diag = FALSE, Upper = FALSE, class = 'dist')
 }
 
 
 #' @rdname CharacterMI
-CharacterEntropy <- function (characters) {
+#' @export
+MutualCharacterInformation <- function (characters, ignore = character(0)) {
+
+  .AsDist <- function (x) {
+    structure(x[lowerTri], Size = nChar, Diag = FALSE, class = 'dist')
+  }
+
   nChar <- ncol(characters)
-  n <- matrix(seq_len(nChar), nChar, nChar)
+  m <- nChar - 1L
+  jointDist <- JointCharacterEntropies(characters, ignore = ignore)
 
-  is <- t(n)[lower.tri(n)]
-  js <- n[lower.tri(n)]
+  h <- CharacterEntropies(characters)
+  meanH <- mean(h)
 
-  char1 <- characters[, 1]
-  char2 <- characters[, 8]
+  joint <- as.matrix(jointDist)
+  diag(joint) <- h
 
-  JointCharacterEntropy(char1, char2)
+  mi <- outer(h, h, '+') - joint
+  mi[mi < sqrt(.Machine$double.eps)] <- 0
+  lowerTri <- lower.tri(mi)
 
-  mapply(function (i, j) JointCharacterEntropy(characters[, i], characters[, j]),
-                                               is, js)
+  charMeanMi <- (colSums(mi) - diag(mi)) / m
+  meanMi <- mean(mi[lowerTri])
+
+  meanJoint <- mean(jointDist)
+  charJoint <- colSums(joint) - diag(joint) / m
+
+  apc <- outer(charMeanMi, charMeanMi) / meanMi
+  mip <- .AsDist(mi - apc)
+
+  asc <- outer(charMeanMi, charMeanMi, '+') - meanMi
+  mia <- .AsDist(mi - asc)
+
+  mir <- .AsDist(mi / joint)
+
+  # Return:
+  list(MI = mi, APC = .AsDist(apc),
+       MIr = mir, Zr = (mir - mean(mir)) / sd(mir),
+       MIp = mip, Zp = (mip - mean(mip)) / sd(mip),
+       MIa = mia, Za = (mia - mean(mia)) / sd(mia)
+       )
 }
+
+#' @rdname CharacterMI
+#' @export
+MutCharInfo <- MutualCharacterInformation
 
 #' Entropy of a table of frequencies
 #' @param \dots Frequencies  of observations

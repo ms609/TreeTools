@@ -6,6 +6,15 @@
 \usage{
 FrequencyToEntropy(...)
 }
+\arguments{
+\item{\dots}{Frequencies  of observations}
+}
+\value{
+\code{FrequencyToEntropy()} returns the entropy of the input observations.
+}
 \description{
 Entropy of a table of frequencies
+}
+\author{
+Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

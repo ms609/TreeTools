@@ -5,6 +5,8 @@
 \alias{CharacterEntropy}
 \alias{ApportionAmbiguity}
 \alias{JointCharacterEntropy}
+\alias{JointCharacterEntropies}
+\alias{MutualCharacterInformation}
 \title{Mutual information between characters}
 \usage{
 CharacterEntropy(char, ignore = character(0))
@@ -12,6 +14,10 @@ CharacterEntropy(char, ignore = character(0))
 ApportionAmbiguity(char, ignore = character(0))
 
 JointCharacterEntropy(char1, char2, ignore = character(0))
+
+JointCharacterEntropies(characters)
+
+MutualCharacterInformation(characters)
 }
 \arguments{
 \item{char, char1, char2}{Character vector listing character tokens.
@@ -39,8 +45,8 @@ a 6/10 chance of being token \code{0};
 data('Lobo', package = 'TreeTools')
 dat <- PhyDatToMatrix(Lobo.phy)
 
-characterEntropies <- apply(dat, 2, CharacterEntropy)
-head(characterEntropies)
+JointCharacterEntropies(dat[, 1:6])
+CharacterEntropy(dat[, 1:6])
 
 
 char <- c(rep('0', 6), rep('1', 4), '[01]', '[02]', '?')
