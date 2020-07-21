@@ -1,4 +1,21 @@
 #' Mutual information between characters
+#'
+#' Calculate the entropy, joint entropy and mutual information between
+#' characters in a morphological dataset,
+#' distinguishing 'background' mutual information due to
+#' shared ancestry and random chance from functionally significant correlations.
+#'
+#' `CharacterEntropy()` and `CharacterEntropies()` calculate the entropy of
+#' individual characters, using `ApportionAmiguity()` to assign frequencies
+#' to ambiguous tokens.
+#'
+#' `JointCharacterEntropy()` and `JointCharacterEntropies()` calculate the
+#' joint entropy of pairs of characters.
+#'
+#' `MutualCharacterInformation()` calculates the mutual information between
+#' each pair of characters: i.e. the extent to which the state of one character
+#' can be guessed based on the state of the other.
+#'
 #' @references \insertRef{Dunn2008}{TreeTools}
 #' @examples
 #' data('Lobo', package = 'TreeTools')
@@ -8,7 +25,6 @@
 #' apply(dat, 2, CharacterEntropy)
 #' JointCharacterEntropies(dat)
 #' MutualCharacterInformation(dat)
-#'
 #'
 #' @template MRS
 #' @name CharacterMI

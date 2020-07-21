@@ -7,6 +7,7 @@
 \alias{ApportionAmbiguity}
 \alias{JointCharacterEntropy}
 \alias{JointCharacterEntropies}
+\alias{MutualCharacterInformation}
 \alias{MutCharInfo}
 \title{Mutual information between characters}
 \usage{
@@ -16,9 +17,21 @@ CharacterEntropies(chars, ignore = character(0))
 
 ApportionAmbiguity(char, ignore = character(0))
 
-JointCharacterEntropy(char1, char2, ignore = character(0))
+JointCharacterEntropy(
+  char1,
+  char2,
+  ignore = character(0),
+  ignore1 = NULL,
+  ignore2 = NULL,
+  states1 = NULL,
+  states2 = NULL,
+  tokens1 = NULL,
+  tokens2 = NULL
+)
 
 JointCharacterEntropies(characters, ignore = character(0))
+
+MutualCharacterInformation(characters, ignore = character(0))
 
 MutCharInfo(characters, ignore = character(0))
 }
@@ -30,7 +43,22 @@ For handling of ambiguous tokens, see section 'Ambiguity'.}
 besides \verb{?} and \code{-}.}
 }
 \description{
-Mutual information between characters
+Calculate the entropy, joint entropy and mutual information between
+characters in a morphological dataset,
+distinguishing 'background' mutual information due to
+shared ancestry and random chance from functionally significant correlations.
+}
+\details{
+\code{CharacterEntropy()} and \code{CharacterEntropies()} calculate the entropy of
+individual characters, using \code{ApportionAmiguity()} to assign frequencies
+to ambiguous tokens.
+
+\code{JointCharacterEntropy()} and \code{JointCharacterEntropies()} calculate the
+joint entropy of pairs of characters.
+
+\code{MutualCharacterInformation()} calculates the mutual information between
+each pair of characters: i.e. the extent to which the state of one character
+can be guessed based on the state of the other.
 }
 \section{Ambiguity}{
 
@@ -42,6 +70,14 @@ Each token is assigned a probability according to its number of
 Example: in \verb{000000 1111 [01] [02] ?}, \verb{[01]} and \verb{?} will be taken to have
 a 6/10 chance of being token \code{0};
 \verb{[02]} will be treated as having a 100\% chance of being state \code{0}.
+}
+
+\section{#TODO Notes}{
+
+MI = MIb (background, = random noise + shared ancestry) +
+MIsf (structure and function)
+MIp approximates MIsf
+High mean MIb implies strong phylogenetic signal
 }
 
 \examples{
