@@ -76,9 +76,11 @@ ApportionAmbiguity <- function (char, ignore = character(0)) {
 
 #' @rdname CharacterMI
 #' @export
-JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
+JointCharacterEntropy <- function (char1, char2, ignore = character(0),
+                                   states1 = NULL, states2 = NULL,
+                                   tokens1 = NULL, tokens2 = NULL) {
 
-  ignore <- c('?', '-', ignore)
+  ignore <- unique(c('?', '-', ignore))
   ignore1 <- char1 %in% ignore
   ignore2 <- char2 %in% ignore
   bothIgnored <- ignore1 & ignore2
@@ -92,10 +94,10 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
   char1[ignore1] <- '?'
   char2[ignore2] <- '?'
 
-  states1 <- table(char1[!ignore1])
-  states2 <- table(char2[!ignore2])
-  tokens1 <- sort(unique(char1))
-  tokens2 <- sort(unique(char2))
+  if (is.null(states1)) states1 <- table(char1[!ignore1])
+  if (is.null(states2)) states2 <- table(char2[!ignore2])
+  if (is.null(tokens1)) tokens1 <- sort(unique(char1))
+  if (is.null(tokens2)) tokens2 <- sort(unique(char2))
 
   ambigTokens1 <- tokens1 %in% ignore | nchar(tokens1) != 1L
   ambigTokens2 <- tokens2 %in% ignore | nchar(tokens2) != 1L
@@ -104,7 +106,7 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
     vapply(tokens2,
            function (x2) sum(char1 == x1 & char2 == x2),
            integer(1))
-  }, integer(length(unique(char2))))
+  }, integer(length(tokens2)))
   if (is.null(dim(confusion))) {
     confusion <- if (length(tokens1) == 1L) {
       cbind(confusion)
@@ -118,11 +120,15 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
   known1 <- colSums(confusion[, !ambigTokens1, drop = FALSE])
   known2 <- rowSums(confusion[!ambigTokens2, , drop = FALSE])
 
+  blankConfusion <- unambigConfusion * 0
   ambig1 <- vapply(tokens1[ambigTokens1], function (token) {
     couldBe <- if (token == '?') names(known1) else strsplit(token, '')[[1]]
     x <- known1[couldBe[couldBe %in% names(known1)]]
     x <- outer(confusion[!ambigTokens2, token], x / sum(x, na.rm = TRUE))
-  }, unambigConfusion * 1)
+    ret <- blankConfusion
+    ret[rownames(x), colnames(x)] <- x
+    ret
+  }, blankConfusion)
   if (!is.null(dim(ambig1))) {
     ambig1 <- rowSums(ambig1, dims = 2)
   }
@@ -131,7 +137,10 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
     couldBe <- if (token == '?') names(known2) else strsplit(token, '')[[1]]
     x <- known2[couldBe[couldBe %in% names(known2)]]
     x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens1])
-  }, unambigConfusion * 1)
+    ret <- blankConfusion
+    ret[rownames(x), colnames(x)] <- x
+    ret
+  }, blankConfusion)
   if (!is.null(dim(ambig2))) {
     ambig2 <- rowSums(ambig2, dims = 2)
   }
@@ -140,16 +149,26 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0)) {
 
 }
 
+
 #' @rdname CharacterMI
 #' @export
 JointCharacterEntropies <- function (characters, ignore = character(0)) {
+  ignore <- unique(c('-', '?', ignore))
   nChar <- ncol(characters)
   n <- matrix(seq_len(nChar), nChar, nChar)
+  tables <- apply(characters, 2L, table)
+  tables <- lapply(tables, function (x) x[!names(x) %in% ignore])
+  tokens <- apply(characters, 2L, unique)
+  tokens <- lapply(tokens, function (x) unique(ifelse(x %in% ignore, '?', x)))
+  tokens <- lapply(tokens, sort)
 
-  ret <- mapply(function (i, j) JointCharacterEntropy(characters[, i],
-                                                      characters[, j],
-                                                      ignore = ignore),
-                t(n)[lower.tri(n)], n[lower.tri(n)])
+  ret <- mapply(function (i, j) {
+    # message(i, ', ', j)
+    JointCharacterEntropy(characters[, i], characters[, j],
+                          ignore = ignore,
+                          states1 = tables[[i]], states2 = tables[[j]],
+                          tokens1 = tokens[[i]], tokens2 = tokens[[j]])
+    }, t(n)[lower.tri(n)], n[lower.tri(n)])
 
   # Return:
   structure(ret, Size = nChar, Diag = FALSE, Upper = FALSE, class = 'dist')
@@ -157,6 +176,11 @@ JointCharacterEntropies <- function (characters, ignore = character(0)) {
 
 
 #' @rdname CharacterMI
+#' @section #TODO Notes:
+#' MI = MIb (background, = random noise + shared ancestry) +
+#' MIsf (structure and function)
+#' MIp approximates MIsf
+#' High mean MIb implies strong phylogenetic signal
 #' @export
 MutualCharacterInformation <- function (characters, ignore = character(0)) {
 
@@ -196,7 +220,8 @@ MutualCharacterInformation <- function (characters, ignore = character(0)) {
   list(MI = mi, APC = .AsDist(apc),
        MIr = mir, Zr = (mir - mean(mir)) / sd(mir),
        MIp = mip, Zp = (mip - mean(mip)) / sd(mip),
-       MIa = mia, Za = (mia - mean(mia)) / sd(mia)
+       MIa = mia, Za = (mia - mean(mia)) / sd(mia),
+       MIb = mi[lowerTri] - mip
        )
 }
 

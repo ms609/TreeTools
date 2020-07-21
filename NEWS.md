@@ -1,4 +1,9 @@
-# TreeTools 1.1.0.9000
+# TreeTools 1.1.0.9001 (development)
+
+ - `MutualCharacterInformation()` family of functions based on Dunn _et al._
+ (2008).
+ 
+# TreeTools 1.1.0.9000 (development)
 
  - Documentation improvements.
  - Improve TNT dataset parsing.
