@@ -77,22 +77,24 @@ ApportionAmbiguity <- function (char, ignore = character(0)) {
 #' @rdname CharacterMI
 #' @export
 JointCharacterEntropy <- function (char1, char2, ignore = character(0),
+                                   ignore1 = NULL, ignore2 = NULL,
                                    states1 = NULL, states2 = NULL,
                                    tokens1 = NULL, tokens2 = NULL) {
 
-  ignore <- unique(c('?', '-', ignore))
-  ignore1 <- char1 %in% ignore
-  ignore2 <- char2 %in% ignore
-  bothIgnored <- ignore1 & ignore2
+  if (!is.na(ignore)) {
+    ignore <- unique(c('?', '-', ignore))
+    ignore1 <- char1 %in% ignore
+    ignore2 <- char2 %in% ignore
+    bothIgnored <- ignore1 & ignore2
+    char1 <- char1[!bothIgnored]
+    char2 <- char2[!bothIgnored]
 
-  char1 <- char1[!bothIgnored]
-  char2 <- char2[!bothIgnored]
+    ignore1 <- ignore1[!bothIgnored]
+    ignore2 <- ignore2[!bothIgnored]
 
-  ignore1 <- ignore1[!bothIgnored]
-  ignore2 <- ignore2[!bothIgnored]
-
-  char1[ignore1] <- '?'
-  char2[ignore2] <- '?'
+    char1[ignore1] <- '?'
+    char2[ignore2] <- '?'
+  }
 
   if (is.null(states1)) states1 <- table(char1[!ignore1])
   if (is.null(states2)) states2 <- table(char2[!ignore2])
@@ -162,10 +164,13 @@ JointCharacterEntropies <- function (characters, ignore = character(0)) {
   tokens <- lapply(tokens, function (x) unique(ifelse(x %in% ignore, '?', x)))
   tokens <- lapply(tokens, sort)
 
+  ignores <- characters %in% ignore
+
   ret <- mapply(function (i, j) {
     # message(i, ', ', j)
     JointCharacterEntropy(characters[, i], characters[, j],
-                          ignore = ignore,
+                          ignore = NA,
+                          ignore1 = ignores[, i], ignore2 = ignores[, j],
                           states1 = tables[[i]], states2 = tables[[j]],
                           tokens1 = tokens[[i]], tokens2 = tokens[[j]])
     }, t(n)[lower.tri(n)], n[lower.tri(n)])
