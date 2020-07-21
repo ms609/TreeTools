@@ -120,29 +120,30 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0),
   ambigTokens1 <- tokens1 %in% ignore | nchar(tokens1) != 1L
   ambigTokens2 <- tokens2 %in% ignore | nchar(tokens2) != 1L
 
-  confusion <- vapply(tokens1, function (x1) {
-    vapply(tokens2,
-           function (x2) sum(char1 == x1 & char2 == x2),
+  #confusion <- table(char1, char2) # Doubles runtime cf:
+  confusion <- vapply(tokens2, function (x2) {
+    vapply(tokens1,
+           function (x1) sum(char1 == x1 & char2 == x2),
            integer(1))
-  }, integer(length(tokens2)))
+  }, integer(length(tokens1)))
   if (is.null(dim(confusion))) {
     confusion <- if (length(tokens1) == 1L) {
-      cbind(confusion)
-    } else {
       rbind(confusion)
+    } else {
+      cbind(confusion)
     }
   }
 
-  unambigConfusion <- confusion[!ambigTokens2, !ambigTokens1, drop = FALSE]
+  unambigConfusion <- confusion[!ambigTokens1, !ambigTokens2, drop = FALSE]
 
-  known1 <- colSums(confusion[, !ambigTokens1, drop = FALSE])
-  known2 <- rowSums(confusion[!ambigTokens2, , drop = FALSE])
+  known1 <- rowSums(confusion[!ambigTokens1, , drop = FALSE])
+  known2 <- colSums(confusion[, !ambigTokens2, drop = FALSE])
 
   blankConfusion <- unambigConfusion * 0
   ambig1 <- vapply(tokens1[ambigTokens1], function (token) {
     couldBe <- if (token == '?') names(known1) else strsplit(token, '')[[1]]
     x <- known1[couldBe[couldBe %in% names(known1)]]
-    x <- outer(confusion[!ambigTokens2, token], x / sum(x, na.rm = TRUE))
+    x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens2])
     ret <- blankConfusion
     ret[rownames(x), colnames(x)] <- x
     ret
@@ -154,7 +155,7 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0),
   ambig2 <- vapply(tokens2[ambigTokens2], function (token) {
     couldBe <- if (token == '?') names(known2) else strsplit(token, '')[[1]]
     x <- known2[couldBe[couldBe %in% names(known2)]]
-    x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens1])
+    x <- outer(confusion[!ambigTokens1, token], x / sum(x, na.rm = TRUE))
     ret <- blankConfusion
     ret[rownames(x), colnames(x)] <- x
     ret
