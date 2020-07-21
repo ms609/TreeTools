@@ -97,7 +97,7 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0),
                                    states1 = NULL, states2 = NULL,
                                    tokens1 = NULL, tokens2 = NULL) {
 
-  if (!is.na(ignore)) {
+  if (!isFALSE(ignore)) {
     ignore <- unique(c('?', '-', ignore))
     ignore1 <- char1 %in% ignore
     ignore2 <- char2 %in% ignore
@@ -185,7 +185,7 @@ JointCharacterEntropies <- function (characters, ignore = character(0)) {
   ret <- mapply(function (i, j) {
     # message(i, ', ', j)
     JointCharacterEntropy(characters[, i], characters[, j],
-                          ignore = NA,
+                          ignore = FALSE,
                           ignore1 = ignores[, i], ignore2 = ignores[, j],
                           states1 = tables[[i]], states2 = tables[[j]],
                           tokens1 = tokens[[i]], tokens2 = tokens[[j]])
