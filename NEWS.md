@@ -1,3 +1,7 @@
+# TreeTools 1.1.0.9002
+
+ - Artificial extinction.
+
 # TreeTools 1.1.0.9000
 
  - Documentation improvements.
