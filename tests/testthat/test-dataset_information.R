@@ -22,4 +22,10 @@ test_that("Entropies are calculated", {
              "0", "0", "0", "0", "0", "?", "1", "1", "1", "1", "1", "1")
   expect_equal(JointCharacterEntropy(char1, char2),
                JointCharacterEntropy(char2, char1))
+
+  expect_equal(0, JointCharacterEntropy(rep('?', 10), rep('?', 10)))
+  expect_equal(0, JointCharacterEntropy(rep('0', 10), rep('1', 10)))
+  expect_equal(1, JointCharacterEntropy(rep(0:1, 5), rep(0:1, 5)))
+  expect_equal(2, JointCharacterEntropy(rep(0:3, 5), rep(0:3, 5)))
+
 })
