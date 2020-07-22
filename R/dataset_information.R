@@ -16,6 +16,29 @@
 #' each pair of characters: i.e. the extent to which the state of one character
 #' can be guessed based on the state of the other.
 #'
+#' The mutual information (MI) of two characters is assumed to represent the
+#' contribution of two components: background MI (_MIb_), comprising
+#' a signal from shared ancestry overprinted with random noise, and
+#' MI arising from structure and function (_MSsf_).
+#' Dunn _et al._ (2008) use this
+#' measure to identify amino acids that play a role in the structure or
+#' function of proteins -- mutations in one AA will require compensatory
+#' mutations in other AA if the protein is to continue functioning.
+#' A morphological analogy is proposed.
+#'
+#' The average product correlation (APC), the product of the average MI of
+#' each character with  each other character in the dataset), approximates
+#' the background mutual information.
+#' A high mean value of MIb across a dataset implies that there is a strong
+#' phylogenetic signal.
+#'
+#' _MIp_, the difference between the mutual information of two characters
+#' and their APC, approximates _MIsf_.
+#'
+#'
+#' The runtime increases with the square of the number of characters --
+#' may take a couple of seconds to calculate with 100 characters.
+#'
 #' @references \insertRef{Dunn2008}{TreeTools}
 #' @examples
 #' data('Lobo', package = 'TreeTools')
@@ -26,6 +49,10 @@
 #' JointCharacterEntropies(dat)
 #' MutualCharacterInformation(dat)
 #'
+#' h1 <- JointCharacterEntropies(dat)
+#' fit <- cmdscale(h1, k=2)
+#' plot(fit, type = 'n')
+#' text(fit[, 1], fit[, 2], 1:196, cex = 0.8)
 #' @template MRS
 #' @name CharacterMI
 #' @export
@@ -143,6 +170,7 @@ JointCharacterEntropy <- function (char1, char2, ignore = character(0),
   ambig1 <- vapply(tokens1[ambigTokens1], function (token) {
     couldBe <- if (token == '?') names(known1) else strsplit(token, '')[[1]]
     x <- known1[couldBe[couldBe %in% names(known1)]]
+    # TODO YOU ARE HERE: What if [23] only occurs with `?`?
     x <- outer(x / sum(x, na.rm = TRUE), confusion[token, !ambigTokens2])
     ret <- blankConfusion
     ret[rownames(x), colnames(x)] <- x
@@ -198,11 +226,6 @@ JointCharacterEntropies <- function (characters, ignore = character(0)) {
 
 
 #' @rdname CharacterMI
-#' @section #TODO Notes:
-#' MI = MIb (background, = random noise + shared ancestry) +
-#' MIsf (structure and function)
-#' MIp approximates MIsf
-#' High mean MIb implies strong phylogenetic signal
 #' @export
 MutualCharacterInformation <- function (characters, ignore = character(0)) {
 
@@ -243,7 +266,7 @@ MutualCharacterInformation <- function (characters, ignore = character(0)) {
        MIr = mir, Zr = (mir - mean(mir)) / sd(mir),
        MIp = mip, Zp = (mip - mean(mip)) / sd(mip),
        MIa = mia, Za = (mia - mean(mia)) / sd(mia),
-       MIb = mi[lowerTri] - mip
+       H = jointDist
        )
 }
 
