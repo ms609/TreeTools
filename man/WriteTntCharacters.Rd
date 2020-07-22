@@ -43,7 +43,8 @@ Write morphological character matrix to TNT file
 \examples{
 data('Lobo', package = 'TreeTools')
 WriteTntCharacters(Lobo.phy)
-WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre='piwe=10;xpiwe=;', post = 'proc/;')
+# Read with extended implied weighting
+WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre = 'piwe=10;', post = 'xpiwe=;')
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

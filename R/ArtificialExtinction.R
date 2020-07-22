@@ -9,8 +9,8 @@
 #' dependent characters.
 #'
 #' @param dataset Phylogenetic dataset of class `phyDat` or `matrix`.
-#' @param template Taxon to use as a template.
 #' @param subject Vector identifying subject taxa, by name or index.
+#' @param template Character or integer identifying taxon to use as a template.
 #' @param replacement Character specifying whether deleted tokens should be
 #' replaced with:
 #'  - `?`: The ambiguous token, `?`;
@@ -30,14 +30,14 @@
 #' artex <- ArtificialExtinction(dataset, 'FOSSIL', c('A', 'C'))
 #' @template MRS
 #' @export
-ArtificialExtinction <- function (dataset, template, subject,
+ArtificialExtinction <- function (dataset, subject, template,
                                   replacement = '?', sampleFrom = NULL) {
   UseMethod('ArtificialExtinction')
 }
 
 #' @rdname ArtificialExtinction
 #' @export
-ArtificialExtinction.matrix <- function (dataset, template, subject,
+ArtificialExtinction.matrix <- function (dataset, subject, template,
                                          replacement = '?',
                                          sampleFrom = NULL) {
   replacers <- c('?', 'binary', 'uniform', 'frequency')
@@ -69,10 +69,10 @@ ArtificialExtinction.matrix <- function (dataset, template, subject,
 
 #' @rdname ArtificialExtinction
 #' @export
-ArtificialExtinction.phyDat <- function (dataset, template, subject,
+ArtificialExtinction.phyDat <- function (dataset, subject, template,
                                          replacement = '?', sampleFrom = NULL) {
-  MatrixToPhyDat(ArtificialExtinction(PhyDatToMatrix(dataset), template,
-                                      subject, replacement))
+  MatrixToPhyDat(ArtificialExtinction(PhyDatToMatrix(dataset), subject,
+                                      template, replacement))
 }
 
 #' @rdname ArtificialExtinction
