@@ -1,6 +1,7 @@
 # TreeTools 1.1.0.9002
 
  - Artificial extinction.
+ - `WriteTntCharacters()`: Write morphological dataset in TNT format.
 
 # TreeTools 1.1.0.9000
 

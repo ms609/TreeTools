@@ -21,6 +21,13 @@
 #'  to their frequency.
 #' @return A dataset with the same class as `dataset` in which entries that
 #' are ambiguous in `template` are made ambiguous in `subject`.
+#' @examples
+#' set.seed(1)
+#' dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
+#'                     '0', '0', rep('?', 6)), nrow = 5,
+#'                     dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
+#'                                     paste('char', 1:8)), byrow = TRUE)
+#' artex <- ArtificialExtinction(dataset, 'FOSSIL', c('A', 'C'))
 #' @template MRS
 #' @export
 ArtificialExtinction <- function (dataset, template, subject,

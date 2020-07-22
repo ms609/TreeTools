@@ -65,6 +65,14 @@ Note: this simple implementation does not account for character contingency,
 e.g. characters whose absence imposes inapplicable or absent tokens on
 dependent characters.
 }
+\examples{
+set.seed(1)
+dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
+                    '0', '0', rep('?', 6)), nrow = 5,
+                    dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
+                                    paste('char', 1:8)), byrow = TRUE)
+artex <- ArtificialExtinction(dataset, 'FOSSIL', c('A', 'C'))
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
