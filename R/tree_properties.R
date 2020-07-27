@@ -579,9 +579,9 @@ NTip.matrix <- function (phy) {
 #'
 #' `NSplits()` counts the unique bipartition splits in a tree or object.
 #'
-#' @param x A phylogenetic tree of class `phylo`, or a list of such trees
-#' (of class `list` or `multiPhylo`), or a `Splits` object,
-#' or a vector of integers.
+#' @param x A phylogenetic tree of class `phylo`; a list of such trees
+#' (of class `list` or `multiPhylo`); a `Splits` object;
+#' a vector of integers; or a character vector listing tips of a tree.
 #'
 #' @return `NSplits()` returns an integer specifying the number of bipartitions in
 #' the specified objects, or in a binary tree with `x` tips.
@@ -608,11 +608,11 @@ NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.multiPhylo <- function (x) vapply(x, NSplits, numeric(1L))
+NSplits.list <- function (x) vapply(x, NSplits, numeric(1L))
 
 #' @rdname NSplits
 #' @export
-NSplits.list <- NSplits.multiPhylo
+NSplits.multiPhylo <- NSplits.list
 
 #' @rdname NSplits
 #' @export
@@ -621,6 +621,10 @@ NSplits.Splits <- function (x) nrow(x)
 #' @rdname NSplits
 #' @export
 NSplits.numeric <- function (x) x - 3L
+
+#' @rdname NSplits
+#' @export
+NSplits.character <- function (x) NSplits(length(x))
 
 #' Maximum splits in an _n_-leaf tree
 #'

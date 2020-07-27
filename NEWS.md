@@ -1,6 +1,7 @@
 # TreeTools 1.1.0.9003
 
  - Use methods for `DropTip()`.
+ - Add `character` method for `NSplits()`.
 
 # TreeTools 1.1.0.9000
 

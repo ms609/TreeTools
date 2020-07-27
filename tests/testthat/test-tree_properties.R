@@ -105,6 +105,10 @@ test_that("NTip() works", {
   Test(2000L)
 })
 
+test_that("NSplits() works", {
+  expect_equal(NSplits(5L), NSplits(LETTERS[1:5]))
+})
+
 test_that("MRCA() works", {
   bal7 <- BalancedTree(7)
   allAnc <- AllAncestors(bal7$edge[, 1], bal7$edge[, 2])

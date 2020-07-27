@@ -4,10 +4,11 @@
 \alias{NSplits}
 \alias{NPartitions}
 \alias{NSplits.phylo}
-\alias{NSplits.multiPhylo}
 \alias{NSplits.list}
+\alias{NSplits.multiPhylo}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
+\alias{NSplits.character}
 \title{Number of distinct splits}
 \usage{
 NSplits(x)
@@ -16,18 +17,20 @@ NPartitions(x)
 
 \method{NSplits}{phylo}(x)
 
-\method{NSplits}{multiPhylo}(x)
-
 \method{NSplits}{list}(x)
+
+\method{NSplits}{multiPhylo}(x)
 
 \method{NSplits}{Splits}(x)
 
 \method{NSplits}{numeric}(x)
+
+\method{NSplits}{character}(x)
 }
 \arguments{
-\item{x}{A phylogenetic tree of class \code{phylo}, or a list of such trees
-(of class \code{list} or \code{multiPhylo}), or a \code{Splits} object,
-or a vector of integers.}
+\item{x}{A phylogenetic tree of class \code{phylo}; a list of such trees
+(of class \code{list} or \code{multiPhylo}); a \code{Splits} object;
+a vector of integers; or a character vector listing tips of a tree.}
 }
 \value{
 \code{NSplits()} returns an integer specifying the number of bipartitions in
