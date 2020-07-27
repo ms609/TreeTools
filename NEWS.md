@@ -1,3 +1,7 @@
+# TreeTools 1.1.0.9003
+
+ - Use methods for `DropTip()`.
+
 # TreeTools 1.1.0.9000
 
  - Documentation improvements.

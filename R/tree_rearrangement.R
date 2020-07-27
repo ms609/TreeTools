@@ -362,7 +362,11 @@ CollapseEdge <- function (tree, edges) {
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip) {
+DropTip <- function (tree, tip) UseMethod("DropTip")
+
+#' @rdname DropTip
+#' @export
+DropTip.phylo <- function (tree, tip) {
   #TODO Rewrite in C.
   labels <- tree$tip.label
   nTip <- length(labels)
@@ -436,6 +440,12 @@ DropTip <- function (tree, tip) {
     # Return:
     Preorder(tree)
   }
+}
+
+#' @rdname DropTip
+#' @export
+DropTip.multiPhylo <- function (tree, tip) {
+  structure(lapply(tree, DropTip, tip), class = 'multiPhylo')
 }
 
 #' Generate binary tree by collapsing polytomies
