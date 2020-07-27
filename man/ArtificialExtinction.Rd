@@ -9,41 +9,53 @@
 \usage{
 ArtificialExtinction(
   dataset,
-  template,
   subject,
-  replacement = "?",
+  template,
+  replaceAmbiguous = "ambig",
+  replaceCoded = "original",
   sampleFrom = NULL
 )
 
 \method{ArtificialExtinction}{matrix}(
   dataset,
-  template,
   subject,
-  replacement = "?",
+  template,
+  replaceAmbiguous = "ambig",
+  replaceCoded = "original",
   sampleFrom = NULL
 )
 
 \method{ArtificialExtinction}{phyDat}(
   dataset,
-  template,
   subject,
-  replacement = "?",
+  template,
+  replaceAmbiguous = "ambig",
+  replaceCoded = "original",
   sampleFrom = NULL
 )
 
-ArtEx(dataset, template, subject, replacement = "?", sampleFrom = NULL)
+ArtEx(
+  dataset,
+  subject,
+  template,
+  replaceAmbiguous = "ambig",
+  replaceCoded = "original",
+  sampleFrom = NULL
+)
 }
 \arguments{
 \item{dataset}{Phylogenetic dataset of class \code{phyDat} or \code{matrix}.}
 
-\item{template}{Taxon to use as a template.}
-
 \item{subject}{Vector identifying subject taxa, by name or index.}
 
-\item{replacement}{Character specifying whether deleted tokens should be
+\item{template}{Character or integer identifying taxon to use as a template.}
+
+\item{replaceAmbiguous, replaceCoded}{Character specifying whether tokens
+that are ambiguous or codable in the fossil template should be
 replaced with:
 \itemize{
-\item \verb{?}: The ambiguous token, \verb{?};
+\item \code{original}: Their original value; i.e. no change;
+\item \code{ambiguous}: The ambiguous token, \verb{?};
 \item \code{binary}: The tokens \code{0} or \code{1}, with equal probability;
 \item \code{uniform}: One of the tokens present in \code{sampleFrom}, with equal
 probability;
@@ -71,7 +83,7 @@ dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
                     '0', '0', rep('?', 6)), nrow = 5,
                     dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
                                     paste('char', 1:8)), byrow = TRUE)
-artex <- ArtificialExtinction(dataset, 'FOSSIL', c('A', 'C'))
+artex <- ArtificialExtinction(dataset, c('A', 'C'), 'FOSSIL')
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
