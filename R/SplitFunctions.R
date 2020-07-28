@@ -269,6 +269,7 @@ TipLabels.Splits <- function (x, single = TRUE) attr(x, 'tip.label')
 #' @export
 TipLabels.list <- function (x, single = FALSE) {
   if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
+  if (!is.null(x$tip.label$tip.label)) return (x$tip.label$tip.label)
   if (!is.null(x$tip.label)) return (x$tip.label)
   .ListLabels(x, single, TipLabels)
 
@@ -293,6 +294,7 @@ TipLabels.list <- function (x, single = FALSE) {
 #' @rdname TipLabels
 #' @export
 TipLabels.multiPhylo <- function (x, single = FALSE) {
+  if (!is.null(x$tip.label$tip.label)) return (x$tip.label$tip.label)
   if (!is.null(x$tip.label)) return (x$tip.label)
   if (single) {
     firstEntry <- x[[1]]
