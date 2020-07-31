@@ -341,7 +341,6 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
 #' [`phyDat`][phangorn::phyDat] object.
 #'
-#' @template MRS
 #' @references
 #'   \insertRef{Maddison1997}{TreeTools}
 #'
@@ -359,6 +358,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' continuous <- suppressWarnings(as.numeric(continuous))
 #' attributes(continuous) <- at
 #' continuous
+#' @template MRS
 #'
 #' @seealso Convert between matrices and `phyDat` objects: [`MatrixToPhyDat()`]
 #' @export
