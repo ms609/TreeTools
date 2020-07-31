@@ -1,12 +1,20 @@
+# TreeTools 1.1.0.9004
+
+ - Artificial extinction.
+ - `WriteTntCharacters()`: Write morphological dataset in TNT format.
+
+
 # TreeTools 1.1.0.9003
 
  - Use methods for `DropTip()`.
  - Add `character` method for `NSplits()`.
 
+
 # TreeTools 1.1.0.9000
 
  - Documentation improvements.
  - Improve TNT dataset parsing.
+
 
 # TreeTools 1.1.0
 

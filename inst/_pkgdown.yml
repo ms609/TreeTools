@@ -41,9 +41,10 @@ reference:
     desc: "Functions for modifying and evaluating datasets."
     contents:
       - has_concept("phylogenetic matrix conversion functions")
+      - ArtificialExtinction
 
   - title: "Parsers"
-    desc: "Functions to parse files."
+    desc: "Functions to parse or write files."
     contents:
       - as.Newick
       - ApeTime
@@ -53,6 +54,7 @@ reference:
       - ReadTntTree
       - StringToPhyDat
       - TNTText2Tree
+      - WriteTntCharacters
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."

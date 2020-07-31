@@ -43,3 +43,57 @@ as.Newick.list <- function (x) {
 #' @rdname as.Newick
 #' @export
 as.Newick.multiPhylo <- as.Newick.list
+
+#' Write morphological character matrix to TNT file
+#' @param dataset Morphological dataset of class `phyDat` or `matrix`.
+#' @param filepath Path to file; if `NULL`, returns a character vector.
+#' @param comment Optional comment with which to entitle matrix.
+#' @param pre,post Character vector listing text to print before and after the
+#' character matrix.  Specify `pre = 'piwe=;` if the matrix is to be analysed
+#' using extended implied weighting (`xpiwe=`).
+#'
+#' @seealso [`ReadTntCharacters()`]
+#' @examples
+#' data('Lobo', package = 'TreeTools')
+#' WriteTntCharacters(Lobo.phy)
+#' # Read with extended implied weighting
+#' WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre = 'piwe=10;', post = 'xpiwe=;')
+#' @template MRS
+#' @export
+WriteTntCharacters <- function (dataset, filepath = NULL,
+                                comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                pre = '', post = '') {
+  UseMethod('WriteTntCharacters')
+}
+
+#' @rdname WriteTntCharacters
+#' @export
+WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
+                                       comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       pre = '', post = '') {
+  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, pre, post)
+}
+
+#' @rdname WriteTntCharacters
+#' @export
+WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
+                                       comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       pre = '', post = '') {
+  EOL <- '\n'
+  ret <- paste(
+    pre,
+    paste0("xread '", comment, "'"),
+    paste(rev(dim(dataset)), collapse = ' '),
+    '&[num]',
+    paste(rownames(dataset),
+          apply(dataset, 1, paste0, collapse = ''),
+          collapse = EOL),
+    ';',
+    post,
+    sep = EOL)
+  if (is.null(filepath)) {
+    ret
+  } else {
+    writeLines(ret, filepath)
+  }
+}
