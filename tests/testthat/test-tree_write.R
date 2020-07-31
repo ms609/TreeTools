@@ -19,3 +19,21 @@ test_that("Write is successful", {
     class = 'phylo') # Danger: Do not plot!
   Test(nasty)
 })
+
+test_that("WriteTntCharacters()", {
+  nTax <- 4L
+  dataset <- matrix(seq_len(nTax), nrow = nTax, ncol = 6,
+                    dimnames = list(LETTERS[1:nTax], 1:6))
+  dataset[4, 4:6] <- '-'
+  dataset[3:2, 4:6] <- '?'
+
+  expect_equal("PRE\nxread 'COM'\n6 4\n&[num]\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST",
+               WriteTntCharacters(dataset, comment = 'COM', pre = 'PRE', post  = 'POST'))
+  expect_equal(WriteTntCharacters(dataset),
+               WriteTntCharacters(MatrixToPhyDat(dataset)))
+
+  written <- tempfile()
+  WriteTntCharacters(dataset, written)
+  on.exit(file.remove(written))
+  expect_equivalent(dataset, ReadTntCharacters(written))
+})
