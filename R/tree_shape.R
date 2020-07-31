@@ -219,12 +219,14 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
     stop("Too many shapes to calculate with ", nTip, " leaves.")
   } else if (nTip > length(unrootedKeys)) {
     #TODO make efficient - this is horrible!
+    # nocov start
     shapes <- as.integer(structure(
       vapply(seq_len(as.integer(NRootedShapes(nTip))) - 1L,
              function (shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
              integer64(1L)),
       class = 'integer64'))
     uniqueShapes <- unique(shapes)
+    # nocov end
   } else {
     uniqueShapes <- unrootedKeys[[nTip]]
   }
