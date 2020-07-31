@@ -23,4 +23,9 @@ test_that("Replacements ok", {
 
   expect_true(all(!'?' == ArtificialExtinction(dataset[-6, ], 5, 1:2, 'freq')[1:2, 4:6]))
 
+  nChar <- 100
+  dataset <- rbind(subj = c(rep(2, nChar)),
+                   templ = c(rep(3, nChar / 2), rep('?', nChar / 2)))
+  suppressWarnings(expect_gt(chisq.test(as.integer(
+    ArtEx(dataset, 1, 2, 'binary', 'binary')[1, ]))$p.value, 0.05))
 })
