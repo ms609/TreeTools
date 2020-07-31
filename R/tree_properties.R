@@ -581,7 +581,8 @@ NTip.matrix <- function (phy) {
 #'
 #' @param x A phylogenetic tree of class `phylo`; a list of such trees
 #' (of class `list` or `multiPhylo`); a `Splits` object;
-#' a vector of integers; or a character vector listing tips of a tree.
+#' a vector of integers; or a character vector listing tips of a tree,
+#' or a character of length one specifying a tree in newick format.
 #'
 #' @return `NSplits()` returns an integer specifying the number of bipartitions in
 #' the specified objects, or in a binary tree with `x` tips.
@@ -620,11 +621,19 @@ NSplits.Splits <- function (x) nrow(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.numeric <- function (x) x - 3L
+NSplits.numeric <- function (x) pmax(0L, x - 3L)
 
 #' @rdname NSplits
+#' @importFrom ape read.tree
 #' @export
-NSplits.character <- function (x) NSplits(length(x))
+NSplits.character <- function (x) {
+  lengthX <- length(x)
+  if (lengthX == 1) {
+    tree <- read.tree(text = x)
+    if (!is.null(tree)) return(NSplits(tree))
+  }
+  NSplits(lengthX)
+}
 
 #' Maximum splits in an _n_-leaf tree
 #'
