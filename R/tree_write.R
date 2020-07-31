@@ -48,6 +48,9 @@ as.Newick.multiPhylo <- as.Newick.list
 #' @param dataset Morphological dataset of class `phyDat` or `matrix`.
 #' @param filepath Path to file; if `NULL`, returns a character vector.
 #' @param comment Optional comment with which to entitle matrix.
+#' @param pre,post Character vector listing text to print before and after the
+#' character matrix.  Specify `pre = 'piwe=;` if the matrix is to be analysed
+#' using extended implied weighting (`xpiwe=`).
 #'
 #' @template MRS
 #' @examples

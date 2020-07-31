@@ -21,6 +21,10 @@
 #'  probability;
 #'  - `sample`: One of the tokens present in `sampleFrom`, sampled according
 #'  to their frequency.
+#' @param sampleFrom Vector identifying a subset of characters from which to
+#' sample replacement tokens.
+#' If `NULL`, replacement tokens will be sampled from the initial states of
+#' all taxa not used as a template (including the subjects).
 #' @return A dataset with the same class as `dataset` in which entries that
 #' are ambiguous in `template` are made ambiguous in `subject`.
 #' @examples

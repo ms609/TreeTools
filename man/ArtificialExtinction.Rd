@@ -62,6 +62,11 @@ probability;
 \item \code{sample}: One of the tokens present in \code{sampleFrom}, sampled according
 to their frequency.
 }}
+
+\item{sampleFrom}{Vector identifying a subset of characters from which to
+sample replacement tokens.
+If \code{NULL}, replacement tokens will be sampled from the initial states of
+all taxa not used as a template (including the subjects).}
 }
 \value{
 A dataset with the same class as \code{dataset} in which entries that

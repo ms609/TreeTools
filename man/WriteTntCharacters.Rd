@@ -36,6 +36,10 @@ WriteTntCharacters(
 \item{filepath}{Path to file; if \code{NULL}, returns a character vector.}
 
 \item{comment}{Optional comment with which to entitle matrix.}
+
+\item{pre, post}{Character vector listing text to print before and after the
+character matrix.  Specify \verb{pre = 'piwe=;} if the matrix is to be analysed
+using extended implied weighting (\verb{xpiwe=}).}
 }
 \description{
 Write morphological character matrix to TNT file
