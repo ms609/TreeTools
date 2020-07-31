@@ -50,6 +50,9 @@ WriteTntCharacters(Lobo.phy)
 # Read with extended implied weighting
 WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre = 'piwe=10;', post = 'xpiwe=;')
 }
+\seealso{
+\code{\link[=ReadTntCharacters]{ReadTntCharacters()}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

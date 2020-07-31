@@ -52,12 +52,13 @@ as.Newick.multiPhylo <- as.Newick.list
 #' character matrix.  Specify `pre = 'piwe=;` if the matrix is to be analysed
 #' using extended implied weighting (`xpiwe=`).
 #'
-#' @template MRS
+#' @seealso [`ReadTntCharacters()`]
 #' @examples
 #' data('Lobo', package = 'TreeTools')
 #' WriteTntCharacters(Lobo.phy)
 #' # Read with extended implied weighting
 #' WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre = 'piwe=10;', post = 'xpiwe=;')
+#' @template MRS
 #' @export
 WriteTntCharacters <- function (dataset, filepath = NULL,
                                 comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',

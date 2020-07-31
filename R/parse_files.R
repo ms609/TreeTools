@@ -360,7 +360,10 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' continuous
 #' @template MRS
 #'
-#' @seealso Convert between matrices and `phyDat` objects: [`MatrixToPhyDat()`]
+#' @seealso
+#' - Convert between matrices and `phyDat` objects: [`MatrixToPhyDat()`]
+#'
+#' - Write characters to TNT-format file: [`WriteTntCharacters()`]
 #' @export
 ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 

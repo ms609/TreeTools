@@ -79,13 +79,15 @@ at <- attributes(continuous)
 continuous <- suppressWarnings(as.numeric(continuous))
 attributes(continuous) <- at
 continuous
-
 }
 \references{
 \insertRef{Maddison1997}{TreeTools}
 }
 \seealso{
-Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+\itemize{
+\item Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+\item Write characters to TNT-format file: \code{\link[=WriteTntCharacters]{WriteTntCharacters()}}
+}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
