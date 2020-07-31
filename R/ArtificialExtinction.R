@@ -12,8 +12,8 @@
 #' @param subject Vector identifying subject taxa, by name or index.
 #' @param template Character or integer identifying taxon to use as a template.
 #' @param replaceAmbiguous,replaceCoded Character specifying whether tokens
-#' that are ambiguous or codable in the fossil template should be
-#' replaced with:
+#' that are ambiguous (`?`) or codable (not `?`) in the fossil template should
+#' be replaced with:
 #'  - `original`: Their original value; i.e. no change;
 #'  - `ambiguous`: The ambiguous token, `?`;
 #'  - `binary`: The tokens `0` or `1`, with equal probability;

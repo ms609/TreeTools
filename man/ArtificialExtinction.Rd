@@ -51,8 +51,8 @@ ArtEx(
 \item{template}{Character or integer identifying taxon to use as a template.}
 
 \item{replaceAmbiguous, replaceCoded}{Character specifying whether tokens
-that are ambiguous or codable in the fossil template should be
-replaced with:
+that are ambiguous (\verb{?}) or codable (not \verb{?}) in the fossil template should
+be replaced with:
 \itemize{
 \item \code{original}: Their original value; i.e. no change;
 \item \code{ambiguous}: The ambiguous token, \verb{?};
