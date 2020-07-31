@@ -2,7 +2,8 @@ context('tree_shape.cpp')
 
 test_that('Tree shapes counted', {
   expect_equal(as.integer64(c(1, 1, 1, 2, 3, 6, 11, 23)),
-               as.integer64(vapply(1:8, NRootedShapes, bit64::integer64(1L))))
+               structure(vapply(1:8, NRootedShapes, bit64::integer64(1L)),
+                         class = 'integer64'))
 
   expect_equal(as.integer64(vapply(unrootedKeys, length, 0L)),
                structure(vapply(seq_along(unrootedKeys),
