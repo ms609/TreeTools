@@ -29,6 +29,8 @@ test_that("WriteTntCharacters()", {
 
   expect_equal("PRE\nxread 'COM'\n6 4\n&[num]\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST",
                WriteTntCharacters(dataset, comment = 'COM', pre = 'PRE', post  = 'POST'))
+  expect_equal(WriteTntCharacters(dataset),
+               WriteTntCharacters(MatrixToPhyDat(dataset)))
 
   written <- tempfile()
   WriteTntCharacters(dataset, written)
