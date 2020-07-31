@@ -9,19 +9,20 @@ dataset[6, 3] <- '?'
 
 test_that("Errors are handled", {
 
-  expect_error(ArtificialExtinction(dataset, 'E', 'A', replacement = 'INVALID'))
+  expect_error(ArtificialExtinction(dataset, 'A', 'E', replaceAmbiguous = 'INVALID'))
+  expect_error(ArtificialExtinction(dataset, 'A', 'E', replaceCoded = 'INVALID'))
 })
 
 test_that("Replacements ok", {
   expect_equivalent(rep('?', 6),
                     ArtificialExtinction(dataset,
-                                         'E', c('A', 'B'), '?')[1:2, 4:6])
+                                         c('A', 'B'), 'E', 'ambig')[1:2, 4:6])
 
   expect_equivalent(rep('1', 6),
-                    ArtificialExtinction(dataset, 'F', c('A', 'B'),
+                    ArtificialExtinction(dataset, c('A', 'B'), 'F',
                                          'unif', sampleFrom = 'A')[1:2, 4:6])
 
-  expect_true(all(!'?' == ArtificialExtinction(dataset[-6, ], 5, 1:2, 'freq')[1:2, 4:6]))
+  expect_true(all(!'?' == ArtificialExtinction(dataset[-6, ], 1:2, 5, 'freq')[1:2, 4:6]))
 
   nChar <- 100
   dataset <- rbind(subj = c(rep(2, nChar)),
