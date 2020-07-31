@@ -2,9 +2,15 @@
 % Please edit documentation in R/tree_rearrangement.R
 \name{DropTip}
 \alias{DropTip}
+\alias{DropTip.phylo}
+\alias{DropTip.multiPhylo}
 \title{Drop tips from tree}
 \usage{
 DropTip(tree, tip)
+
+\method{DropTip}{phylo}(tree, tip)
+
+\method{DropTip}{multiPhylo}(tree, tip)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}

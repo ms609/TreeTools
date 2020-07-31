@@ -49,14 +49,14 @@ DoubleFactorial <- function (n) {
 #' DoubleFactorial64(31)
 #' @export
 DoubleFactorial64 <- function (n) {
-  if (n < 2) 1 else as.integer64(n * DoubleFactorial64(n - 2L))
+  if (n < 2L) 1 else as.integer64(n * DoubleFactorial64(n - 2L))
 }
 
 # Memoizing this function makes it MUCH slower...
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
 #' @export
 LnDoubleFactorial <- (function (n) {
-  n[n < 2] <- 1 # Much faster than pmax
+  n[n < 2L] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
 
     odds <- as.logical(n %% 2)
@@ -82,7 +82,7 @@ LnDoubleFactorial <- (function (n) {
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
 #' @export
 Log2DoubleFactorial <- (function (n) {
-  n[n < 2] <- 1 # Much faster than pmax
+  n[n < 2L] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
 
     odds <- as.logical(n %% 2)
@@ -113,7 +113,7 @@ LogDoubleFactorial <- LnDoubleFactorial
 #' and below 50001
 #' @export
 LnDoubleFactorial.int <- function (n) {
-  if (n < 2) {
+  if (n < 2L) {
     0
   } else {
     logDoubleFactorials[n]

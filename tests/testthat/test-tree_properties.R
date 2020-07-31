@@ -83,7 +83,11 @@ test_that('Rooting and partition counting', {
 
   expect_equal(c(5L, 5L), NPartitions(list(tree8, UnrootTree(tree8))))
   expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
-  expect_error(NPartitions('not a tree'))
+  expect_equal(2L, NSplits('((a, b), (c, (d, e)));'))
+  expect_equal(0L, NSplits('a'))
+  expect_equal(0L, NSplits(letters[1:2]))
+  expect_equal(3L, NSplits(letters[1:6]))
+  expect_error(NPartitions(raw(1)))
 })
 
 test_that("NTip() works", {
@@ -103,6 +107,10 @@ test_that("NTip() works", {
   Test(8L)
   Test(64L)
   Test(2000L)
+})
+
+test_that("NSplits() works", {
+  expect_equal(NSplits(5L), NSplits(LETTERS[1:5]))
 })
 
 test_that("MRCA() works", {
