@@ -15,11 +15,10 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.2",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.0.2 (2020-06-22)",
@@ -213,11 +212,7 @@
     }
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
-  "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "contIntegration": [
-    "https://travis-ci.org/ms609/TreeTools",
-    "https://codecov.io/gh/ms609/TreeTools"
-  ],
+  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
@@ -243,5 +238,6 @@
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
-  "keywords": "phylogenetics"
+  "keywords": "phylogenetics",
+  "fileSize": "95095.605KB"
 }

@@ -31,7 +31,7 @@ NPartitions(x)
 \item{x}{A phylogenetic tree of class \code{phylo}; a list of such trees
 (of class \code{list} or \code{multiPhylo}); a \code{Splits} object;
 a vector of integers; or a character vector listing tips of a tree,
-or a character of length one specifying a tree in newick format.}
+or a character of length one specifying a tree in Newick format.}
 }
 \value{
 \code{NSplits()} returns an integer specifying the number of bipartitions in
