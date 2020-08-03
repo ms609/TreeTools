@@ -55,9 +55,14 @@ as.Newick.multiPhylo <- as.Newick.list
 #' @seealso [`ReadTntCharacters()`]
 #' @examples
 #' data('Lobo', package = 'TreeTools')
+#'
 #' WriteTntCharacters(Lobo.phy)
+#'
 #' # Read with extended implied weighting
-#' WriteTntCharacters(Lobo.phy, 'TEST.tnt', pre = 'piwe=10;', post = 'xpiwe=;')
+#' WriteTntCharacters(Lobo.phy, pre = 'piwe=10;', post = 'xpiwe=;')
+#'
+#' # Write to a file with:
+#' # WriteTntCharacters(Lobo.phy, 'example_file.tnt')
 #' @template MRS
 #' @export
 WriteTntCharacters <- function (dataset, filepath = NULL,
