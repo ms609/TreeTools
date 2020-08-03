@@ -239,5 +239,6 @@
     "url": "https://cran.r-project.org"
   },
   "keywords": "phylogenetics",
-  "fileSize": "95095.605KB"
+  "fileSize": "59268.438KB",
+  "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }
