@@ -34,7 +34,7 @@ The DOI and URL are correct, and work in my browser.
 Downstream dependencies R CMD CHECKed locally: No changes to worse in
 
 √ Quartet 1.1.0                          -- E: 0     | W: 0     | N: 0
-√ TreeSearch 0.4.0                       -- E: 0     | W: 0     | N: 0
-√ TreeDist 1.0.0                         -- E: 0     | W: 0     | N: 0
-√ TBRDist 1.0.0                          -- E: 0     | W: 0     | N: 0
+√ TBRDist 1.0.1                          -- E: 0     | W: 0     | N: 1
+√ TreeDist 1.1.1                         -- E: 0     | W: 0     | N: 2
+√ TreeSearch 0.4.3                       -- E: 0     | W: 0     | N: 0
 
