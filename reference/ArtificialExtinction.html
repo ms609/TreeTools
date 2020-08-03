@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate a single taxon tree — SingleTaxonTree • TreeTools</title>
+<title>Artificial Extinction — ArtificialExtinction • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,10 @@
 
 
 
-<meta property="og:title" content="Generate a single taxon tree — SingleTaxonTree" />
-<meta property="og:description" content="SingleTaxonTree() creates a phylogenetic 'tree' that contains a single
-taxon." />
+<meta property="og:title" content="Artificial Extinction — ArtificialExtinction" />
+<meta property="og:description" content="Remove tokens that do not occur in a fossil 'template' taxon from a living
+taxon, to simulate the process of fossilization in removing data from
+a phylogenetic dataset." />
 
 
 
@@ -152,61 +153,110 @@ taxon." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate a single taxon tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/phylo.R'><code>R/phylo.R</code></a></small>
-    <div class="hidden name"><code>SingleTaxonTree.Rd</code></div>
+    <h1>Artificial Extinction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/ArtificialExtinction.R'><code>R/ArtificialExtinction.R</code></a></small>
+    <div class="hidden name"><code>ArtificialExtinction.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>SingleTaxonTree()</code> creates a phylogenetic 'tree' that contains a single
-taxon.</p>
+    <p>Remove tokens that do not occur in a fossil 'template' taxon from a living
+taxon, to simulate the process of fossilization in removing data from
+a phylogenetic dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SingleTaxonTree</span>(<span class='no'>label</span>)</pre>
+    <pre class="usage"><span class='fu'>ArtificialExtinction</span>(
+  <span class='no'>dataset</span>,
+  <span class='no'>subject</span>,
+  <span class='no'>template</span>,
+  <span class='kw'>replaceAmbiguous</span> <span class='kw'>=</span> <span class='st'>"ambig"</span>,
+  <span class='kw'>replaceCoded</span> <span class='kw'>=</span> <span class='st'>"original"</span>,
+  <span class='kw'>sampleFrom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>ArtificialExtinction</span>(
+  <span class='no'>dataset</span>,
+  <span class='no'>subject</span>,
+  <span class='no'>template</span>,
+  <span class='kw'>replaceAmbiguous</span> <span class='kw'>=</span> <span class='st'>"ambig"</span>,
+  <span class='kw'>replaceCoded</span> <span class='kw'>=</span> <span class='st'>"original"</span>,
+  <span class='kw'>sampleFrom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='co'># S3 method for phyDat</span>
+<span class='fu'>ArtificialExtinction</span>(
+  <span class='no'>dataset</span>,
+  <span class='no'>subject</span>,
+  <span class='no'>template</span>,
+  <span class='kw'>replaceAmbiguous</span> <span class='kw'>=</span> <span class='st'>"ambig"</span>,
+  <span class='kw'>replaceCoded</span> <span class='kw'>=</span> <span class='st'>"original"</span>,
+  <span class='kw'>sampleFrom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
+
+<span class='fu'>ArtEx</span>(
+  <span class='no'>dataset</span>,
+  <span class='no'>subject</span>,
+  <span class='no'>template</span>,
+  <span class='kw'>replaceAmbiguous</span> <span class='kw'>=</span> <span class='st'>"ambig"</span>,
+  <span class='kw'>replaceCoded</span> <span class='kw'>=</span> <span class='st'>"original"</span>,
+  <span class='kw'>sampleFrom</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>label</th>
-      <td><p>a character vector specifying the label of the tip.</p></td>
+      <th>dataset</th>
+      <td><p>Phylogenetic dataset of class <code>phyDat</code> or <code>matrix</code>.</p></td>
+    </tr>
+    <tr>
+      <th>subject</th>
+      <td><p>Vector identifying subject taxa, by name or index.</p></td>
+    </tr>
+    <tr>
+      <th>template</th>
+      <td><p>Character or integer identifying taxon to use as a template.</p></td>
+    </tr>
+    <tr>
+      <th>replaceAmbiguous, replaceCoded</th>
+      <td><p>Character specifying whether tokens
+that are ambiguous (<code>?</code>) or coded (not <code>?</code>) in the fossil template should
+be replaced with:</p><ul>
+<li><p><code>original</code>: Their original value; i.e. no change;</p></li>
+<li><p><code>ambiguous</code>: The ambiguous token, <code>?</code>;</p></li>
+<li><p><code>binary</code>: The tokens <code>0</code> or <code>1</code>, with equal probability;</p></li>
+<li><p><code>uniform</code>: One of the tokens present in <code>sampleFrom</code>, with equal
+probability;</p></li>
+<li><p><code>sample</code>: One of the tokens present in <code>sampleFrom</code>, sampled according
+to their frequency.</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>sampleFrom</th>
+      <td><p>Vector identifying a subset of characters from which to
+sample replacement tokens.
+If <code>NULL</code>, replacement tokens will be sampled from the initial states of
+all taxa not used as a template (including the subjects).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SingleTaxonTree()</code> returns a <code>phylo</code> object containing a single
-tip with the specified label.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A dataset with the same class as <code>dataset</code> in which entries that
+are ambiguous in <code>template</code> are made ambiguous in <code>subject</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class='dont-index'><p>Other tree manipulation: 
-<code><a href='AddTip.html'>AddTip</a>()</code>,
-<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
-<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
-<code><a href='DropTip.html'>DropTip</a>()</code>,
-<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
-<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
-<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
-<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
-<code><a href='Reorder.html'>RenumberTree</a>()</code>,
-<code><a href='Renumber.html'>Renumber</a>()</code>,
-<code><a href='RootTree.html'>RootTree</a>()</code>,
-<code><a href='SortTree.html'>SortTree</a>()</code>,
-<code><a href='Subtree.html'>Subtree</a>()</code></p>
-<p>Other tree generation functions: 
-<code><a href='GenerateTree.html'>GenerateTree</a></code>,
-<code><a href='NJTree.html'>NJTree</a>()</code>,
-<code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
+    <p>Note: this simple implementation does not account for character contingency,
+e.g. characters whose absence imposes inapplicable or absent tokens on
+dependent characters.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>SingleTaxonTree</span>(<span class='st'>'Homo_sapiens'</span>)</div><div class='output co'>#&gt; 
-#&gt; Phylogenetic tree with 1 tips and 1 internal nodes.
-#&gt; 
-#&gt; Tip labels:
-#&gt; [1] "Homo_sapiens"
-#&gt; 
-#&gt; Rooted; no branch lengths.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>SingleTaxonTree</span>(<span class='st'>'root'</span>) + <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>4</span>))</div><div class='img'><img src='SingleTaxonTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>0</span>:<span class='fl'>2</span>, <span class='fl'>4</span> * <span class='fl'>8</span>, <span class='fl'>TRUE</span>),
+                    <span class='st'>'0'</span>, <span class='st'>'0'</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>'?'</span>, <span class='fl'>6</span>)), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                    <span class='kw'>dimnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='st'>'FOSSIL'</span>),
+                                    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>'char'</span>, <span class='fl'>1</span>:<span class='fl'>8</span>)), <span class='kw'>byrow</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>artex</span> <span class='kw'>&lt;-</span> <span class='fu'>ArtificialExtinction</span>(<span class='no'>dataset</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'A'</span>, <span class='st'>'C'</span>), <span class='st'>'FOSSIL'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

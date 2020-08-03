@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -167,16 +167,19 @@
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>NSplits</span>(<span class='no'>x</span>)
 
-<span class='co'># S3 method for multiPhylo</span>
+<span class='co'># S3 method for list</span>
 <span class='fu'>NSplits</span>(<span class='no'>x</span>)
 
-<span class='co'># S3 method for list</span>
+<span class='co'># S3 method for multiPhylo</span>
 <span class='fu'>NSplits</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for Splits</span>
 <span class='fu'>NSplits</span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for numeric</span>
+<span class='fu'>NSplits</span>(<span class='no'>x</span>)
+
+<span class='co'># S3 method for character</span>
 <span class='fu'>NSplits</span>(<span class='no'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -184,9 +187,10 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A phylogenetic tree of class <code>phylo</code>, or a list of such trees
-(of class <code>list</code> or <code>multiPhylo</code>), or a <code>Splits</code> object,
-or a vector of integers.</p></td>
+      <td><p>A phylogenetic tree of class <code>phylo</code>; a list of such trees
+(of class <code>list</code> or <code>multiPhylo</code>); a <code>Splits</code> object;
+a vector of integers; or a character vector listing tips of a tree,
+or a character of length one specifying a tree in Newick format.</p></td>
     </tr>
     </table>
 

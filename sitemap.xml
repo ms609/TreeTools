@@ -13,6 +13,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/ApeTime.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ArtificialExtinction.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/CharacterInformation.html</loc>
   </url>
   <url>
@@ -203,6 +206,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/WriteTntCharacters.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc>
