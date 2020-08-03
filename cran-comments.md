@@ -8,26 +8,7 @@
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-
-There was one NOTE:
-
-> Maintainer: 'Martin R. Smith <martin.smith@durham.ac.uk>'
-> 
-> Possibly mis-spelled words in DESCRIPTION:
->   cladistic (26:30)
-
-Spelling confirmed as correct
-
-> Found the following (possibly) invalid URLs:
->  URL: https://doi.org/10.1137/0403005
->    From: man/NRooted.Rd
->          man/UnrootedTreesMatchingSplit.Rd
->    Status: Error
->    Message: libcurl error code 56:
->      	Recv failure: Connection was reset
-
-The DOI and URL are correct, and work in my browser.
+There were no ERRORs, WARNINGs or NOTEs.
 
 ## Downstream dependencies
 
