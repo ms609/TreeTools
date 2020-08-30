@@ -92,3 +92,4 @@ replicate64 <- function (n, expr, simplify = "array") {
   sapply64(integer(n), eval.parent(substitute(function (...) expr)),
            simplify = simplify)
 }
+

@@ -1,3 +1,7 @@
+# TreeTools 1.2.0.9000 (development)
+
+- New function `MSTEdges()`: Edges of minimum spanning tree.
+
 # TreeTools 1.2.0
 
  - `ArtificialExtinction()`: Remove characters that are absent in a fossil 
