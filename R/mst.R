@@ -41,6 +41,8 @@ MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
   if (plot) {
     apply(ends, 1, function (edge)
       lines(x[edge], y[edge], ...))
+    invisible(ends)
+  } else {
+    ends
   }
-  ends
 }
