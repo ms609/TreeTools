@@ -92,6 +92,7 @@ reference:
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
+      - MSTEdges
       - RightmostCharacter
       - SampleOne
       - sapply64
