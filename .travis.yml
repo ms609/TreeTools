@@ -14,6 +14,9 @@ git:
 r_packages:
  - devtools # imports pkgload, remotes, roxygen2, testthat
 
+r_github_packages:
+- KlausVigo/phangorn # Not available from CRAN, 2020-08-31
+
 before_script:
   - R -e "pkgload::load_all(); devtools::document()"
 
