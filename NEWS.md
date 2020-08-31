@@ -1,6 +1,7 @@
-# TreeTools 1.2.0.9000 (development)
+# TreeTools 1.2.0.9001 (development)
 
-- New function `MSTEdges()`: Edges of minimum spanning tree.
+ - New function `MSTEdges()`: Edges of minimum spanning tree.
+ - Remove obselete copy of C++ code from 'phangorn'
 
 # TreeTools 1.2.0
 
