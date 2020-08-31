@@ -6,14 +6,11 @@ Authors@R: c(person("Martin R.", 'Smith',
                   role=c("aut", "cre", "cph"), 
                   comment=c(ORCID = "0000-0001-5660-1727")),
                person(given = "Emmanuel", family="Paradis", role = c("cph"),
-                  comment = c(ORCID = "0000-0003-3092-2199")),
-               person(given = "Klaus", family="Schliep", role = c("cph"),
-                  comment = c(ORCID = "0000-0003-2941-0161"))
+                  comment = c(ORCID = "0000-0003-3092-2199"))
             )
 License: GPL (>= 3)
 Copyright: Incorporates C/C++ code from:
-   ape by Emmanuel Paradis;
-   phangorn by Klaus Scheip <doi:10.1093/bioinformatics/btq706>
+   ape by Emmanuel Paradis <doi:10.1093/bioinformatics/bty633>
 Description: Efficient implementations of functions for the creation, 
   modification and analysis of phylogenetic trees.
   Applications include:
@@ -43,12 +40,12 @@ Suggests:
     shiny,
     testthat,
     vdiffr
+LinkingTo: Rcpp
 RdMacros: Rdpack
 LazyData: true
 ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
-LinkingTo: Rcpp
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

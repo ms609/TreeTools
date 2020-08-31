@@ -5,7 +5,6 @@
 
 #include "ape_reorder.h"
 
-extern SEXP _TreeTools_phangorn_bipCPP(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP);
 extern SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
 extern SEXP _TreeTools_postorder_edges(SEXP);
@@ -30,7 +29,6 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
   {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
-  {"_TreeTools_phangorn_bipCPP", (DL_FUNC) &_TreeTools_phangorn_bipCPP, 2},
   {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
   {"_TreeTools_postorder_edges", (DL_FUNC) &_TreeTools_postorder_edges, 1},
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},

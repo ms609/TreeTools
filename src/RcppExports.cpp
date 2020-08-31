@@ -53,18 +53,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// phangorn_bipCPP
-List phangorn_bipCPP(IntegerMatrix orig, int nTips);
-RcppExport SEXP _TreeTools_phangorn_bipCPP(SEXP origSEXP, SEXP nTipsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type orig(origSEXP);
-    Rcpp::traits::input_parameter< int >::type nTips(nTipsSEXP);
-    rcpp_result_gen = Rcpp::wrap(phangorn_bipCPP(orig, nTips));
-    return rcpp_result_gen;
-END_RCPP
-}
 // preorder_edges_and_nodes
 IntegerMatrix preorder_edges_and_nodes(IntegerVector parent, IntegerVector child);
 RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childSEXP) {

@@ -1,7 +1,7 @@
 #include <string.h> /* for memset */
 
 static R_NativePrimitiveArgType ape_node_depth_t[] = {
-  INTSXP, INTSXP, INTSXP, INTSXP, 
+  INTSXP, INTSXP, INTSXP, INTSXP,
   INTSXP, REALSXP, INTSXP
 };
 extern void ape_node_depth(int *ntip, int *nnode, int *e1, int *e2,
@@ -35,10 +35,10 @@ extern void ape_node_depth(int *ntip, int *nnode, int *e1, int *e2,
 void tabulate
 (const int *x, const int *n, const int *nbin, int *ans) {
     int i, tmp;
-    for (i=0; i < *nbin; i++) ans[i]=0L; 
+    for (i=0; i < *nbin; i++) ans[i]=0L;
     for (i=0; i < *n; i++) {
         tmp = x[i];
-        if( (tmp>0) & (tmp<(*nbin+1L)) )   
+        if( (tmp>0) & (tmp<(*nbin+1L)) )
         ans[tmp-1L] ++;
     }
 }
@@ -87,7 +87,7 @@ extern void ape_neworder_phylo(int *n_tips, int *parent, int *child, int *n_edge
    n_nodes: nb of nodes
    n_edges: nb of edges */
 {
-	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1, 
+	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1,
 	  max_node = *n_tips - n_nodes + 1;
 
 /* max_node is the largest value that a node degree can be */
