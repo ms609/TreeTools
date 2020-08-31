@@ -37,6 +37,9 @@ MSTLines(distances)
 plot(points[, 1:2], ann = FALSE, asp = 1)
 MSTLines(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 }
+\references{
+\insertRef{Gower1969}{TreeTools}
+}
 \seealso{
 Calculate minimum spanning tree: \code{\link[ape:mst]{ape::mst()}}.
 }

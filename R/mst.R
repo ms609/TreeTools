@@ -18,6 +18,9 @@
 #' @seealso
 #' Calculate minimum spanning tree: [`ape::mst()`].
 #'
+#' @references
+#' \insertRef{Gower1969}{TreeTools}
+#'
 #' @examples
 #' # Corners of an almost-regular octahedron
 #' points <- matrix(c(0, 0, 2, 2, 1.1, 1,
