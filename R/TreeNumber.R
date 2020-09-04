@@ -139,7 +139,7 @@ as.TreeNumber.phylo <- function (x, ...) {
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
             tip.labels = TipLabels(x),
-            class = 'TreeNumber')
+            class = c('TreeNumber', 'integer64'))
 }
 
 #' @rdname TreeNumber
@@ -154,7 +154,7 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
   structure(as.integer64(x),
             nTip = nTip,
             tip.labels = tipLabels,
-            class = 'TreeNumber')
+            class = c('TreeNumber', 'integer64'))
 }
 
 #' @rdname TreeNumber
