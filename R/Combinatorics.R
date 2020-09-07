@@ -22,7 +22,7 @@ utils::globalVariables(c('doubleFactorials',
 #' @family double factorials
 #' @export
 DoubleFactorial <- function (n) {
-  if (any(n > 300)) stop("301!! is too large to represent. Use LnDoubleFactorial instead.")
+  if (any(n > 300)) stop("301!! is too large to represent. Use LnDoubleFactorial() instead.")
 
   n[n < 2] <- 1
   doubleFactorials[n]

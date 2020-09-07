@@ -2,7 +2,14 @@ context("Combinatorics.R")
 
 test_that("Factorials are calculated correctly", {
   expect_equal(c(1L, 1L, 1L, 2L, 3L, 2L * 4L, 3L * 5L,
-                 2L * 4L * 6L, 3L * 5L * 7L), DoubleFactorial(-1:7))
+                 2L * 4L * 6L, 3L * 5L * 7L,
+                 2L * 4L * 6L * 8L,
+                 3L * 5L * 7L * 9L,
+                 2L * 4L * 6L * 8L * 10L,
+                 3L * 5L * 7L * 9L * 11L),
+               as.integer(DoubleFactorial((-1):11)))
+  expect_equal(floor(doubleFactorials[1:19]),
+               ceiling(doubleFactorials[1:19]))
   expect_equal(doubleFactorials[1:20], DoubleFactorial(1:20))
   expect_equal(LnDoubleFactorial(-1:10), log(DoubleFactorial(-1:10)))
   expect_equal(logDoubleFactorials[1:20], log(DoubleFactorial(1:20)))
