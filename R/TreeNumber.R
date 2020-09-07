@@ -201,12 +201,13 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
 as.phylo.integer64 <- as.phylo.numeric
 
 .Int64.to.C <- function (i64) {
-  INT_MAX <- 2147483647L
-  if (i64 > INT_MAX) c(i64 %/% INT_MAX, i64 %% INT_MAX) else as.integer(i64[1])
-}
-
-.TreeNumber.to.C <- function (tn64) {
-  .Int64.to.C(structure(tn64[1], class = 'integer64'))
+  INT_MAX <- as.integer64(2147483647L)
+  i64 <- as.integer64(i64)
+  if (i64 > INT_MAX) {
+    as.integer(c(i64 %/% INT_MAX, i64 %% INT_MAX))
+  } else {
+    as.integer(i64[1])
+  }
 }
 
 #' @rdname TreeNumber
@@ -214,7 +215,7 @@ as.phylo.integer64 <- as.phylo.numeric
 as.phylo.TreeNumber <- function (x, nTip = attr(x, 'nTip'),
                                  tipLabels = attr(x, 'tip.label'), ...) {
   if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  edge <- RenumberEdges(num_to_parent(.TreeNumber.to.C(x), nTip),
+  edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                         seq_len(nTip + nTip - 2L))
   structure(list(edge = do.call(cbind, edge),
                  tip.label = tipLabels,
