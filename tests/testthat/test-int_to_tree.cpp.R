@@ -11,11 +11,11 @@ test_that("Failures are graceful", {
 test_that("Edge cases handled", {
   expect_equal(SingleTaxonTree('singleton'), as.phylo(0, 1, 'singleton'))
   expect_equal(BalancedTree(2), as.phylo(0, 2))
-  expect_equal(structure(0L, nTip = 2L, tip.labels = c('t1', 't2'),
-                         class = 'TreeNumber'),
+  expect_equal(structure(as.integer64(0L), nTip = 2L, tip.labels = c('t1', 't2'),
+                         class = c('TreeNumber', 'integer64')),
                as.TreeNumber(as.phylo(0, 2)))
-  expect_equal(structure(0L, nTip = 1L, tip.labels = 't1',
-                         class = 'TreeNumber'),
+  expect_equal(structure(integer64(1), nTip = 1L, tip.labels = 't1',
+                         class = c('TreeNumber', 'integer64')),
                as.TreeNumber(SingleTaxonTree()))
 })
 
