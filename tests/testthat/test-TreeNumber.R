@@ -6,6 +6,12 @@ test_that("as.phylo.numeric()", {
   expect_equal(as.phylo(0, tipLabels = letters[1:6]),
                PectinateTree(letters[c(1, 3:6, 2)]))
   expect_error(as.phylo(0))
+  expect_equal(as.phylo(123, nTip = 8),
+               as.phylo(123L, nTip = 8))
+  expect_equal(as.phylo(123, nTip = 8),
+               as.phylo(as.integer64(123), nTip = 8))
+  expect_equal(as.phylo(123:124, nTip = 10),
+               as.phylo(as.integer64(123:124), nTip = 10))
 })
 
 test_that("as.TreeNumber()", {

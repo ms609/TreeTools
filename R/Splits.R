@@ -189,9 +189,9 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
     }
 
     structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
-    nTip = nTip,
-    tip.label = tipLabels,
-    class = 'Splits')
+              nTip = nTip,
+              tip.label = tipLabels,
+              class = 'Splits')
   } else {
     nTip <- dimX[2]
     if (is.null(tipLabels)) {

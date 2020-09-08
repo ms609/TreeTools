@@ -30,7 +30,7 @@ IntegerVector tips_in_splits(RawMatrix splits) {
   const int32
     n_tip = splits.attr("nTip"),
     n_split = splits.nrow(),
-    n_bin = 1 + (n_tip / 8)
+    n_bin = (n_tip % 8 == 0 ? 0 : 1) + (n_tip / 8)
   ;
   if (n_tip < 1) throw std::out_of_range("nTip < 1");
   if (n_bin != splits.ncol()) throw std::invalid_argument("nTip does not match split size");
