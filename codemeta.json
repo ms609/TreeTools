@@ -15,7 +15,7 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.2.0",
+  "version": "1.2.0.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -45,12 +45,6 @@
       "givenName": "Emmanuel",
       "familyName": "Paradis",
       "@id": "https://orcid.org/0000-0003-3092-2199"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Klaus",
-      "familyName": "Schliep",
-      "@id": "https://orcid.org/0000-0003-2941-0161"
     }
   ],
   "funder": {},
@@ -135,6 +129,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "vdiffr",
+      "name": "vdiffr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=vdiffr"
     }
   ],
   "softwareRequirements": [
@@ -239,6 +245,6 @@
     "url": "https://cran.r-project.org"
   },
   "keywords": "phylogenetics",
-  "fileSize": "59268.438KB",
+  "fileSize": "1337.045KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

@@ -1,3 +1,7 @@
+# TreeTools 1.2.0.9002 (development)
+ 
+ - New function `SplitImbalance()`: how balanced is each split?
+ 
 # TreeTools 1.2.0.9001 (development)
 
  - New function `MSTEdges()`: Edges of minimum spanning tree.

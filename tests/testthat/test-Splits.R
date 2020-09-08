@@ -168,6 +168,15 @@ test_that('as.Splits.logical()', {
   expect_equivalent(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
+test_that("&.Splits()", {
+  splits <- structure(as.raw(c(0x07, 0x03, 0x18, 0xe0, 0x60, 0x80)),
+                      .Dim = c(3L, 2L), nTip = 9L, class = "Splits")
+  mask <- as.raw(c(0x0f, 0x00))
+  expect_equal(structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
+                         .Dim = c(2L, 3L)),
+               t(splits) & mask)
+})
+
 test_that('empty as.X.Splits()', {
   someSplit <- as.Splits(BalancedTree(6))
   noSplit <- someSplit[[logical(0)]]
@@ -267,8 +276,6 @@ test_that("Split combination", {
   expect_equivalent(as.raw(c(3L, 24L, 28L, 24L)),
                     c(splits1, as.Splits(RenumberTips(tree3, letters[1:5])))[, 1])
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
-
-  expect_equal(c('8' = 2, '9' = 2), TipsInSplits(splits1))
 
   #TODO: Fully test splits with large (> 8 tip) trees
 })
