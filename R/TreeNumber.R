@@ -197,8 +197,38 @@ as.phylo.numeric <- function (x, nTip = attr(x, 'nTip'),
   }
 }
 
+# Copied from as.phylo.numeric except if length > 1
 #' @export
-as.phylo.integer64 <- as.phylo.numeric
+as.phylo.integer64 <- function (x, nTip = attr(x, 'nTip'),
+                                tipLabels = attr(x, 'tip.label'), ...) {
+  if (is.null(nTip)) {
+    if (is.null(tipLabels)) {
+      stop("Either nTip or tipLabels must be specified.")
+    } else {
+      nTip <- length(tipLabels)
+    }
+  }
+  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (nTip == 1) {
+    SingleTaxonTree(tipLabels)
+  } else {
+    if (length(x) > 1) {
+      ret <- vector('list', length(x))
+      for (i in seq_along(x)) {
+        ret[[i]] <- as.phylo(x[i], nTip = nTip, tipLabels = tipLabels)
+      }
+      ret <- structure(ret, tip.label = tipLabels, class = 'multiPhylo')
+    } else {
+      edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
+                            seq_len(nTip + nTip - 2L))
+      structure(list(edge = do.call(cbind, edge),
+                     tip.label = tipLabels,
+                     Nnode = nTip - 1L),
+                order = 'preorder',
+                class = 'phylo')
+    }
+  }
+}
 
 .Int64.to.C <- function (i64) {
   INT_MAX <- as.integer64(2147483647L)
