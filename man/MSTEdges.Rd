@@ -19,7 +19,7 @@ element in \code{distances}.  Necessary only if \code{plot = TRUE}.}
 \item{\dots}{Additional parameters to send to \verb{[lines()]}.}
 }
 \value{
-\code{MSTLines()} returns a matrix in which each row corresponds to an
+\code{MSTEdges()} returns a matrix in which each row corresponds to an
 edge of the minimum spanning tree, and each column lists the index of the
 entry in \code{distances} at which the line begins and ends.
 }
@@ -33,9 +33,9 @@ points <- matrix(c(0, 0, 2, 2, 1.1, 1,
                    0, 2, 0, 2, 1, 1.1,
                    0, 0, 0, 0, 1, -1), 6)
 distances <- dist(points)
-MSTLines(distances)
+MSTEdges(distances)
 plot(points[, 1:2], ann = FALSE, asp = 1)
-MSTLines(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
+MSTEdges(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 }
 \references{
 \insertRef{Gower1969}{TreeTools}
