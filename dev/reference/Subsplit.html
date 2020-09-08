@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subset of a split on fewer taxa — Subsplit • TreeTools</title>
+<title>Subset of a split on fewer leaves — Subsplit • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Subset of a split on fewer taxa — Subsplit" />
-<meta property="og:description" content="Subset of a split on fewer taxa" />
+<meta property="og:title" content="Subset of a split on fewer leaves — Subsplit" />
+<meta property="og:description" content="Subsplit() removes leaves from a Splits object." />
 
 
 <meta name="robots" content="noindex">
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -151,16 +151,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Subset of a split on fewer taxa</h1>
+    <h1>Subset of a split on fewer leaves</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/SplitFunctions.R'><code>R/SplitFunctions.R</code></a></small>
     <div class="hidden name"><code>Subsplit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Subset of a split on fewer taxa</p>
+    <p><code>Subsplit()</code> removes leaves from a <code>Splits</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Subsplit</span>(<span class='no'>splits</span>, <span class='no'>tips</span>, <span class='kw'>keepAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>unique</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>Subsplit</span>(<span class='kw'>splits</span>, <span class='kw'>tips</span>, keepAll = <span class='fl'>FALSE</span>, unique = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,12 +171,12 @@
     </tr>
     <tr>
       <th>tips</th>
-      <td><p>A vector specifying a subset of the tip labels applied to <code>split</code>.</p></td>
+      <td><p>A vector specifying a subset of the leaf labels applied to <code>split</code>.</p></td>
     </tr>
     <tr>
       <th>keepAll</th>
       <td><p>logical specifying whether to keep entries that define trivial
-splits (i.e. splits of zero or one tip) on the subset of tips.</p></td>
+splits (i.e. splits of zero or one leaf) on the subset of leaves.</p></td>
     </tr>
     <tr>
       <th>unique</th>
@@ -186,17 +186,22 @@ splits (i.e. splits of zero or one tip) on the subset of tips.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>Splits</code>, defined on <code>tips</code>.</p>
+    <p><code>Subsplit()</code> returns an object of class <code>Splits</code>, defined on the
+leaves <code>tips</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other split manipulation functions: 
 <code><a href='TrivialSplits.html'>TrivialSplits</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>9</span>]))
-<span class='no'>efgh</span> <span class='kw'>&lt;-</span> <span class='fu'>Subsplit</span>(<span class='no'>splits</span>, <span class='kw'>tips</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>5</span>:<span class='fl'>8</span>], <span class='kw'>keepAll</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>efgh</span>)</div><div class='output co'>#&gt; 4 bipartition splits (3 trivial) dividing 4 tips, e .. h
+    <pre class="examples"><div class='input'><span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span>]))
+<span class='kw'>splits</span>
+</div><div class='output co'>#&gt; 6 bipartition splits dividing 9 tips, a .. i</div><div class='input'><span class='kw'>efgh</span> <span class='op'>&lt;-</span> <span class='fu'>Subsplit</span>(<span class='kw'>splits</span>, tips = <span class='kw'>letters</span>[<span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span>], keepAll = <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>efgh</span>)
+</div><div class='output co'>#&gt; 4 bipartition splits (3 trivial) dividing 4 tips, e .. h
 #&gt;      1234
 #&gt;  12  ****
 #&gt;  15  .***
@@ -204,11 +209,15 @@ splits (i.e. splits of zero or one tip) on the subset of tips.</p></td>
 #&gt;  17  ...*
 #&gt; 
 #&gt;  Tip 1: e	 Tip 2: f	 Tip 3: g	 Tip 4: h	</div><div class='input'>
-<span class='fu'><a href='TrivialSplits.html'>TrivialSplits</a></span>(<span class='no'>efgh</span>)</div><div class='output co'>#&gt;    12    15    16    17 
+<span class='fu'><a href='TrivialSplits.html'>TrivialSplits</a></span>(<span class='kw'>efgh</span>)
+</div><div class='output co'>#&gt;    12    15    16    17 
 #&gt;  TRUE  TRUE FALSE  TRUE </div><div class='input'>
-<span class='fu'>Subsplit</span>(<span class='no'>splits</span>, <span class='kw'>tips</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>5</span>:<span class='fl'>8</span>], <span class='kw'>keepAll</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; 1 bipartition split dividing 4 tips, e .. h</div><div class='input'>
-
-</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='fu'>Subsplit</span>(<span class='kw'>splits</span>, tips = <span class='kw'>letters</span>[<span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span>], keepAll = <span class='fl'>FALSE</span>))
+</div><div class='output co'>#&gt; 1 bipartition split dividing 4 tips, e .. h
+#&gt;      1234
+#&gt;  16  ..**
+#&gt; 
+#&gt;  Tip 1: e	 Tip 2: f	 Tip 3: g	 Tip 4: h	</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -224,7 +233,7 @@ splits (i.e. splits of zero or one tip) on the subset of tips.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

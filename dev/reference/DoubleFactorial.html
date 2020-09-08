@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Double factorial — DoubleFactorial" />
-<meta property="og:description" content="Double factorial" />
+<meta property="og:description" content="Calculate the double factorial of a number, or its logarithm." />
 
 
 <meta name="robots" content="noindex">
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -157,20 +157,22 @@
     </div>
 
     <div class="ref-description">
-    <p>Double factorial</p>
+    <p>Calculate the double factorial of a number, or its logarithm.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DoubleFactorial</span>(<span class='no'>n</span>)
+    <pre class="usage"><span class='fu'>DoubleFactorial</span>(<span class='kw'>n</span>)
 
-<span class='fu'>LnDoubleFactorial</span>(<span class='no'>n</span>)
+<span class='fu'>DoubleFactorial64</span>(<span class='kw'>n</span>)
 
-<span class='fu'>Log2DoubleFactorial</span>(<span class='no'>n</span>)
+<span class='fu'>LnDoubleFactorial</span>(<span class='kw'>n</span>)
 
-<span class='fu'>LogDoubleFactorial</span>(<span class='no'>n</span>)
+<span class='fu'>Log2DoubleFactorial</span>(<span class='kw'>n</span>)
 
-<span class='fu'>LnDoubleFactorial.int</span>(<span class='no'>n</span>)
+<span class='fu'>LogDoubleFactorial</span>(<span class='kw'>n</span>)
 
-<span class='fu'>LogDoubleFactorial.int</span>(<span class='no'>n</span>)</pre>
+<span class='fu'>LnDoubleFactorial.int</span>(<span class='kw'>n</span>)
+
+<span class='fu'>LogDoubleFactorial.int</span>(<span class='kw'>n</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,11 +185,14 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...</p>
+    <p>Returns the double factorial, <em>n</em> * (<em>n</em> - 2) * (<em>n</em> - 4) *
+(<em>n</em> - 6) * ...</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
 <ul>
+<li><p><code>DoubleFactorial64</code>: Returns the exact double factorial as a 64-bit
+<code>integer64</code>, for <code>n</code> &lt; 34.</p></li>
 <li><p><code>LnDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
 <li><p><code>Log2DoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
 <li><p><code>LnDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
@@ -195,19 +200,21 @@ and below 50001</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Double factorial: 
+    <div class='dont-index'><p>Other double factorials: 
 <code><a href='doubleFactorials.html'>doubleFactorials</a></code>,
 <code><a href='logDoubleFactorials.html'>logDoubleFactorials</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>{
-<span class='fu'>DoubleFactorial</span> (-<span class='fl'>4</span>:<span class='fl'>0</span>) <span class='co'># Return 1 if n &lt; 2</span>
-<span class='fu'>DoubleFactorial</span> (<span class='fl'>2</span>) <span class='co'># 2</span>
-<span class='fu'>DoubleFactorial</span> (<span class='fl'>5</span>) <span class='co'># 1 x 3 x 5</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LnDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># 2 x 4 x 6 x 8</span>
-
-}</div><div class='output co'>#&gt; [1] 384</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='op'>-</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>0</span>) <span class='co'># Return 1 if n &lt; 2</span>
+</div><div class='output co'>#&gt; [1] 1 1 1 1 1</div><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='fl'>2</span>) <span class='co'># 2</span>
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='fl'>5</span>) <span class='co'># 1 * 3 * 5</span>
+</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LnDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># log(2 * 4 * 6 * 8)</span>
+</div><div class='output co'>#&gt; [1] 384</div><div class='input'><span class='fu'>DoubleFactorial64</span>(<span class='fl'>31</span>)
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 191898783962510625</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -223,7 +230,7 @@ and below 50001</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

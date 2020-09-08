@@ -46,8 +46,9 @@
 
 
 <meta property="og:title" content="Write Newick Tree — NewickTree" />
-<meta property="og:description" content="Writes a tree in Newick format.  This differs from ape's write.tree
-in the encoding of spaces as spaces, rather than underscores." />
+<meta property="og:description" content="NewickTree() encodes a tree as a Newick-format string.
+This differs from write.tree() in the encoding of
+spaces as spaces, rather than underscores." />
 
 
 <meta name="robots" content="noindex">
@@ -89,7 +90,7 @@ in the encoding of spaces as spaces, rather than underscores." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -153,36 +154,38 @@ in the encoding of spaces as spaces, rather than underscores." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Write Newick Tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_display.R'><code>R/tree_display.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/parse_files.R'><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>NewickTree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Writes a tree in Newick format.  This differs from ape's <code>write.tree</code>
-in the encoding of spaces as spaces, rather than underscores.</p>
+    <p><code>NewickTree()</code> encodes a tree as a Newick-format string.
+This differs from <code><a href='https://rdrr.io/pkg/ape/man/write.tree.html'>write.tree()</a></code> in the encoding of
+spaces as spaces, rather than underscores.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NewickTree</span>(<span class='no'>tree</span>)</pre>
+    <pre class="usage"><span class='fu'>NewickTree</span>(<span class='kw'>tree</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>A tree of class <code>phylo</code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NewickTree</code> returns a character string denoting <code>tree</code> in Newick
+    <p><code>NewickTree()</code> returns a character string denoting <code>tree</code> in Newick
 format.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='as.Newick.html'>as.Newick</a></code></p></div>
+    <div class='dont-index'><p>Use tip numbers, rather than leaf labels: <code><a href='as.Newick.html'>as.Newick</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>NewickTree</span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>6</span>))</div><div class='output co'>#&gt; [1] "((t1,(t2,t3)),(t4,(t5,t6)));"</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>NewickTree</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>4</span><span class='op'>:</span><span class='fl'>9</span>]))
+</div><div class='output co'>#&gt; [1] "(((D,E),F),((G,H),I));"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -199,7 +202,7 @@ format.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

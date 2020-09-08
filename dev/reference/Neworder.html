@@ -91,7 +91,7 @@ as many checks on user input.  Bad input could crash R." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -166,9 +166,9 @@ These call the C functions directly, so are faster -- but don't perform
 as many checks on user input.  Bad input could crash R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NeworderPruningwise</span>(<span class='no'>nTip</span>, <span class='no'>nNode</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='no'>nEdge</span>)
+    <pre class="usage"><span class='fu'>NeworderPruningwise</span>(<span class='kw'>nTip</span>, <span class='kw'>nNode</span>, <span class='kw'>parent</span>, <span class='kw'>child</span>, <span class='kw'>nEdge</span>)
 
-<span class='fu'>NeworderPhylo</span>(<span class='no'>nTip</span>, <span class='no'>parent</span>, <span class='no'>child</span>, <span class='no'>nb.edge</span>, <span class='no'>whichwise</span>)</pre>
+<span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>parent</span>, <span class='kw'>child</span>, <span class='kw'>nb.edge</span>, <span class='kw'>whichwise</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,19 +204,28 @@ of edges under the ordering sequence specified by <code>whichwise</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other C wrappers: 
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
-<code><a href='Reorder.html'>Reorder</a></code></p></div>
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    
+<ul>
+<li><p>C algorithm: Emmanuel Paradis</p></li>
+<li><p>R wrapper: Martin R. Smith</p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>nTip</span> <span class='kw'>&lt;-</span> <span class='fl'>8L</span>
-<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='no'>nTip</span>)
-<span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>
-<span class='no'>pruningwise</span> <span class='kw'>&lt;-</span> <span class='fu'>NeworderPruningwise</span>(<span class='no'>nTip</span>, <span class='no'>tree</span>$<span class='no'>Nnode</span>, <span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>],
-                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>edge</span>)[<span class='fl'>1</span>])
-<span class='no'>cladewise</span> <span class='kw'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='no'>nTip</span>, <span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>1L</span>)
-<span class='no'>postorder</span> <span class='kw'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='no'>nTip</span>, <span class='no'>edge</span>[, <span class='fl'>1</span>], <span class='no'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='no'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>2L</span>)
+    <pre class="examples"><div class='input'><span class='kw'>nTip</span> <span class='op'>&lt;-</span> <span class='fl'>8L</span>
+<span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='kw'>nTip</span>)
+<span class='kw'>edge</span> <span class='op'>&lt;-</span> <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>
+<span class='kw'>pruningwise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPruningwise</span>(<span class='kw'>nTip</span>, <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>Nnode</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>],
+                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>])
+<span class='kw'>cladewise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>1L</span>)
+<span class='kw'>postorder</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>2L</span>)
 
-<span class='no'>tree</span>$<span class='no'>edge</span> <span class='kw'>&lt;-</span> <span class='no'>tree</span>$<span class='no'>edge</span>[<span class='no'>pruningwise</span>, ]</div></pre>
+<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span> <span class='op'>&lt;-</span> <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>[<span class='kw'>pruningwise</span>, ]
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -232,7 +241,7 @@ of edges under the ordering sequence specified by <code>whichwise</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

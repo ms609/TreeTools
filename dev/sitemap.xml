@@ -7,22 +7,22 @@
     <loc>https://ms609.github.io/TreeTools/reference/AddTip.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/AllAncestors.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/AncestorEdge.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ApeTime.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/BalancedTree.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/ArtificialExtinction.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/CharacterInformation.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/CladeSizes.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/CladisticInfo.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc>
@@ -40,6 +40,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/DoubleFactorial.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/DropTip.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc>
   </url>
   <url>
@@ -52,13 +55,28 @@
     <loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/LeafLabelInterchange.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ListAncestors.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/Lobo.data.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Lobo.phy.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/MSTEdges.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/MakeTreeBinary.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.html</loc>
@@ -91,22 +109,16 @@
     <loc>https://ms609.github.io/TreeTools/reference/Neworder.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/NodeDepth.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/NonDuplicateRoot.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PectinateTree.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PhylogeneticInfo.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RandomTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc>
@@ -119,9 +131,6 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RenumberTips.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RenumberTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/Reorder.html</loc>
@@ -154,7 +163,7 @@
     <loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/StringToPhyDat.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/Subsplit.html</loc>
@@ -170,6 +179,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TotalCopheneticIndex.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TreeIsRooted.html</loc>
@@ -199,6 +211,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/WriteTntCharacters.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc>
   </url>
   <url>
@@ -208,19 +223,25 @@
     <loc>https://ms609.github.io/TreeTools/reference/brewer.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/dot-RandomParent.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/in.Splits.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/match.Splits.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/match.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/nRootedShapes.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/print.TreeNumber.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>

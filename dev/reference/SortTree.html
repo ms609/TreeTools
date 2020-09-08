@@ -46,8 +46,8 @@
 
 
 <meta property="og:title" content="Sort tree — SortTree" />
-<meta property="og:description" content="Sorts each node into a consistent order, so similar trees look visually
-similar." />
+<meta property="og:description" content="SortTree() sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees." />
 
 
 <meta name="robots" content="noindex">
@@ -89,7 +89,7 @@ similar." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -158,29 +158,65 @@ similar." />
     </div>
 
     <div class="ref-description">
-    <p>Sorts each node into a consistent order, so similar trees look visually
-similar.</p>
+    <p><code>SortTree()</code> sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SortTree</span>(<span class='no'>tree</span>)</pre>
+    <pre class="usage"><span class='fu'>SortTree</span>(<span class='kw'>tree</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>A tree of class <code>phylo</code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SortTree</code> returns a tree of class <code>phylo</code>, with each node sorted
+    <p><code>SortTree()</code> returns a tree of class <code>phylo</code>, with each node sorted
 such that the larger clade is first.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>At each node, clades will be listed in <code>tree$edge</code> in decreasing size order.</p>
+<p>Clades that contain the same number of leaves are sorted in decreasing order
+of minimum leaf number, so (2, 3) will occur before (1, 4).</p>
+<p>As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+bottom of a plotted tree.</p>
+<p><code>tree</code> must (presently) be binary (<a href='https://github.com/ms609/TreeTools/issues/25'>#25</a>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='RenumberTree.html'>RenumberTree</a></code></p></div>
+    <div class='dont-index'><p><code><a href='RenumberTree.html'>Preorder()</a></code> also rearranges trees into a consistent shape, but
+based on the index of leaves rather than the size of subtrees.</p>
+<p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>messyTree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span>(<span class='fl'>10</span>, <span class='fl'>6</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>messyTree</span>)
+</div><div class='img'><img src='SortTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>sorted</span> <span class='op'>&lt;-</span> <span class='fu'>SortTree</span>(<span class='kw'>messyTree</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>sorted</span>)
+</div><div class='input'><span class='kw'>ape</span>::<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()
+</div><div class='input'><span class='kw'>ape</span>::<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>()
+</div><div class='img'><img src='SortTree-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -196,7 +232,7 @@ such that the larger clade is first.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

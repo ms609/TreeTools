@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reorder trees — Reorder • TreeTools</title>
+<title>Reorder trees — RenumberTree • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Reorder trees — Reorder" />
-<meta property="og:description" content="A wrapper for ape:::.reorder_ape.
+<meta property="og:title" content="Reorder trees — RenumberTree" />
+<meta property="og:description" content="Reorder() is a wrapper for ape:::.reorder_ape.
 Calling this C function directly is approximately twice as fast as using
 ape::cladewise or
 ape::postorder" />
@@ -91,7 +91,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -160,30 +160,102 @@ ape::postorder" />
     </div>
 
     <div class="ref-description">
-    <p>A wrapper for <code>ape:::.reorder_ape</code>.
+    <p><code>Reorder()</code> is a wrapper for <code>ape:::.reorder_ape</code>.
 Calling this C function directly is approximately twice as fast as using
 <code>ape::<a href='https://rdrr.io/pkg/ape/man/reorder.phylo.html'>cladewise</a></code> or
 <code>ape::<a href='https://rdrr.io/pkg/ape/man/reorder.phylo.html'>postorder</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>Cladewise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+    <pre class="usage"><span class='fu'>RenumberTree</span>(<span class='kw'>parent</span>, <span class='kw'>child</span>)
 
-<span class='fu'>ApePostorder</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+<span class='fu'>RenumberEdges</span>(<span class='kw'>parent</span>, <span class='kw'>child</span>, <span class='kw'>...</span>)
 
-<span class='fu'>Postorder</span>(<span class='no'>tree</span>, <span class='kw'>force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>Cladewise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
 
-<span class='fu'>PostorderEdges</span>(<span class='no'>edge</span>)
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>Cladewise</span>(<span class='kw'>tree</span>, nTip = <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>tip.label</span>), edge = <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>)
 
-<span class='fu'>Pruningwise</span>(<span class='no'>tree</span>, <span class='kw'>nTip</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>tree</span>$<span class='no'>tip.label</span>), <span class='kw'>edge</span> <span class='kw'>=</span> <span class='no'>tree</span>$<span class='no'>edge</span>)
+<span class='co'># S3 method for list</span>
+<span class='fu'>Cladewise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
 
-<span class='fu'>Preorder</span>(<span class='no'>tree</span>)</pre>
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>Cladewise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>Cladewise</span>(<span class='kw'>tree</span>, nTip = <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='kw'>tree</span>[, <span class='fl'>1</span>]) <span class='op'>-</span> <span class='fl'>1L</span>, <span class='kw'>edge</span>)
+
+<span class='fu'>ApePostorder</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>ApePostorder</span>(<span class='kw'>tree</span>, nTip = <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>tip.label</span>), edge = <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>ApePostorder</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>ApePostorder</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='fu'>Postorder</span>(<span class='kw'>tree</span>, force = <span class='fl'>FALSE</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>Postorder</span>(<span class='kw'>tree</span>, force = <span class='fl'>FALSE</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>Postorder</span>(<span class='kw'>tree</span>, force = <span class='fl'>FALSE</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>Postorder</span>(<span class='kw'>tree</span>, force = <span class='fl'>FALSE</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>Postorder</span>(<span class='kw'>tree</span>, force = <span class='fl'>FALSE</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='fu'>PostorderEdges</span>(<span class='kw'>edge</span>, renumber = <span class='fl'>FALSE</span>)
+
+<span class='fu'>Pruningwise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>Pruningwise</span>(<span class='kw'>tree</span>, nTip = <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>tip.label</span>), edge = <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>Pruningwise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>Pruningwise</span>(<span class='kw'>tree</span>, <span class='kw'>nTip</span>, <span class='kw'>edge</span>)
+
+<span class='fu'>Preorder</span>(<span class='kw'>tree</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>Preorder</span>(<span class='kw'>tree</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>Preorder</span>(<span class='kw'>tree</span>)
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>Preorder</span>(<span class='kw'>tree</span>)
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>Preorder</span>(<span class='kw'>tree</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>parent</th>
+      <td><p>Integer vector corresponding to the first column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 1]</code></p></td>
+    </tr>
+    <tr>
+      <th>child</th>
+      <td><p>Integer vector corresponding to the second column of the edge
+matrix of a tree of class <code>phylo</code>, i.e. <code>tree$edge[, 2]</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Deprecated; included for compatibility with previous versions.</p></td>
+    </tr>
+    <tr>
       <th>tree</th>
-      <td><p>A tree of class <code>phylo</code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     <tr>
       <th>nTip</th>
@@ -191,48 +263,70 @@ Calling this C function directly is approximately twice as fast as using
     </tr>
     <tr>
       <th>edge</th>
-      <td><p>A matrix with two columns, with each row listing the parent and
-child node of an edge in a phylogenetic tree.  Property <code>edge</code> of objects
-of class <code>phylo</code>.</p></td>
+      <td><p>Two-column matrix listing the parent and child of each edge in a
+tree, corresponding to <code>tree$edge</code>. Optional in <code>Cladewise()</code>.</p></td>
     </tr>
     <tr>
       <th>force</th>
       <td><p>Logical specifying whether to rearrange trees already in
-postorder, in order to ensure TreeTools edge ordering.</p></td>
+postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.</p></td>
+    </tr>
+    <tr>
+      <th>renumber</th>
+      <td><p>Logical specifying whether to renumber nodes such that they
+increase in number away from the root.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ApePostorder()</code>, <code>Cladewise()</code>, <code>Postorder()</code>, <code>Preorder()</code> and
+    <p><code>RenumberTree()</code> returns an edge matrix for a tree of class <code>phylo</code>
+following the preorder convention for edge and node numbering.</p>
+<p><code>RenumberEdges()</code> formats the output of <code>RenumberTree()</code> into a list
+whose two entries correspond to the new parent and child vectors.</p>
+<p><code>ApePostorder()</code>, <code>Cladewise()</code>, <code>Postorder()</code>, <code>Preorder()</code> and
 <code>Pruningwise()</code> each return a tree of class <code>phylo</code> with nodes following the
 specified numbering scheme.</p>
-<p><code>PostorderEdges</code> returns a two-column array corresponding to <code>edge</code>,
-with edges listed in postorder.</p>
+<p><code>Postorder.numeric</code> accepts a numeric matrix corresponding to the
+<code>edge</code> entry of a tree of class <code>phylo</code>, and returns a two-column array
+corresponding to <code>tree</code>, with edges listed in postorder</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For <code>Cladewise</code>, <code>Postorder</code> and <code>Pruningwise</code>, all nodes must be binary;
-<a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> and <a href='https://rdrr.io/pkg/ape/man/multi2di.html'>ape::multi2di</a> may help.</p>
-<p><code>Preorder</code> is more robust: it supports polytomies, nodes can be numbered
+    <p><code>Cladewise()</code>, <code>ApePostorder()</code> and <code>Pruningwise()</code> are convenience
+functions to the corresponding functions in 'ape'. Single nodes may
+need to be collapsed using <a href='https://rdrr.io/pkg/ape/man/collapse.singles.html'>ape::collapse.singles</a> first.  'ape' functions
+can cause crashes if nodes are numbered unconventionally -- sometimes
+encountered after using tree rearrangement functions, e.g. <code>phangorn::SPR</code>.</p>
+<p><code>Preorder()</code> is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.
-It has a unique output for each tree topology, allowing unique trees
-to be detected by comparing sorted edge matrices alone.</p>
+Its output is guaranteed to be identical for any tree of an equivalent
+topology, allowing unique trees to be detected by comparing sorted edge
+matrices alone.</p>
 <p>A tree in preorder is numbered starting from the root node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.</p>
-<p>Child edges of a node are sorted from left to right in order of the
-smallest descendant tip; i.e. an edge leading to tip 1 will be to the left
-of an edge leading to a subtree that contains tip 2.</p>
+<p>At each node, child edges are sorted from left to right in order of the
+lowest-numbered leaf in the subtree subtended by each edge; i.e. an edge
+that leads eventually to tip 1 will be to the left of an edge leading to a
+subtree containing tip 2.</p>
 <p>Numbering begins by following the leftmost edge of the root node,
 and sorting its descendant subtree into preorder.
 Then, the next edge at the root node is followed, and its descendants
 sorted into preorder, until each edge has been visited.</p>
-<p><code>Postorder</code> is modified from the ape function to return a specific
+<p><code>RenumberTree()</code> and <code>RenumberEdges()</code> are wrappers for the C function
+<code>preorder_edges_and_nodes()</code>; they do not perform the same checks on input
+as <code>Preorder()</code> and are intended for use where performance is at a premium.</p>
+<p><code>Postorder()</code> is modified from the 'ape' function to return a specific
 order: edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
-in postorder, it will not be rearranged unless <code>force = TRUE</code>, or
-<code>PostorderEdges</code> is employed.</p>
+in postorder, it will not be rearranged unless <code>force = TRUE</code>.</p>
+<p>Methods applied to numeric inputs do not check input for sanity, so should
+be used with caution: malformed input may cause undefined results, including
+crashing R.</p>
+<p>Trees with &gt;8191 leaves require additional memory and are not handled
+at present.  If you need to process such large trees, please contact the
+maintainer for advice.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -246,9 +340,30 @@ function, which is robust to unconventional node numbering.</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other C wrappers: 
-<code><a href='Neworder.html'>Neworder</a></code>,
-<code><a href='RenumberTree.html'>RenumberTree</a>()</code></p></div>
+    <div class='dont-index'><p>Rotate each node into a consistent orientation with <code><a href='SortTree.html'>SortTree()</a></code>.</p>
+<p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p>
+<p>Other C wrappers: 
+<code><a href='Neworder.html'>Neworder</a></code></p>
+<p>Other C wrappers: 
+<code><a href='Neworder.html'>Neworder</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p><code>Preorder()</code> and <code>Postorder()</code>: Martin R. Smith.</p>
+<p><code>Cladewise()</code>, <code>ApePostorder()</code> and <code>Pruningwise()</code>: modified by Martin R.
+Smith from <code>.reorder_ape()</code> in <span class="pkg">ape</span> (Emmanuel Paradis).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -265,7 +380,7 @@ function, which is robust to unconventional node numbering.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

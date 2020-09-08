@@ -46,7 +46,8 @@
 
 
 <meta property="og:title" content="Generate a single taxon tree — SingleTaxonTree" />
-<meta property="og:description" content="Create a phylogenetic 'tree' that comprises a single taxon." />
+<meta property="og:description" content="SingleTaxonTree() creates a phylogenetic 'tree' that contains a single
+taxon." />
 
 
 <meta name="robots" content="noindex">
@@ -88,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -157,10 +158,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a phylogenetic 'tree' that comprises a single taxon.</p>
+    <p><code>SingleTaxonTree()</code> creates a phylogenetic 'tree' that contains a single
+taxon.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SingleTaxonTree</span>(<span class='no'>label</span>)</pre>
+    <pre class="usage"><span class='fu'>SingleTaxonTree</span>(<span class='kw'>label</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,23 +181,33 @@ tip with the specified label.</p>
 
     <div class='dont-index'><p>Other tree manipulation: 
 <code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
 <code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
 <code><a href='Subtree.html'>Subtree</a>()</code></p>
 <p>Other tree generation functions: 
-<code><a href='BalancedTree.html'>BalancedTree</a>()</code>,
+<code><a href='GenerateTree.html'>GenerateTree</a></code>,
 <code><a href='NJTree.html'>NJTree</a>()</code>,
-<code><a href='PectinateTree.html'>PectinateTree</a>()</code>,
-<code><a href='RandomTree.html'>RandomTree</a>()</code>,
 <code><a href='TreeNumber.html'>TreeNumber</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>SingleTaxonTree</span>(<span class='st'>'Homo_sapiens'</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'>SingleTaxonTree</span>(<span class='st'>'Homo_sapiens'</span>)
+</div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 1 tips and 1 internal nodes.
 #&gt; 
 #&gt; Tip labels:
-#&gt; [1] "Homo_sapiens"
+#&gt;   Homo_sapiens
 #&gt; 
-#&gt; Rooted; no branch lengths.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='fu'>SingleTaxonTree</span>(<span class='st'>'root'</span>) + <span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>4</span>))</div><div class='img'><img src='SingleTaxonTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; Rooted; no branch lengths.</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>SingleTaxonTree</span>(<span class='st'>'root'</span>) <span class='op'>+</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>4</span>))
+</div><div class='img'><img src='SingleTaxonTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -212,7 +224,7 @@ tip with the specified label.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of distinct partitions — NSplits • TreeTools</title>
+<title>Number of distinct splits — NSplits • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Number of distinct partitions — NSplits" />
-<meta property="og:description" content="How many unique bipartition splits occur in a tree or object?" />
+<meta property="og:title" content="Number of distinct splits — NSplits" />
+<meta property="og:description" content="NSplits() counts the unique bipartition splits in a tree or object." />
 
 
 <meta name="robots" content="noindex">
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -151,63 +151,77 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of distinct partitions</h1>
+    <h1>Number of distinct splits</h1>
     <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>NSplits.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>How many unique bipartition splits occur in a tree or object?</p>
+    <p><code>NSplits()</code> counts the unique bipartition splits in a tree or object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NSplits</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>NSplits</span>(<span class='kw'>x</span>)
 
-<span class='fu'>NPartitions</span>(<span class='no'>x</span>)
+<span class='fu'>NPartitions</span>(<span class='kw'>x</span>)
 
 <span class='co'># S3 method for phylo</span>
-<span class='fu'>NSplits</span>(<span class='no'>x</span>)
-
-<span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>NSplits</span>(<span class='no'>x</span>)
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>NSplits</span>(<span class='no'>x</span>)
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
 
 <span class='co'># S3 method for Splits</span>
-<span class='fu'>NSplits</span>(<span class='no'>x</span>)
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>NSplits</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>NSplits</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A phylogenetic tree of class <code>phylo</code>, or a list of such trees
-(of class <code>list</code> or <code>multiPhylo</code>), or a <code>Splits</code> object,
-or a vector of integers.</p></td>
+      <td><p>A phylogenetic tree of class <code>phylo</code>; a list of such trees
+(of class <code>list</code> or <code>multiPhylo</code>); a <code>Splits</code> object;
+a vector of integers; or a character vector listing tips of a tree,
+or a character of length one specifying a tree in Newick format.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NSplits</code> returns an integer specifying the number of partitions in
-the specified objects, or in a rooted tree with <code>n</code> tips.</p>
+    <p><code>NSplits()</code> returns an integer specifying the number of bipartitions in
+the specified objects, or in a binary tree with <code>x</code> tips.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Splits operations: 
+    <div class='dont-index'><p>Other tree properties: 
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='NTip.html'>NTip</a>()</code>,
+<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
+<code><a href='TipLabels.html'>TipLabels</a>()</code>,
+<code><a href='TreeIsRooted.html'>TreeIsRooted</a>()</code></p>
+<p>Other Splits operations: 
+<code><a href='NTip.html'>NTip</a>()</code>,
+<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
 <code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
 <code><a href='as.Splits.html'>as.Splits</a>()</code>,
-<code><a href='in.Splits.html'>in.Splits</a>()</code>,
-<code><a href='match.Splits.html'>match.Splits</a>()</code></p></div>
+<code><a href='match.html'>match</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>NSplits</span>(<span class='fl'>8L</span>)</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='PectinateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>)))</div><div class='output co'>#&gt; [1] 5</div><div class='input'>
-
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>NSplits</span>(<span class='fl'>8L</span>)
+</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))
+</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>)))
+</div><div class='output co'>#&gt; [1] 5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -223,7 +237,7 @@ the specified objects, or in a rooted tree with <code>n</code> tips.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

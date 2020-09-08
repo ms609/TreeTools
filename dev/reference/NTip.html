@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of tips in a phylogenetic tree — NTip • TreeTools</title>
+<title>Number of leaves in a phylogenetic tree — NTip • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,10 @@
 
 
 
-<meta property="og:title" content="Number of tips in a phylogenetic tree — NTip" />
-<meta property="og:description" content="Extends ape's function Ntip to handle objects of
-class Splits and list." />
+<meta property="og:title" content="Number of leaves in a phylogenetic tree — NTip" />
+<meta property="og:description" content="NTip() extends ape::Ntip() to handle
+objects of class Splits and list, and edge matrices
+(equivalent to tree$edge)." />
 
 
 <meta name="robots" content="noindex">
@@ -89,7 +90,7 @@ class Splits and list." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -152,52 +153,62 @@ class Splits and list." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of tips in a phylogenetic tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Splits.R'><code>R/Splits.R</code></a></small>
+    <h1>Number of leaves in a phylogenetic tree</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R'><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>NTip.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extends ape's function <code><a href='https://rdrr.io/pkg/ape/man/summary.phylo.html'>Ntip</a></code> to handle objects of
-class <code>Splits</code> and <code>list</code>.</p>
+    <p><code>NTip()</code> extends <code><a href='https://rdrr.io/pkg/ape/man/summary.phylo.html'>ape::Ntip()</a></code> to handle
+objects of class <code>Splits</code> and <code>list</code>, and edge matrices
+(equivalent to <code>tree$edge</code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NTip</span>(<span class='no'>phy</span>)
+    <pre class="usage"><span class='fu'>NTip</span>(<span class='kw'>phy</span>)
 
 <span class='co'># S3 method for Splits</span>
-<span class='fu'>NTip</span>(<span class='no'>phy</span>)
+<span class='fu'>NTip</span>(<span class='kw'>phy</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>NTip</span>(<span class='no'>phy</span>)
+<span class='fu'>NTip</span>(<span class='kw'>phy</span>)
 
 <span class='co'># S3 method for phylo</span>
-<span class='fu'>NTip</span>(<span class='no'>phy</span>)
+<span class='fu'>NTip</span>(<span class='kw'>phy</span>)
 
 <span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>NTip</span>(<span class='no'>phy</span>)</pre>
+<span class='fu'>NTip</span>(<span class='kw'>phy</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>NTip</span>(<span class='kw'>phy</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>phy</th>
-      <td><p>Object to count.</p></td>
+      <td><p>Object representing one or more phylogenetic trees.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NTip</code> returns an integer specifying the number of tips in each
+    <p><code>NTip()</code> returns an integer specifying the number of tips in each
 object in <code>phy</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other Splits operations: 
+    <div class='dont-index'><p>Other tree properties: 
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='NSplits.html'>NSplits</a>()</code>,
+<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
+<code><a href='TipLabels.html'>TipLabels</a>()</code>,
+<code><a href='TreeIsRooted.html'>TreeIsRooted</a>()</code></p>
+<p>Other Splits operations: 
+<code><a href='NSplits.html'>NSplits</a>()</code>,
+<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
 <code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
 <code><a href='as.Splits.html'>as.Splits</a>()</code>,
-<code><a href='in.Splits.html'>in.Splits</a>()</code>,
-<code><a href='match.Splits.html'>match.Splits</a>()</code></p></div>
+<code><a href='match.html'>match</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -214,7 +225,7 @@ object in <code>phy</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Extract taxa from a matrix block — ExtractTaxa" />
-<meta property="og:description" content="Reads the character information from a Nexus-formatted matrix into R." />
+<meta property="og:description" content="Extract leaf labels and character states from a Nexus-formatted matrix." />
 
 
 <meta name="robots" content="noindex">
@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -157,20 +157,25 @@
     </div>
 
     <div class="ref-description">
-    <p>Reads the character information from a Nexus-formatted matrix into R.</p>
+    <p>Extract leaf labels and character states from a Nexus-formatted matrix.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ExtractTaxa</span>(<span class='no'>matrixLines</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>ExtractTaxa</span>(
+  <span class='kw'>matrixLines</span>,
+  character_num = <span class='kw'>NULL</span>,
+  session = <span class='kw'>NULL</span>,
+  continuous = <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>NexusTokens</span>(<span class='no'>tokens</span>, <span class='kw'>character_num</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>NexusTokens</span>(<span class='kw'>tokens</span>, character_num = <span class='kw'>NULL</span>, session = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>matrixLines</th>
-      <td><p>lines of a file containing a phylogenetic matrix
-(see <code><a href='ReadCharacters.html'>ReadCharacters</a></code> for expected format).</p></td>
+      <td><p>Character vector containing lines of a file that include
+a phylogenetic matrix. See <code><a href='ReadCharacters.html'>ReadCharacters()</a></code> for expected format.</p></td>
     </tr>
     <tr>
       <th>character_num</th>
@@ -179,8 +184,13 @@
     </tr>
     <tr>
       <th>session</th>
-      <td><p>(optionally) a Shiny session with a <code>numericInput</code> named
+      <td><p>(Optional) A Shiny session with a <code>numericInput</code> named
 <code>character_num</code> whose maximum should be updated.</p></td>
+    </tr>
+    <tr>
+      <th>continuous</th>
+      <td><p>Logical specifying whether characters are continuous.
+Treated as discrete if <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>tokens</th>
@@ -191,33 +201,26 @@ tokens.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>ExtractTaxa</code> returns a matrix with <em>n</em> rows, each named for the
+    <p><code>ExtractTaxa()</code> returns a matrix with <em>n</em> rows, each named for the
 relevant taxon, and <em>c</em> columns,
 each corresponding to the respective character specified in <code>character_num</code>.</p>
-<p><code>NexusTokens</code> returns a character vector in which each entry
-corresponds to the states of a phylogenetic character.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Extracts the names of tips from the matrix block of a Nexus file.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>NexusTokens</code>: Converts a Nexus string to a vector of character
-states.</p></li>
-</ul>
+<p><code>NexusTokens()</code> returns a character vector in which each entry
+corresponds to the states of a phylogenetic character, or a list containing
+an error message if input is invalid.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>fileName</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'TreeTools'</span>),
+    <pre class="examples"><div class='input'><span class='kw'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(package=<span class='st'>'TreeTools'</span>),
                    <span class='st'>'/extdata/input/dataset.nex'</span>)
-<span class='no'>matrixLines</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='no'>fileName</span>)[<span class='fl'>6</span>:<span class='fl'>11</span>]
-<span class='fu'>ExtractTaxa</span>(<span class='no'>matrixLines</span>)</div><div class='output co'>#&gt;           [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+<span class='kw'>matrixLines</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='kw'>fileName</span>)[<span class='fl'>6</span><span class='op'>:</span><span class='fl'>11</span>]
+<span class='fu'>ExtractTaxa</span>(<span class='kw'>matrixLines</span>)
+</div><div class='output co'>#&gt;           [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 #&gt; \ttaxon_a "0"  "0"  "0"  "0"  "0"  "0"  "0" 
 #&gt; \ttaxon_b "0"  "0"  "0"  "0"  "0"  "0"  "0" 
 #&gt; \ttaxon_c "1"  "1"  "1"  "1"  "?"  "0"  "0" 
 #&gt; \ttaxon_d "1"  "1"  "1"  "?"  "?"  "1"  "1" 
 #&gt; \ttaxon_e "1"  "1"  "1"  "1"  "?"  "1"  "1" </div><div class='input'>
-<span class='fu'>NexusTokens</span>(<span class='st'>'01[01]-?'</span>)</div><div class='output co'>#&gt;      [,1] [,2] [,3]   [,4] [,5]
+<span class='fu'>NexusTokens</span>(<span class='st'>'01[01]-?'</span>)
+</div><div class='output co'>#&gt;      [,1] [,2] [,3]   [,4] [,5]
 #&gt; [1,] "0"  "1"  "[01]" "-"  "?" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -234,7 +237,7 @@ states.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

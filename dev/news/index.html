@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -154,28 +154,128 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="treetools-0-1-4-9001-development" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.4.9001">
-<a href="#treetools-0-1-4-9001-development" class="anchor"></a>TreeTools 0.1.4.9001 (development)<small> Unreleased </small>
+    <div id="treetools-1-2-0-9002-development" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9002">
+<a href="#treetools-1-2-0-9002-development" class="anchor"></a>TreeTools 1.2.0.9002 (development)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Improve support for unrooted trees in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
-<li>Improve performance of <code><a href="../reference/as.Splits.html">as.logical.Splits()</a></code> and related functions.</li>
+<li>New function <code><a href="../reference/TipsInSplits.html">SplitImbalance()</a></code>: how balanced is each split?</li>
+<li>C++ implementation of <code><a href="../reference/TipsInSplits.html">TipsInSplits()</a></code>.</li>
 </ul>
 </div>
-    <div id="treetools-0-1-4-9000-development" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.4.9000">
-<a href="#treetools-0-1-4-9000-development" class="anchor"></a>TreeTools 0.1.4.9000 (development)<small> Unreleased </small>
+    <div id="treetools-1-2-0-9001-development" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0.9001">
+<a href="#treetools-1-2-0-9001-development" class="anchor"></a>TreeTools 1.2.0.9001 (development)<small> Unreleased </small>
 </h1>
 <ul>
+<li>New function <code><a href="../reference/MSTEdges.html">MSTEdges()</a></code>: Edges of minimum spanning tree.</li>
+<li>Remove obselete copy of C++ code from ‘phangorn’.</li>
+</ul>
+</div>
+    <div id="treetools-1-2-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0">
+<a href="#treetools-1-2-0" class="anchor"></a>TreeTools 1.2.0<small> 2020-08-03 </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/ArtificialExtinction.html">ArtificialExtinction()</a></code>: Remove characters that are absent in a fossil template.</li>
+<li>
+<code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters()</a></code>: Write morphological dataset in TNT format.</li>
+<li>Improve TNT dataset parsing.</li>
+<li>Documentation improvements.</li>
+</ul>
+</div>
+    <div id="treetools-1-1-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.1.0">
+<a href="#treetools-1-1-0" class="anchor"></a>TreeTools 1.1.0<small> 2020-07-07 </small>
+</h1>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/GenerateTree.html">RandomTree()</a></code>: Draw tree from uniform distribution, instead of via <code><a href="https://rdrr.io/pkg/ape/man/rtree.html">ape::rtree()</a></code>.</li>
+<li>
+<code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code>: Uniform equivalent of <code><a href="https://rdrr.io/pkg/ape/man/multi2di.html">ape::multi2di()</a></code>.</li>
+<li>
+<code><a href="../reference/match.html">match.list()</a></code> method for lists of splits.</li>
+<li>
+<code><a href="../reference/SplitsInBinaryTree.html">SplitsInBinaryTree()</a></code>: How many splits occur in an <em>n</em>-leaf binary tree?</li>
+<li>
+<code><a href="../reference/sapply64.html">vapply64()</a></code>, <code><a href="../reference/sapply64.html">sapply64()</a></code>, <code><a href="../reference/sapply64.html">replicate64()</a></code>: helper functions when a function returns a 64-bit integer.</li>
+</ul>
+</div>
+<div id="enhancements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#enhancements" class="anchor"></a>Enhancements</h2>
+<ul>
+<li>Use methods for <code><a href="../reference/RootTree.html">UnrootTree()</a></code>, <code><a href="../reference/RootTree.html">RootTree()</a></code>, <code><a href="../reference/RootTree.html">RootOnNode()</a></code> to support lists of trees.</li>
+</ul>
+</div>
+</div>
+    <div id="treetools-1-0-0" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#treetools-1-0-0" class="anchor"></a>TreeTools 1.0.0<small> 2020-06-08 </small>
+</h1>
+<div id="new-functions-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/CladisticInfo.html">CladisticInfo()</a></code>: Calculate the information content of a tree.</li>
 <li>
 <code><a href="../reference/RootNode.html">RootNode()</a></code>: Which node is a tree’s root?</li>
 <li>
-<code><a href="../reference/PhylogeneticInfo.html">PhylogeneticInfo()</a></code>: Calculate the information content of a tree.</li>
+<code><a href="../reference/RootTree.html">UnrootTree()</a></code>: Safely remove a root node.</li>
 <li>
-<code><a href="../reference/NodeOrder.html">NodeOrder()</a></code>, <code><a href="../reference/NDescendants.html">NDescendants()</a></code>: Calculate edges incident to each node.</li>
+<code><a href="../reference/NodeDepth.html">NodeDepth()</a></code>: Discriminate shallow from deep nodes.</li>
+<li>
+<code><a href="../reference/NodeOrder.html">NodeOrder()</a></code>, <code><a href="../reference/NDescendants.html">NDescendants()</a></code>: Count edges incident to each node.</li>
+<li>
+<code><a href="../reference/CladeSizes.html">CladeSizes()</a></code>: Count leaves / nodes descended from each node.</li>
+<li>
+<code><a href="../reference/ListAncestors.html">ListAncestors()</a></code>: List ancestors of a node.</li>
+<li>
+<code><a href="../reference/LabelSplits.html">LabelSplits()</a></code>: Label splits on plotted tree.</li>
+<li>
+<code><a href="../reference/DropTip.html">DropTip()</a></code>: Remove tip, handling weird node orders.</li>
+<li>
+<code><a href="../reference/LeafLabelInterchange.html">LeafLabelInterchange()</a></code>: Exchange position of <em>n</em> tips.</li>
+<li>
+<code><a href="../reference/GenerateTree.html">StarTree()</a></code>: Generate unresolved tree.</li>
+<li>
+<code><a href="../reference/TotalCopheneticIndex.html">TotalCopheneticIndex()</a></code> integrated from ‘tci’ package.</li>
+</ul>
+</div>
+<div id="deprecations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deprecations" class="anchor"></a>Deprecations</h2>
+<ul>
+<li>
+<code><a href="../reference/RenumberTree.html">PostorderEdges()</a></code>: use <code><a href="../reference/RenumberTree.html">Postorder()</a></code> instead.</li>
+<li>
+<code><a href="../reference/NonDuplicateRoot.html">NonDuplicateRoot()</a></code>: unused internal function.</li>
+<li>
+<code><a href="../reference/match.html">match.Splits()</a></code>: use <code><a href="../reference/match.html">match()</a></code> instead.</li>
+<li>
+<code><a href="../reference/match.html">in.Splits()</a></code>: use <code>%in%.Splits()</code> instead.</li>
+</ul>
+</div>
+<div id="enhancements-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#enhancements-1" class="anchor"></a>Enhancements</h2>
+<ul>
+<li>Improve support for unrooted trees in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
+<li>Use methods so <code>Reorder</code> functions can handle <code>multiPhylo</code> objects and edges.</li>
+<li>Handle funny node orders.</li>
+<li>Support continuous characters in <code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code>.</li>
+<li>Improve performance of <code><a href="../reference/as.Splits.html">as.logical.Splits()</a></code> and related functions.</li>
+<li>Fail nicely when trees are too large for memory.</li>
+<li>Fix memory leak in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
+<li>Various under-the-hood improvements to functions.</li>
 <li>Documentation improvements.</li>
 </ul>
+</div>
 </div>
     <div id="treetools-0-1-4" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.4">
@@ -245,7 +345,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

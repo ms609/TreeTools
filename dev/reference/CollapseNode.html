@@ -89,7 +89,7 @@ polytomies." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -162,46 +162,81 @@ polytomies." />
 polytomies.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>CollapseNode</span>(<span class='no'>tree</span>, <span class='no'>nodes</span>)
+    <pre class="usage"><span class='fu'>CollapseNode</span>(<span class='kw'>tree</span>, <span class='kw'>nodes</span>)
 
-<span class='fu'>CollapseEdge</span>(<span class='no'>tree</span>, <span class='no'>edges</span>)</pre>
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>CollapseNode</span>(<span class='kw'>tree</span>, <span class='kw'>nodes</span>)
+
+<span class='fu'>CollapseEdge</span>(<span class='kw'>tree</span>, <span class='kw'>edges</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tree</th>
-      <td><p>A tree of class <code>phylo</code>.</p></td>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     <tr>
       <th>nodes, edges</th>
       <td><p>Integer vector specifying the nodes or edges in the tree
 to be dropped.
-(Use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></code> or <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></code>
+(Use <code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a>()</code> or
+<code><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a>()</code>
 to view numbers on a plotted tree.)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>CollapseNode</code> and <code>CollapseEdge</code> return a tree of class <code>phylo</code>,
+    <p><code>CollapseNode()</code> and <code>CollapseEdge()</code> return a tree of class <code>phylo</code>,
 corresponding to <code>tree</code> with the specified nodes or edges collapsed.
 The length of each dropped edge will (naively) be added to each descendant
 edge.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ape</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='no'>oldPar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>1</span>), <span class='kw'>mar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.5</span>, <span class='fl'>4</span>))
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
+<span class='kw'>oldPar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(mfrow=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>), mar=<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>0.5</span>, <span class='fl'>4</span>))
 
-<span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()
-<span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>tree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.6</span>, <span class='kw'>frame</span><span class='kw'>=</span><span class='st'>'n'</span>, <span class='kw'>adj</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))
+<span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='kw'>ape</span>::<span class='fu'><a href='https://rdrr.io/pkg/ape/man/rtree.html'>rtree</a></span>(<span class='fl'>7</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tree</span>)
+<span class='fu'>nodelabels</span>()
+<span class='fu'>edgelabels</span>()
+<span class='fu'>edgelabels</span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge.length</span>, <span class='fl'>2</span>),
+           cex = <span class='fl'>0.6</span>, frame = <span class='st'>'n'</span>, adj = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>))
 
-<span class='no'>newTree</span> <span class='kw'>&lt;-</span> <span class='fu'>CollapseNode</span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>13</span>))
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>newTree</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>nodelabels</a></span>()</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/ape/man/nodelabels.html'>edgelabels</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='no'>newTree</span>$<span class='no'>edge.length</span>, <span class='fl'>2</span>), <span class='kw'>cex</span><span class='kw'>=</span><span class='fl'>0.6</span>, <span class='kw'>frame</span><span class='kw'>=</span><span class='st'>'n'</span>, <span class='kw'>adj</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>))</div><div class='img'><img src='CollapseNode-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>oldPar</span>)</div></pre>
+<span class='co'># Collapse by node number</span>
+<span class='kw'>newTree</span> <span class='op'>&lt;-</span> <span class='fu'>CollapseNode</span>(<span class='kw'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>13</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>newTree</span>)
+<span class='fu'>nodelabels</span>()
+<span class='fu'>edgelabels</span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='kw'>newTree</span><span class='op'>$</span><span class='kw'>edge.length</span>, <span class='fl'>2</span>),
+           cex = <span class='fl'>0.6</span>, frame = <span class='st'>'n'</span>, adj = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>))
+
+<span class='co'># Collapse by edge number</span>
+<span class='kw'>newTree</span> <span class='op'>&lt;-</span> <span class='fu'>CollapseEdge</span>(<span class='kw'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>newTree</span>)
+</div><div class='img'><img src='CollapseNode-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>oldPar</span>)
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -217,7 +252,7 @@ edge.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

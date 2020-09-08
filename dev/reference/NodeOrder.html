@@ -46,7 +46,7 @@
 
 
 <meta property="og:title" content="Order of each node in a tree — NodeOrder" />
-<meta property="og:description" content="Calculate the number of edges incident to each node in a tree.
+<meta property="og:description" content="NodeOrder() calculates the number of edges incident to each node in a tree.
 Includes the root edge in rooted trees." />
 
 
@@ -89,7 +89,7 @@ Includes the root edge in rooted trees." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -158,11 +158,11 @@ Includes the root edge in rooted trees." />
     </div>
 
     <div class="ref-description">
-    <p>Calculate the number of edges incident to each node in a tree.
+    <p><code>NodeOrder()</code> calculates the number of edges incident to each node in a tree.
 Includes the root edge in rooted trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NodeOrder</span>(<span class='no'>x</span>, <span class='kw'>includeAncestor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>internalOnly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>NodeOrder</span>(<span class='kw'>x</span>, includeAncestor = <span class='fl'>TRUE</span>, internalOnly = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -186,26 +186,32 @@ to internal nodes, i.e. to omit leaves. Irrelevant if
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>NodeOrder()</code> returns a table listing the order of each node;
+    <p><code>NodeOrder()</code> returns an integer listing the order of each node;
 entries are named with the number of each node.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree navigation: 
-<code><a href='AllAncestors.html'>AllAncestors</a>()</code>,
 <code><a href='AncestorEdge.html'>AncestorEdge</a>()</code>,
+<code><a href='CladeSizes.html'>CladeSizes</a>()</code>,
 <code><a href='DescendantEdges.html'>DescendantEdges</a>()</code>,
 <code><a href='EdgeAncestry.html'>EdgeAncestry</a>()</code>,
 <code><a href='EdgeDistances.html'>EdgeDistances</a>()</code>,
+<code><a href='ListAncestors.html'>ListAncestors</a>()</code>,
 <code><a href='MRCA.html'>MRCA</a>()</code>,
 <code><a href='NDescendants.html'>NDescendants</a>()</code>,
+<code><a href='NodeDepth.html'>NodeDepth</a>()</code>,
 <code><a href='NonDuplicateRoot.html'>NonDuplicateRoot</a>()</code>,
 <code><a href='RootNode.html'>RootNode</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span>(<span class='fu'><a href='BalancedTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>), <span class='fl'>12</span>:<span class='fl'>15</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'>nodelabels</span>()</div><div class='img'><img src='NodeOrder-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>NodeOrder</span>(<span class='no'>tree</span>, <span class='kw'>internalOnly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
-#&gt;  9 10 11 
-#&gt;  5  4  3 </div><div class='input'>
+    <pre class="examples"><div class='input'><span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>), <span class='fl'>12</span><span class='op'>:</span><span class='fl'>15</span>)
+<span class='fu'>NodeOrder</span>(<span class='kw'>tree</span>)
+</div><div class='output co'>#&gt;  [1] 1 1 1 1 1 1 1 1 5 4 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tree</span>)
+</div><div class='input'><span class='fu'>nodelabels</span>(<span class='fu'>NodeOrder</span>(<span class='kw'>tree</span>, internalOnly = <span class='fl'>TRUE</span>))
+</div><div class='img'><img src='NodeOrder-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -222,7 +228,7 @@ entries are named with the number of each node.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -46,8 +46,9 @@
 
 
 <meta property="og:title" content="Probability of matching this well — SplitMatchProbability" />
-<meta property="og:description" content="Calculates the probability that two random splits of the sizes provided
-will be at least as similar as the two specified." />
+<meta property="og:description" content="(Ln)SplitMatchProbability()calculates the probability that two random
+splits of the sizes provided will be at least as similar as the two
+specified." />
 
 
 <meta name="robots" content="noindex">
@@ -89,7 +90,7 @@ will be at least as similar as the two specified." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.4.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9002</span>
       </span>
     </div>
 
@@ -158,13 +159,14 @@ will be at least as similar as the two specified." />
     </div>
 
     <div class="ref-description">
-    <p>Calculates the probability that two random splits of the sizes provided
-will be at least as similar as the two specified.</p>
+    <p>(<code>Ln</code>)<code>SplitMatchProbability()</code>calculates the probability that two random
+splits of the sizes provided will be at least as similar as the two
+specified.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SplitMatchProbability</span>(<span class='no'>split1</span>, <span class='no'>split2</span>)
+    <pre class="usage"><span class='fu'>SplitMatchProbability</span>(<span class='kw'>split1</span>, <span class='kw'>split2</span>)
 
-<span class='fu'>LnSplitMatchProbability</span>(<span class='no'>split1</span>, <span class='no'>split2</span>)</pre>
+<span class='fu'>LnSplitMatchProbability</span>(<span class='kw'>split1</span>, <span class='kw'>split2</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,20 +181,28 @@ each terminal is identified as a member of the ingroup (<code>TRUE</code>) or ou
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The proportion of permissible informative splits
-splitting the terminals into bipartitions of the sizes given,
-that match as well as <code>split1</code> and <code>split2</code> do.</p>
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <p><code>SplitMatchProbability()</code> returns a numeric giving the proportion
+of permissible non-trivial splits that divide the terminals into bipartitions
+of the sizes given, that match as well as <code>split1</code> and <code>split2</code> do.</p>
+<p><code>LnSplitMatchProbability()</code> returns the natural logarithm of the
+probability.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    
-<ul>
-<li><p><code>LnSplitMatchProbability</code>: The natural logarithm of the probability</p></li>
-</ul>
+    <div class='dont-index'><p>Other split information functions: 
+<code><a href='CharacterInformation.html'>CharacterInformation</a>()</code>,
+<code><a href='SplitInformation.html'>SplitInformation</a>()</code>,
+<code><a href='TreesMatchingSplit.html'>TreesMatchingSplit</a>()</code>,
+<code><a href='UnrootedTreesMatchingSplit.html'>UnrootedTreesMatchingSplit</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>SplitMatchProbability</span>(<span class='kw'>split1</span> <span class='kw'>=</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>4</span>))),
-                      <span class='kw'>split2</span> <span class='kw'>=</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>5</span>))))</div><div class='output co'>#&gt; [1] 0.1428571</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>split1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>4</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>4</span>)))
+<span class='kw'>split2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>TRUE</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>5</span>)))
+<span class='fu'>SplitMatchProbability</span>(<span class='kw'>split1</span>, <span class='kw'>split2</span>)
+</div><div class='output co'>#&gt; [1] 0.1428571</div><div class='input'><span class='fu'>LnSplitMatchProbability</span>(<span class='kw'>split1</span>, <span class='kw'>split2</span>)
+</div><div class='output co'>#&gt; [1] -1.94591</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -208,7 +218,7 @@ that match as well as <code>split1</code> and <code>split2</code> do.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
