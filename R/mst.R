@@ -11,7 +11,7 @@
 #' element in `distances`.  Necessary only if `plot = TRUE`.
 #' @param \dots Additional parameters to send to `[lines()]`.
 #'
-#' @return `MSTLines()` returns a matrix in which each row corresponds to an
+#' @return `MSTEdges()` returns a matrix in which each row corresponds to an
 #' edge of the minimum spanning tree, and each column lists the index of the
 #' entry in `distances` at which the line begins and ends.
 #'
@@ -27,9 +27,9 @@
 #'                    0, 2, 0, 2, 1, 1.1,
 #'                    0, 0, 0, 0, 1, -1), 6)
 #' distances <- dist(points)
-#' MSTLines(distances)
+#' MSTEdges(distances)
 #' plot(points[, 1:2], ann = FALSE, asp = 1)
-#' MSTLines(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
+#' MSTEdges(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 #' @template MRS
 #' @importFrom ape mst
 #' @importFrom graphics lines
