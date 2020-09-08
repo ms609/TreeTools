@@ -9,20 +9,23 @@
 \alias{SplitImbalance.phylo}
 \title{Tips contained within splits}
 \usage{
-TipsInSplits(splits, ...)
+TipsInSplits(splits, keep.names = TRUE, ...)
 
-\method{TipsInSplits}{Splits}(splits, ...)
+\method{TipsInSplits}{Splits}(splits, keep.names = TRUE, ...)
 
-\method{TipsInSplits}{phylo}(splits, ...)
+\method{TipsInSplits}{phylo}(splits, keep.names = TRUE, ...)
 
-SplitImbalance(splits, ...)
+SplitImbalance(splits, keep.names = TRUE, ...)
 
-\method{SplitImbalance}{Splits}(splits, ...)
+\method{SplitImbalance}{Splits}(splits, keep.names = TRUE, ...)
 
-\method{SplitImbalance}{phylo}(splits, ...)
+\method{SplitImbalance}{phylo}(splits, keep.names = TRUE, ...)
 }
 \arguments{
 \item{splits}{Object of class \code{Splits} or \code{phylo}.}
+
+\item{keep.names}{Logical specifying whether to include the names of \code{splits}
+in the output.}
 
 \item{\dots}{Additional parameters to pass to \code{as.Splits()}.}
 }
