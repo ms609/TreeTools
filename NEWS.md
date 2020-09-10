@@ -1,3 +1,7 @@
+# TreeTools 1.2.0.9003 (development)
+
+ - Handle some punctulation characters in `TNTReadTree()`.
+ 
 # TreeTools 1.2.0.9002 (development)
  
  - New function `SplitImbalance()`: how balanced is each split?

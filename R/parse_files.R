@@ -198,7 +198,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
 #'                 format output by TNT.
 #' @export
 TntText2Tree <- function (treeText) {
-  treeText <- gsub("([\\w']+)", "\\1,", treeText, perl = TRUE)
+  treeText <- gsub("([\\w'\\.\\-]+)", "\\1,", treeText, perl = TRUE)
   treeText <- gsub(")(", "),(", treeText, fixed = TRUE)
   treeText <- gsub("*", ";", treeText, fixed = TRUE)
   # Return:
