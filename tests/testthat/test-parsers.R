@@ -50,7 +50,7 @@ test_that("TNT trees parsed correctly", {
   expect_identical(trees, fromLabels)
 
   namedLabels <- ReadTntTree(TestFile('tnt-namedtree.tre'))[[1]]$tip.label
-  expect_equal('Flustra', namedLabels[1])
+  expect_equal('Flustra_sp.', namedLabels[1])
   expect_equal(74L, length(namedLabels))
 
   oldWD <- getwd()
