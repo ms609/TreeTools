@@ -73,7 +73,8 @@ TCIContext(5L) # Context for a tree with 5 leaves.
 provides an alternative implementation of this index and its predecessors.
 
 Other tree characterization functions: 
-\code{\link{CladisticInfo}()}
+\code{\link{CladisticInfo}()},
+\code{\link{Stemwardness}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

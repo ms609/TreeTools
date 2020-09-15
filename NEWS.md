@@ -1,3 +1,8 @@
+# TreeTools 1.2.0.9004 (development)
+
+ - New function `Stemwardness()` measures root-node distance and sister-clade
+   size.
+
 # TreeTools 1.2.0.9003 (development)
 
  - Handle some punctulation characters in `TNTReadTree()`.
