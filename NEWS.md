@@ -1,7 +1,7 @@
 # TreeTools 1.2.0.9004 (development)
 
- - New function `Stemwardness()` measures root-node distance and sister-clade
-   size.
+ - New functions `SisterSize()` and `RootNodeDist()` measure sister-clade size
+   and root-node distance.
 
 # TreeTools 1.2.0.9003 (development)
 

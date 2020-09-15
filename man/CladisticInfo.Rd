@@ -64,7 +64,7 @@ Other tree information functions:
 \code{\link{TreesMatchingTree}()}
 
 Other tree characterization functions: 
-\code{\link{Stemwardness}()},
+\code{\link{SisterSize}()},
 \code{\link{TotalCopheneticIndex}()}
 }
 \author{
