@@ -15,7 +15,7 @@ replicate64(n, expr, simplify = "array")
 \arguments{
 \item{X}{a vector (atomic or list) or an \code{\link[base]{expression}}
     object.  Other objects (including classed objects) will be coerced
-    by \code{base::\link[base:list]{as.list}}.}
+    by \code{base::\link[base]{as.list}}.}
 
 \item{FUN}{the function to be applied to each element of \code{X}:
     see \sQuote{Details}.  In the case of functions like
@@ -41,7 +41,7 @@ replicate64(n, expr, simplify = "array")
 
 \item{n}{integer: the number of replications.}
 
-\item{expr}{the expression (a \link[base:is.language]{language object}, usually a call)
+\item{expr}{the expression (a \link[base]{language object}, usually a call)
     to evaluate repeatedly.}
 }
 \description{

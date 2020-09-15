@@ -1,3 +1,8 @@
+# TreeTools 1.2.0.9004 (development)
+
+ - New functions `SisterSize()` and `RootNodeDist()` measure sister-clade size
+   and root-node distance.
+
 # TreeTools 1.2.0.9003 (development)
 
  - Handle some punctulation characters in `TNTReadTree()`.
