@@ -53,11 +53,12 @@
 #' RootNodeDist(pec8, 't3')
 #' RootNodeDist(RootTree(pec8, 't3'), 't3')
 #' @template MRS
+#' @name Stemwardness
 #' @family tree characterization functions
 #' @export
 SisterSize <- function (tree, tip) UseMethod('SisterSize', tip)
 
-#' @rdname SisterSize
+#' @rdname Stemwardness
 #' @export
 SisterSize.numeric <- function (tree, tip) {
   edge <- tree$edge
@@ -67,18 +68,18 @@ SisterSize.numeric <- function (tree, tip) {
   CladeSizes(tree, nodes = parent) - 1L # Subtract the tip itself
 }
 
-#' @rdname SisterSize
+#' @rdname Stemwardness
 #' @export
 SisterSize.character <- function (tree, tip) {
   SisterSize(tree, which(tree$tip.label == tip))
 }
 
 
-#' @rdname SisterSize
+#' @rdname Stemwardness
 #' @export
 RootNodeDistance <- function (tree, tip) UseMethod('RootNodeDistance', tip)
 
-#' @rdname SisterSize
+#' @rdname Stemwardness
 #' @export
 RootNodeDistance.numeric <- function (tree, tip) {
   edge <- tree$edge
@@ -90,12 +91,13 @@ RootNodeDistance.numeric <- function (tree, tip) {
 
 }
 
-#' @rdname SisterSize
+#' @rdname Stemwardness
 #' @export
 RootNodeDistance.character <- function (tree, tip) {
   RootNodeDistance(tree, which(tree$tip.label == tip))
 }
 
-#' @aliases RootNodeDistance
+#' @rdname Stemwardness
+#' @aliases RootNodeDist
 #' @export
 RootNodeDist <- RootNodeDistance

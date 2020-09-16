@@ -74,7 +74,7 @@ provides an alternative implementation of this index and its predecessors.
 
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},
-\code{\link{SisterSize}()}
+\code{\link{Stemwardness}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
