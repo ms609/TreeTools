@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract tip labels — TipLabels • TreeTools</title>
+<title>'Stemwardness' of a leaf — Stemwardness • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,9 +45,10 @@
 
 
 
-<meta property="og:title" content="Extract tip labels — TipLabels" />
-<meta property="og:description" content="TipLabels() extracts labels from an object: for example, names of taxa in
-a phylogenetic tree or data matrix." />
+<meta property="og:title" content="'Stemwardness' of a leaf — Stemwardness" />
+<meta property="og:description" content="Functions to describe the position of a leaf relative to the root.
+'Stemmier' leaves ought to exhibit a smaller root-node distance and a
+larger sister size," />
 
 
 <meta name="robots" content="noindex">
@@ -152,95 +153,97 @@ a phylogenetic tree or data matrix." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract tip labels</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/SplitFunctions.R'><code>R/SplitFunctions.R</code></a></small>
-    <div class="hidden name"><code>TipLabels.Rd</code></div>
+    <h1>'Stemwardness' of a leaf</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Stemwardness.R'><code>R/Stemwardness.R</code></a></small>
+    <div class="hidden name"><code>Stemwardness.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>TipLabels()</code> extracts labels from an object: for example, names of taxa in
-a phylogenetic tree or data matrix.</p>
+    <p>Functions to describe the position of a leaf relative to the root.
+'Stemmier' leaves ought to exhibit a smaller root-node distance and a
+larger sister size,</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for phylo</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for TreeNumber</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for Splits</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
-
-<span class='co'># S3 method for list</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for character</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>SisterSize</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
+<span class='fu'>SisterSize</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
 
-<span class='co'># S3 method for phyDat</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)
+<span class='co'># S3 method for character</span>
+<span class='fu'>SisterSize</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
 
-<span class='co'># S3 method for default</span>
-<span class='fu'>TipLabels</span>(<span class='kw'>x</span>, single = <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>RootNodeDistance</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>RootNodeDistance</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>RootNodeDistance</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)
+
+<span class='fu'>RootNodeDist</span>(<span class='kw'>tree</span>, <span class='kw'>tip</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>An object of a supported class (see Usage section above).</p></td>
+      <th>tree</th>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
     </tr>
     <tr>
-      <th>single</th>
-      <td><p>Logical specifying whether to report the labels for the first
-object only (<code>TRUE</code>), or for each object in a list (<code>FALSE</code>).</p></td>
+      <th>tip</th>
+      <td><p>Either a numeric specifying the index of a single tip, or a
+character specifying its label.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>TipLabels()</code> returns a character vector listing the tip labels
-appropriate to <code>x</code>. If <code>x</code> is a single integer, this will be a vector
-<code>t1</code>, <code>t2</code> ... <code>tx</code>, to match the default of <code><a href='https://rdrr.io/pkg/ape/man/rtree.html'>ape::rtree()</a></code>.</p>
+    <p><code>SisterSize()</code> returns an integer specifying the number of leaves
+in the clade that is sister to <code>tip</code>.
+<code>RootNodeDist()</code> returns an integer specifying the number of nodes between
+<code>tip</code> and the root node of <code>tree</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>RootNodeDistance()</code> calculates the number of nodes between the chosen leaf
+and the root of <code>tree</code>.
+This is an unsatisfactory measure, as the range of possible
+distances is a function of the shape of the tree.
+As an example, leaf <em>X1</em> in the tree <code>(.,(.,(.,(.,(X1,(a,b))))))</code>
+falls outside the clade <em>(a, b)</em> and has a root-node distance of 4,
+whereas leaf <em>X2</em> in the tree <code>(.,((.,(.,.)),(b,(X2,a))))</code>
+falls within the clade <em>(a, b)</em>, so should be considered more 'crownwards',
+yet has a smaller root-node distance (3).</p>
+<p><img src='figures/Stemwardness.png' alt='' /></p>
+<p><code>SisterSize()</code> measures the number of leaves in the clade that is sister to
+the chosen leaf.  In the examples above, <em>X1</em> has a sister size of 2 leaves,
+whereas <em>X2</em>, which is 'more crownwards', has a smaller sister size (1 leaf),
+as desired.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Asher R, Smith MR (2020).
+&#8220;Phylogenetic Signal and Bias in Vertebrate Paleontology.&#8221;
+<em>forthcoming</em>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other tree properties: 
-<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
-<code><a href='NSplits.html'>NSplits</a>()</code>,
-<code><a href='NTip.html'>NTip</a>()</code>,
-<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
-<code><a href='TreeIsRooted.html'>TreeIsRooted</a>()</code></p>
-<p>Other Splits operations: 
-<code><a href='NSplits.html'>NSplits</a>()</code>,
-<code><a href='NTip.html'>NTip</a>()</code>,
-<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
-<code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
-<code><a href='as.Splits.html'>as.Splits</a>()</code>,
-<code><a href='match.html'>match</a>()</code></p></div>
+    <div class='dont-index'><p>Other tree characterization functions: 
+<code><a href='CladisticInfo.html'>CladisticInfo</a>()</code>,
+<code><a href='TotalCopheneticIndex.html'>TotalCopheneticIndex</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>TipLabels</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='kw'>letters</span>[<span class='fl'>5</span><span class='op'>:</span><span class='fl'>1</span>]))
-</div><div class='output co'>#&gt; [1] "e" "d" "c" "b" "a"</div><div class='input'><span class='fu'>TipLabels</span>(<span class='fl'>5</span>)
-</div><div class='output co'>#&gt; [1] "t1" "t2" "t3" "t4" "t5"</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'Lobo'</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'>TipLabels</span>(<span class='kw'>Lobo.phy</span>))
-</div><div class='output co'>#&gt; [1] "Tubiluchus_Priapulida"  "Cricocosmia"            "Aysheaia"              
-#&gt; [4] "Siberion"               "Onychodictyon_ferox"    "Onychodictyon_gracilis"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>bal8</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>)
+<span class='kw'>pec8</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>)
+
+<span class='fu'>SisterSize</span>(<span class='kw'>bal8</span>, <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'>SisterSize</span>(<span class='kw'>pec8</span>, <span class='st'>'t3'</span>)
+</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>SisterSize</span>(<span class='fu'><a href='RootTree.html'>RootTree</a></span>(<span class='kw'>pec8</span>, <span class='st'>'t3'</span>), <span class='st'>'t3'</span>)
+</div><div class='output co'>#&gt; [1] 7</div><div class='input'>
+<span class='fu'>RootNodeDist</span>(<span class='kw'>bal8</span>, <span class='fl'>3</span>)
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>RootNodeDist</span>(<span class='kw'>pec8</span>, <span class='st'>'t3'</span>)
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>RootNodeDist</span>(<span class='fu'><a href='RootTree.html'>RootTree</a></span>(<span class='kw'>pec8</span>, <span class='st'>'t3'</span>), <span class='st'>'t3'</span>)
+</div><div class='output co'>#&gt; [1] 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
