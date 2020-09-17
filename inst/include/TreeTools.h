@@ -11,6 +11,8 @@ namespace TreeTools {
   extern IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
                                                 const IntegerVector child);
   extern IntegerMatrix postorder_edges(const IntegerMatrix edge);
+
+  extern IntegerMatrix root_on_node(const IntegerMatrix edge, int outgroup);
 }
 
 #endif // TreeTools_H_GEN_

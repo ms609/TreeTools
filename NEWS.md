@@ -1,6 +1,11 @@
 # TreeTools 1.2.0.9010 (development)
 
  - Export C++ functions `preorder_edges_and_nodes()` and `postorder_edges()`.
+ - New C++ function `root_on_node()` 
+   # To do: 
+     [ ] document
+     [ ] integrate into R funcs
+     [ ] write test cases
  
 # TreeTools 1.2.0.9005 (development)
 
