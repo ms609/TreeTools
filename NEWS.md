@@ -1,3 +1,7 @@
+# TreeTools 1.2.0.9010 (development)
+
+ - Export `preorder_edges_and_nodes()` C++ function.
+ 
 # TreeTools 1.2.0.9005 (development)
 
  - Import RdMacros package 'Rdpack'.
