@@ -8,8 +8,8 @@ namespace TreeTools {
 
   using namespace Rcpp;
 
-  extern IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
-                                                IntegerVector child);
+  extern IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
+                                                const IntegerVector child);
 }
 
 #endif // TreeTools_H_GEN_

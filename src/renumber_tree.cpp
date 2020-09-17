@@ -73,8 +73,8 @@ void add_child_edges(intx node, intx node_label,
 }
 
 // [[Rcpp::export]]
-IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
-                                       IntegerVector child)
+IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
+                                       const IntegerVector child)
 {
   const intx n_edge = parent.length(),
              node_limit = n_edge + 2;
@@ -150,7 +150,7 @@ intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
 // occur together.
 // Subtract one from $edge before passing.
 // [[Rcpp::export]]
-IntegerMatrix postorder_edges(IntegerMatrix edge)
+IntegerMatrix postorder_edges(const IntegerMatrix edge)
 {
   if (1L + edge.nrow() > INTX_CONSERVATIVE_MAX) {
     throw std::length_error("Too many edges in tree for postorder_edges: "
