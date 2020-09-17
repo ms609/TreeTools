@@ -25,6 +25,10 @@ postorder_edges <- function(edge) {
     .Call(`_TreeTools_postorder_edges`, edge)
 }
 
+root_on_node <- function(edge, outgroup) {
+    .Call(`_TreeTools_root_on_node`, edge, outgroup)
+}
+
 cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
