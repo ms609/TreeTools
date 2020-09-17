@@ -1,6 +1,6 @@
 # TreeTools 1.2.0.9010 (development)
 
- - Export `preorder_edges_and_nodes()` C++ function.
+ - Export C++ functions `preorder_edges_and_nodes()` and `postorder_edges()`.
  
 # TreeTools 1.2.0.9005 (development)
 
