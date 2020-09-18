@@ -8,6 +8,7 @@
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP);
 extern SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
 extern SEXP _TreeTools_postorder_edges(SEXP);
+extern SEXP _TreeTools_root_on_node(SEXP, SEXP);
 extern SEXP _TreeTools_num_to_parent(SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
@@ -32,6 +33,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
   {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
   {"_TreeTools_postorder_edges", (DL_FUNC) &_TreeTools_postorder_edges, 1},
+  {"_TreeTools_root_on_node", (DL_FUNC) &_TreeTools_root_on_node, 2},
   {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
   {NULL, NULL, 0}

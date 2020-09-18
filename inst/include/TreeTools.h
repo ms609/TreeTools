@@ -6,4 +6,5 @@ using namespace Rcpp;
 
 #include "types.h"
 
+
 #endif // TreeTools_H_GEN_
