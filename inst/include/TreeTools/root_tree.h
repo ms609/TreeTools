@@ -7,13 +7,13 @@
 
 namespace TreeTools {
   using namespace Rcpp;
-  extern IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
-                                                const IntegerVector child);
+  extern inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
+                                                       const IntegerVector child);
 
   // #TODO Write test cases
   // edge must be in preorder
   //  [[Rcpp::export]]
-  IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup) {
+  inline IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup) {
 
     if (edge(0, 1) == outgroup) return edge;
 

@@ -8,7 +8,7 @@
 using namespace Rcpp;
 
 namespace TreeTools {
-  intx smallest_descendant(intx *node, intx *smallest_desc, intx *n_children,
+  inline intx smallest_descendant(intx *node, intx *smallest_desc, intx *n_children,
                            intx *children_of, const intx *n_edge) {
     if (!smallest_desc[*node]) {
       smallest_desc[*node] =
@@ -25,7 +25,7 @@ namespace TreeTools {
     return smallest_desc[*node];
   }
 
-  void swap(intx *a, intx *b) {
+  inline void swap(intx *a, intx *b) {
     const intx temp = *a;
     *a = *b;
     *b = temp;
@@ -34,7 +34,7 @@ namespace TreeTools {
   /* Requires unsigned integers. */
   /* If we chose signed, we'd have to impose a limit on n_children, which
    * would exclude star trees */
-  void quicksort_by_smallest(intx *to_sort, intx *sort_by, intx left, intx right) {
+  inline void quicksort_by_smallest(intx *to_sort, intx *sort_by, intx left, intx right) {
     if (left >= right) return;
     const intx pivot = sort_by[to_sort[right]];
     intx centre = left;
@@ -48,7 +48,7 @@ namespace TreeTools {
     quicksort_by_smallest(to_sort, sort_by, centre, right);
   }
 
-  void add_child_edges(intx node, intx node_label,
+inline void add_child_edges(intx node, intx node_label,
                        intx *children_of, intx *n_children,
                        IntegerMatrix final_edges, intx *next_edge, intx *next_label,
                        intx *n_tip, const intx *n_edge) {
@@ -77,7 +77,7 @@ namespace TreeTools {
   }
 
   // [[Rcpp::export]]
-  IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
+  inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
                                          const IntegerVector child)
   {
     const intx n_edge = parent.length(),
@@ -138,7 +138,7 @@ namespace TreeTools {
     return (ret);
   }
 
-  intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
+inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
                        intx *children_of, intx n_edge) {
     if (!subtree_size[node]) {
       for (intx i = 0; i != n_children[node]; i++) {
@@ -154,7 +154,7 @@ namespace TreeTools {
   // occur together.
   // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  IntegerMatrix postorder_edges(const IntegerMatrix edge)
+  inline IntegerMatrix postorder_edges(const IntegerMatrix edge)
   {
     if (1L + edge.nrow() > INTX_CONSERVATIVE_MAX) {
       throw std::length_error("Too many edges in tree for postorder_edges: "
