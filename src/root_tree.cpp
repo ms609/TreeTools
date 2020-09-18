@@ -1,5 +1,9 @@
-#include "../inst/include/TreeTools.h"
+#include <Rcpp.h>
 #include "types.h"
+
+using namespace Rcpp;
+extern IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
+                                              const IntegerVector child);
 
 // #TODO Write test cases
 // edge must be in preorder
@@ -55,5 +59,5 @@ IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup) {
   ret(invert_next, 1) = edge(root_edges[spare_edge], 1);
   ret(root_edges[spare_edge], 1) = outgroup;
 
-  return TreeTools::preorder_edges_and_nodes(ret(_, 0), ret(_, 1));
+  return preorder_edges_and_nodes(ret(_, 0), ret(_, 1));
 }
