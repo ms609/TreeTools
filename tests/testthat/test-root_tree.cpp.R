@@ -7,8 +7,14 @@ Test <- function (tree, root) {
 }
 
 test_that('Binary trees are rootable', {
-  Test(BalancedTree(8), 3)
-  Test(BalancedTree(8), 1)
-  Test(PectinateTree(8), 1)
-  Test(PectinateTree(8), 7)
+  Test(BalancedTree(9), 3)
+  Test(BalancedTree(9), 1)
+  Test(PectinateTree(9), 1)
+  Test(PectinateTree(9), 7)
 })
+
+#test_that('Polytomous trees are rootable', {
+  #Test(CollapseNode(BalancedTree(8), 10), 1)
+  #Test(CollapseNode(BalancedTree(8), 11), 1)
+  #Test(StarTree(8), 1)
+#})
