@@ -37,6 +37,12 @@ test_that("Random trees are generated correctly", {
   expect_equal(c(4, 4, 5, 5, 1, 5, 2, 3), RandomTree(3, root = TRUE)$edge[1:8])
   expect_equal(PectinateTree(c('t2', 't3', 't1')), RandomTree(3, root = 't2'))
   expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
+  expect_warning(expect_equal(RandomTree(3, root = 't2'),
+                              RandomTree(3, root = 2:3)))
+  expect_error(RandomTree(4, root = 'not_there'))
+  expect_error(RandomTree(4, root = 999))
+  expect_error(RandomTree(4, root = -1))
+  expect_error(RandomTree(4, root = NA_integer_))
 })
 
 test_that("NJTree() works", {

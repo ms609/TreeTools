@@ -44,8 +44,13 @@ RandomTree <- function (tips, root = FALSE) {
                                 seq_len(nTips + nTips - 2L)))
   if (!is.logical(root) && root != 1L) {
     if (isTRUE(root)) root <- 1L
+    if (is.character(root)) root <- which(tips == root)
+    if (length(root) == 0L) stop ("No match found for `root`")
     if (!is.integer(root)) root <- as.integer(root)
-    if (is.na(root)) stop("`root` parameter invalid")
+    if (length(root) > 1L) {
+      root <- root[1]
+      warning("More than one entry in `root`; using ", root)
+    }
     edge <- root_on_node(edge, root)
   }
   tree <- structure(list(edge = edge,
