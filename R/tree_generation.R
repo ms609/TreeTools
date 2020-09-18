@@ -35,7 +35,6 @@ NULL
 #' data('Lobo')
 #' RandomTree(Lobo.phy)
 #'
-#' @importFrom ape root
 #' @export
 RandomTree <- function (tips, root = FALSE) {
   tips <- TipLabels(tips)
@@ -43,6 +42,12 @@ RandomTree <- function (tips, root = FALSE) {
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
+  if (!is.logical(root) && root != 1L) {
+    if (isTRUE(root)) root <- 1L
+    if (!is.integer(root)) root <- as.integer(root)
+    if (is.na(root)) stop("`root` parameter invalid")
+    edge <- root_on_node(edge, root)
+  }
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,
                          tip.label = tips,
@@ -50,10 +55,6 @@ RandomTree <- function (tips, root = FALSE) {
                     class = 'phylo')
   if (isFALSE(root)) {
     tree <- UnrootTree(tree)
-  } else if(isTRUE(root) || root == 1L) {
-    # Tree already rooted on '1'
-  } else {
-    tree <- root(tree, root, resolve.root = TRUE)
   }
 
   # Return:
