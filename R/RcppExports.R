@@ -17,10 +17,6 @@ edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }
 
-root_on_node <- function(edge, outgroup) {
-    .Call(`_TreeTools_root_on_node`, edge, outgroup)
-}
-
 cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }

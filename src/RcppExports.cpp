@@ -54,18 +54,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// root_on_node
-IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup);
-RcppExport SEXP _TreeTools_root_on_node(SEXP edgeSEXP, SEXP outgroupSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< const int >::type outgroup(outgroupSEXP);
-    rcpp_result_gen = Rcpp::wrap(root_on_node(edge, outgroup));
-    return rcpp_result_gen;
-END_RCPP
-}
 // cpp_edge_to_splits
 RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
