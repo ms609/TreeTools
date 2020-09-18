@@ -4,7 +4,7 @@
 // #TODO Write test cases
 // edge must be in preorder
 //  [[Rcpp::export]]
-IntegerMatrix root_on_node(const IntegerMatrix edge, int outgroup) {
+IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup) {
 
   if (edge(0, 1) == outgroup) return edge;
 
