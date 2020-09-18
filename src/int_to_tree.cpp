@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 #include <random>
-#include "types.h"
+#include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;

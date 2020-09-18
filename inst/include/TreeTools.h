@@ -4,12 +4,6 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-namespace TreeTools {
-
-  using namespace Rcpp;
-
-  extern IntegerMatrix preorder_edges_and_nodes(IntegerVector parent,
-                                                IntegerVector child);
-}
+#include "types.h"
 
 #endif // TreeTools_H_GEN_
