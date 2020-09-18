@@ -1,6 +1,4 @@
 #include "../inst/include/TreeTools.h"
-#include "../inst/include/root_tree.h"
-#include "../inst/include/renumber_tree.h"
 #include <Rcpp.h>
 
 using namespace Rcpp;

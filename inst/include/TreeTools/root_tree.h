@@ -1,4 +1,8 @@
+#ifndef TreeTools_root_tree_
+#define TreeTools_root_tree_
+
 #include <Rcpp.h>
+#include "renumber_tree.h"
 #include "types.h"
 
 namespace TreeTools {
@@ -63,3 +67,5 @@ namespace TreeTools {
     return preorder_edges_and_nodes(ret(_, 0), ret(_, 1));
   }
 }
+
+#endif

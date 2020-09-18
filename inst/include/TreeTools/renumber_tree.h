@@ -1,3 +1,6 @@
+#ifndef TreeTools_renumber_tree_
+#define TreeTools_renumber_tree_
+
 #include <cstdio>
 #include <cstdlib> /* for calloc */
 #include <Rcpp.h>
@@ -234,3 +237,5 @@ namespace TreeTools {
     return (ret);
   }
 }
+
+#endif

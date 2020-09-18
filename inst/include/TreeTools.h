@@ -4,7 +4,8 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-#include "types.h"
+#include "TreeTools/types.h"
+#include "TreeTools/root_tree.h"
 
 
 #endif // TreeTools_H_GEN_
