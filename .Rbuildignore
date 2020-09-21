@@ -23,6 +23,5 @@ vignettes/.RData
 ^docs$
 ^doc$
 ^data-raw$
-^Meta$
 ^pkgdown$
 ^revdep$
