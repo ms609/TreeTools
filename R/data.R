@@ -6,7 +6,7 @@
 #'
 #' @source{
 #'
-#' * [ColourBrewer2.org](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
+#' * [ColourBrewer2.org](https://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
 #'
 #' * [Martin Krzywinski](http://mkweb.bcgsc.ca/colorblind/)
 #' }
