@@ -134,7 +134,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="kw">badTree</span> <span class="op">&lt;-</span> <span class="kw">ape</span>::<span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span>(text=<span class="st">'((A, B), (((C, D), ((E), F))));'</span>)
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">badTree</span>)
-<span class="kw">ape</span>::<span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html">nodelabels</a></span>(bg=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">2</span>))
+<span class="kw">ape</span>::<span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html">nodelabels</a></span>(bg = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>))
 </pre></div>
 <p><img src="load-trees_files/figure-html/double-bracket-1.png" width="75%" style="display: block; margin: auto;"></p>
 <p>The text is expected in Newick format, so can contain edge lengths - but edge lengths must be included for every edge of the tree, or they will be ignored.</p>
