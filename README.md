@@ -11,7 +11,9 @@
 'TreeTools' is an R package that provides efficient implementations of 
 functions for the creation, modification and analysis of phylogenetic trees.
 
-Applications include: generation of trees with specified shapes;
+Applications include:
+generation of trees with specified shapes;
+analysis of tree shape;
 rooting of trees and extraction of subtrees;
 calculation and depiction of node support;
 calculation of ancestor-descendant relationships;

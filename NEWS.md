@@ -1,34 +1,24 @@
-# TreeTools 1.2.0.9010 (development)
+# TreeTools 1.3.0
 
- - Export C++ functions `preorder_edges_and_nodes()` and `postorder_edges()`.
- - New C++ function `root_on_node()` roots binary trees.
-   # To do: 
-     [ ] document
-     [ ] integrate into R funcs
-     [X] write test cases
+## New functions
  
-# TreeTools 1.2.0.9005 (development)
+ - `SisterSize()` and `RootNodeDist()` measure sister-clade size and root-node
+   distance.
+ - `MSTEdges()`: Edges of minimum spanning tree.
+ - `SplitImbalance()`: how balanced is each split?
+ - Experimental: new C++ function `root_on_node()` roots binary trees.
+   - Not yet documented
+   - Not yet fully integrated into R front-end
+   - Only binary trees are supported
 
+## Enhancements
+
+ - `TNTReadTree()` handles additional punctuation characters.
  - Import RdMacros package 'Rdpack'.
-
-# TreeTools 1.2.0.9004 (development)
-
- - New functions `SisterSize()` and `RootNodeDist()` measure sister-clade size
-   and root-node distance.
-
-# TreeTools 1.2.0.9003 (development)
-
- - Handle some punctulation characters in `TNTReadTree()`.
  
-# TreeTools 1.2.0.9002 (development)
- 
- - New function `SplitImbalance()`: how balanced is each split?
  - C++ implementation of `TipsInSplits()`.
- 
-# TreeTools 1.2.0.9001 (development)
-
- - New function `MSTEdges()`: Edges of minimum spanning tree.
- - Remove obselete copy of C++ code from 'phangorn'.
+ - Export C++ functions `preorder_edges_and_nodes()` and `postorder_edges()`.
+ - Remove obsolete copy of C++ code from 'phangorn'.
 
 # TreeTools 1.2.0
 

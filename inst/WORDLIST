@@ -1,3 +1,7 @@
+mfrow
+edgelabels
+nodelabels
+png
 ABCD
 Brazeau
 Cavalli
@@ -31,10 +35,14 @@ Preorder
 Pruningwise
 R's
 RStudio
+RdMacros
+Rdpack
 Rohlf
 Sackin's
 Sforza
 SPR
+Stemmier
+Stemwardness
 TNT's
 TreeDist
 TreeSearch
@@ -48,6 +56,7 @@ cladewise
 cladistic
 codecov
 colourblind
+crownwards
 doi
 durham
 endopods

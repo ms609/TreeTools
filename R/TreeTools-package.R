@@ -9,6 +9,8 @@
 #' aiming for efficient and robust implementations of functions, typically
 #' applied to unweighted trees (i.e. those without edge lengths).
 #'
+#' Full documentation is available [online](https://ms609.github.io/TreeTools/).
+#'
 #' @keywords internal
 "_PACKAGE"
 
