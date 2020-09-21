@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "types.h"
+#include "../inst/include/TreeTools/types.h"
 using namespace Rcpp;
 using namespace std;
 

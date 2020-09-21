@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "types.h"
+#include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
 const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,

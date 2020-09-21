@@ -6,7 +6,7 @@
      [ ] document
      [ ] integrate into R funcs
      [X] write test cases
- 
+
 # TreeTools 1.2.0.9005 (development)
 
  - Import RdMacros package 'Rdpack'.
