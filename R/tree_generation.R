@@ -42,7 +42,7 @@ RandomTree <- function (tips, root = FALSE) {
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
-  if (!is.logical(root) && root != 1L) {
+  if (!is.logical(root) && !(length(root) == 1L && root == 1L)) {
     if (isTRUE(root)) root <- 1L
     if (is.character(root)) root <- which(tips == root)
     if (length(root) == 0L) stop ("No match found for `root`")
