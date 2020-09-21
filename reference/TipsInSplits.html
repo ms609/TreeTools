@@ -89,7 +89,7 @@ bipartition split in a Splits object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -153,7 +153,7 @@ bipartition split in a Splits object." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Tips contained within splits</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Splits.R'><code>R/Splits.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/split_analysis.R'><code>R/split_analysis.R</code></a></small>
     <div class="hidden name"><code>TipsInSplits.Rd</code></div>
     </div>
 
@@ -162,14 +162,37 @@ bipartition split in a Splits object." />
 bipartition split in a <code>Splits</code> object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>)</pre>
+    <pre class="usage"><span class='fu'>TipsInSplits</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for Splits</span>
+<span class='fu'>TipsInSplits</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>TipsInSplits</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='fu'>SplitImbalance</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for Splits</span>
+<span class='fu'>SplitImbalance</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>SplitImbalance</span>(<span class='kw'>splits</span>, keep.names = <span class='fl'>TRUE</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>splits</th>
-      <td><p>Object of class <code>Splits</code>.</p></td>
+      <td><p>Object of class <code>Splits</code> or <code>phylo</code>.</p></td>
+    </tr>
+    <tr>
+      <th>keep.names</th>
+      <td><p>Logical specifying whether to include the names of <code>splits</code>
+in the output.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters to pass to <code><a href='as.Splits.html'>as.Splits()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -177,6 +200,10 @@ bipartition split in a <code>Splits</code> object.</p>
 
     <p><code>TipsInSplits()</code> returns a named vector of integers, specifying the
 number of tips contained within each split in <code>splits</code>.</p>
+<p><code>SplitImbalance()</code> returns a named vector of integers, specifying the
+number of leaves within a split that are not 'balanced' by a leaf outside it;
+i.e. a split that divides leaves evenly has an imbalance of zero; one that
+splits two tips from ten has an imbalance of 10 - 2 = 8.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other Splits operations: 
@@ -188,12 +215,16 @@ number of tips contained within each split in <code>splits</code>.</p>
 <code><a href='match.html'>match</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tree</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>)<span class='co'>#'</span>
-<span class='no'>splits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='no'>tree</span>)
-<span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>)</div><div class='output co'>#&gt; 11 12 13 14 15 
+    <pre class="examples"><div class='input'><span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>)
+<span class='kw'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='kw'>tree</span>)
+<span class='fu'>TipsInSplits</span>(<span class='kw'>splits</span>)
+</div><div class='output co'>#&gt; 11 12 13 14 15 
 #&gt;  6  5  4  3  2 </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tree</span>)</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='no'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>splits</span>), <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>3L</span>, <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>0.7</span>)</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='no'>tree</span>, <span class='fu'>TipsInSplits</span>(<span class='no'>splits</span>), <span class='kw'>unit</span> <span class='kw'>=</span> <span class='st'>' tips'</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='st'>'none'</span>,
-            <span class='kw'>pos</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</div><div class='img'><img src='TipsInSplits-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tree</span>)
+</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='kw'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='kw'>splits</span>), frame = <span class='st'>'none'</span>, pos = <span class='fl'>3L</span>, cex = <span class='fl'>0.7</span>)
+</div><div class='input'><span class='fu'><a href='LabelSplits.html'>LabelSplits</a></span>(<span class='kw'>tree</span>, <span class='fu'>TipsInSplits</span>(<span class='kw'>splits</span>), unit = <span class='st'>' tips'</span>, frame = <span class='st'>'none'</span>,
+            pos = <span class='fl'>1L</span>)
+</div><div class='img'><img src='TipsInSplits-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -210,7 +241,7 @@ number of tips contained within each split in <code>splits</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

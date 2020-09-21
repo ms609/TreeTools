@@ -90,7 +90,7 @@ TCIContext() lists its possible values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -164,12 +164,12 @@ TCIContext() lists its possible values." />
 <code>TCIContext()</code> lists its possible values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TotalCopheneticIndex</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>TotalCopheneticIndex</span>(<span class='kw'>x</span>)
 
-<span class='fu'>TCIContext</span>(<span class='no'>x</span>)
+<span class='fu'>TCIContext</span>(<span class='kw'>x</span>)
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>TCIContext</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>TCIContext</span>(<span class='kw'>x</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,19 +216,31 @@ doi: <a href='https://doi.org/10.1016/j.mbs.2012.10.005'>10.1016/j.mbs.2012.10.0
 '<a href='https://github.com/LuciaRotger/CollessLike'>CollessLike</a>'
 provides an alternative implementation of this index and its predecessors.</p>
 <p>Other tree characterization functions: 
-<code><a href='CladisticInfo.html'>CladisticInfo</a>()</code></p></div>
+<code><a href='CladisticInfo.html'>CladisticInfo</a>()</code>,
+<code><a href='Stemwardness.html'>Stemwardness</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Balanced trees have the minimum index for a binary tree;</span>
 <span class='co'># Pectinate trees the maximum:</span>
-<span class='fu'>TCIContext</span>(<span class='fl'>8</span>)</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
-#&gt; 1      56      16          38.8345      28.51429      90.52281</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 56</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 16</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>StarTree</a></span>(<span class='fl'>8</span>))</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
+<span class='fu'>TCIContext</span>(<span class='fl'>8</span>)
+</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
+#&gt; 1      56      16          38.8345      28.51429      90.52281</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))
+</div><div class='output co'>#&gt; [1] 56</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>))
+</div><div class='output co'>#&gt; [1] 16</div><div class='input'><span class='fu'>TotalCopheneticIndex</span>(<span class='fu'><a href='GenerateTree.html'>StarTree</a></span>(<span class='fl'>8</span>))
+</div><div class='output co'>#&gt; [1] 0</div><div class='input'>
 
 <span class='co'># Examples from Mir et al. (2013):</span>
-<span class='no'>tree12</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'(1, (2, (3, (4, 5))));'</span>)  <span class='co'>#Fig. 4, tree 12</span>
-<span class='fu'>TotalCopheneticIndex</span>(<span class='no'>tree12</span>) <span class='co'># 10</span></div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='no'>tree8</span>  <span class='kw'>&lt;-</span> <span class='kw pkg'>ape</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(<span class='kw'>text</span><span class='kw'>=</span><span class='st'>'((1, 2, 3, 4), 5);'</span>)      <span class='co'>#Fig. 4, tree 8</span>
-<span class='fu'>TotalCopheneticIndex</span>(<span class='no'>tree8</span>)  <span class='co'># 6</span></div><div class='output co'>#&gt; [1] 6</div><div class='input'><span class='fu'>TCIContext</span>(<span class='no'>tree8</span>)</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
-#&gt; 1      10       4         8.285714      7.166667      5.138889</div><div class='input'><span class='fu'>TCIContext</span>(<span class='fl'>5L</span>) <span class='co'># Context for a tree with 5 leaves.</span></div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
+<span class='kw'>tree12</span> <span class='op'>&lt;-</span> <span class='kw'>ape</span>::<span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(text=<span class='st'>'(1, (2, (3, (4, 5))));'</span>)  <span class='co'>#Fig. 4, tree 12</span>
+<span class='fu'>TotalCopheneticIndex</span>(<span class='kw'>tree12</span>) <span class='co'># 10</span>
+</div><div class='output co'>#&gt; [1] 10</div><div class='input'><span class='kw'>tree8</span>  <span class='op'>&lt;-</span> <span class='kw'>ape</span>::<span class='fu'><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>read.tree</a></span>(text=<span class='st'>'((1, 2, 3, 4), 5);'</span>)      <span class='co'>#Fig. 4, tree 8</span>
+<span class='fu'>TotalCopheneticIndex</span>(<span class='kw'>tree8</span>)  <span class='co'># 6</span>
+</div><div class='output co'>#&gt; [1] 6</div><div class='input'><span class='fu'>TCIContext</span>(<span class='kw'>tree8</span>)
+</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
+#&gt; 1      10       4         8.285714      7.166667      5.138889</div><div class='input'><span class='fu'>TCIContext</span>(<span class='fl'>5L</span>) <span class='co'># Context for a tree with 5 leaves.</span>
+</div><div class='output co'>#&gt;   maximum minimum uniform.expected yule.expected yule.variance
 #&gt; 1      10       4         8.285714      7.166667      5.138889</div><div class='input'>
 </div></pre>
   </div>
@@ -246,7 +258,7 @@ provides an alternative implementation of this index and its predecessors.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
