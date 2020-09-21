@@ -11,6 +11,7 @@ namespace TreeTools {
                                                        const IntegerVector child);
 
   // #TODO Write test cases
+  // edge must be BINARY
   // edge must be in preorder
   //  [[Rcpp::export]]
   inline IntegerMatrix root_on_node(const IntegerMatrix edge, const int outgroup) {
