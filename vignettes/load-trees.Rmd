@@ -38,7 +38,7 @@ Beware common gotchas when entering text:
 ```{r double-bracket, fig.align='center', fig.width=6, out.width='75%'}
 badTree <- ape::read.tree(text='((A, B), (((C, D), ((E), F))));')
 plot(badTree)
-ape::nodelabels(bg=c(3,3,2,2,3,3,2))
+ape::nodelabels(bg = c(3, 3, 2, 2, 3, 3, 2))
 ```
 
 The text is expected in Newick format, so can contain edge lengths - but edge
