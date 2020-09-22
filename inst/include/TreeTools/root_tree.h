@@ -79,8 +79,6 @@ namespace TreeTools {
 
     IntegerMatrix edge = phy["edge"];
 
-    if (edge(0, 1) == outgroup) return phy;
-
     const intx n_edge = edge.nrow(),
       n_node = phy["Nnode"],
       max_node = n_edge + 1,
@@ -121,6 +119,8 @@ namespace TreeTools {
 
     intx invert_next = edge_above[outgroup];
     if (root_edges_found == 2) { // Root node is vapour, and can be repurposed
+
+      if (edge(0, 1) == outgroup) return phy;
       // #TODO work in situ without clone
       IntegerMatrix new_edge = clone(edge);
 
