@@ -51,7 +51,7 @@ RandomTree <- function (tips, root = FALSE) {
       root <- root[1]
       warning("More than one entry in `root`; using ", root)
     }
-    edge <- root_on_node(edge, root)
+    edge <- root_binary(edge, root)
   }
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,
@@ -187,15 +187,15 @@ StarTree <- function (tips) {
 #' NJTree(Lobo.phy)
 #'
 #' @template MRS
-#' @importFrom ape nj
+#' @importFrom ape nj root
 #' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
 NJTree <- function (dataset, edgeLengths = FALSE) {
-  nj.tree <- nj(dist.hamming(dataset))
-  nj.tree <- RootTree(nj.tree, names(dataset)[1])
-  if (!edgeLengths) nj.tree$edge.length <- NULL
-  nj.tree
+  tree <- nj(dist.hamming(dataset))
+  tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
+  if (!edgeLengths) tree$edge.length <- NULL
+  tree
 }
 
 #' Generate a tree with a specific outgroup
