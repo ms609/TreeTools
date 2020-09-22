@@ -2,7 +2,7 @@
 
 * Local Windows 10 installation, R 4.0.2
 * Ubuntu 16.04.6 LTS, R 3.6.0, release and devel, via 
-  [Travis CI](https://travis-ci.org/ms609/TreeTools)
+  [Travis CI](https://travis-ci.org/ms609/TreeTools/)
 * Mac OS X 10.13.6, R release, via Travis
 * R-hub, with `check_for_cran()` and `check_win_devel()`
 
