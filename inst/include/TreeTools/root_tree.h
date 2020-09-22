@@ -106,11 +106,6 @@ namespace TreeTools {
       edge_above[edge(i, 1)] = i;
 
       if (edge(i, 0) == root_node) {
-        if (edge(i, 1) == outgroup) {
-          delete[] edge_above;
-          ret["edge"] = edge;
-          return ret;
-        }
         if (root_edges_found < 2) root_edges[root_edges_found] = i;
         ++root_edges_found;
       }
@@ -118,9 +113,11 @@ namespace TreeTools {
     }
 
     intx invert_next = edge_above[outgroup];
+
     if (root_edges_found == 2) { // Root node is vapour, and can be repurposed
 
-      if (edge(0, 1) == outgroup) return phy;
+      if (edge(root_edges[0], 1) == outgroup ||
+          edge(root_edges[1], 1) == outgroup) return phy;
       // #TODO work in situ without clone
       IntegerMatrix new_edge = clone(edge);
 
