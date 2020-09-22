@@ -12,7 +12,8 @@
 #' the names or indices of the tips to include in the outgroup.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
-#' clade that contains the specified tips.
+#' clade that contains the specified tips, with edges and nodes numbered in
+#' preorder.
 #'
 #' @examples
 #' tree <- PectinateTree(8)
@@ -40,20 +41,22 @@ RootTree <- function (tree, outgroupTips) UseMethod('RootTree')
 RootTree.phylo <- function (tree, outgroupTips) {
   tipLabels <- tree$tip.label
   if (is.character(outgroupTips)) {
-    if (!all(outgroupTips %in% tipLabels)) {
-      stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
+    chosenTips <- match(outgroupTips, tipLabels)
+    if (any(is.na(chosenTips))) {
+      stop("Outgroup tips [", paste(outgroupTips[is.na(chosenTips)], collapse=', '),
            "] not found in tree's tip labels.")
     }
-  } else {
-    outgroupTips <- tipLabels[outgroupTips]
+    outgroupTips <- chosenTips
+  } else if (is.logical(outgroupTips)) {
+    outgroupTips <- which(outgroupTips)
   }
+  tree <- Preorder(tree)
   if (length(outgroupTips) == 0) {
     stop("No outgroup tips selected")
-  } else if (length(outgroupTips) == 1) {
+  } else if (length(outgroupTips) == 1L) {
     outgroup <- outgroupTips
   } else {
-    tipNos <- which(tipLabels %in% outgroupTips)
-    ancestry <- unlist(Ancestors(tree, tipNos))
+    ancestry <- unlist(Ancestors(tree, outgroupTips))
     ancestryTable <- table(ancestry)
     lineage <- as.integer(names(ancestryTable))
     lca <- max(lineage[ancestryTable == length(outgroupTips)])
@@ -61,10 +64,10 @@ RootTree.phylo <- function (tree, outgroupTips) {
     if (lca == rootNode) {
       lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
     }
-    outgroup <- Descendants(tree, lca)[[1]]
+    outgroup <- lca
   }
 
-  Renumber(root(tree, outgroup, resolve.root = TRUE))
+  root_on_node(tree, outgroup)
 }
 
 #' @export
