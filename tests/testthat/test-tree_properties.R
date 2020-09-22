@@ -1,11 +1,32 @@
 context("tree_properties.R")
 
-test_that('EdgeAncestry works', {
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
+test_that("AllDescendantEdges() works", {
+  pec5 <- UnrootTree(PectinateTree(5))
+  V <- TRUE; x <- FALSE
+  expect_equal(matrix(c(V, x, x, x, x, x, x,
+                        x, V, x, x, x, x, x,
+                        x, x, V, V, V, V, V,
+                        x, x, x, V, x, x, x,
+                        x, x, x, x, V, V, V,
+                        x, x, x, x, x, V, x,
+                        x, x, x, x, x, x, V), 7, 7, byrow = T),
+               DescendantEdges(edge = NULL, pec5$edge[, 1], pec5$edge[, 2]))
+})
+
+test_that('EdgeAncestry() works', {
   tree <- BalancedTree(10)
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
-  expect_equal(c(10, 14, 16), which(EdgeAncestry(18, parent, child)))
+  expect_equal(1:3, which(EdgeAncestry(4L, parent, child)))
   expect_equal(1, which(EdgeAncestry(2, parent, child)))
   expect_equal(integer(0), which(EdgeAncestry(1, parent, child)))
   expect_equal(logical(18), EdgeAncestry(10, parent, child))
@@ -14,7 +35,7 @@ test_that('EdgeAncestry works', {
 test_that('Root node can be found', {
   rooted <- BalancedTree(8)
   postorder <- Postorder(rooted)
-  unrooted <- unroot(rooted)
+  unrooted <- UnrootTree(rooted)
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
   expect_equal(9L, RootNode(rooted$edge))
@@ -29,7 +50,7 @@ test_that('Root node can be found', {
   expect_warning(RootNode(matrix(1:4, 2)))
 })
 
-test_that('NodeOrder works', {
+test_that('NodeOrder() works', {
   expect_equivalent(c(2L, rep(3L, 6)),
                     as.integer(NodeOrder(BalancedTree(8), internalOnly = TRUE)))
   expect_equivalent(c(rep(1L, 8), 2L, rep(3L, 6)),
@@ -40,6 +61,8 @@ test_that('NodeOrder works', {
                     as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
   expect_equal(list(NodeOrder(tree), NodeOrder(tree)), NodeOrder(c(tree, tree)))
   expect_equal(NodeOrder(c(tree, tree)), NodeOrder(list(tree, tree)))
+
+  expect_equal(c(3, 2, 2), NDescendants(UnrootTree(PectinateTree(5))))
 })
 
 test_that('Rooting and partition counting', {
@@ -48,19 +71,56 @@ test_that('Rooting and partition counting', {
   expect_false(TreeIsRooted(ape::read.tree(text='(a, b, c);')))
   expect_true(TreeIsRooted(ape::read.tree(text='(a, (b, c));')))
 
-  tree8 <- ape::rtree(8L)
+  tree8 <- RandomTree(8L, TRUE)
   expect_true(TreeIsRooted(tree8))
-  expect_false(TreeIsRooted(ape::unroot(tree8)))
+  expect_false(TreeIsRooted(UnrootTree(tree8)))
 
   expect_equal(5L, NPartitions(8))
   expect_equal(5L, NPartitions(tree8))
-  expect_equal(5L, NPartitions(ape::unroot(tree8)))
+  expect_equal(5L, NPartitions(UnrootTree(tree8)))
 
   expect_equal(0L, NPartitions(ape::read.tree(text='(A, ((B, C)));')))
 
-  expect_equal(c(5L, 5L), NPartitions(list(tree8, ape::unroot(tree8))))
+  expect_equal(c(5L, 5L), NPartitions(list(tree8, UnrootTree(tree8))))
   expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
-  expect_error(NPartitions('not a tree'))
+  expect_equal(2L, NSplits('((a, b), (c, (d, e)));'))
+  expect_equal(0L, NSplits('a'))
+  expect_equal(0L, NSplits(letters[1:2]))
+  expect_equal(3L, NSplits(letters[1:6]))
+  expect_error(NPartitions(raw(1)))
+})
+
+test_that("NTip() works", {
+  Test <- function (n) {
+    tr <- BalancedTree(n)
+    pec <- PectinateTree(n)
+    expect_identical(n, NTip(tr))
+    expect_identical(n, NTip(tr$edge))
+    expect_identical(n, NTip(Postorder(tr$edge)))
+    expect_identical(n, NTip(list(tr)))
+    expect_identical(rep(n, 2L), NTip(list(tr, tr)))
+    expect_identical(rep(n, 3L),
+                     NTip(structure(list(tr, tr, pec), class = 'multiPhylo')))
+    expect_error(NTip(matrix('', n, 2)))
+  }
+  Test(1L)
+  Test(8L)
+  Test(64L)
+  Test(2000L)
+})
+
+test_that("NSplits() works", {
+  expect_equal(NSplits(5L), NSplits(LETTERS[1:5]))
+})
+
+test_that("MRCA() works", {
+  bal7 <- BalancedTree(7)
+  allAnc <- AllAncestors(bal7$edge[, 1], bal7$edge[, 2])
+  expect_equal(9, MRCA(1, 4, allAnc))
+  expect_equal(8, MRCA(1, 6, allAnc))
+  expect_equal(8, MRCA(1, 7, allAnc))
+  expect_equal(1, MRCA(1, 1, allAnc))
+  expect_equal(9, MRCA(1, 11, allAnc))
 })
 
 test_that('Edge distances are calculated correctly', {
@@ -88,43 +148,51 @@ test_that("Node depths calculated correctly", {
   expect_equal(c(rep(0, 20), 19:1), NodeDepth(PectinateTree(20)))
   expect_equal(c(rep(0, 20), rep(1, 19)),
                NodeDepth(PectinateTree(20), shortest = TRUE))
-  expect_equal(c(rep(0, 20), 1:9, 9:1), NodeDepth(unroot(PectinateTree(20))))
+  expect_equal(c(rep(0, 20), 1:9, 9:1), NodeDepth(UnrootTree(PectinateTree(20))))
   expect_equal(c(rep(0, 20), rep(1, 18)),
-               NodeDepth(unroot(PectinateTree(20)), shortest = TRUE))
+               NodeDepth(UnrootTree(PectinateTree(20)), shortest = TRUE))
 
   tree <- BalancedTree(20)
-  expect_equal(c(5,4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
+  expect_equal(c(5,4,3,2,1,1,3,2,1,1,4,3,2,1,1,3,2,1,1),
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
+  expect_equal(list(c(4,3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1)),
+               NodeDepth(list(tree), shortest = TRUE, includeTips = FALSE))
 
-  tree <- unroot(tree)
-  expect_equal(c(4,3,1,2,1,3,1,2,1,4,3,1,2,1,3,1,2,1),
+  tree <- UnrootTree(tree)
+  expect_equal(c(4,3,2,1,1,3,2,1,1,4,3,2,1,1,3,2,1,1),
                NodeDepth(tree, includeTips = FALSE))
   expect_equal(c(3,2,1,1,1,2,1,1,1,3,2,1,1,1,2,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
-  tree <- unroot(RootTree(BalancedTree(20), 't10'))
-  #plot(tree)
-  #nodelabels(NodeDepth(tree, T, FALSE))
+  tree <- UnrootTree(RootTree(BalancedTree(20), 't10'))
+  #plot(tree); nodelabels(adj = 2, bg = 'yellow')
   #nodelabels(NodeDepth(tree, F, FALSE))
-  expect_equal(c(1,2,3,4,3,1,2,1,4,3,1,2,1,3,1,2,1,1),
+  #nodelabels(NodeDepth(tree, T, FALSE))
+  expect_equal(c(1,3,4,3,2,1,1,4,3,2,1,1,3,2,1,1,2,1),
                NodeDepth(tree, includeTips = FALSE))
-  expect_equal(c(1,1,2,3,2,1,1,1,3,2,1,1,1,2,1,1,1,1),
+  expect_equal(c(1,2,3,2,1,1,1,3,2,1,1,1,2,1,1,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
 
 
   tree <- CollapseNode(BalancedTree(20), c(22:26, 33:35))
-  expect_equal(c(4,3,1,2,1,4,1,3,1,2,1), NodeDepth(tree, FALSE, FALSE))
+  expect_equal(c(4,3,2,1,1,4,1,3,2,1,1), NodeDepth(tree, FALSE, FALSE))
   expect_equal(c(1,2,1,1,1,2,1,2,1,1,1), NodeDepth(tree, TRUE, FALSE))
 
   tree <- CollapseNode(BalancedTree(20), c(22, 33:35))
-  expect_equal(c(4,3,1,2,1,3,1,2,1,4,1,3,1,2,1),
+  expect_equal(c(4,3,2,1,1,3,2,1,1,4,1,3,2,1,1),
                NodeDepth(tree, FALSE, FALSE))
   expect_equal(c(3,2,1,1,1,2,1,1,1,2,1,2,1,1,1),
                NodeDepth(tree, TRUE, FALSE))
 
-  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), FALSE, FALSE))
-  expect_equal(1L, NodeDepth(CollapseNode(BalancedTree(8), 10:15), TRUE, FALSE))
+  expect_equal(1L, NodeDepth(StarTree(8), FALSE, FALSE))
+  expect_equal(1L, NodeDepth(StarTree(8), TRUE, FALSE))
+})
+
+test_that('SplitsInBinaryTree() works', {
+  expect_identical(5L, SplitsInBinaryTree(8))
+  expect_identical(5L, SplitsInBinaryTree(as.phylo(0, 8)))
+  expect_identical(rep(5L, 4), SplitsInBinaryTree(as.phylo(0:3, 8)))
 })

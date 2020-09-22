@@ -4,25 +4,44 @@
 \alias{CladeSizes}
 \title{Clade sizes}
 \usage{
-CladeSizes(tree, nodes)
+CladeSizes(tree, internal = FALSE, nodes = NULL)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
-\item{nodes}{whose descendants should be returned}
+\item{internal}{Logical specifying whether internal nodes should be counted
+towards the size of each clade.}
+
+\item{nodes}{Integer specifying indices of nodes at the base of clades
+whose sizes should be returned.
+If unspecified, counts will be provided for all nodes (including leaves).}
 }
 \value{
-\code{CladeSizes()} returns the number of nodes (including tips) that are
-descended from each node.
+\code{CladeSizes()} returns the number of nodes (including leaves) that
+are descended from each node, not including the node itself.
 }
 \description{
-Clade sizes
+\code{CladeSizes()} reports the number of nodes in each clade in a tree.
 }
 \examples{
 tree <- BalancedTree(6)
 plot(tree)
 ape::nodelabels()
-CladeSizes(tree, c(8, 9))
+CladeSizes(tree, nodes = c(1, 8, 9))
 
 }
-\keyword{internal}
+\seealso{
+Other tree navigation: 
+\code{\link{AncestorEdge}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
+\code{\link{MRCA}()},
+\code{\link{NDescendants}()},
+\code{\link{NodeDepth}()},
+\code{\link{NodeOrder}()},
+\code{\link{NonDuplicateRoot}()},
+\code{\link{RootNode}()}
+}
+\concept{tree navigation}

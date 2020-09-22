@@ -5,13 +5,13 @@
 \alias{AllDescendantEdges}
 \title{Identify descendant edges}
 \usage{
-DescendantEdges(edge, parent, child, nEdge = length(parent))
+DescendantEdges(edge = NULL, parent, child, nEdge = length(parent))
 
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{edge}{Integer specifying the number of the edge whose child edges are
-required (see \code{\link[ape:nodelabels]{edgelabels}}).}
+required (see \code{\link[ape:nodelabels]{edgelabels}()}).}
 
 \item{parent}{Integer vector corresponding to the first column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
@@ -23,27 +23,31 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 supplied).}
 }
 \value{
-\code{DescendantEdges} returns a logical vector stating whether each edge
-in turn is a descendant of the specified edge (or the edge itself).
+\code{DescendantEdges()} returns a logical vector stating whether each
+edge in turn is a descendant of the specified edge (or the edge itself).
 
-\code{AllDescendantEdges} returns a matrix of class logical, with row N
-specifying whether each edge is a descendant of edge N (or the edge itself).
+\code{AllDescendantEdges()} returns a matrix of class logical, with row
+\emph{N} specifying whether each edge is a descendant of edge \emph{N}
+(or the edge itself).
 }
 \description{
-Quickly identify edges that are 'descended' from a particular edge in a tree.
+Quickly identify edges that are 'descended' from edges in a tree.
 }
-\section{Functions}{
-\itemize{
-\item \code{AllDescendantEdges}: Quickly identifies edges that are 'descended'
-from each edge in a tree.
-}}
-
+\details{
+The order of parameters in \code{DescendantEdges()} will change in the future,
+to allow \code{AllDescendantEdges()} to be merged into this function
+(\href{https://github.com/ms609/TreeTools/issues/31}{#31}).
+Please explicitly name the \code{edge} parameter in \code{DescendantEdges()}, and
+replace \code{AllDesdendantEdges()} with \code{DescendantEdges(edge = NULL)},
+to future-proof your code.
+}
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

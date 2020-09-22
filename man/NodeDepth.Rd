@@ -34,7 +34,11 @@ tree, meaning the position that will minimise the maximum node depth.
 \examples{
 tree <- CollapseNode(BalancedTree(10), c(12:13, 19))
 plot(tree)
+<<<<<<< HEAD
 nodelabels(NodeDepth(tree, FALSE))
+=======
+nodelabels(NodeDepth(tree, includeTips = FALSE))
+>>>>>>> master
 
 
 }
@@ -43,11 +47,20 @@ nodelabels(NodeDepth(tree, FALSE))
 node.
 
 Other tree navigation: 
+<<<<<<< HEAD
 \code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+=======
+\code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
+\code{\link{DescendantEdges}()},
+\code{\link{EdgeAncestry}()},
+\code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
+>>>>>>> master
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeOrder}()},

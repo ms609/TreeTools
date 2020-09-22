@@ -7,19 +7,57 @@
 SortTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
-\code{SortTree} returns a tree of class \code{phylo}, with each node sorted
+\code{SortTree()} returns a tree of class \code{phylo}, with each node sorted
 such that the larger clade is first.
 }
 \description{
-Sorts each node into a consistent order, so similar trees look visually
-similar.
+\code{SortTree()} sorts each node into a consistent order, so that node rotation
+does not obscure similarities between similar trees.
+}
+\details{
+At each node, clades will be listed in \code{tree$edge} in decreasing size order.
+
+Clades that contain the same number of leaves are sorted in decreasing order
+of minimum leaf number, so (2, 3) will occur before (1, 4).
+
+As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+bottom of a plotted tree.
+
+\code{tree} must (presently) be binary (\href{https://github.com/ms609/TreeTools/issues/25}{#25}).
+}
+\examples{
+messyTree <- as.phylo(10, 6)
+plot(messyTree)
+
+sorted <- SortTree(messyTree)
+plot(sorted)
+ape::nodelabels()
+ape::edgelabels()
+
 }
 \seealso{
-\code{\link{RenumberTree}}
+\code{Preorder()} also rearranges trees into a consistent shape, but
+based on the index of leaves rather than the size of subtrees.
+
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{Subtree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

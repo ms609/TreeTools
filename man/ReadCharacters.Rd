@@ -6,7 +6,7 @@
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
 \alias{PhyDat}
-\title{Read characters from Nexus file}
+\title{Read phylogenetic characters from file}
 \usage{
 ReadCharacters(filepath, character_num = NULL, session = NULL)
 
@@ -24,42 +24,44 @@ PhyDat(dataset)
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(optionally) a Shiny session with a \code{numericInput} named
+\item{session}{(Optional) A Shiny session with a \code{numericInput} named
 \code{character_num} whose maximum should be updated.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
-a list of sequences each made of a single vector of mode character,
+a list of sequences each made of a single character vector,
 and named with the taxon name.}
 }
 \value{
-A matrix whose row names correspond to tip labels, and column names
-correspond to character labels, with the attribute \code{state.labels}
-listing the state labels for each character; or a character string
-explaining why the character cannot be returned.
+\code{ReadCharacters()} and \code{ReadTNTCharacters()} return a matrix whose
+row names correspond to
+tip labels, and column names correspond to character labels, with the
+attribute \code{state.labels} listing the state labels for each character; or
+a list of length one containing a character string explaining why the
+function call was unsuccessful.
+
+\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
+\code{\link[phangorn:phyDat]{phyDat}} object.
 }
 \description{
-Parses a Nexus file, reading character states and names.
+Parse a Nexus or TNT file, reading character states and names.
 }
 \details{
-Tested with nexus files downloaded from MorphoBank with the "no notes"
-option, but should also work more generally.
-
-Please \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
+Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank},
+but should also work more widely; please
+\href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incorrectly parsed files.
+
+Matrices must contain only continuous or only discrete characters;
+maximum one matrix per file.  Continuous characters will be read as strings
+(i.e. base type 'character').
 }
 \section{Functions}{
 \itemize{
-\item \code{ReadTntCharacters}: Read characters from TNT file
-
-\item \code{ReadAsPhyDat}: Read Nexus characters as \code{phyDat} object.
-
-\item \code{ReadTntAsPhyDat}: Read TNT characters as \code{phyDat} object.
-
 \item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
-\code{phyDat()}, which converts a \emph{list} of morphological characters into a
+\code{phyDat()}, which converts a \strong{list} of morphological characters into a
 \code{phyDat} object.
-If your morphological characters are in the form of a \emph{matrix}, perhaps
-because they have been read using \code{read.table}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+If your morphological characters are in the form of a \strong{matrix}, perhaps
+because they have been read using \code{\link[=read.table]{read.table()}}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
 instead.
 }}
 
@@ -68,9 +70,24 @@ fileName <- paste0(system.file(package='TreeTools'),
                    '/extdata/input/dataset.nex')
 ReadCharacters(fileName)
 
+fileName <- paste0(system.file(package='TreeTools'),
+                   '/extdata/tests/continuous.nex')
+continuous <- ReadCharacters(fileName)
+
+# To convert from strings to numbers:
+at <- attributes(continuous)
+continuous <- suppressWarnings(as.numeric(continuous))
+attributes(continuous) <- at
+continuous
 }
 \references{
 \insertRef{Maddison1997}{TreeTools}
+}
+\seealso{
+\itemize{
+\item Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+\item Write characters to TNT-format file: \code{\link[=WriteTntCharacters]{WriteTntCharacters()}}
+}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

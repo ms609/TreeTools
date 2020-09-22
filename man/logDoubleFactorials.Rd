@@ -11,12 +11,13 @@ An object of class \code{numeric} of length 50000.
 logDoubleFactorials
 }
 \description{
-A vector with pre-calculated values of double factorials up to 50 000!!.
+\code{logDoubleFactorials} is a numeric vector with pre-calculated values of
+double factorials up to 50 000!!.
 }
 \seealso{
-Other Double factorial: 
+Other double factorials: 
 \code{\link{DoubleFactorial}()},
 \code{\link{doubleFactorials}}
 }
-\concept{Double factorial}
+\concept{double factorials}
 \keyword{datasets}

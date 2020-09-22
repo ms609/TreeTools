@@ -16,8 +16,7 @@ aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 }
 \details{
-Version 0.1 is a pre-release; some minor functionality may change in version
-1.0, due in mid-2020.
+Full documentation is available \href{https://ms609.github.io/TreeTools/}{online}.
 }
 \seealso{
 Useful links:
@@ -34,7 +33,6 @@ Useful links:
 Other contributors:
 \itemize{
   \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) [copyright holder]
-  \item Klaus Schliep (\href{https://orcid.org/0000-0003-2941-0161}{ORCID}) [copyright holder]
 }
 
 }

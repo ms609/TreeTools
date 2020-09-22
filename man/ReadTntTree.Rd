@@ -2,10 +2,13 @@
 % Please edit documentation in R/parse_files.R
 \name{ReadTntTree}
 \alias{ReadTntTree}
+\alias{TntText2Tree}
 \alias{TNTText2Tree}
 \title{Parse TNT Tree}
 \usage{
 ReadTntTree(filename, relativePath = NULL, keepEnd = 1L, tipLabels = NULL)
+
+TntText2Tree(treeText)
 
 TNTText2Tree(treeText)
 }
@@ -30,11 +33,11 @@ taxon names will be loaded from the data file linked in the first line of the
 format output by TNT.}
 }
 \value{
-\code{ReadTNTTree} returns a tree of class \code{phylo}, corresponding
+\code{ReadTntTree()} returns a tree of class \code{phylo}, corresponding
 to the tree in \code{filename}.
 }
 \description{
-Reads a tree from TNT's parenthetical output.
+Read a tree from TNT's parenthetical output.
 }
 \details{
 \href{http://www.lillo.org.ar/phylogeny/tnt/}{TNT} is software for parsimony
@@ -42,7 +45,7 @@ analysis.  Whilst its implementation of tree search is extremely rapid,
 analysis of results in TNT is made difficult by its esoteric and scantly
 documented scripting language.
 
-\code{ReadTNTTree} aims to aid the user by facilitating the import of trees
+\code{ReadTntTree()} aims to aid the user by facilitating the import of trees
 generated in TNT into R for further analysis.
 
 The function depends on tree files being saved by TNT in parenthetical
@@ -52,70 +55,67 @@ Trees are easiest to load into R if taxa have been saved using their names
 contains tip labels and can be parsed directly.  The downside is that the
 uncompressed \code{.tre} files will have a larger file size.
 
-\code{ReadTNTTree} can also read \code{.tre} files in which taxa have been saved using
-their numbers (\verb{taxname-}).  Such files contain a hard-coded link to the
-matrix file that was used to generate the trees, in the first line of the
+\code{ReadTntTree()} can also read \code{.tre} files in which taxa have been saved
+using their numbers (\verb{taxname-}).  Such files contain a hard-coded link to
+the matrix file that was used to generate the trees, in the first line of the
 \code{.tre} file.  This poses problems for portability: if the matrix file is
 moved, or the \code{.tre} file is accessed on another computer, the taxon names
 may be lost.  As such, it is important to check that the matrix file
 exists in the expected location -- if it does not,
 either use the \code{relativePath} argument to point to its new location, or
 specify \code{tipLabels} to manually specify the tip labels.
-}
-\section{Functions}{
-\itemize{
-\item \code{TNTText2Tree}: Converts text representation of a tree in TNT to an
+
+\code{TntText2Tree()} converts text representation of a tree in TNT to an
 object of class \code{phylo}.
-}}
-
+}
 \examples{
-  # In the examples below, TNT has read a matrix from
-  # "c:/TreeTools/input/dataset.nex"
-  # The results of an analysis were written to
-  # "c:/TreeTools/output/results1.tnt"
-  #
-  # results1.tnt will contain a hard-coded reference to
-  # "c:/TreeTools/input/dataset.nex".
+# In the examples below, TNT has read a matrix from
+# "c:/TreeTools/input/dataset.nex"
+# The results of an analysis were written to
+# "c:/TreeTools/output/results1.tnt"
+#
+# results1.tnt will contain a hard-coded reference to
+# "c:/TreeTools/input/dataset.nex".
 
-  # On the original machine (but not elsewhere), it would be possible to read
-  # this hard-coded reference from results.tnt:
-  # ReadTntTree('output/results1.tnt')
+# On the original machine (but not elsewhere), it would be possible to read
+# this hard-coded reference from results.tnt:
+# ReadTntTree('output/results1.tnt')
 
-  # These datasets are provided with the `TreeTools` package, which will
-  # probably not be located at c:/TreeTools on your machine:
+# These datasets are provided with the 'TreeTools' package, which will
+# probably not be located at c:/TreeTools on your machine:
 
-  oldWD <- getwd() # Remember the current working directory
-  setwd(system.file(package = 'TreeTools'))
+oldWD <- getwd() # Remember the current working directory
+setwd(system.file(package = 'TreeTools'))
 
-  # If taxon names were saved within the file (using `taxname=` in TNT),
-  # then our job is easy:
-  ReadTntTree('extdata/output/named.tre')
+# If taxon names were saved within the file (using `taxname=` in TNT),
+# then our job is easy:
+ReadTntTree('extdata/output/named.tre')
 
-  # But if taxa were compressed to numbers (using `taxname-`), we need to
-  # look up the original matrix in order to dereference the tip names.
-  #
-  # We need to extract the relevant file path from the end of the
-  # hard-coded path in the original file.
-  #
-  # We are interested in the last two elements of
-  # c:/TreeTools/input/dataset.nex
-  #                2      1
-  #
-  # '.' means "relative to the current directory"
-  ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
+# But if taxa were compressed to numbers (using `taxname-`), we need to
+# look up the original matrix in order to dereference the tip names.
+#
+# We need to extract the relevant file path from the end of the
+# hard-coded path in the original file.
+#
+# We are interested in the last two elements of
+# c:/TreeTools/input/dataset.nex
+#                2      1
+#
+# '.' means "relative to the current directory"
+ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
 
-  # If working in a lower subdirectory
-  setwd('./extdata/otherfolder')
+# If working in a lower subdirectory
+setwd('./extdata/otherfolder')
 
-  # then it will be necessary to navigate up the directory path with '..':
-  ReadTntTree('../output/numbered.tre', '..', 2)
+# then it will be necessary to navigate up the directory path with '..':
+ReadTntTree('../output/numbered.tre', '..', 2)
 
 
-  setwd(oldWD) # Restore original working directory
+setwd(oldWD) # Restore original working directory
+
+TNTText2Tree("(A (B (C (D E ))));")
 
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

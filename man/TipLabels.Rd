@@ -37,30 +37,46 @@ TipLabels(x, single = TRUE)
 \method{TipLabels}{default}(x, single = TRUE)
 }
 \arguments{
-\item{x}{An object of a supported class (see Usage section).}
+\item{x}{An object of a supported class (see Usage section above).}
 
 \item{single}{Logical specifying whether to report the labels for the first
 object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 }
 \value{
-\code{TipLabels} returns a character vector listing the tip labels for the
-specified object.
+\code{TipLabels()} returns a character vector listing the tip labels
+appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
+\code{t1}, \code{t2} ... \code{tx}, to match the default of \code{ape::\link{rtree}()}.
 }
 \description{
-Extracts tip labels from an object.  If the object is a single integer,
-\code{TipLabels} will return a vector \code{t1}, \code{t2} ... \code{tn}, to match
-the default of \code{ape::\link{rtree}}.
+\code{TipLabels()} extracts labels from an object: for example, names of taxa in
+a phylogenetic tree or data matrix.
+}
+\examples{
+TipLabels(BalancedTree(letters[5:1]))
+TipLabels(5)
+
+data('Lobo')
+head(TipLabels(Lobo.phy))
+
 }
 \seealso{
+Other tree properties: 
+\code{\link{ConsensusWithout}()},
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{TreeIsRooted}()}
+
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipsInSplits}()},
 \code{\link{as.Splits}()},
-\code{\link{in.Splits}()},
-\code{\link{match.Splits}()}
+\code{\link{match}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
+\concept{tree properties}

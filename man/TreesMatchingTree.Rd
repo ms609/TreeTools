@@ -13,7 +13,7 @@ LnTreesMatchingTree(tree)
 Log2TreesMatchingTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
 \code{TreesMatchingTree()} returns a numeric specifying the number of
@@ -22,8 +22,8 @@ unrooted binary trees that contain all the edges present in the input tree.
 \code{LnTreesMatchingTree()} gives the natural logarithm of this number.
 }
 \description{
-Calculates the number of unrooted binary trees that are consistent with
-a tree topology on the same leaves.
+\code{TreesMatchingTree()} calculates the number of unrooted binary trees that
+are consistent with a tree topology on the same leaves.
 }
 \details{
 Remember to unroot a tree first if the position of its root is arbitrary.
@@ -36,12 +36,11 @@ LnTreesMatchingTree(partiallyResolvedTree)
 # Number of rooted trees:
 rootedTree <- AddTip(partiallyResolvedTree, where = 0)
 TreesMatchingTree(partiallyResolvedTree)
-
 }
 \seealso{
 Other tree information functions: 
-\code{\link{ClusterInfo}()},
-\code{\link{PhylogeneticInfo}()}
+\code{\link{CladisticInfo}()},
+\code{\link{NRooted}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

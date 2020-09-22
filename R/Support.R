@@ -1,15 +1,18 @@
 #' Frequency of splits
 #'
-#' `SplitFrequency` provides a simple way to count the number of times that
-#' bipartition splits, as defined by a reference tree, occur in a forest of trees.
+#' `SplitFrequency()` provides a simple way to count the number of times that
+#' bipartition splits, as defined by a reference tree, occur in a forest of
+#' trees. May be used to calculate edge ("node") support for majority consensus
+#' or bootstrap trees.
 #'
 #' If multiple calculations are required, some time can be saved by using the
 #' constituent functions (see examples)
 #'
-#'
 #' @param reference A tree of class `phylo`, a `Splits` object.
 #' @param forest a list of trees of class `phylo`, or a `multiPhylo` object; or a
-#' `Splits` object.
+#' `Splits` object. See
+#' [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html) for
+#' possible methods of loading trees into R.
 #'
 #' @return `SplitFrequency()` returns the number of trees in `forest` that
 #' contain each split in `reference`.
@@ -18,15 +21,7 @@
 #' Note that the three nodes at the root of the tree correspond to a single
 #' split; see the example for how these might be plotted on a tree.
 #'
-#' @examples
-#' forest <- as.phylo(c(1, 10, 10, 100, 1000), nTip = 7)
-#'
-#' # Simple, but means counting each split in the forest twice:
-#' tree1Freqs <- SplitFrequency(forest[[1]], forest)
-#' SplitFrequency(forest[[2]], forest)
-#'
-#' plot(forest[[1]])
-#' ape::nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
+#' @template exampleNodeSupport
 #'
 #' @template MRS
 #' @export
@@ -35,13 +30,56 @@ SplitFrequency <- function(reference, forest) {
   forestSplits <- as.Splits(forest,
                             tipLabels = attr(referenceSplits, 'tip.label'))
 
-  ret <- rowSums(vapply(forestSplits, function (cf) in.Splits(referenceSplits, cf),
-         logical(length(referenceSplits))))
+  ret <- rowSums(vapply(forestSplits,
+                        function (cf) referenceSplits %in% cf,
+                        logical(length(referenceSplits))))
   names(ret) <- rownames(referenceSplits)
 
   # Return:
   ret
+}
 
+#' Label splits
+#'
+#' Labels the edges associated with each split on a plotted tree.
+#'
+#' As the two root edges of a rooted tree denote the same split, only the
+#' rightmost (plotted at the bottom, by default) edge will be labelled.
+#' If the position of the root is significant, add a tip at the root using
+#' [`AddTip()`].
+#'
+#' @template treeParam
+#' @param labels Named vector listing annotations for each split. Names
+#' should correspond to the node associated with each split; see
+#' [`as.Splits()`] for details.
+#' @param unit Character specifying units of `labels`, if desired. Include a
+#' leading space if necessary.
+#' @param \dots Additional parameters to [`ape::edgelabels()`][ape::nodelabels].
+#' @return `LabelSplits()` returns `invisible()`, after plotting `labels` on
+#' each relevant edge of a plot (which should already have been produced using
+#' `plot(tree)`).
+#'
+#' @examples
+#' tree <- BalancedTree(LETTERS[1:5])
+#' splits <- as.Splits(tree)
+#' plot(tree)
+#' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
+#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+#'             pos = 1L)
+#'
+#' @template exampleNodeSupport
+#'
+#' @seealso Calculate split support: [`SplitFrequency()`]
+#'
+#' Colour labels according to value: [`SupportColour()`]
+#' @importFrom ape edgelabels
+#' @export
+LabelSplits <- function (tree, labels, unit = '', ...) {
+  edgelabels(paste0(labels, unit),
+             edge = match(as.integer(names(labels)), tree$edge[, 2]),
+             ...)
+  # Return:
+  invisible()
 }
 
 #' @describeIn SplitFrequency Assign a unique integer to each split
@@ -52,7 +90,7 @@ SplitFrequency <- function(reference, forest) {
 #' @param powersOf2 Integer vector of same length as `tipIndex`, specifying a
 #' power of 2 to be associated with each tip in turn.
 #' @export
-SplitNumber <- function (tips, tree, tipIndex, powersOf2) {
+SplitNumber <- function (tips, tree, tipIndex, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
   included <- tipIndex %in% tree$tip.label[tips]
   as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
@@ -79,7 +117,7 @@ ForestSplits <- function (forest, powersOf2) {
 #' @export
 TreeSplits <- function (tree) {
   .Deprecated("as.Splits")
-}
+} # nocov end
 
 #' Colour for node support value
 #'
@@ -87,18 +125,38 @@ TreeSplits <- function (tree) {
 #'
 #' @param support A numeric vector of values in the range 0--1.
 #' @param show1 Logical specifying whether to display values of 1.
-#'              A transparent white will be returned if `FALSE`.
-#' @return `SupportColour()` returns a string containing the hexadecimal code
-#'  for a colour picked from a diverging scale, or `red` if a value is invalid.
+#' A transparent white will be returned if `FALSE`.
+#' @param scale 101-element vector listing colours in sequence. Defaults to
+#' a diverging \acronym{HCL} scale.
+#' @param outOfRange Colour to use if results are outside the range 0--1.
+#' @return `SupportColour()` returns the appropriate value from `scale`,
+#' or `outOfRange` if a value is outwith the valid range.
 #' @examples
-#' SupportColour(0:4 / 4, show1 = FALSE)
+#' SupportColour((-1):4 / 4, show1 = FALSE)
+#'
+#' @template exampleNodeSupport
+#'
+#' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
+#' possibly calculated using [`SplitFrequency()`].
+#'
 #' @importFrom colorspace diverge_hcl
 #' @export
-SupportColour <- function (support, show1=TRUE) {
-  # continuousScale <- rev(colorspace::heat_hcl(101, h=c(300, 75), c.=c(35, 95), l=c(15, 90), power=c(0.8, 1.2))) # Viridis prefered
-  divergingScale <- rev(diverge_hcl(101, h=c(260, 0), c=100, l=c(50, 90), power=1.0))
-  ifelse(is.na(support) | support < 0 | support > 1 | support == '', 'red',
-         ifelse(support == 1 & !show1, "#ffffff00", divergingScale[(support * 100) + 1L]))
+SupportColour <- function (support,
+                           show1 = TRUE,
+                           scale = rev(diverge_hcl(101, h = c(260, 0), c = 100,
+                                                   l = c(50, 90),
+                                                   power = 1.0)),
+                           outOfRange = 'red') {
+  # continuousScale <- rev(colorspace::heat_hcl(101, h=c(300, 75), c.=c(35, 95),
+  #  l=c(15, 90), power=c(0.8, 1.2))) # Viridis prefered
+
+  sanitized <- support
+  sanitized[!is.numeric(support) | support < 0 | support > 1] <- NA
+  ifelse(is.na(support) | support < 0 | support > 1 | support == '',
+         outOfRange,
+         ifelse(support == 1 & !show1,
+                "#ffffff00",
+                scale[(sanitized * 100) + 1L]))
 }
 
 #' @rdname SupportColour

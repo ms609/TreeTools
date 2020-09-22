@@ -2,37 +2,36 @@
 % Please edit documentation in R/SplitFunctions.R
 \name{Subsplit}
 \alias{Subsplit}
-\title{Subset of a split on fewer taxa}
+\title{Subset of a split on fewer leaves}
 \usage{
 Subsplit(splits, tips, keepAll = FALSE, unique = TRUE)
 }
 \arguments{
 \item{splits}{An object of class \code{\link[=as.Splits]{Splits}}.}
 
-\item{tips}{A vector specifying a subset of the tip labels applied to \code{split}.}
+\item{tips}{A vector specifying a subset of the leaf labels applied to \code{split}.}
 
 \item{keepAll}{logical specifying whether to keep entries that define trivial
-splits (i.e. splits of zero or one tip) on the subset of tips.}
+splits (i.e. splits of zero or one leaf) on the subset of leaves.}
 
 \item{unique}{logical specifying whether to remove duplicate splits.}
 }
 \value{
-An object of class \code{Splits}, defined on \code{tips}.
+\code{Subsplit()} returns an object of class \code{Splits}, defined on the
+leaves \code{tips}.
 }
 \description{
-Subset of a split on fewer taxa
+\code{Subsplit()} removes leaves from a \code{Splits} object.
 }
 \examples{
-
 splits <- as.Splits(PectinateTree(letters[1:9]))
+splits
 efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 summary(efgh)
 
 TrivialSplits(efgh)
 
-Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-
-
+summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 }
 \seealso{
 Other split manipulation functions: 

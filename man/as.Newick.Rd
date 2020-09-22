@@ -20,13 +20,14 @@ as.Newick(x)
 See Usage section for supported classes.}
 }
 \value{
-\code{as.Newick} returns a character string representing \code{tree} in Newick
+\code{as.Newick()} returns a character string representing \code{tree} in Newick
 format.
 }
 \description{
-Creates a character string describing a phylogenetic tree in Newick format,
-using R's internal tip numbering.  Use \code{\link{RenumberTips}} to ensure that the
-internal numbering follows the order you expect.
+\code{as.Newick()} creates a character string representation of a phylogenetic
+tree, in the Newick format, using R's internal tip numbering.
+Use \code{\link[=RenumberTips]{RenumberTips()}} to ensure that the internal numbering follows the
+order you expect.
 }
 \examples{
 trees <- list(BalancedTree(1:8), PectinateTree(8:1))
@@ -36,9 +37,9 @@ as.Newick(trees)
 }
 \seealso{
 \itemize{
-\item \code{\link{NewickTree}}
-\item \code{\link{RenumberTips}}
-\item \code{\link[ape:write.tree]{ape::write.tree}}
+\item Retain leaf labels: \code{\link[=NewickTree]{NewickTree()}}
+\item Change R's internal numbering of leaves: \code{\link[=RenumberTips]{RenumberTips()}}
+\item Write tree to text or file: \code{\link[ape:write.tree]{ape::write.tree()}}
 }
 }
 \author{

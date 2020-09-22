@@ -11,7 +11,9 @@
 'TreeTools' is an R package that provides efficient implementations of 
 functions for the creation, modification and analysis of phylogenetic trees.
 
-Applications include: generation of trees with specified shapes;
+Applications include:
+generation of trees with specified shapes;
+analysis of tree shape;
 rooting of trees and extraction of subtrees;
 calculation and depiction of node support;
 calculation of ancestor-descendant relationships;
@@ -26,10 +28,6 @@ It complements packages such as
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 
-
-This is a pre-release; some minor functionality may change in version 1.0, due
-in mid-2020.
-
 # Installation
 
 Install and load the library from CRAN as follows:
@@ -38,7 +36,7 @@ install.packages('TreeTools')
 library('TreeTools')
 ```
 
-Install the very lastest version, which may be under development, with:
+Install the very latest version, which may be under development, with:
 ```r
 if(!require(devtools)) install.packages("devtools")
 devtools::install_github('ms609/TreeTools')

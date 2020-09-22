@@ -7,13 +7,14 @@
 EdgeDistances(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
-A symmetrical matrix listing the number of edges that must be
-traversed to travel from each numbered edge to each other.
+\code{EdgeDistances()} returns a symmetrical matrix listing the number
+of edges that must be traversed to travel from each numbered edge to each
+other.
 The two edges straddling the root of a rooted tree
-are counted as a single edge.  Add a 'root' tip using \code{\link{AddTip}} if the
+are treated as a single edge.  Add a 'root' tip using \code{\link[=AddTip]{AddTip()}} if the
 position of the root is significant.
 }
 \description{
@@ -31,10 +32,11 @@ EdgeDistances(tree)
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

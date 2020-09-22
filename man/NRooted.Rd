@@ -3,6 +3,8 @@
 \name{NRooted}
 \alias{NRooted}
 \alias{NUnrooted}
+\alias{NRooted64}
+\alias{NUnrooted64}
 \alias{LnUnrooted}
 \alias{LnUnrooted.int}
 \alias{Log2Unrooted}
@@ -17,11 +19,15 @@
 \alias{LnUnrootedMult}
 \alias{Log2UnrootedMult}
 \alias{NUnrootedMult}
-\title{Number of rooted/unrooted trees}
+\title{Number of trees}
 \usage{
 NRooted(tips)
 
 NUnrooted(tips)
+
+NRooted64(tips)
+
+NUnrooted64(tips)
 
 LnUnrooted(tips)
 
@@ -39,23 +45,23 @@ Log2Rooted(tips)
 
 Log2Rooted.int(tips)
 
-LnUnrootedSplits(splits)
+LnUnrootedSplits(...)
 
-Log2UnrootedSplits(splits)
+Log2UnrootedSplits(...)
 
-NUnrootedSplits(splits)
+NUnrootedSplits(...)
 
-LnUnrootedMult(splits)
+LnUnrootedMult(...)
 
-Log2UnrootedMult(splits)
+Log2UnrootedMult(...)
 
-NUnrootedMult(splits)
+NUnrootedMult(...)
 }
 \arguments{
-\item{tips}{Integer specifying the number of tips.}
+\item{tips}{Integer specifying the number of leaves.}
 
-\item{splits}{Integer vector listing the number of taxa in each tree
-bipartition.}
+\item{\dots}{Integer vector, or series of integers, listing the number of
+leaves in each split.}
 }
 \description{
 These functions return the number of rooted or unrooted binary trees
@@ -66,12 +72,18 @@ Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow Cavalli‐Sforza & Edwards (1967) and
+Calculations follow Cavalli-Sforza & Edwards (1967) and
 Carter \emph{et al.} 1990, Theorem 2.
 }
 \section{Functions}{
 \itemize{
 \item \code{NUnrooted}: Number of unrooted trees
+
+\item \code{NRooted64}: Exact number of rooted trees as 64-bit integer
+(13 < \code{nTip} < 19)
+
+\item \code{NUnrooted64}: Exact number of unrooted trees as 64-bit integer
+(14 < \code{nTip} < 20)
 
 \item \code{LnUnrooted}: Log Number of unrooted trees
 
@@ -98,19 +110,26 @@ Log2Unrooted(10)
 # 00000 11111 222
 NUnrootedMult(c(5,5,3))
 
+NUnrooted64(18)
 LnUnrootedSplits(c(2,4))
-LnUnrootedSplits(c(3,3))
+LnUnrootedSplits(3, 3)
 Log2UnrootedSplits(c(2,4))
-Log2UnrootedSplits(c(3,3))
+Log2UnrootedSplits(3, 3)
 NUnrootedSplits(c(2,4))
-NUnrootedSplits(c(3,3))
+NUnrootedSplits(3, 3)
 }
 \references{
 \insertRef{Carter1990}{TreeTools}
 
 \insertRef{CavalliSforza1967}{TreeTools}
 }
+\seealso{
+Other tree information functions: 
+\code{\link{CladisticInfo}()},
+\code{\link{TreesMatchingTree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information function}
+\concept{tree information functions}

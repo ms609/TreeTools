@@ -15,27 +15,29 @@ RootNode(x)
 Badly conformed trees trigger an error.
 }
 \description{
-Identify the root node of a (rooted or unrooted) phylogenetic tree.
-Unrooted trees are represented internally by a rooted tree with an
-unresolved root node.
+\code{RootNode()} identifies the root node of a (rooted or unrooted) phylogenetic
+tree.
+Unrooted trees are represented internally by a rooted tree with a polytomy
+at the root.
 }
 \examples{
 RootNode(BalancedTree(8))
-RootNode(unroot(BalancedTree(8)))
+RootNode(UnrootTree(BalancedTree(8)))
 
 
 }
 \seealso{
-\code{\link[=TreeIsRooted]{TreeIsRooted()}}
+Test whether a tree is rooted: \code{\link[=TreeIsRooted]{TreeIsRooted()}}
 
 phangorn::\code{\link[=getRoot]{getRoot()}}
 
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

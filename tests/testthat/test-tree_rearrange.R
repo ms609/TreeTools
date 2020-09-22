@@ -1,21 +1,52 @@
-library(ape)
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
 
 context("Tree rearrangements")
 
-test_that("RootOnNode works", {
+test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
                                           .Dim = c(8L, 2L)),
-                         tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L),
-                    class = "phylo", order = "cladewise")
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "cladewise")
 
-  exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L, 8L, 1L, 2L, 3L, 9L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
-  exp7 <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L, 7L, 1L, 2L, 8L, 3L, 9L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
-  exp5 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L, 8L, 9L, 1L, 2L, 3L, 4L, 5L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
-  exp4 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L, 8L, 9L, 1L, 2L, 3L, 5L, 4L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
-  exp3 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 9L, 9L, 6L, 7L, 8L, 1L, 2L, 9L, 4L, 5L, 3L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
-  exp2 <- structure(list(edge = structure(c(6L, 7L, 7L, 8L, 8L, 9L, 9L, 6L, 7L, 1L, 8L, 3L, 9L, 4L, 5L, 2L), .Dim = c(8L, 2L)), tip.label = c("t3", "t4", "t1", "t2", "t5"), Nnode = 4L), class = "phylo", order = "preorder")
+  exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L,
+                                            8L, 1L, 2L, 3L, 9L, 4L, 5L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
+  exp7 <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L, 7L,
+                                            1L, 2L, 8L, 3L, 9L, 4L, 5L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
+  exp5 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L,
+                                            8L, 9L, 1L, 2L, 3L, 4L, 5L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
+  exp4 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L,
+                                            8L, 9L, 1L, 2L, 3L, 5L, 4L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
+  exp3 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 9L, 9L, 6L, 7L,
+                                            8L, 1L, 2L, 9L, 4L, 5L, 3L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
+  exp2 <- structure(list(edge = structure(c(6L, 7L, 7L, 8L, 8L, 9L, 9L, 6L, 7L,
+                                            1L, 8L, 3L, 9L, 4L, 5L, 2L),
+                                          .Dim = c(8L, 2L)),
+                         tip.label = c("t3", "t4", "t1", "t2", "t5"),
+                         Nnode = 4L), class = "phylo", order = "preorder")
   #t2 <- Preorder(t2)
   expect_equal(tree, RootOnNode(tree, node = 9L, TRUE))
   expect_equal(exp8, RootOnNode(tree, node = 8L, TRUE))
@@ -27,8 +58,24 @@ test_that("RootOnNode works", {
   expect_equal(exp3, RootOnNode(tree, node = 3L, TRUE))
   expect_equal(exp2, RootOnNode(tree, node = 2L, TRUE))
   expect_equal(tree, RootOnNode(tree, node = 1L, TRUE))
-  expect_equal(tree, RootOnNode(unroot(tree), node = 1L, TRUE))
+  expect_equal(tree, RootOnNode(UnrootTree(tree), node = 1L, TRUE))
 
+  expb6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3),
+                                               1:2, 4:6, 10, 3, 8:9),
+                                             .Dim = c(9L, 2L)),
+                            tip.label = paste0('t', 1:6), Nnode = 4L),
+                       class = "phylo", order = "preorder")
+  expp6_8 <- structure(list(edge = structure(c(7, rep(7:10, each = 2), 1:2, 8,
+                                               3, 9, 4, 10, 5:6),
+                                             .Dim = c(9L, 2L)),
+                            tip.label = paste0('t', 1:6), Nnode = 4L),
+                       class = "phylo", order = "preorder")
+
+  expect_equal(expb6_8, Preorder(RootOnNode(BalancedTree(6L), 8L)))
+  expect_equal(expp6_8, Preorder(RootOnNode(PectinateTree(6L), 8L)))
+
+  expect_equal(UnrootTree(PectinateTree(6L)),
+               RootOnNode(PectinateTree(6L), 1))
 
   TestTip <- function (tr, node, rr) {
     expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
@@ -58,17 +105,78 @@ test_that("RootOnNode works", {
   TestTip(urt, 1, TRUE)
 
   expect_equal(PectinateTree(8), RootOnNode(PectinateTree(8), 9L, TRUE))
-  expect_equal(unroot(PectinateTree(8)), RootOnNode(PectinateTree(8), 9L, FALSE))
+  expect_equal(UnrootTree(PectinateTree(8)),
+               RootOnNode(PectinateTree(8), 9L, FALSE))
   expect_equal(urt, RootOnNode(urt, 9L, FALSE))
   expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
                RootOnNode(urt, 9L, TRUE))
 
 })
 
-test_that("CollapseNodes works", {
+test_that("RootOnNode() supports lists of trees", {
+  rootOn <- 8L
+  expect_equal(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
+                              RootOnNode(as.phylo(2, 5), rootOn)),
+                         class = 'multiPhylo'),
+               RootOnNode(as.phylo(1:2, 5), rootOn))
+})
+
+test_that("RootOnNode() supports nasty node ordering", {
+  expect_equal(Preorder(nasty),
+               RootOnNode(nasty, 12L, resolveRoot = TRUE))
+  expect_equal(RootOnNode(Preorder(nasty), 11L),
+               RootOnNode(nasty, 13L))
+})
+
+test_that("RootTree() works", {
+  bal8 <- BalancedTree(8)
+  expect_error(RootTree(bal8, 1:8 %in% 0))
+  expect_error(RootTree(bal8, character(0)))
+  expect_error(RootTree(bal8, integer(0)))
+  expect_error(RootTree(bal8, 'tip_not_there'))
+  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
+  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
+  expect_equivalent(as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
+                    RootTree(bal8, 't5'))
+  expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
+  expect_equal(EnforceOutgroup(bal8, c('t5', 't6')),
+               RootTree(bal8, c('t5', 't6')))
+  expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
+
+  expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
+                              RootTree(as.phylo(2, 5), 't5')),
+                         class = 'multiPhylo'),
+               RootTree(as.phylo(1:2, 5), 't5'))
+
+})
+
+test_that("UnrootTree() works", {
+  expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
+                        8, 1, 2, 3, 9, 10, 4,  5, 6), ncol = 2L),
+               UnrootTree(BalancedTree(6))$edge)
+  expect_equal(matrix(c(7, 7, 7, 8, 8, 9, 9, 10, 10,
+                        1, 2, 8, 3, 9, 4, 10, 5,  6), ncol = 2L),
+               UnrootTree(PectinateTree(6))$edge)
+  expect_equal(BalancedTree(2), UnrootTree(BalancedTree(2)))
+  expect_equal(BalancedTree(1), UnrootTree(BalancedTree(1)))
+  expect_equal(matrix(c(9, 9, 10, 10, 10, 9, 11, 11, 12, 12, 9,
+                        1, 10, 2,  4,  7, 11, 3, 12,  5,  6, 8), ncol = 2L),
+               UnrootTree(nasty)$edge)
+  # Unrooting when already unrooted
+  expect_equal(UnrootTree(PectinateTree(6)),
+               UnrootTree(UnrootTree(PectinateTree(6))))
+
+  expList <- list(UnrootTree(as.phylo(1, 5)), UnrootTree(as.phylo(2, 5)))
+  expect_equal(expList, UnrootTree(list(as.phylo(1, 5), as.phylo(2, 5))))
+  expect_equal(structure(expList, class = 'multiPhylo'),
+                    UnrootTree(as.phylo(1:2, 5)))
+})
+
+test_that("CollapseNodes() works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
   expect_error(CollapseNode(tree8, 1))
+  expect_warning(CollapseNode(tree8, 9L))
 
   tree <- as.phylo(123, 7)
   tree$edge.length <- 12:1
@@ -87,4 +195,86 @@ test_that("CollapseNodes works", {
   no11 <- CollapseEdge(tree, c(7, 8))
   expect_equal(exp1213, no11$edge)
 
+  expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
+               Preorder(CollapseNode(nasty, c(11, 13))))
+
+  expect_error(CollapseEdge(tree, 9))
+})
+
+test_that("DropTip() works", {
+  bal8 <- BalancedTree(8)
+  expect_null(DropTip(bal8, 1:8))
+  expect_warning(expect_equal(bal8, DropTip(bal8, -1)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 99)))
+  expect_warning(expect_equal(bal8, DropTip(bal8, 'MissingTip')))
+  expect_error(DropTip(bal8, list('Invalid format')))
+
+  expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
+  expect_equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8))
+  expect_equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7)))
+
+  expect_equal(DropTip(Preorder(nasty), c(1, 3)),
+               Preorder(DropTip(nasty, c(1, 3))))
+
+
+  bigTree <- RandomTree(1284)
+  set.seed(1284)
+  bigTip <- sample(1:1284, 608)
+  expect_equal(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
+  #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
+  #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
+})
+
+test_that("Binarification is uniform", {
+  set.seed(0)
+  Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
+
+    if (ape) {
+      # Ape's trees are not uniformly distributed:
+      counts <- table(replicate64(nSamples, as.TreeNumber(multi2di(tree))))
+      expect_equal(nTree, length(counts))
+      expect_lt(chisq.test(counts)$p.value, 0.001)
+    }
+
+    # Our trees are:
+    counts <- table(replicate64(nSamples, as.TreeNumber(MakeTreeBinary(tree))))
+    expect_equal(nTree, length(counts))
+    expect_gt(chisq.test(counts)$p.value, 0.001)
+
+  }
+
+  Test(CollapseNode(PectinateTree(5), 8:9), NUnrooted(5), nSamples = 300L,
+       ape = TRUE) # Rooted four-star
+  Test(CollapseNode(PectinateTree(6), 8:9), NUnrooted(4))
+  Test(CollapseNode(PectinateTree(6), 9:10), NRooted(4))
+  Test(CollapseNode(PectinateTree(6), c(8, 10)), NUnrooted(3) * NRooted(3))
+  Test(CollapseNode(BalancedTree(8), c(10:12)), NUnrooted(5))
+  Test(CollapseNode(BalancedTree(7), c(10, 13)), NRooted(3) * NRooted(3))
+
+  bal7 <- BalancedTree(7)
+  expect_equal(bal7, MakeTreeBinary(bal7))
+  expect_equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7)))
+  expect_equal(structure(list(bal7, bal7), class = 'multiPhylo'),
+               MakeTreeBinary(structure(list(bal7, bal7),
+                                        class = 'multiPhylo')))
+
+})
+
+test_that("LeafLabelInterchange() works", {
+  expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
+  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
+  expect_equivalent(BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
+  expect_equal(rev(BalancedTree(2)$tip),
+                   LeafLabelInterchange(BalancedTree(2), 2)$tip)
+
+  abcd <- letters[1:4]
+  sapply(1 + seq_len(100), function (i) {
+    # Check all pertubations
+    set.seed(i)
+    expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))
+
+    # Check lots of sizes
+    expect_equal(i, sum(paste0('t', 1:128) !=
+                        LeafLabelInterchange(BalancedTree(128), i)$tip))
+  })
 })

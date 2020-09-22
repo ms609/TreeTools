@@ -6,9 +6,10 @@
 \alias{as.Splits.multiPhylo}
 \alias{as.Splits.Splits}
 \alias{as.Splits.list}
+\alias{as.Splits.matrix}
 \alias{as.Splits.logical}
 \alias{as.logical.Splits}
-\title{Convert object to splits}
+\title{Convert object to \code{Splits}}
 \usage{
 as.Splits(x, tipLabels = NULL, ...)
 
@@ -19,6 +20,8 @@ as.Splits(x, tipLabels = NULL, ...)
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{list}(x, tipLabels = NULL, asSplits = TRUE, ...)
+
+\method{as.Splits}{matrix}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 
@@ -41,13 +44,17 @@ or an unannotated two-dimensional array (useful where performance is
 paramount).}
 }
 \value{
-\code{as.Splits} returns an object of class \code{Splits}, or
-(if \code{asSplits = FALSE}) a two-dimensional array of 32-bit integers, which
-each bit specifying whether a tip is a member of the split.
-Splits are named according to the node that defines them.
+\code{as.Splits()} returns an object of class \code{Splits}, or
+(if \code{asSplits = FALSE}) a two-dimensional array of \code{raw} objects, with
+each bit specifying whether or not the leaf corresponding to the respective
+bit position is a member of the split.
+Splits are named according to the node at the non-root end of the edge that
+defines them. In rooted trees, the child of the rightmost root edge names
+the split.
 }
 \description{
-Converts a phylogenetic tree to an array of bipartition splits.
+\code{as.Splits()} converts a phylogenetic tree to a \code{Splits} object representing
+its constituent bipartition splits.
 }
 \examples{
 splits <- as.Splits(BalancedTree(letters[1:6]))
@@ -63,18 +70,18 @@ summary(c(splits[[2:3]], !splits[[1:2]]))
 
 moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 print(moreSplits, details = TRUE)
-match.Splits(splits, moreSplits)
-in.Splits(moreSplits, splits)
+match(splits, moreSplits)
+moreSplits \%in\% splits
 
 }
 \seealso{
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{in.Splits}()},
-\code{\link{match.Splits}()}
+\code{\link{match}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

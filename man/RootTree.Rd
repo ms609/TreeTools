@@ -3,37 +3,45 @@
 \name{RootTree}
 \alias{RootTree}
 \alias{RootOnNode}
-\title{Root a phylogenetic tree}
+\alias{UnrootTree}
+\title{Root or unroot a phylogenetic tree}
 \usage{
 RootTree(tree, outgroupTips)
 
 RootOnNode(tree, node, resolveRoot = FALSE)
+
+UnrootTree(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}, or a list of trees
+of class \code{list} or \code{multiPhylo}.}
 
-\item{outgroupTips}{Character vector specifying the names of the tips to
-include in the outgroup.}
+\item{outgroupTips}{Vector of type character, integer or logical, specifying
+the names or indices of the tips to include in the outgroup.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}
 
 \item{resolveRoot}{logical specifying whether to resolve the root node.}
 }
 \value{
-\code{RootTree} returns a tree of class \code{phylo}, rooted on the smallest
-clade that contains the specified tips.
+\code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
+clade that contains the specified tips, with edges and nodes numbered in
+preorder.
 
-\code{RootOnNode} returns a tree of class \code{phylo}, rooted on the requested
-\code{node} and ordered in \code{\link{Preorder}}.
+\code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
+requested \code{node} and ordered in \code{\link{Preorder}}.
+
+\code{UnrootTree()} returns \code{tree}, in preorder,
+having collapsed the first child of the root node in each tree.
 }
 \description{
-Roots a tree on the smallest clade containing the specified tips.
+\code{RootTree()} roots a tree on the smallest clade containing the specified
+tips;
+\code{RootOnNode()} roots a tree on a specified internal node;
+\code{UnrootTree()} collapses a root node, without the undefined behaviour
+encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
+preorder.
 }
-\section{Functions}{
-\itemize{
-\item \code{RootOnNode}: Roots a tree on a specified internal node.
-}}
-
 \examples{
 tree <- PectinateTree(8)
 plot(tree)
@@ -47,10 +55,26 @@ plot(RootOnNode(tree, 2))
 }
 \seealso{
 \itemize{
-\item \link[ape:root]{ape::root}
-\item \code{\link{EnforceOutgroup}}
+\item \code{\link[ape:root]{ape::root()}}
+\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
+
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

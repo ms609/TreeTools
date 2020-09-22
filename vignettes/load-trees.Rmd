@@ -1,6 +1,6 @@
 ---
 title: "Loading phylogenetic trees into R"
-author: "Martin R. Smith"
+author: "Martin R. Smith <martin.smith@durham.ac.uk>"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -27,7 +27,7 @@ Beware common gotchas when entering text:
 - Ensure that the tree string ends in a semi-colon.
 
 - Make sure that brackets are matched.  Some text editors, such as 
-  [RStudio](https://www.rstudio.com/) or 
+  [RStudio](https://rstudio.com/) or 
   [Notepad++](https://notepad-plus-plus.org/), contain built-in syntax 
   highlighting that will highlight the counterpart to each parenthesis as you 
   type.
@@ -38,7 +38,7 @@ Beware common gotchas when entering text:
 ```{r double-bracket, fig.align='center', fig.width=6, out.width='75%'}
 badTree <- ape::read.tree(text='((A, B), (((C, D), ((E), F))));')
 plot(badTree)
-ape::nodelabels(bg=c(3,3,2,2,3,3,2))
+ape::nodelabels(bg = c(3, 3, 2, 2, 3, 3, 2))
 ```
 
 The text is expected in Newick format, so can contain edge lengths - but edge
@@ -81,7 +81,7 @@ single descendant (which will often denote a misspecified tree).
 ### Trees from TNT
 
 Trees saved using [TNT](http://www.lillo.org.ar/phylogeny/tnt/) can be opened in
-R using `TreeTools::ReadTntTree`.
+R using `ReadTntTree()`.
 
 Trees should be saved  in parenthetical format (TNT command `tsav*`),
 rather than TNT's compressed format (TNT command `tsav`). 
@@ -93,7 +93,7 @@ The TNT command `taxname-` saves just the numbers of the terminals.
 In order for the trees to be reunited with the names of their tips, terminal 
 labels will be read from the linked matrix file listed in the first line of the
 .tre file. 
-Ensure that this file exists in the expected location – if it does not, use 
+Ensure that this file exists in the expected location.  If it does not, use 
 `ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')`, or
 `tipLabels` to manually specify the names of the tips (e.g.
 `ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])`).

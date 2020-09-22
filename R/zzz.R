@@ -7,19 +7,25 @@ release_questions <- function() {
   c(
     "Is the code free of #TODOs?",
     "Have you checked the Vignettes for sanity?",
-    "Have you updated the version number in .zenodo.json, NEWS & DESCRIPTION?"
+    "Have you updated the version number in NEWS & DESCRIPTION?"
   )
 }
 
 
+# Additional steps:
+#
+# Propogate changes in README.md to R/TreeTools-package.R
+
+
 # Additional tests:
 #
+# spell_check()
 # pkgdown::build_reference_index()
 #
 # run_examples()
 # build_vignettes()
 #
-# check_win_devel(); rhub::check_for_cran()
+# devtools::check_win_devel(quiet = TRUE); rhub::check_for_cran()
 # rhub::check_with_valgrind() # runs the build and check on Linux, in valgrind to find memory leaks and pointer errors.
 # rhub::check_with_sanitizers() # runs all package package tests, examples and vignettes with Address Sanitizer and Undefined Behavior Sanitizer.
 #

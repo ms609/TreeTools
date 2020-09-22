@@ -44,17 +44,21 @@ Log2TreesMatchingSplit <- function (A, B) {
 
 #' Character information content
 #'
-#' Calculates the phylogenetic information content of a given character.
+#' `CharacterInformation()` calculates the phylogenetic information content
+#' of a given character.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
 #' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
 #'
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
-#' replaced with `?`.`
+#' replaced with `?`.
 #'
-#' @return `CharacterInformation` returns a numeric specifying the
-#' phylogenetic information content of the character, in bits.
+#' @return `CharacterInformation()` returns a numeric specifying the
+#' phylogenetic information content of the character (_sensu_ Steel & Penny
+#' 2006), in bits.
 #'
+#' @references
+#' - \insertRef{Steel2006}{TreeTools}
 #' @family split information functions
 #' @template MRS
 #' @export
@@ -64,15 +68,8 @@ CharacterInformation <- function (tokens) {
   # ?s and -s are best ignored
   splits <- tokenCounts[!(names(tokenCounts) %in% c('?', '-'))]
 
-  # Information content = -log2(probability)
-  # Probability of a tree being consistent with our character is
-  # n trees consistent with character / n trees with that many tips
-  # NUnrootedMult(splits) / NUnrooted(splits)
-  # As we are working with large numbers we can use logarithms
-  log2P <- Log2UnrootedMult(splits) - Log2Unrooted(sum(splits))
-  
   # Return:
-  -log2P
+  MultiSplitInformation(splits)
 }
 
 #' Phylogenetic information content of splitting leaves into two partitions
@@ -90,7 +87,7 @@ CharacterInformation <- function (tokens) {
 #'
 #' A simple way to characterise trees is to count the number of edges.
 #' (Edges are almost, but not quite, equivalent to nodes.)
-#' Counting edges (or nodes) provides a quick measaure of a tree's resolution,
+#' Counting edges (or nodes) provides a quick measure of a tree's resolution,
 #' and underpins the Robinson-Foulds tree distance measure.
 #' Not all edges, however, are created equal.
 #'
@@ -151,9 +148,7 @@ CharacterInformation <- function (tokens) {
 #' # that seven maximally uneven splits on the same leaves:
 #' SplitInformation(25, 25)
 #' 7 * SplitInformation(2, 48)
-#'
 #' @references
-#'
 #' - \insertRef{Steel2006}{TreeTools}
 #'
 #' @family split information functions
@@ -161,11 +156,11 @@ CharacterInformation <- function (tokens) {
 #' @seealso
 #'
 #' Sum the phylogenetic information content of splits within a tree:
-#'  [`TreeDist`](https://ms609.github.io/TreeDist/)`::`[`SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html)
+#'  [`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html)
 #'
 #'
 #' Sum the clustering information content of splits within a tree:
-#'  [`TreeDist`](https://ms609.github.io/TreeDist/)`::`[`ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
+#'  [`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
 #'
 #'
 #'
@@ -187,7 +182,7 @@ SplitInformation <- function (A, B) {
 #'
 #' @export
 MultiSplitInformation <- function (partitionSizes) {
-  -(LnUnrootedMult(partitionSizes) - LnUnrooted.int(sum(partitionSizes))) / log(2)
+  Log2Unrooted.int(sum(partitionSizes)) - Log2UnrootedMult(partitionSizes)
 }
 
 #' Number of trees consistent with split
@@ -195,15 +190,19 @@ MultiSplitInformation <- function (partitionSizes) {
 #' Calculates the number of unrooted bifurcating trees consistent with the
 #' specified multi-partition split, using the formula of Carter _et al_. (1990).
 #'
-#' @template splitsParam
+#' @param \dots A series or vector of integers listing the number of tips in
+#' each of a number of tree splits (e.g. bipartitions).
+#' For example, `3, 5` states that a character divides a set of eight tips into
+#' a group of three and a group of five.
+#TODO Support Splits objects, using a Method.
 #'
-#' @return `UnrootedTreesMatchingSplit` returns an integer specifying the
+#' @return `UnrootedTreesMatchingSplit()` returns an integer specifying the
 #'  number of unrooted bifurcating trees consistent with the specified split.
 #'
 #'
 #' @examples
 #'  UnrootedTreesMatchingSplit(c(3, 5))
-#'  UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
+#'  UnrootedTreesMatchingSplit(3, 2, 1, 2)
 #'
 #' @references
 #' See Theorem 2 in \insertRef{Carter1990}{TreeTools}
@@ -211,12 +210,30 @@ MultiSplitInformation <- function (partitionSizes) {
 #' @template MRS
 #' @family split information functions
 #' @export
-UnrootedTreesMatchingSplit <- function (splits) {
+UnrootedTreesMatchingSplit <- function (...) {
+  # use exp and log as it's just as fast, but less likely to overflow to Inf
+  exp(LnUnrootedTreesMatchingSplit(...))
+}
+
+.LogUTMS <- function (LogXDoubleFactorial, splits) {
+
   splits <- splits[splits > 0L]
   totalTips <- sum(splits)
   tipsMinusLengthSplits <- totalTips - length(splits)
-  # use exp and log as it's just as fast, but less likely to overflow to Inf
-  exp(sum(LnDoubleFactorial(totalTips + totalTips - 5L),
-          LnDoubleFactorial(splits + splits - 3L)) -
-        LnDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L))
+
+  sum(LogXDoubleFactorial(totalTips + totalTips - 5L),
+      LogXDoubleFactorial(splits + splits - 3L)) -
+      LogXDoubleFactorial(tipsMinusLengthSplits + tipsMinusLengthSplits - 1L)
+}
+
+#' @rdname UnrootedTreesMatchingSplit
+#' @export
+LnUnrootedTreesMatchingSplit <- function (...) {
+  .LogUTMS(LnDoubleFactorial, c(...))
+}
+
+#' @rdname UnrootedTreesMatchingSplit
+#' @export
+Log2UnrootedTreesMatchingSplit <- function (...) {
+  .LogUTMS(Log2DoubleFactorial, c(...))
 }

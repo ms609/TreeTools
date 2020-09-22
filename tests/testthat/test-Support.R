@@ -20,7 +20,9 @@ test_that("Node supports calculated correctly", {
 
 test_that("Node support colours consistent", {
   expect_equal('red', SupportColour(NA))
-  expect_equal('red', SupportColour(2))
+  expect_equal(c('#ffffff00', 'red'), SupportColour(1:2, show1 = FALSE))
   expect_equal('red', SupportColor(-2)) # Check alternative spelling
-  expect_equal('#ffffff00', SupportColour(1, show1=FALSE))
+  expect_equal('#ffffff00', SupportColour(1, show1 = FALSE))
+  expect_equal(c('oor', '1', '34', '67', '101'),
+               SupportColour((-1):3 / 3, scale = 1:101, outOfRange = 'oor'))
 })

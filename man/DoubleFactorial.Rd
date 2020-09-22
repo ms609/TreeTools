@@ -2,6 +2,7 @@
 % Please edit documentation in R/Combinatorics.R
 \name{DoubleFactorial}
 \alias{DoubleFactorial}
+\alias{DoubleFactorial64}
 \alias{LnDoubleFactorial}
 \alias{Log2DoubleFactorial}
 \alias{LogDoubleFactorial}
@@ -10,6 +11,8 @@
 \title{Double factorial}
 \usage{
 DoubleFactorial(n)
+
+DoubleFactorial64(n)
 
 LnDoubleFactorial(n)
 
@@ -25,13 +28,17 @@ LogDoubleFactorial.int(n)
 \item{n}{Vector of integers.}
 }
 \value{
-Returns the double factorial, n x (n - 2) x (n - 4) x (n - 6) x ...
+Returns the double factorial, \emph{n} * (\emph{n} - 2) * (\emph{n} - 4) *
+(\emph{n} - 6) * ...
 }
 \description{
-Double factorial
+Calculate the double factorial of a number, or its logarithm.
 }
 \section{Functions}{
 \itemize{
+\item \code{DoubleFactorial64}: Returns the exact double factorial as a 64-bit
+\code{integer64}, for \code{n} < 34.
+
 \item \code{LnDoubleFactorial}: Returns the logarithm of the double factorial.
 
 \item \code{Log2DoubleFactorial}: Returns the logarithm of the double factorial.
@@ -41,21 +48,18 @@ and below 50001
 }}
 
 \examples{
-{
 DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2
-DoubleFactorial (5) # 1 x 3 x 5
-exp(LnDoubleFactorial.int (8)) # 2 x 4 x 6 x 8
-
-}
-
+DoubleFactorial (5) # 1 * 3 * 5
+exp(LnDoubleFactorial.int (8)) # log(2 * 4 * 6 * 8)
+DoubleFactorial64(31)
 }
 \seealso{
-Other Double factorial: 
+Other double factorials: 
 \code{\link{doubleFactorials}},
 \code{\link{logDoubleFactorials}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
-\concept{Double factorial}
+\concept{double factorials}

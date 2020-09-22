@@ -2,34 +2,36 @@
 % Please edit documentation in R/tree_properties.R
 \name{NDescendants}
 \alias{NDescendants}
-\title{Number of descendants for each node in a tree}
+\title{Count descendants for each node in a tree}
 \usage{
 NDescendants(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
-\code{NDescendants()} returns a table listing the number of direct
-descendants for each node in a tree.
+\code{NDescendants()} returns an integer listing the number of direct
+descendants (leaves or internal nodes) for each node in a tree.
 }
 \description{
-Number of descendants for each node in a tree
+\code{NDescendants()} counts the number of nodes (including leaves) directly
+descended from each node in a tree.
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)
-plot(tree)
-nodelabels()
 NDescendants(tree)
+plot(tree)
+nodelabels(NDescendants(tree))
 
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},

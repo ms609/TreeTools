@@ -4,9 +4,9 @@
 #' are readily distinguished by colourblind viewers, followed by a twelfth
 #' 12-colour palette adapted for colour blindness.
 #'
-#' @source {
+#' @source{
 #'
-#' * [ColourBrewer2.org](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
+#' * [ColourBrewer2.org](https://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
 #'
 #' * [Martin Krzywinski](http://mkweb.bcgsc.ca/colorblind/)
 #' }
@@ -28,7 +28,7 @@
 #'
 #' 301!! is too large to store as an integer; use `logDoubleFactorials` instead.
 #'
-#' @family Double factorial
+#' @family double factorials
 #' @keywords datasets
 #' @name doubleFactorials
 #' @export
@@ -36,15 +36,42 @@
 
 #' Natural logarithms of double factorials
 #'
-#' A vector with pre-calculated values of double factorials up to 50 000!!.
+#' `logDoubleFactorials` is a numeric vector with pre-calculated values of
+#' double factorials up to 50 000!!.
 #'
-#' @family Double factorial
+#' @family double factorials
 #' @keywords datasets
 #' @name logDoubleFactorials
 #' @export
 "logDoubleFactorials"
 
-#' Raw data from Zhang et al. 2016
+#' @rdname TreeShape
+#' @format `unrootedKeys` is a list of length `r length(unrootedKeys)`; each
+#' entry is a vector of integers corresponding to they keys (not shape numbers)
+#' of the different unrooted tree shapes with `nTip` leaves.
+"unrootedKeys"
+
+#' Number of rooted / unrooted tree shapes
+#'
+#' `nRootedShapes` and `nUnrootedShapes` give the number of (un)rooted binary
+#' trees on _n_ unlabelled leaves.
+#'
+#' @source
+#' `nRootedShapes` corresponds to the Wedderburn-Etherington numbers,
+#' [\acronym{OEIS} A001190](https://oeis.org/A001190)
+#'
+#' `nUnrootedShapes` is [\acronym{OEIS} A000672](https://oeis.org/A000672)
+#'
+#' @keywords datasets
+"nRootedShapes"
+
+#' @rdname nRootedShapes
+"nUnrootedShapes"
+
+#' Data from Zhang et al. 2016
+#'
+#' Phylogenetic data from Zhang _et al._ (2016) in raw (`Lobo.data`) and
+#' `phyDat` (`Lobo.phy`) formats.
 #'
 #' @template LoboMods
 #'
@@ -54,12 +81,5 @@
 #' @keywords datasets
 "Lobo.data"
 
-#' Data from Zhang et al. 2016 in `phyDat` format
-#'
-#' @template LoboMods
-#'
-#' @source
-#'  \insertRef{Zhang2016}{TreeTools}
-#'
-#' @keywords datasets
+#' @rdname Lobo.data
 "Lobo.phy"

@@ -17,7 +17,7 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 class \code{\link{phylo}}, i.e. \code{dim(tree$edge)[1]}}
 }
 \value{
-\code{NonDuplicateRoot} returns a logical vector of length \code{nEdge},
+\code{NonDuplicateRoot()} returns a logical vector of length \code{nEdge},
 specifying \code{TRUE} unless an edge identifies the same partition as
 the root edge.
 }
@@ -25,7 +25,12 @@ the root edge.
 Identify, for each edge, whether it denotes a different partition from
 the root edge.
 The first edge of the input tree must be a root edge; this can be
-accomplished using \code{Preorder}.
+accomplished using \code{Preorder()}.
+}
+\details{
+This function is deprecated; if you use it, please
+\href{https://github.com/ms609/TreeTools/issues/32}{comment (#32)}
+so that a suitable replacement can be guaranteed.
 }
 \examples{
 tree <- Preorder(BalancedTree(8))
@@ -38,11 +43,12 @@ which(!NonDuplicateRoot(parent, child))
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},

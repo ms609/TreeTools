@@ -19,11 +19,11 @@ The number of ways to distribute \code{sum(configuration)} taxa according
 to the specified pattern.
 }
 \description{
-Number of terminal arrangements matching a specified configuration of
-two partitions.
+\code{NPartitionPairs()} calculates the number of terminal arrangements matching
+a specified configuration of two splits.
 }
 \details{
-Consider partitions that divide eight terminals, labelled A to H.
+Consider splits that divide eight terminals, labelled A to H.
 
 \tabular{rcll}{
 Bipartition 1:\tab ABCD:EFGH\tab A1 = ABCD\tab B1 = EFGH \cr
@@ -44,7 +44,6 @@ this pair of bipartition splits.
 }
 \examples{
 NPartitionPairs(c(2, 1, 1, 3))
-
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

@@ -9,11 +9,14 @@
 #' aiming for efficient and robust implementations of functions, typically
 #' applied to unweighted trees (i.e. those without edge lengths).
 #'
-#' Version 0.1 is a pre-release; some minor functionality may change in version
-#' 1.0, due in mid-2020.
+#' Full documentation is available [online](https://ms609.github.io/TreeTools/).
 #'
 #' @keywords internal
 "_PACKAGE"
+
+# Suppress "NOTE: Nothing imported from Rdpack":
+#' @importFrom Rdpack reprompt
+NULL
 
 # The following block is used by usethis to automatically manage
 # roxygen namespace tags. Modify with care!

@@ -37,7 +37,7 @@ multi-state characters in a phylogenetic matrix.
 
 A simple way to characterise trees is to count the number of edges.
 (Edges are almost, but not quite, equivalent to nodes.)
-Counting edges (or nodes) provides a quick measaure of a tree's resolution,
+Counting edges (or nodes) provides a quick measure of a tree's resolution,
 and underpins the Robinson-Foulds tree distance measure.
 Not all edges, however, are created equal.
 
@@ -91,7 +91,6 @@ SplitInformation(2, 6)
 # that seven maximally uneven splits on the same leaves:
 SplitInformation(25, 25)
 7 * SplitInformation(2, 48)
-
 # Three ways to split eight leaves into multiple partitions:
 MultiSplitInformation(c(2, 2, 4))
 MultiSplitInformation(c(2, 3, 3))
@@ -106,13 +105,14 @@ MultiSplitInformation(rep(2, 4))
 }
 \seealso{
 Sum the phylogenetic information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{TreeDist::SplitwiseInfo()}}
 
 Sum the clustering information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/}{\code{TreeDist}}\code{::}\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{TreeDist::ClusteringInfo()}}
 
 Other split information functions: 
 \code{\link{CharacterInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()},
 \code{\link{UnrootedTreesMatchingSplit}()}
 }

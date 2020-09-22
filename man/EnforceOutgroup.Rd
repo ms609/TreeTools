@@ -2,33 +2,60 @@
 % Please edit documentation in R/tree_generation.R
 \name{EnforceOutgroup}
 \alias{EnforceOutgroup}
-\title{Force taxa to form an outgroup}
+\alias{EnforceOutgroup.phylo}
+\alias{EnforceOutgroup.character}
+\title{Generate a tree with a specific outgroup}
 \usage{
 EnforceOutgroup(tree, outgroup)
+
+\method{EnforceOutgroup}{phylo}(tree, outgroup)
+
+\method{EnforceOutgroup}{character}(tree, outgroup)
 }
 \arguments{
-\item{tree}{Either: a tree of class \code{phylo}; or a character vector
-listing the names of all the taxa in the tree, from which a random tree will
-be generated.}
+\item{tree}{Either a tree of class \code{phylo}; or (for \code{EnforceOutgroup()})
+a character vector listing the names of all the taxa in the tree, from which
+a random tree will be generated.}
 
 \item{outgroup}{Character vector containing the names of taxa to include in the
 outgroup.}
 }
 \value{
-\code{EnforceOutgroup} returns a tree of class \code{phylo} where all outgroup
+\code{EnforceOutgroup()} returns a tree of class \code{phylo} where all outgroup
 taxa are sister to all remaining taxa, without modifying the ingroup
 topology.
 }
 \description{
-Given a tree or a list of taxa, rearrange the ingroup and outgroup taxa such
-that the two are sister taxa across the root, without changing the
-relationships within the ingroup or within the outgroup.
+Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup
+and outgroup taxa such that the two are sister taxa across the root, without
+changing the relationships within the ingroup or within the outgroup.
 }
 \examples{
 tree <- EnforceOutgroup(letters[1:9], letters[1:3])
 plot(tree)
 
 }
+\seealso{
+For a more robust implementation, see \code{\link[=RootTree]{RootTree()}}, which will
+eventually replace this function
+(\href{https://github.com/ms609/TreeTools/issues/30}{#30}).
+
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

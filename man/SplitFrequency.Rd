@@ -19,12 +19,14 @@ TreeSplits(tree)
 \item{reference}{A tree of class \code{phylo}, a \code{Splits} object.}
 
 \item{forest}{a list of trees of class \code{phylo}, or a \code{multiPhylo} object; or a
-\code{Splits} object.}
+\code{Splits} object. See
+\href{https://ms609.github.io/TreeTools/articles/load-trees.html}{vignette} for
+possible methods of loading trees into R.}
 
 \item{tips}{Integer vector specifying the tips of the tree within the chosen
 split.}
 
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tipIndex}{Character vector of tip names, in a fixed order.}
 
@@ -40,8 +42,10 @@ Note that the three nodes at the root of the tree correspond to a single
 split; see the example for how these might be plotted on a tree.
 }
 \description{
-\code{SplitFrequency} provides a simple way to count the number of times that
-bipartition splits, as defined by a reference tree, occur in a forest of trees.
+\code{SplitFrequency()} provides a simple way to count the number of times that
+bipartition splits, as defined by a reference tree, occur in a forest of
+trees. May be used to calculate edge ("node") support for majority consensus
+or bootstrap trees.
 }
 \details{
 If multiple calculations are required, some time can be saved by using the
@@ -58,14 +62,17 @@ Use as.Splits instead.
 }}
 
 \examples{
-forest <- as.phylo(c(1, 10, 10, 100, 1000), nTip = 7)
+# An example forest of 100 trees, some identical
+forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
 
-# Simple, but means counting each split in the forest twice:
-tree1Freqs <- SplitFrequency(forest[[1]], forest)
-SplitFrequency(forest[[2]], forest)
+# Generate an 80\% consensus tree
+cons <- ape::consensus(forest, p = 0.8)
+plot(cons)
 
-plot(forest[[1]])
-ape::nodelabels(tree1Freqs, node=as.integer(names(tree1Freqs)))
+splitFreqs <- SplitFrequency(cons, forest)
+LabelSplits(cons, splitFreqs, unit = '\%',
+            col = SupportColor(splitFreqs / 100),
+            frame = 'none', pos = 3L)
 
 }
 \author{

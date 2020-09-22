@@ -8,13 +8,16 @@
 AddTip(
   tree,
   where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
-  label = "New tip"
+  label = "New tip",
+  nTip = NTip(tree),
+  nNode = tree$Nnode,
+  rootNode = RootNode(tree)
 )
 
 AddTipEverywhere(tree, label = "New tip", includeRoot = FALSE)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{where}{The node or tip that should form the sister taxon to the new
 node.  To add a new tip at the root, use \code{where = 0}.  By default, the
@@ -22,8 +25,14 @@ new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
 
-\item{includeRoot}{Logical; if \code{TRUE}, the three positions adjacent
-to the root edge are considered to represent distinct edges.}
+\item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips and
+nodes in \code{tree}, and index of root node.
+Not checked for correctness: specifying values here trades code safety for a
+nominal speed increase.}
+
+\item{includeRoot}{Logical; if \code{TRUE}, each position adjacent
+to the root edge is considered to represent distinct edges; if \code{FALSE},
+they are treated as a single edge.}
 }
 \value{
 \code{AddTip()} returns a tree of class \code{phylo} with an additional tip
@@ -33,19 +42,15 @@ at the desired location.
 the trees produced by adding \code{label} to each edge of \code{tree} in turn.
 }
 \description{
-\code{AddTip} adds a tip to a phylogenetic tree at a specified location.
+\code{AddTip()} adds a tip to a phylogenetic tree at a specified location.
 }
 \details{
-\code{AddTip} extends \code{\link{bind.tree}}, which cannot handle
+\code{AddTip()} extends \code{\link{bind.tree}}, which cannot handle
 single-taxon trees.
+
+\code{AddTipEverywhere()} adds a tip to each edge in turn.
 }
-\section{Functions}{
-\itemize{
-\item \code{AddTipEverywhere}: Add a tip to each edge in turn.
-}}
-
 \examples{
-
 plot(tree <- BalancedTree(10))
 ape::nodelabels()
 ape::nodelabels(15, 15, bg='green')
@@ -55,10 +60,12 @@ plot(AddTip(tree, 15, 'NEW_TIP'))
 oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
 
 backbone <- BalancedTree(4)
+# Treating the position of the root as instructive:
 additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 xx <- lapply(additions, plot)
 
 par(mfrow=c(2, 3))
+# Don't treat root edges as distinct:
 additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 xx <- lapply(additions, plot)
 
@@ -66,13 +73,21 @@ par(oldPar)
 
 }
 \seealso{
-\code{\link{bind.tree}}
-
-\code{\link{nodelabels}}
+Add one tree to another: \code{\link{bind.tree}()}
 
 Other tree manipulation: 
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
+\code{\link{RootTree}()},
 \code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
 \code{\link{Subtree}()}
 }
 \author{

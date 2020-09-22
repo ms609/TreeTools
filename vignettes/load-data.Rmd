@@ -1,6 +1,6 @@
 ---
 title: "Loading phylogenetic data into R"
-author: "Martin R. Smith"
+author: "Martin R. Smith <martin.smith@durham.ac.uk>"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
@@ -117,7 +117,7 @@ an unexpected dataset format -- if they don't work on your dataset, please
 
 
 Failing that, you can enlist the help of the
-`phangorn` package, which was installed when you installed `TreeTools`:
+'phangorn' package, which was installed when you installed 'TreeTools':
 
 ```r
 library('phangorn')

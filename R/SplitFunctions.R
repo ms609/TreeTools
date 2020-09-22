@@ -1,35 +1,36 @@
-#' Subset of a split on fewer taxa
+#' Subset of a split on fewer leaves
+#'
+#' `Subsplit()` removes leaves from a `Splits` object.
 #'
 #' @template splitsObjectParam
-#' @param tips A vector specifying a subset of the tip labels applied to `split`.
+#' @param tips A vector specifying a subset of the leaf labels applied to `split`.
 #' @param keepAll logical specifying whether to keep entries that define trivial
-#' splits (i.e. splits of zero or one tip) on the subset of tips.
+#' splits (i.e. splits of zero or one leaf) on the subset of leaves.
 #' @param unique logical specifying whether to remove duplicate splits.
 #'
-#' @return An object of class `Splits`, defined on `tips`.
+#' @return `Subsplit()` returns an object of class `Splits`, defined on the
+#' leaves `tips`.
 #'
 #' @examples
-#'
 #' splits <- as.Splits(PectinateTree(letters[1:9]))
+#' splits
 #' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 #' summary(efgh)
 #'
 #' TrivialSplits(efgh)
 #'
-#' Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-#'
-#'
+#' summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 #' @template MRS
 #'
 #' @family split manipulation functions
 #' @export
 Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
-  if (mode(splits) == 'list') {
+  if (is.list(splits)) {
     lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
   } else if (length(splits) == 0) {
     ret <- splits
     attr(ret, 'nTip') <- length(tips)
-    attr(ret, 'tip.label') <- if (mode(tips) == 'character') {
+    attr(ret, 'tip.label') <- if (is.character(tips)) {
       tips
     } else {
       attr(splits, 'tip.label')[tips]
@@ -44,31 +45,38 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
   }
 }
 
-#' Are splits trivial?
+#' Identify and remove trivial splits
+#'
+#' `TrivialSplits()` identifies trivial splits (which separate one or zero
+#' leaves from all others); `WithoutTrivialSplits()` removes them from a
+#' `Splits` object.
 #'
 #' @template splitsObjectParam
 #' @template nTipParam
 #'
-#' @return Logical vector specifying whether each split in `splits` is trivial,
-#' i.e. includes or excludes only a single tip or no tips at all.
+#' @return `TrivialSplits()` returns a logical vector specifying whether each
+#' split in `splits` is trivial, i.e. includes or excludes only a single tip or
+#' no tips at all.
 #'
 #' @template MRS
 #' @family split manipulation functions
 #' @examples
-#'
 #' splits <- as.Splits(PectinateTree(letters[1:9]))
 #' efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 #' summary(efgh)
 #'
 #' TrivialSplits(efgh)
-#'
 #' @export
 TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   inSplit <- TipsInSplits(splits)
   inSplit < 2L | inSplit > nTip - 2L
 }
 
-#' @describeIn TrivialSplits Remove trivial splits from a splits object
+#' @rdname TrivialSplits
+#' @return `WithoutTrivialSplits()` returns a `Splits` object with trivial
+#' splits removed.
+#' @examples
+#' summary(WithoutTrivialSplits(efgh))
 #' @export
 WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
   splits[[!TrivialSplits(splits, nTip)]]
@@ -133,19 +141,21 @@ CompatibleSplits <- function (splits, splits2) {
 
 #' Probability of matching this well
 #'
-#' Calculates the probability that two random splits of the sizes provided
-#' will be at least as similar as the two specified.
+#' (`Ln`)`SplitMatchProbability()`calculates the probability that two random
+#' splits of the sizes provided will be at least as similar as the two
+#' specified.
 #'
 #' @template split12Params
 #'
-#' @return The proportion of permissible informative splits
-#' splitting the terminals into bipartitions of the sizes given,
-#'  that match as well as `split1` and `split2` do.
+#' @return `SplitMatchProbability()` returns a numeric giving the proportion
+#' of permissible non-trivial splits that divide the terminals into bipartitions
+#' of the sizes given, that match as well as `split1` and `split2` do.
 #'
 #' @examples
-#' SplitMatchProbability(split1 = as.Splits(c(rep(TRUE, 4), rep(FALSE, 4))),
-#'                       split2 = as.Splits(c(rep(TRUE, 3), rep(FALSE, 5))))
-#'
+#' split1 <- as.Splits(c(rep(TRUE, 4), rep(FALSE, 4)))
+#' split2 <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 5)))
+#' SplitMatchProbability(split1, split2)
+#' @family split information functions
 #' @template MRS
 #' @export
 SplitMatchProbability <- function (split1, split2) {
@@ -202,19 +212,38 @@ SplitMatchProbability <- function (split1, split2) {
   sum(choices[ranking <= ranking[partitions[3] + 1L - minA1B2]]) / choose(n, A1)
 }
 
+#' @rdname SplitMatchProbability
+#' @return `LnSplitMatchProbability()` returns the natural logarithm of the
+#' probability.
+#' @examples
+#' LnSplitMatchProbability(split1, split2)
+#' @export
+LnSplitMatchProbability <- function (split1, split2) {
+  log(SplitMatchProbability(split1, split2))
+}
+
+
 #' Extract tip labels
 #'
-#' Extracts tip labels from an object.  If the object is a single integer,
-#' `TipLabels` will return a vector `t1`, `t2` ... `tn`, to match
-#' the default of \code{ape::\link{rtree}}.
+#' `TipLabels()` extracts labels from an object: for example, names of taxa in
+#' a phylogenetic tree or data matrix.
 #'
-#' @param x An object of a supported class (see Usage section).
+#' @param x An object of a supported class (see Usage section above).
 #' @param single Logical specifying whether to report the labels for the first
 #' object only (`TRUE`), or for each object in a list (`FALSE`).
 #'
-#' @return `TipLabels` returns a character vector listing the tip labels for the
-#' specified object.
+#' @return `TipLabels()` returns a character vector listing the tip labels
+#' appropriate to `x`. If `x` is a single integer, this will be a vector
+#' `t1`, `t2` ... `tx`, to match the default of \code{ape::\link{rtree}()}.
 #'
+#' @examples
+#' TipLabels(BalancedTree(letters[5:1]))
+#' TipLabels(5)
+#'
+#' data('Lobo')
+#' head(TipLabels(Lobo.phy))
+#'
+#' @family tree properties
 #' @template MRS
 #' @export
 TipLabels <- function (x, single = TRUE) UseMethod('TipLabels')
@@ -229,7 +258,7 @@ TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.TreeNumber <- function (x, single = TRUE) x$tip.label
+TipLabels.TreeNumber <- function (x, single = TRUE) attr(x, 'tip.label')
 
 #' @rdname TipLabels
 #' @family Splits operations
@@ -240,9 +269,15 @@ TipLabels.Splits <- function (x, single = TRUE) attr(x, 'tip.label')
 #' @export
 TipLabels.list <- function (x, single = FALSE) {
   if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
-  if (!is.null(x$tip.label)) return (x$tip.label)
+  xTipLabel <- x$tip.label
+  if (!is.null(xTipLabel)) {
+    if (is.list(xTipLabel) && !is.null(xTipLabel$tip.label)) {
+      return(xTipLabel$tip.label)
+    } else {
+      return(xTipLabel)
+    }
+  }
   .ListLabels(x, single, TipLabels)
-
 }
 
 #' @keywords internal
@@ -264,7 +299,14 @@ TipLabels.list <- function (x, single = FALSE) {
 #' @rdname TipLabels
 #' @export
 TipLabels.multiPhylo <- function (x, single = FALSE) {
-  if (!is.null(x$tip.label)) return (x$tip.label)
+  xTipLabel <- x$tip.label
+  if (!is.null(xTipLabel)) {
+    if (is.list(xTipLabel) && !is.null(xTipLabel$tip.label)) {
+      return(xTipLabel$tip.label)
+    } else {
+      return(xTipLabel)
+    }
+  }
   if (single) {
     firstEntry <- x[[1]]
     if (!is.null(firstEntry$tip.label)) return (firstEntry$tip.label)
@@ -307,10 +349,10 @@ TipLabels.default <- function (x, single = TRUE) {
 
 #' Distributions of tips consistent with a partition pair
 #'
-#' Number of terminal arrangements matching a specified configuration of
-#' two partitions.
+#' `NPartitionPairs()` calculates the number of terminal arrangements matching
+#' a specified configuration of two splits.
 #'
-#' Consider partitions that divide eight terminals, labelled A to H.
+#' Consider splits that divide eight terminals, labelled A to H.
 #'
 #' \tabular{rcll}{
 #'   Bipartition 1:\tab ABCD:EFGH\tab A1 = ABCD\tab B1 = EFGH \cr
@@ -341,14 +383,9 @@ TipLabels.default <- function (x, single = TRUE) {
 #'
 #' @examples
 #' NPartitionPairs(c(2, 1, 1, 3))
-#'
 #' @template MRS
 #' @export
 NPartitionPairs <- function (configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *
     choose(sum(configuration[c(2, 4)]), configuration[2])
-}
-#' @describeIn SplitMatchProbability The natural logarithm of the probability
-LnSplitMatchProbability <- function(split1, split2) {
-  log(SplitMatchProbability(split1, split2))
 }

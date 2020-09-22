@@ -12,26 +12,7 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - AddTip
-      - AllAncestors
-      - AncestorEdge
-      - CladeSizes
-      - CollapseNode
-      - ConsensusWithout
-      - EnforceOutgroup
-      - MRCA
-      - NPartitions
-      - NPartitionPairs
-      - NewickTree
-      - NonDuplicateRoot
-      - Renumber
-      - RootTree
-      - SingleTaxonTree
-      - SortTree
-      - Subtree
-      - RenumberTips
-      - TreeIsRooted
-      - UnshiftTree
+      - has_concept('tree manipulation')
 
   - title: "Tree navigation"
     desc: >
@@ -46,16 +27,24 @@ reference:
       - has_concept('tree generation functions')
       - print.TreeNumber
 
+  - title: "Tree properties"
+    desc: >
+      Functions describing properties of trees.
+    contents:
+      - has_concept("tree characterization functions")
+      - NTip
+      - NPartitions
+      - TipLabels
+      - TreeIsRooted
+
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
     contents:
-      - MatrixToPhyDat
-      - PhyDatToMatrix
-      - PhyToString
-      - StringToPhyDat
+      - has_concept("phylogenetic matrix conversion functions")
+      - ArtificialExtinction
 
   - title: "Parsers"
-    desc: "Functions to parse files."
+    desc: "Functions to parse or write files."
     contents:
       - as.Newick
       - ApeTime
@@ -63,27 +52,30 @@ reference:
       - NewickTree
       - ReadCharacters
       - ReadTntTree
+      - StringToPhyDat
       - TNTText2Tree
+      - WriteTntCharacters
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
     contents:
-      - matches('Split')
       - has_concept("split manipulation functions")
+      - has_concept("Splits operations")
 
   - title: "Information and combinatorics"
     desc: "Functions to calculate factorial quantities."
     contents:
     - starts_with('IC')
-    - NRooted
     - N1Spr
     - DoubleFactorial
+    - NPartitionPairs
     - has_concept("tree information functions")
     - has_concept("split information functions")
 
-  - title: "Node support"
-    desc: "Functions that describe support for nodes in trees."
+  - title: "Split support"
+    desc: "Calculate and depict support for splits ('edges' / 'nodes') in trees."
     contents:
+      - LabelSplits
       - SplitFrequency
       - SupportColour
 
@@ -93,15 +85,18 @@ reference:
       - brewer
       - doubleFactorials
       - Lobo.data
-      - Lobo.phy
       - logDoubleFactorials
+      - nRootedShapes
      #- has_concept('datasets') # Not yet implemented by pkgdown
 
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
+      - MSTEdges
       - RightmostCharacter
       - SampleOne
+      - sapply64
+      - UnshiftTree
 
 template:
   params:

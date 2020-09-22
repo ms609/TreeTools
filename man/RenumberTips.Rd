@@ -16,20 +16,20 @@ RenumberTips(tree, tipOrder)
 \method{RenumberTips}{list}(tree, tipOrder)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tipOrder}{A character vector containing the values of
 \code{tree$tip.label} in the desired sort order, or an object
 (perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
 }
 \value{
-\code{RenumberTips} returns \code{tree1}, with the tips' internal
+\code{RenumberTips()} returns \code{tree}, with the tips' internal
 representation numbered to match \code{tipOrder}.
 }
 \description{
-\code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree
+\code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree \code{tree}
 such that the indices in \code{tree$edge[, 2]} correspond to the order of
-tips given in \code{tipOrder}.
+leaves given in \code{tipOrder}.
 }
 \examples{
 data('Lobo') # Loads the phyDat object Lobo.phy
@@ -37,6 +37,23 @@ tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 
 }
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}

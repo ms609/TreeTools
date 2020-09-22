@@ -2,18 +2,24 @@
 % Please edit documentation in R/Information.R
 \name{UnrootedTreesMatchingSplit}
 \alias{UnrootedTreesMatchingSplit}
+\alias{LnUnrootedTreesMatchingSplit}
+\alias{Log2UnrootedTreesMatchingSplit}
 \title{Number of trees consistent with split}
 \usage{
-UnrootedTreesMatchingSplit(splits)
+UnrootedTreesMatchingSplit(...)
+
+LnUnrootedTreesMatchingSplit(...)
+
+Log2UnrootedTreesMatchingSplit(...)
 }
 \arguments{
-\item{splits}{A vector of integers listing the number of tips in each of a number of
-tree splits (e.g. bipartitions).  For example, \code{c(3, 5)} states that
-a character divides a set of eight tips into a group of three and a group
-of five.}
+\item{\dots}{A series or vector of integers listing the number of tips in
+each of a number of tree splits (e.g. bipartitions).
+For example, \verb{3, 5} states that a character divides a set of eight tips into
+a group of three and a group of five.}
 }
 \value{
-\code{UnrootedTreesMatchingSplit} returns an integer specifying the
+\code{UnrootedTreesMatchingSplit()} returns an integer specifying the
 number of unrooted bifurcating trees consistent with the specified split.
 }
 \description{
@@ -22,7 +28,7 @@ specified multi-partition split, using the formula of Carter \emph{et al}. (1990
 }
 \examples{
  UnrootedTreesMatchingSplit(c(3, 5))
- UnrootedTreesMatchingSplit(c(3, 2, 1, 2))
+ UnrootedTreesMatchingSplit(3, 2, 1, 2)
 
 }
 \references{
@@ -32,6 +38,7 @@ See Theorem 2 in \insertRef{Carter1990}{TreeTools}
 Other split information functions: 
 \code{\link{CharacterInformation}()},
 \code{\link{SplitInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()}
 }
 \author{

@@ -2,10 +2,19 @@
 % Please edit documentation in R/tree_display.R
 \name{ConsensusWithout}
 \alias{ConsensusWithout}
+\alias{ConsensusWithout.phylo}
+\alias{ConsensusWithout.multiPhylo}
+\alias{ConsensusWithout.list}
 \alias{MarkMissing}
 \title{Consensus without taxa}
 \usage{
-ConsensusWithout(trees, tip, ...)
+ConsensusWithout(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{phylo}(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{multiPhylo}(trees, tip = character(0), ...)
+
+\method{ConsensusWithout}{list}(trees, tip = character(0), ...)
 
 MarkMissing(tip, position = "bottomleft", ...)
 }
@@ -13,29 +22,27 @@ MarkMissing(tip, position = "bottomleft", ...)
 \item{trees}{A list of phylogenetic trees, of class \code{multiPhylo} or \code{list}.}
 
 \item{tip}{A character vector specifying the names (or numbers) of tips to
-drop (using ape::drop.tip).}
+drop (using \code{ape::drop.tip()}).}
 
-\item{\dots}{Additional parameters to pass on to \link[ape:consensus]{ape::consensus} or \link{legend}.}
+\item{\dots}{Additional parameters to pass on to \code{\link[ape:consensus]{ape::consensus()}} or
+\code{\link[=legend]{legend()}}.}
 
-\item{position}{Where to plot the missing taxa.  See \link{legend} for options.}
+\item{position}{Where to plot the missing taxa.
+See \code{\link[=legend]{legend()}} for options.}
 }
 \value{
-\code{ConsensusWithout} returns a consensus tree (of class \code{phylo})
+\code{ConsensusWithout()} returns a consensus tree (of class \code{phylo})
 without the excluded taxa.
+
+\code{MarkMissing()} provides a null return, after plotting the specified
+\code{tip}s as a legend.
 }
 \description{
-Displays a consensus plot with selected taxa excluded.
+\code{ConsensusWithout()} displays a consensus plot with specified taxa excluded,
+which can be a useful way to increase the resolution of a consensus tree
+when a few wildcard taxa obscure a consistent set of relationships.
+\code{MarkMissing()} adds missing taxa as loose leaves on the plot.
 }
-\details{
-A useful way to gain resolution if a few wildcard taxa obscure a consistent
-set of relationship.
-}
-\section{Functions}{
-\itemize{
-\item \code{MarkMissing}: Adds labels for taxa omitted from a plotted
-consensus tree.
-}}
-
 \examples{
 oldPar <- par(mfrow=c(1, 2), mar=rep(0.5, 4))
 
@@ -44,18 +51,40 @@ trees <- as.phylo(c(0, 53), 6)
 plot(trees[[1]])
 plot(trees[[2]])
 
-# Strict consensus lacks resolution:
+# Strict consensus (left panel) lacks resolution:
 plot(ape::consensus(trees))
 
-# But omitting tip two reveals shared structure in common:
+# But omitting tip two (right panel) reveals shared structure in common:
 plot(ConsensusWithout(trees, 't2'))
 MarkMissing('t2')
 
 par(oldPar)
+}
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
 
+Other tree properties: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{TipLabels}()},
+\code{\link{TreeIsRooted}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}
+\concept{tree properties}

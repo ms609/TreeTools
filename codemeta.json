@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
-  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include: generation of trees with specified shapes;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and\n  analysis of partitions and cladistic information.",
+  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include:\n  generation of trees with specified shapes;\n  analysis of tree shape;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and analysis of splits and cladistic information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "relatedLink": [
@@ -15,14 +15,13 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.1.4.9003",
+  "version": "1.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 (2020-04-24)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "author": [
     {
       "@type": "Person",
@@ -46,12 +45,6 @@
       "givenName": "Emmanuel",
       "familyName": "Paradis",
       "@id": "https://orcid.org/0000-0003-3092-2199"
-    },
-    {
-      "@type": "Person",
-      "givenName": "Klaus",
-      "familyName": "Schliep",
-      "@id": "https://orcid.org/0000-0003-2941-0161"
     }
   ],
   "funder": {},
@@ -91,18 +84,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "Rdpack",
-      "name": "Rdpack",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=Rdpack"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -136,6 +117,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "vdiffr",
+      "name": "vdiffr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=vdiffr"
     }
   ],
   "softwareRequirements": [
@@ -157,6 +150,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=ape"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "bit64",
+      "name": "bit64",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=bit64"
     },
     {
       "@type": "SoftwareApplication",
@@ -197,15 +202,23 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "Rdpack",
+      "name": "Rdpack",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Rdpack"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "https://sysreqs.r-hub.io/get/cxx11"
     }
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
-  "readme": "https://github.com/ms609/TreeTools/blob/master/README.md",
-  "contIntegration": [
-    "https://travis-ci.org/ms609/TreeTools",
-    "https://codecov.io/gh/ms609/TreeTools"
-  ],
+  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
@@ -231,5 +244,7 @@
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
-  "fileSize": "923.658KB"
+  "keywords": "phylogenetics",
+  "fileSize": "1363.713KB",
+  "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

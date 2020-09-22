@@ -14,7 +14,8 @@ SingleTaxonTree(label)
 tip with the specified label.
 }
 \description{
-Create a phylogenetic 'tree' that comprises a single taxon.
+\code{SingleTaxonTree()} creates a phylogenetic 'tree' that contains a single
+taxon.
 }
 \examples{
 SingleTaxonTree('Homo_sapiens')
@@ -24,14 +25,22 @@ plot(SingleTaxonTree('root') + BalancedTree(4))
 \seealso{
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SortTree}()},
 \code{\link{Subtree}()}
 
 Other tree generation functions: 
-\code{\link{BalancedTree}()},
+\code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{PectinateTree}()},
-\code{\link{RandomTree}()},
 \code{\link{TreeNumber}}
 }
 \concept{tree generation functions}

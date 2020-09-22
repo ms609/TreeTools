@@ -7,14 +7,23 @@
 Renumber(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}.}
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 }
 \value{
-\code{Renumber()} returns a tree of class \code{phylo}.
+\code{Renumber()} returns a tree of class \code{phylo}, numbered in a
+\link{Cladewise} fashion consistent with the expectations of 'ape' functions.
 }
 \description{
 \code{Renumber()} numbers the nodes and tips in a tree to conform with the
 \code{phylo} standards.
+}
+\details{
+The 'ape' class \code{phylo} is not formally defined, but expects trees' internal
+representation to conform to certain principles: for example, nodes should
+be numbered sequentially, with values increasing away from the root.
+
+\code{Renumber()} attempts to reformat any tree into a representation that will
+not cause 'ape' functions to produce unwanted results or to crash R.
 }
 \examples{
 tree <- RandomTree(letters[1:10])
@@ -22,9 +31,22 @@ Renumber(tree)
 
 }
 \seealso{
+\code{Preorder()} provides a faster and simpler alternative, but also
+rotates nodes.
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{RootTree}()},
 \code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
 \code{\link{Subtree}()}
 }
 \author{

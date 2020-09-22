@@ -3,35 +3,36 @@
 \name{MatrixToPhyDat}
 \alias{MatrixToPhyDat}
 \alias{PhyDatToMatrix}
-\title{Matrix to \code{phyDat}}
+\title{Convert between matrices and \code{phyDat} objects}
 \usage{
 MatrixToPhyDat(tokens)
 
 PhyDatToMatrix(dataset)
 }
 \arguments{
-\item{tokens}{matrix of tokens, probably created with \code{\link{ReadCharacters}}
-or \code{\link{ReadTntCharacters}}. Row names should correspond to tip
+\item{tokens}{matrix of tokens, probably created with \code{\link[=ReadCharacters]{ReadCharacters()}}
+or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}. Row names should correspond to tip
 labels; column names may optionally correspond to
 character labels.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
 }
 \value{
-an object of class \code{phyDat}.
+\code{MatrixToPhyDat()} returns an object of class \code{phyDat}.
 
 \code{PhyDatToMatrix()} returns a matrix corresponding to the
 uncompressed character states within a \code{phyDat} object.
 }
 \description{
-Converts a matrix of tokens to a \code{phyDat} object.
+\code{MatrixToPhyDat()} converts a matrix of tokens to a \code{phyDat} object;
+\code{PhyDatToMatrix()} converts a \code{phyDat} object to a matrix of tokens.
 }
-\section{Functions}{
-\itemize{
-\item \code{PhyDatToMatrix}: Converts a \code{phyDat} object to a matrix of tokens.
-}}
-
+\seealso{
+Other phylogenetic matrix conversion functions: 
+\code{\link{StringToPhyDat}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{phylogenetic matrix conversion functions}
 \keyword{internal}

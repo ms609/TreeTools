@@ -4,28 +4,55 @@
 \alias{MRCA}
 \title{Most recent common ancestor}
 \usage{
-MRCA(tip1, tip2, ancestors)
+MRCA(x1, x2, ancestors)
 }
 \arguments{
-\item{tip1, tip2}{Integer specifying index of tips whose most recent common
-ancestor should be found.}
+\item{x1, x2}{Integer specifying index of leaves or nodes whose most
+recent common ancestor should be found.}
 
-\item{ancestors}{Output of \code{\link{AllAncestors}} for the tree in question}
+\item{ancestors}{List of ancestors for each node in a tree. Perhaps
+produced by \code{\link[=ListAncestors]{ListAncestors()}}.}
 }
 \value{
-\code{MRCA} returns an integer specifying the node number of the last
-common ancestor of \code{tip1} and \code{tip2}.
+\code{MRCA()} returns an integer specifying the node number of the last
+common ancestor of \code{x1} and \code{x2}.
 }
 \description{
-What is the last common ancestor of the specified tips?
+\code{MRCA()} calculates the last common ancestor of specified nodes.
+}
+\details{
+\code{MRCA()} requires that node values within a tree increase away from the root,
+which will be true of trees listed in \code{Preorder}.
+No warnings will be given if trees do not fulfil this requirement.
+}
+\examples{
+tree <- BalancedTree(7)
+
+# Verify that node numbering increases away from root
+plot(tree)
+nodelabels()
+
+# ListAncestors expects a tree in Preorder
+tree <- Preorder(tree)
+edge <- tree$edge
+ancestors <- ListAncestors(edge[, 1], edge[, 2])
+MRCA(1, 4, ancestors)
+
+# If a tree must be in postorder, use:
+tree <- Postorder(tree)
+edge <- tree$edge
+ancestors <- lapply(seq_len(max(edge)), ListAncestors,
+                    parent = edge[, 1], child = edge[, 2])
+
 }
 \seealso{
 Other tree navigation: 
-\code{\link{AllAncestors}()},
 \code{\link{AncestorEdge}()},
+\code{\link{CladeSizes}()},
 \code{\link{DescendantEdges}()},
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
+\code{\link{ListAncestors}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},

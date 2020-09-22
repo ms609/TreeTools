@@ -11,18 +11,26 @@ CharacterInformation(tokens)
 a character.  Example: \code{c(0, 0, 0, 1, 1, 1, '?', '-')}.
 
 Note that ambiguous tokens such as \code{(01)} are not supported, and should be
-replaced with \verb{?}.`}
+replaced with \verb{?}.}
 }
 \value{
-\code{CharacterInformation} returns a numeric specifying the
-phylogenetic information content of the character, in bits.
+\code{CharacterInformation()} returns a numeric specifying the
+phylogenetic information content of the character (\emph{sensu} Steel & Penny
+2006), in bits.
 }
 \description{
-Calculates the phylogenetic information content of a given character.
+\code{CharacterInformation()} calculates the phylogenetic information content
+of a given character.
+}
+\references{
+\itemize{
+\item \insertRef{Steel2006}{TreeTools}
+}
 }
 \seealso{
 Other split information functions: 
 \code{\link{SplitInformation}()},
+\code{\link{SplitMatchProbability}()},
 \code{\link{TreesMatchingSplit}()},
 \code{\link{UnrootedTreesMatchingSplit}()}
 }

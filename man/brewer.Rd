@@ -10,7 +10,7 @@ An object of class \code{list} of length 12.
 \source{
 {
 \itemize{
-\item \href{http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3}{ColourBrewer2.org}
+\item \href{https://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3}{ColourBrewer2.org}
 \item \href{http://mkweb.bcgsc.ca/colorblind/}{Martin Krzywinski}
 }
 }

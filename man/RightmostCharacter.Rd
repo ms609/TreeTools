@@ -9,13 +9,14 @@ RightmostCharacter(string, len = nchar(string))
 \arguments{
 \item{string}{Character string.}
 
-\item{len}{Integer specifying number of characters in \code{string}.}
+\item{len}{(Optional) Integer specifying number of characters in \code{string}.}
 }
 \value{
-Rightmost character of \code{string}.
+\code{RightmostCharacter()} returns the rightmost character of a string.
 }
 \description{
-Rightmost character of string
+\code{RightmostCharacter()} is a convenience function that returns the final
+character of a string.
 }
 \examples{
 RightmostCharacter("Hello, World!")
