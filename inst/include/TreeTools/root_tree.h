@@ -150,11 +150,11 @@ namespace TreeTools {
       new_edge(invert_next, 0) = new_root;
       new_edge(invert_next, 1) = edge(invert_next, 0);
 
-      do {
+      while (edge(invert_next, 0) != root_node) {
         invert_next = edge_above[edge(invert_next, 0)];
         new_edge(invert_next, 0) = edge(invert_next, 1);
         new_edge(invert_next, 1) = edge(invert_next, 0);
-      } while (edge(invert_next, 0) != root_node);
+      }
       delete[] edge_above;
 
       ret["Nnode"] = n_node + 1;
