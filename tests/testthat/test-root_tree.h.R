@@ -12,9 +12,3 @@ test_that('Binary trees are rootable', {
   Test(PectinateTree(9), 1)
   Test(PectinateTree(9), 7)
 })
-
-#test_that('Polytomous trees are rootable', {
-  #Test(CollapseNode(BalancedTree(8), 10), 1)
-  #Test(CollapseNode(BalancedTree(8), 11), 1)
-  #Test(StarTree(8), 1)
-#})
