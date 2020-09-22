@@ -16,7 +16,7 @@ test_that('Binary trees are rootable', {
 test_that('Polytomous trees are rootable', {
   Test <- function (tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root])),
-                 root_binary(tree, root))
+                 root_on_node(tree, root))
   }
   bt <- BalancedTree(9)
   pt <- PectinateTree(9)
