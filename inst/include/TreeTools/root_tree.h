@@ -102,14 +102,11 @@ namespace TreeTools {
     intx root_edges_found = 0;
 
     for (intx i = n_edge; i--; ) {
-
       edge_above[edge(i, 1)] = i;
-
       if (edge(i, 0) == root_node) {
         if (root_edges_found < 2) root_edges[root_edges_found] = i;
         ++root_edges_found;
       }
-
     }
 
     intx invert_next = edge_above[outgroup];
