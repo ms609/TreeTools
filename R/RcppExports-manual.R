@@ -6,6 +6,10 @@ postorder_edges <- function(edge) {
   .Call(`_TreeTools_postorder_edges`, edge)
 }
 
-root_on_node <- function(edge, outgroup) {
+root_binary <- function(edge, outgroup) {
   .Call(`_TreeTools_root_on_node`, edge, outgroup)
+}
+
+root_on_node <- function(phy, outgroup) {
+  .Call(`_TreeTools_root_on_node`, phy, outgroup)
 }
