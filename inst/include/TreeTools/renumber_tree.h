@@ -8,8 +8,11 @@
 using namespace Rcpp;
 
 namespace TreeTools {
-  inline intx smallest_descendant(intx *node, intx *smallest_desc, intx *n_children,
-                           intx *children_of, const intx *n_edge) {
+  inline intx smallest_descendant(const intx *node,
+                                  intx *smallest_desc,
+                                  const intx *n_children,
+                                  const intx *children_of,
+                                  const intx *n_edge) {
     if (!smallest_desc[*node]) {
       smallest_desc[*node] =
         smallest_descendant(&children_of[*node * *n_edge + 0], smallest_desc,
@@ -34,8 +37,10 @@ namespace TreeTools {
   /* Requires unsigned integers. */
   /* If we chose signed, we'd have to impose a limit on n_children, which
    * would exclude star trees */
-  inline void quicksort_by_smallest(intx *to_sort, intx *sort_by, intx left, intx right) {
+  inline void quicksort_by_smallest(intx *to_sort, const intx *sort_by,
+                                    const intx left, const intx right) {
     if (left >= right) return;
+
     const intx pivot = sort_by[to_sort[right]];
     intx centre = left;
     for (intx i = left; i <= right; i++) {
@@ -48,10 +53,11 @@ namespace TreeTools {
     quicksort_by_smallest(to_sort, sort_by, centre, right);
   }
 
-inline void add_child_edges(intx node, intx node_label,
-                       intx *children_of, intx *n_children,
-                       IntegerMatrix final_edges, intx *next_edge, intx *next_label,
-                       intx *n_tip, const intx *n_edge) {
+inline void add_child_edges(const intx node, const intx node_label,
+                            const intx *children_of, const intx *n_children,
+                            IntegerMatrix final_edges,
+                            intx *next_edge, intx *next_label,
+                            const intx *n_tip, const intx *n_edge) {
 
     for (intx child = 0; child != n_children[node]; child++) {
 
