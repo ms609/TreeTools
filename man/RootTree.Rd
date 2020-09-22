@@ -25,7 +25,8 @@ the names or indices of the tips to include in the outgroup.}
 }
 \value{
 \code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
-clade that contains the specified tips.
+clade that contains the specified tips, with edges and nodes numbered in
+preorder.
 
 \code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
 requested \code{node} and ordered in \code{\link{Preorder}}.
