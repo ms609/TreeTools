@@ -6,10 +6,8 @@
    distance.
  - `MSTEdges()`: Edges of minimum spanning tree.
  - `SplitImbalance()`: how balanced is each split?
- - Experimental: new C++ function `root_on_node()` roots binary trees.
-   - Not yet documented
-   - Not yet fully integrated into R front-end
-   - Only binary trees are supported
+ - New C++ functions `root_on_node()` and `root_binary()` to root trees quickly
+   and robustly.
 
 ## Enhancements
 
