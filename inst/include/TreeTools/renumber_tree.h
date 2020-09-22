@@ -78,7 +78,7 @@ inline void add_child_edges(intx node, intx node_label,
 
   // [[Rcpp::export]]
   inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
-                                         const IntegerVector child)
+                                                const IntegerVector child)
   {
     const intx n_edge = parent.length(),
                node_limit = n_edge + 2;
@@ -103,15 +103,15 @@ inline void add_child_edges(intx node, intx node_label,
                               "preorder_edges_and_nodes. Try 64-bit R?");         // # nocov
     }
 
-    for (intx i = 0; i != n_edge; i++) {
+    for (intx i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
       children_of[parent[i] * n_edge + n_children[parent[i]]] = child[i];
       (n_children[parent[i]])++;
     }
 
     for (intx i = 1; i != node_limit; i++) {
-      if (parent_of[i] == 0) root_node = i;
-      if (n_children[i] == 0) ++n_tip;
+      if (!parent_of[i]) root_node = i;
+      if (!n_children[i]) ++n_tip;
     }
     std::free(parent_of);
 
@@ -119,7 +119,7 @@ inline void add_child_edges(intx node, intx node_label,
       smallest_desc[tip] = tip;
     }
 
-    for (intx node = n_tip + 1; node < node_limit; node++) {
+    for (intx node = n_tip + 1; node != node_limit; node++) {
       smallest_descendant(&node, smallest_desc, n_children, children_of, &n_edge);
       quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
                             0, n_children[node] - 1);
