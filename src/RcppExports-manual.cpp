@@ -36,13 +36,13 @@ RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   END_RCPP
 }
 // root_on_node
-RcppExport SEXP _TreeTools_root_on_node(SEXP phyloSEXP, SEXP outgroupSEXP) {
+RcppExport SEXP _TreeTools_root_on_node(SEXP phySEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
-  Rcpp::traits::input_parameter< const List >::type phylo(phyloSEXP);
+  Rcpp::traits::input_parameter< const List >::type phy(phySEXP);
   Rcpp::traits::input_parameter< const int >::type outgroup(outgroupSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::root_on_node(phylo, outgroup));
+  rcpp_result_gen = Rcpp::wrap(TreeTools::root_on_node(phy, outgroup));
   return rcpp_result_gen;
   END_RCPP
 }
