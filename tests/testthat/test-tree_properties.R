@@ -167,12 +167,12 @@ test_that("Node depths calculated correctly", {
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
   tree <- UnrootTree(RootTree(BalancedTree(20), 't10'))
-  #plot(tree)
+  #plot(tree); nodelabels(adj = 2, bg = 'yellow')
   #nodelabels(NodeDepth(tree, F, FALSE))
   #nodelabels(NodeDepth(tree, T, FALSE))
-  expect_equal(c(1,3,2,1,4,4,3,1,2,1,3,1,2,1,3,1,2,1),
+  expect_equal(c(1,3,4,3,2,1,1,4,3,2,1,1,3,2,1,1,2,1),
                NodeDepth(tree, includeTips = FALSE))
-  expect_equal(c(1,2,1,1,3,3,2,1,1,1,2,1,1,1,2,1,1,1),
+  expect_equal(c(1,2,3,2,1,1,1,3,2,1,1,1,2,1,1,1,1,1),
                NodeDepth(tree, shortest = TRUE, includeTips = FALSE))
 
 
