@@ -90,7 +90,7 @@ a phylogenetic dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.3.0.9000</span>
       </span>
     </div>
 
@@ -164,43 +164,43 @@ taxon, to simulate the process of fossilization in removing data from
 a phylogenetic dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ArtificialExtinction</span>(
-  <span class='kw'>dataset</span>,
-  <span class='kw'>subject</span>,
-  <span class='kw'>template</span>,
-  replaceAmbiguous = <span class='st'>"ambig"</span>,
-  replaceCoded = <span class='st'>"original"</span>,
-  sampleFrom = <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>ArtificialExtinction</span><span class='op'>(</span>
+  <span class='va'>dataset</span>,
+  <span class='va'>subject</span>,
+  <span class='va'>template</span>,
+  replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
+  replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>ArtificialExtinction</span>(
-  <span class='kw'>dataset</span>,
-  <span class='kw'>subject</span>,
-  <span class='kw'>template</span>,
-  replaceAmbiguous = <span class='st'>"ambig"</span>,
-  replaceCoded = <span class='st'>"original"</span>,
-  sampleFrom = <span class='kw'>NULL</span>
-)
+<span class='fu'>ArtificialExtinction</span><span class='op'>(</span>
+  <span class='va'>dataset</span>,
+  <span class='va'>subject</span>,
+  <span class='va'>template</span>,
+  replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
+  replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for phyDat</span>
-<span class='fu'>ArtificialExtinction</span>(
-  <span class='kw'>dataset</span>,
-  <span class='kw'>subject</span>,
-  <span class='kw'>template</span>,
-  replaceAmbiguous = <span class='st'>"ambig"</span>,
-  replaceCoded = <span class='st'>"original"</span>,
-  sampleFrom = <span class='kw'>NULL</span>
-)
+<span class='fu'>ArtificialExtinction</span><span class='op'>(</span>
+  <span class='va'>dataset</span>,
+  <span class='va'>subject</span>,
+  <span class='va'>template</span>,
+  replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
+  replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>ArtEx</span>(
-  <span class='kw'>dataset</span>,
-  <span class='kw'>subject</span>,
-  <span class='kw'>template</span>,
-  replaceAmbiguous = <span class='st'>"ambig"</span>,
-  replaceCoded = <span class='st'>"original"</span>,
-  sampleFrom = <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'>ArtEx</span><span class='op'>(</span>
+  <span class='va'>dataset</span>,
+  <span class='va'>subject</span>,
+  <span class='va'>template</span>,
+  replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
+  replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,12 +254,12 @@ dependent characters.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>1</span>)
-<span class='kw'>dataset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>4</span> <span class='op'>*</span> <span class='fl'>8</span>, <span class='fl'>TRUE</span>),
-                    <span class='st'>'0'</span>, <span class='st'>'0'</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>'?'</span>, <span class='fl'>6</span>)), nrow = <span class='fl'>5</span>,
-                    dimnames = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>], <span class='st'>'FOSSIL'</span>),
-                                    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='st'>'char'</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span>)), byrow = <span class='fl'>TRUE</span>)
-<span class='kw'>artex</span> <span class='op'>&lt;-</span> <span class='fu'>ArtificialExtinction</span>(<span class='kw'>dataset</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'A'</span>, <span class='st'>'C'</span>), <span class='st'>'FOSSIL'</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>4</span> <span class='op'>*</span> <span class='fl'>8</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
+                    <span class='st'>'0'</span>, <span class='st'>'0'</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>'?'</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>, nrow <span class='op'>=</span> <span class='fl'>5</span>,
+                    dimnames <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, <span class='st'>'FOSSIL'</span><span class='op'>)</span>,
+                                    <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>'char'</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>, byrow <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>artex</span> <span class='op'>&lt;-</span> <span class='fu'>ArtificialExtinction</span><span class='op'>(</span><span class='va'>dataset</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'A'</span>, <span class='st'>'C'</span><span class='op'>)</span>, <span class='st'>'FOSSIL'</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -89,7 +89,7 @@ dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.3.0.9000</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@ dataset." />
 dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NJTree</span>(<span class='kw'>dataset</span>, edgeLengths = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>NJTree</span><span class='op'>(</span><span class='va'>dataset</span>, edgeLengths <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,13 +192,13 @@ whose names correspond to the labels of any accompanying tree.</p></td>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'Lobo'</span>)
-<span class='fu'>NJTree</span>(<span class='kw'>Lobo.phy</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'Lobo'</span><span class='op'>)</span>
+<span class='fu'>NJTree</span><span class='op'>(</span><span class='va'>Lobo.phy</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 48 tips and 47 internal nodes.
 #&gt; 
 #&gt; Tip labels:
-#&gt;   Plicatoperipatus_Onychophora, Ooperipatellus_Onychophora, Euperipatoides_Onychophora, Helenodora, Antennacanthopodia, Megadictyon, ...
+#&gt;   Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...
 #&gt; 
 #&gt; Rooted; no branch lengths.</div><div class='input'>
 </div></pre>

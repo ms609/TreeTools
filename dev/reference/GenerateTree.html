@@ -89,7 +89,7 @@ generate trees with the specified shapes and leaf labels." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.2.0.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.3.0.9000</span>
       </span>
     </div>
 
@@ -162,13 +162,13 @@ generate trees with the specified shapes and leaf labels." />
 generate trees with the specified shapes and leaf labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RandomTree</span>(<span class='kw'>tips</span>, root = <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>RandomTree</span><span class='op'>(</span><span class='va'>tips</span>, root <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>PectinateTree</span>(<span class='kw'>tips</span>)
+<span class='fu'>PectinateTree</span><span class='op'>(</span><span class='va'>tips</span><span class='op'>)</span>
 
-<span class='fu'>BalancedTree</span>(<span class='kw'>tips</span>)
+<span class='fu'>BalancedTree</span><span class='op'>(</span><span class='va'>tips</span><span class='op'>)</span>
 
-<span class='fu'>StarTree</span>(<span class='kw'>tips</span>)</pre>
+<span class='fu'>StarTree</span><span class='op'>(</span><span class='va'>tips</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,7 +211,7 @@ basal position.  Otherwise, the tree will be rooted on <code>root</code>.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>RandomTree</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>])
+    <pre class="examples"><div class='input'><span class='fu'>RandomTree</span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 10 tips and 8 internal nodes.
 #&gt; 
@@ -219,8 +219,8 @@ basal position.  Otherwise, the tree will be rooted on <code>root</code>.</p>
 #&gt;   A, B, C, D, E, F, ...
 #&gt; 
 #&gt; Unrooted; no branch lengths.</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>'Lobo'</span>)
-<span class='fu'>RandomTree</span>(<span class='kw'>Lobo.phy</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'Lobo'</span><span class='op'>)</span>
+<span class='fu'>RandomTree</span><span class='op'>(</span><span class='va'>Lobo.phy</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 48 tips and 46 internal nodes.
 #&gt; 
@@ -228,10 +228,10 @@ basal position.  Otherwise, the tree will be rooted on <code>root</code>.</p>
 #&gt;   Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...
 #&gt; 
 #&gt; Unrooted; no branch lengths.</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>PectinateTree</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>]))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>PectinateTree</span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='GenerateTree-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>BalancedTree</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>]))
-</div><div class='img'><img src='GenerateTree-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='fu'>StarTree</span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>]))
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>BalancedTree</span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='GenerateTree-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>StarTree</span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='GenerateTree-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
