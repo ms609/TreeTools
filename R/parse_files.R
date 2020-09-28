@@ -138,39 +138,46 @@ ApeTime <- function (filename, format = 'double') {
 ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   fileText <- readLines(filename)
-  trees <- lapply(fileText[2:(length(fileText)-1)], TNTText2Tree)
+  treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
+  if (length(treeStart) > 1) warning("Multiple tree blocks not yet supported; contact maintainer to request. Returning first block only.")
+  semicolons <- grep(';', fileText, fixed = TRUE)
+  lastTree <- semicolons[semicolons >= treeStart][1]
+  trees <- lapply(fileText[treeStart:lastTree], TNTText2Tree)
 
   if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
-      taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
-                        fileText[1], fixed=TRUE)
-      taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed=TRUE),
-                        fixed=TRUE)
-      if (!is.null(relativePath)) {
-        taxonFileParts <- strsplit(taxonFile, '/')[[1]]
-        nParts <- length(taxonFileParts)
-        if (nParts < keepEnd) {
-          stop("Taxon file path (", taxonFile,                                  # nocov
-               ") contains fewer than keepEnd (", keepEnd, ") components.")     # nocov
+      tipLabels <- rownames(ReadTntCharacters(filename))
+      if (is.null(tipLabels)) {
+        taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
+                          fileText[1], fixed = TRUE)
+        taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed = TRUE),
+                          fixed=TRUE)
+        if (!is.null(relativePath)) {
+          taxonFileParts <- strsplit(taxonFile, '/')[[1]]
+          nParts <- length(taxonFileParts)
+          if (nParts < keepEnd) {
+            stop("Taxon file path (", taxonFile,                                  # nocov
+                 ") contains fewer than keepEnd (", keepEnd, ") components.")     # nocov
+          }
+          taxonFile <- paste0(c(relativePath,
+                                taxonFileParts[(nParts + 1L - keepEnd):nParts]),
+                              collapse = '/')
         }
-        taxonFile <- paste0(c(relativePath,
-                              taxonFileParts[(nParts + 1L - keepEnd):nParts]),
-                            collapse='/')
-      }
 
-      if (!file.exists(taxonFile)) {
-        warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
-      } else {
-        tipLabels <- rownames(ReadTntCharacters(taxonFile, 1))
-        if (is.null(tipLabels)) {
-          # TNT character read failed.  Perhaps taxonFile is in NEXUS format?
-          tipLabels <- rownames(ReadCharacters(taxonFile, 1))
-        }
-        if (is.null(tipLabels)) {
-          warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
-                  taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
-                  " If failing inexplicably, please report:",                   # nocov
-                  "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
+        if (!file.exists(taxonFile)) {
+          warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
+        } else {
+          tipLabels <- rownames(ReadTntCharacters(taxonFile, 1))
+          if (is.null(tipLabels)) {
+            # TNT character read failed.  Perhaps taxonFile is in NEXUS format?
+            tipLabels <- rownames(ReadCharacters(taxonFile, 1))
+          }
+          if (is.null(tipLabels)) {
+            warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
+                    taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
+                    " If failing inexplicably, please report:",                   # nocov
+                    "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
+          }
         }
       }
     }
@@ -438,63 +445,76 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
   lines <- readLines(filepath,
                      warn = FALSE) # Missing EOL might occur in user-generated
                                    # file, so warning not helpful
-  tntComment.pattern <- "'[^']*']"
-  lines <- gsub(tntComment.pattern, "", lines)
+  tntComment.pattern <- "'[^']*'"
+  lines <- gsub(tntComment.pattern, "", lines, perl = TRUE)
+  multilineComments <- grep("'", lines, fixed = TRUE)
+  nmlc <- length(multilineComments) / 2
+  openComment <- multilineComments[seq_len(nmlc) * 2L - 1L]
+  closeComment <- multilineComments[seq_len(nmlc) * 2L]
+  lines[openComment] <- gsub("'.*", "", lines[openComment])
+  lines[closeComment] <- gsub(".*'", "", lines[closeComment])
+
   lines <- trimws(lines)
   lines <- lines[lines != ""]
+  ctypeLines <- grep("^&\\[\\w+\\]$", lines, perl = TRUE)
+  if (length(ctypeLines)) lines <- lines[-ctypeLines]
 
-  semicolons <- which(RightmostCharacter(lines) == ';')
-  ampersands <- which(substr(lines, 0, 1) == '&')
-  possibleEnds <- sort(c(semicolons, ampersands))
+  semicolons <- grep(';', lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  matrixStart <- which(upperLines == '&[NUM]')
-  if (length(matrixStart) == 0L) {
-    return(list("&[num] entry not found in TNT file."))
-  } else if (length (matrixStart) > 1L) {
-    return(list("Multiple &[num] entries found in TNT file."))
+  xread <- grep('^XREAD\\b', upperLines, perl = TRUE)
+  if (length(xread) > 1) warning("Multiple character blocks not yet supported; contact maintainer to request. Returning first block only.")
+  if (length(xread) < 1) return(NULL)
+
+  xreadEnd <- semicolons[semicolons > xread][1]
+  if (lines[xreadEnd] == ';') {
+    xreadEnd <- xreadEnd - 1L
+  }
+  xreadLines <- lines[xread:xreadEnd]
+  xDimPos <- regexec("'?\\s*(\\d+)\\s*(\\d+)\\s*$", xreadLines)
+  xDimLine <- which(vapply(xDimPos, `[`, 1, 1) > -1)[1]
+  dimText <- xreadLines[xDimLine]
+  dimHit <- xDimPos[[xDimLine]]
+  nChar <- as.integer(substr(dimText, dimHit[2], dimHit[2] + attr(dimHit, 'match.length')[2] - 1L))
+  nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] + attr(dimHit, 'match.length')[3] - 1L))
+  matrixLines <- xreadLines[-seq_len(xDimLine)]
+  if (length(matrixLines) != nTip) {
+    warning("Unexpected number of matrix lines; please check output and report bugs.")
+  }
+
+  tokens <- ExtractTaxa(matrixLines, character_num, session)
+  labelStart <- which(upperLines == 'CHARLABELS')
+  if (length(labelStart) == 1) {
+    labelEnd <- semicolons[semicolons > labelStart][1]
+    if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
+    #attr(dat, 'char.labels')
+    colnames(tokens) <- lines[labelStart + character_num]
   } else {
-    matrixEnd <- possibleEnds[possibleEnds > matrixStart][1]
-    if (lines[matrixEnd] == ';'
-        || substr(lines[matrixEnd], 0, 1) == '&') {
-      matrixEnd <- matrixEnd - 1
-    }
-
-    matrixLines <- lines[(matrixStart + 1):matrixEnd]
-    tokens <- ExtractTaxa(matrixLines, character_num, session)
-    labelStart <- which(upperLines == 'CHARLABELS')
-    if (length(labelStart) == 1) {
-      labelEnd <- semicolons[semicolons > labelStart][1]
-      if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
-      #attr(dat, 'char.labels')
-      colnames(tokens) <- lines[labelStart + character_num]
-    } else {
-      if (length(labelStart) > 1)
-        return(list("Multiple CharLabels blocks in Nexus file."))
-    }
+    if (length(labelStart) > 1)
+      return(list("Multiple CharLabels blocks in Nexus file."))
+  }
 
 
-    labelStart <- which(upperLines == 'CNAMES')
-    if (length(labelStart) == 1) {
-      labelEnd <- semicolons[semicolons > labelStart][1]
-      if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
-      charLines <- lines[labelStart + character_num]
-      charLine.pattern <- "^\\S+\\s\\d+\\s(\\w+)(.*)\\s*;\\s*$"
+  labelStart <- which(upperLines == 'CNAMES')
+  if (length(labelStart) == 1) {
+    labelEnd <- semicolons[semicolons > labelStart][1]
+    if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
+    charLines <- lines[labelStart + character_num]
+    charLine.pattern <- "^\\S+\\s\\d+\\s(\\w+)(.*)\\s*;\\s*$"
 
-      # Character labels
-      charNames <- gsub(charLine.pattern, "\\1", charLines, perl=TRUE)
-      colnames(tokens) <- gsub("_", " ", charNames, fixed=TRUE)
+    # Character labels
+    charNames <- gsub(charLine.pattern, "\\1", charLines, perl=TRUE)
+    colnames(tokens) <- gsub("_", " ", charNames, fixed=TRUE)
 
-      # State labels
-      stateNames <- gsub(charLine.pattern, "\\2", charLines, perl=TRUE)
-      attr(tokens, 'state.labels') <- lapply(stateNames, function (line) {
-        states <- strsplit(trimws(line), "\\s+", perl=TRUE)[[1]]
-        trimws(gsub("_", " ", states, fixed=TRUE))
-      })
-    } else {
-      if (length(labelStart) > 1)
-        return(list("Multiple cnames entries in TNT file."))
-    }
+    # State labels
+    stateNames <- gsub(charLine.pattern, "\\2", charLines, perl=TRUE)
+    attr(tokens, 'state.labels') <- lapply(stateNames, function (line) {
+      states <- strsplit(trimws(line), "\\s+", perl=TRUE)[[1]]
+      trimws(gsub("_", " ", states, fixed=TRUE))
+    })
+  } else {
+    if (length(labelStart) > 1)
+      return(list("Multiple cnames entries in TNT file."))
   }
 
   # Return:

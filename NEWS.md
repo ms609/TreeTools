@@ -1,3 +1,7 @@
+# TreeTools 1.3.0.9000 (development)
+
+ - Improved parsing of TNT files.
+
 # TreeTools 1.3.0
 
 ## New functions
