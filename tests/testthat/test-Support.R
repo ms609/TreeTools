@@ -26,3 +26,15 @@ test_that("Node support colours consistent", {
   expect_equal(c('oor', '1', '34', '67', '101'),
                SupportColour((-1):3 / 3, scale = 1:101, outOfRange = 'oor'))
 })
+
+test_that("LabelSplits()", {
+  tree <- BalancedTree(9)
+
+  SplitLabelling <- function () {
+    plot(tree)
+    labs <- letters[1:6]
+    names(labs) <- names(as.Splits(tree))
+    LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
+  }
+  vdiffr::expect_doppelganger('LabelSplits()', SplitLabelling)
+})

@@ -273,6 +273,10 @@ summary.Splits <- function (object, ...) {
   }
 }
 
+#' @family Splits operations
+#' @export
+names.Splits <- rownames
+
 
 #' @family Splits operations
 #' @export
