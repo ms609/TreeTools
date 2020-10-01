@@ -15,7 +15,7 @@ extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_random_parent(SEXP, SEXP);
 extern SEXP _TreeTools_rooted_shape_to_edge(SEXP, SEXP);
-extern SEXP _TreeTools_tips_in_splits(SEXP, SEXP);
+extern SEXP _TreeTools_tips_in_splits(SEXP);
 extern SEXP _TreeTools_as_newick(SEXP);
 
 static const R_CMethodDef cMethods[] = {
