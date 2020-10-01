@@ -89,7 +89,7 @@ are consistent with a tree topology on the same leaves." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -162,11 +162,11 @@ are consistent with a tree topology on the same leaves." />
 are consistent with a tree topology on the same leaves.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>TreesMatchingTree</span>(<span class='kw'>tree</span>)
+    <pre class="usage"><span class='fu'>TreesMatchingTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
 
-<span class='fu'>LnTreesMatchingTree</span>(<span class='kw'>tree</span>)
+<span class='fu'>LnTreesMatchingTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
 
-<span class='fu'>Log2TreesMatchingTree</span>(<span class='kw'>tree</span>)</pre>
+<span class='fu'>Log2TreesMatchingTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,13 +195,13 @@ unrooted binary trees that contain all the edges present in the input tree.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>partiallyResolvedTree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>), <span class='fl'>12</span><span class='op'>:</span><span class='fl'>15</span>)
-<span class='fu'>TreesMatchingTree</span>(<span class='kw'>partiallyResolvedTree</span>)
-</div><div class='output co'>#&gt; [1] 45</div><div class='input'><span class='fu'>LnTreesMatchingTree</span>(<span class='kw'>partiallyResolvedTree</span>)
+    <pre class="examples"><div class='input'><span class='va'>partiallyResolvedTree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>, <span class='fl'>12</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>)</span>
+<span class='fu'>TreesMatchingTree</span><span class='op'>(</span><span class='va'>partiallyResolvedTree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 45</div><div class='input'><span class='fu'>LnTreesMatchingTree</span><span class='op'>(</span><span class='va'>partiallyResolvedTree</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 3.806662</div><div class='input'>
 <span class='co'># Number of rooted trees:</span>
-<span class='kw'>rootedTree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='AddTip.html'>AddTip</a></span>(<span class='kw'>partiallyResolvedTree</span>, where = <span class='fl'>0</span>)
-<span class='fu'>TreesMatchingTree</span>(<span class='kw'>partiallyResolvedTree</span>)
+<span class='va'>rootedTree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='AddTip.html'>AddTip</a></span><span class='op'>(</span><span class='va'>partiallyResolvedTree</span>, where <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+<span class='fu'>TreesMatchingTree</span><span class='op'>(</span><span class='va'>partiallyResolvedTree</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 45</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

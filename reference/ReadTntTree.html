@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -160,11 +160,11 @@
     <p>Read a tree from TNT's parenthetical output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ReadTntTree</span>(<span class='kw'>filename</span>, relativePath = <span class='kw'>NULL</span>, keepEnd = <span class='fl'>1L</span>, tipLabels = <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='va'>filename</span>, relativePath <span class='op'>=</span> <span class='cn'>NULL</span>, keepEnd <span class='op'>=</span> <span class='fl'>1L</span>, tipLabels <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>TntText2Tree</span>(<span class='kw'>treeText</span>)
+<span class='fu'>TntText2Tree</span><span class='op'>(</span><span class='va'>treeText</span><span class='op'>)</span>
 
-<span class='fu'>TNTText2Tree</span>(<span class='kw'>treeText</span>)</pre>
+<span class='fu'>TNTText2Tree</span><span class='op'>(</span><span class='va'>treeText</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,7 +203,7 @@ format output by TNT.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>ReadTntTree()</code> returns a tree of class <code>phylo</code>, corresponding
-to the tree in <code>filename</code>.</p>
+to the tree in <code>filename</code>, or NULL if no trees are found.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='http://www.lillo.org.ar/phylogeny/tnt/'>TNT</a> is software for parsimony
@@ -249,12 +249,12 @@ object of class <code>phylo</code>.</p>
 <span class='co'># These datasets are provided with the 'TreeTools' package, which will</span>
 <span class='co'># probably not be located at c:/TreeTools on your machine:</span>
 
-<span class='kw'>oldWD</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>() <span class='co'># Remember the current working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(package = <span class='st'>'TreeTools'</span>))
+<span class='va'>oldWD</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span> <span class='co'># Remember the current working directory</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'TreeTools'</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># If taxon names were saved within the file (using `taxname=` in TNT),</span>
 <span class='co'># then our job is easy:</span>
-<span class='fu'>ReadTntTree</span>(<span class='st'>'extdata/output/named.tre'</span>)
+<span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'extdata/output/named.tre'</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
 #&gt; 
@@ -273,18 +273,18 @@ object of class <code>phylo</code>.</p>
 <span class='co'>#                2      1</span>
 <span class='co'>#</span>
 <span class='co'># '.' means "relative to the current directory"</span>
-<span class='fu'>ReadTntTree</span>(<span class='st'>'extdata/output/numbered.tre'</span>, <span class='st'>'./extdata'</span>, <span class='fl'>2</span>)
+<span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'extdata/output/numbered.tre'</span>, <span class='st'>'./extdata'</span>, <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
 <span class='co'># If working in a lower subdirectory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='st'>'./extdata/otherfolder'</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>'./extdata/otherfolder'</span><span class='op'>)</span>
 
 <span class='co'># then it will be necessary to navigate up the directory path with '..':</span>
-<span class='fu'>ReadTntTree</span>(<span class='st'>'../output/numbered.tre'</span>, <span class='st'>'..'</span>, <span class='fl'>2</span>)
+<span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'../output/numbered.tre'</span>, <span class='st'>'..'</span>, <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
 
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='kw'>oldWD</span>) <span class='co'># Restore original working directory</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>oldWD</span><span class='op'>)</span> <span class='co'># Restore original working directory</span>
 
-<span class='fu'>TNTText2Tree</span>(<span class='st'>"(A (B (C (D E ))));"</span>)
+<span class='fu'>TNTText2Tree</span><span class='op'>(</span><span class='st'>"(A (B (C (D E ))));"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
 #&gt; 

@@ -91,7 +91,7 @@ as many checks on user input.  Bad input could crash R." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -166,9 +166,9 @@ These call the C functions directly, so are faster -- but don't perform
 as many checks on user input.  Bad input could crash R.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NeworderPruningwise</span>(<span class='kw'>nTip</span>, <span class='kw'>nNode</span>, <span class='kw'>parent</span>, <span class='kw'>child</span>, <span class='kw'>nEdge</span>)
+    <pre class="usage"><span class='fu'>NeworderPruningwise</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>nNode</span>, <span class='va'>parent</span>, <span class='va'>child</span>, <span class='va'>nEdge</span><span class='op'>)</span>
 
-<span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>parent</span>, <span class='kw'>child</span>, <span class='kw'>nb.edge</span>, <span class='kw'>whichwise</span>)</pre>
+<span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>parent</span>, <span class='va'>child</span>, <span class='va'>nb.edge</span>, <span class='va'>whichwise</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,15 +215,15 @@ of edges under the ordering sequence specified by <code>whichwise</code>.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>nTip</span> <span class='op'>&lt;-</span> <span class='fl'>8L</span>
-<span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='kw'>nTip</span>)
-<span class='kw'>edge</span> <span class='op'>&lt;-</span> <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>
-<span class='kw'>pruningwise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPruningwise</span>(<span class='kw'>nTip</span>, <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>Nnode</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>],
-                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>])
-<span class='kw'>cladewise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>1L</span>)
-<span class='kw'>postorder</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span>(<span class='kw'>nTip</span>, <span class='kw'>edge</span>[, <span class='fl'>1</span>], <span class='kw'>edge</span>[, <span class='fl'>2</span>], <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span>(<span class='kw'>edge</span>)[<span class='fl'>1</span>], <span class='fl'>2L</span>)
+    <pre class="examples"><div class='input'><span class='va'>nTip</span> <span class='op'>&lt;-</span> <span class='fl'>8L</span>
+<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='va'>nTip</span><span class='op'>)</span>
+<span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
+<span class='va'>pruningwise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPruningwise</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>tree</span><span class='op'>$</span><span class='va'>Nnode</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>,
+                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>cladewise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1L</span><span class='op'>)</span>
+<span class='va'>postorder</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2L</span><span class='op'>)</span>
 
-<span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span> <span class='op'>&lt;-</span> <span class='kw'>tree</span><span class='op'>$</span><span class='kw'>edge</span>[<span class='kw'>pruningwise</span>, ]
+<span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span><span class='op'>[</span><span class='va'>pruningwise</span>, <span class='op'>]</span>
 
 </div></pre>
   </div>

@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -160,27 +160,27 @@
     <p><code>NSplits()</code> counts the unique bipartition splits in a tree or object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+    <pre class="usage"><span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>NPartitions</span>(<span class='kw'>x</span>)
+<span class='fu'>NPartitions</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for Splits</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for numeric</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>NSplits</span>(<span class='kw'>x</span>)</pre>
+<span class='fu'>NSplits</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,9 +218,9 @@ the specified objects, or in a binary tree with <code>x</code> tips.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>NSplits</span>(<span class='fl'>8L</span>)
-</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span>(<span class='fl'>8</span>))
-</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span>(<span class='fu'><a href='as.Splits.html'>as.Splits</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>)))
+    <pre class="examples"><div class='input'><span class='fu'>NSplits</span><span class='op'>(</span><span class='fl'>8L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 5</div><div class='input'><span class='fu'>NSplits</span><span class='op'>(</span><span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

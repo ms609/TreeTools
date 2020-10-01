@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -160,19 +160,19 @@
     <p>Calculate the double factorial of a number, or its logarithm.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DoubleFactorial</span>(<span class='kw'>n</span>)
+    <pre class="usage"><span class='fu'>DoubleFactorial</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>DoubleFactorial64</span>(<span class='kw'>n</span>)
+<span class='fu'>DoubleFactorial64</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>LnDoubleFactorial</span>(<span class='kw'>n</span>)
+<span class='fu'>LnDoubleFactorial</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>Log2DoubleFactorial</span>(<span class='kw'>n</span>)
+<span class='fu'>Log2DoubleFactorial</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>LogDoubleFactorial</span>(<span class='kw'>n</span>)
+<span class='fu'>LogDoubleFactorial</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>LnDoubleFactorial.int</span>(<span class='kw'>n</span>)
+<span class='fu'>LnDoubleFactorial.int</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
 
-<span class='fu'>LogDoubleFactorial.int</span>(<span class='kw'>n</span>)</pre>
+<span class='fu'>LogDoubleFactorial.int</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,11 +208,11 @@ and below 50001</p></li>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='op'>-</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>0</span>) <span class='co'># Return 1 if n &lt; 2</span>
-</div><div class='output co'>#&gt; [1] 1 1 1 1 1</div><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='fl'>2</span>) <span class='co'># 2</span>
-</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>DoubleFactorial</span> (<span class='fl'>5</span>) <span class='co'># 1 * 3 * 5</span>
-</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span>(<span class='fu'>LnDoubleFactorial.int</span> (<span class='fl'>8</span>)) <span class='co'># log(2 * 4 * 6 * 8)</span>
-</div><div class='output co'>#&gt; [1] 384</div><div class='input'><span class='fu'>DoubleFactorial64</span>(<span class='fl'>31</span>)
+    <pre class="examples"><div class='input'><span class='fu'>DoubleFactorial</span> <span class='op'>(</span><span class='op'>-</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>0</span><span class='op'>)</span> <span class='co'># Return 1 if n &lt; 2</span>
+</div><div class='output co'>#&gt; [1] 1 1 1 1 1</div><div class='input'><span class='fu'>DoubleFactorial</span> <span class='op'>(</span><span class='fl'>2</span><span class='op'>)</span> <span class='co'># 2</span>
+</div><div class='output co'>#&gt; [1] 2</div><div class='input'><span class='fu'>DoubleFactorial</span> <span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span> <span class='co'># 1 * 3 * 5</span>
+</div><div class='output co'>#&gt; [1] 15</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'>LnDoubleFactorial.int</span> <span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># log(2 * 4 * 6 * 8)</span>
+</div><div class='output co'>#&gt; [1] 384</div><div class='input'><span class='fu'>DoubleFactorial64</span><span class='op'>(</span><span class='fl'>31</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; integer64
 #&gt; [1] 191898783962510625</div></pre>
   </div>

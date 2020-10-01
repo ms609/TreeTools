@@ -89,7 +89,7 @@ Includes the root edge in rooted trees." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@ Includes the root edge in rooted trees." />
 Includes the root edge in rooted trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>NodeOrder</span>(<span class='kw'>x</span>, includeAncestor = <span class='fl'>TRUE</span>, internalOnly = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>NodeOrder</span><span class='op'>(</span><span class='va'>x</span>, includeAncestor <span class='op'>=</span> <span class='cn'>TRUE</span>, internalOnly <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,10 +207,10 @@ entries are named with the number of each node.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span>(<span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span>(<span class='fl'>8</span>), <span class='fl'>12</span><span class='op'>:</span><span class='fl'>15</span>)
-<span class='fu'>NodeOrder</span>(<span class='kw'>tree</span>)
-</div><div class='output co'>#&gt;  [1] 1 1 1 1 1 1 1 1 5 4 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tree</span>)
-</div><div class='input'><span class='fu'>nodelabels</span>(<span class='fu'>NodeOrder</span>(<span class='kw'>tree</span>, internalOnly = <span class='fl'>TRUE</span>))
+    <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>, <span class='fl'>12</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>)</span>
+<span class='fu'>NodeOrder</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] 1 1 1 1 1 1 1 1 5 4 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>nodelabels</span><span class='op'>(</span><span class='fu'>NodeOrder</span><span class='op'>(</span><span class='va'>tree</span>, internalOnly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='img'><img src='NodeOrder-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
