@@ -14,7 +14,12 @@ test_that("as.phylo.numeric()", {
                as.phylo(as.integer64(123:124), nTip = 10))
 })
 
+test_that("as.TreeNumber() error handling", {
+  expect_error(as.phylo(integer64(1), NULL, NULL))
+})
+
 test_that("as.TreeNumber()", {
+  expect_equal(SingleTaxonTree('t1'), as.phylo(integer64(1), 1, NULL))
   expect_equal(c("Phylogenetic tree number 0 of 105 ",
                  " 6 tips: t1 t2 t3 t4 t5 t6"),
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
