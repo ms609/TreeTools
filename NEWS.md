@@ -1,7 +1,7 @@
-# TreeTools 1.3.0.9001 (development)
+# TreeTools 1.3.1
 
  - Improved parsing of TNT files.
- - Fix LTO error.
+ - Fix misspecified C++ linkage.
 
 # TreeTools 1.3.0
 
