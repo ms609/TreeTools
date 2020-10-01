@@ -30,13 +30,23 @@ test_that("Nexus file can be parsed", {
 })
 
 test_that("ReadTntCharacter()", {
+  testFile <- TestFile('tnt-trees-and-matrix.tnt')
   expect_equal(
-  structure(c("0", "0", "1", "1", "1", "1", "-", "-", "0", "0",
+    structure(c("0", "0", "1", "1", "1", "1", "-", "-", "0", "0",
               "0", "0", "-", "-", "0", "0", "1", "1", "-", "-", "-", "-", "0",
               "1", "-", "-", "1", "1", "1", "0", "-", "-", "0", "0", "1", "-",
               "-", "-", "0", "1", "0", "-"), .Dim = 6:7,
             .Dimnames = list(c("a", "b", "c", "d", "e", "f"), NULL)),
-  ReadTntCharacters(TestFile('tnt-trees-and-matrix.tnt')))
+    ReadTntCharacters(testFile)
+  )
+  expect_equal(
+    phangorn::as.phyDat(
+      ReadTntCharacters(testFile),
+      type = 'USER',
+      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
+                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
+      ),
+    ReadTntAsPhyDat(testFile))
 })
 
 test_that("TNT trees parsed correctly", {

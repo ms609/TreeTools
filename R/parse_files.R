@@ -549,7 +549,7 @@ MatrixToPhyDat <- function (tokens) {
   allTokens <- unique(as.character(tokens))
   tokenNumbers <- seq_along(allTokens)
   names(tokenNumbers) <- allTokens
-  matches <- gregexpr("[\\d\\-\\w]", allTokens, perl=TRUE)
+  matches <- gregexpr("[\\d\\-\\w]", allTokens, perl = TRUE)
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
   whichTokens[allTokens == '?'] <- list(levels)
@@ -557,7 +557,7 @@ MatrixToPhyDat <- function (tokens) {
                            logical(length(levels))))
   rownames(contrast) <- allTokens
   colnames(contrast) <- levels
-  dat <- phangorn::phyDat(tokens, type='USER', contrast=contrast)
+  dat <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
 
   # Return:
   dat
