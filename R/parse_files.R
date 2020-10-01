@@ -83,7 +83,7 @@ ApeTime <- function (filename, format = 'double') {
 #'  `.tre` file specified in `filename`.
 #'
 #' @return `ReadTntTree()` returns a tree of class \code{phylo}, corresponding
-#' to the tree in `filename`.
+#' to the tree in `filename`, or NULL if no trees are found.
 #'
 #' @examples
 #' # In the examples below, TNT has read a matrix from
@@ -140,8 +140,16 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
   fileText <- readLines(filename)
   treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
   if (length(treeStart) > 1) warning("Multiple tree blocks not yet supported; contact maintainer to request. Returning first block only.")
+  if (length(treeStart) < 1) return (NULL)
   semicolons <- grep(';', fileText, fixed = TRUE)
-  lastTree <- semicolons[semicolons >= treeStart][1]
+  lastTree <- semicolons[semicolons >= treeStart]
+  if (length(lastTree)) {
+    lastTree <- lastTree[1]
+  } else {
+    warning("No closing semicolon on trees block.")
+    lastTree <- length(fileText)
+  }
+
   trees <- lapply(fileText[treeStart:lastTree], TNTText2Tree)
 
   if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
@@ -151,7 +159,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
         taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
                           fileText[1], fixed = TRUE)
         taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed = TRUE),
-                          fixed=TRUE)
+                          fixed = TRUE)
         if (!is.null(relativePath)) {
           taxonFileParts <- strsplit(taxonFile, '/')[[1]]
           nParts <- length(taxonFileParts)

@@ -34,7 +34,7 @@ format output by TNT.}
 }
 \value{
 \code{ReadTntTree()} returns a tree of class \code{phylo}, corresponding
-to the tree in \code{filename}.
+to the tree in \code{filename}, or NULL if no trees are found.
 }
 \description{
 Read a tree from TNT's parenthetical output.
