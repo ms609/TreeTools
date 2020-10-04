@@ -7,6 +7,8 @@
 \alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
+\alias{AllTipLabels.list}
+\alias{AllTipLabels.multiPhylo}
 \alias{TipLabels.multiPhylo}
 \alias{TipLabels.character}
 \alias{TipLabels.numeric}
@@ -25,6 +27,10 @@ TipLabels(x, single = TRUE)
 \method{TipLabels}{Splits}(x, single = TRUE)
 
 \method{TipLabels}{list}(x, single = FALSE)
+
+AllTipLabels.list(x)
+
+AllTipLabels.multiPhylo(x)
 
 \method{TipLabels}{multiPhylo}(x, single = FALSE)
 
@@ -49,7 +55,8 @@ appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
 }
 \description{
 \code{TipLabels()} extracts labels from an object: for example, names of taxa in
-a phylogenetic tree or data matrix.
+a phylogenetic tree or data matrix.  \code{AllTipLabels()} extracts all labels,
+where entries of a list of trees may pertain to different taxa.
 }
 \examples{
 TipLabels(BalancedTree(letters[5:1]))
@@ -57,6 +64,8 @@ TipLabels(5)
 
 data('Lobo')
 head(TipLabels(Lobo.phy))
+
+AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 
 }
 \seealso{
