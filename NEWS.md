@@ -1,3 +1,7 @@
+# TreeTools 1.3.1.9000 (development)
+
+ - New function `AllTipLabels()` returns all labels from all trees in a list.
+
 # TreeTools 1.3.1
 
  - Improved parsing of TNT files.

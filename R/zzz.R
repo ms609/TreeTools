@@ -7,7 +7,6 @@ release_questions <- function() {
   c(
     "Is the code free of #TODOs?",
     "Have you checked the Vignettes for sanity?",
-    "Have you updated the version number in NEWS & DESCRIPTION?"
   )
 }
 

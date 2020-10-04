@@ -226,7 +226,8 @@ LnSplitMatchProbability <- function (split1, split2) {
 #' Extract tip labels
 #'
 #' `TipLabels()` extracts labels from an object: for example, names of taxa in
-#' a phylogenetic tree or data matrix.
+#' a phylogenetic tree or data matrix.  `AllTipLabels()` extracts all labels,
+#' where entries of a list of trees may pertain to different taxa.
 #'
 #' @param x An object of a supported class (see Usage section above).
 #' @param single Logical specifying whether to report the labels for the first
@@ -242,6 +243,8 @@ LnSplitMatchProbability <- function (split1, split2) {
 #'
 #' data('Lobo')
 #' head(TipLabels(Lobo.phy))
+#'
+#' AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 #'
 #' @family tree properties
 #' @template MRS
@@ -279,6 +282,16 @@ TipLabels.list <- function (x, single = FALSE) {
   }
   .ListLabels(x, single, TipLabels)
 }
+
+#' @rdname TipLabels
+#' @export
+AllTipLabels.list <- function (x) {
+  unique(unlist(lapply(x, TipLabels)))
+}
+
+#' @rdname TipLabels
+#' @export
+AllTipLabels.multiPhylo <- AllTipLabels.list
 
 #' @keywords internal
 .ListLabels <- function (x, single, Func) {
