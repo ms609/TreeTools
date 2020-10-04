@@ -285,6 +285,10 @@ TipLabels.list <- function (x, single = FALSE) {
 
 #' @rdname TipLabels
 #' @export
+AllTipLabels <- function (x) UseMethod('AllTipLabels')
+
+#' @rdname TipLabels
+#' @export
 AllTipLabels.list <- function (x) {
   unique(unlist(lapply(x, TipLabels)))
 }

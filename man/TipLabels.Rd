@@ -7,6 +7,7 @@
 \alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
+\alias{AllTipLabels}
 \alias{AllTipLabels.list}
 \alias{AllTipLabels.multiPhylo}
 \alias{TipLabels.multiPhylo}
@@ -28,9 +29,11 @@ TipLabels(x, single = TRUE)
 
 \method{TipLabels}{list}(x, single = FALSE)
 
-AllTipLabels.list(x)
+AllTipLabels(x)
 
-AllTipLabels.multiPhylo(x)
+\method{AllTipLabels}{list}(x)
+
+\method{AllTipLabels}{multiPhylo}(x)
 
 \method{TipLabels}{multiPhylo}(x, single = FALSE)
 
