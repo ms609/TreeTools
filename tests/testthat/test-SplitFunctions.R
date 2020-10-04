@@ -198,3 +198,8 @@ test_that('Tip labels are found', {
 
   expect_equal(t1..4, TipLabels(c(t1 = 1, t2 = 3, t3 = 3, t4 = 4)))
 })
+
+test_that("AllTipLabels()", {
+  expect_equal(1:10, sort(as.integer(AllTipLabels(c(BalancedTree(1:5), PectinateTree(6:10))))))
+  expect_equal(1:10, sort(as.integer(AllTipLabels(list(BalancedTree(1:6), PectinateTree(4:10))))))
+})
