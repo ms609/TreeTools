@@ -10,6 +10,10 @@
 \alias{AllTipLabels}
 \alias{AllTipLabels.list}
 \alias{AllTipLabels.multiPhylo}
+\alias{AllTipLabels.phylo}
+\alias{AllTipLabels.Splits}
+\alias{AllTipLabels.TreeNumber}
+\alias{AllTipLabels.matrix}
 \alias{TipLabels.multiPhylo}
 \alias{TipLabels.character}
 \alias{TipLabels.numeric}
@@ -34,6 +38,14 @@ AllTipLabels(x)
 \method{AllTipLabels}{list}(x)
 
 \method{AllTipLabels}{multiPhylo}(x)
+
+\method{AllTipLabels}{phylo}(x, single = TRUE)
+
+\method{AllTipLabels}{Splits}(x, single = TRUE)
+
+\method{AllTipLabels}{TreeNumber}(x, single = TRUE)
+
+\method{AllTipLabels}{matrix}(x, single = TRUE)
 
 \method{TipLabels}{multiPhylo}(x, single = FALSE)
 

@@ -297,6 +297,22 @@ AllTipLabels.list <- function (x) {
 #' @export
 AllTipLabels.multiPhylo <- AllTipLabels.list
 
+#' @rdname TipLabels
+#' @export
+AllTipLabels.phylo <- TipLabels.phylo
+
+#' @rdname TipLabels
+#' @export
+AllTipLabels.Splits <- TipLabels.Splits
+
+#' @rdname TipLabels
+#' @export
+AllTipLabels.TreeNumber <- TipLabels.TreeNumber
+
+#' @rdname TipLabels
+#' @export
+AllTipLabels.matrix <- TipLabels.matrix
+
 #' @keywords internal
 .ListLabels <- function (x, single, Func) {
   if (length(x)) {
