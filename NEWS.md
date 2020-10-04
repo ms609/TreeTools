@@ -1,6 +1,8 @@
 # TreeTools 1.3.1.9000 (development)
 
  - New function `AllTipLabels()` returns all labels from all trees in a list.
+ - New function `PairwiseDistances()` (from 'TreeDistData') computes distances
+   between all pairs of trees in a list.
 
 # TreeTools 1.3.1
 
