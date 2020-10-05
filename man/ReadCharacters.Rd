@@ -10,7 +10,7 @@
 \usage{
 ReadCharacters(filepath, character_num = NULL, session = NULL)
 
-ReadTntCharacters(filepath, character_num = NULL, session = NULL)
+ReadTntCharacters(filepath, character_num = NULL, type = NULL, session = NULL)
 
 ReadAsPhyDat(filepath)
 
@@ -26,6 +26,11 @@ PhyDat(dataset)
 
 \item{session}{(Optional) A Shiny session with a \code{numericInput} named
 \code{character_num} whose maximum should be updated.}
+
+\item{type}{Character vector specifying categories of data to extract from
+file. Setting \code{type = c('num', 'dna')} will return only characters
+following a \verb{&[num]} or \verb{&[dna]} tag in a TNT input file. Leave as \code{NULL}
+(the default) to return all characters.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
 a list of sequences each made of a single character vector,

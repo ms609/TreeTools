@@ -47,6 +47,14 @@ test_that("ReadTntCharacter()", {
                            .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
       ),
     ReadTntAsPhyDat(testFile))
+
+  dnaTest <- TestFile('tnt-dna.tnt')
+  expect_equal(ReadTntCharacters(dnaTest),
+               cbind(ReadTntCharacters(dnaTest, type = 'num'),
+                     ReadTntCharacters(dnaTest, type = 'dna')))
+  expect_equal(ReadTntCharacters(dnaTest),
+               ReadTntCharacters(dnaTest, type = c('NUM', 'Dna')))
+  expect_null(ReadTntCharacters(dnaTest, type = 'NONE'))
 })
 
 test_that("TNT trees parsed correctly", {

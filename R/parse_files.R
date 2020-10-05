@@ -175,10 +175,10 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
         if (!file.exists(taxonFile)) {
           warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
         } else {
-          tipLabels <- rownames(ReadTntCharacters(taxonFile, 1))
+          tipLabels <- rownames(ReadTntCharacters(taxonFile, character_num = 1L))
           if (is.null(tipLabels)) {
             # TNT character read failed.  Perhaps taxonFile is in NEXUS format?
-            tipLabels <- rownames(ReadCharacters(taxonFile, 1))
+            tipLabels <- rownames(ReadCharacters(taxonFile, character_num = 1L))
           }
           if (is.null(tipLabels)) {
             warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
@@ -191,7 +191,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
     }
 
     trees <- lapply(trees, function (tree) {
-      tree$tip.label <- tipLabels[as.integer(tree$tip.label) + 1]
+      tree$tip.label <- tipLabels[as.integer(tree$tip.label) + 1L]
       tree
     })
   }
@@ -343,6 +343,10 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' (i.e. base type 'character').
 #'
 #' @param filepath character string specifying location of file
+#' @param type Character vector specifying categories of data to extract from
+#' file. Setting `type = c('num', 'dna')` will return only characters
+#' following a `&[num]` or `&[dna]` tag in a TNT input file. Leave as `NULL`
+#' (the default) to return all characters.
 #' @template characterNumParam
 #' @template sessionParam
 #'
@@ -448,7 +452,8 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
 #' @rdname ReadCharacters
 #' @export
-ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
+ReadTntCharacters <- function (filepath, character_num = NULL,
+                               type = NULL, session = NULL) {
 
   lines <- readLines(filepath,
                      warn = FALSE) # Missing EOL might occur in user-generated
@@ -464,8 +469,6 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
   lines <- trimws(lines)
   lines <- lines[lines != ""]
-  ctypeLines <- grep("^&\\[\\w+\\]$", lines, perl = TRUE)
-  if (length(ctypeLines)) lines <- lines[-ctypeLines]
 
   semicolons <- grep(';', lines, fixed = TRUE)
   upperLines <- toupper(lines)
@@ -486,11 +489,28 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
   nChar <- as.integer(substr(dimText, dimHit[2], dimHit[2] + attr(dimHit, 'match.length')[2] - 1L))
   nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] + attr(dimHit, 'match.length')[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
-  if (length(matrixLines) != nTip) {
-    warning("Unexpected number of matrix lines; please check output and report bugs.")
+
+  ctypeLines <- grep("^&\\[\\w+\\]$", matrixLines, perl = TRUE)
+  if (is.null(type)) {
+    if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
+  } else {
+    types <- toupper(matrixLines[ctypeLines])
+    typeTags <- paste0('&[', type, ']')
+    blocks <- types %in% toupper(typeTags)
+    if (sum(blocks) != length(type)) {
+      message("Tags ", paste0(typeTags[!toupper(typeTags) %in% types], collapse = ', '),
+      " not found. Ignored: ", types[!blocks])
+    }
+    if (!any(blocks)) return(NULL)
+    blockSpan <- cbind(ctypeLines + 1L, c(ctypeLines[-1] - 1, length(matrixLines)))
+    matrixLines <- matrixLines[unlist(apply(blockSpan[blocks, , drop = FALSE],  1, function(x) seq(x[1], x[2])))]
   }
 
   tokens <- ExtractTaxa(matrixLines, character_num, session)
+  if (nrow(tokens) != nTip) {
+    warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
+            ": please check output and report bugs.")                           # nocov
+  }
   labelStart <- which(upperLines == 'CHARLABELS')
   if (length(labelStart) == 1) {
     labelEnd <- semicolons[semicolons > labelStart][1]
@@ -511,14 +531,14 @@ ReadTntCharacters <- function (filepath, character_num = NULL, session = NULL) {
     charLine.pattern <- "^\\S+\\s\\d+\\s(\\w+)(.*)\\s*;\\s*$"
 
     # Character labels
-    charNames <- gsub(charLine.pattern, "\\1", charLines, perl=TRUE)
-    colnames(tokens) <- gsub("_", " ", charNames, fixed=TRUE)
+    charNames <- gsub(charLine.pattern, "\\1", charLines, perl = TRUE)
+    colnames(tokens) <- gsub("_", " ", charNames, fixed = TRUE)
 
     # State labels
-    stateNames <- gsub(charLine.pattern, "\\2", charLines, perl=TRUE)
+    stateNames <- gsub(charLine.pattern, "\\2", charLines, perl = TRUE)
     attr(tokens, 'state.labels') <- lapply(stateNames, function (line) {
-      states <- strsplit(trimws(line), "\\s+", perl=TRUE)[[1]]
-      trimws(gsub("_", " ", states, fixed=TRUE))
+      states <- strsplit(trimws(line), "\\s+", perl = TRUE)[[1]]
+      trimws(gsub("_", " ", states, fixed = TRUE))
     })
   } else {
     if (length(labelStart) > 1)
