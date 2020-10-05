@@ -299,19 +299,19 @@ AllTipLabels.multiPhylo <- AllTipLabels.list
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.phylo <- TipLabels.phylo
+AllTipLabels.phylo <- function(x) TipLabels.phylo(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.Splits <- TipLabels.Splits
+AllTipLabels.Splits <- function (x) TipLabels.Splits(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.TreeNumber <- TipLabels.TreeNumber
+AllTipLabels.TreeNumber <- function (x) TipLabels.TreeNumber(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.matrix <- TipLabels.matrix
+AllTipLabels.matrix <- function (x) TipLabels.matrix(x)
 
 #' @keywords internal
 .ListLabels <- function (x, single, Func) {
