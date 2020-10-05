@@ -35,6 +35,29 @@
 #' @importFrom graphics lines
 #' @export
 MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
+  ends <- MinimumSpanningTree(distances)
+  if (plot) {
+    apply(ends, 1, function (edge)
+      lines(x[edge], y[edge], ...))
+    invisible(ends)
+  } else {
+    ends
+  }
+}
+
+MinimumSpanningTree <- function(distances) UseMethod("MinimumSpanningTree")
+
+MinimumSpanningTree.dist <- function (distances) {
+  minimum_spanning_tree(distances, order(distances, decreasing = TRUE))
+}
+
+MinimumSpanningTree.matrix <- function (distances) {
+  dists <- distances[lower.tri(distances)]
+  minimum_spanning_tree(dists, order(dists, decreasing = TRUE))
+}
+
+#' @keywords internal
+ApeMSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
   umst <- ape::mst(distances)
   edges <- umst == 1L
   from <- umst
