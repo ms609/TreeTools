@@ -1,7 +1,6 @@
-#' Edges of minimum spanning tree
+#' Minimum spanning tree
 #'
-#' Calculate or plot the ends of each edge of the minimum spanning tree of a
-#' distance matrix.
+#' Calculate or plot the minimum spanning tree of a distance matrix.
 #'
 #' @param distances Either a matrix that can be interpreted as a distance
 #' matrix, or an object of class `dist`.

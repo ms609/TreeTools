@@ -3,7 +3,7 @@
 \name{MSTEdges}
 \alias{MSTEdges}
 \alias{MSTLength}
-\title{Edges of minimum spanning tree}
+\title{Minimum spanning tree}
 \usage{
 MSTEdges(distances, plot = FALSE, x = NULL, y = NULL, ...)
 
@@ -32,8 +32,7 @@ entry in \code{distances} at which the line begins and ends.
 \code{MSTLength()} returns the length of the minimum spanning tree.
 }
 \description{
-Calculate or plot the ends of each edge of the minimum spanning tree of a
-distance matrix.
+Calculate or plot the minimum spanning tree of a distance matrix.
 }
 \examples{
 # Corners of an almost-regular octahedron
