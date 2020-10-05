@@ -2,6 +2,7 @@
 
  - C++ implementation of `MSTEdges()`, improving runtime by orders of magnitude.
  - New function `MSTLength()` reports length of minimum spanning tree.
+ - Improved parsing of TNT character files.
 
 # TreeTools 1.3.1.9000 (development)
 
