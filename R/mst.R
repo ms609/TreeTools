@@ -11,8 +11,9 @@
 #' @param \dots Additional parameters to send to `[lines()]`.
 #'
 #' @return `MSTEdges()` returns a matrix in which each row corresponds to an
-#' edge of the minimum spanning tree, and each column lists the index of the
-#' entry in `distances` at which the line begins and ends.
+#' edge of the minimum spanning tree, listed in non-decreasing order of length.
+#' The two columns contain the indices of the entries in `distances` that
+#' each edge connects, with the lower value listed first.
 #'
 #' @seealso
 #' Slow implementation returning the association matrix of the minimum spanning
