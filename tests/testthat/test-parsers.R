@@ -54,6 +54,7 @@ test_that("ReadTntCharacter()", {
                      ReadTntCharacters(dnaTest, type = 'dna')))
   expect_equal(ReadTntCharacters(dnaTest),
                ReadTntCharacters(dnaTest, type = c('NUM', 'Dna')))
+  expect_null(ReadTntCharacters(dnaTest, type = 'NONE'))
 })
 
 test_that("TNT trees parsed correctly", {

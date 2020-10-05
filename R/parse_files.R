@@ -508,8 +508,8 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 
   tokens <- ExtractTaxa(matrixLines, character_num, session)
   if (nrow(tokens) != nTip) {
-    warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip,
-            ": please check output and report bugs.")
+    warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
+            ": please check output and report bugs.")                           # nocov
   }
   labelStart <- which(upperLines == 'CHARLABELS')
   if (length(labelStart) == 1) {
