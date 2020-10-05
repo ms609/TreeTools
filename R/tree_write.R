@@ -86,15 +86,15 @@ WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
                                        pre = '', post = '') {
   EOL <- '\n'
   ret <- paste(
-    pre,
-    paste0("xread '", comment, "'"),
+    paste(pre, collapse = '\n'),
+    paste0("xread '", paste(comment, collapse = ' '), "'"),
     paste(rev(dim(dataset)), collapse = ' '),
     '&[num]',
     paste(rownames(dataset),
           apply(dataset, 1, paste0, collapse = ''),
           collapse = EOL),
     ';',
-    post,
+    paste(post, collapse = '\n'),
     sep = EOL)
   if (is.null(filepath)) {
     ret
