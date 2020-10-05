@@ -50,6 +50,7 @@ MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
 #' @param mst Optional parameter specifying the minimum spanning tree in the
 #' format returned by `MSTEdges()`; if `NULL`, calculated from `distances`.
 #' @return `MSTLength()` returns the length of the minimum spanning tree.
+#' @export
 MSTLength <- function (distances, mst = NULL) {
   distMat <- as.matrix(distances)
   if (is.null(mst)) mst <- MSTEdges(distances)
