@@ -9,6 +9,8 @@ test_that('MST edges calculated correctly', {
   distMat <- as.matrix(distances)
   expect_equal(MSTLength(distances, apeMst),
                MSTLength(distances))
+  expect_equal(MSTLength(distances),
+               MSTLength(distMat))
   MSTPlot <- function () {
     plot(points, asp = 1, ann = FALSE)
     expect_equal(MSTEdges(distances, FALSE),
