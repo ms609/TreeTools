@@ -23,7 +23,7 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
   ;
   unique_ptr<intx[]> left = make_unique<intx[]>(n_distances);
   unique_ptr<intx[]> top = make_unique<intx[]>(n_distances);
-Rcout <<"\n\nMST()\n";
+
   intx k = n_distances;
   for (intx col = n_objects - 1; col--; ) {
     for (intx row = n_objects - 1; row != col; row--) {
@@ -47,19 +47,15 @@ Rcout <<"\n\nMST()\n";
       left_island = island_housing(left[d], island),
       top_island = island_housing(top[d], island)
     ;
-    Rcout << "order[" << i << "] = " << (1+d);
-    Rcout << ": " <<(1+ left[d]) << "-"<<(1+top[d]) <<"; ";
-    Rcout << "On islands: " << (1+island_housing(left[d], island));
-    Rcout << ", " << (1+island_housing(top[d], island)) << ".\n";
     if (top_island != left_island) {
       const intx new_island = (top_island < left_island ? top_island : left_island);
-      Rcout << "  - Connecting islands and renumbering to " << new_island <<"\n";
       island[top[d]] = new_island;
       island[left[d]] = new_island;
       island[top_island] = new_island;
       island[left_island] = new_island;
-      ret(ret_pos, 0) = top[i] + 1;
-      ret(ret_pos, 1) = left[i] + 1;
+      ret(ret_pos, 0) = top[d] + 1;
+      ret(ret_pos, 1) = left[d] + 1;
+      if (ret_pos == n_objects - 2) break;
       ret_pos++;
     }
   }
