@@ -26,8 +26,9 @@ format returned by \code{MSTEdges()}; if \code{NULL}, calculated from \code{dist
 }
 \value{
 \code{MSTEdges()} returns a matrix in which each row corresponds to an
-edge of the minimum spanning tree, and each column lists the index of the
-entry in \code{distances} at which the line begins and ends.
+edge of the minimum spanning tree, listed in non-decreasing order of length.
+The two columns contain the indices of the entries in \code{distances} that
+each edge connects, with the lower value listed first.
 
 \code{MSTLength()} returns the length of the minimum spanning tree.
 }
