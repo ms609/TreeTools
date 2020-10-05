@@ -54,6 +54,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// minimum_spanning_tree
+IntegerMatrix minimum_spanning_tree(const IntegerVector order);
+RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP orderSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
+    rcpp_result_gen = Rcpp::wrap(minimum_spanning_tree(order));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_edge_to_splits
 RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP nTipSEXP) {

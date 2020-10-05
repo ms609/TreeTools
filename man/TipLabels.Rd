@@ -39,13 +39,13 @@ AllTipLabels(x)
 
 \method{AllTipLabels}{multiPhylo}(x)
 
-\method{AllTipLabels}{phylo}(x, single = TRUE)
+\method{AllTipLabels}{phylo}(x)
 
-\method{AllTipLabels}{Splits}(x, single = TRUE)
+\method{AllTipLabels}{Splits}(x)
 
-\method{AllTipLabels}{TreeNumber}(x, single = TRUE)
+\method{AllTipLabels}{TreeNumber}(x)
 
-\method{AllTipLabels}{matrix}(x, single = TRUE)
+\method{AllTipLabels}{matrix}(x)
 
 \method{TipLabels}{multiPhylo}(x, single = FALSE)
 

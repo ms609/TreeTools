@@ -17,6 +17,10 @@ edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }
 
+minimum_spanning_tree <- function(order) {
+    .Call(`_TreeTools_minimum_spanning_tree`, order)
+}
+
 cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }

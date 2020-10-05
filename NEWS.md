@@ -1,3 +1,8 @@
+# TreeTools 1.3.1.9001 (development)
+
+ - C++ implementation of `MSTEdges()`, improving runtime by orders of magnitude.
+ - New function `MSTLength()` reports length of minimum spanning tree.
+
 # TreeTools 1.3.1.9000 (development)
 
  - New function `AllTipLabels()` returns all labels from all trees in a list.
