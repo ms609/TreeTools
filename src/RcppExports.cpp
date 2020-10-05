@@ -55,14 +55,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // minimum_spanning_tree
-IntegerMatrix minimum_spanning_tree(const NumericVector distances, const IntegerVector order);
-RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP distancesSEXP, SEXP orderSEXP) {
+IntegerMatrix minimum_spanning_tree(const IntegerVector order);
+RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP orderSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector >::type distances(distancesSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
-    rcpp_result_gen = Rcpp::wrap(minimum_spanning_tree(distances, order));
+    rcpp_result_gen = Rcpp::wrap(minimum_spanning_tree(order));
     return rcpp_result_gen;
 END_RCPP
 }

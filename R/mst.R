@@ -48,12 +48,12 @@ MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
 MinimumSpanningTree <- function(distances) UseMethod("MinimumSpanningTree")
 
 MinimumSpanningTree.dist <- function (distances) {
-  minimum_spanning_tree(distances, order(distances, decreasing = TRUE))
+  minimum_spanning_tree(order(distances, decreasing = TRUE) - 1L)
 }
 
 MinimumSpanningTree.matrix <- function (distances) {
   dists <- distances[lower.tri(distances)]
-  minimum_spanning_tree(dists, order(dists, decreasing = TRUE))
+  minimum_spanning_tree(order(dists, decreasing = TRUE) - 1L)
 }
 
 #' @keywords internal
