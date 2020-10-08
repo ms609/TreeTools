@@ -139,8 +139,14 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   fileText <- readLines(filename)
   treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
-  if (length(treeStart) > 1) warning("Multiple tree blocks not yet supported; contact maintainer to request. Returning first block only.")
   if (length(treeStart) < 1) return (NULL)
+  if (length(treeStart) > 1) {
+    warning("Multiple tree blocks not yet supported; ",
+            "contact 'TreeTools' maintainer to request. ",
+            "Returning first block only.")
+    treeStart <- treeStart[1]
+  }
+
   semicolons <- grep(';', fileText, fixed = TRUE)
   lastTree <- semicolons[semicolons >= treeStart]
   if (length(lastTree)) {
@@ -164,8 +170,8 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
           taxonFileParts <- strsplit(taxonFile, '/')[[1]]
           nParts <- length(taxonFileParts)
           if (nParts < keepEnd) {
-            stop("Taxon file path (", taxonFile,                                  # nocov
-                 ") contains fewer than keepEnd (", keepEnd, ") components.")     # nocov
+            stop("Taxon file path (", taxonFile,                                # nocov
+                 ") contains fewer than keepEnd (", keepEnd, ") components.")   # nocov
           }
           taxonFile <- paste0(c(relativePath,
                                 taxonFileParts[(nParts + 1L - keepEnd):nParts]),
@@ -474,8 +480,13 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   upperLines <- toupper(lines)
 
   xread <- grep('^XREAD\\b', upperLines, perl = TRUE)
-  if (length(xread) > 1) warning("Multiple character blocks not yet supported; contact maintainer to request. Returning first block only.")
   if (length(xread) < 1) return(NULL)
+  if (length(xread) > 1) {
+    message("Multiple character blocks not yet supported;",
+            "contact 'TreeTools' maintainer to request.",
+            "Returning first block only.")
+    xread <- xread[1]
+  }
 
   xreadEnd <- semicolons[semicolons > xread][1]
   if (lines[xreadEnd] == ';') {
