@@ -48,6 +48,8 @@ as.Newick.multiPhylo <- as.Newick.list
 #' @param dataset Morphological dataset of class `phyDat` or `matrix`.
 #' @param filepath Path to file; if `NULL`, returns a character vector.
 #' @param comment Optional comment with which to entitle matrix.
+#' @param types Optional list specifying where different data types begin.
+#' `c(num = 1, dna = 10)` sets characters 1..9 as numeric, 10..end as DNA.
 #' @param pre,post Character vector listing text to print before and after the
 #' character matrix.  Specify `pre = 'piwe=;` if the matrix is to be analysed
 #' using extended implied weighting (`xpiwe=`).
@@ -67,6 +69,7 @@ as.Newick.multiPhylo <- as.Newick.list
 #' @export
 WriteTntCharacters <- function (dataset, filepath = NULL,
                                 comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                types = NULL,
                                 pre = '', post = '') {
   UseMethod('WriteTntCharacters')
 }
@@ -75,6 +78,7 @@ WriteTntCharacters <- function (dataset, filepath = NULL,
 #' @export
 WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       types = NULL,
                                        pre = '', post = '') {
   WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, pre, post)
 }
@@ -83,15 +87,26 @@ WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
 #' @export
 WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       types = NULL,
                                        pre = '', post = '') {
   EOL <- '\n'
   ret <- paste(
     paste(pre, collapse = '\n'),
     paste0("xread '", paste(comment, collapse = ' '), "'"),
     paste(rev(dim(dataset)), collapse = ' '),
-    paste(rownames(dataset),
-          apply(dataset, 1, paste0, collapse = ''),
-          collapse = EOL),
+    if (is.null(types)) {
+      paste(rownames(dataset),
+            apply(dataset, 1, paste0, collapse = ''),
+            collapse = EOL)
+    } else {
+      typeEnds <- c(unname(types[-1]) - 1L, ncol(dataset))
+      paste(paste0('&[', names(types), ']'),
+            vapply(seq_along(types), function(i)
+              paste(rownames(dataset),
+                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ''),
+                    collapse = EOL),
+              character(1)), collapse = EOL)
+    },
     ';',
     paste(post, collapse = '\n'),
     sep = EOL)
