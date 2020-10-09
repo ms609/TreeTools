@@ -139,7 +139,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   fileText <- readLines(filename)
   treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
-  if (length(treeStart) < 1) return (NULL)
+  if (length(treeStart) < 1) return(NULL)
   if (length(treeStart) > 1) {
     warning("Multiple tree blocks not yet supported; ",
             "contact 'TreeTools' maintainer to request. ",

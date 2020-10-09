@@ -90,7 +90,8 @@ inline void add_child_edges(const intx node, const intx node_label,
                node_limit = n_edge + 2;
 
     if (2L * (2L + child.length()) > INTX_CONSERVATIVE_MAX) {
-      throw std::length_error("Too many edges: Contact maintainer for support.");
+      throw std::length_error("Too many edges in tree: "
+                              "Contact 'TreeTools' maintainer for support.");
     }
     if (child.length() != n_edge) {
       throw std::invalid_argument("Length of parent and child must match");

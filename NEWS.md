@@ -1,3 +1,7 @@
+# TreeTools 1.3.1.9002 (development)
+
+ - Handle `NULL` with tree information methods.
+
 # TreeTools 1.3.1.9001 (development)
 
  - C++ implementation of `MSTEdges()`, improving runtime by orders of magnitude.

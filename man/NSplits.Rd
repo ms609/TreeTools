@@ -8,6 +8,7 @@
 \alias{NSplits.multiPhylo}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
+\alias{NSplits.NULL}
 \alias{NSplits.character}
 \title{Number of distinct splits}
 \usage{
@@ -24,6 +25,8 @@ NPartitions(x)
 \method{NSplits}{Splits}(x)
 
 \method{NSplits}{numeric}(x)
+
+\method{NSplits}{`NULL`}(x)
 
 \method{NSplits}{character}(x)
 }

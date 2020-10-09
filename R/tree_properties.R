@@ -575,6 +575,9 @@ NTip.matrix <- function (phy) {
   }
 }
 
+#' @export
+NTip.NULL <- function (phy) NULL
+
 #' Number of distinct splits
 #'
 #' `NSplits()` counts the unique bipartition splits in a tree or object.
@@ -622,6 +625,10 @@ NSplits.Splits <- function (x) nrow(x)
 #' @rdname NSplits
 #' @export
 NSplits.numeric <- function (x) pmax(0L, x - 3L)
+
+#' @rdname NSplits
+#' @export
+NSplits.NULL <- function (x) NULL
 
 #' @rdname NSplits
 #' @importFrom ape read.tree
@@ -678,6 +685,9 @@ SplitsInBinaryTree.multiPhylo <- SplitsInBinaryTree.list
 #' @rdname SplitsInBinaryTree
 #' @export
 SplitsInBinaryTree.numeric <- function (tree) as.integer(tree) - 3L
+
+#' @export
+SplitsInBinaryTree.NULL <- function(tree) NULL
 
 #' Is tree rooted?
 #'
