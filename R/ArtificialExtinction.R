@@ -21,6 +21,8 @@
 #'  probability;
 #'  - `sample`: One of the tokens present in `sampleFrom`, sampled according
 #'  to their frequency.
+#' @param replaceAll Logical: if `TRUE`, replace all tokens in a subject; if
+#' `FALSE`, leave any ambiguous tokens (`?`) ambiguous.
 #' @param sampleFrom Vector identifying a subset of characters from which to
 #' sample replacement tokens.
 #' If `NULL`, replacement tokens will be sampled from the initial states of
@@ -39,6 +41,7 @@
 ArtificialExtinction <- function (dataset, subject, template,
                                   replaceAmbiguous = 'ambig',
                                   replaceCoded = 'original',
+                                  replaceAll = TRUE,
                                   sampleFrom = NULL) {
   UseMethod('ArtificialExtinction')
 }
@@ -48,6 +51,7 @@ ArtificialExtinction <- function (dataset, subject, template,
 ArtificialExtinction.matrix <- function (dataset, subject, template,
                                          replaceAmbiguous = 'ambig',
                                          replaceCoded = 'original',
+                                         replaceAll = TRUE,
                                          sampleFrom = NULL) {
   replacers <- c('original', 'ambiguous', 'binary', 'uniform', 'frequency')
   replaceA <- pmatch(replaceAmbiguous, replacers)
@@ -76,6 +80,9 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
       apply(dataset[sampleFrom, columns, drop = FALSE], 2, sample,
             length(subject), replace = TRUE) # Frequency
     )
+    if (isFALSE(replaceAll)) {
+      replaceWith[dataset[subject, columns] == '?'] <- '?'
+    }
     dataset[subject, columns] <- replaceWith
     dataset
   }
@@ -90,6 +97,7 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
 ArtificialExtinction.phyDat <- function (dataset, subject, template,
                                          replaceAmbiguous = 'ambig',
                                          replaceCoded = 'original',
+                                         replaceAll = TRUE,
                                          sampleFrom = NULL) {
   MatrixToPhyDat(ArtificialExtinction(PhyDatToMatrix(dataset), subject,
                                       template,

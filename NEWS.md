@@ -1,3 +1,7 @@
+# TreeTools 1.3.1.9003 (development)
+
+- Add `replaceAll` option to `ArtificialExtinction()`.
+
 # TreeTools 1.3.1.9002 (development)
 
  - Tree characterization S3 methods: add `.default` and `.NULL`.
