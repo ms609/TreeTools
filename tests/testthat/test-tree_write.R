@@ -27,12 +27,15 @@ test_that("WriteTntCharacters()", {
   dataset[4, 4:6] <- '-'
   dataset[3:2, 4:6] <- '?'
 
-  expect_equal("PRE\nFIX\nxread 'COM MENT'\n6 4\n&[num]\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST\nSCRIPT",
+  expect_equal("PRE\nFIX\nxread 'COM MENT'\n6 4\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST\nSCRIPT",
                WriteTntCharacters(dataset, comment = c('COM', 'MENT'),
                                   pre = c('PRE', 'FIX'),
                                   post  = c('POST', 'SCRIPT')))
   expect_equal(WriteTntCharacters(dataset),
                WriteTntCharacters(MatrixToPhyDat(dataset)))
+
+  expect_equal("\nxread 'Dataset written by `TreeTools::WriteTntCharacters()`'\n6 4\n&[num]\n A 11\nB 22\nC 33\nD 44\n&[dna]\n A 1111\nB 2???\nC 3???\nD 4---\n;\n",
+               WriteTntCharacters(dataset, types = c(num = 1, dna = 3)))
 
   written <- tempfile()
   WriteTntCharacters(dataset, written)

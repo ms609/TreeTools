@@ -1,3 +1,9 @@
+# TreeTools 1.3.1.9003 (development)
+
+- Add `replaceAll` option to `ArtificialExtinction()`.
+- Write different character types to TNT file with 
+  `WriteTntCharacters(types = ...)`.
+
 # TreeTools 1.3.1.9002 (development)
 
  - Tree characterization S3 methods: add `.default` and `.NULL`.

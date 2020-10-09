@@ -10,6 +10,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -18,6 +19,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -26,6 +28,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -36,6 +39,9 @@ WriteTntCharacters(
 \item{filepath}{Path to file; if \code{NULL}, returns a character vector.}
 
 \item{comment}{Optional comment with which to entitle matrix.}
+
+\item{types}{Optional list specifying where different data types begin.
+\code{c(num = 1, dna = 10)} sets characters 1..9 as numeric, 10..end as DNA.}
 
 \item{pre, post}{Character vector listing text to print before and after the
 character matrix.  Specify \verb{pre = 'piwe=;} if the matrix is to be analysed

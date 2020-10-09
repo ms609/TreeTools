@@ -13,6 +13,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -22,6 +23,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -31,6 +33,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -40,6 +43,7 @@ ArtEx(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 }
@@ -62,6 +66,9 @@ probability;
 \item \code{sample}: One of the tokens present in \code{sampleFrom}, sampled according
 to their frequency.
 }}
+
+\item{replaceAll}{Logical: if \code{TRUE}, replace all tokens in a subject; if
+\code{FALSE}, leave any ambiguous tokens (\verb{?}) ambiguous.}
 
 \item{sampleFrom}{Vector identifying a subset of characters from which to
 sample replacement tokens.
