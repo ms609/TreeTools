@@ -27,7 +27,7 @@ test_that("WriteTntCharacters()", {
   dataset[4, 4:6] <- '-'
   dataset[3:2, 4:6] <- '?'
 
-  expect_equal("PRE\nFIX\nxread 'COM MENT'\n6 4\n&[num]\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST\nSCRIPT",
+  expect_equal("PRE\nFIX\nxread 'COM MENT'\n6 4\nA 111111\nB 222???\nC 333???\nD 444---\n;\nPOST\nSCRIPT",
                WriteTntCharacters(dataset, comment = c('COM', 'MENT'),
                                   pre = c('PRE', 'FIX'),
                                   post  = c('POST', 'SCRIPT')))
