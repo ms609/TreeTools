@@ -80,7 +80,7 @@ WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
                                        types = NULL,
                                        pre = '', post = '') {
-  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, pre, post)
+  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types, pre, post)
 }
 
 #' @rdname WriteTntCharacters
@@ -100,7 +100,7 @@ WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
             collapse = EOL)
     } else {
       typeEnds <- c(unname(types[-1]) - 1L, ncol(dataset))
-      paste(paste0('&[', names(types), ']'),
+      paste(paste0('&[', names(types), ']\n'),
             vapply(seq_along(types), function(i)
               paste(rownames(dataset),
                     apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ''),

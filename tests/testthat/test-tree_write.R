@@ -34,7 +34,7 @@ test_that("WriteTntCharacters()", {
   expect_equal(WriteTntCharacters(dataset),
                WriteTntCharacters(MatrixToPhyDat(dataset)))
 
-  expect_equal("\nxread 'Dataset written by `TreeTools::WriteTntCharacters()`'\n6 6\n&[num] A 11\nB 22\nC 33\nD 44\nE 55\nF 66\n&[dna] A 1111\nB 2222\nC 3333\nD ---4\nE 5???\nF ????\n;\n",
+  expect_equal("\nxread 'Dataset written by `TreeTools::WriteTntCharacters()`'\n6 4\n&[num]\n A 11\nB 22\nC 33\nD 44\n&[dna]\n A 1111\nB 2???\nC 3???\nD 4---\n;\n",
                WriteTntCharacters(dataset, types = c(num = 1, dna = 3)))
 
   written <- tempfile()
