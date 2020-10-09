@@ -1,6 +1,6 @@
 # TreeTools 1.3.1.9002 (development)
 
- - Handle `NULL` with tree information methods.
+ - Tree characterization S3 methods: add `.default` and `.NULL`.
 
 # TreeTools 1.3.1.9001 (development)
 

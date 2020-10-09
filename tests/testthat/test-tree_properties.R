@@ -101,7 +101,7 @@ test_that("NTip() works", {
     expect_identical(rep(n, 2L), NTip(list(tr, tr)))
     expect_identical(rep(n, 3L),
                      NTip(structure(list(tr, tr, pec), class = 'multiPhylo')))
-    expect_error(NTip(matrix('', n, 2)))
+    expect_null(NTip(matrix('', n, 2)))
   }
   Test(1L)
   Test(8L)
@@ -111,6 +111,7 @@ test_that("NTip() works", {
 
 test_that("NSplits() works", {
   expect_equal(NSplits(5L), NSplits(LETTERS[1:5]))
+  expect_equal(3L, NSplits(structure(matrix(0, 6, 2), class = 'ClusterTable')))
 })
 
 test_that("MRCA() works", {

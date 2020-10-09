@@ -9,6 +9,7 @@
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
 \alias{NSplits.NULL}
+\alias{NSplits.ClusterTable}
 \alias{NSplits.character}
 \title{Number of distinct splits}
 \usage{
@@ -27,6 +28,8 @@ NPartitions(x)
 \method{NSplits}{numeric}(x)
 
 \method{NSplits}{`NULL`}(x)
+
+\method{NSplits}{ClusterTable}(x)
 
 \method{NSplits}{character}(x)
 }

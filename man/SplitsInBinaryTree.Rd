@@ -2,24 +2,30 @@
 % Please edit documentation in R/tree_properties.R
 \name{SplitsInBinaryTree}
 \alias{SplitsInBinaryTree}
-\alias{SplitsInBinaryTree.phylo}
-\alias{SplitsInBinaryTree.Splits}
 \alias{SplitsInBinaryTree.list}
 \alias{SplitsInBinaryTree.multiPhylo}
 \alias{SplitsInBinaryTree.numeric}
+\alias{SplitsInBinaryTree.NULL}
+\alias{SplitsInBinaryTree.default}
+\alias{SplitsInBinaryTree.Splits}
+\alias{SplitsInBinaryTree.phylo}
 \title{Maximum splits in an \emph{n}-leaf tree}
 \usage{
 SplitsInBinaryTree(tree)
-
-\method{SplitsInBinaryTree}{phylo}(tree)
-
-\method{SplitsInBinaryTree}{Splits}(tree)
 
 \method{SplitsInBinaryTree}{list}(tree)
 
 \method{SplitsInBinaryTree}{multiPhylo}(tree)
 
 \method{SplitsInBinaryTree}{numeric}(tree)
+
+\method{SplitsInBinaryTree}{`NULL`}(tree)
+
+\method{SplitsInBinaryTree}{default}(tree)
+
+\method{SplitsInBinaryTree}{Splits}(tree)
+
+\method{SplitsInBinaryTree}{phylo}(tree)
 }
 \arguments{
 \item{tree}{An object of a supported format that represents a tree or

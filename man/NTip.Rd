@@ -2,6 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{NTip}
 \alias{NTip}
+\alias{NTip.default}
 \alias{NTip.Splits}
 \alias{NTip.list}
 \alias{NTip.phylo}
@@ -10,6 +11,8 @@
 \title{Number of leaves in a phylogenetic tree}
 \usage{
 NTip(phy)
+
+\method{NTip}{default}(phy)
 
 \method{NTip}{Splits}(phy)
 

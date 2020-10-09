@@ -543,9 +543,13 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 NTip <- function (phy) UseMethod('NTip')
 
 #' @rdname NTip
+#' @export
+NTip.default <- function(phy) attr(phy, 'nTip')
+
+#' @rdname NTip
 #' @family Splits operations
 #' @export
-NTip.Splits <- function (phy) attr(phy, 'nTip')
+NTip.Splits <- NTip.default
 
 #' @rdname NTip
 #' @export
@@ -574,9 +578,6 @@ NTip.matrix <- function (phy) {
     NextMethod()
   }
 }
-
-#' @export
-NTip.NULL <- function (phy) NULL
 
 #' Number of distinct splits
 #'
@@ -631,6 +632,10 @@ NSplits.numeric <- function (x) pmax(0L, x - 3L)
 NSplits.NULL <- function (x) NULL
 
 #' @rdname NSplits
+#' @export
+NSplits.ClusterTable <- function (x) nrow(as.matrix(x)) - 3L # Root + Ingroup + All-leaves
+
+#' @rdname NSplits
 #' @importFrom ape read.tree
 #' @export
 NSplits.character <- function (x) {
@@ -668,14 +673,6 @@ SplitsInBinaryTree <- function (tree) UseMethod('SplitsInBinaryTree')
 
 #' @rdname SplitsInBinaryTree
 #' @export
-SplitsInBinaryTree.phylo <- function (tree) NTip(tree) - 3L
-
-#' @rdname SplitsInBinaryTree
-#' @export
-SplitsInBinaryTree.Splits <- SplitsInBinaryTree.phylo
-
-#' @rdname SplitsInBinaryTree
-#' @export
 SplitsInBinaryTree.list <- function (tree) vapply(tree, SplitsInBinaryTree, 0L)
 
 #' @rdname SplitsInBinaryTree
@@ -686,8 +683,21 @@ SplitsInBinaryTree.multiPhylo <- SplitsInBinaryTree.list
 #' @export
 SplitsInBinaryTree.numeric <- function (tree) as.integer(tree) - 3L
 
+#' @rdname SplitsInBinaryTree
 #' @export
 SplitsInBinaryTree.NULL <- function(tree) NULL
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.default <- function(tree) NTip(tree) - 3L
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.Splits <- SplitsInBinaryTree.default
+
+#' @rdname SplitsInBinaryTree
+#' @export
+SplitsInBinaryTree.phylo <- SplitsInBinaryTree.default
 
 #' Is tree rooted?
 #'

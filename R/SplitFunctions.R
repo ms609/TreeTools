@@ -261,12 +261,16 @@ TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.TreeNumber <- function (x, single = TRUE) attr(x, 'tip.label')
+TipLabels.default <- function (x, single = TRUE) attr(x, 'tip.label')
+
+#' @rdname TipLabels
+#' @export
+TipLabels.TreeNumber <- TipLabels.default
 
 #' @rdname TipLabels
 #' @family Splits operations
 #' @export
-TipLabels.Splits <- function (x, single = TRUE) attr(x, 'tip.label')
+TipLabels.Splits <- TipLabels.default
 
 #' @rdname TipLabels
 #' @export
