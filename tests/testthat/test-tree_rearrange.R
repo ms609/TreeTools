@@ -172,7 +172,7 @@ test_that("UnrootTree() works", {
                     UnrootTree(as.phylo(1:2, 5)))
 })
 
-test_that("CollapseNodes() works", {
+test_that("CollapseNode() works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
   expect_error(CollapseNode(tree8, 1))
