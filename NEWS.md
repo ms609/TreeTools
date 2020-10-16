@@ -1,29 +1,25 @@
-# TreeTools 1.3.1.9003 (development)
+# TreeTools 1.4.0
 
-- Add `replaceAll` option to `ArtificialExtinction()`.
-- Write different character types to TNT file with 
-  `WriteTntCharacters(types = ...)`.
-
-# TreeTools 1.3.1.9002 (development)
-
+## New functions
+ - `MSTLength()` reports length of minimum spanning tree.
+ - `AllTipLabels()` returns all labels from all trees in a list.
+ - `PairwiseDistances()` (from 'TreeDistData') computes distances between all
+   pairs of trees in a list.
+ - `ArtificialExtinction()` gains `replaceAll` option.
+ - `WriteTntCharacters(types = ...)` writes different character types to TNT 
+   file.
  - Tree characterization S3 methods: add `.default` and `.NULL`.
 
-# TreeTools 1.3.1.9001 (development)
-
- - C++ implementation of `MSTEdges()`, improving runtime by orders of magnitude.
- - New function `MSTLength()` reports length of minimum spanning tree.
+## Enhancements
+ - `MSTEdges()` implemented in C++, improving runtime by orders of magnitude.
  - Improved parsing of TNT character files.
 
-# TreeTools 1.3.1.9000 (development)
-
- - New function `AllTipLabels()` returns all labels from all trees in a list.
- - New function `PairwiseDistances()` (from 'TreeDistData') computes distances
-   between all pairs of trees in a list.
 
 # TreeTools 1.3.1
 
  - Improved parsing of TNT files.
  - Fix misspecified C++ linkage.
+
 
 # TreeTools 1.3.0
 
@@ -44,6 +40,7 @@
  - C++ implementation of `TipsInSplits()`.
  - Export C++ functions `preorder_edges_and_nodes()` and `postorder_edges()`.
  - Remove obsolete copy of C++ code from 'phangorn'.
+
 
 # TreeTools 1.2.0
 
