@@ -58,6 +58,8 @@ RandomTree <- function (tips, root = FALSE) {
                          tip.label = tips,
                          br = NULL),
                     class = 'phylo')
+  # Until require R >= 3.5.0
+  isFALSE <- function (x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
   if (isFALSE(root)) {
     tree <- UnrootTree(tree)
   }
