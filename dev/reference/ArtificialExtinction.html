@@ -90,7 +90,7 @@ a phylogenetic dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.3.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.3.1.9003</span>
       </span>
     </div>
 
@@ -170,6 +170,7 @@ a phylogenetic dataset.</p>
   <span class='va'>template</span>,
   replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
   replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  replaceAll <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span>
 
@@ -180,6 +181,7 @@ a phylogenetic dataset.</p>
   <span class='va'>template</span>,
   replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
   replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  replaceAll <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span>
 
@@ -190,6 +192,7 @@ a phylogenetic dataset.</p>
   <span class='va'>template</span>,
   replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
   replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  replaceAll <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span>
 
@@ -199,6 +202,7 @@ a phylogenetic dataset.</p>
   <span class='va'>template</span>,
   replaceAmbiguous <span class='op'>=</span> <span class='st'>"ambig"</span>,
   replaceCoded <span class='op'>=</span> <span class='st'>"original"</span>,
+  replaceAll <span class='op'>=</span> <span class='cn'>TRUE</span>,
   sampleFrom <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -230,6 +234,11 @@ probability;</p></li>
 <li><p><code>sample</code>: One of the tokens present in <code>sampleFrom</code>, sampled according
 to their frequency.</p></li>
 </ul></td>
+    </tr>
+    <tr>
+      <th>replaceAll</th>
+      <td><p>Logical: if <code>TRUE</code>, replace all tokens in a subject; if
+<code>FALSE</code>, leave any ambiguous tokens (<code>?</code>) ambiguous.</p></td>
     </tr>
     <tr>
       <th>sampleFrom</th>
