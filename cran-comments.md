@@ -14,8 +14,8 @@ There were no ERRORs, WARNINGs or NOTEs.
 
 Downstream dependencies R CMD CHECKed locally: No changes to worse in
 
-√ Quartet 1.1.0                          -- E: 0     | W: 0     | N: 0
-√ TBRDist 1.0.2                          -- E: 0     | W: 0     | N: 2
-√ TreeDist 1.2.1                         -- E: 0     | W: 0     | N: 2
-√ TreeSearch 0.4.3                       -- E: 0     | W: 0     | N: 0
+v Quartet 1.1.0                          -- E: 0     | W: 0     | N: 1          
+v TBRDist 1.0.2                          -- E: 0     | W: 0     | N: 1          
+v TreeDist 1.2.1                         -- E: 0     | W: 0     | N: 2          
+v TreeSearch 0.4.3                       -- E: 0     | W: 0     | N: 0      
 
