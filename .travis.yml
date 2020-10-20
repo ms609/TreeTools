@@ -65,5 +65,5 @@ jobs:
       before_install:
       - sudo tlmgr install doi titling hyperref
   allow_failures:
-    - os: osx
+    - r: devel # new plotting framework for vdiffr
   fast_finish: true
