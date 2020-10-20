@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.0</span>
       </span>
     </div>
 
@@ -162,7 +162,7 @@
 
     <pre class="usage"><span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>ReadTntCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>ReadTntCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>ReadAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
 
@@ -186,6 +186,13 @@
       <th>session</th>
       <td><p>(Optional) A Shiny session with a <code>numericInput</code> named
 <code>character_num</code> whose maximum should be updated.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character vector specifying categories of data to extract from
+file. Setting <code>type = c('num', 'dna')</code> will return only characters
+following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file. Leave as <code>NULL</code>
+(the default) to return all characters.</p></td>
     </tr>
     <tr>
       <th>dataset</th>
