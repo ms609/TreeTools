@@ -1,3 +1,7 @@
+# TreeTools 1.4.0.9000 (development)
+
+ - `MSTEdges()` supports distance matrices with > 256 entries.
+
 # TreeTools 1.4.0
 
 ## New functions

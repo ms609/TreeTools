@@ -1,4 +1,5 @@
 context('mst.R')
+
 test_that('MST edges calculated correctly', {
   set.seed(0)
   points <- matrix(c(0.1, 0, 1.9, 2, 1.1, 1,
@@ -17,4 +18,8 @@ test_that('MST edges calculated correctly', {
                  MSTEdges(distances, TRUE, points[, 1], points[, 2]))
   }
   vdiffr::expect_doppelganger('MST plotting', MSTPlot)
+})
+test_that("MST handles large distance matrices", {
+  x <- dist(0:300)
+  expect_equal(c(300, 2), dim(MSTEdges(x)))
 })

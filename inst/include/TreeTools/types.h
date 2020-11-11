@@ -4,6 +4,7 @@
 #include <cstdint> /* for uint_fast16_t, int_fast16_t, INTPTR_MAX */
 
 typedef int_fast16_t intx;
+typedef int_fast16_t int16;
 typedef uint_fast16_t uintx;
 typedef int_fast32_t int32;
 
