@@ -5,6 +5,7 @@ DELETE
 man-roxygen
 data-raw
 vignettes/.RData
+.github
 ^\.git/
 ^_pkgdown\.yml$
 ^.*\.o$

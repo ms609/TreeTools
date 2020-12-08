@@ -36,5 +36,6 @@ test_that("LabelSplits()", {
     names(labs) <- names(as.Splits(tree))
     LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
   }
+  skip_if_not_installed('vdiffr')
   vdiffr::expect_doppelganger('LabelSplits()', SplitLabelling)
 })
