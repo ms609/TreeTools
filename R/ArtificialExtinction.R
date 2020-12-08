@@ -80,6 +80,9 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
       apply(dataset[sampleFrom, columns, drop = FALSE], 2, sample,
             length(subject), replace = TRUE) # Frequency
     )
+
+    # Until require R >= 3.5.0
+    isFALSE <- function (x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
     if (isFALSE(replaceAll)) {
       replaceWith[dataset[subject, columns] == '?'] <- '?'
     }
