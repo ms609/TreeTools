@@ -1,6 +1,5 @@
 # TreeTools
 
-[![Build Status](https://travis-ci.org/ms609/TreeTools.svg?branch=master)](https://travis-ci.org/ms609/TreeTools)
 [![codecov](https://codecov.io/gh/ms609/TreeTools/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTools)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeTools)](https://cran.r-project.org/package=TreeTools)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTools)](https://cran.r-project.org/package=TreeTools)
