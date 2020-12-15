@@ -1,3 +1,7 @@
+# TreeTools 1.4.1.9000 (development)
+
+ - Support star trees in `RootTree()`.
+
 # TreeTools 1.4.1
 
  - `MSTEdges()` supports distance matrices with > 256 entries.

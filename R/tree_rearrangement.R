@@ -62,7 +62,11 @@ RootTree.phylo <- function (tree, outgroupTips) {
     lca <- max(lineage[ancestryTable == length(outgroupTips)])
     rootNode <- length(tipLabels) + 1L
     if (lca == rootNode) {
-      lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+      if (tree$Nnode > 2L) {
+        lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+      } else {
+        return (tree)
+      }
     }
     outgroup <- lca
   }

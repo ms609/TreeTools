@@ -15,13 +15,13 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.4.0",
+  "version": "1.4.1.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
   "author": [
     {
       "@type": "Person",
@@ -211,14 +211,10 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "https://sysreqs.r-hub.io/get/cxx11"
     }
   ],
   "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
-  "contIntegration": ["https://travis-ci.org/ms609/TreeTools", "https://codecov.io/gh/ms609/TreeTools"],
+  "contIntegration": "https://codecov.io/gh/ms609/TreeTools",
   "developmentStatus": "http://www.repostatus.org/#active",
   "citation": [
     {
@@ -244,7 +240,7 @@
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
-  "keywords": "phylogenetics",
-  "fileSize": "1391.771KB",
+  "keywords": ["phylogenetics", "r-packages", "phylogenetic-trees", "evolutionary-biology"],
+  "fileSize": "1392.546KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

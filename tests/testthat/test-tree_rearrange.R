@@ -121,6 +121,11 @@ test_that("RootOnNode() supports lists of trees", {
                RootOnNode(as.phylo(1:2, 5), rootOn))
 })
 
+test_that("RootTree() supports star trees", {
+  star <- StarTree(8)
+  expect_equal(star, RootTree(star, 5:7))
+})
+
 test_that("RootOnNode() supports nasty node ordering", {
   expect_equal(Preorder(nasty),
                RootOnNode(nasty, 12L, resolveRoot = TRUE))
