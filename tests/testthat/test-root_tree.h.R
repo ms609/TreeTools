@@ -1,6 +1,16 @@
-context("root_tree.cpp")
+context("root_tree.h")
 
 ApeRoot <- function (tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
+
+test_that("Memory leak not encountered", {
+  # Example from TreeDist::ClusterTable
+  tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");
+  tree2 <- ape::read.tree(text = "(A, (B, (D, (C, E))));");
+  # as.ClusterTable(tree1) calls:
+  expect_equal(tree1, root_on_node(tree1, 1))
+  root_on_node(RenumberTips(Preorder(tree2), LETTERS[1:5]), 1)[]
+
+})
 
 test_that('Binary trees are rootable', {
   Test <- function (tree, root) {

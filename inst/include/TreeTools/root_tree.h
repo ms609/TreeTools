@@ -73,6 +73,7 @@ namespace TreeTools {
   // #TODO Write test cases
   // NB: If specifying internal node by number, note that node numbers will
   // change if tree is not already in preorder.
+  // NB: root_node must == n_tip + 1
   //
   //  [[Rcpp::export]]
   inline List root_on_node(const List phy, const int outgroup) {
@@ -128,7 +129,6 @@ namespace TreeTools {
         new_edge(invert_next, 1) = edge(invert_next, 0);
       } while (edge(invert_next, 0) != root_node);
 
-      delete[] edge_above;
 
       // further root edges must be replaced with root -> outgroup.
       intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
@@ -155,12 +155,12 @@ namespace TreeTools {
         new_edge(invert_next, 0) = edge(invert_next, 1);
         new_edge(invert_next, 1) = edge(invert_next, 0);
       }
-      delete[] edge_above;
 
       ret["Nnode"] = n_node + 1;
       ret["edge"] = preorder_edges_and_nodes(new_edge(_, 0), new_edge(_, 1));
 
     }
+    delete[] edge_above;
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
   }
