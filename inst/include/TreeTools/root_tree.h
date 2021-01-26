@@ -114,7 +114,9 @@ namespace TreeTools {
     if (root_edges_found == 2) { // Root node is vapour, and can be repurposed
 
       if (edge(root_edges[0], 1) == outgroup ||
-          edge(root_edges[1], 1) == outgroup) return phy;
+          edge(root_edges[1], 1) == outgroup) {
+        return phy;
+      }
       // #TODO work in situ without clone
       IntegerMatrix new_edge = clone(edge);
 
