@@ -1,9 +1,10 @@
 CONTRIBUTING.md
 README.md
 cran-comments.md
+data-raw
 DELETE
 man-roxygen
-data-raw
+memcheck
 vignettes/.RData
 .github
 ^\.git/
