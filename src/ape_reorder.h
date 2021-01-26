@@ -88,8 +88,10 @@ extern void ape_neworder_phylo(int *n_tips, int *parent, int *child,
 /* n_tips: nb of tips
    n_nodes: nb of nodes
    n_edges: nb of edges */
-	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1,
-	  max_node = *n_tips - n_nodes + 1;
+	int i, j, k, *L, *pos,
+	  n_nodes = *n_edges - *n_tips + 1,
+	  max_node = *n_tips - n_nodes + 1
+  ;
 
 /* max_node is the largest value that a node degree can be */
 
@@ -108,7 +110,7 @@ extern void ape_neworder_phylo(int *n_tips, int *parent, int *child,
 
 /* we now go down along the edge matrix */
 
-	for (i = 0; i < *n_edges; i++) {
+	for (i = 0; i != *n_edges; i++) {
 		k = parent[i] - *n_tips - 1; /* k is the 'row' index in L corresponding to node parent[i] */
 		j = pos[k]; /* the current 'column' position corresponding to k */
 		pos[k]++; /* increment in case the same node is found in another row of the edge matrix */
