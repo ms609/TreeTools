@@ -18,6 +18,7 @@ test_that('MST edges calculated correctly', {
                  MSTEdges(distances, TRUE, points[, 1], points[, 2]))
   }
   skip_if_not_installed('vdiffr')
+  skip_if(packageVersion("graphics") > "4.0.99")
   vdiffr::expect_doppelganger('MST plotting', MSTPlot)
 })
 test_that("MST handles large distance matrices", {
