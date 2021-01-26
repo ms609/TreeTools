@@ -57,4 +57,15 @@ LabelSplits(cons, splitFreqs, unit = '\%',
 Calculate split support: \code{\link[=SplitFrequency]{SplitFrequency()}}
 
 Colour labels according to value: \code{\link[=SupportColour]{SupportColour()}}
+
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{SplitFrequency}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{match}()}
 }
+\concept{Splits operations}

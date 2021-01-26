@@ -75,6 +75,18 @@ LabelSplits(cons, splitFreqs, unit = '\%',
             frame = 'none', pos = 3L)
 
 }
+\seealso{
+Other Splits operations: 
+\code{\link{LabelSplits}()},
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{as.Splits}()},
+\code{\link{match}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{Splits operations}

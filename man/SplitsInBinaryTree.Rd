@@ -55,8 +55,10 @@ Other tree properties:
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitFrequency}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
 \code{\link{as.Splits}()},

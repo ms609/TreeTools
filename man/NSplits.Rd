@@ -60,7 +60,9 @@ Other tree properties:
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NTip}()},
+\code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},

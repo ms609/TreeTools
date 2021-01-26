@@ -24,6 +24,7 @@
 #' @template exampleNodeSupport
 #'
 #' @template MRS
+#' @family Splits operations
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
@@ -73,6 +74,7 @@ SplitFrequency <- function(reference, forest) {
 #'
 #' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
+#' @family Splits operations
 #' @export
 LabelSplits <- function (tree, labels, unit = '', ...) {
   edgelabels(paste0(labels, unit),
