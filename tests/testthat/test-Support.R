@@ -37,5 +37,6 @@ test_that("LabelSplits()", {
     LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
   }
   skip_if_not_installed('vdiffr')
+  skip_if(packageVersion("graphics") > "4.0.99")
   vdiffr::expect_doppelganger('LabelSplits()', SplitLabelling)
 })
