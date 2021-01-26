@@ -15,7 +15,7 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.4.1.9000",
+  "version": "1.4.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -240,7 +240,12 @@
     "name": "Comprehensive R Archive Network (CRAN)",
     "url": "https://cran.r-project.org"
   },
-  "keywords": ["phylogenetics", "r-packages", "phylogenetic-trees", "evolutionary-biology"],
-  "fileSize": "1392.546KB",
+  "keywords": [
+    "phylogenetics",
+    "r-packages",
+    "phylogenetic-trees",
+    "evolutionary-biology"
+  ],
+  "fileSize": "1395.138KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

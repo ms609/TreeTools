@@ -8,7 +8,10 @@ test_that("Memory leak not encountered", {
   tree2 <- ape::read.tree(text = "(A, (B, (D, (C, E))));");
   # as.ClusterTable(tree1) calls:
   expect_equal(tree1, root_on_node(tree1, 1))
+
+  # Check for memory leaks...
   root_on_node(RenumberTips(Preorder(tree2), LETTERS[1:5]), 1)[]
+  root_on_node(RenumberTips(StarTree(8), LETTERS[1:5]), 1)[]
 
 })
 

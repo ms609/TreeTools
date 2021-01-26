@@ -1,6 +1,8 @@
-# TreeTools 1.4.1.9000 (development)
+# TreeTools 1.4.2
 
  - Support star trees in `RootTree()`.
+ - Improve memory handling in `root_on_node()`.
+ - Documentation linkage.
 
 # TreeTools 1.4.1
 
