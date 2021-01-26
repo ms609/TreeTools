@@ -2,6 +2,7 @@
 #define TreeTools_root_tree_
 
 #include <Rcpp.h>
+#include <memory>
 #include "renumber_tree.h"
 #include "types.h"
 
@@ -30,7 +31,8 @@ namespace TreeTools {
     if (outgroup > max_node) throw std::range_error("`outgroup` exceeds number of nodes");
     if (outgroup == root_node) return edge;
 
-    intx* edge_above = new intx[max_node + 1];
+
+    std::unique_ptr<intx[]> edge_above = std::make_unique<intx[]>(max_node + 1);
     intx root_edges[2] = {0, 0};
 
     for (intx i = n_edge; i--; ) {
@@ -39,7 +41,6 @@ namespace TreeTools {
 
       if (edge(i, 0) == root_node) {
         if (edge(i, 1) == outgroup) {
-          delete[] edge_above;
           return edge;
         }
         root_edges[root_edges[1] ? 0 : 1] = i;
@@ -59,8 +60,6 @@ namespace TreeTools {
       ret(invert_next, 0) = edge(invert_next, 1);
       ret(invert_next, 1) = edge(invert_next, 0);
     } while (edge(invert_next, 0) != root_node);
-
-    delete[] edge_above;
 
     // second root i.e. 16 -- 24 must be replaced with root -> outgroup.
     intx spare_edge = (ret(root_edges[0], 0) == root_node ? 0 : 1);
@@ -98,7 +97,7 @@ namespace TreeTools {
     }
 
 
-    intx* edge_above = new intx[max_node + 1];
+    std::unique_ptr<intx[]> edge_above = std::make_unique<intx[]>(max_node + 1);
     intx root_edges[] = {0, 0};
     intx root_edges_found = 0;
 
@@ -128,7 +127,6 @@ namespace TreeTools {
         new_edge(invert_next, 0) = edge(invert_next, 1);
         new_edge(invert_next, 1) = edge(invert_next, 0);
       } while (edge(invert_next, 0) != root_node);
-
 
       // further root edges must be replaced with root -> outgroup.
       intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
@@ -160,7 +158,6 @@ namespace TreeTools {
       ret["edge"] = preorder_edges_and_nodes(new_edge(_, 0), new_edge(_, 1));
 
     }
-    delete[] edge_above;
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
   }
