@@ -12,7 +12,6 @@ test_that("Memory leak not encountered", {
   # Check for memory leaks...
   root_on_node(RenumberTips(Preorder(tree2), LETTERS[1:5]), 1)[]
   root_on_node(RenumberTips(StarTree(LETTERS[5:1]), LETTERS[1:5]), 1)[]
-
 })
 
 test_that('Binary trees are rootable', {
