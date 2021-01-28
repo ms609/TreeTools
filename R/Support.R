@@ -53,6 +53,7 @@ SplitFrequency <- function(reference, forest) {
 #' @param labels Named vector listing annotations for each split. Names
 #' should correspond to the node associated with each split; see
 #' [`as.Splits()`] for details.
+#' If `NULL`, each splits will be labelled with its associated node.
 #' @param unit Character specifying units of `labels`, if desired. Include a
 #' leading space if necessary.
 #' @param \dots Additional parameters to [`ape::edgelabels()`][ape::nodelabels].
@@ -76,7 +77,11 @@ SplitFrequency <- function(reference, forest) {
 #' @importFrom ape edgelabels
 #' @family Splits operations
 #' @export
-LabelSplits <- function (tree, labels, unit = '', ...) {
+LabelSplits <- function (tree, labels = NULL, unit = '', ...) {
+  if (is.null(labels)) {
+    splitNames <- names(as.Splits(tree))
+    labels <- setNames(splitNames, splitNames)
+  }
   edgelabels(paste0(labels, unit),
              edge = match(as.integer(names(labels)), tree$edge[, 2]),
              ...)

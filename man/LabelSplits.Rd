@@ -4,14 +4,15 @@
 \alias{LabelSplits}
 \title{Label splits}
 \usage{
-LabelSplits(tree, labels, unit = "", ...)
+LabelSplits(tree, labels = NULL, unit = "", ...)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{labels}{Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see
-\code{\link[=as.Splits]{as.Splits()}} for details.}
+\code{\link[=as.Splits]{as.Splits()}} for details.
+If \code{NULL}, each splits will be labelled with its associated node.}
 
 \item{unit}{Character specifying units of \code{labels}, if desired. Include a
 leading space if necessary.}

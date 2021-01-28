@@ -1,3 +1,7 @@
+# TreeTools 1.4.2.9000
+
+ - `LabelSplits(labels = NULL)` labels each split with its associated node.
+
 # TreeTools 1.4.2
 
  - Support star trees in `RootTree()`.
