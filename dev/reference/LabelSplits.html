@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9000</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
     <p>Labels the edges associated with each split on a plotted tree.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>LabelSplits</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>labels</span>, unit <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>LabelSplits</span><span class='op'>(</span><span class='va'>tree</span>, labels <span class='op'>=</span> <span class='cn'>NULL</span>, unit <span class='op'>=</span> <span class='st'>""</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,7 +173,8 @@
       <th>labels</th>
       <td><p>Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see
-<code><a href='as.Splits.html'>as.Splits()</a></code> for details.</p></td>
+<code><a href='as.Splits.html'>as.Splits()</a></code> for details.
+If <code>NULL</code>, each splits will be labelled with its associated node.</p></td>
     </tr>
     <tr>
       <th>unit</th>
@@ -200,7 +201,16 @@ If the position of the root is significant, add a tip at the root using
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Calculate split support: <code><a href='SplitFrequency.html'>SplitFrequency()</a></code></p>
-<p>Colour labels according to value: <code><a href='SupportColour.html'>SupportColour()</a></code></p></div>
+<p>Colour labels according to value: <code><a href='SupportColour.html'>SupportColour()</a></code></p>
+<p>Other Splits operations: 
+<code><a href='NSplits.html'>NSplits</a>()</code>,
+<code><a href='NTip.html'>NTip</a>()</code>,
+<code><a href='SplitFrequency.html'>SplitFrequency</a>()</code>,
+<code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
+<code><a href='TipLabels.html'>TipLabels</a>()</code>,
+<code><a href='TipsInSplits.html'>TipsInSplits</a>()</code>,
+<code><a href='as.Splits.html'>as.Splits</a>()</code>,
+<code><a href='match.html'>match</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
