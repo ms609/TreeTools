@@ -158,12 +158,18 @@ Subtree <- function (tree, node) {
 #' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
+#' @param edgeLength Numeric specifying length of new edge
+#' @param lengthBelow Numeric specifying length below neighbour at which to
+#' graft new edge. Values greater than the length of the edge will result
+#' in negative edge lengths. If `NULL`, the default, the new tip will be added
+#' at the midpoint of the broken edge. If inserting at the root (`where = 0`),
+#' a new edge of length `lengthBelow` will be inserted.
 #' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips and
 #' nodes in `tree`, and index of root node.
 #' Not checked for correctness: specifying values here trades code safety for a
 #' nominal speed increase.
 #'
-#' @return `AddTip()` returns a tree of class \code{phylo} with an additional tip
+#' @return `AddTip()` returns a tree of class `phylo` with an additional tip
 #' at the desired location.
 #'
 #' @template MRS
@@ -184,16 +190,19 @@ Subtree <- function (tree, node) {
 AddTip <- function (tree,
                     where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
                     label = "New tip",
+                    edgeLength = 0,
+                    lengthBelow = NULL,
                     nTip = NTip(tree),
                     nNode = tree$Nnode,
                     rootNode = RootNode(tree)
                     ) {
-  if (where < 1L) where <- nTip + 1L
   newTipNumber <- nTip + 1L
   treeEdge <- tree$edge
+  edgeLengths <- tree$edge.length
+  lengths <- !is.null(edgeLengths)
 
   ## find the row of 'where' before renumbering
-  if (where == rootNode) {
+  if (where < 1L || where == rootNode) {
     case <- 1L
   } else {
       insertionEdge <- which(treeEdge[, 2] == where)
@@ -213,6 +222,9 @@ AddTip <- function (tree,
 
   switch(case, { # case = 1 -> y is bound on the root of x
       treeEdge <- rbind(c(nextNode, treeEdge[1]), treeEdge, c(nextNode, newTipNumber))
+      if (lengths) {
+        edgeLengths <- c(lengthBelow, edgeLengths, edgeLength)
+      }
       rootNode <- nextNode
     }, { # case = 2 -> y is bound on a tip of x
       beforeInsertion <- seq_len(insertionEdge)
@@ -221,19 +233,32 @@ AddTip <- function (tree,
                         c(nextNode, where),
                         c(nextNode, newTipNumber),
                         treeEdge[-beforeInsertion, ])
+      if (lengths) {
+        if (is.null(lengthBelow)) lengthBelow <- edgeLengths[insertionEdge] / 2L
+        edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
+                         edgeLengths[insertionEdge] - lengthBelow,
+                         lengthBelow,
+                         edgeLength,
+                         edgeLengths[-beforeInsertion])
+      }
     }, { # case = 3 -> y is bound on a node of x
       beforeInsertion <- seq_len(insertionEdge)
 
       treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(nextNode, newTipNumber),
                         c(nextNode, treeEdge[insertionEdge, 2]),
                         treeEdge[-beforeInsertion, ])
       treeEdge[insertionEdge, 2] <- nextNode
 
-      insertionEdge <- insertionEdge + 1L
-      beforeInsertion <- seq_len(insertionEdge)
-      treeEdge <- rbind(treeEdge[beforeInsertion, ],
-                        c(nextNode, newTipNumber),
-                        treeEdge[-beforeInsertion, ])
+      if (lengths) {
+        if (is.null(lengthBelow)) lengthBelow <- edgeLengths[insertionEdge] / 2L
+        edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
+                         edgeLengths[insertionEdge] - lengthBelow,
+                         edgeLength,
+                         lengthBelow,
+                         edgeLengths[-beforeInsertion])
+      }
+
     }
   )
   tree$tip.label <- c(tree$tip.label, label)
@@ -253,6 +278,7 @@ AddTip <- function (tree,
   treeEdge[, 1] <- newNumbering[-treeEdge[, 1]]
 
   tree$edge <- treeEdge
+  if (lengths) tree$edge.length <- edgeLengths
 
   # Return:
   tree

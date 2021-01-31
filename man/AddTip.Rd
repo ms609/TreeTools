@@ -9,6 +9,8 @@ AddTip(
   tree,
   where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
   label = "New tip",
+  edgeLength = 0,
+  lengthBelow = NULL,
   nTip = NTip(tree),
   nNode = tree$Nnode,
   rootNode = RootNode(tree)
@@ -24,6 +26,14 @@ node.  To add a new tip at the root, use \code{where = 0}.  By default, the
 new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
+
+\item{edgeLength}{Numeric specifying length of new edge}
+
+\item{lengthBelow}{Numeric specifying length below neighbour at which to
+graft new edge. Values greater than the length of the edge will result
+in negative edge lengths. If \code{NULL}, the default, the new tip will be added
+at the midpoint of the broken edge. If inserting at the root (\code{where = 0}),
+a new edge of length \code{lengthBelow} will be inserted.}
 
 \item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips and
 nodes in \code{tree}, and index of root node.

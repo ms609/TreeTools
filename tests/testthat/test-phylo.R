@@ -19,12 +19,32 @@ test_that('AddTipEverywhere() correct', {
 
 })
 
-
 test_that("AddTip() at root", {
   expect_equal(PectinateTree(8),
                AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'))
   AddTip(nasty, 1L)
   AddTip(nasty, 12L)
+})
+
+test_that("AddTip() with edge lengths", {
+  pec8 <- PectinateTree(8)
+  pec8$edge.length <- rep(1L, 14L)
+
+  # case = 1 -> y is bound on the root of x
+  expect_equal(c(0.6, rep(1, 14), 2),
+               AddTip(pec8, 0, edgeLength = 2, lengthBelow = 0.6)$edge.length)
+  # case = 2 -> y is bound on a tip of x
+  expect_equal(c(rep(1, 2), 0.3, 0.7, 2, rep(1, 11)),
+               AddTip(pec8, 2, edgeLength = 2, lengthBelow = 0.7)$edge.length)
+  # case = 3 -> y is bound on a node of x
+  expect_equal(c(rep(1, 11), 0.3, 2, 0.7, 1, 1),
+               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 0.7)$edge.length)
+  expect_equal(c(rep(1, 11), 0.5, 0, 0.5, 1, 1),
+               AddTip(pec8, 15)$edge.length)
+  expect_equal(c(rep(1, 11), 0, 2, 1, 1, 1),
+               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1)$edge.length)
+  expect_equal(c(rep(1, 11), -0.6, 2, 1.6, 1, 1),
+               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1.6)$edge.length)
 })
 
 test_that('AddTipEverywhere() handles nasty tree', {

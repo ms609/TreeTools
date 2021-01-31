@@ -1,5 +1,6 @@
 # TreeTools 1.4.2.9000
 
+ - `AddTip()` supports edge lengths.
  - `LabelSplits(labels = NULL)` labels each split with its associated node.
 
 # TreeTools 1.4.2
