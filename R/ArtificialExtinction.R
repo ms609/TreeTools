@@ -55,9 +55,9 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
                                          sampleFrom = NULL) {
   replacers <- c('original', 'ambiguous', 'binary', 'uniform', 'frequency')
   replaceA <- pmatch(replaceAmbiguous, replacers)
-  if (is.na(replaceA)) stop("`replaceAmbiguous` unambiguously matched.")
+  if (is.na(replaceA)) stop("`replaceAmbiguous` ambiguously matched.")
   replaceC <- pmatch(replaceCoded, replacers)
-  if (is.na(replaceC)) stop("`replaceCoded` unambiguously matched.")
+  if (is.na(replaceC)) stop("`replaceCoded` ambiguously matched.")
 
   removes <- dataset[template, ] == '?'
   if (is.null(sampleFrom)) {
@@ -72,9 +72,9 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
   .DoReplace <- function (dataset, subject, columns, replace) {
     nCols <- sum(columns)
     replaceWith <- switch(replace,
-      dataset[subject, columns],
-      '?',
-      sample(c('0', '1'), nCols * length(subject), replace = TRUE), # binary
+      dataset[subject, columns], # Original
+      '?', # Ambiguous
+      sample(c('0', '1'), nCols * length(subject), replace = TRUE), # Binary
       apply(unique(dataset[sampleFrom, columns, drop = FALSE]), 2, sample,
             length(subject), replace = TRUE), # Uniform
       apply(dataset[sampleFrom, columns, drop = FALSE], 2, sample,
