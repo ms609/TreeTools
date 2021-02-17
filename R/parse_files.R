@@ -607,7 +607,7 @@ MatrixToPhyDat <- function (tokens) {
 PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   at <- attributes(dataset)
   index <- at$index
-  allLevels <- at$allLevels
+  allLevels <- as.character(at$allLevels)
   t(vapply(dataset, function (x) allLevels[x[index]], character(length(index))))
 }
 

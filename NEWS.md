@@ -1,7 +1,8 @@
-# TreeTools 1.4.2.9000
+# TreeTools 1.4.2.9001
 
  - `AddTip()` supports edge lengths.
  - `LabelSplits(labels = NULL)` labels each split with its associated node.
+ - `PhyDatToMatrix()` supports integer-only levels.
 
 # TreeTools 1.4.2
 
