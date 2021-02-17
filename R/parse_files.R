@@ -608,7 +608,9 @@ PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   at <- attributes(dataset)
   index <- at$index
   allLevels <- as.character(at$allLevels)
-  t(vapply(dataset, function (x) allLevels[x[index]], character(length(index))))
+  matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
+           ncol = max(index), byrow = TRUE,
+         dimnames = list(at$names, NULL))[, index]
 }
 
 #' @rdname ReadCharacters
