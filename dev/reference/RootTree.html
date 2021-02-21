@@ -187,7 +187,9 @@ of class <code>list</code> or <code>multiPhylo</code>.</p></td>
     <tr>
       <th>outgroupTips</th>
       <td><p>Vector of type character, integer or logical, specifying
-the names or indices of the tips to include in the outgroup.</p></td>
+the names or indices of the tips to include in the outgroup.  If
+<code>outgroupTips</code> is a of type character, and a tree contains multiple tips
+with a matching label, the first will be used.</p></td>
     </tr>
     <tr>
       <th>node</th>
@@ -208,6 +210,10 @@ preorder.</p>
 requested <code>node</code> and ordered in <code><a href='RenumberTree.html'>Preorder</a></code>.</p>
 <p><code>UnrootTree()</code> returns <code>tree</code>, in preorder,
 having collapsed the first child of the root node in each tree.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
+a GitHub issue if you would find this useful.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
