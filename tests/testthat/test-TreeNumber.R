@@ -16,6 +16,7 @@ test_that("as.phylo.numeric()", {
 
 test_that("as.TreeNumber() error handling", {
   expect_error(as.phylo(integer64(1), NULL, NULL))
+  expect_warning(as.TreeNumber(BalancedTree(20)))
 })
 
 test_that("as.TreeNumber()", {

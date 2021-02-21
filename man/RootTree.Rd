@@ -17,7 +17,9 @@ UnrootTree(tree)
 of class \code{list} or \code{multiPhylo}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
-the names or indices of the tips to include in the outgroup.}
+the names or indices of the tips to include in the outgroup.  If
+\code{outgroupTips} is a of type character, and a tree contains multiple tips
+with a matching label, the first will be used.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}
 
@@ -41,6 +43,10 @@ tips;
 \code{UnrootTree()} collapses a root node, without the undefined behaviour
 encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 preorder.
+}
+\details{
+Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
+a GitHub issue if you would find this useful.
 }
 \examples{
 tree <- PectinateTree(8)

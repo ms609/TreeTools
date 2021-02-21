@@ -89,11 +89,8 @@
 #' = 10
 #'
 #' Note that the hyperexponential nature of tree space means that there are &gt;
-#' 2^30 unique 12-leaf trees.  As integers &gt; 2^31 are not supported by R,
-#' numbers representing larger trees are represented internally as a vector of
-#' nine-digit integer 'chunks' and passed to the underlying C code, where they
-#' are combined into a single 64-bit integer.  This allows trees with up to
-#' 42 leaves to be accommodated.
+#' 2^64 unique 20-leaf trees.  As a `TreeNumber` is a 64-bit integer,
+#' only trees with at most 19 leaves can be accommodated.
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of leaves in the tree.
@@ -135,6 +132,9 @@ as.TreeNumber.phylo <- function (x, ...) {
   x <- root(x, 1, resolve.root = TRUE)
   edge <- x$edge
   nTip <- NTip(x)
+  if (nTip > 19L) warning("Trees with > 19 leaves not uniquely identified ",
+                          "by 64-bit TreeNumbers")
+
   edge <- Postorder(edge)
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
@@ -279,6 +279,7 @@ print.TreeNumber <- function (x, ...) {
   if (n < 15L || n > 19L) NUnrooted(n) else paste0(NUnrooted64(n))
 }
 
+# x: Object of class `TreeNumber`
 #' @keywords internal
 .PrintedTreeNumber <- function (x) {
   paste0(structure(x, class = 'integer64'))
