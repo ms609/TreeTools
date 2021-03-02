@@ -89,7 +89,7 @@ does not obscure similarities between similar trees." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9002</span>
       </span>
     </div>
 
@@ -162,21 +162,31 @@ does not obscure similarities between similar trees." />
 does not obscure similarities between similar trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>SortTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>SortTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+
+<span class='co'># S3 method for phylo</span>
+<span class='fu'>SortTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>SortTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+
+<span class='co'># S3 method for multiPhylo</span>
+<span class='fu'>SortTree</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tree</th>
-      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
+      <th>`tree`</th>
+      <td><p>One or more trees of class <code>phylo</code>, optionally as a list
+or a <code>multiPhylo</code> object.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>SortTree()</code> returns a tree of class <code>phylo</code>, with each node sorted
-such that the larger clade is first.</p>
+    <p><code>SortTree()</code> returns tree in the format of <code>tree</code>, with each node
+in each tree sorted such that the larger clade is first.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>At each node, clades will be listed in <code>tree$edge</code> in decreasing size order.</p>
