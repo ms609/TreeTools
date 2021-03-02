@@ -2,16 +2,26 @@
 % Please edit documentation in R/tree_display.R
 \name{SortTree}
 \alias{SortTree}
+\alias{SortTree.phylo}
+\alias{SortTree.list}
+\alias{SortTree.multiPhylo}
 \title{Sort tree}
 \usage{
 SortTree(tree)
+
+\method{SortTree}{phylo}(tree)
+
+\method{SortTree}{list}(tree)
+
+\method{SortTree}{multiPhylo}(tree)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
+\item{`tree`}{One or more trees of class \code{phylo}, optionally as a list
+or a \code{multiPhylo} object.}
 }
 \value{
-\code{SortTree()} returns a tree of class \code{phylo}, with each node sorted
-such that the larger clade is first.
+\code{SortTree()} returns tree in the format of \code{tree}, with each node
+in each tree sorted such that the larger clade is first.
 }
 \description{
 \code{SortTree()} sorts each node into a consistent order, so that node rotation

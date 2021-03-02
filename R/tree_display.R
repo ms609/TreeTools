@@ -87,10 +87,11 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #TODO:
 #' `tree` must (presently) be binary ([#25](https://github.com/ms609/TreeTools/issues/25)).
 #'
-#' @template treeParam
+#' @param `tree` One or more trees of class `phylo`, optionally as a list
+#' or a `multiPhylo` object.
 #'
-#' @return `SortTree()` returns a tree of class `phylo`, with each node sorted
-#' such that the larger clade is first.
+#' @return `SortTree()` returns tree in the format of `tree`, with each node
+#' in each tree sorted such that the larger clade is first.
 #'
 #' @seealso `Preorder()` also rearranges trees into a consistent shape, but
 #' based on the index of leaves rather than the size of subtrees.
@@ -108,7 +109,11 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #'
 #' @template MRS
 #' @export
-SortTree <- function (tree) {
+SortTree <- function (tree) UseMethod('SortTree')
+
+#' @export
+#' @rdname SortTree
+SortTree.phylo <- function (tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -142,4 +147,14 @@ SortTree <- function (tree) {
   tree$edge[, 2] <- child
   attr(tree, 'order') <- NULL
   Renumber(tree)
+}
+
+#' @export
+#' @rdname SortTree
+SortTree.list <- function (tree) lapply(tree, SortTree)
+
+#' @export
+#' @rdname SortTree
+SortTree.multiPhylo <- function (tree) {
+  structure(SortTree.list(tree), class = 'multiPhylo')
 }
