@@ -4,6 +4,7 @@
 \alias{CladisticInfo}
 \alias{PhylogeneticInfo}
 \alias{CladisticInfo.phylo}
+\alias{CladisticInfo.Splits}
 \alias{CladisticInfo.list}
 \alias{CladisticInfo.multiPhylo}
 \alias{PhylogeneticInformation}
@@ -15,6 +16,8 @@ CladisticInfo(x)
 PhylogeneticInfo(x)
 
 \method{CladisticInfo}{phylo}(x)
+
+\method{CladisticInfo}{Splits}(x)
 
 \method{CladisticInfo}{list}(x)
 
@@ -30,6 +33,8 @@ CladisticInformation(x)
 \value{
 \code{CladisticInfo()} returns a numeric giving the cladistic information
 content of the input tree(s), in bits.
+If passed a \code{Splits} object, it returns the information content of each
+split in turn.
 }
 \description{
 \code{CladisticInfo()} calculates the cladistic (phylogenetic) information

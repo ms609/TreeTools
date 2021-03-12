@@ -63,6 +63,8 @@ Log2TreesMatchingTree <- function (tree) {
 #'
 #' @return `CladisticInfo()` returns a numeric giving the cladistic information
 #' content of the input tree(s), in bits.
+#' If passed a `Splits` object, it returns the information content of each
+#' split in turn.
 #'
 #' @references
 #'
@@ -92,6 +94,13 @@ PhylogeneticInfo <- function (x) {                                              
 #' @export
 CladisticInfo.phylo <- function (x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
+}
+
+#' @rdname CladisticInfo
+#' @export
+CladisticInfo.Splits <- function (x) {
+  Log2Unrooted(NTip(x)) -
+    apply(cbind(TipsInSplits(x), TipsInSplits(!x)), 1, Log2TreesMatchingSplit)
 }
 
 #' @rdname CladisticInfo

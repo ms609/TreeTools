@@ -20,26 +20,26 @@
 #'
 #' @family split information functions
 #' @export
-TreesMatchingSplit <- function (A, B) {
-  if (A == 0) NUnrooted(B) else
-  if (B == 0) NUnrooted(A) else
-  NRooted(A) * NRooted(B)
+TreesMatchingSplit <- function (A, B = A[2]) {
+  if (A[1] == 0) NUnrooted(B) else
+  if (B == 0) NUnrooted(A[1]) else
+  NRooted(A[1]) * NRooted(B)
 }
 
 #' @rdname TreesMatchingSplit
 #' @export
-LnTreesMatchingSplit <- function (A, B) {
-  if (A == 0) LnUnrooted.int(B) else
-  if (B == 0) LnUnrooted.int(A) else
-  LnRooted.int(A) + LnRooted.int(B)
+LnTreesMatchingSplit <- function (A, B = A[2]) {
+  if (A[1] == 0) LnUnrooted.int(B) else
+  if (B == 0) LnUnrooted.int(A[1]) else
+  LnRooted.int(A[1]) + LnRooted.int(B)
 }
 
 #' @rdname TreesMatchingSplit
 #' @export
-Log2TreesMatchingSplit <- function (A, B) {
-  if (A == 0) Log2Unrooted.int(B) else
-  if (B == 0) Log2Unrooted.int(A) else
-  Log2Rooted.int(A) + Log2Rooted.int(B)
+Log2TreesMatchingSplit <- function (A, B = A[2]) {
+  if (A[1] == 0) Log2Unrooted.int(B) else
+  if (B == 0) Log2Unrooted.int(A[1]) else
+  Log2Rooted.int(A[1]) + Log2Rooted.int(B)
 }
 
 #' Character information content

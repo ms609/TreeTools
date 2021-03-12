@@ -1,6 +1,7 @@
-# TreeTools 1.4.2.9002
+# TreeTools 1.4.2.9003
 
  - `AddTip()` supports edge lengths.
+ - `CladisticInfo()` supports `Splits` objects.
  - `LabelSplits(labels = NULL)` labels each split with its associated node.
  - `PhyDatToMatrix()` supports integer-only levels.
  - `SortTree()` supports lists of trees.

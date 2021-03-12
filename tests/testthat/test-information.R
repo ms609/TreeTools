@@ -28,3 +28,9 @@ test_that("MultiSplitInformation() works", {
   expect_equal(CharacterInformation(rep(c('-', '?', 0:2), 1:5)),
                MultiSplitInformation(3:5))
 })
+
+test_that("TreesMatchingSplit() accepts different formats", {
+  expect_equal(TreesMatchingSplit(4, 5), TreesMatchingSplit(4:5))
+  expect_equal(LnTreesMatchingSplit(4, 5), LnTreesMatchingSplit(4:5))
+  expect_equal(Log2TreesMatchingSplit(4, 5), Log2TreesMatchingSplit(4:5))
+})
