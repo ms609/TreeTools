@@ -2,6 +2,8 @@
 
  - `AddTip()` supports edge lengths.
  - `CladisticInfo()` supports `Splits` objects.
+ - `as.multiPhylo()` converts trees, datasets and Splits objects into 
+     `multiPhylo` objects.
  - `LabelSplits(labels = NULL)` labels each split with its associated node.
  - `PhyDatToMatrix()` supports integer-only levels.
  - `SortTree()` supports lists of trees.
