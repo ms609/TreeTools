@@ -501,7 +501,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] + attr(dimHit, 'match.length')[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
 
-  ctypeLines <- grep("^&\\[\\w+\\]$", matrixLines, perl = TRUE)
+  ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
   if (is.null(type)) {
     if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
   } else {
