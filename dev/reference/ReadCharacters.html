@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9004</span>
       </span>
     </div>
 
@@ -191,8 +191,10 @@
       <th>type</th>
       <td><p>Character vector specifying categories of data to extract from
 file. Setting <code>type = c('num', 'dna')</code> will return only characters
-following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file. Leave as <code>NULL</code>
-(the default) to return all characters.</p></td>
+following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file, listing <code>num</code>
+character blocks before <code>dna</code> characters.
+Leave as <code>NULL</code> (the default) to return all characters in their original
+sequence.</p></td>
     </tr>
     <tr>
       <th>dataset</th>
