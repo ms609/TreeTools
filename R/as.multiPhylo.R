@@ -51,7 +51,7 @@ as.multiPhylo.phyDat <- function (x) {
                               }, character(1)), collapse = '), ('),
                               '));'))
     }
-  }), class = 'multiPhylo')
+  })[at$index], class = 'multiPhylo')
 }
 
 #' @rdname as.multiPhylo

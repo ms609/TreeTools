@@ -12,7 +12,8 @@ test_that("as.multiPhylo()", {
 
   char2 <- MatrixToPhyDat(matrix(c(1,1,1,0,0,0,
                                    0,1,1,1,1,'?',
-                                   0,0,1,1,'-',2), ncol = 3,
+                                   0,0,1,1,'-',2,
+                                   0,1,1,1,1,'?'), ncol = 4,
                                 dimnames = list(letters[1:6], NULL)))
   mpChar2 <- as.multiPhylo(char2)
 
@@ -22,6 +23,7 @@ test_that("as.multiPhylo()", {
                mpChar2[[2]])
   expect_equal(ape::read.tree(text = '((a, b), (c, d));'),
                mpChar2[[3]])
+  expect_equal(mpChar2[[2]], mpChar2[[4]])
 
   mpSplits <- as.Splits(PectinateTree(letters[1:6]))
   expect_equal(structure(list(
