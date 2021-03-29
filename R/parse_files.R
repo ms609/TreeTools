@@ -351,8 +351,10 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' @param filepath character string specifying location of file
 #' @param type Character vector specifying categories of data to extract from
 #' file. Setting `type = c('num', 'dna')` will return only characters
-#' following a `&[num]` or `&[dna]` tag in a TNT input file. Leave as `NULL`
-#' (the default) to return all characters.
+#' following a `&[num]` or `&[dna]` tag in a TNT input file, listing `num`
+#' character blocks before `dna` characters.
+#' Leave as `NULL` (the default) to return all characters in their original
+#' sequence.
 #' @template characterNumParam
 #' @template sessionParam
 #'
@@ -479,7 +481,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   semicolons <- grep(';', lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep('^XREAD\\b', upperLines, perl = TRUE)
+  xread <- grep('^XREAD\\b', lines, ignore.case = TRUE, perl = TRUE)
   if (length(xread) < 1) return(NULL)
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
@@ -505,16 +507,18 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   if (is.null(type)) {
     if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
   } else {
-    types <- toupper(matrixLines[ctypeLines])
-    typeTags <- paste0('&[', type, ']')
-    blocks <- types %in% toupper(typeTags)
-    if (sum(blocks) != length(type)) {
-      message("Tags ", paste0(typeTags[!toupper(typeTags) %in% types], collapse = ', '),
-      " not found. Ignored: ", types[!blocks])
+    types <- matrixLines[ctypeLines]
+    blocks <- lapply(paste0("\\b", type, "\\b"), grep, types, ignore.case = TRUE)
+    nBlocks <- vapply(blocks, length, 0)
+    if (any(nBlocks == 0)) {
+      message("Tags ", paste0(type[nBlocks == 0], collapse = ', '),
+      " not found. Ignored: ", types[!seq_along(types) %in% unlist(blocks)])
     }
-    if (!any(blocks)) return(NULL)
+    if (all(nBlocks == 0L)) return(NULL)
     blockSpan <- cbind(ctypeLines + 1L, c(ctypeLines[-1] - 1, length(matrixLines)))
-    matrixLines <- matrixLines[unlist(apply(blockSpan[blocks, , drop = FALSE],  1, function(x) seq(x[1], x[2])))]
+    matrixLines <- matrixLines[unlist(
+      apply(blockSpan[unlist(blocks), , drop = FALSE],  1,
+            function(x) seq(x[1], x[2])))]
   }
 
   tokens <- ExtractTaxa(matrixLines, character_num, session)
