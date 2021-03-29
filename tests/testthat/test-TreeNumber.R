@@ -26,8 +26,10 @@ test_that("as.TreeNumber()", {
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
   expect_equal("Phylogenetic tree number 105 of 6332659870762850625 ",
                capture.output(print(as.TreeNumber(as.phylo(105, 19))))[1])
-  expect_equal("Phylogenetic tree number 105 of 2.216431e+20 ",
-               capture.output(print(as.TreeNumber(as.phylo(105, 20))))[1])
+  expect_warning(
+    expect_equal("Phylogenetic tree number 105 of 2.216431e+20 ",
+                 capture.output(print(as.TreeNumber(as.phylo(105, 20))))[1])
+    )
   expect_equal(unlist(lapply(1:3, as.integer64)),
                unlist(as.TreeNumber(as.phylo(1:3, 6))))
 
