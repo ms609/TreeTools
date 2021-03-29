@@ -15,13 +15,13 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.4.2",
+  "version": "1.4.2.9004",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.0.4 (2021-02-15)",
   "author": [
     {
       "@type": "Person",
@@ -246,6 +246,6 @@
     "phylogenetic-trees",
     "evolutionary-biology"
   ],
-  "fileSize": "1395.138KB",
+  "fileSize": "1411.695KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

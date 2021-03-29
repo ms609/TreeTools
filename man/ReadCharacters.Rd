@@ -29,8 +29,10 @@ PhyDat(dataset)
 
 \item{type}{Character vector specifying categories of data to extract from
 file. Setting \code{type = c('num', 'dna')} will return only characters
-following a \verb{&[num]} or \verb{&[dna]} tag in a TNT input file. Leave as \code{NULL}
-(the default) to return all characters.}
+following a \verb{&[num]} or \verb{&[dna]} tag in a TNT input file, listing \code{num}
+character blocks before \code{dna} characters.
+Leave as \code{NULL} (the default) to return all characters in their original
+sequence.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
 a list of sequences each made of a single character vector,
