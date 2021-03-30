@@ -348,7 +348,18 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' maximum one matrix per file.  Continuous characters will be read as strings
 #' (i.e. base type 'character').
 #'
-#' @param filepath character string specifying location of file
+#' The encoding of an input file will be automatically determined by R.
+#' Errors pertaining to an `invalid multibyte string` or
+#' `string invalid at that locale` indicate that R has failed to detect
+#' the appropriate encoding.  Either
+#' [re-save the file](https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding)
+#' in a supported encoding (`UTF-8` is a good choice) or
+#' specify the file encoding (which you can find by, for example, opening in
+#' [Notepad++](https://notepad-plus-plus.org/downloads/) and identifying
+#' the highlighted option in the "Encoding" menu) following the example below.
+#'
+#' @param filepath character string specifying location of file, or a
+#' [connection][base::connections] to the file.
 #' @param type Character vector specifying categories of data to extract from
 #' file. Setting `type = c('num', 'dna')` will return only characters
 #' following a `&[num]` or `&[dna]` tag in a TNT input file, listing `num`
@@ -372,11 +383,11 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #'   \insertRef{Maddison1997}{TreeTools}
 #'
 #' @examples
-#' fileName <- paste0(system.file(package='TreeTools'),
+#' fileName <- paste0(system.file(package = 'TreeTools'),
 #'                    '/extdata/input/dataset.nex')
 #' ReadCharacters(fileName)
 #'
-#' fileName <- paste0(system.file(package='TreeTools'),
+#' fileName <- paste0(system.file(package = 'TreeTools'),
 #'                    '/extdata/tests/continuous.nex')
 #' continuous <- ReadCharacters(fileName)
 #'
@@ -385,6 +396,20 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' continuous <- suppressWarnings(as.numeric(continuous))
 #' attributes(continuous) <- at
 #' continuous
+#'
+#'
+#' # Read a file with a known encoding that cannot be auto-detected by R
+#'
+#' # Specify appropriate encoding:
+#' fileEncoding <- "UTF-8"
+#'
+#' # Open connection to file
+#' con <- file(fileName, encoding = fileEncoding, open = "r")
+#'
+#' ReadCharacters(con)
+#'
+#' # Close connection after use
+#' close(con)
 #' @template MRS
 #'
 #' @seealso
