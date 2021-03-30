@@ -75,6 +75,7 @@ SplitFrequency <- function(reference, forest) {
 #'
 #' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
+#' @importFrom stats setNames
 #' @family Splits operations
 #' @export
 LabelSplits <- function (tree, labels = NULL, unit = '', ...) {
