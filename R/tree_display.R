@@ -87,7 +87,7 @@ MarkMissing <- function (tip, position = 'bottomleft', ...) {                   
 #TODO:
 #' `tree` must (presently) be binary ([#25](https://github.com/ms609/TreeTools/issues/25)).
 #'
-#' @param `tree` One or more trees of class `phylo`, optionally as a list
+#' @param tree One or more trees of class `phylo`, optionally as a list
 #' or a `multiPhylo` object.
 #'
 #' @return `SortTree()` returns tree in the format of `tree`, with each node

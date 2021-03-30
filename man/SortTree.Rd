@@ -16,7 +16,7 @@ SortTree(tree)
 \method{SortTree}{multiPhylo}(tree)
 }
 \arguments{
-\item{`tree`}{One or more trees of class \code{phylo}, optionally as a list
+\item{tree}{One or more trees of class \code{phylo}, optionally as a list
 or a \code{multiPhylo} object.}
 }
 \value{
