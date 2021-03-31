@@ -114,7 +114,7 @@ test_that("RootOnNode() works", {
 })
 
 
-test_that("root_on_node works", {
+test_that("root_on_node() works", {
   tree <- Preorder(BalancedTree(15))
   edge <- tree$edge
   TipTest <- function (i) {
@@ -149,10 +149,10 @@ test_that("root_on_node works", {
 
 test_that("RootOnNode() supports lists of trees", {
   rootOn <- 8L
-  expect_equal(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
+  expect_equivalent(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
                               RootOnNode(as.phylo(2, 5), rootOn)),
                          class = 'multiPhylo'),
-               RootOnNode(as.phylo(1:2, 5), rootOn))
+                    RootOnNode(as.phylo(1:2, 5), rootOn))
 })
 
 test_that("RootTree() supports star trees", {
@@ -182,10 +182,10 @@ test_that("RootTree() works", {
                RootTree(bal8, c('t5', 't6')))
   expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
 
-  expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
-                              RootTree(as.phylo(2, 5), 't5')),
-                         class = 'multiPhylo'),
-               RootTree(as.phylo(1:2, 5), 't5'))
+  expect_equivalent(structure(list(RootTree(as.phylo(1, 5), 't5'),
+                                   RootTree(as.phylo(2, 5), 't5')),
+                              class = 'multiPhylo'),
+                    RootTree(as.phylo(1:2, 5), 't5'))
 
 })
 
@@ -207,7 +207,7 @@ test_that("UnrootTree() works", {
 
   expList <- list(UnrootTree(as.phylo(1, 5)), UnrootTree(as.phylo(2, 5)))
   expect_equal(expList, UnrootTree(list(as.phylo(1, 5), as.phylo(2, 5))))
-  expect_equal(structure(expList, class = 'multiPhylo'),
+  expect_equivalent(structure(expList, class = 'multiPhylo'),
                     UnrootTree(as.phylo(1:2, 5)))
 })
 

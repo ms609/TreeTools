@@ -156,5 +156,6 @@ SortTree.list <- function (tree) lapply(tree, SortTree)
 #' @export
 #' @rdname SortTree
 SortTree.multiPhylo <- function (tree) {
-  structure(SortTree.list(tree), class = 'multiPhylo')
+  tree[] <- SortTree.list(tree)
+  tree
 }

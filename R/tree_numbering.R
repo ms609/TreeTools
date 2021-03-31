@@ -192,7 +192,9 @@ Cladewise.list <- function (tree, nTip, edge) {
 #' @rdname Reorder
 #' @export
 Cladewise.multiPhylo <- function (tree, nTip, edge) {
-  structure(lapply(tree, Cladewise), order = 'cladewise', class = 'multiPhylo')
+  tree[] <- lapply(tree, Cladewise)
+  attr(tree, 'order') <- 'cladewise'
+  tree
 }
 
 #' @rdname Reorder
@@ -241,9 +243,9 @@ ApePostorder.list <- function (tree, nTip, edge) {
 #' @rdname Reorder
 #' @export
 ApePostorder.multiPhylo <- function (tree, nTip, edge) {
-  structure(lapply(tree, ApePostorder),
-            order = 'postorder',
-            class = 'multiPhylo')
+  tree[] <- lapply(tree, ApePostorder)
+  attr(tree, 'order') <- 'postorder'
+  tree
 }
 
 #' @describeIn Reorder Reorder tree in Postorder. Edge lengths are not retained.
@@ -280,8 +282,9 @@ Postorder.list <- function (tree, force = FALSE, renumber = FALSE) {
 #' @rdname Reorder
 #' @export
 Postorder.multiPhylo <- function (tree, force = FALSE, renumber = FALSE) {
-  structure(lapply(tree, Postorder, force = force, renumber = renumber),
-            order = 'postorder', class = 'multiPhylo')
+  tree[] <- lapply(tree, Postorder, force = force, renumber = renumber)
+  attr(tree, 'order') <- 'postorder'
+  tree
 }
 
 #' @rdname Reorder
@@ -344,9 +347,9 @@ Pruningwise.list <- function (tree, nTip, edge) {
 #' @rdname Reorder
 #' @export
 Pruningwise.multiPhylo <- function (tree, nTip, edge) {
-  structure(lapply(tree, Pruningwise),
-            order = 'pruningwise',
-            class = 'multiPhylo')
+  tree[] <- lapply(tree, Pruningwise)
+  attr(tree, 'order') <- 'pruningwise'
+  tree
 }
 
 #' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
@@ -380,7 +383,9 @@ Preorder.numeric <- function (tree) {
 #' @rdname Reorder
 #' @export
 Preorder.multiPhylo <- function (tree) {
-  structure(lapply(tree, Preorder), order = 'preorder', class = 'multiPhylo')
+  tree[] <- lapply(tree, Preorder)
+  attr(tree, 'order') <- 'preorder'
+  tree
 }
 
 #' @rdname Reorder
@@ -439,7 +444,8 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
-  structure(lapply(tree, RenumberTips.phylo, tipOrder), class = 'multiPhylo')
+  tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
+  tree
 }
 
 #' @rdname RenumberTips

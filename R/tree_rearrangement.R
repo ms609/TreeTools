@@ -86,7 +86,8 @@ RootTree.list <- function (tree, outgroupTips) {
 
 #' @export
 RootTree.multiPhylo <- function (tree, outgroupTips) {
-  structure(RootTree.list(tree, outgroupTips), class = 'multiPhylo')
+  tree[] <- RootTree.list(tree, outgroupTips)
+  tree
 }
 
 #' @export
@@ -196,7 +197,8 @@ RootOnNode.list <- function (tree, node, resolveRoot = FALSE) {
 
 #' @export
 RootOnNode.multiPhylo <- function (tree, node, resolveRoot = FALSE) {
-  structure(RootOnNode.list(tree, node, resolveRoot), class = 'multiPhylo')
+  tree[] <- RootOnNode.list(tree, node, resolveRoot)
+  tree
 }
 
 #' @export
@@ -234,7 +236,8 @@ UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
 
 #' @export
 UnrootTree.multiPhylo <- function (tree) {
-  structure(UnrootTree.list(tree), class = 'multiPhylo')
+  tree[] <- UnrootTree.list(tree)
+  tree
 }
 
 #' @export
@@ -457,7 +460,8 @@ DropTip.phylo <- function (tree, tip) {
 #' @rdname DropTip
 #' @export
 DropTip.multiPhylo <- function (tree, tip) {
-  structure(lapply(tree, DropTip, tip), class = 'multiPhylo')
+  tree[] <- lapply(tree, DropTip, tip)
+  tree
 }
 
 #' Generate binary tree by collapsing polytomies
