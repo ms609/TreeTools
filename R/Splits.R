@@ -314,7 +314,7 @@ c.Splits <- function (...) {
   structure(do.call(rbind, splits),
             nTip = nTip,
             tip.label = tipLabels,
-            class='Splits')
+            class = 'Splits')
 }
 
 #' @family Splits operations

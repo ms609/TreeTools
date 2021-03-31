@@ -47,13 +47,10 @@ SampleOne <- function (x, len = length(x)) {
 #'
 #' @export
 UnshiftTree <- function (add, treeList) {
-  if (inherits(treeList, 'multiPhylo')) {
-    structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
-  } else if (inherits(treeList, 'phylo')) {
-    structure(list(add, treeList), class = 'multiPhylo')
-  } else { # including: if (is.list(trees)) {
-    c(list(add), treeList)
+  if (inherits(treeList, 'list')) { # is.list('phylo') == TRUE (!)
+    add <- list(add)
   }
+  c(add, treeList)
 }
 
 #' Apply a function that returns 64-bit integers over a list or vector
