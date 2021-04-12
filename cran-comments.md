@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.0.3
+  - Windows 10, R 4.0.4
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu 20.04
@@ -26,9 +26,3 @@ There was one NOTE:
 >    Newick (22:35)
 
 These spellings have been verified.
-
-v Quartet 1.1.0                          -- E: 0     | W: 0     | N: 1          
-v TBRDist 1.0.2                          -- E: 0     | W: 0     | N: 1          
-v TreeDist 1.2.1                         -- E: 0     | W: 0     | N: 2          
-v TreeSearch 0.4.3                       -- E: 0     | W: 0     | N: 0      
-
