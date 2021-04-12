@@ -2,7 +2,7 @@ url: https://ms609.github.io/TreeTools
 
 authors:
   Martin R. Smith:
-    href: https://community.dur.ac.uk/martin.smith/
+    href: https://smithlabdurham.github.io/
 
 development:
   mode: auto
@@ -93,6 +93,7 @@ reference:
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
+      - as.multiPhylo
       - MSTEdges
       - RightmostCharacter
       - SampleOne

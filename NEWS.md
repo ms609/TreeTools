@@ -1,4 +1,4 @@
-# TreeTools 1.4.2.9004
+# TreeTools 1.4.3
 
  - `AddTip()` supports edge lengths.
  - `CladisticInfo()` supports `Splits` objects.
@@ -7,7 +7,8 @@
  - `LabelSplits(labels = NULL)` labels each split with its associated node.
  - `PhyDatToMatrix()` supports integer-only levels.
  - `SortTree()` supports lists of trees.
- - Improvements to `ReadTntCharacters()` character block extraction.
+ - Improvements to `ReadTntCharacters()` character block extraction
+   ([#50](https://github.com/ms609/TreeTools/issues/50)).
 
 # TreeTools 1.4.2
 
