@@ -89,7 +89,7 @@ representation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.3</span>
       </span>
     </div>
 
@@ -268,11 +268,8 @@ with the mixed-base number 0021.  We can convert this into decimal:</p>
 <p>1 × (1)</p>
 <p>= 10</p>
 <p>Note that the hyperexponential nature of tree space means that there are &gt;
-2^30 unique 12-leaf trees.  As integers &gt; 2^31 are not supported by R,
-numbers representing larger trees are represented internally as a vector of
-nine-digit integer 'chunks' and passed to the underlying C code, where they
-are combined into a single 64-bit integer.  This allows trees with up to
-42 leaves to be accommodated.</p>
+2^64 unique 20-leaf trees.  As a <code>TreeNumber</code> is a 64-bit integer,
+only trees with at most 19 leaves can be accommodated.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Based on a concept by John Tromp, employed in Li <em>et al.</em> 1996.</p>
@@ -321,7 +318,7 @@ ISBN 978-3-540-61332-9 978-3-540-68461-9, doi: <a href='https://doi.org/10.1007/
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://community.dur.ac.uk/martin.smith/'>Martin R. Smith</a>.</p>
+  <p>Developed by <a href='https://smithlabdurham.github.io/'>Martin R. Smith</a>.</p>
 </div>
 
 <div class="pkgdown">

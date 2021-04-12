@@ -89,7 +89,7 @@ content of a phylogenetic object, sensu Thorley et al. (1998)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.3</span>
       </span>
     </div>
 
@@ -169,6 +169,9 @@ content of a phylogenetic object, <em>sensu</em> Thorley <em>et al.</em> (1998).
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>CladisticInfo</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
+<span class='co'># S3 method for Splits</span>
+<span class='fu'>CladisticInfo</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+
 <span class='co'># S3 method for list</span>
 <span class='fu'>CladisticInfo</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
@@ -191,7 +194,9 @@ content of a phylogenetic object, <em>sensu</em> Thorley <em>et al.</em> (1998).
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>CladisticInfo()</code> returns a numeric giving the cladistic information
-content of the input tree(s), in bits.</p>
+content of the input tree(s), in bits.
+If passed a <code>Splits</code> object, it returns the information content of each
+split in turn.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <acronym>CIC</acronym> is the logarithm of the number of binary trees that include the
@@ -249,7 +254,7 @@ ISBN 978-3-540-64641-9, doi: <a href='https://doi.org/10.1007/978-3-642-72253-0'
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://community.dur.ac.uk/martin.smith/'>Martin R. Smith</a>.</p>
+  <p>Developed by <a href='https://smithlabdurham.github.io/'>Martin R. Smith</a>.</p>
 </div>
 
 <div class="pkgdown">

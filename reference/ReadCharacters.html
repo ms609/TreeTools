@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.3</span>
       </span>
     </div>
 
@@ -175,7 +175,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>filepath</th>
-      <td><p>character string specifying location of file</p></td>
+      <td><p>character string specifying location of file, or a
+<a href='https://rdrr.io/r/base/connections.html'>connection</a> to the file.</p></td>
     </tr>
     <tr>
       <th>character_num</th>
@@ -191,8 +192,10 @@
       <th>type</th>
       <td><p>Character vector specifying categories of data to extract from
 file. Setting <code>type = c('num', 'dna')</code> will return only characters
-following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file. Leave as <code>NULL</code>
-(the default) to return all characters.</p></td>
+following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file, listing <code>num</code>
+character blocks before <code>dna</code> characters.
+Leave as <code>NULL</code> (the default) to return all characters in their original
+sequence.</p></td>
     </tr>
     <tr>
       <th>dataset</th>
@@ -221,6 +224,15 @@ incorrectly parsed files.</p>
 <p>Matrices must contain only continuous or only discrete characters;
 maximum one matrix per file.  Continuous characters will be read as strings
 (i.e. base type 'character').</p>
+<p>The encoding of an input file will be automatically determined by R.
+Errors pertaining to an <code>invalid multibyte string</code> or
+<code>string invalid at that locale</code> indicate that R has failed to detect
+the appropriate encoding.  Either
+<a href='https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding'>re-save the file</a>
+in a supported encoding (<code>UTF-8</code> is a good choice) or
+specify the file encoding (which you can find by, for example, opening in
+<a href='https://notepad-plus-plus.org/downloads/'>Notepad++</a> and identifying
+the highlighted option in the "Encoding" menu) following the example below.</p>
     <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
     
@@ -252,7 +264,7 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package<span class='op'>=</span><span class='st'>'TreeTools'</span><span class='op'>)</span>,
+    <pre class="examples"><div class='input'><span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'TreeTools'</span><span class='op'>)</span>,
                    <span class='st'>'/extdata/input/dataset.nex'</span><span class='op'>)</span>
 <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>fileName</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;         [,1] [,2] [,3] [,4] [,5] [,6] [,7]
@@ -261,7 +273,7 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
 #&gt; taxon_c "1"  "1"  "1"  "1"  "?"  "0"  "0" 
 #&gt; taxon_d "1"  "1"  "1"  "?"  "?"  "1"  "1" 
 #&gt; taxon_e "1"  "1"  "1"  "1"  "?"  "1"  "1" </div><div class='input'>
-<span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package<span class='op'>=</span><span class='st'>'TreeTools'</span><span class='op'>)</span>,
+<span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'TreeTools'</span><span class='op'>)</span>,
                    <span class='st'>'/extdata/tests/continuous.nex'</span><span class='op'>)</span>
 <span class='va'>continuous</span> <span class='op'>&lt;-</span> <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>fileName</span><span class='op'>)</span>
 
@@ -273,7 +285,24 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
 </div><div class='output co'>#&gt;            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]
 #&gt; A_taxon   1.111 1.000 1.330 1.444 1.555 1.666
 #&gt; B_alienus 2.111 2.222 2.333    NA 2.550 2.666
-#&gt; C_andinus 3.111 3.222 3.333 3.444 3.555 3.666</div></pre>
+#&gt; C_andinus 3.111 3.222 3.333 3.444 3.555 3.666</div><div class='input'>
+
+<span class='co'># Read a file with a known encoding that cannot be auto-detected by R</span>
+
+<span class='co'># Specify appropriate encoding:</span>
+<span class='va'>fileEncoding</span> <span class='op'>&lt;-</span> <span class='st'>"UTF-8"</span>
+
+<span class='co'># Open connection to file</span>
+<span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>file</a></span><span class='op'>(</span><span class='va'>fileName</span>, encoding <span class='op'>=</span> <span class='va'>fileEncoding</span>, open <span class='op'>=</span> <span class='st'>"r"</span><span class='op'>)</span>
+
+<span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;           [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   
+#&gt; A_taxon   "1.111" "1"     "1.33"  "1.444" "1.555" "1.666"
+#&gt; B_alienus "2.111" "2.222" "2.333" "?"     "2.55"  "2.666"
+#&gt; C_andinus "3.111" "3.222" "3.333" "3.444" "3.555" "3.666"</div><div class='input'>
+<span class='co'># Close connection after use</span>
+<span class='fu'><a href='https://rdrr.io/r/base/connections.html'>close</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -285,7 +314,7 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://community.dur.ac.uk/martin.smith/'>Martin R. Smith</a>.</p>
+  <p>Developed by <a href='https://smithlabdurham.github.io/'>Martin R. Smith</a>.</p>
 </div>
 
 <div class="pkgdown">
