@@ -1,4 +1,7 @@
-#' Convert object to multiPhylo class
+#' Convert object to `multiPhylo` class
+#'
+#' Converts representations of phylogenetic trees to an object of the 'ape'
+#' class `multiPhylo`.
 #' @param x Object to be converted
 #' @return `as.multiPhylo` returns an object of class `multiPhylo`
 #' @examples

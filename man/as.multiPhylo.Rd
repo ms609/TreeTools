@@ -6,7 +6,7 @@
 \alias{as.multiPhylo.list}
 \alias{as.multiPhylo.phyDat}
 \alias{as.multiPhylo.Splits}
-\title{Convert object to multiPhylo class}
+\title{Convert object to \code{multiPhylo} class}
 \usage{
 as.multiPhylo(x)
 
@@ -28,7 +28,8 @@ as.multiPhylo(x)
 to the partitions implied by each non-ambiguous character in \code{x}.
 }
 \description{
-Convert object to multiPhylo class
+Converts representations of phylogenetic trees to an object of the 'ape'
+class \code{multiPhylo}.
 }
 \examples{
 as.multiPhylo(BalancedTree(8))
