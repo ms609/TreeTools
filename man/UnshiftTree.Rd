@@ -20,7 +20,8 @@ tree specified as `add.
 }
 \description{
 \code{UnshiftTree()} adds a phylogenetic tree to the start of a list of trees.
-This is useful where the class of a list of trees is unknown.
+This is useful where the class of a list of trees is unknown, or where
+names of trees should be retained.
 }
 \details{
 Caution: adding a tree to a \code{multiPhylo} object whose own attributes apply
@@ -33,7 +34,10 @@ tree <- BalancedTree(6)
 
 UnshiftTree(tree, forest)
 UnshiftTree(tree, tree)
-
+}
+\seealso{
+\code{\link[=c]{c()}} joins a tree or series of trees to a \code{multiPhylo} object, but loses
+names and does not handle lists of trees.
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
