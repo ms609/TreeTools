@@ -1,3 +1,9 @@
+# TreeTools 1.4.4
+
+- Add `NTip.phyDat()` method.
+- Update `MakeTreeBinary()` docs and tests to reflect updated behaviour of 
+  `ape::multi2di()` in 'ape' v5.5.
+
 # TreeTools 1.4.3
 
  - `AddTip()` supports edge lengths.

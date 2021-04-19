@@ -107,6 +107,7 @@ test_that("NTip() works", {
   Test(8L)
   Test(64L)
   Test(2000L)
+  expect_identical(48L, NTip(Lobo.phy))
 })
 
 test_that("NSplits() works", {

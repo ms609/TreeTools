@@ -470,9 +470,9 @@ DropTip.multiPhylo <- function (tree, tip) {
 #' trees, such that all trees compatible with the input topology are drawn
 #' with equal probability.
 #'
-#'
-#' @seealso Resolve polytomies such that some resolutions are more probable
-#' than others using [`ape::multi2di()`].
+#' @seealso Since ape v5.5, this functionality is available through
+#' [`ape::multi2di()`]; previous versions of 'ape' did not return topologies
+#' in equal frequencies.
 #'
 #' @return `MakeTreeBinary()` returns a rooted binary tree of class `phylo`,
 #' corresponding to tree uniformly selected from all those compatible with

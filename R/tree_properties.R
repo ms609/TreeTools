@@ -567,6 +567,12 @@ NTip.multiPhylo <- function (phy) {
 
 #' @rdname NTip
 #' @export
+NTip.phyDat <- function (phy) {
+  length(phy)
+}
+
+#' @rdname NTip
+#' @export
 NTip.matrix <- function (phy) {
   if (is.numeric(phy)) {
     parent <- phy[, 1]

@@ -267,23 +267,12 @@ test_that("DropTip() works", {
 test_that("Binarification is uniform", {
   set.seed(0)
   Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
-
-    if (ape) {
-      # Ape's trees are not uniformly distributed:
-      counts <- table(replicate64(nSamples, as.TreeNumber(multi2di(tree))))
-      expect_equal(nTree, length(counts))
-      expect_lt(chisq.test(counts)$p.value, 0.001)
-    }
-
-    # Our trees are:
     counts <- table(replicate64(nSamples, as.TreeNumber(MakeTreeBinary(tree))))
     expect_equal(nTree, length(counts))
     expect_gt(chisq.test(counts)$p.value, 0.001)
 
   }
 
-  Test(CollapseNode(PectinateTree(5), 8:9), NUnrooted(5), nSamples = 300L,
-       ape = TRUE) # Rooted four-star
   Test(CollapseNode(PectinateTree(6), 8:9), NUnrooted(4))
   Test(CollapseNode(PectinateTree(6), 9:10), NRooted(4))
   Test(CollapseNode(PectinateTree(6), c(8, 10)), NUnrooted(3) * NRooted(3))

@@ -7,6 +7,7 @@
 \alias{NTip.list}
 \alias{NTip.phylo}
 \alias{NTip.multiPhylo}
+\alias{NTip.phyDat}
 \alias{NTip.matrix}
 \title{Number of leaves in a phylogenetic tree}
 \usage{
@@ -21,6 +22,8 @@ NTip(phy)
 \method{NTip}{phylo}(phy)
 
 \method{NTip}{multiPhylo}(phy)
+
+\method{NTip}{phyDat}(phy)
 
 \method{NTip}{matrix}(phy)
 }

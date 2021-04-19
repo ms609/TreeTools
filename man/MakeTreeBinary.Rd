@@ -24,8 +24,9 @@ MakeTreeBinary(CollapseNode(PectinateTree(7), c(9, 11, 13)))
 UnrootTree(MakeTreeBinary(StarTree(5)))
 }
 \seealso{
-Resolve polytomies such that some resolutions are more probable
-than others using \code{\link[ape:multi2di]{ape::multi2di()}}.
+Since ape v5.5, this functionality is available through
+\code{\link[ape:multi2di]{ape::multi2di()}}; previous versions of 'ape' did not return topologies
+in equal frequencies.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},

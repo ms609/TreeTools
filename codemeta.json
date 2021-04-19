@@ -15,7 +15,7 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.4.2.9004",
+  "version": "1.4.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -246,6 +246,6 @@
     "phylogenetic-trees",
     "evolutionary-biology"
   ],
-  "fileSize": "1411.695KB",
+  "fileSize": "1349.702KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }
