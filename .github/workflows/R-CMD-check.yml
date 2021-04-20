@@ -35,6 +35,7 @@ jobs:
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
       R_REMOTES_STANDALONE: true
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_CRAN_INCOMING_USE_ASPELL_: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -61,11 +62,6 @@ jobs:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Activate aspell (except Windows)
-        if: runner.os != 'Windows'
-        env:
-          _R_CHECK_CRAN_INCOMING_USE_ASPELL_: true
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
