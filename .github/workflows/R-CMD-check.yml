@@ -39,6 +39,10 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
+    if: runner.os = 'Windows'
+      env:
+        _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
+
     steps:
       - uses: actions/checkout@v2
 
