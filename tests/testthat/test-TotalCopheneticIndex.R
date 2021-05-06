@@ -16,6 +16,10 @@ test_that("Trees from Mir et al. 2013 are scored correctly", {
   expect_identical(10L, TotalCopheneticIndex(PectinateTree(5)))
   expect_identical(c(10L, 8L, 10L), TotalCopheneticIndex(as.phylo(0:2, 5)))
 
+  expect_equal(TotalCopheneticIndex(BalancedTree(13)),
+               TCIContext(13)[1, 'minimum'])
+  expect_equal(TotalCopheneticIndex(PectinateTree(13)),
+               TCIContext(13)[1, 'maximum'])
 
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,

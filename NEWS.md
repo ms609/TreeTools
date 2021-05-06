@@ -1,3 +1,7 @@
+# TreeTools 1.4.4.9000
+
+- Correct calculation of minimum value in `TCIContext()`.
+
 # TreeTools 1.4.4
 
 - Add `NTip.phyDat()` method.

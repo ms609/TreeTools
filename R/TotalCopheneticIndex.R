@@ -117,8 +117,10 @@ TCIContext.phylo <- function (x) {
 .MCI <- function (n) { # Lemma 14 in Mir er al 2013
   if (n < 3L) return (0L)
   halfN <- n / 2L
-  ceiling(.MCI(halfN)) + floor(.MCI(halfN)) +
-    choose(ceiling(halfN), 2L) + choose(floor(halfN), 2L)
+  topHalf <- ceiling(halfN)
+  btmHalf <- floor(halfN)
+  .MCI(topHalf) + .MCI(btmHalf) +
+    choose(topHalf, 2L) + choose(btmHalf, 2L)
 }
 
 #' @rdname TotalCopheneticIndex
