@@ -47,7 +47,8 @@
 
 <meta property="og:title" content="Add tree to start of list — UnshiftTree" />
 <meta property="og:description" content="UnshiftTree() adds a phylogenetic tree to the start of a list of trees.
-This is useful where the class of a list of trees is unknown." />
+This is useful where the class of a list of trees is unknown, or where
+names of trees should be retained." />
 
 
 <meta name="robots" content="noindex">
@@ -89,7 +90,7 @@ This is useful where the class of a list of trees is unknown." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.2.9004</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.4.9000</span>
       </span>
     </div>
 
@@ -159,7 +160,8 @@ This is useful where the class of a list of trees is unknown." />
 
     <div class="ref-description">
     <p><code>UnshiftTree()</code> adds a phylogenetic tree to the start of a list of trees.
-This is useful where the class of a list of trees is unknown.</p>
+This is useful where the class of a list of trees is unknown, or where
+names of trees should be retained.</p>
     </div>
 
     <pre class="usage"><span class='fu'>UnshiftTree</span><span class='op'>(</span><span class='va'>add</span>, <span class='va'>treeList</span><span class='op'>)</span></pre>
@@ -189,6 +191,10 @@ tree specified as `add.</p>
     <p>Caution: adding a tree to a <code>multiPhylo</code> object whose own attributes apply
 to all trees, for example trees read from a Nexus file, causes data to be
 lost.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/c.html'>c()</a></code> joins a tree or series of trees to a <code>multiPhylo</code> object, but loses
+names and does not handle lists of trees.</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
@@ -199,8 +205,7 @@ lost.</p>
 
 <span class='fu'>UnshiftTree</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>forest</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 7 phylogenetic trees</div><div class='input'><span class='fu'>UnshiftTree</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
-</div></pre>
+</div><div class='output co'>#&gt; 2 phylogenetic trees</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -212,7 +217,7 @@ lost.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://community.dur.ac.uk/martin.smith/'>Martin R. Smith</a>.</p>
+  <p>Developed by <a href='https://smithlabdurham.github.io/'>Martin R. Smith</a>.</p>
 </div>
 
 <div class="pkgdown">
