@@ -188,7 +188,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
       tipLabels <- TipLabels(tipLabels)
     }
 
-    structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
+    structure(matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
               nTip = nTip,
               tip.label = tipLabels,
               class = 'Splits')
@@ -241,14 +241,14 @@ print.Splits <- function (x, details = FALSE, ...) {
 
       nameLengths <- vapply(splitNames, nchar, 0)
       namePads <- vapply(nameLengths, function (thisLength)
-        paste0(rep(' ', max(nameLengths) - thisLength), collapse=''), character(1))
+        paste0(rep.int(' ', max(nameLengths) - thisLength), collapse=''), character(1))
       splitNames <- paste0(splitNames, namePads)
     } else {
-      splitNames <- rep('', length(x))
+      splitNames <- character(length(x))
       nameLengths = 0L
     }
-    cat("\n ", paste0(rep(' ', max(nameLengths)), collapse = ''),
-        paste0(rep(c(1:9, ' '), length.out = nTip), collapse = ''))
+    cat("\n ", paste0(rep.int(' ', max(nameLengths)), collapse = ''),
+        paste0(rep_len(c(1:9, ' '), nTip), collapse = ''))
 
     for (i in seq_len(dim(x)[1])) {
       split <- x[i, , drop = FALSE]
@@ -269,7 +269,7 @@ summary.Splits <- function (object, ...) {
     cat("\n\nTips not labelled.")
   } else {
     cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
-                     "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+                     "\t", c(character(4L), '\n')[seq_len(min(nTip, 5L))]))
   }
 }
 
@@ -354,7 +354,7 @@ c.Splits <- function (...) {
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
     lastSplit <- dim(x)[2]
-    endMask <- packBits(c(rep(TRUE, 8L - remainder), rep(FALSE, remainder)))
+    endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
     x[, lastSplit] <- x[, lastSplit] & endMask
   }
   class(x) <- 'Splits'

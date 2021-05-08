@@ -13,7 +13,7 @@
 #' without the excluded taxa.
 #'
 #' @examples
-#' oldPar <- par(mfrow=c(1, 2), mar=rep(0.5, 4))
+#' oldPar <- par(mfrow = c(1, 2), mar = rep(0.5, 4))
 #'
 #' # Two trees differing only in placement of tip 2:
 #' trees <- as.phylo(c(0, 53), 6)

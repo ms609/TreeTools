@@ -32,7 +32,7 @@ Collapses specified nodes or edges on a phylogenetic tree, resulting in
 polytomies.
 }
 \examples{
-oldPar <- par(mfrow=c(3, 1), mar=rep(0.5, 4))
+oldPar <- par(mfrow = c(3, 1), mar = rep(0.5, 4))
 
 tree <- as.phylo(898, 7)
 tree$edge.length <- 11:22

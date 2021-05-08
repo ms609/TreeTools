@@ -27,9 +27,9 @@ RootedTreeShape(tree)
 
 RootedTreeWithShape(shape, nTip, tipLabels)
 
-UnrootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
+UnrootedTreeWithShape(shape, nTip, tipLabels = character(nTip))
 
-UnrootedTreeWithKey(key, nTip, tipLabels = rep("", nTip))
+UnrootedTreeWithKey(key, nTip, tipLabels = character(nTip))
 
 UnrootedTreeShape(tree)
 

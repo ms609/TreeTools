@@ -543,7 +543,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
     blockSpan <- cbind(ctypeLines + 1L, c(ctypeLines[-1] - 1, length(matrixLines)))
     matrixLines <- matrixLines[unlist(
       apply(blockSpan[unlist(blocks), , drop = FALSE],  1,
-            function(x) seq(x[1], x[2])))]
+            function(x) seq.int(from = x[1], to = x[2])))]
   }
 
   tokens <- ExtractTaxa(matrixLines, character_num, session)

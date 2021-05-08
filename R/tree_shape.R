@@ -106,7 +106,7 @@ RootedTreeWithShape <- function (shape, nTip, tipLabels)
 
 #' @export
 RootedTreeWithShape.numeric <- function (shape, nTip,
-                                         tipLabels = rep('', nTip)) {
+                                         tipLabels = character(nTip)) {
   structure(list(edge = rooted_shape_to_edge(shape, nTip),
                  Nnode = nTip - 1L,
                  tip.label = tipLabels),
@@ -115,7 +115,7 @@ RootedTreeWithShape.numeric <- function (shape, nTip,
 
 #' @export
 RootedTreeWithShape.integer64 <- function (shape, nTip,
-                                           tipLabels = rep('', nTip)) {
+                                           tipLabels = character(nTip)) {
   if (shape < 0) {
     stop("Shape may not be negative.")
   } else if (shape > 2L^31L - 1L) {
@@ -131,7 +131,7 @@ RootedTreeWithShape.integer64 <- function (shape, nTip,
 #' @return `UnrootedTreeWithShape()` returns a tree of class `phylo`
 #' corresponding to the shape provided.  Tips are unlabelled.
 #' @export
-UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
+UnrootedTreeWithShape <- function (shape, nTip, tipLabels = character(nTip)) {
   if (nTip > 30) {
     stop("Only trees with < 31 tips are presently handled")
   }
@@ -150,7 +150,7 @@ UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
 #' @return `UnrootedTreeWithKey()` returns a tree of class `phylo` corresponding
 #' to the key provided.  Tips are unlabelled.
 #' @export
-UnrootedTreeWithKey <- function (key, nTip, tipLabels = rep('', nTip)) {
+UnrootedTreeWithKey <- function (key, nTip, tipLabels = character(nTip)) {
   AddRoot <- function (x) {
     x$root.edge <- 1L
     x
@@ -181,7 +181,8 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
   child <- edge[, 2]
   nEdge <- length(child)
   unrooted <- nEdge %% 2L
-  nodeFirst <- c(rep(c(TRUE, FALSE), nEdge / 2L), logical(as.integer(unrooted)))
+  nodeFirst <- c(rep.int(c(TRUE, FALSE), nEdge / 2L),
+                 logical(as.integer(unrooted)))
   nodeSecond <- !nodeFirst
   nodeNumbers <- unique(parent)
   if (unrooted) {

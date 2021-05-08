@@ -117,9 +117,9 @@ CompatibleSplits <- function (splits, splits2) {
 #' @export
 .CompatibleSplit <- function (a, b, nTip) {
   rawMask <- if (nTip %% 8L) {
-    as.raw(c(2^(nTip %% 8L) - 1L, rep(255L, nTip %/% 8)))
+    as.raw(c(2^(nTip %% 8L) - 1L, rep.int(255L, nTip %/% 8)))
   } else {
-    rep(as.raw(255), nTip %/% 8L)
+    rep.int(as.raw(255), nTip %/% 8L)
   }
   .CompatibleRaws(a, b, rawMask)
 }

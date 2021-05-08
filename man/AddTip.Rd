@@ -67,7 +67,7 @@ ape::nodelabels(15, 15, bg='green')
 
 plot(AddTip(tree, 15, 'NEW_TIP'))
 
-oldPar <- par(mfrow=c(2, 4), mar=rep(0.3, 4), cex=0.9)
+oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 
 backbone <- BalancedTree(4)
 # Treating the position of the root as instructive:

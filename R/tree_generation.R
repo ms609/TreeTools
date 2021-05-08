@@ -164,7 +164,7 @@ StarTree <- function (tips) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
 
-  parent <- rep(nTips + 1L, nTips)
+  parent <- rep.int(nTips + 1L, nTips)
   child <- seq_len(nTips)
 
   structure(list(

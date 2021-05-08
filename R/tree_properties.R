@@ -234,7 +234,7 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
   nLeaf <- minVertex - 1L
   nNode <- nVertex - nLeaf
   leaf0s <- integer(nLeaf)
-  depths <- c(leaf0s, rep(NA, nNode))
+  depths <- c(leaf0s, rep.int(NA_integer_, nNode))
   uncalculated <- is.na(depths)
   Func <- if (shortest) min else max
 
@@ -452,7 +452,7 @@ EdgeDistances <- function (tree) {
   for (i in seq_len(nEdge - 1L)) {
     ancI <- ancs[[child[i]]]
     nAncI <- length(ancI)
-    for (j in seq(from = i + 1L, to = nEdge)) {
+    for (j in seq.int(from = i + 1L, to = nEdge)) {
       ancJ <- ancs[[child[j]]]
       intersection <- intersect(ancI, ancJ)
       if (length(intersection) > 1L) {

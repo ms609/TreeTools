@@ -326,7 +326,7 @@ Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
 #' split.
 #' @export
-NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
+NUnrootedMult  <- function (...) { # Carter et al. 1990, Theorem 2
   splits <- c(...)
   splits <- splits[splits > 0]
   nSplits <- length(splits)
@@ -345,7 +345,7 @@ NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
     denominator <- 2L * (totalTips - length(splits)) + 1L
 
     # Return:
-    prod(seq(numerator, denominator, -2L),
+    prod(seq.int(numerator, denominator, -2L),
          DoubleFactorial(splits + splits - 3L))
   }
 }
