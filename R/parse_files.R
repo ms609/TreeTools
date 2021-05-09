@@ -639,7 +639,7 @@ PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
   allLevels <- as.character(at$allLevels)
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
            ncol = max(index), byrow = TRUE,
-         dimnames = list(at$names, NULL))[, index]
+         dimnames = list(at$names, NULL))[, index, drop = FALSE]
 }
 
 #' @rdname ReadCharacters
