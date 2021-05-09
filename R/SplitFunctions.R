@@ -265,6 +265,10 @@ TipLabels.default <- function (x, single = TRUE) attr(x, 'tip.label')
 
 #' @rdname TipLabels
 #' @export
+TipLabels.phyDat <- function (x, single = TRUE) names(x)
+
+#' @rdname TipLabels
+#' @export
 TipLabels.TreeNumber <- TipLabels.default
 
 #' @rdname TipLabels

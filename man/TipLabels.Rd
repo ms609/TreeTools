@@ -5,6 +5,7 @@
 \alias{TipLabels.matrix}
 \alias{TipLabels.phylo}
 \alias{TipLabels.default}
+\alias{TipLabels.phyDat}
 \alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
@@ -18,7 +19,6 @@
 \alias{TipLabels.multiPhylo}
 \alias{TipLabels.character}
 \alias{TipLabels.numeric}
-\alias{TipLabels.phyDat}
 \title{Extract tip labels}
 \usage{
 TipLabels(x, single = TRUE)
@@ -28,6 +28,8 @@ TipLabels(x, single = TRUE)
 \method{TipLabels}{phylo}(x, single = TRUE)
 
 \method{TipLabels}{default}(x, single = TRUE)
+
+\method{TipLabels}{phyDat}(x, single = TRUE)
 
 \method{TipLabels}{TreeNumber}(x, single = TRUE)
 

@@ -1,6 +1,7 @@
 # TreeTools 1.4.4.9000
 
 - Correct calculation of minimum value in `TCIContext()`.
+- Add `TipLabels.phyDat()` method.
 
 # TreeTools 1.4.4
 
