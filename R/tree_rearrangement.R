@@ -79,6 +79,49 @@ RootTree.phylo <- function (tree, outgroupTips) {
   root_on_node(tree, outgroup)
 }
 
+# Modified from phangorn::allAncestors
+.AllAncestors <- function (edge) {
+  edge <- Postorder(edge)
+  parents <- edge[, 1]
+  child <- edge[, 2]
+  res <- vector("list", max(parents))
+  for (i in rev(seq_along(parents))) {
+    pa <- parents[i]
+    res[[child[i]]] <- c(pa, res[[pa]])
+  }
+
+  # Return:
+  res
+}
+
+#' @export
+RootTree.matrix <- function (tree, outgroupTips) {
+  tree <- Preorder(tree)
+  rootNode <- tree[1]
+  nNode <- max(tree[, 1]) - rootNode + 1L
+  if (length(outgroupTips) == 0) {
+    stop("No outgroup tips selected")
+  } else if (length(outgroupTips) == 1L) {
+    outgroup <- outgroupTips
+  } else {
+    ancestry <- unlist(.AllAncestors(tree)[outgroupTips])
+    ancestryTable <- table(ancestry)
+    lineage <- as.integer(names(ancestryTable))
+    lca <- max(lineage[ancestryTable == length(outgroupTips)])
+
+    if (lca == rootNode) {
+      if (nNode > 2L) {
+        lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+      } else {
+        return (tree)
+      }
+    }
+    outgroup <- lca
+  }
+
+  root_on_node(list(edge = tree, Nnode = nNode), outgroup)$edge
+}
+
 #' @export
 RootTree.list <- function (tree, outgroupTips) {
   lapply(tree, RootTree, outgroupTips)

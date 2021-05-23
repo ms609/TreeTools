@@ -1,5 +1,6 @@
-# TreeTools 1.4.4.9000
+# TreeTools 1.4.4.9001
 
+- Add `RootTree.matrix()` method for edge matrices.
 - Correct calculation of minimum value in `TCIContext()`.
 - Add `TipLabels.phyDat()` method.
 

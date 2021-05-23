@@ -158,6 +158,7 @@ test_that("RootOnNode() supports lists of trees", {
 test_that("RootTree() supports star trees", {
   star <- StarTree(8)
   expect_equal(star, RootTree(star, 5:7))
+  expect_equal(star$edge, RootTree(star$edge, 5:7))
 })
 
 test_that("RootOnNode() supports nasty node ordering", {
@@ -174,10 +175,12 @@ test_that("RootTree() works", {
   expect_error(RootTree(bal8, integer(0)))
   expect_error(RootTree(bal8, 'tip_not_there'))
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
+  expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
   expect_equivalent(as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
                     RootTree(bal8, 't5'))
   expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
+  expect_equal(RootTree(bal8, 5)$edge, RootTree(bal8$edge, 5))
   expect_equal(EnforceOutgroup(bal8, c('t5', 't6')),
                RootTree(bal8, c('t5', 't6')))
   expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
