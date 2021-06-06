@@ -473,7 +473,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
       .phylogram.plot(x$edge, Ntip, Nnode, xx, yy, horizontal,
                       edge.color, edge.width, edge.lty,
                       color.v = if (is.null(node.color)) rep(par('fg'), Nnode)
-                                    else node.color)
+                                    else node.color[-seq_len(Ntip)])
     } else {
       if (type == "fan") {
         ereorder <- match(z$edge[, 2], x$edge[, 2])
