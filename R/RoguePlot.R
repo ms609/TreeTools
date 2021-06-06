@@ -134,7 +134,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   if (plot) {
     .plot.phylo(cons, edge.color = pal[nOnEdge + 1L],
                 node.color = pal[c(double(consTip), nAtNode) + 1L],
-                edge.width = ifelse(nOnEdge > 0, fat, thin), ...)
+                edge.width = ifelse(nOnEdge > 0, fat, thin),
+                node.width = ifelse(c(double(consTip), nAtNode) > 0, fat, thin),
+                ...)
   }
 
   # Return:
@@ -145,8 +147,10 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 .plot.phylo <- function (x, type = "phylogram", use.edge.length = TRUE,
                          node.pos = NULL, show.tip.label = TRUE,
                          show.node.label = FALSE, edge.color = "black",
+                         edge.width = 1, edge.lty = 1,
                          node.color = par('fg'),
-                         edge.width = 1, edge.lty = 1, font = 3,
+                         node.width = 1, node.lty = 1,
+                         font = 3,
                          cex = par("cex"), adj = NULL, srt = 0,
                          no.margin = FALSE, root.edge = FALSE, label.offset = 0,
                          underscore = FALSE, x.lim = NULL, y.lim = NULL,
@@ -473,7 +477,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
       .phylogram.plot(x$edge, Ntip, Nnode, xx, yy, horizontal,
                       edge.color, edge.width, edge.lty,
                       color.v = if (is.null(node.color)) rep(par('fg'), Nnode)
-                                    else node.color[-seq_len(Ntip)])
+                                    else node.color[-seq_len(Ntip)],
+                      width.v = if (is.null(node.width)) rep(par('lwd'), Nnode)
+                                    else (node.width[-seq_len(Ntip)]))
     } else {
       if (type == "fan") {
         ereorder <- match(z$edge[, 2], x$edge[, 2])
@@ -623,7 +629,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 
 # Modified from ape::phylogram.plot
 .phylogram.plot <- function (edge, Ntip, Nnode, xx, yy, horizontal, edge.color,
-          edge.width, edge.lty, color.v = rep(par('fg'), Nnode)) {
+          edge.width, edge.lty, color.v = rep.int(par('fg'), Nnode),
+          width.v = rep.int(par('lwd'), Nnode)) {
   nodes <- (Ntip + 1):(Ntip + Nnode)
   if (!horizontal) {
     tmp <- yy
@@ -660,7 +667,6 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     edge.width <- rep(edge.width, length.out = Nedge)
     edge.lty <- rep(edge.lty, length.out = Nedge)
     DF <- data.frame(edge.color, edge.width, edge.lty, stringsAsFactors = FALSE)
-    width.v <- rep(1, Nnode)
     lty.v <- rep(1, Nnode)
     for (i in 1:Nnode) {
       br <- NodeInEdge1[[i]]
