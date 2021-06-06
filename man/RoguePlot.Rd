@@ -9,7 +9,7 @@ RoguePlot(
   tip,
   p = 1,
   plot = TRUE,
-  Palette = colorRampPalette(c(par("col"), "red"), space = "Lab"),
+  Palette = colorRampPalette(c(par("fg"), "red"), space = "Lab"),
   thin = par("lwd"),
   fat = thin + 1L,
   ...
@@ -46,10 +46,15 @@ according to the proportion of trees in which the taxon attaches to that
 edge, after Klopfstein & Spasojevic (2019).
 }
 \examples{
-trees <- list(read.tree(text = '(a1, (b1, (c1, (rogue, (d1, e1)))));'),
-              read.tree(text = '(a1, (b1, (c1, (rogue, (d1, e1)))));'),
-              read.tree(text = '(a1, (b1, (c1, (rogue, (d1, e1)))));'),
-              read.tree(text = '(a1, (b1, (c1, (d1, (rogue, e1)))));'))
+trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
+              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
+              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
+              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
+              read.tree(text = '(rogue, (a, (b, (c, (d, (e, f))))));'),
+              read.tree(text = '((rogue, a), (b, (c, (d, (e, f)))));'),
+              read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
+              read.tree(text = '(a, (b, ((c, (rogue, d)), (e, f))));'),
+              read.tree(text = '(a, (b, (c, (d, (rogue, (e, f))))));'))
 RoguePlot(trees, 'rogue')
 }
 \references{
