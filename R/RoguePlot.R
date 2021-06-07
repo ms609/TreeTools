@@ -58,6 +58,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 
   noRogue <- trees
   noRogue[] <- lapply(trees, drop.tip, tip)
+  noRogue[] <- lapply(noRogue, AddTip, 0, 'Dummy root')
   cons <- Preorder(consensus(noRogue, p = p))
   consTip <- NTip(cons)
 
@@ -100,9 +101,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   tab <- table(as.integer(tipMatches))
   nAtTip[as.integer(names(tab))] <- tab
 
-  unmatched <- !(indexSums %in% c(0L, 1L, nrow(index)))
+  unmatched <- !(indexSums %in% c(0L, 1L))
   consSplits <- as.Splits(cons)
-  splits <- as.logical(consSplits)
+  splits <- as.logical(as.Splits(AddTip(cons, 0)))[, -nTip]
   nSplits <- nrow(splits)
   edgeMatches <- match(data.frame(index[, unmatched, drop = FALSE]),
                        data.frame(t(splits[, -1])))
@@ -154,7 +155,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 # Modified from ape::plot.phylo
 .plot.phylo <- function (x, type = "phylogram", use.edge.length = TRUE,
                          node.pos = NULL, show.tip.label = TRUE,
-                         show.node.label = FALSE, edge.color = "black",
+                         show.node.label = FALSE, edge.color = par("fg"),
                          edge.width = 1, edge.lty = 1,
                          node.color = par('fg'),
                          node.width = 1, node.lty = 1,

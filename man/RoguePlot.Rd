@@ -52,6 +52,11 @@ Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 according to the proportion of trees in which the taxon attaches to that
 edge, after Klopfstein & Spasojevic (2019).
 }
+\details{
+Note: this function is currently under development and is not fully tested.
+Please check that results are in line with expectations before using the
+output, and \href{https://github.com/ms609/TreeTools/issues/53}{report any errors}.
+}
 \examples{
 trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
               read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),

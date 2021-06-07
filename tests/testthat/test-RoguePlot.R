@@ -22,15 +22,15 @@ test_that('Complex rogue plot', {
 
   trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-                read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-                read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
+                read.tree(text = '(a, (b, (c, (rogue, (d, (f, e))))));'),
+                read.tree(text = '(a, (b, (c, (rogue, ((e, f), d)))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
                 read.tree(text = '(rogue, (a, (b, (c, (d, (e, f))))));'),
                 read.tree(text = '(a, (rogue, (b, (c, (d, (e, f))))));'),
                 read.tree(text = '((rogue, a), (b, (c, (d, (e, f)))));'),
                 read.tree(text = '((rogue, a), (b, (c, (d, (e, f)))));'),
-                read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
-                read.tree(text = '(a, (b, ((c, (rogue, d)), (e, f))));'),
+                read.tree(text = '(a, (b, ((c, d), (rogue, (f, e)))));'),
+                read.tree(text = '(a, (b, (((rogue, d), c), (e, f))));'),
                 read.tree(text = '(a, (b, (c, (d, (rogue, (e, f))))));'))
   RoguePlot(trees, 'rogue', p = 1)
   expect_equal(list(cons = Preorder(read.tree(text = '(a, (b, (c, d, (e, f))));')),
