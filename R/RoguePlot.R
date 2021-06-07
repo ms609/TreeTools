@@ -4,6 +4,10 @@
 #' according to the proportion of trees in which the taxon attaches to that
 #' edge, after Klopfstein &amp; Spasojevic (2019).
 #'
+#' Note: this function is currently under development and is not fully tested.
+#' Please check that results are in line with expectations before using the
+#' output, and [report any errors](https://github.com/ms609/TreeTools/issues/53).
+#'
 #' @param trees List or `multiPhylo` object containing phylogenetic trees
 #' of class `phylo` to be summarized.
 #' @param tip Numeric or character identifying rogue leaf, in format accepted
@@ -16,8 +20,13 @@
 #' palette with `n` entries.
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
-#' @return `RoguePlot()` returns a vector of integers specifying the number of
+#' @return `RoguePlot()` returns a list whose elements are:
+#' - `cons`: The reduced consensus tree, in preorder;
+#' - `onEdge`: a vector of integers specifying the number of
 #' trees in `trees` in which the rogue leaf is attached to each edge in turn
+#' of the consensus tree;
+#' - `atNode`: a vector of integers specifying the number of trees in `trees`
+#' in which the rogue leaf is attached to an edge collapsed into each node
 #' of the consensus tree.
 #' @references
 #' \insertRef{Klopfstein2019}{TreeTools}
@@ -38,7 +47,8 @@
 #' @importFrom grDevices colorRampPalette
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
-                       Palette = colorRampPalette(c(par('fg'), 'red'), space = 'Lab'),
+                       Palette = colorRampPalette(c(par('fg'), 'red'),
+                                                  space = 'Lab'),
                        thin = par('lwd'), fat = thin + 1L,
                        ...) {
   trees <- RenumberTips(trees, trees[[1]])
@@ -84,14 +94,13 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   }
 
   indexSums <- colSums(index)
-  nAtTip <- c(sum(indexSums == 0L), double(nTip - 1L))
+  nAtTip <- c(sum(indexSums == nrow(index)), double(nTip - 1L))
   atTip <- indexSums == 1L
   tipMatches <- 1L + apply(index[, atTip, drop = FALSE], 2, which)
   tab <- table(as.integer(tipMatches))
   nAtTip[as.integer(names(tab))] <- tab
-  nAtTip <- nAtTip[-tip]
 
-  unmatched <- indexSums > 1L
+  unmatched <- !(indexSums %in% c(0L, 1L, nrow(index)))
   consSplits <- as.Splits(cons)
   splits <- as.logical(consSplits)
   nSplits <- nrow(splits)
@@ -105,10 +114,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   decipher <- c(nAtTip, rep.int(NA, cons$Nnode))
   decipher[as.integer(names(consSplits))] <- nAtSplit
   nOnEdge <- decipher[cons$edge[, 2]]
-  nOnEdge[is.na(nOnEdge)] <- nOnEdge[1] # second root edge
 
 
-  nAtNode <- double(cons$Nnode)
+  nAtNode <- c(sum(indexSums == 0L), double(cons$Nnode - 1L))
   unmatched[unmatched] <- is.na(edgeMatches)
   if (any(unmatched)) {
     nodeDescs <- vapply(allDescendants(cons)[-seq_len(nTip)], function (tips) {
@@ -140,7 +148,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   }
 
   # Return:
-  list(onEdge = nOnEdge, atNode = nAtNode)
+  list(cons = cons, onEdge = nOnEdge, atNode = nAtNode)
 }
 
 # Modified from ape::plot.phylo

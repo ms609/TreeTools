@@ -36,9 +36,16 @@ never / sometimes does attach to them.}
 \item{\dots}{Additional parameters to \code{plot.phylo()}.}
 }
 \value{
-\code{RoguePlot()} returns a vector of integers specifying the number of
+\code{RoguePlot()} returns a list whose elements are:
+\itemize{
+\item \code{cons}: The reduced consensus tree, in preorder;
+\item \code{onEdge}: a vector of integers specifying the number of
 trees in \code{trees} in which the rogue leaf is attached to each edge in turn
+of the consensus tree;
+\item \code{atNode}: a vector of integers specifying the number of trees in \code{trees}
+in which the rogue leaf is attached to an edge collapsed into each node
 of the consensus tree.
+}
 }
 \description{
 Plots a consensus of trees with a rogue taxon omitted, with edges coloured
