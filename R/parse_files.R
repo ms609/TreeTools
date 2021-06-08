@@ -156,7 +156,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
     lastTree <- length(fileText)
   }
 
-  trees <- lapply(fileText[treeStart:lastTree], TNTText2Tree)
+  trees <- lapply(fileText[treeStart:lastTree], TntText2Tree)
 
   if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
@@ -222,8 +222,12 @@ TntText2Tree <- function (treeText) {
   treeText <- gsub("([\\w'\\.\\-]+)", "\\1,", treeText, perl = TRUE)
   treeText <- gsub(")(", "),(", treeText, fixed = TRUE)
   treeText <- gsub("*", ";", treeText, fixed = TRUE)
+
+  tr <- read.tree(text = gsub(", )", ")", treeText, fixed = TRUE))
+  tr$tip.label[] <- Unquote(tr$tip.label)
+
   # Return:
-  read.tree(text=gsub(", )", ")", treeText, fixed=TRUE))
+  tr
 }
 
 #' @rdname ReadTntTree
@@ -451,7 +455,7 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
       labelEnd <- semicolons[semicolons > labelStart][1]
       if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
       #attr(dat, 'char.labels')
-      colnames(tokens) <- lines[labelStart + character_num]
+      colnames(tokens) <- Unquote(lines[labelStart + character_num])
     } else {
       if (length(labelStart) > 1)
         return(list("Multiple CharLabels blocks in Nexus file."))
@@ -468,7 +472,7 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
       } else {
         attr(tokens, 'state.labels') <-
           lapply(character_num, function (i)
-            stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)]
+            Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
       }
     } else {
@@ -587,6 +591,138 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 
   # Return:
   tokens
+}
+
+#' @rdname ReadCharacters
+#' @return `ReadNotes()` returns a list in which each entry corresponds to a
+#' single character, and itself contains a list of with two elements:
+#'
+#' 1. A single character object listing any notes associated with the character
+#' 2. A named character vector listing the notes associated with each taxon
+#' for that character, named with the names of each note-bearing taxon.
+#'
+#' @export
+ReadNotes <- function (filename) {
+  taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
+  charNote.pattern <- "^\\s+TEXT\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
+  stateNote.pattern <- "^\\s+TEXT\\s+TAXON=(\\d+)\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
+
+  lines <- enc2utf8(readLines(filename, warn = FALSE))
+  upperLines <- toupper(lines)
+  trimUpperLines <- trimws(upperLines)
+
+  notesStart <- which(trimUpperLines == "BEGIN NOTES;")
+  endBlocks <- which(trimUpperLines == "ENDBLOCK;")
+  taxlabels <- which(trimUpperLines == "TAXLABELS")
+  semicolons <- which(trimUpperLines == ";")
+
+  if (length(notesStart) == 0) {
+    return(list("NOTES block not found in Nexus file."))
+  } else if (length(taxlabels) == 0) {
+    return(list("TAXLABELS not found in Nexus file."))
+  } else if (length(notesStart) > 1) {
+    return(list("Multiple NOTES blocks found in Nexus file."))
+  } else if (length(taxlabels) > 1) {
+    return(list("Multiple TAXLABELS found in Nexus file."))
+  } else {
+    taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
+    taxaLines <- lines[(taxlabels + 1):taxaEnd]
+    taxon.matches <- grepl(taxon.pattern, taxaLines, perl=TRUE)
+    taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl=TRUE)
+    taxa <- gsub(' ', '_', taxa, fixed=TRUE)
+
+    notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
+    notesLines <- lines[(notesStart + 1):notesEnd]
+    charNote.matches <- grepl(charNote.pattern, notesLines, perl=TRUE)
+    charNotes <- gsub(charNote.pattern, "\\2",
+                      notesLines[charNote.matches], perl=TRUE)
+    charNotes <- EndSentence(MorphoBankDecode(charNotes))
+    charNumbers <- gsub(charNote.pattern, "\\1",
+                        notesLines[charNote.matches], perl=TRUE)
+
+    stateNote.matches <- grepl(stateNote.pattern, notesLines, perl=TRUE)
+    stateNotes <- gsub(stateNote.pattern, "\\3",
+                       notesLines[stateNote.matches], perl=TRUE)
+    stateNotes <- EndSentence(MorphoBankDecode(stateNotes))
+    stateTaxon <- gsub(stateNote.pattern, "\\1",
+                       notesLines[stateNote.matches], perl=TRUE)
+    stateChar  <- gsub(stateNote.pattern, "\\2",
+                       notesLines[stateNote.matches], perl=TRUE)
+
+    seqAlongNotes <- seq_len(max(as.integer(c(stateChar, charNumbers))))
+    charNotes <- lapply(seqAlongNotes, function (i) {
+      ret <- list(
+        charNotes[charNumbers == i],
+        stateNotes[stateChar == i])
+      names(ret[[2]]) <- taxa[as.integer(stateTaxon[stateChar == i])]
+
+      # Return:
+      ret
+    })
+    names(charNotes) <- seqAlongNotes
+
+    # Return:
+    charNotes
+  }
+}
+
+#' Add full stop to end of a sentence
+#'
+#' @param string Input string
+#'
+#' @return `EndSentence()` returns `string`, punctuated with a final full stop
+#' (period).`
+#'
+#' @examples
+#' EndSentence("Hello World") # "Hello World."
+#' @author Martin R. Smith
+#' @export
+EndSentence <- function (string) {
+  ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
+  ret <- gsub("(\\.[\"'])\\.$", "\\1", ret, perl = TRUE)
+  ret <- gsub("([!\\?])\\.$", "\\1", ret, perl = TRUE)
+  ret
+}
+
+#' Remove quotation marks from a string
+#'
+#' @param string Input string
+#'
+#' @return `Unquote()` returns `string`, with any matched punctuation marks
+#' and trailing whitespace removed.
+#'
+#' @examples
+#' Unquote("'Hello World'")
+#' @author Martin R. Smith
+#' @export
+Unquote <- function (string) {
+  noSingle <- vapply(string, gsub, character(1),
+                     pattern = "^\\s*'(.*)'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
+  vapply(noSingle, gsub, character(1),
+         pattern = '^\\s*"(.*)"\\s*$', replacement = "\\1", USE.NAMES = FALSE)
+}
+
+#' Decode MorphoBank text
+#'
+#' Converts strings from MorphoBank notes into a format compatible with Latex / bookdown
+#'
+#' @param string String to process
+#'
+#' @return A string with new lines and punctuation reformatted
+#' @export
+#' @author Martin R. Smith
+#'
+MorphoBankDecode <- function (string) {
+  string <- gsub("^n", "  \n", string, fixed = TRUE)
+  string <- gsub("''", "'", string, fixed = TRUE)
+  string <- gsub(" - ", " -- ", string, fixed = TRUE)
+  string <- gsub("(\\d)\\-(\\d)", "\\1--\\2", string, perl = TRUE)
+  string <- gsub("(\\d) ?um\\b", "\\1 \u{03BC}m", string, perl = TRUE)
+  string <- gsub(" [recoded as neomorphic]",
+                 " Inapplicable tokens in this neomorphic character have been replaced with the absent token, following @Brazeau2018", string, fixed = TRUE)
+
+  # Return:
+  string
 }
 
 #' Convert between matrices and `phyDat` objects

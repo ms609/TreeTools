@@ -3,6 +3,7 @@
 \name{ReadCharacters}
 \alias{ReadCharacters}
 \alias{ReadTntCharacters}
+\alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
 \alias{PhyDat}
@@ -11,6 +12,8 @@
 ReadCharacters(filepath, character_num = NULL, session = NULL)
 
 ReadTntCharacters(filepath, character_num = NULL, type = NULL, session = NULL)
+
+ReadNotes(filename)
 
 ReadAsPhyDat(filepath)
 
@@ -49,6 +52,14 @@ function call was unsuccessful.
 
 \code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
 \code{\link[phangorn:phyDat]{phyDat}} object.
+
+\code{ReadNotes()} returns a list in which each entry corresponds to a
+single character, and itself contains a list of with two elements:
+\enumerate{
+\item A single character object listing any notes associated with the character
+\item A named character vector listing the notes associated with each taxon
+for that character, named with the names of each note-bearing taxon.
+}
 }
 \description{
 Parse a Nexus or TNT file, reading character states and names.

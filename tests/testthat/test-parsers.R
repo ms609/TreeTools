@@ -141,9 +141,24 @@ test_that('PhyToString() works', {
   expect_equal(str,
                PhyToString(StringToPhyDat(str, letters[1:4], byTaxon = TRUE),
                            byTaxon = TRUE))
+})
 
+test_that("EndSentence() works correctly", {
+  expect_equal('Hi.', EndSentence('Hi'))
+  expect_equal('Hi.', EndSentence('Hi.'))
+  expect_equal('Hi?', EndSentence('Hi?'))
+  expect_equal('Hi!', EndSentence('Hi!'))
+})
 
+test_that("Unquote() unquotes", {
+  expect_equal("Unquoted", Unquote("'Unquoted'"))
+  expect_equal("Unquoted", Unquote('"Unquoted"'))
+  expect_equal("", Unquote('""'))
+  expect_equal("", Unquote("''"))
+})
 
+test_that("MorphoBankDecode() decodes", {
+  expect_equal("' -- x  \n 1--2", MorphoBankDecode("'' - x^n 1-2"))
 })
 
 test_that('NewickTree() works', {
