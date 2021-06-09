@@ -15,6 +15,13 @@ A string with new lines and punctuation reformatted
 \description{
 Converts strings from MorphoBank notes into a format compatible with Latex / bookdown
 }
+\seealso{
+Other string parsing functions: 
+\code{\link{EndSentence}()},
+\code{\link{RightmostCharacter}()},
+\code{\link{Unquote}()}
+}
 \author{
 Martin R. Smith
 }
+\concept{string parsing functions}

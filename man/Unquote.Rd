@@ -19,6 +19,13 @@ Remove quotation marks from a string
 \examples{
 Unquote("'Hello World'")
 }
+\seealso{
+Other string parsing functions: 
+\code{\link{EndSentence}()},
+\code{\link{MorphoBankDecode}()},
+\code{\link{RightmostCharacter}()}
+}
 \author{
 Martin R. Smith
 }
+\concept{string parsing functions}

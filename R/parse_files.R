@@ -676,6 +676,7 @@ ReadNotes <- function (filename) {
 #' @examples
 #' EndSentence("Hello World") # "Hello World."
 #' @author Martin R. Smith
+#' @family string parsing functions
 #' @export
 EndSentence <- function (string) {
   ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
@@ -694,12 +695,13 @@ EndSentence <- function (string) {
 #' @examples
 #' Unquote("'Hello World'")
 #' @author Martin R. Smith
+#' @family string parsing functions
 #' @export
 Unquote <- function (string) {
   noSingle <- vapply(string, gsub, character(1),
-                     pattern = "^\\s*'(.*)'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
+                     pattern = "^\\s*'\\s*(.*?)\\s*'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
   vapply(noSingle, gsub, character(1),
-         pattern = '^\\s*"(.*)"\\s*$', replacement = "\\1", USE.NAMES = FALSE)
+         pattern = '^\\s*"\\s*(.*?)\\s*"\\s*$', replacement = "\\1", USE.NAMES = FALSE)
 }
 
 #' Decode MorphoBank text
@@ -710,6 +712,7 @@ Unquote <- function (string) {
 #'
 #' @return A string with new lines and punctuation reformatted
 #' @export
+#' @family string parsing functions
 #' @author Martin R. Smith
 #'
 MorphoBankDecode <- function (string) {
@@ -956,7 +959,7 @@ PhydatToString <- PhyToString
 #'
 #' @template MRS
 #' @export
-#' @keywords internal
+#' @family string parsing functions
 RightmostCharacter <- function (string, len = nchar(string)) {
   substr(string, len, len)
 }

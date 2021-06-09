@@ -19,6 +19,13 @@ Add full stop to end of a sentence
 \examples{
 EndSentence("Hello World") # "Hello World."
 }
+\seealso{
+Other string parsing functions: 
+\code{\link{MorphoBankDecode}()},
+\code{\link{RightmostCharacter}()},
+\code{\link{Unquote}()}
+}
 \author{
 Martin R. Smith
 }
+\concept{string parsing functions}

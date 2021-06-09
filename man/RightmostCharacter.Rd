@@ -22,7 +22,13 @@ character of a string.
 RightmostCharacter("Hello, World!")
 
 }
+\seealso{
+Other string parsing functions: 
+\code{\link{EndSentence}()},
+\code{\link{MorphoBankDecode}()},
+\code{\link{Unquote}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
-\keyword{internal}
+\concept{string parsing functions}
