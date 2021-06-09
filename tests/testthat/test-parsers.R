@@ -109,6 +109,11 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
+test_that("StringToPhyDat()", {
+  expect_equal(rep(1:2, each = 4),
+               as.integer(StringToPhyDat('1111????', letters[1:8])))
+})
+
 test_that('PhyToString() works', {
   longLevels <- phyDat(rbind(x = c('-', '?', 0:12), y = c(12:0, '-', '?')),
                        type = 'USER', levels = c(0:6, '-', 7:12))

@@ -752,10 +752,14 @@ MatrixToPhyDat <- function (tokens) {
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
   whichTokens[allTokens == '?'] <- list(levels)
-  contrast <- 1 * t(vapply(whichTokens, function (x) levels %in% x,
-                           logical(length(levels))))
-  rownames(contrast) <- allTokens
-  colnames(contrast) <- levels
+  contrast <- vapply(whichTokens, function (x) levels %in% x,
+                     logical(length(levels)))
+  contrast <- 1 * if (is.null(dim(contrast))) {
+    as.matrix(contrast)
+  } else {
+    t(contrast)
+  }
+  dimnames(contrast) <- list(allTokens, levels)
   dat <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
 
   # Return:
