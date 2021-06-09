@@ -3,7 +3,7 @@
 #' `ApeTime()` reads the time that a tree written with 'ape' was modified,
 #' based on the comment in the Nexus file.
 #'
-#' @param filename Character string specifying path to the file.
+#' @param filepath Character string specifying path to the file.
 #' @param format Format in which to return the time: 'double' as a sortable numeric;
 #'               any other value to return a string in the format
 #'               `YYYY-MM-DD hh:mm:ss`.
@@ -13,11 +13,11 @@
 #' @export
 #' @template MRS
 #'
-ApeTime <- function (filename, format = 'double') {
-  if (length(filename) > 1L) {
-    stop("`filename` must be a character string of length 1")
+ApeTime <- function (filepath, format = 'double') {
+  if (length(filepath) > 1L) {
+    stop("`filepath` must be a character string of length 1")
   }
-  comment <- readLines(filename, n = 2)[2]
+  comment <- readLines(filepath, n = 2)[2]
   Month <- function (month) {
     months <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
@@ -69,7 +69,7 @@ ApeTime <- function (filename, format = 'double') {
 #' `TntText2Tree()` converts text representation of a tree in TNT to an
 #'  object of class `phylo`.
 #'
-#' @param filename character string specifying path to TNT `.tre` file,
+#' @param filepath character string specifying path to TNT `.tre` file,
 #' relative to the R working directory (visible with `getwd()`).
 #' @param relativePath (discouraged) character string specifying location of the
 #' matrix file used to generate the TNT results, relative to the current working
@@ -80,10 +80,10 @@ ApeTime <- function (filename, format = 'double') {
 #' @param tipLabels (optional) character vector specifying the names of the
 #' taxa, in the sequence that they appear in the TNT file.  If not specified,
 #' taxon names will be loaded from the data file linked in the first line of the
-#'  `.tre` file specified in `filename`.
+#'  `.tre` file specified in `filepath`.
 #'
 #' @return `ReadTntTree()` returns a tree of class \code{phylo}, corresponding
-#' to the tree in `filename`, or NULL if no trees are found.
+#' to the tree in `filepath`, or NULL if no trees are found.
 #'
 #' @examples
 #' # In the examples below, TNT has read a matrix from
@@ -135,9 +135,9 @@ ApeTime <- function (filename, format = 'double') {
 #' @template MRS
 #' @importFrom ape read.tree
 #' @export
-ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
+ReadTntTree <- function (filepath, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
-  fileText <- readLines(filename)
+  fileText <- readLines(filepath)
   treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
   if (length(treeStart) < 1) return(NULL)
   if (length(treeStart) > 1) {
@@ -160,7 +160,7 @@ ReadTntTree <- function (filename, relativePath = NULL, keepEnd = 1L,
 
   if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
-      tipLabels <- rownames(ReadTntCharacters(filename))
+      tipLabels <- rownames(ReadTntCharacters(filepath))
       if (is.null(tipLabels)) {
         taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
                           fileText[1], fixed = TRUE)
@@ -602,12 +602,12 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 #' for that character, named with the names of each note-bearing taxon.
 #'
 #' @export
-ReadNotes <- function (filename) {
+ReadNotes <- function (filepath) {
   taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
   charNote.pattern <- "^\\s+TEXT\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
   stateNote.pattern <- "^\\s+TEXT\\s+TAXON=(\\d+)\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
 
-  lines <- enc2utf8(readLines(filename, warn = FALSE))
+  lines <- enc2utf8(readLines(filepath, warn = FALSE))
   upperLines <- toupper(lines)
   trimUpperLines <- trimws(upperLines)
 
