@@ -425,7 +425,7 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 
   lines <- readLines(filepath, warn = FALSE) # Missing EOL is quite common, so
                                              # warning not helpful
-  nexusComment.pattern <- "\\[[^\\]*\\]"
+  nexusComment.pattern <- "\\[[^\\]*?\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
   lines <- trimws(lines)
   lines <- lines[lines != ""]
