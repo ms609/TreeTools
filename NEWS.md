@@ -1,9 +1,10 @@
-# TreeTools 1.4.4.9002
+# TreeTools 1.4.4.9003
 
 - Add `RootTree.matrix()` method for edge matrices.
 - Correct calculation of minimum value in `TCIContext()`.
 - Add `TipLabels.phyDat()` method.
 - Extract tip labels from objects in `StringToPhyDat()`.
+- Additions and improvements to text parsing functions.
 
 # TreeTools 1.4.4
 
