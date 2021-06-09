@@ -40,7 +40,10 @@ Suggests:
     rmarkdown,
     shiny,
     testthat,
-    vdiffr
+    vdiffr (>= 1.0.0)
+Config/Needs/coverage: covr
+Config/Needs/metadata: codemetar
+Config/Needs/website: pkgdown
 LinkingTo: Rcpp
 RdMacros: Rdpack
 LazyData: true
