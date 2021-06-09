@@ -80,7 +80,7 @@ jobs:
       - name: vdiffr v1.0.0 (Windows)
         if: runner.os == 'Windows'
         run: |
-          remotes::install_cran("vdiffr", type = 'source')
+          remotes::install_cran("vdiffr", type = 'source') # until binary available
         shell: Rscript {0}
 
       - name: Check

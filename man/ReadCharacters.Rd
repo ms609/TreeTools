@@ -13,7 +13,7 @@ ReadCharacters(filepath, character_num = NULL, session = NULL)
 
 ReadTntCharacters(filepath, character_num = NULL, type = NULL, session = NULL)
 
-ReadNotes(filename)
+ReadNotes(filepath)
 
 ReadAsPhyDat(filepath)
 
