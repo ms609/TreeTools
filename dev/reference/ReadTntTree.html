@@ -160,7 +160,7 @@
     <p>Read a tree from TNT's parenthetical output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='va'>filename</span>, relativePath <span class='op'>=</span> <span class='cn'>NULL</span>, keepEnd <span class='op'>=</span> <span class='fl'>1L</span>, tipLabels <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='va'>filepath</span>, relativePath <span class='op'>=</span> <span class='cn'>NULL</span>, keepEnd <span class='op'>=</span> <span class='fl'>1L</span>, tipLabels <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
 <span class='fu'>TntText2Tree</span><span class='op'>(</span><span class='va'>treeText</span><span class='op'>)</span>
 
@@ -170,7 +170,7 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filename</th>
+      <th>filepath</th>
       <td><p>character string specifying path to TNT <code>.tre</code> file,
 relative to the R working directory (visible with <code><a href='https://rdrr.io/r/base/getwd.html'>getwd()</a></code>).</p></td>
     </tr>
@@ -191,7 +191,7 @@ the file path to conserve when creating relative path (see examples).</p></td>
       <td><p>(optional) character vector specifying the names of the
 taxa, in the sequence that they appear in the TNT file.  If not specified,
 taxon names will be loaded from the data file linked in the first line of the
-<code>.tre</code> file specified in <code>filename</code>.</p></td>
+<code>.tre</code> file specified in <code>filepath</code>.</p></td>
     </tr>
     <tr>
       <th>treeText</th>
@@ -203,7 +203,7 @@ format output by TNT.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>ReadTntTree()</code> returns a tree of class <code>phylo</code>, corresponding
-to the tree in <code>filename</code>, or NULL if no trees are found.</p>
+to the tree in <code>filepath</code>, or NULL if no trees are found.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><a href='http://www.lillo.org.ar/phylogeny/tnt/'>TNT</a> is software for parsimony
