@@ -166,7 +166,7 @@ CharacterInformation <- function (tokens) {
 #'
 #' @template MRS
 #' @export
-SplitInformation <- function (A, B) {
+SplitInformation <- function (A, B = A[1]) {
   -(Log2TreesMatchingSplit(A, B) - Log2Unrooted.int(A + B))
 }
 
