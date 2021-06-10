@@ -201,6 +201,11 @@ AddTip <- function (tree,
   edgeLengths <- tree$edge.length
   lengths <- !is.null(edgeLengths)
 
+  if (is.character(where)) {
+    tmp <- match(where, TipLabels(tree))
+    if (is.na(tmp)) stop("No tip labelled '", where, "'")
+    where <- tmp
+  }
   ## find the row of 'where' before renumbering
   if (where < 1L || where == rootNode) {
     case <- 1L

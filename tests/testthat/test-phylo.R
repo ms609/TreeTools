@@ -26,6 +26,13 @@ test_that("AddTip() at root", {
   AddTip(nasty, 12L)
 })
 
+test_that("AddTip() with tip name", {
+  bal8 <- BalancedTree(8)
+  expect_error(AddTip(bal8, 'invalid tip'))
+  expect_equal(AddTip(bal8, 1L), AddTip(bal8, 't1'))
+  expect_equal(AddTip(nasty, 1L), AddTip(nasty, 'a'))
+})
+
 test_that("AddTip() with edge lengths", {
   pec8 <- PectinateTree(8)
   pec8$edge.length <- rep(1L, 14L)

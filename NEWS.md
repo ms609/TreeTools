@@ -1,4 +1,4 @@
-# TreeTools 1.4.4.9003
+# TreeTools 1.4.4.9004
 
 - Add `RootTree.matrix()` method for edge matrices.
 - Correct calculation of minimum value in `TCIContext()`.
