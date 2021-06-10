@@ -112,6 +112,8 @@ test_that("Matrix converts to phyDat", {
 test_that("StringToPhyDat()", {
   expect_equal(rep(1:2, each = 4),
                as.integer(StringToPhyDat('1111????', letters[1:8])))
+  expect_equal(rep(1:2, each = 4),
+               as.integer(StringToPhyDat('----????', letters[1:8])))
 })
 
 test_that('PhyToString() works', {

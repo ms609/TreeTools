@@ -5,6 +5,8 @@
 - Add `TipLabels.phyDat()` method.
 - Extract tip labels from objects in `StringToPhyDat()`.
 - Additions and improvements to text parsing functions.
+- Add `NULL` methods for tree reordering functions.
+- Support `AddTip(tree, where = "tip name")`.
 
 # TreeTools 1.4.4
 
