@@ -27,6 +27,12 @@ test_that("Node support colours consistent", {
                SupportColour((-1):3 / 3, scale = 1:101, outOfRange = 'oor'))
 })
 
+test_that("SplitFrequency() handles four-split trees", {
+  trees <- AddTipEverywhere(BalancedTree(3))
+  trees <- c(trees[1], trees)
+  expect_equal(c('7' = 2L), SplitFrequency(trees[[1]], trees))
+})
+
 test_that("LabelSplits()", {
   tree <- BalancedTree(9)
 

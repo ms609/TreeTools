@@ -1,4 +1,4 @@
-# TreeTools 1.4.4.9004
+# TreeTools 1.4.4.9005
 
 - Add `RootTree.matrix()` method for edge matrices.
 - Correct calculation of minimum value in `TCIContext()`.
@@ -7,6 +7,7 @@
 - Additions and improvements to text parsing functions.
 - Add `NULL` methods for tree reordering functions.
 - Support `AddTip(tree, where = "tip name")`.
+- `SplitFrequency()` supports four-leaf trees.
 
 # TreeTools 1.4.4
 

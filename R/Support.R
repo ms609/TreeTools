@@ -31,9 +31,14 @@ SplitFrequency <- function(reference, forest) {
   forestSplits <- as.Splits(forest,
                             tipLabels = attr(referenceSplits, 'tip.label'))
 
-  ret <- rowSums(vapply(forestSplits,
-                        function (cf) referenceSplits %in% cf,
-                        logical(length(referenceSplits))))
+  logicals <- vapply(forestSplits,
+                     function (cf) referenceSplits %in% cf,
+                     logical(length(referenceSplits)))
+  ret <- if (is.null(dim(logicals))) {
+    sum(logicals)
+  } else {
+    rowSums(logicals)
+  }
   names(ret) <- rownames(referenceSplits)
 
   # Return:
