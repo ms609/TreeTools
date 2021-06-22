@@ -2,4 +2,4 @@
 #   R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < tests/thisfile.R
 # First build and install the package.
 library('TreeTools')
-devtools::test()
+testthat::test_dir()

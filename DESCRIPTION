@@ -35,6 +35,7 @@ Imports:
     R.cache,
     Rdpack
 Suggests:
+    devtools,
     knitr,
     Rcpp,
     rmarkdown,
