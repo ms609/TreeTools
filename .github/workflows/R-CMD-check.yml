@@ -77,12 +77,6 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: vdiffr v1.0.0 (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          remotes::install_cran("vdiffr", type = 'source') # until binary available
-        shell: Rscript {0}
-
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
