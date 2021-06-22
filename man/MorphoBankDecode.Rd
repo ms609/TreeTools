@@ -10,10 +10,11 @@ MorphoBankDecode(string)
 \item{string}{String to process}
 }
 \value{
-A string with new lines and punctuation reformatted
+\code{MorphoBankDecode()} returns a string with new lines and punctuation
+reformatted.
 }
 \description{
-Converts strings from MorphoBank notes into a format compatible with Latex / bookdown
+Converts strings from MorphoBank notes into a Latex-compatible format.
 }
 \seealso{
 Other string parsing functions: 

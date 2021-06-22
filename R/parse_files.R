@@ -706,15 +706,15 @@ Unquote <- function (string) {
 
 #' Decode MorphoBank text
 #'
-#' Converts strings from MorphoBank notes into a format compatible with Latex / bookdown
+#' Converts strings from MorphoBank notes into a Latex-compatible format.
 #'
 #' @param string String to process
 #'
-#' @return A string with new lines and punctuation reformatted
-#' @export
+#' @return `MorphoBankDecode()` returns a string with new lines and punctuation
+#' reformatted.
 #' @family string parsing functions
 #' @author Martin R. Smith
-#'
+#' @export
 MorphoBankDecode <- function (string) {
   string <- gsub("^n", "  \n", string, fixed = TRUE)
   string <- gsub("''", "'", string, fixed = TRUE)
