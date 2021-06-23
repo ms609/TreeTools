@@ -62,7 +62,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
+          remotes::install_cran(c("rcmdcheck", 'devtools'))
         shell: Rscript {0}
 
       - name: Install TreeTools

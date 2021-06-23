@@ -1,19 +1,21 @@
-# TreeTools 1.4.4.9005
+# TreeTools 1.4.5
 
-- Add `RootTree.matrix()` method for edge matrices.
 - Correct calculation of minimum value in `TCIContext()`.
-- Add `TipLabels.phyDat()` method.
 - Extract tip labels from objects in `StringToPhyDat()`.
-- Additions and improvements to text parsing functions.
-- Add `NULL` methods for tree reordering functions.
 - Support `AddTip(tree, where = "tip name")`.
 - `SplitFrequency()` supports four-leaf trees.
+- Add `RootTree.matrix()` method for edge matrices.
+- Add `TipLabels.phyDat()` method.
+- Add `NULL` methods for tree reordering functions.
+- Additions and improvements to text parsing functions.
+
 
 # TreeTools 1.4.4
 
 - Add `NTip.phyDat()` method.
 - Update `MakeTreeBinary()` docs and tests to reflect updated behaviour of 
   `ape::multi2di()` in 'ape' v5.5.
+
 
 # TreeTools 1.4.3
 
@@ -27,16 +29,19 @@
  - Improvements to `ReadTntCharacters()` character block extraction
    ([#50](https://github.com/ms609/TreeTools/issues/50)).
 
+
 # TreeTools 1.4.2
 
  - Support star trees in `RootTree()`.
  - Improve memory handling in `root_on_node()`.
  - Documentation linkage.
 
+
 # TreeTools 1.4.1
 
  - `MSTEdges()` supports distance matrices with > 256 entries.
  - Package 'vdiffr' used conditionally.
+
 
 # TreeTools 1.4.0
 
