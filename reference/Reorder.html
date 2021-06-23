@@ -91,7 +91,7 @@ ape::postorder" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
       </span>
     </div>
 
@@ -184,6 +184,9 @@ Calling this C function directly is approximately twice as fast as using
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>Cladewise</span><span class='op'>(</span><span class='va'>tree</span>, nTip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1L</span>, <span class='va'>edge</span><span class='op'>)</span>
 
+<span class='co'># S3 method for `NULL`</span>
+<span class='fu'>Cladewise</span><span class='op'>(</span><span class='va'>tree</span>, nTip <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1L</span>, <span class='va'>edge</span><span class='op'>)</span>
+
 <span class='fu'>ApePostorder</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
@@ -192,12 +195,18 @@ Calling this C function directly is approximately twice as fast as using
 <span class='co'># S3 method for list</span>
 <span class='fu'>ApePostorder</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
 
+<span class='co'># S3 method for `NULL`</span>
+<span class='fu'>ApePostorder</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
+
 <span class='co'># S3 method for multiPhylo</span>
 <span class='fu'>ApePostorder</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
 
 <span class='fu'>Postorder</span><span class='op'>(</span><span class='va'>tree</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, renumber <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
+<span class='fu'>Postorder</span><span class='op'>(</span><span class='va'>tree</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, renumber <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='co'># S3 method for `NULL`</span>
 <span class='fu'>Postorder</span><span class='op'>(</span><span class='va'>tree</span>, force <span class='op'>=</span> <span class='cn'>FALSE</span>, renumber <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for list</span>
@@ -222,6 +231,9 @@ Calling this C function directly is approximately twice as fast as using
 <span class='co'># S3 method for multiPhylo</span>
 <span class='fu'>Pruningwise</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
 
+<span class='co'># S3 method for `NULL`</span>
+<span class='fu'>Pruningwise</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>)</span>
+
 <span class='fu'>Preorder</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
@@ -234,6 +246,9 @@ Calling this C function directly is approximately twice as fast as using
 <span class='fu'>Preorder</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
 
 <span class='co'># S3 method for list</span>
+<span class='fu'>Preorder</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+
+<span class='co'># S3 method for `NULL`</span>
 <span class='fu'>Preorder</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>

@@ -49,6 +49,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/EdgeDistances.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/EndSentence.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/EnforceOutgroup.html</loc>
   </url>
   <url>
@@ -80,6 +83,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/MorphoBankDecode.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/N1Spr.html</loc>
@@ -209,6 +215,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Unquote.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc>

@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
       </span>
     </div>
 
@@ -164,6 +164,8 @@
 
 <span class='fu'>ReadTntCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
+<span class='fu'>ReadNotes</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
+
 <span class='fu'>ReadAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
 
 <span class='fu'>ReadTntAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
@@ -215,6 +217,13 @@ a list of length one containing a character string explaining why the
 function call was unsuccessful.</p>
 <p><code>ReadAsPhyDat()</code> and <code>ReadTntAsPhyDat()</code> return a
 <code><a href='https://rdrr.io/pkg/phangorn/man/phyDat.html'>phyDat</a></code> object.</p>
+<p><code>ReadNotes()</code> returns a list in which each entry corresponds to a
+single character, and itself contains a list of with two elements:</p><ol>
+<li><p>A single character object listing any notes associated with the character</p></li>
+<li><p>A named character vector listing the notes associated with each taxon
+for that character, named with the names of each note-bearing taxon.</p></li>
+</ol>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Tested with matrices downloaded from <a href='https://morphobank.org'>MorphoBank</a>,
@@ -250,7 +259,7 @@ instead.</p></li>
 &#8220;Nexus: an extensible file format for systematic information.&#8221;
 <em>Systematic Biology</em>, <b>46</b>, 590--621.
 doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</a>
-, <a href='https://doi.org/10.1093/sysbio/46.4.590'>https://doi.org/10.1093/sysbio/46.4.590</a>.</p>
+.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
