@@ -109,6 +109,14 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
+test_that("MatrixToPhyDat() warns when characters blank", {
+  # May occur when loading an excel file with empty cells
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,'','','',0,1,0,1,2,2,2,2,2,2,2,'?'),
+                nrow = 3, byrow = TRUE)
+  rownames(mat) <- LETTERS[1:3]
+  expect_warning(MatrixToPhyDat(mat))
+})
+
 test_that("StringToPhyDat()", {
   expect_equal(rep(1:2, each = 4),
                as.integer(StringToPhyDat('1111????', letters[1:8])))

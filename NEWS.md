@@ -1,3 +1,7 @@
+# TreeTools 1.4.5.9000 (development)
+
+- Warn when empty cells passed to `MatrixToPhyDat()`.
+
 # TreeTools 1.4.5
 
 - Correct calculation of minimum value in `TCIContext()`.

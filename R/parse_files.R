@@ -746,6 +746,13 @@ MorphoBankDecode <- function (string) {
 #' @export
 MatrixToPhyDat <- function (tokens) {
   allTokens <- unique(as.character(tokens))
+  if (any(nchar(allTokens) == 0)) {
+    problems <- apply(tokens, 1, function (x) which(nchar(x) == 0))
+    problemTaxa <- vapply(problems, length, 1) > 0
+    problemTaxa <- names(problemTaxa[problemTaxa])
+    warning("Blank tokens ('') found in taxa: ",
+            paste0(problemTaxa, collapse = ', '))
+  }
   tokenNumbers <- seq_along(allTokens)
   names(tokenNumbers) <- allTokens
   matches <- gregexpr("[\\d\\-\\w]", allTokens, perl = TRUE)
