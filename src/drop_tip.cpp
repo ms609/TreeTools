@@ -6,11 +6,11 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
-  IntegerMatrix preorder = TreeTools::preorder_edges_and_nodes(edge(0, _), edge(1, _));
+  IntegerMatrix preorder = TreeTools::preorder_edges_and_nodes(edge(_, 0), edge(_, 1));
 
   const int32 root_node = preorder(0, 0),
     start_tip = root_node - 1,
-    start_edge = edge.nrow(),
+    start_edge = preorder.nrow(),
     start_node = start_edge - start_tip,
     max_node = start_node + start_tip
   ;
@@ -25,23 +25,29 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
   std::unique_ptr<int32[]> delete_edge = std::make_unique<int32[]>(start_edge);
 
+  Rcout << "Starting on tree with " << start_tip << " tips, root = "
+        << root_node <<", " << start_edge << " edges.\n";
+
   for (int32 i = start_edge; i--; ) {
-    const int32 child = edge(i, 1);
+    const int32 child = preorder(i, 1);
     bool delete_this = 0;
     if (child <= start_tip) {
       for (int32 j = still_to_drop; j--; ) {
+        Rcout << j << ": " << child << " == " << drop[j] << "?\n";
         if (child == drop[j]) {
+          Rcout << " Delete " << int(preorder(i, 0)) << "-"<< child << ".\n";
           droppers[j] = droppers[still_to_drop--];
           delete_this = 1;
           break;
         }
-        if (delete_this) {
-          delete_edge[n_deleted++] = i;
-          delete_this = 0;
-        } else {
-          ret(i - still_to_drop, _) = edge(i, _);
-        }
       }
+    }
+    if (delete_this) {
+      delete_edge[n_deleted++] = i;
+      delete_this = 0;
+    } else {
+      Rcout << "Retain: "<<int(preorder(i, 0))<<"-"<<int(preorder(i, 1))<<"\n";
+      ret(i - still_to_drop, _) = preorder(i, _);
     }
   }
 
