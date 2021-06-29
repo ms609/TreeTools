@@ -1,6 +1,7 @@
 # TreeTools 1.4.5.9000 (development)
 
 - Warn when empty cells passed to `MatrixToPhyDat()`.
+- `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
 
 # TreeTools 1.4.5
 

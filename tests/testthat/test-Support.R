@@ -6,7 +6,7 @@ test_that("Node supports calculated correctly", {
     swapFE  = ape::read.tree(text = "((((((A,B),C),D),F),E),out);"),
     DEClade = ape::read.tree(text = "(((((A,B),C),(D,E)),F),out);"),
     swapBC  = ape::read.tree(text = "((((((A,C),B),D),E),F),out);"),
-    DbyA    = ape::read.tree(text = "((((((A,D),C),B),E),F),out);")
+    DbyA    = ape::read.tree(text = "((((((A,D),C),B),E),F,G),out);")
   )
   expect_equal(c('10' = 4, '11' = 4, '12' = 4, '13' = 3),
                SplitFrequency(treeSample$correct, treeSample))
