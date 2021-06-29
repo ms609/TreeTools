@@ -456,46 +456,8 @@ DropTip.phylo <- function (tree, tip) {
     if (all(drop)) {
       return (NULL)
     }
-    edge <- tree$edge
-    edge <- RenumberTree(edge[, 1], edge[, 2]) # Necessary to handle 'nasty node ordering'
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    external <- child <= nTip
 
-    # Drop tips:
-    keep <- !child %in% which(drop)
-
-    # Drop dangling nodes:
-    repeat {
-      nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
-      if (all(nonDanglers)) break
-      keep[keep] <- nonDanglers
-    }
-
-    parent <- parent[keep]
-    child <- child[keep]
-
-    # Collapse singles:
-    singletons <- tabulate(parent) == 1
-    if (any(singletons)) {
-      #edgeBelowSingles <- sort(match(which(singletons), parent),
-      #                     decreasing = TRUE) # If cladewise but not nasty ordering
-      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
-      sortedSingles <- parent[edgeBelowSingles]
-      edgeAboveSingles <- match(sortedSingles, child)
-
-      for (i in seq_along(sortedSingles)) {
-        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
-      }
-      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
-    } else {
-      edge <- c(parent, child)
-    }
-
-    newNumbers <- integer(max(edge))
-    uniqueInts <- unique(edge)
-    newNumbers[uniqueInts] <- rank(uniqueInts)
-    edge <- matrix(newNumbers[edge], ncol = 2L)
+    edge <- drop_tips(tree$edge, which(drop))
     # Return:
     structure(list(
       edge = edge,
