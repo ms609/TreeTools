@@ -436,9 +436,18 @@ DropTip.phylo <- function (tree, tip) {
   } else if (is.numeric(tip)) {
     nNodes <- nTip + tree$Nnode
     if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
-    if (any(tip < 1L)) warning("tip must be > 0")
+    if (any(tip < 1L)) {
+      warning("`tip` must be > 0")
+      tip <- tip[tip > 0L]
+    }
 
-    drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
+    drop <- logical(nTip)
+    if (any(tip > nTip)) {
+      drop[tip <= nTip] <- TRUE
+      drop[unlist(Descendants(tree, tip[tip > nTip]))] <- TRUE
+    } else {
+      drop[tip] <- TRUE
+    }
   } else {
     stop("`tip` must be of type character or numeric")
   }
