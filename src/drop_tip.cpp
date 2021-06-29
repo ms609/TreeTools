@@ -4,9 +4,13 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/types.h"
 #include "../inst/include/TreeTools/renumber_tree.h"
 
-#define NODE_COUNT(x) node_count[x - start_tip - 1]
+#define ASSERT_NODE_COUNT(x) assert((x) - start_tip - 1 > 0); assert((x) < (start_tip + start_node + 1))
+#define NODE_COUNT(x) node_count[(x) - start_tip - 1]
 
-#define RAISE_EDGE(i) if (n_deleted) ret((i) - n_deleted, _) = ret((i), _)
+#define RAISE_EDGE(i) assert((i) >= n_deleted);                       \
+  Rcout << " Raising edge " << i << " to " << (i - n_deleted) << ": " \
+        << int(ret(i, 0)) << " " << int(ret(i, 1)) << "\n";           \
+  if (n_deleted) ret((i) - n_deleted, _) = ret((i), _)
 
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
@@ -27,9 +31,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
   IntegerVector droppers = drop;
   IntegerMatrix ret(ret_edges, 2);
 
-  std::unique_ptr<int32[]>
-    node_count = std::make_unique<int32[]>(start_node)
-  ;
+  std::unique_ptr<int32[]> node_count = std::make_unique<int32[]>(start_node);
 
   Rcout << "Starting on tree with " << start_tip << " tips, root = "
         << root_node <<", " << start_edge << " edges.\n";
@@ -50,30 +52,45 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       n_deleted++;
       delete_this = 0;
     } else {
+      ASSERT_NODE_COUNT(preorder(i, 0));
+      NODE_COUNT(preorder(i, 0))++;
       ret(i - still_to_drop, _) = preorder(i, _);
-      NODE_COUNT(preorder(i, 0);)++;
     }
+  }
+
+  for (int i = 0; i != start_node; i++) {
+    Rcout << node_count[i] << " instances of node ";
+    Rcout << (i + start_tip + 1) << "\n";
   }
 
   do {
     n_deleted = 0;
-    Rcout << ret_edges << " edges in ret\n";
-    for (int32 i = 0; i != ret_edges; i++) { // postorder traversal
-      Rcout << "   [" << i <<",]" << ret(i, 0) << "   " << ret(i, 1) << "\n";
-      if (NODE_COUNT(ret(i, 1)) == 0) {
-        Rcout << "Deleting dead end edge " << i <<"\n";
-        NODE_COUNT(ret(i, 0))--;
-        ++n_deleted;
-      } else if (NODE_COUNT(ret(i, 1)) == 1) {
-        Rcout << "Deleting singleton edge " << i <<"\n";
-        NODE_COUNT(ret(i, 1))--;
-        if (n_deleted) {
-          ret(i - n_deleted, 0) = ret(i, 0);
-          ret(i - n_deleted, 1) = ret(i + 1, 1);
+    Rcout << ret_edges << " edges in ret\n\n";
+    for (int32 i = 0; i < ret_edges; i++) { // postorder traversal
+      Rcout << "   [" << i << ",]  " << ret(i, 0) << "   " << ret(i, 1) << "\n";
+      const int32 child = ret(i, 1);
+      if (child > start_tip) {
+        ASSERT_NODE_COUNT(ret(i, 1));
+        if (NODE_COUNT(ret(i, 1)) == 0) {
+          Rcout << "Deleting dead end edge " << i <<"\n";
+          ASSERT_NODE_COUNT(ret(i, 0));
+          NODE_COUNT(ret(i, 0))--;
+          ++n_deleted;
+        } else if (NODE_COUNT(ret(i, 1)) == 1) {
+          Rcout << "Deleting singleton edge " << i << ": "
+          << ret(i, 0) << " " << ret(i + 1, 1) <<"\n";
+          NODE_COUNT(ret(i, 1))--;
+          if (n_deleted) {
+            ret(i - n_deleted, 0) = ret(i, 0);
+            ret(i - n_deleted, 1) = ret(i + 1, 1);
+          } else {
+            ret(i, 1) = ret(i + 1, 1);
+          }
+          ++n_deleted;
+          ++i;
         } else {
-          ret(i, 1) = ret(i + 1, 1);
+          RAISE_EDGE(i);
         }
-        ++n_deleted;
       } else {
         RAISE_EDGE(i);
       }
