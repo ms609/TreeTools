@@ -425,7 +425,6 @@ DropTip <- function (tree, tip) UseMethod("DropTip")
 #' @rdname DropTip
 #' @export
 DropTip.phylo <- function (tree, tip) {
-  #TODO Rewrite in C.
   labels <- tree$tip.label
   nTip <- length(labels)
   if (is.character(tip)) {
@@ -457,7 +456,7 @@ DropTip.phylo <- function (tree, tip) {
       return (NULL)
     }
 
-    edge <- drop_tips(tree$edge, which(drop))
+    edge <- drop_tip(tree$edge, which(drop))
     # Return:
     structure(list(
       edge = edge,
