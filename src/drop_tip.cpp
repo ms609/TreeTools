@@ -15,8 +15,10 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
   IntegerMatrix preorder = TreeTools::preorder_edges_and_nodes(edge(_, 0), edge(_, 1));
+  const IntegerMatrix preorder = TreeTools::preorder_edges_and_nodes(edge(_, 0), edge(_, 1));
 
-  const int32 root_node = preorder(0, 0),
+  const int32
+    root_node = preorder(0, 0),
     start_tip = root_node - 1,
     start_edge = preorder.nrow(),
     start_node = start_edge - start_tip
@@ -28,10 +30,12 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     ret_edges = start_edge - still_to_drop
   ;
 
-  IntegerVector droppers = drop;
+  IntegerVector droppers = clone(drop);
   IntegerMatrix ret(ret_edges, 2);
 
-  std::unique_ptr<int32[]> node_count = std::make_unique<int32[]>(start_node);
+  std::unique_ptr<int32[]>
+    node_count = std::make_unique<int32[]>(start_node),
+  ;
 
   Rcout << "Starting on tree with " << start_tip << " tips, root = "
         << root_node <<", " << start_edge << " edges.\n";
