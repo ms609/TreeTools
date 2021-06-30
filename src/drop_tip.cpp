@@ -10,9 +10,10 @@ using namespace Rcpp;
 #define RAISE_EDGE(i) assert((i) >= n_deleted);                       \
   if (n_deleted) ret((i) - n_deleted, _) = ret((i), _)
 
+// edges must be in preorder.
+// drop is a vector of integers between 1 and nTip marking tips to drop.
 // [[Rcpp::export]]
-IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
-  const IntegerMatrix preorder = TreeTools::preorder_edges_and_nodes(edge(_, 0), edge(_, 1));
+IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) {
 
   const int32
     root_node = preorder(0, 0),
@@ -25,7 +26,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     still_to_drop = drop.length(),
     n_deleted = 0,
     ret_edges = start_edge - still_to_drop,
-    next_no = start_tip + 2 - still_to_drop // tips + root node
+    next_no = start_tip - still_to_drop + 1
   ;
 
   IntegerVector droppers = clone(drop);
@@ -38,7 +39,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
 
   std::sort(droppers.begin(), droppers.end());
-  for (int32 i = 1; i != start_tip + 2; i++) { // tips + root node
+  for (int32 i = 1; i != start_tip + 1; i++) {
     if (n_deleted != droppers.length() && i == droppers[n_deleted]) {
       ++n_deleted;
     } else {
@@ -60,8 +61,8 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
   }
 
   do {
-    n_deleted = 0;
-    for (int32 i = 0; i < ret_edges; i++) { // postorder traversal
+    n_deleted = (NODE_COUNT(ret(0, 0)) < 2) ? 1 : 0;
+    for (int32 i = n_deleted; i < ret_edges; i++) { // preorder traversal
       const int32 child = ret(i, 1);
       if (child > start_tip) {
         ASSERT_NODE_COUNT(ret(i, 1));
@@ -89,6 +90,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     ret_edges -= n_deleted;
   } while (n_deleted);
 
+  new_no[ret(0, 0)] = next_no++;
   for (int32 i = 0; i != ret_edges; i++) {
     const int32 parent = ret(i, 0), child = ret(i, 1);
     assert(parent < (start_tip + start_node + 1));

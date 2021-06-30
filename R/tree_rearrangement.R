@@ -425,6 +425,7 @@ DropTip <- function (tree, tip) UseMethod("DropTip")
 #' @rdname DropTip
 #' @export
 DropTip.phylo <- function (tree, tip) {
+  tree <- Preorder(tree)
   labels <- tree$tip.label
   nTip <- length(labels)
   if (is.character(tip)) {
@@ -466,7 +467,7 @@ DropTip.phylo <- function (tree, tip) {
 
   } else {
     # Return:
-    Preorder(tree)
+    tree
   }
 }
 
