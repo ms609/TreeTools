@@ -8,8 +8,6 @@ using namespace Rcpp;
 #define NODE_COUNT(x) node_count[(x) - start_tip - 1]
 
 #define RAISE_EDGE(i) assert((i) >= n_deleted);                       \
-  Rcout << " Raising edge " << i << " to " << (i - n_deleted) << ": " \
-        << int(ret(i, 0)) << " " << int(ret(i, 1)) << "\n";           \
   if (n_deleted) ret((i) - n_deleted, _) = ret((i), _)
 
 // [[Rcpp::export]]
@@ -35,11 +33,9 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
   std::unique_ptr<int32[]>
     node_count = std::make_unique<int32[]>(start_node),
+    new_no = std::make_unique<int32[]>(start_tip + start_node + 1)
   ;
 
-  Rcout << "Starting on tree with " << start_tip << " tips, root = "
-        << root_node <<", " << start_node << " nodes, "
-        << start_edge << " edges.\n";
 
   std::sort(droppers.begin(), droppers.end());
   for (int32 i = 1; i != start_tip + 2; i++) { // tips + root node
@@ -63,27 +59,17 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     }
   }
 
-  for (int i = 0; i != start_node; i++) {
-    Rcout << node_count[i] << " instances of node ";
-    Rcout << (i + start_tip + 1) << "\n";
-  }
-
   do {
     n_deleted = 0;
-    Rcout << "\n" << ret_edges << " edges in ret\n\n";
     for (int32 i = 0; i < ret_edges; i++) { // postorder traversal
-      Rcout << "   [" << i << ",]  " << ret(i, 0) << "   " << ret(i, 1) << "\n";
       const int32 child = ret(i, 1);
       if (child > start_tip) {
         ASSERT_NODE_COUNT(ret(i, 1));
         if (NODE_COUNT(ret(i, 1)) == 0) {
-          Rcout << "Deleting dead end edge " << i <<"\n";
           ASSERT_NODE_COUNT(ret(i, 0));
           NODE_COUNT(ret(i, 0))--;
           ++n_deleted;
         } else if (NODE_COUNT(ret(i, 1)) == 1) {
-          Rcout << "Deleting singleton edge " << i << ": "
-          << ret(i, 0) << " " << ret(i + 1, 1) <<"\n";
           NODE_COUNT(ret(i, 1))--;
           if (n_deleted) {
             ret(i - n_deleted, 0) = ret(i, 0);
@@ -113,6 +99,9 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       new_no[child] = next_no++;
     }
 
+//
+//     Rcout << "    [" << i << ",]  " << new_no[parent] << "[" << parent << "] "
+//           << new_no[child] << "[" << child << "]\n";
 
     ret(i, 0) = new_no[parent];
     ret(i, 1) = new_no[child];
