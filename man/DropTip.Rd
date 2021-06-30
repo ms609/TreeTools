@@ -4,6 +4,7 @@
 \alias{DropTip}
 \alias{DropTip.phylo}
 \alias{DropTip.multiPhylo}
+\alias{KeepTip}
 \title{Drop tips from tree}
 \usage{
 DropTip(tree, tip)
@@ -11,6 +12,8 @@ DropTip(tree, tip)
 \method{DropTip}{phylo}(tree, tip)
 
 \method{DropTip}{multiPhylo}(tree, tip)
+
+KeepTip(tree, tip)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
@@ -23,6 +26,9 @@ node.}
 \value{
 \code{DropTip()} returns a tree of class \code{phylo}, in \link{Preorder}, with the
 requested leaves removed.
+
+\code{KeepTip()} returns \code{tree} with all leaves not in \code{tip} removed,
+in preorder.
 }
 \description{
 \code{DropTip()} removes specified tips from a phylogenetic tree, collapsing

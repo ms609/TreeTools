@@ -479,6 +479,24 @@ DropTip.multiPhylo <- function (tree, tip) {
   tree
 }
 
+#' @rdname DropTip
+#' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
+#' in preorder.
+#' @export
+KeepTip <- function (tree, tip) {
+  labels <- if (is.character(tip)) {
+    TipLabels(tree)
+  } else {
+    seq_len(NTip(tree))
+  }
+  if (!all(tip %in% labels)) {
+    missing <- !tip %in% labels
+    warning("Tips not in tree: ", paste0(tip[missing], collapse = ', '))
+  }
+  keep <- setdiff(labels, tip)
+  DropTip(tree, keep)
+}
+
 #' Generate binary tree by collapsing polytomies
 #'
 #' `MakeTreeBinary()` resolves, at random, all polytomies in a tree or set of

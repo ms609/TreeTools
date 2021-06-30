@@ -267,6 +267,13 @@ test_that("DropTip() works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
+test_that("KeepTip() works", {
+  expect_equal(BalancedTree(paste0('t', 5:8)),
+    expect_warning(KeepTip(BalancedTree(8), paste0('t', 5:9))))
+  expect_equal(BalancedTree(paste0('t', 5:8)),
+    expect_warning(KeepTip(BalancedTree(8), 5:9)))
+})
+
 test_that("Binarification is uniform", {
   set.seed(0)
   Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {

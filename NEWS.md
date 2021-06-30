@@ -2,7 +2,7 @@
 
 - Warn when empty cells passed to `MatrixToPhyDat()`.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
-- Improve performance of `DropTip()`
+- Add `KeepTip()` and improve performance of `DropTip()`.
 
 # TreeTools 1.4.5
 
