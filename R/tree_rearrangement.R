@@ -429,10 +429,12 @@ DropTip.phylo <- function (tree, tip) {
   labels <- tree$tip.label
   nTip <- length(labels)
   if (is.character(tip)) {
-    found <- tip %in% labels
-    if (!all(found)) warning(paste(tip[!found], collapse = ', '),
-                             " not present in tree")
-    drop <- tree$tip.label %in% tip[found]
+    drop <- match(tip, tree$tip.label)
+    missing <- is.na(drop)
+    if (any(missing)) {
+      warning(paste(tip[missing], collapse = ', '), " not present in tree")
+      drop <- drop[!missing]
+    }
   } else if (is.numeric(tip)) {
     nNodes <- nTip + tree$Nnode
     if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
@@ -441,28 +443,27 @@ DropTip.phylo <- function (tree, tip) {
       tip <- tip[tip > 0L]
     }
 
-    drop <- logical(nTip)
     if (any(tip > nTip)) {
-      drop[tip <= nTip] <- TRUE
-      drop[unlist(Descendants(tree, tip[tip > nTip]))] <- TRUE
+      drop <- c(tip[tip <= nTip],
+                unlist(Descendants(tree, tip[tip > nTip])))
     } else {
-      drop[tip] <- TRUE
+      drop <- tip
     }
   } else {
     stop("`tip` must be of type character or numeric")
   }
 
-  if (any(drop)) {
-    if (all(drop)) {
+  if (length(drop) > 0) {
+    if (length(drop) == nTip) {
       return (NULL)
     }
 
-    edge <- drop_tip(tree$edge, which(drop))
+    edge <- drop_tip(tree$edge, drop)
     # Return:
     structure(list(
       edge = edge,
-      tip.label = labels[!drop],
-      Nnode = max(edge) - sum(!drop)
+      tip.label = labels[-drop],
+      Nnode = max(edge) - nTip + length(drop)
     ), class = 'phylo', order = 'preorder')
 
   } else {
