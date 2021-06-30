@@ -437,7 +437,10 @@ DropTip.phylo <- function (tree, tip) {
     }
   } else if (is.numeric(tip)) {
     nNodes <- nTip + tree$Nnode
-    if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
+    if (any(tip > nNodes)) {
+      warning("Tree only has ", nNodes, " nodes")
+      tip <- tip[tip <= nNodes]
+    }
     if (any(tip < 1L)) {
       warning("`tip` must be > 0")
       tip <- tip[tip > 0L]
@@ -458,18 +461,13 @@ DropTip.phylo <- function (tree, tip) {
       return (NULL)
     }
 
-    edge <- drop_tip(tree$edge, drop)
-    # Return:
-    structure(list(
-      edge = edge,
-      tip.label = labels[-drop],
-      Nnode = max(edge) - nTip + length(drop)
-    ), class = 'phylo', order = 'preorder')
-
-  } else {
-    # Return:
-    tree
+    tree$edge <- drop_tip(tree$edge, drop)
+    attr(tree, 'order') <- 'preorder'
+    tree$tip.label <- labels[-drop]
+    tree$Nnode <- max(tree$edge) - nTip + length(drop)
   }
+
+  # Return:
 }
 
 #' @rdname DropTip
