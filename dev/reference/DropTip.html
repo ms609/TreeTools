@@ -168,7 +168,9 @@ incident branches.</p>
 <span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span>
 
 <span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span></pre>
+<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span>
+
+<span class='fu'>KeepTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,6 +192,8 @@ node.</p></td>
 
     <p><code>DropTip()</code> returns a tree of class <code>phylo</code>, in <a href='RenumberTree.html'>Preorder</a>, with the
 requested leaves removed.</p>
+<p><code>KeepTip()</code> returns <code>tree</code> with all leaves not in <code>tip</code> removed,
+in preorder.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is more robust than <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip()</a></code> as it does not
