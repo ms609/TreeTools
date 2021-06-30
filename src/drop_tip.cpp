@@ -4,7 +4,7 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/types.h"
 #include "../inst/include/TreeTools/renumber_tree.h"
 
-#define ASSERT_NODE_COUNT(x) assert((x) - start_tip - 1 > 0); assert((x) < (start_tip + start_node + 1))
+#define ASSERT_NODE_COUNT(x) assert((x) - start_tip - 1 >= 0); assert((x) < (start_tip + start_node + 1))
 #define NODE_COUNT(x) node_count[(x) - start_tip - 1]
 
 #define RAISE_EDGE(i) assert((i) >= n_deleted);                       \
@@ -20,13 +20,14 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     root_node = preorder(0, 0),
     start_tip = root_node - 1,
     start_edge = preorder.nrow(),
-    start_node = start_edge - start_tip
+    start_node = start_edge + 1 - start_tip
   ;
 
   int32
     still_to_drop = drop.length(),
     n_deleted = 0,
-    ret_edges = start_edge - still_to_drop
+    ret_edges = start_edge - still_to_drop,
+    next_no = start_tip + 2 - still_to_drop // tips + root node
   ;
 
   IntegerVector droppers = clone(drop);
@@ -37,23 +38,24 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
   ;
 
   Rcout << "Starting on tree with " << start_tip << " tips, root = "
-        << root_node <<", " << start_edge << " edges.\n";
+        << root_node <<", " << start_node << " nodes, "
+        << start_edge << " edges.\n";
+
+  std::sort(droppers.begin(), droppers.end());
+  for (int32 i = 1; i != start_tip + 2; i++) { // tips + root node
+    if (n_deleted != droppers.length() && i == droppers[n_deleted]) {
+      ++n_deleted;
+    } else {
+      new_no[i] = i - n_deleted;
+    }
+  }
+
 
   for (int32 i = start_edge; i--; ) {
     const int32 child = preorder(i, 1);
-    bool delete_this = 0;
-    if (child <= start_tip) {
-      for (int32 j = still_to_drop; j--; ) {
-        if (child == drop[j]) {
-          droppers[j] = droppers[still_to_drop--];
-          delete_this = 1;
-          break;
-        }
-      }
-    }
-    if (delete_this) {
-      n_deleted++;
-      delete_this = 0;
+    assert(child < (start_tip + start_node + 1));
+    if (child <= start_tip && !new_no[child]) {
+      still_to_drop--;
     } else {
       ASSERT_NODE_COUNT(preorder(i, 0));
       NODE_COUNT(preorder(i, 0))++;
@@ -68,7 +70,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
   do {
     n_deleted = 0;
-    Rcout << ret_edges << " edges in ret\n\n";
+    Rcout << "\n" << ret_edges << " edges in ret\n\n";
     for (int32 i = 0; i < ret_edges; i++) { // postorder traversal
       Rcout << "   [" << i << ",]  " << ret(i, 0) << "   " << ret(i, 1) << "\n";
       const int32 child = ret(i, 1);
@@ -101,45 +103,22 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     ret_edges -= n_deleted;
   } while (n_deleted);
 
-  return ret(Range(0, ret_edges), _);
-
-/*
-
-parent <- edge[, 1]
-child <- edge[, 2]
-external <- child <= nTip
-
-# Drop tips:
-  keep <- !child %in% which(drop)
-
-# Drop dangling nodes:
-    repeat {
-  nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
-  if (all(nonDanglers)) break
-    keep[keep] <- nonDanglers
-}
-
-    parent <- parent[keep]
-    child <- child[keep]
-
-# Collapse singles:
-    singletons <- tabulate(parent) == 1
-    if (any(singletons)) {
-      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
-      sortedSingles <- parent[edgeBelowSingles]
-      edgeAboveSingles <- match(sortedSingles, child)
-
-      for (i in seq_along(sortedSingles)) {
-        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
-      }
-      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
-    } else {
-      edge <- c(parent, child)
+  for (int32 i = 0; i != ret_edges; i++) {
+    const int32 parent = ret(i, 0), child = ret(i, 1);
+    assert(parent < (start_tip + start_node + 1));
+    assert(child < (start_tip + start_node + 1));
+    assert(child > 0);
+    assert(new_no[parent]);
+    if (!new_no[child]) {
+      new_no[child] = next_no++;
     }
 
-    newNumbers <- integer(max(edge))
-      uniqueInts <- unique(edge)
-      newNumbers[uniqueInts] <- rank(uniqueInts)
-      edge <- matrix(newNumbers[edge], ncol = 2L)
-*/
+
+    ret(i, 0) = new_no[parent];
+    ret(i, 1) = new_no[child];
+  }
+
+
+  return ret(Range(0, ret_edges - 1), _);
+
 }
