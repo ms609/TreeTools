@@ -468,6 +468,7 @@ DropTip.phylo <- function (tree, tip) {
   }
 
   # Return:
+  tree
 }
 
 #' @rdname DropTip
