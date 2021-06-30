@@ -464,7 +464,7 @@ DropTip.phylo <- function (tree, tip) {
     tree$edge <- drop_tip(tree$edge, drop)
     attr(tree, 'order') <- 'preorder'
     tree$tip.label <- labels[-drop]
-    tree$Nnode <- max(tree$edge) - nTip + length(drop)
+    tree$Nnode <- dim(tree$edge)[1] + 1 - (nTip - length(drop))
   }
 
   # Return:
