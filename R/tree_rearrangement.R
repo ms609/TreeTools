@@ -425,88 +425,50 @@ DropTip <- function (tree, tip) UseMethod("DropTip")
 #' @rdname DropTip
 #' @export
 DropTip.phylo <- function (tree, tip) {
-  #TODO Rewrite in C.
+  tree <- Preorder(tree)
   labels <- tree$tip.label
   nTip <- length(labels)
   if (is.character(tip)) {
-    found <- tip %in% labels
-    if (!all(found)) warning(paste(tip[!found], collapse = ', '),
-                             " not present in tree")
-    drop <- tree$tip.label %in% tip[found]
+    drop <- match(tip, tree$tip.label)
+    missing <- is.na(drop)
+    if (any(missing)) {
+      warning(paste(tip[missing], collapse = ', '), " not present in tree")
+      drop <- drop[!missing]
+    }
   } else if (is.numeric(tip)) {
     nNodes <- nTip + tree$Nnode
-    if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
+    if (any(tip > nNodes)) {
+      warning("Tree only has ", nNodes, " nodes")
+      tip <- tip[tip <= nNodes]
+    }
     if (any(tip < 1L)) {
       warning("`tip` must be > 0")
       tip <- tip[tip > 0L]
     }
 
-    drop <- logical(nTip)
     if (any(tip > nTip)) {
-      drop[tip <= nTip] <- TRUE
-      drop[unlist(Descendants(tree, tip[tip > nTip]))] <- TRUE
+      drop <- c(tip[tip <= nTip],
+                unlist(Descendants(tree, tip[tip > nTip])))
     } else {
-      drop[tip] <- TRUE
+      drop <- tip
     }
   } else {
     stop("`tip` must be of type character or numeric")
   }
 
-  if (any(drop)) {
-    if (all(drop)) {
+  if (length(drop) > 0) {
+    if (length(drop) == nTip) {
       return (NULL)
     }
-    edge <- tree$edge
-    edge <- RenumberTree(edge[, 1], edge[, 2]) # Necessary to handle 'nasty node ordering'
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    external <- child <= nTip
 
-    # Drop tips:
-    keep <- !child %in% which(drop)
-
-    # Drop dangling nodes:
-    repeat {
-      nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
-      if (all(nonDanglers)) break
-      keep[keep] <- nonDanglers
-    }
-
-    parent <- parent[keep]
-    child <- child[keep]
-
-    # Collapse singles:
-    singletons <- tabulate(parent) == 1
-    if (any(singletons)) {
-      #edgeBelowSingles <- sort(match(which(singletons), parent),
-      #                     decreasing = TRUE) # If cladewise but not nasty ordering
-      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
-      sortedSingles <- parent[edgeBelowSingles]
-      edgeAboveSingles <- match(sortedSingles, child)
-
-      for (i in seq_along(sortedSingles)) {
-        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
-      }
-      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
-    } else {
-      edge <- c(parent, child)
-    }
-
-    newNumbers <- integer(max(edge))
-    uniqueInts <- unique(edge)
-    newNumbers[uniqueInts] <- rank(uniqueInts)
-    edge <- matrix(newNumbers[edge], ncol = 2L)
-    # Return:
-    structure(list(
-      edge = edge,
-      tip.label = labels[!drop],
-      Nnode = max(edge) - sum(!drop)
-    ), class = 'phylo', order = 'preorder')
-
-  } else {
-    # Return:
-    Preorder(tree)
+    tree$edge <- drop_tip(tree$edge, drop)
+    attr(tree, 'order') <- 'preorder'
+    tree$tip.label <- labels[-drop]
+    tree$Nnode <- dim(tree$edge)[1] + 1 - (nTip - length(drop))
   }
+
+  # Return:
+  tree
 }
 
 #' @rdname DropTip
@@ -514,6 +476,24 @@ DropTip.phylo <- function (tree, tip) {
 DropTip.multiPhylo <- function (tree, tip) {
   tree[] <- lapply(tree, DropTip, tip)
   tree
+}
+
+#' @rdname DropTip
+#' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
+#' in preorder.
+#' @export
+KeepTip <- function (tree, tip) {
+  labels <- if (is.character(tip)) {
+    TipLabels(tree)
+  } else {
+    seq_len(NTip(tree))
+  }
+  if (!all(tip %in% labels)) {
+    missing <- !tip %in% labels
+    warning("Tips not in tree: ", paste0(tip[missing], collapse = ', '))
+  }
+  keep <- setdiff(labels, tip)
+  DropTip(tree, keep)
 }
 
 #' Generate binary tree by collapsing polytomies
