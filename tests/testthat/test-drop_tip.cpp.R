@@ -4,4 +4,7 @@ test_that("drop_tip() works", {
                drop_tip(BalancedTree(8)$edge, 6:4))
   expect_equal(BalancedTree(4)$edge,
                drop_tip(BalancedTree(8)$edge, 5:8))
+
+  testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")
+  testEdge <- Preorder(testTree)$edge
 })

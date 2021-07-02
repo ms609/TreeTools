@@ -397,20 +397,18 @@ CollapseEdge <- function (tree, edges) {
 #' incident branches.
 #'
 #' This function is more robust than [`ape::drop.tip()`] as it does not
-#' require any particular internal node numbering schema.  It is not presently
-#' as fast, though it is ripe for optimization; if you are finding this
-#' function is a rate-limiting step, please get in touch and I'll prioritise
-#' writing a faster implementation.
-#'
+#' require any particular internal node numbering schema.#'
 #'
 #' @template treeParam
 #' @param tip Character vector specifying labels of leaves in tree to be dropped,
 #' or integer vector specifying the indices of leaves to be dropped.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
+#' @param preorder Logical specifying whether to [Preorder] the tree before
+#' dropping tips.  Necessary if a tree's edges may be unconventionally numbered.
 #'
-#' @return `DropTip()` returns a tree of class `phylo`, in [Preorder], with the
-#' requested leaves removed.
+#' @return `DropTip()` returns a tree of class `phylo`, with the requested
+#' leaves removed.
 #'
 #' @examples
 #' tree <- BalancedTree(8)
@@ -420,12 +418,14 @@ CollapseEdge <- function (tree, edges) {
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip) UseMethod("DropTip")
+DropTip <- function (tree, tip, preorder = TRUE) UseMethod("DropTip")
 
 #' @rdname DropTip
 #' @export
-DropTip.phylo <- function (tree, tip) {
-  tree <- Preorder(tree)
+DropTip.phylo <- function (tree, tip, preorder = TRUE) {
+  if (preorder) {
+    tree <- Preorder(tree)
+  }
   labels <- tree$tip.label
   nTip <- length(labels)
   if (is.character(tip)) {
@@ -473,8 +473,8 @@ DropTip.phylo <- function (tree, tip) {
 
 #' @rdname DropTip
 #' @export
-DropTip.multiPhylo <- function (tree, tip) {
-  tree[] <- lapply(tree, DropTip, tip)
+DropTip.multiPhylo <- function (tree, tip, preorder) {
+  tree[] <- lapply(tree, DropTip, tip, preorder)
   tree
 }
 
@@ -482,7 +482,7 @@ DropTip.multiPhylo <- function (tree, tip) {
 #' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
 #' in preorder.
 #' @export
-KeepTip <- function (tree, tip) {
+KeepTip <- function (tree, tip, preorder = TRUE) {
   labels <- if (is.character(tip)) {
     TipLabels(tree)
   } else {
@@ -493,7 +493,7 @@ KeepTip <- function (tree, tip) {
     warning("Tips not in tree: ", paste0(tip[missing], collapse = ', '))
   }
   keep <- setdiff(labels, tip)
-  DropTip(tree, keep)
+  DropTip(tree, keep, preorder)
 }
 
 #' Generate binary tree by collapsing polytomies
