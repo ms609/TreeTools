@@ -7,18 +7,4 @@ test_that("drop_tip() works", {
 
   testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")
   testEdge <- Preorder(testTree)$edge
-
-  drop_tip(testEdge, 3)
-  drop_tip2(testEdge, 3)
-
-  Test <- function (tips) {
-    expect_equal(drop_tip(testEdge, tips), drop_tip2(testEdge, tips))
-  }
-  Test(1)
-  Test(2)
-  Test(3)
-  Test(4)
-  Test(5)
-  Test(6)
-  Test(7)
 })
