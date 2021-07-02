@@ -5,8 +5,12 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
-drop_tip <- function(preorder, drop) {
-    .Call(`_TreeTools_drop_tip`, preorder, drop)
+drop_tip2 <- function(preorder, drop) {
+    .Call(`_TreeTools_drop_tip2`, preorder, drop)
+}
+
+drop_tip <- function(edge, drop) {
+    .Call(`_TreeTools_drop_tip`, edge, drop)
 }
 
 num_to_parent <- function(n, nTip) {

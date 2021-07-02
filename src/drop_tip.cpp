@@ -13,7 +13,7 @@ using namespace Rcpp;
 // edges must be in preorder.
 // drop is a vector of integers between 1 and nTip marking tips to drop.
 // [[Rcpp::export]]
-IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) {
+IntegerMatrix drop_tip2 (const IntegerMatrix preorder, const IntegerVector drop) {
 
   const int32
     root_node = preorder(0, 0),
@@ -24,9 +24,9 @@ IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) 
 
   int32
     still_to_drop = drop.length(),
-    n_deleted = 0,
-    ret_edges = start_edge - still_to_drop,
-    next_no = start_tip - still_to_drop + 1
+      n_deleted = 0,
+      ret_edges = start_edge - still_to_drop,
+      next_no = start_tip - still_to_drop + 1
   ;
 
   IntegerVector droppers = clone(drop);
@@ -34,8 +34,8 @@ IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) 
 
   std::unique_ptr<int32[]>
     node_count = std::make_unique<int32[]>(start_node),
-    new_no = std::make_unique<int32[]>(start_tip + start_node + 1)
-  ;
+      new_no = std::make_unique<int32[]>(start_tip + start_node + 1)
+    ;
 
 
   std::sort(droppers.begin(), droppers.end());
@@ -101,9 +101,9 @@ IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) 
       new_no[child] = next_no++;
     }
 
-//
-//     Rcout << "    [" << i << ",]  " << new_no[parent] << "[" << parent << "] "
-//           << new_no[child] << "[" << child << "]\n";
+    //
+    //     Rcout << "    [" << i << ",]  " << new_no[parent] << "[" << parent << "] "
+    //           << new_no[child] << "[" << child << "]\n";
 
     ret(i, 0) = new_no[parent];
     ret(i, 1) = new_no[child];
@@ -111,5 +111,109 @@ IntegerMatrix drop_tip (const IntegerMatrix preorder, const IntegerVector drop) 
 
 
   return ret(Range(0, ret_edges - 1), _);
+
+}
+
+// edges must be in preorder.
+// drop is a vector of integers between 1 and nTip marking tips to drop.
+// [[Rcpp::export]]
+IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
+
+  const int32
+    start_edge = edge.nrow(),
+    all_nodes = start_edge + 2
+  ;
+
+  std::unique_ptr<int32[]>
+    parent_of = std::make_unique<int32[]>(all_nodes),
+    as_parent = std::make_unique<int32[]>(all_nodes),
+    child_on =  std::make_unique<int32[]>(all_nodes),
+    new_child = std::make_unique<int32[]>(start_edge),
+    new_no = std::make_unique<int32[]>(all_nodes)
+  ;
+  std::unique_ptr<bool[]>
+    dropped_edge = std::make_unique<bool[]>(start_edge),
+    dropped_node = std::make_unique<bool[]>(all_nodes)
+  ;
+
+
+  for (int32 i = start_edge; i--; ) {
+    const int32 parent = edge(i, 0), child = edge(i, 1);
+    parent_of[child] = parent;
+    ++as_parent[parent];
+    child_on[child] = i;
+    new_child[i] = child;
+  }
+
+  for (int32 i = drop.length(); i--; ) {
+    const int32 tip = drop(i);
+    dropped_node[tip] = true;
+    dropped_edge[child_on[tip]] = true;
+
+    const int32 node_parent = parent_of[tip];
+#ifdef MSDEBUG
+    Rcout << " Dropping tip " << tip << " on edge 1+"<<child_on[tip] <<".\n";
+    Rcout << "  Parent of tip = " << node_parent << ", instance "
+          << as_parent[node_parent] <<"\n";
+#endif
+    parent_of[tip] = 0;
+    if (--as_parent[node_parent] == 1) {
+      int32 child = 0;
+      do {++child;} while (parent_of[child] != node_parent);
+      dropped_edge[child_on[child]] = true;
+      const int32
+        lost_node = parent_of[child],
+        child_destination = child_on[lost_node]
+      ;
+#ifdef MSDEBUG
+      Rcout << " Lost node " << lost_node << "; moving child " << child
+            << " to edge 1+"
+            << child_on[lost_node] << " and setting parent to "
+            << parent_of[lost_node] << ".\n";
+#endif
+      dropped_node[lost_node] = true;
+      child_on[child] = child_destination;
+      new_child[child_destination] = child;
+      parent_of[child] = parent_of[lost_node];
+      parent_of[lost_node] = 0;
+    }
+  }
+
+
+  int32 dropped = 0;
+  for (int32 i = 1; i != all_nodes; i++) {
+    if (dropped_node[i]) {
+      ++dropped;
+
+#ifdef MSDEBUG
+      Rcout << " Summary: Dropped another node: " << i <<". That's "
+            << dropped << " altogether.\n";
+#endif
+#ifndef NDEBUG
+      new_no[i] = -i;
+#endif
+
+    } else {
+      new_no[i] = i - dropped;
+
+#ifdef MSDEBUG
+      Rcout << "  New no for " << i <<": " << new_no[i] << " .\n";
+#endif
+    }
+  }
+
+  IntegerMatrix ret(start_edge - dropped, 2);
+  for (int32 i = start_edge; i--; ) {
+    if (dropped_edge[i]) {
+      --dropped;
+    } else {
+      assert(new_no[edge(i, 0)] > 0);
+      assert(new_no[new_child[i]] > 0);
+      ret(i - dropped, 0) = new_no[edge(i, 0)];
+      ret(i - dropped, 1) = new_no[new_child[i]];
+    }
+  }
+
+  return ret;
 
 }

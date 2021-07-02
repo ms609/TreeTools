@@ -17,15 +17,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// drop_tip
-IntegerMatrix drop_tip(const IntegerMatrix preorder, const IntegerVector drop);
-RcppExport SEXP _TreeTools_drop_tip(SEXP preorderSEXP, SEXP dropSEXP) {
+// drop_tip2
+IntegerMatrix drop_tip2(const IntegerMatrix preorder, const IntegerVector drop);
+RcppExport SEXP _TreeTools_drop_tip2(SEXP preorderSEXP, SEXP dropSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerMatrix >::type preorder(preorderSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type drop(dropSEXP);
-    rcpp_result_gen = Rcpp::wrap(drop_tip(preorder, drop));
+    rcpp_result_gen = Rcpp::wrap(drop_tip2(preorder, drop));
+    return rcpp_result_gen;
+END_RCPP
+}
+// drop_tip
+IntegerMatrix drop_tip(const IntegerMatrix edge, const IntegerVector drop);
+RcppExport SEXP _TreeTools_drop_tip(SEXP edgeSEXP, SEXP dropSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type drop(dropSEXP);
+    rcpp_result_gen = Rcpp::wrap(drop_tip(edge, drop));
     return rcpp_result_gen;
 END_RCPP
 }
