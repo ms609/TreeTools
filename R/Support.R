@@ -86,13 +86,26 @@ SplitFrequency <- function(reference, forest) {
 #' @family Splits operations
 #' @export
 LabelSplits <- function (tree, labels = NULL, unit = '', ...) {
+  splits <- as.Splits(tree)
   if (is.null(labels)) {
-    splitNames <- names(as.Splits(tree))
+    splitNames <- names(splits)
     labels <- setNames(splitNames, splitNames)
+  } else if (length(names(labels)) == 0) {
+    if (length(splits) == length(labels)) {
+      labels <- setNames(labels, names(splits))
+    } else {
+      stop("`labels` must bear the same names as `as.Splits(tree)`")
+    }
   }
-  edgelabels(paste0(labels, unit),
-             edge = match(as.integer(names(labels)), tree$edge[, 2]),
-             ...)
+  if (length(setdiff(names(labels), names(splits)))) {
+    warning("Label names do not correspond to splits in tree",
+            immediate. = TRUE)
+  }
+  whichEdge <- match(as.integer(names(labels)), tree$edge[, 2])
+  if (any(is.na(whichEdge))) {
+    warning("Label names do not correspond to splits in tree")
+  }
+  edgelabels(paste0(labels, unit), edge = whichEdge, ...)
   # Return:
   invisible()
 }
