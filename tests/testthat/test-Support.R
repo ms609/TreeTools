@@ -34,14 +34,21 @@ test_that("SplitFrequency() handles four-split trees", {
 })
 
 test_that("LabelSplits()", {
-  SplitLabelling <- function () {
+  expect_error(LabelSplits(BalancedTree(8), 1:8))
+  skip_if_not_installed('vdiffr', minimum_version = "1.0.0")
+  skip_if(packageVersion("graphics") < "4.1.0")
+  vdiffr::expect_doppelganger('LabelSplits()',  function () {
+    tree <- BalancedTree(9)
+    plot(tree)
+    labs <- letters[6:1]
+    names(labs) <- rev(names(as.Splits(tree)))
+    LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
+  })
+  vdiffr::expect_doppelganger('LabelSplits()-names', function() {
     tree <- BalancedTree(9)
     plot(tree)
     labs <- letters[1:6]
-    names(labs) <- names(as.Splits(tree))
-    LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
-  }
-  skip_if_not_installed('vdiffr', minimum_version = "1.0.0")
-  skip_if(packageVersion("graphics") < "4.1.0")
-  vdiffr::expect_doppelganger('LabelSplits()', SplitLabelling)
+    LabelSplits(tree, labs, bg = 'orange')
+    expect_warning(LabelSplits(BalancedTree(9), setNames(letters[11:16], 1:6)))
+  })
 })
