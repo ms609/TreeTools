@@ -15,12 +15,12 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     dropped_node(all_nodes)
   ;
 
-  IntegerVector // much faster than make_unique<int32>; faster than std::vector<>
-    new_child = edge(_, 1),
-    parent_of(all_nodes),
-    as_parent(all_nodes),
-    child_on(all_nodes),
-    new_no(all_nodes)
+  IntegerVector new_child = edge(_, 1);
+  auto
+    parent_of = std::make_unique<int[]>(all_nodes),
+    as_parent = std::make_unique<int[]>(all_nodes),
+    child_on = std::make_unique<int[]>(all_nodes),
+    new_no = std::make_unique<int[]>(all_nodes)
   ;
   for (int i = start_edge; i--; ) {
     const int parent = edge(i, 0), child = new_child[i];
