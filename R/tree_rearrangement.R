@@ -428,7 +428,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
   }
   labels <- tree$tip.label
   nTip <- length(labels)
-  if (is.null(tip) || is.na(tip)) {
+  if (is.null(tip) || is.na(tip) || length(tip) == 0) {
     drop <- character(0)
   } else if (is.character(tip)) {
     drop <- match(tip, tree$tip.label)
