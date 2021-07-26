@@ -61,6 +61,19 @@ test_that('AddTipEverywhere() handles nasty tree', {
                lapply(added, Preorder))
 })
 
+test_that('AddTipEverywhere() with tiny trees', {
+  added <- AddTipEverywhere(StarTree(2))
+  lapply(added, function (tr) expect_true(all(tr$edge > 0)))
+  expect_equal(2, length(added))
+  expect_equal(3, length(AddTipEverywhere(StarTree(2), include = TRUE)))
+
+  expect_equal(list(PectinateTree(c('t1', 'New tip'))),
+               AddTipEverywhere(StarTree(1)))
+  expect_equal(list(SingleTaxonTree('New tip')),
+               AddTipEverywhere(structure(list(tip.label = character(0)),
+                                          class = 'phylo')))
+})
+
 test_that("Subtree() works", {
   expect_error(Subtree(BalancedTree(8), 10)) # Nodes must be in preorder
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
