@@ -4,6 +4,7 @@
 - Warn when `LabelSplits(labels)` lack names.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
 - Add `KeepTip()` and improve performance of `DropTip()`.
+- `AddTipEverywhere()` supports trees with < 3 leaves.
 
 # TreeTools 1.4.5
 
