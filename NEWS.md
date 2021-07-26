@@ -8,6 +8,7 @@
 - Warn when empty cells passed to `MatrixToPhyDat()`.
 - Warn when `LabelSplits(labels)` lack names.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
+- `AddTipEverywhere()` supports trees with < 3 leaves.
 
 # TreeTools 1.4.5
 
