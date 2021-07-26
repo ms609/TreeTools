@@ -279,3 +279,10 @@ test_that("Split combination", {
 
   #TODO: Fully test splits with large (> 8 tip) trees
 })
+
+test_that("as.phylo.Splits()", {
+  Test <- function (tr) expect_equal(unroot(tr), as.phylo(as.Splits(tr)))
+  Test(read.tree(text = "((a, b, c), (d, e, f, g));"))
+  Test(read.tree(text = "((a, b, c), (d, e, (f, g)));"))
+  Test(BalancedTree(9))
+})
