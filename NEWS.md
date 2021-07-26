@@ -1,9 +1,11 @@
-# TreeTools 1.4.5.9000 (development)
+# TreeTools 1.4.5.9001 (development)
 
+- Add `KeepTip()` and improve performance of `DropTip()`.
+- `ImposeConstraint()` makes a tree consistent with topological constraints.
+- `as.phylo.Splits()` represents a `Splits` object as a tree.
 - Warn when empty cells passed to `MatrixToPhyDat()`.
 - Warn when `LabelSplits(labels)` lack names.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
-- Add `KeepTip()` and improve performance of `DropTip()`.
 
 # TreeTools 1.4.5
 

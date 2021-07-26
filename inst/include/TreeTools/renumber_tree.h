@@ -185,8 +185,8 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     // 0.9999 leaves room for memory overhead: seems in practice to avoid
     // attempting a doomed call to calloc.
     if (long(n_edge * node_limit * sizeof(intx)) > 0.9999L * INTPTR_MAX) {
-      throw std::length_error("Tree too large for postorder_edges. "              // # nocov
-                              "Try running 64-bit R?");                           // # nocov
+      throw std::length_error("Tree too large for postorder_edges. "            // # nocov
+                              "Try running 64-bit R?");                         // # nocov
     }
 
     intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
@@ -200,7 +200,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     for (intx i = 0; i != n_edge; i++) {
       parent_of[edge(i, 1)] = edge(i, 0);
       children_of[edge(i, 0) * n_edge + n_children[edge(i, 0)]] = edge(i, 1);
-      (n_children[edge(i, 0)])++;
+      ++(n_children[edge(i, 0)]);
     }
 
     for (intx i = 0; i != node_limit; i++) {
@@ -221,7 +221,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
                             0, n_children[node] - 1);
     }
     intx * node_order = (intx*) malloc(n_node * sizeof(intx));
-    for (intx i = 0; i != n_node; i++) {
+    for (intx i = 0; i != n_node; ++i) {
       node_order[i] = i + n_tip;
     }
     quicksort_by_smallest(node_order, subtree_size, 0, n_node - 1);
@@ -231,7 +231,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     intx this_edge = 0;
     for (intx i = 0; i != n_node; i++) {
       const intx this_parent = node_order[i];
-      for (intx j = 0; j != n_children[this_parent]; j++) {
+      for (intx j = 0; j != n_children[this_parent]; ++j) {
         ret(this_edge, 0) = this_parent + 1;
         ret(this_edge, 1) = children_of[this_parent * n_edge + j] + 1;
         ++this_edge;
