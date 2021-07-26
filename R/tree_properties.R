@@ -665,9 +665,9 @@ NSplits.character <- function (x) {
 #' of unique non-trivial splits in a binary tree with _n_ leaves.
 #'
 #' @examples
-#' tree <- TreeTools::BalancedTree(8)
+#' tree <- BalancedTree(8)
 #' SplitsInBinaryTree(tree)
-#' SplitsInBinaryTree(TreeTools::as.Splits(tree))
+#' SplitsInBinaryTree(as.Splits(tree))
 #' SplitsInBinaryTree(8)
 #' SplitsInBinaryTree(list(tree, tree))
 #' @template MRS

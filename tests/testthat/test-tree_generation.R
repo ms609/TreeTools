@@ -54,6 +54,22 @@ test_that("NJTree() works", {
                Preorder(NJTree(bal6, TRUE))$edge.length * 4L)
 })
 
+test_that("Constrained NJ trees work", {
+  dataset <- MatrixToPhyDat(matrix(
+    c(0, 1, 1, 1, 0, 1,
+      0, 1, 1, 0, 0, 1), ncol = 2,
+    dimnames = list(letters[1:6], NULL)))
+  constraint <- MatrixToPhyDat(c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
+  expect_equal(read.tree(text = "(a, (d, ((c, b), (e, f))));"),
+               ConstrainedNJ(dataset, constraint))
+  # b == c == f, so these three could be resolved in one of three ways. Drop B.
+  expect_equal(DropTip(NJTree(dataset), 'b'),
+               DropTip(ConstrainedNJ(dataset, dataset), 'b'))
+
+  expect_equal(BalancedTree(letters[3:6]),
+               KeepTip(ConstrainedNJ(dataset, constraint[3:6]), letters[3:6]))
+})
+
 test_that("EnforceOutgroup() fails nicely", {
   expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
   expect_error(EnforceOutgroup(BalancedTree(6), c('t1', 'Non-taxon')))

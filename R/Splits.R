@@ -291,7 +291,15 @@ as.character.Splits <- function (x, ...) {
 
 }
 
+#' @family Splits operations
+#' @export
+as.phylo.Splits <- function (x, ...) {
+  const <- StringToPhyDat(paste0(ifelse(as.logical(x), '1', '0'), collapse = ''),
+                          TipLabels(x), TRUE)
+  ImposeConstraint(StarTree(x), const)
+}
 
+#' @family Splits operations
 #' @export
 names.Splits <- function (x) rownames(x)
 
