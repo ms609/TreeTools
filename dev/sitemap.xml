@@ -34,6 +34,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ConstrainedNJ.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/DescendantEdges.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc>
