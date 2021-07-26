@@ -90,8 +90,8 @@ ImposeConstraint <- function (tree, constraint) {
 
 #' @describeIn ImposeConstraint Expand a constraint to include unconstrained
 #' taxa.
-#' @toAdd Character vector specifying taxa to add to constraint.
-#' @asPhyDat Logical: if `TRUE`, return a `phyDat` object; if `FALSE`, return
+#' @param toAdd Character vector specifying taxa to add to constraint.
+#' @param asPhyDat Logical: if `TRUE`, return a `phyDat` object; if `FALSE`, return
 #' a matrix.
 #' @export
 AddUnconstrained <- function (constraint, toAdd, asPhyDat = TRUE) {
