@@ -9,7 +9,7 @@
 - Warn when `LabelSplits(labels)` lack names.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
 - `AddTipEverywhere()` supports trees with < 3 leaves.
-- Make `RootTree()` more robust.
+- Make `RootTree()` and `PhyDatToMatrix()` more robust.
 
 # TreeTools 1.4.5
 
