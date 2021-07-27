@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9001 (development)
+# TreeTools 1.4.5.9002 (development)
 
 - Add `KeepTip()` and improve performance of `DropTip()`.
 - `ImposeConstraint()` makes a tree consistent with topological constraints.
@@ -9,6 +9,7 @@
 - Warn when `LabelSplits(labels)` lack names.
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
 - `AddTipEverywhere()` supports trees with < 3 leaves.
+- Make `RootTree()` more robust.
 
 # TreeTools 1.4.5
 

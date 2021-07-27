@@ -190,6 +190,13 @@ test_that("RootTree() works", {
                               class = 'multiPhylo'),
                     RootTree(as.phylo(1:2, 5), 't5'))
 
+  expect_equal(read.tree(text = "((b, c), (a, (d, e)));"),
+               RootTree(read.tree(text = "(a, ((b, c), (d, e)));"), c(1, 4)))
+
+  pec4 <- PectinateTree(4)
+  expect_equal(pec4, RootTree(pec4, c(1, 3)))
+  pec5 <- PectinateTree(5)
+  expect_equal(pec5, RootTree(pec5, c(1, 4)))
 })
 
 test_that("UnrootTree() works", {
