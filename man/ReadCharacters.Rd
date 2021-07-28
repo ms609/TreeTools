@@ -9,11 +9,22 @@
 \alias{PhyDat}
 \title{Read phylogenetic characters from file}
 \usage{
-ReadCharacters(filepath, character_num = NULL, session = NULL)
+ReadCharacters(
+  filepath,
+  character_num = NULL,
+  encoding = "UTF8",
+  session = NULL
+)
 
-ReadTntCharacters(filepath, character_num = NULL, type = NULL, session = NULL)
+ReadTntCharacters(
+  filepath,
+  character_num = NULL,
+  type = NULL,
+  session = NULL,
+  encoding = "UTF8"
+)
 
-ReadNotes(filepath)
+ReadNotes(filepath, encoding = "UTF8")
 
 ReadAsPhyDat(filepath)
 
@@ -27,6 +38,8 @@ PhyDat(dataset)
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
+
+\item{encoding}{Character encoding of input file.}
 
 \item{session}{(Optional) A Shiny session with a \code{numericInput} named
 \code{character_num} whose maximum should be updated.}

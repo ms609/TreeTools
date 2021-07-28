@@ -371,6 +371,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' Leave as `NULL` (the default) to return all characters in their original
 #' sequence.
 #' @template characterNumParam
+#' @param encoding Character encoding of input file.
 #' @template sessionParam
 #'
 #' @return `ReadCharacters()` and `ReadTNTCharacters()` return a matrix whose
@@ -421,10 +422,10 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #'
 #' - Write characters to TNT-format file: [`WriteTntCharacters()`]
 #' @export
-ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
+ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
+                            session = NULL) {
 
-  lines <- readLines(filepath, warn = FALSE) # Missing EOL is quite common, so
-                                             # warning not helpful
+  lines <- .UTFLines(filepath, encoding)
   nexusComment.pattern <- "\\[[^\\]*?\\]"
   lines <- gsub(nexusComment.pattern, "", lines)
   lines <- trimws(lines)
@@ -490,11 +491,9 @@ ReadCharacters <- function (filepath, character_num = NULL, session = NULL) {
 #' @rdname ReadCharacters
 #' @export
 ReadTntCharacters <- function (filepath, character_num = NULL,
-                               type = NULL, session = NULL) {
+                               type = NULL, session = NULL, encoding = 'UTF8') {
 
-  lines <- readLines(filepath,
-                     warn = FALSE) # Missing EOL might occur in user-generated
-                                   # file, so warning not helpful
+  lines <- .UTFLines(filepath, encoding)
   tntComment.pattern <- "'[^']*'"
   lines <- gsub(tntComment.pattern, "", lines, perl = TRUE)
   multilineComments <- grep("'", lines, fixed = TRUE)
@@ -593,6 +592,13 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   tokens
 }
 
+.UTFLines <- function (filepath, encoding) {
+  con <- file(filepath, encoding = encoding)
+  on.exit(close(con))
+  # Missing EOL might occur in user-generated file, so warning not helpful
+  enc2utf8(readLines(con, warn = FALSE))
+}
+
 #' @rdname ReadCharacters
 #' @return `ReadNotes()` returns a list in which each entry corresponds to a
 #' single character, and itself contains a list of with two elements:
@@ -602,12 +608,12 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 #' for that character, named with the names of each note-bearing taxon.
 #'
 #' @export
-ReadNotes <- function (filepath) {
+ReadNotes <- function (filepath, encoding = 'UTF8') {
   taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
   charNote.pattern <- "^\\s+TEXT\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
   stateNote.pattern <- "^\\s+TEXT\\s+TAXON=(\\d+)\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
 
-  lines <- enc2utf8(readLines(filepath, warn = FALSE))
+  lines <- .UTFLines(filepath, encoding)
   upperLines <- toupper(lines)
   trimUpperLines <- trimws(upperLines)
 
