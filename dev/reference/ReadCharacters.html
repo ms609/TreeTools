@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9003</span>
       </span>
     </div>
 
@@ -160,11 +160,22 @@
     <p>Parse a Nexus or TNT file, reading character states and names.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ReadCharacters</span><span class='op'>(</span>
+  <span class='va'>filepath</span>,
+  character_num <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF8"</span>,
+  session <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>ReadTntCharacters</span><span class='op'>(</span><span class='va'>filepath</span>, character_num <span class='op'>=</span> <span class='cn'>NULL</span>, type <span class='op'>=</span> <span class='cn'>NULL</span>, session <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+<span class='fu'>ReadTntCharacters</span><span class='op'>(</span>
+  <span class='va'>filepath</span>,
+  character_num <span class='op'>=</span> <span class='cn'>NULL</span>,
+  type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  session <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF8"</span>
+<span class='op'>)</span>
 
-<span class='fu'>ReadNotes</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
+<span class='fu'>ReadNotes</span><span class='op'>(</span><span class='va'>filepath</span>, encoding <span class='op'>=</span> <span class='st'>"UTF8"</span><span class='op'>)</span>
 
 <span class='fu'>ReadAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
 
@@ -184,6 +195,10 @@
       <th>character_num</th>
       <td><p>Index of character(s) to return.
 <code>NULL</code>, the default, returns all characters.</p></td>
+    </tr>
+    <tr>
+      <th>encoding</th>
+      <td><p>Character encoding of input file.</p></td>
     </tr>
     <tr>
       <th>session</th>
@@ -305,10 +320,7 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
 <span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>file</a></span><span class='op'>(</span><span class='va'>fileName</span>, encoding <span class='op'>=</span> <span class='va'>fileEncoding</span>, open <span class='op'>=</span> <span class='st'>"r"</span><span class='op'>)</span>
 
 <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;           [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   
-#&gt; A_taxon   "1.111" "1"     "1.33"  "1.444" "1.555" "1.666"
-#&gt; B_alienus "2.111" "2.222" "2.333" "?"     "2.55"  "2.666"
-#&gt; C_andinus "3.111" "3.222" "3.333" "3.444" "3.555" "3.666"</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in file(filepath, encoding = encoding): invalid 'description' argument</span></div><div class='input'>
 <span class='co'># Close connection after use</span>
 <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>close</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
 </div></pre>
