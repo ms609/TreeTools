@@ -155,7 +155,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
   // [[Rcpp::export]]
   inline IntegerMatrix postorder_edges(const IntegerMatrix edge)
   {
-    if (1L + edge.nrow() > INTX_CONSERVATIVE_MAX) {
+    if (1.0 + edge.nrow() > double(INTX_CONSERVATIVE_MAX)) {
       throw std::length_error("Too many edges in tree for postorder_edges: "
                               "Contact maintainer for advice");
       // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
