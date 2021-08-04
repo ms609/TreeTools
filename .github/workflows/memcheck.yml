@@ -63,6 +63,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran(c("rcmdcheck", 'devtools'))
+          remotes::install_github('ms609/brio')
         shell: Rscript {0}
 
       - name: Install TreeTools
