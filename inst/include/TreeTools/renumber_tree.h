@@ -86,19 +86,20 @@ inline void add_child_edges(const intx node, const intx node_label,
   inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
                                                 const IntegerVector child)
   {
-    const intx n_edge = parent.length(),
-               node_limit = n_edge + 2;
-
-    if (2L * (2L + child.length()) > INTX_CONSERVATIVE_MAX) {
+    if (2.0 * (2 + child.length()) > double(INTX_CONSERVATIVE_MAX)) {
       throw std::length_error("Too many edges in tree: "
                               "Contact 'TreeTools' maintainer for support.");
     }
+
+    const intx n_edge = parent.length(),
+               node_limit = n_edge + 2;
+
     if (child.length() != n_edge) {
       throw std::invalid_argument("Length of parent and child must match");
     }
 
     intx next_edge = 0,
-         root_node = n_edge + n_edge, /* Initialize with too-big value */
+         root_node = n_edge * 2, /* Initialize with too-big value */
          n_tip = 0;
 
     intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
@@ -106,8 +107,8 @@ inline void add_child_edges(const intx node, const intx node_label,
          * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx)),
          * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
     if (!children_of) {
-      throw std::length_error("Could not allocate memory in "                     // # nocov
-                              "preorder_edges_and_nodes. Try 64-bit R?");         // # nocov
+      throw std::length_error("Could not allocate memory in "                   // # nocov
+                              "preorder_edges_and_nodes. Try 64-bit R?");       // # nocov
     }
 
     for (intx i = n_edge; i--; ) {
