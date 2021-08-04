@@ -7,7 +7,7 @@ using namespace Rcpp;
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
   if (edge.ncol() != 2) {
-    std::invalid_argument("edge must have two columns");
+    throw std::invalid_argument("edge must have two columns");
   }
   const int
     start_edge = edge.nrow(),
