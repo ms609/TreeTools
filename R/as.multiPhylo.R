@@ -25,19 +25,20 @@ as.multiPhylo.list <- function (x) structure(x, class = 'multiPhylo')
 #' @return `as.multiPhylo.phyDat()` returns a list of trees, each corresponding
 #' to the partitions implied by each non-ambiguous character in `x`.
 #' @importFrom ape read.tree
+#' @importFrom fastmatch %fin%
 #' @export
 as.multiPhylo.phyDat <- function (x) {
   at <- attributes(x)
   cont <- at$contrast
-  if ('-' %in% colnames(cont)) cont[cont[, '-'] > 0, ] <- 1
+  if ('-' %fin% colnames(cont)) cont[cont[, '-'] > 0, ] <- 1
   ambiguous <- rowSums(cont) != 1
   labels <- names(x)
 
   mat <- matrix(unlist(x), length(x), byrow = TRUE)
-  mat[mat %in% which(ambiguous)] <- NA
+  mat[ambiguous[mat]] <- NA
   mat <- apply(mat, 2, function (x) {
     uniques <- table(x) == 1
-    x[x %in% names(uniques[uniques])] <- NA
+    x[x %fin% names(uniques[uniques])] <- NA
     x
   })
   structure(apply(mat, 2, function (split) {

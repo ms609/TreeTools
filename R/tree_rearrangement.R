@@ -150,13 +150,14 @@ RootTree.NULL <- function (tree, outgroupTips) NULL
 #' @export
 RootOnNode <- function (tree, node, resolveRoot = FALSE) UseMethod('RootOnNode')
 
+#' @importFrom fastmatch %fin%
 #' @export
 RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
   nodeParentEdge <- child == node
-  rootEdges <- !parent %in% child
+  rootEdges <- !parent %fin% child
   rootNode <- parent[rootEdges][1]
   rooted <- sum(rootEdges) == 2L
 
@@ -167,7 +168,7 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
                                     stopAt = rootEdges)
 
       rootChildren <- child[rootEdges]
-      if (node %in% rootChildren) {
+      if (node %fin% rootChildren) {
         if (!resolveRoot) {
           if (node < NTip(tree)) {
             node <- rootChildren[rootChildren != node]
@@ -337,6 +338,7 @@ UnrootTree.NULL <- function (tree) NULL
 CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
 
 #' @rdname CollapseNode
+#' @importFrom fastmatch %fin%
 #' @export
 CollapseNode.phylo <- function (tree, nodes) {
   if (length(nodes) == 0) return (tree)
@@ -355,7 +357,7 @@ CollapseNode.phylo <- function (tree, nodes) {
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
   nodes <- unique(nodes)
 
-  if (!all(nodes %in% (nTip + 1L):maxNode)) {
+  if (!all(nodes %fin% (nTip + 1L):maxNode)) {
     stop("nodes must be integers between ", nTip + 1L, " and ", maxNode)
   }
   if (any(nodes == root)) {
@@ -373,7 +375,7 @@ CollapseNode.phylo <- function (tree, nodes) {
     parent[parent == node] <- newParent
   }
 
-  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %in% parent))
+  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %fin% parent))
 
   tree$edge <-cbind(newNumber[parent[keptEdges]], newNumber[child[keptEdges]])
   tree$edge.length <- lengths[keptEdges]
@@ -495,8 +497,7 @@ KeepTip <- function (tree, tip, preorder = TRUE) {
     seq_len(NTip(tree))
   }
   if (!all(tip %in% labels)) {
-    missing <- !tip %in% labels
-    warning("Tips not in tree: ", paste0(tip[missing], collapse = ', '))
+    warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
   }
   keep <- setdiff(labels, tip)
   DropTip(tree, keep, preorder)

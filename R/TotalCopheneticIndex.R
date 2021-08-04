@@ -72,7 +72,7 @@ TotalCopheneticIndex <- function (x) UseMethod('TotalCopheneticIndex')
   as.integer(depth)
 }
 
-
+#' @importFrom fastmatch %fin%
 #' @export
 TotalCopheneticIndex.phylo <- function (x) {
   nTip   <- NTip(x)
@@ -88,7 +88,7 @@ TotalCopheneticIndex.phylo <- function (x) {
     vapply(seq_len(nTip), function (j) {
       anc.i <- ancestors[[i]]
       anc.j <- ancestors[[j]]
-      lca <- max(anc.i[anc.i %in% anc.j])
+      lca <- max(anc.i[anc.i %fin% anc.j])
 
       # Return:
       depth[lca]
@@ -99,10 +99,10 @@ TotalCopheneticIndex.phylo <- function (x) {
   sum(lca.depth[upper.tri(lca.depth)])
 }
 
-#'@export
+#' @export
 TotalCopheneticIndex.list <- function(x) vapply(x, TotalCopheneticIndex, integer(1))
 
-#'@export
+#' @export
 TotalCopheneticIndex.multiPhylo <- TotalCopheneticIndex.list
 
 #' @rdname TotalCopheneticIndex

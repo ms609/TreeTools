@@ -273,8 +273,9 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 .EnforceOutgroup <- function (tree, outgroup, taxa) {
   if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
 
-  ingroup <- taxa[!(taxa %in% outgroup)]
-  if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {
+  ingroup <- taxa[!(taxa %fin% outgroup)]
+  if (!all(outgroup %fin% taxa) ||
+      length(ingroup) + length(outgroup) != length(taxa)) {
     stop ("All outgroup taxa must occur in tree")
   }
 

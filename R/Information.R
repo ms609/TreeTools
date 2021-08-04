@@ -61,12 +61,13 @@ Log2TreesMatchingSplit <- function (A, B = A[2]) {
 #' - \insertRef{Steel2006}{TreeTools}
 #' @family split information functions
 #' @template MRS
+#' @importFrom fastmatch %fin%
 #' @export
 CharacterInformation <- function (tokens) {
   tokenCounts <- table(tokens)
   # Our character splits our taxa into groups with the same token
   # ?s and -s are best ignored
-  splits <- tokenCounts[!(names(tokenCounts) %in% c('?', '-'))]
+  splits <- tokenCounts[!(names(tokenCounts) %fin% c('?', '-'))]
 
   # Return:
   MultiSplitInformation(splits)
