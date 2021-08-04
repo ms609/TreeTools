@@ -221,7 +221,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #'   c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
 #' plot(ConstrainedNJ(dataset, constraint))
 #' @template MRS
-#' @importFrom ape nj
+#' @importFrom ape nj multi2di
 #' @importFrom phangorn dist.hamming
 #' @export
 ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
