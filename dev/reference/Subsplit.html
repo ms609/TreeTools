@@ -198,26 +198,14 @@ leaves <code>tips</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>splits</span>
-</div><div class='output co'>#&gt; 6 bipartition splits dividing 9 tips, a .. i</div><div class='input'><span class='va'>efgh</span> <span class='op'>&lt;-</span> <span class='fu'>Subsplit</span><span class='op'>(</span><span class='va'>splits</span>, tips <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, keepAll <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efgh</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 4 bipartition splits (3 trivial) dividing 4 tips, e .. h
-#&gt;      1234
-#&gt;  12  ****
-#&gt;  15  .***
-#&gt;  16  ..**
-#&gt;  17  ...*
-#&gt; 
-#&gt;  Tip 1: e	 Tip 2: f	 Tip 3: g	 Tip 4: h	</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in as.Splits(PectinateTree(letters[1:9])): could not find function "as.Splits"</span></div><div class='input'><span class='va'>splits</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'splits' not found</span></div><div class='input'><span class='va'>efgh</span> <span class='op'>&lt;-</span> <span class='fu'>Subsplit</span><span class='op'>(</span><span class='va'>splits</span>, tips <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, keepAll <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in Subsplit(splits, tips = letters[5:8], keepAll = TRUE): could not find function "Subsplit"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efgh</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in summary(efgh): object 'efgh' not found</span></div><div class='input'>
 <span class='fu'><a href='TrivialSplits.html'>TrivialSplits</a></span><span class='op'>(</span><span class='va'>efgh</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    12    15    16    17 
-#&gt;  TRUE  TRUE FALSE  TRUE </div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in TrivialSplits(efgh): could not find function "TrivialSplits"</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'>Subsplit</span><span class='op'>(</span><span class='va'>splits</span>, tips <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, keepAll <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 1 bipartition split dividing 4 tips, e .. h
-#&gt;      1234
-#&gt;  16  ..**
-#&gt; 
-#&gt;  Tip 1: e	 Tip 2: f	 Tip 3: g	 Tip 4: h	</div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in Subsplit(splits, tips = letters[5:8], keepAll = FALSE): could not find function "Subsplit"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

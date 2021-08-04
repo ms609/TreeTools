@@ -215,9 +215,9 @@ node.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='CollapseNode.html'>CollapseNode</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>12</span><span class='op'>:</span><span class='fl'>13</span>, <span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'>nodelabels</span><span class='op'>(</span><span class='fu'>NodeDepth</span><span class='op'>(</span><span class='va'>tree</span>, includeTips <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='NodeDepth-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in CollapseNode(BalancedTree(10), c(12:13, 19)): could not find function "CollapseNode"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot(tree): object 'tree' not found</span></div><div class='input'><span class='fu'>nodelabels</span><span class='op'>(</span><span class='fu'>NodeDepth</span><span class='op'>(</span><span class='va'>tree</span>, includeTips <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in get("last_plot.phylo", envir = .PlotPhyloEnv): object 'last_plot.phylo' not found</span></div><div class='input'>
 
 </div></pre>
   </div>

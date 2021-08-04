@@ -208,14 +208,8 @@ rotates nodes.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>RandomTree</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'>Renumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; Phylogenetic tree with 10 tips and 8 internal nodes.
-#&gt; 
-#&gt; Tip labels:
-#&gt;   c, d, g, i, f, b, ...
-#&gt; 
-#&gt; Unrooted; no branch lengths.</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in RandomTree(letters[1:10]): could not find function "RandomTree"</span></div><div class='input'><span class='fu'>Renumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in Renumber(tree): could not find function "Renumber"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

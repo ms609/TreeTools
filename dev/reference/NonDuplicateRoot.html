@@ -218,12 +218,12 @@ so that a suitable replacement can be guaranteed.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RenumberTree.html'>Preorder</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
-<span class='va'>parent</span> <span class='op'>&lt;-</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>
-<span class='va'>child</span> <span class='op'>&lt;-</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in Preorder(BalancedTree(8)): could not find function "Preorder"</span></div><div class='input'><span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'tree' not found</span></div><div class='input'><span class='va'>parent</span> <span class='op'>&lt;-</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'edge' not found</span></div><div class='input'><span class='va'>child</span> <span class='op'>&lt;-</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'edge' not found</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'>NonDuplicateRoot</span><span class='op'>(</span><span class='va'>parent</span>, <span class='va'>child</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in NonDuplicateRoot(parent, child): could not find function "NonDuplicateRoot"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

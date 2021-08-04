@@ -223,11 +223,11 @@ It will be deprecated in a future release.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>splits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>splits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in as.Splits(BalancedTree(7)): could not find function "as.Splits"</span></div><div class='input'><span class='va'>splits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in as.Splits(PectinateTree(7)): could not find function "as.Splits"</span></div><div class='input'>
 <span class='fu'>match</span><span class='op'>(</span><span class='va'>splits1</span>, <span class='va'>splits2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  1 NA  3 NA</div><div class='input'><span class='va'>splits1</span> <span class='op'>%in%</span> <span class='va'>splits2</span>
-</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in match(splits1, splits2): object 'splits1' not found</span></div><div class='input'><span class='va'>splits1</span> <span class='op'>%in%</span> <span class='va'>splits2</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in splits1 %in% splits2: object 'splits1' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

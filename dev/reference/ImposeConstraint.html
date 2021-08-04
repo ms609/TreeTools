@@ -213,11 +213,11 @@ taxa.</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tips</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span>
 <span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>9</span>, <span class='va'>tips</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='img'><img src='ImposeConstraint-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("as.phylo"): no applicable method for 'as.phylo' applied to an object of class "c('double', 'numeric')"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in plot(tree): object 'tree' not found</span></div><div class='input'>
 <span class='va'>constraint</span> <span class='op'>&lt;-</span> <span class='fu'><a href='StringToPhyDat.html'>StringToPhyDat</a></span><span class='op'>(</span><span class='st'>'0000?1111 000111111 0000??110'</span>, <span class='va'>tips</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ImposeConstraint</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>constraint</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='ImposeConstraint-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='error'>Error in StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE): could not find function "StringToPhyDat"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ImposeConstraint</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>constraint</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in ImposeConstraint(tree, constraint): could not find function "ImposeConstraint"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

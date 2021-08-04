@@ -220,8 +220,8 @@ representation numbered to match <code>tipOrder</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'Lobo'</span><span class='op'>)</span> <span class='co'># Loads the phyDat object Lobo.phy</span>
 <span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>RandomTree</a></span><span class='op'>(</span><span class='va'>Lobo.phy</span><span class='op'>)</span>
-<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>RenumberTips</span><span class='op'>(</span><span class='va'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>Lobo.phy</span><span class='op'>)</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error in RandomTree(Lobo.phy): could not find function "RandomTree"</span></div><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>RenumberTips</span><span class='op'>(</span><span class='va'>tree</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>Lobo.phy</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='error'>Error in RenumberTips(tree, names(Lobo.phy)): could not find function "RenumberTips"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
