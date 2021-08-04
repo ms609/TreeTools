@@ -98,7 +98,6 @@ inline void add_child_edges(const intx node, const intx node_label,
       if (!n_children[i]) ++n_tip;
       children_of[i] = new intx[n_children[i]];
     }
-    std::free(parent_of);
 
     smallest_desc[0] = 1;
     for (intx tip = 1; tip != n_tip + 1; ++tip) {
@@ -109,6 +108,7 @@ inline void add_child_edges(const intx node, const intx node_label,
         parent = parent_of[parent];
       }
     }
+    std::free(parent_of);
 
     intx * found_children = (intx*) std::calloc(node_limit, sizeof(intx));
     for (intx i = n_edge; i--; ) {
