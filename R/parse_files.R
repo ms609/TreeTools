@@ -394,27 +394,14 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #'
 #' fileName <- paste0(system.file(package = 'TreeTools'),
 #'                    '/extdata/tests/continuous.nex')
-#' continuous <- ReadCharacters(fileName)
+#'
+#' continuous <- ReadCharacters(fileName, encoding = 'UTF8')
 #'
 #' # To convert from strings to numbers:
 #' at <- attributes(continuous)
 #' continuous <- suppressWarnings(as.numeric(continuous))
 #' attributes(continuous) <- at
 #' continuous
-#'
-#'
-#' # Read a file with a known encoding that cannot be auto-detected by R
-#'
-#' # Specify appropriate encoding:
-#' fileEncoding <- "UTF-8"
-#'
-#' # Open connection to file
-#' con <- file(fileName, encoding = fileEncoding, open = "r")
-#'
-#' ReadCharacters(con)
-#'
-#' # Close connection after use
-#' close(con)
 #' @template MRS
 #'
 #' @seealso
