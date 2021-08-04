@@ -8,26 +8,6 @@
 using namespace Rcpp;
 
 namespace TreeTools {
-  inline intx smallest_descendant(const intx *node,
-                                  intx *smallest_desc,
-                                  const intx *n_children,
-                                  const intx *children_of,
-                                  const intx *n_edge) {
-    if (!smallest_desc[*node]) {
-      smallest_desc[*node] =
-        smallest_descendant(&children_of[*node * *n_edge + 0], smallest_desc,
-                            n_children, children_of, n_edge);
-      for (intx j = 1; j != n_children[*node]; j++) {
-        const intx this_child =
-          smallest_descendant(&children_of[*node * *n_edge + j], smallest_desc,
-                              n_children, children_of, n_edge);
-        smallest_desc[*node] = smallest_desc[*node] < this_child
-          ? smallest_desc[*node] : this_child;
-      }
-    }
-    return smallest_desc[*node];
-  }
-
   inline void swap(intx *a, intx *b) {
     const intx temp = *a;
     *a = *b;
@@ -121,14 +101,20 @@ inline void add_child_edges(const intx node, const intx node_label,
       if (!parent_of[i]) root_node = i;
       if (!n_children[i]) ++n_tip;
     }
+
+    smallest_desc[0] = 1;
+    for (intx tip = 1; tip != n_tip + 1; ++tip) {
+      smallest_desc[tip] = tip;
+      intx parent = parent_of[tip];
+      while (!smallest_desc[parent]) {
+        smallest_desc[parent] = tip;
+        parent = parent_of[parent];
+      }
+    }
     std::free(parent_of);
 
-    for (intx tip = 1; tip != n_tip + 1; tip++) {
-      smallest_desc[tip] = tip;
-    }
 
     for (intx node = n_tip + 1; node != node_limit; node++) {
-      smallest_descendant(&node, smallest_desc, n_children, children_of, &n_edge);
       quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
                             0, n_children[node] - 1);
     }
