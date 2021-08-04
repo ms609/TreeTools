@@ -293,17 +293,19 @@ ISBN 978-3-540-61332-9, doi: <a href='https://doi.org/10.1007/3-540-61332-3_168'
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>10</span>, nTip <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("as.phylo"): no applicable method for 'as.phylo' applied to an object of class "c('double', 'numeric')"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(tree): object 'tree' not found</span></div><div class='input'><span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in as.TreeNumber(tree): could not find function "as.TreeNumber"</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='img'><img src='TreeNumber-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Phylogenetic tree number 10 of 105 
+#&gt;  6 tips: t1 t2 t3 t4 t5 t6</div><div class='input'>
 <span class='co'># Larger trees:</span>
 <span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in as.TreeNumber(BalancedTree(19)): could not find function "as.TreeNumber"</span></div><div class='input'>
+</div><div class='output co'>#&gt; Phylogenetic tree number 3259279213732796827 of 6332659870762850625 
+#&gt;  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</div><div class='input'>
 <span class='co'># If &gt; 9 digits, represent the tree number as a string.</span>
 <span class='va'>treeNumber</span> <span class='op'>&lt;-</span> <span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='st'>"1234567890123"</span>, nTip <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in as.TreeNumber("1234567890123", nTip = 14): could not find function "as.TreeNumber"</span></div><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='va'>treeNumber</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in as.phylo(treeNumber): object 'treeNumber' not found</span></div><div class='input'><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, nTip <span class='op'>=</span> <span class='fl'>6</span>, tipLabels <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("as.phylo"): no applicable method for 'as.phylo' applied to an object of class "c('integer', 'numeric')"</span></div><div class='input'>
+<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='va'>treeNumber</span><span class='op'>)</span>
+<span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, nTip <span class='op'>=</span> <span class='fl'>6</span>, tipLabels <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 3 phylogenetic trees</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

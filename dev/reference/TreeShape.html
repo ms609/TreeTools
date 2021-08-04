@@ -280,31 +280,36 @@ the position of the root will be ignored.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>RootedTreeShape</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in RootedTreeShape(PectinateTree(8)): could not find function "RootedTreeShape"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>RootedTreeWithShape</span><span class='op'>(</span><span class='fl'>0</span>, nTip <span class='op'>=</span> <span class='fl'>8L</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in RootedTreeWithShape(0, nTip = 8L): could not find function "RootedTreeWithShape"</span></div><div class='input'>
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 0</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>RootedTreeWithShape</span><span class='op'>(</span><span class='fl'>0</span>, nTip <span class='op'>=</span> <span class='fl'>8L</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='TreeShape-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'>NRootedShapes</span><span class='op'>(</span><span class='fl'>8L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in NRootedShapes(8L): could not find function "NRootedShapes"</span></div><div class='input'><span class='co'># Shapes are numbered from 0 to NRootedShapes(n) - 1.  The maximum shape is:</span>
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 23</div><div class='input'><span class='co'># Shapes are numbered from 0 to NRootedShapes(n) - 1.  The maximum shape is:</span>
 <span class='fu'>RootedTreeShape</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in RootedTreeShape(BalancedTree(8)): could not find function "RootedTreeShape"</span></div><div class='input'>
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 22</div><div class='input'>
 <span class='co'># Unique shapes of unrooted trees:</span>
 <span class='fu'>NUnrootedShapes</span><span class='op'>(</span><span class='fl'>8L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in NUnrootedShapes(8L): could not find function "NUnrootedShapes"</span></div><div class='input'>
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 4</div><div class='input'>
 <span class='co'># Keys of these trees:</span>
 <span class='fu'>UnrootedKeys</span><span class='op'>(</span><span class='fl'>8L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UnrootedKeys(8L): could not find function "UnrootedKeys"</span></div><div class='input'>
+</div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
 <span class='co'># A tree may be represented by multiple keys.</span>
 <span class='co'># For a one-to-one correspondence, use a number instead:</span>
 <span class='va'>unrootedShapes8</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'>NUnrootedShapes</span><span class='op'>(</span><span class='fl'>8L</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in NUnrootedShapes(8L): could not find function "NUnrootedShapes"</span></div><div class='input'><span class='va'>allShapes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>unrootedShapes8</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1L</span>,
+<span class='va'>allShapes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='va'>unrootedShapes8</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1L</span>,
                     <span class='va'>UnrootedTreeWithShape</span>, <span class='fl'>8L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in match.fun(FUN): object 'UnrootedTreeWithShape' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>allShapes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(allShapes[[1]]): object 'allShapes' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>allShapes</span>, <span class='va'>UnrootedTreeShape</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in match.fun(FUN): object 'UnrootedTreeShape' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>allShapes</span>, <span class='va'>UnrootedTreeKey</span>, asInteger <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># Key &gt;= number</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in match.fun(FUN): object 'UnrootedTreeKey' not found</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>allShapes</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='img'><img src='TreeShape-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>allShapes</span>, <span class='va'>UnrootedTreeShape</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0 1 2 3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>allShapes</span>, <span class='va'>UnrootedTreeKey</span>, asInteger <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># Key &gt;= number</span>
+</div><div class='output co'>#&gt; [1] 0 1 2 4</div><div class='input'>
 <span class='co'># If numbers larger than 2&gt;31 are required, sapply needs a little help</span>
 <span class='co'># with 64-bit integers:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>allShapes</span>, <span class='va'>UnrootedTreeKey</span><span class='op'>)</span>, class <span class='op'>=</span> <span class='st'>'integer64'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in match.fun(FUN): object 'UnrootedTreeKey' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; integer64
+#&gt; [1] 0 1 2 4</div><div class='input'>
 
 </div></pre>
   </div>

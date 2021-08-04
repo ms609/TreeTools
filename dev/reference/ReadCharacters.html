@@ -291,31 +291,26 @@ doi: <a href='https://doi.org/10.1093/sysbio/46.4.590'>10.1093/sysbio/46.4.590</
     <pre class="examples"><div class='input'><span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'TreeTools'</span><span class='op'>)</span>,
                    <span class='st'>'/extdata/input/dataset.nex'</span><span class='op'>)</span>
 <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>fileName</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadCharacters(fileName): could not find function "ReadCharacters"</span></div><div class='input'>
+</div><div class='output co'>#&gt;         [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+#&gt; taxon_a "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; taxon_b "0"  "0"  "0"  "0"  "0"  "0"  "0" 
+#&gt; taxon_c "1"  "1"  "1"  "1"  "?"  "0"  "0" 
+#&gt; taxon_d "1"  "1"  "1"  "?"  "?"  "1"  "1" 
+#&gt; taxon_e "1"  "1"  "1"  "1"  "?"  "1"  "1" </div><div class='input'>
 <span class='va'>fileName</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'TreeTools'</span><span class='op'>)</span>,
                    <span class='st'>'/extdata/tests/continuous.nex'</span><span class='op'>)</span>
-<span class='va'>continuous</span> <span class='op'>&lt;-</span> <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>fileName</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadCharacters(fileName): could not find function "ReadCharacters"</span></div><div class='input'>
+
+<span class='va'>continuous</span> <span class='op'>&lt;-</span> <span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>fileName</span>, encoding <span class='op'>=</span> <span class='st'>'UTF8'</span><span class='op'>)</span>
+
 <span class='co'># To convert from strings to numbers:</span>
 <span class='va'>at</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>continuous</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'continuous' not found</span></div><div class='input'><span class='va'>continuous</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>continuous</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in withCallingHandlers(expr, warning = function(w) if (inherits(w,     classes)) tryInvokeRestart("muffleWarning")): object 'continuous' not found</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>continuous</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>at</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'at' not found</span></div><div class='input'><span class='va'>continuous</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'continuous' not found</span></div><div class='input'>
-
-<span class='co'># Read a file with a known encoding that cannot be auto-detected by R</span>
-
-<span class='co'># Specify appropriate encoding:</span>
-<span class='va'>fileEncoding</span> <span class='op'>&lt;-</span> <span class='st'>"UTF-8"</span>
-
-<span class='co'># Open connection to file</span>
-<span class='va'>con</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/connections.html'>file</a></span><span class='op'>(</span><span class='va'>fileName</span>, encoding <span class='op'>=</span> <span class='va'>fileEncoding</span>, open <span class='op'>=</span> <span class='st'>"r"</span><span class='op'>)</span>
-
-<span class='fu'>ReadCharacters</span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadCharacters(con): could not find function "ReadCharacters"</span></div><div class='input'>
-<span class='co'># Close connection after use</span>
-<span class='fu'><a href='https://rdrr.io/r/base/connections.html'>close</a></span><span class='op'>(</span><span class='va'>con</span><span class='op'>)</span>
-</div></pre>
+<span class='va'>continuous</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/warning.html'>suppressWarnings</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>continuous</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span><span class='op'>(</span><span class='va'>continuous</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>at</span>
+<span class='va'>continuous</span>
+</div><div class='output co'>#&gt;            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]
+#&gt; A_taxon   1.111 1.000 1.330 1.444 1.555 1.666
+#&gt; B_alienus 2.111 2.222 2.333    NA 2.550 2.666
+#&gt; C_andinus 3.111 3.222 3.333 3.444 3.555 3.666</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

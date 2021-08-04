@@ -240,16 +240,16 @@ without the excluded taxa.</p>
 
 <span class='co'># Two trees differing only in placement of tip 2:</span>
 <span class='va'>trees</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>53</span><span class='op'>)</span>, <span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in UseMethod("as.phylo"): no applicable method for 'as.phylo' applied to an object of class "c('double', 'numeric')"</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>trees</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>trees</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>trees</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='img'><img src='ConsensusWithout-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Strict consensus (left panel) lacks resolution:</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ape</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/ape/man/consensus.html'>consensus</a></span><span class='op'>(</span><span class='va'>trees</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error: $ operator is invalid for atomic vectors</span></div><div class='input'>
+
 <span class='co'># But omitting tip two (right panel) reveals shared structure in common:</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ConsensusWithout</span><span class='op'>(</span><span class='va'>trees</span>, <span class='st'>'t2'</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ConsensusWithout(trees, "t2"): could not find function "ConsensusWithout"</span></div><div class='input'><span class='fu'>MarkMissing</span><span class='op'>(</span><span class='st'>'t2'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in MarkMissing("t2"): could not find function "MarkMissing"</span></div><div class='input'>
+</div><div class='input'><span class='fu'>MarkMissing</span><span class='op'>(</span><span class='st'>'t2'</span><span class='op'>)</span>
+</div><div class='img'><img src='ConsensusWithout-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>oldPar</span><span class='op'>)</span>
 </div></pre>
   </div>

@@ -241,27 +241,105 @@ code is based.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in PectinateTree(5): could not find function "PectinateTree"</span></div><div class='input'><span class='va'>edge</span>   <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'tree' not found</span></div><div class='input'>
+<span class='va'>edge</span>   <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
+
 <span class='co'># Identify desired node with:</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in plot(tree): object 'tree' not found</span></div><div class='input'><span class='fu'>nodelabels</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in get("last_plot.phylo", envir = .PlotPhyloEnv): object 'last_plot.phylo' not found</span></div><div class='input'><span class='fu'>tiplabels</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in get("last_plot.phylo", envir = .PlotPhyloEnv): object 'last_plot.phylo' not found</span></div><div class='input'>
+</div><div class='input'><span class='fu'>nodelabels</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'>tiplabels</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='ListAncestors-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Ancestors of specific nodes:</span>
 <span class='fu'>ListAncestors</span><span class='op'>(</span><span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fl'>4L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ListAncestors(edge[, 1], edge[, 2], 4L): could not find function "ListAncestors"</span></div><div class='input'><span class='fu'>ListAncestors</span><span class='op'>(</span><span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fl'>8L</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ListAncestors(edge[, 1], edge[, 2], 8L): could not find function "ListAncestors"</span></div><div class='input'>
+</div><div class='output co'>#&gt; [1] 9 8 7 6</div><div class='input'><span class='fu'>ListAncestors</span><span class='op'>(</span><span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fl'>8L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 7 6</div><div class='input'>
 <span class='co'># Ancestors of each node, if tree numbering system is uncertain:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>ListAncestors</span>,
        parent <span class='op'>=</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, child <span class='op'>=</span> <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in match.fun(FUN): object 'ListAncestors' not found</span></div><div class='input'>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
 <span class='co'># Ancestors of each node, if tree is in preorder:</span>
 <span class='fu'>ListAncestors</span><span class='op'>(</span><span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ListAncestors(edge[, 1], edge[, 2]): could not find function "ListAncestors"</span></div><div class='input'>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
 <span class='co'># Alias:</span>
 <span class='fu'>AllAncestors</span><span class='op'>(</span><span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in AllAncestors(edge[, 1], edge[, 2]): could not find function "AllAncestors"</span></div><div class='input'>
+</div><div class='output co'>#&gt; [[1]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[2]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[3]]
+#&gt; [1] 8 7 6
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[5]]
+#&gt; [1] 9 8 7 6
+#&gt; 
+#&gt; [[6]]
+#&gt; integer(0)
+#&gt; 
+#&gt; [[7]]
+#&gt; [1] 6
+#&gt; 
+#&gt; [[8]]
+#&gt; [1] 7 6
+#&gt; 
+#&gt; [[9]]
+#&gt; [1] 8 7 6
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

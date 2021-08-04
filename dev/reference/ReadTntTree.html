@@ -255,7 +255,13 @@ object of class <code>phylo</code>.</p>
 <span class='co'># If taxon names were saved within the file (using `taxname=` in TNT),</span>
 <span class='co'># then our job is easy:</span>
 <span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'extdata/output/named.tre'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadTntTree("extdata/output/named.tre"): could not find function "ReadTntTree"</span></div><div class='input'>
+</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt;   taxon_a, taxon_b, taxon_c, taxon_d, taxon_e
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'>
 <span class='co'># But if taxa were compressed to numbers (using `taxname-`), we need to</span>
 <span class='co'># look up the original matrix in order to dereference the tip names.</span>
 <span class='co'>#</span>
@@ -268,18 +274,24 @@ object of class <code>phylo</code>.</p>
 <span class='co'>#</span>
 <span class='co'># '.' means "relative to the current directory"</span>
 <span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'extdata/output/numbered.tre'</span>, <span class='st'>'./extdata'</span>, <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadTntTree("extdata/output/numbered.tre", "./extdata", 2): could not find function "ReadTntTree"</span></div><div class='input'>
+</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
 <span class='co'># If working in a lower subdirectory</span>
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>'./extdata/otherfolder'</span><span class='op'>)</span>
 
 <span class='co'># then it will be necessary to navigate up the directory path with '..':</span>
 <span class='fu'>ReadTntTree</span><span class='op'>(</span><span class='st'>'../output/numbered.tre'</span>, <span class='st'>'..'</span>, <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in ReadTntTree("../output/numbered.tre", "..", 2): could not find function "ReadTntTree"</span></div><div class='input'>
+</div><div class='output co'>#&gt; 2 phylogenetic trees</div><div class='input'>
 
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>oldWD</span><span class='op'>)</span> <span class='co'># Restore original working directory</span>
 
 <span class='fu'>TNTText2Tree</span><span class='op'>(</span><span class='st'>"(A (B (C (D E ))));"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in TNTText2Tree("(A (B (C (D E ))));"): could not find function "TNTText2Tree"</span></div><div class='input'>
+</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 5 tips and 4 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt;   A, B, C, D, E
+#&gt; 
+#&gt; Rooted; no branch lengths.</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
