@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9004 (development)
+# TreeTools 1.4.5.9005 (development)
 
 - Add `KeepTip()` and improve performance of `DropTip()`.
 - `ImposeConstraint()` makes a tree consistent with topological constraints.
@@ -12,6 +12,7 @@
 - Make `RootTree()` and `PhyDatToMatrix()` more robust.
 - Support `encoding` option in `ReadCharacters()` function family.
 - Fast matching functions from "fastmatch".
+- Improve efficiency of `Preorder()`.
 
 # TreeTools 1.4.5
 

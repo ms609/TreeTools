@@ -34,7 +34,8 @@ namespace TreeTools {
   }
 
 inline void add_child_edges(const intx node, const intx node_label,
-                            const intx *children_of, const intx *n_children,
+                            intx const* const* children_of,
+                            const intx *n_children,
                             IntegerMatrix final_edges,
                             intx *next_edge, intx *next_label,
                             const intx *n_tip, const intx *n_edge) {
@@ -42,7 +43,7 @@ inline void add_child_edges(const intx node, const intx node_label,
     for (intx child = 0; child != n_children[node]; child++) {
 
       final_edges(*next_edge, 0) = node_label;
-      intx this_child = children_of[node * *n_edge + child];
+      intx this_child = children_of[node][child];
 
       if (this_child <= *n_tip) {
 
@@ -84,23 +85,20 @@ inline void add_child_edges(const intx node, const intx node_label,
 
     intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
          * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
-    if (!children_of) {
-      throw std::length_error("Could not allocate memory in "                   // # nocov
-                              "preorder_edges_and_nodes. Try 64-bit R?");       // # nocov
-    }
+         * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx));
+    intx ** children_of = new intx*[node_limit];
 
     for (intx i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
-      children_of[parent[i] * n_edge + n_children[parent[i]]] = child[i];
-      (n_children[parent[i]])++;
+      ++(n_children[parent[i]]);
     }
 
     for (intx i = 1; i != node_limit; i++) {
       if (!parent_of[i]) root_node = i;
       if (!n_children[i]) ++n_tip;
+      children_of[i] = new intx[n_children[i]];
     }
+    std::free(parent_of);
 
     smallest_desc[0] = 1;
     for (intx tip = 1; tip != n_tip + 1; ++tip) {
@@ -111,11 +109,15 @@ inline void add_child_edges(const intx node, const intx node_label,
         parent = parent_of[parent];
       }
     }
-    std::free(parent_of);
 
+    intx * found_children = (intx*) std::calloc(node_limit, sizeof(intx));
+    for (intx i = n_edge; i--; ) {
+      children_of[parent[i]][(found_children[parent[i]])++] = child[i];
+    }
+    std::free(found_children);
 
     for (intx node = n_tip + 1; node != node_limit; node++) {
-      quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
+      quicksort_by_smallest(children_of[node], smallest_desc,
                             0, n_children[node] - 1);
     }
     std::free(smallest_desc);
@@ -127,7 +129,11 @@ inline void add_child_edges(const intx node, const intx node_label,
                     &next_edge, &next_label, &n_tip, &n_edge);
 
     std::free(n_children);
-    std::free(children_of);
+
+    for (intx i = 1; i != node_limit; i++) {
+      delete[] children_of[i];
+    }
+    delete[] children_of;
 
     return (ret);
   }
