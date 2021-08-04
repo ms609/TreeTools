@@ -99,7 +99,7 @@ inline void add_child_edges(const intx node, const intx node_label,
       children_of[i] = new intx[n_children[i]];
     }
 
-    smallest_desc[0] = 1;
+    smallest_desc[0] = 0;
     for (intx tip = 1; tip != n_tip + 1; ++tip) {
       smallest_desc[tip] = tip;
       intx parent = parent_of[tip];
