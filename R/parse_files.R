@@ -540,7 +540,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
     nBlocks <- vapply(blocks, length, 0)
     if (any(nBlocks == 0)) {
       message("Tags ", paste0(type[nBlocks == 0], collapse = ', '),
-      " not found. Ignored: ", types[!seq_along(types) %in% unlist(blocks)])
+      " not found. Ignored: ", types[!seq_along(types) %fin% unlist(blocks)])
     }
     if (all(nBlocks == 0L)) return(NULL)
     blockSpan <- cbind(ctypeLines + 1L, c(ctypeLines[-1] - 1, length(matrixLines)))
@@ -765,7 +765,7 @@ MatrixToPhyDat <- function (tokens) {
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
   whichTokens[allTokens == '?'] <- list(levels)
-  contrast <- vapply(whichTokens, function (x) levels %in% x,
+  contrast <- vapply(whichTokens, function (x) levels %fin% x,
                      logical(length(levels)))
   contrast <- 1 * if (is.null(dim(contrast))) {
     as.matrix(contrast)
@@ -917,7 +917,7 @@ PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
   levelLengths <- vapply(outLevels, nchar, integer(1))
   longLevels <- levelLengths > 1
   if (any(longLevels)) {
-    if ('10' %in% outLevels && !(0 %in% outLevels)) {
+    if ('10' %fin% outLevels && !(0 %fin% outLevels)) {
       outLevels[outLevels == '10'] <- '0'
       longLevels['10'] <- FALSE
     }

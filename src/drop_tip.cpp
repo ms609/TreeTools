@@ -1,10 +1,14 @@
 #include <Rcpp.h>
+#include <stdexcept>
 using namespace Rcpp;
 
 // drop is a vector of integers between 1 and nTip marking tips to drop.
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
+  if (edge.ncol() != 2) {
+    std::invalid_argument("edge must have two columns");
+  }
   const int
     start_edge = edge.nrow(),
     all_nodes = start_edge + 2
