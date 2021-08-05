@@ -64,7 +64,7 @@ test_that("Replacement reorder functions work correctly", {
   post6 <- Postorder(BalancedTree(6))$edge
   parent6 <- post6[, 1]
   child6 <- post6[, 2]
-  expect_equal(c(9,9,11,11,10,10,8,8,7, 7), parent6)
+  expect_equal(c(9, 9, 11, 11, 8, 8, 10, 10, 7, 7), parent6)
   # Order of tip pairs is arbitrary\
   expect_equal(1:2, sort(child6[parent6 == 9]))
   expect_equal(4:5, sort(child6[parent6 == 11]))
