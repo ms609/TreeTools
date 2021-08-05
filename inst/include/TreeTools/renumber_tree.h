@@ -213,7 +213,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (intx node = n_tip; node != node_limit; node++) {
-      quicksort_by_smallest(&children_of[node], subtree_size,
+      quicksort_by_smallest(children_of[node], subtree_size,
                             0, n_children[node] - 1);
     }
     intx * node_order = (intx*) malloc(n_node * sizeof(intx));
