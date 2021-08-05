@@ -21,7 +21,7 @@ namespace TreeTools {
     if (left >= right) return;
 
     const intx pivot = sort_by[*right];
-    intx centre = left;
+    intx *centre = left;
     for (intx i = left; i <= right; i++) {
       if (sort_by[*i] <= pivot) {
         swap(centre, i);
