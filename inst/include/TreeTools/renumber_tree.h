@@ -147,7 +147,7 @@ namespace TreeTools {
   inline void add_child_edges(const int32 node, const int32 node_label,
                             int32 const* const* children_of,
                             const int32 *n_children,
-                            IntegerMatrix final_edges,
+                            IntegerMatrix& final_edges,
                             int32 *next_edge, int32 *next_label) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
