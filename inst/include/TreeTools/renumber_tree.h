@@ -163,8 +163,8 @@ namespace TreeTools {
 
       } else {
 
-        *next_label += 1;
         const int32 child_label = *next_label;
+        *next_label += 1;
         final_edges(*next_edge, 1) = child_label;
         *next_edge += 1;
 
