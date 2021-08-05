@@ -11,15 +11,14 @@ test_that("Errors are handled", {
 })
 
 test_that("Replacements ok", {
-  expect_equal(ignore_attr = TRUE,
-               rep('?', 6),
-               ArtificialExtinction(dataset,
-                                    subject = c('A', 'B'),
+  expectation <- matrix(rep('?', 6), 2, 3, dimnames = list(c('A', 'B'), 4:6))
+  expect_equal(expectation,
+               ArtificialExtinction(dataset, subject = c('A', 'B'),
                                     template = 'E',
                                     replaceAmbiguous = 'ambig')[1:2, 4:6])
 
-  expect_equal(ignore_attr = TRUE,
-               rep('1', 6),
+  expectation[] <- 1
+  expect_equal(expectation,
                ArtificialExtinction(dataset, c('A', 'B'), 'F',
                                     'unif', sampleFrom = 'A')[1:2, 4:6])
 
@@ -29,8 +28,7 @@ test_that("Replacements ok", {
   expect_true(all(ArtificialExtinction(dataset, subject = 'E', template = 'F',
                                        replaceAmbiguous = 'binary')['E', 3:6] %in% 0:1))
 
-  expect_equal(ignore_attr = TRUE,
-               rep('?', 3),
+  expect_equal(setNames(rep('?', 3), 4:6),
                ArtificialExtinction(dataset, subject = 'E', template = 'F',
                                     replaceAmbiguous = 'binary',
                                     replaceAll = FALSE)['E', 4:6])
