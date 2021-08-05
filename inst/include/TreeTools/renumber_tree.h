@@ -155,7 +155,7 @@ namespace TreeTools {
       final_edges(*next_edge, 0) = node_label;
       const int32 this_child = children_of[node][child];
 
-      if (this_child <= *n_tip) {
+      if (this_child > *n_tip) {
 
         const int32 child_label = *next_label;
         *next_label += 1;
