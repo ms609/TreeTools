@@ -17,7 +17,7 @@ namespace TreeTools {
   /* Requires unsigned integers. */
   /* If we chose signed, we'd have to impose a limit on n_children, which
    * would exclude star trees */
-  inline void quicksort_by_smallest(int32 *left, const int32 *right,
+  void quicksort_by_smallest(int32 *left, const int32 *right,
                                     const int32 *sort_by) {
     if (left >= right) return;
 
@@ -33,7 +33,7 @@ namespace TreeTools {
     quicksort_by_smallest(centre, right, sort_by);
   }
 
-inline void add_child_edges(const int32 node, const int32 node_label,
+  void add_child_edges(const int32 node, const int32 node_label,
                             int32 const* const* children_of,
                             const int32 *n_children,
                             IntegerMatrix final_edges,
@@ -138,8 +138,9 @@ inline void add_child_edges(const int32 node, const int32 node_label,
     return (ret);
   }
 
-inline int32 get_subtree_size(int32 node, int32 *subtree_size, int32 *n_children,
-                       int32 **children_of, int32 n_edge) {
+  int32 get_subtree_size(int32 node, int32 *subtree_size,
+                                int32 *n_children, int32 **children_of,
+                                int32 n_edge) {
     if (!subtree_size[node]) {
       for (int32 i = n_children[node]; i--; ) {
         subtree_size[node] += get_subtree_size(children_of[node][i],
