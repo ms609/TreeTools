@@ -54,11 +54,11 @@ test_that('Bitwise logic works', {
 
   expect_equal(
     matrix(c(A, A, A, A, A,
-             A, A, A, A, A,
              A, B, A, A, A,
+             A, A, A, A, A,
              A, A, A, B, A,
              A, A, A, A, A), byrow = TRUE, 5, 5,
-           dimnames = list(c(10:12, 14:15), 11:15)),
+           dimnames = list(11:15, 11:15)),
     CompatibleSplits(splits, splits2))
 
   expect_true(.CompatibleSplit(as.raw(3), as.raw(7), nTip = 5))
