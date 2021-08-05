@@ -33,7 +33,7 @@
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
 \alias{Preorder.NULL}
-\title{Reorder trees}
+\title{Reorder tree edges and nodes}
 \usage{
 RenumberTree(parent, child)
 
@@ -135,12 +135,14 @@ specified numbering scheme.
 corresponding to \code{tree}, with edges listed in postorder
 }
 \description{
+Functions for systematically ordering the internal edges of trees.
+}
+\details{
 \code{Reorder()} is a wrapper for \code{ape:::.reorder_ape}.
 Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 \code{ape::\link[ape:reorder.phylo]{postorder}}
-}
-\details{
+
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
 functions to the corresponding functions in 'ape'. Single nodes may
 need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
@@ -182,8 +184,9 @@ be used with caution: malformed input may cause undefined results, including
 crashing R.
 
 Trees with >8191 leaves require additional memory and are not handled
-at present.  If you need to process such large trees, please contact the
-maintainer for advice.
+by \code{Postorder()} at present.
+If you need to process such large trees, please contact the maintainer for
+advice.
 }
 \section{Functions}{
 \itemize{

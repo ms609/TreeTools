@@ -80,7 +80,9 @@ RenumberEdges <- function (parent, child, ...) {
   list(oenn[, 1], oenn[, 2])
 }
 
-#' Reorder trees
+#' Reorder tree edges and nodes
+#'
+#' Functions for systematically ordering the internal edges of trees.
 #'
 #' `Reorder()` is a wrapper for \code{ape:::.reorder_ape}.
 #' Calling this C function directly is approximately twice as fast as using
@@ -129,8 +131,9 @@ RenumberEdges <- function (parent, child, ...) {
 #' crashing R.
 #'
 #' Trees with >8191 leaves require additional memory and are not handled
-#' at present.  If you need to process such large trees, please contact the
-#' maintainer for advice.
+#' by `Postorder()` at present.
+#' If you need to process such large trees, please contact the maintainer for
+#' advice.
 #'
 #' @template treeParam
 #' @template nTipParam
