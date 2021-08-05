@@ -33,6 +33,22 @@ namespace TreeTools {
     quicksort_by_smallest(centre, right, sort_by);
   }
 
+  inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
+                                         int32* sort_by) {
+    for (int32 i = 1; i < arr_len; ++i) {
+      const int32
+        tmp = arr[i],
+        key = sort_by[tmp]
+      ;
+      int32 j = i - 1;
+      while (j >= 0 && sort_by[arr[j]] > key) {
+        arr[j + 1] = arr[j];
+        --j;
+      }
+      arr[j + 1] = tmp;
+    }
+  }
+
   inline void add_child_edges(const int32 node, const int32 node_label,
                             int32 const* const* children_of,
                             const int32 *n_children,
@@ -116,19 +132,8 @@ namespace TreeTools {
     std::free(found_children);
 
     for (int32 node = n_tip + 1; node != node_limit; node++) {
-      // Insertion sort chilren by smallest desc
-      const int32 node_children = n_children[node];
-      int32 * arr = children_of[node];
-      for (int32 i = 1; i < node_children; ++i) {
-        int32 tmp = arr[i];
-        int32 key = smallest_desc[tmp];
-        int32 j = i;
-        while (j >= 0 && smallest_desc[arr[j]] > key) {
-          arr[j + 1] = arr[j];
-          --j;
-        }
-        arr[j + 1] = tmp;
-      }
+      insertion_sort_by_smallest(children_of[node], n_children[node],
+                                 smallest_desc);
     }
     std::free(smallest_desc);
 
@@ -226,9 +231,8 @@ namespace TreeTools {
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (int32 node = n_tip; node != node_limit; node++) {
-      quicksort_by_smallest(children_of[node],
-                            children_of[node] + n_children[node] - 1,
-                            subtree_size);
+      insertion_sort_by_smallest(children_of[node], n_children[node],
+                                 subtree_size);
     }
     int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
     for (int32 i = 0; i != n_node; ++i) {
