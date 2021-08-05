@@ -1,18 +1,40 @@
-# TreeTools 1.4.5.9005 (development)
+# TreeTools 1.4.5.9006 (development)
 
-- Add `KeepTip()` and improve performance of `DropTip()`.
-- `ImposeConstraint()` makes a tree consistent with topological constraints.
-- `as.phylo.Splits()` represents a `Splits` object as a tree.
+
+## New functions
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
+  
+- `PolarizeSplits()` places a specified taxon in the ingroup of all splits.
+
+- Add `KeepTip()` and improve performance of `DropTip()`.
+
+- `ImposeConstraint()` makes a tree consistent with topological constraints.
+
+- `as.phylo.Splits()` represents a `Splits` object as a tree.
+
+
+## Improved functions
+
 - Warn when empty cells passed to `MatrixToPhyDat()`.
+
 - Warn when `LabelSplits(labels)` lack names.
+
 - `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
+
 - `AddTipEverywhere()` supports trees with < 3 leaves.
+
 - Make `RootTree()` and `PhyDatToMatrix()` more robust.
+
 - Support `encoding` option in `ReadCharacters()` function family.
+
+
+## Optimization
+
 - Fast matching functions from "fastmatch".
-- Improve efficiency of `Preorder()`.
+
+- Improve efficiency of `Preorder()` and `Postorder()`.
+
 
 # TreeTools 1.4.5
 

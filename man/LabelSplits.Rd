@@ -62,11 +62,12 @@ Colour labels according to value: \code{\link[=SupportColour]{SupportColour()}}
 Other Splits operations: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
 \code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
 \code{\link{match}()}
 }
 \concept{Splits operations}
