@@ -1,4 +1,3 @@
-context("split_analysis.R")
 test_that("TipsInSplits() family", {
   expect_identical(c('8' = 2L, '9' = 2L),
                    TipsInSplits(BalancedTree(letters[1:5])))

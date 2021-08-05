@@ -1,5 +1,3 @@
-context("Stemwardness.R")
-
 test_that("Stemwardness functions", {
   bal8 <- BalancedTree(8)
   pec8 <- PectinateTree(8)

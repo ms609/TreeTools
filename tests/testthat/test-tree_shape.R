@@ -1,13 +1,9 @@
-context("tree_shape.R")
-
 test_that("Errors are handled", {
   expect_error(RootedTreeWithShape(as.integer64(-1)))
   expect_error(RootedTreeWithShape(as.integer64(2^31)))
   expect_error(UnrootedTreeWithShape(31, 31))
   expect_error(.UnrootedKeys(29L))
 })
-
-context('tree_shape.cpp')
 
 test_that('Tree shapes counted', {
   expect_equal(as.integer64(c(1, 1, 1, 2, 3, 6, 11, 23)),
