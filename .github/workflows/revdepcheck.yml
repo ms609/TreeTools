@@ -62,7 +62,8 @@ jobs:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
           revdepcheck::revdep_check(timeout = as.difftime(60, units = 'mins'), num_workers = 4)
-          revdepcheck::revdep_details()
+          problems <- readLines('revdep/problems.md', warn = FALSE)
+          if (length(problems) > 1) stop(problems)
         shell: Rscript {0}
 
       - name: Upload check results
