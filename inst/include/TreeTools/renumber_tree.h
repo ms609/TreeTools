@@ -176,9 +176,10 @@ inline int32 get_subtree_size(int32 node, int32 *subtree_size, int32 *n_children
       root_node = 0,
       n_tip = 0;
 
+    // 6 * checks we've enough memory for all children_of arrays too.
     // 0.9999 leaves room for memory overhead: seems in practice to avoid
     // attempting a doomed call to calloc.
-    if (long(n_edge * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
+    if (long(6 * node_limit * sizeof(intx)) > 0.9999L * INTPTR_MAX) {
       throw std::length_error("Tree too large for postorder_edges. "            // # nocov
                               "Try running 64-bit R?");                         // # nocov
     }
