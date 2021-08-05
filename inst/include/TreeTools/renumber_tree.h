@@ -148,14 +148,14 @@ namespace TreeTools {
                             int32 const* const* children_of,
                             const int32 *n_children,
                             IntegerMatrix& final_edges,
-                            int32 *next_edge, int32 *next_label) {
+                            int32 *next_edge, int32 *next_label, int32 *n_tip) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
       const int32 this_child = children_of[node][child];
 
-      if (n_children[this_child]) {
+      if (this_child <= *n_tip) {
 
         const int32 child_label = *next_label;
         *next_label += 1;
@@ -164,7 +164,7 @@ namespace TreeTools {
         *next_edge += 1;
 
         add_child_edges(this_child, child_label, children_of, n_children,
-                        final_edges, next_edge, next_label);
+                        final_edges, next_edge, next_label, n_tip);
 
       } else {
 
@@ -239,7 +239,7 @@ namespace TreeTools {
     int32 next_label = n_tip + 2;
     IntegerMatrix ret(n_edge, 2);
     add_child_edges(root_node, n_tip + 1, children_of, n_children, ret,
-                    &next_edge, &next_label);
+                    &next_edge, &next_label, &n_tip);
 
     std::free(n_children);
 
