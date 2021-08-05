@@ -1,5 +1,3 @@
-context("tree_write.R")
-
 test_that("Write is successful", {
   Test <- function (tree) expect_equal(ape::write.tree(tree), as.Newick(tree))
   Test(BalancedTree(0:7))

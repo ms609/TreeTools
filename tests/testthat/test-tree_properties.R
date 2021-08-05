@@ -1,5 +1,3 @@
-context("tree_properties.R")
-
 nasty <- structure(list(edge = structure(
   c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
     5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),

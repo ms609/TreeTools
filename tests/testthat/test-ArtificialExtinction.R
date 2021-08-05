@@ -1,5 +1,3 @@
-context("ArtificalExtinction.R")
-
 nTax <- 6L
 dataset <- matrix(seq_len(nTax), nrow = nTax, ncol = 6,
                   dimnames = list(LETTERS[1:nTax], 1:6))

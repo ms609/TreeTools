@@ -1,5 +1,3 @@
-context("helper_functions.R")
-
 test_that("UnshiftTree() works", {
   t1 <- as.phylo(1, 8)
   t2..9 <- setNames(as.phylo(2:9, 8), letters[2:9])

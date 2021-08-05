@@ -1,5 +1,3 @@
-context("parse_files.R")
-
 TestFile <- function (filename = '') {
   system.file('extdata', 'tests', filename, package = 'TreeTools')
 }

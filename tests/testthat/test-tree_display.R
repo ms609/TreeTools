@@ -1,5 +1,3 @@
-context('tree_display')
-
 test_that('ConsensusWithout() is robust', {
   expect_equal(BalancedTree(8), ConsensusWithout(BalancedTree(8)))
   expect_equal(BalancedTree(4),

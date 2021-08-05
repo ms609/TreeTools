@@ -1,5 +1,3 @@
-context('tree_generation.R')
-
 test_that('Pectinate trees are generated', {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))

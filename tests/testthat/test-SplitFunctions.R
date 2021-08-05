@@ -1,5 +1,3 @@
-context('SplitFunctions.R')
-
 test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)

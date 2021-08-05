@@ -7,8 +7,6 @@ nasty <- structure(list(edge = structure(
   class = 'phylo') # Danger: Do not plot!
 
 
-context("Tree rearrangements")
-
 test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,

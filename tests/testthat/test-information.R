@@ -1,5 +1,3 @@
-context("Information.R")
-
 test_that("Trees matching splits calculated correctly", {
   expect_equal(NUnrooted(9), TreesMatchingSplit(0, 9))
   expect_equal(NUnrooted(9), TreesMatchingSplit(9, 0))
