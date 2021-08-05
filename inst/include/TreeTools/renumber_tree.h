@@ -42,40 +42,24 @@ namespace TreeTools {
         swap(&arr[0], &arr[1]);
       }
       return;
-    case 3:
-      if (sort_by[arr[0]] > sort_by[arr[1]]) {
-        if (sort_by[arr[1]] >= sort_by[arr[2]]) {
-          // 0 > 1 >= 2
-          swap(&arr[0], &arr[2]);
-        } else {
-          // 0 > 1 < 2
-          if (sort_by[arr[0]] > sort_by[arr[2]]) {
-            // 0 > 2 > 1
-            int32 tmp = arr[0];
-            arr[0] = arr[1];
-            arr[1] = arr[2];
-            arr[2] = tmp;
-          } else {
-            // 2 > 0 > 1
-            int32 tmp = arr[0];
-            arr[0] = arr[2];
-            arr[2] = arr[1];
-            arr[1] = tmp;
-          }
-        }
-      } else {
-        // 0 <= 1
-        if (sort_by[arr[1]] > sort_by[arr[2]]) {
-          if (sort_by[arr[0]] == sort_by[arr[1]]) {
-            swap(&arr[0], &arr[2]);
-          } else {
-            swap(&arr[1], &arr[2]);
-          }
-        }
-      }
-      return;
     }
 
+    for (int32 i = 1; i != arr_len; ++i) {
+      const int32
+        tmp = arr[i],
+        key = sort_by[tmp]
+      ;
+      int32 j = i;
+      while (j && sort_by[arr[j - 1]] > key) {
+        arr[j] = arr[j - 1];
+        --j;
+      }
+      arr[j] = tmp;
+    }
+  }
+
+  inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
+                                             int32* sort_by) {
     for (int32 i = 1; i != arr_len; ++i) {
       const int32
         tmp = arr[i],
@@ -144,7 +128,7 @@ namespace TreeTools {
 
     // Sort individual subarrays of size run_length
     for (int32 i = 0; i < arr_len; i += run_length) {
-      insertion_sort_by_smallest(arr + i,
+      tim_insertion_sort_by_smallest(arr + i,
                                  i + run_length > arr_len ?
                                    arr_len % run_length : run_length,
                                  sort_by);
