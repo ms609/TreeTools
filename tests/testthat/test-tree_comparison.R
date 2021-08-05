@@ -9,5 +9,5 @@ test_that('Pairwise distances calculated correctly', {
   class(trees) <- 'multiPhylo'
 
   dists <- PairwiseDistances(trees, phangorn::RF.dist)
-  expect_equal(ignore_attr = TRUE, phangorn::RF.dist(trees), dists)
+  expect_equal(as.integer(phangorn::RF.dist(trees)), as.integer(dists))
 })
