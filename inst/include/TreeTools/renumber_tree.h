@@ -16,9 +16,6 @@ namespace TreeTools {
     *b = temp;
   }
 
-  /* Requires unsigned integers. */
-  /* If we chose signed, we'd have to impose a limit on n_children, which
-   * would exclude star trees */
   inline void quicksort_by_smallest(int32 *left, const int32 *right,
                              const int32 *sort_by) {
     if (left >= right) return;
@@ -98,7 +95,9 @@ namespace TreeTools {
   }
 
   inline void timsort_by_smallest(int32* arr, int32 arr_len, int32* sort_by) {
-    const int32 run_length = 32; // TODO calculate so we have 2^n runs, 32 <= len < 64
+    int32 run_length = arr_len;
+    while (run_length > 64) ++run_length /= 2;
+
     // Sort individual subarrays of size run_length
     for (int32 i = 0; i < arr_len; i += run_length) {
       insertion_sort_by_smallest(arr + i,
@@ -132,13 +131,13 @@ namespace TreeTools {
       if (this_child <= *n_tip) {
 
         final_edges(*next_edge, 1) = this_child;
-        ++(*next_edge);
+        *next_edge += 1;
 
       } else {
 
         const int32 child_label = (*next_label)++;
         final_edges(*next_edge, 1) = child_label;
-        ++(*next_edge);
+        *next_edge += 1;
 
         add_child_edges(this_child, child_label, children_of, n_children,
                         final_edges, next_edge, next_label, n_tip, n_edge);
@@ -174,7 +173,7 @@ namespace TreeTools {
 
     for (int32 i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
-      ++(n_children[parent[i]]);
+      n_children[parent[i]] += 1;
     }
 
     for (int32 i = 1; i != node_limit; i++) {
@@ -275,7 +274,7 @@ namespace TreeTools {
 
     for (int32 i = n_edge; i--; ) {
       parent_of[edge(i, 1)] = edge(i, 0);
-      ++(n_children[edge(i, 0)]);
+      n_children[edge(i, 0)] += 1;
     }
 
     for (int32 i = node_limit; i--; ) {
@@ -293,7 +292,7 @@ namespace TreeTools {
 
     const int32 n_node = n_edge - n_tip + 1;
 
-    for (int32 tip = 0; tip != n_tip; tip++) {
+    for (int32 tip = n_tip; tip--; ) {
       subtree_size[tip] = 1;
     }
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
