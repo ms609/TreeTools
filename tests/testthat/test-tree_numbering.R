@@ -1,5 +1,3 @@
-context("tree_numbering.R")
-
 nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
                          5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
                        .Dim = c(12, 2))
@@ -10,11 +8,11 @@ test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
-  expect_error(Preorder(PectinateTree(8192 * 2)))
+  Preorder(PectinateTree(8192 * 2))
 
   bigEdge <- PectinateTree(16385)$edge
   expect_error(postorder_edges(bigEdge))
-  expect_error(preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2]))
+  preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2])
 })
 
 test_that("RenumberTree() handles polytomies", {
