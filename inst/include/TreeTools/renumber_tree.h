@@ -17,20 +17,20 @@ namespace TreeTools {
   /* Requires unsigned integers. */
   /* If we chose signed, we'd have to impose a limit on n_children, which
    * would exclude star trees */
-  inline void quicksort_by_smallest(intx *to_sort, const intx *sort_by,
-                                    const intx left, const intx right) {
+  inline void quicksort_by_smallest(intx *left, const intx *right,
+                                    const intx *sort_by) {
     if (left >= right) return;
 
-    const intx pivot = sort_by[to_sort[right]];
-    intx centre = left;
-    for (intx i = left; i <= right; i++) {
-      if (sort_by[to_sort[i]] <= pivot) {
-        swap(&to_sort[centre], &to_sort[i]);
-        centre++;
+    const intx pivot = sort_by[*right];
+    intx *centre = left;
+    for (intx *i = left; i <= right; i++) {
+      if (sort_by[*i] <= pivot) {
+        swap(centre, i);
+        ++centre;
       }
     }
-    quicksort_by_smallest(to_sort, sort_by, left, centre - 2);
-    quicksort_by_smallest(to_sort, sort_by, centre, right);
+    quicksort_by_smallest(left, centre - 2, sort_by);
+    quicksort_by_smallest(centre, right, sort_by);
   }
 
 inline void add_child_edges(const intx node, const intx node_label,
@@ -116,8 +116,9 @@ inline void add_child_edges(const intx node, const intx node_label,
     std::free(found_children);
 
     for (intx node = n_tip + 1; node != node_limit; node++) {
-      quicksort_by_smallest(children_of[node], smallest_desc,
-                            0, n_children[node] - 1);
+      quicksort_by_smallest(children_of[node],
+                            children_of[node] + n_children[node] - 1,
+                            smallest_desc);
     }
     std::free(smallest_desc);
 
@@ -186,7 +187,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
          * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
          * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx));
     intx ** children_of = new intx*[node_limit];
-    
+
     for (intx i = n_edge; i--; ) {
       parent_of[edge(i, 1)] = edge(i, 0);
       ++(n_children[edge(i, 0)]);
@@ -204,7 +205,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
       children_of[edge(i, 0)][(found_children[edge(i, 0)])++] = edge(i, 1);
     }
     std::free(found_children);
-    
+
     const intx n_node = n_edge - n_tip + 1;
 
     for (intx tip = 0; tip != n_tip; tip++) {
@@ -213,14 +214,15 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (intx node = n_tip; node != node_limit; node++) {
-      quicksort_by_smallest(&children_of[node], subtree_size,
-                            0, n_children[node] - 1);
+      quicksort_by_smallest(children_of[node],
+                            children_of[node] + n_children[node] - 1,
+                            subtree_size);
     }
     intx * node_order = (intx*) malloc(n_node * sizeof(intx));
     for (intx i = 0; i != n_node; ++i) {
       node_order[i] = i + n_tip;
     }
-    quicksort_by_smallest(node_order, subtree_size, 0, n_node - 1);
+    quicksort_by_smallest(node_order, node_order + n_node - 1, subtree_size);
     std::free(subtree_size);
 
     IntegerMatrix ret(n_edge, 2);

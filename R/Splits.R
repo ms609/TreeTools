@@ -41,10 +41,11 @@
 #'
 #' @family Splits operations
 #' @importFrom ape reorder.phylo
+#' @name Splits
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
@@ -53,10 +54,9 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
-  edge <- Postorder(x, renumber = FALSE)$edge # In case tree already postordered
 
   # Return:
-  .as.Splits.edge(edge, tipLabels = x$tip.label, asSplits = asSplits,
+  .as.Splits.edge(x$edge, tipLabels = x$tip.label, asSplits = asSplits,
                   nTip = NTip(x), ...)
 }
 
@@ -77,14 +77,14 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
@@ -122,7 +122,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], 'phylo')) {
@@ -143,7 +143,7 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
   if (all(c('edge', 'Nnode') %in% rownames(x))) {
@@ -171,7 +171,7 @@ as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
@@ -209,7 +209,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
 as.logical.Splits <- function (x, tipLabels = NULL, ...) {
   nTip <- attr(x, 'nTip')
@@ -358,14 +358,13 @@ c.Splits <- function (...) {
 #' @export
 `!.Splits` <- function (x) {
   nTip <- attr(x, 'nTip')
-  x <- !unclass(x)
+  x[] <- !x[]
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
     lastSplit <- dim(x)[2]
     endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
     x[, lastSplit] <- x[, lastSplit] & endMask
   }
-  class(x) <- 'Splits'
   x
 }
 
@@ -507,3 +506,44 @@ match.list <- function (x, table, ...) {
 #' @rdname match
 #' @export
 in.Splits <- `%in%.Splits`
+
+#' Polarize splits on a single taxon
+#'
+#' @param x Object of class [`Splits`].
+#' @param pole Numeric or character identifying tip that should polarize each
+#' split.
+#'
+#' @return `PolarizeSplits()` returns a `Splits` object in which `pole` is
+#' represented by a zero bit
+#' @family Splits operations
+#' @export
+PolarizeSplits <- function (x, pole = 1L) {
+  nTip <- attr(x, 'nTip')
+  if (!is.numeric(pole)) {
+    pole <- match(pole, attr(x, 'tip.label'))
+  }
+  if (is.na(pole)) {
+    stop("Could not find `pole` in labels of `x`")
+  }
+  if (pole < 1) {
+    stop("`pole` must be positive")
+  }
+  if (pole > nTip) {
+    stop("`pole` must correspond to a leaf")
+  }
+
+  poleMask <- logical(8 * ceiling(nTip / 8))
+  poleMask[pole] <- T
+  poleMask <- packBits(poleMask)
+  flip <- !apply(t(x) & poleMask, 2, function (x) any(as.logical(x)))
+
+  x[flip, ] <- !x[flip, ]
+  remainder <- (8L - nTip) %% 8L
+  if (remainder) {
+    lastSplit <- dim(x)[2]
+    endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
+    x[, lastSplit] <- x[, lastSplit] & endMask
+  }
+  x
+}
+

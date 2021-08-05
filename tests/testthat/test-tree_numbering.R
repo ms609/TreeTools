@@ -63,10 +63,16 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(ape::reorder.phylo(tree, 'cladewise'), Cladewise(tree))
   expect_equal(ape::reorder.phylo(tree, 'pruningwise'), Pruningwise(tree))
 
-  expect_equal(matrix(c(9,9,11,11,10,10,8,8,7, 7,
-                        1,2, 4, 5, 6,11,3,9,8,10), ncol = 2),
-               Postorder(BalancedTree(6))$edge)
-
+  post6 <- Postorder(BalancedTree(6))$edge
+  parent6 <- post6[, 1]
+  child6 <- post6[, 2]
+  expect_equal(c(9,9,11,11,10,10,8,8,7, 7), parent6)
+  # Order of tip pairs is arbitrary\
+  expect_equal(1:2, sort(child6[parent6 == 9]))
+  expect_equal(4:5, sort(child6[parent6 == 11]))
+  expect_equal(c(6, 11), sort(child6[parent6 == 10]))
+  expect_equal(c(3, 9), sort(child6[parent6 == 8]))
+  expect_equal(c(8, 10), sort(child6[parent6 == 7]))
 
   star <- ape::read.tree(text = '(a, b, d, c);')
   edge <- RenumberTips(star, letters[1:4])$edge
