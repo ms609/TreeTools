@@ -60,8 +60,8 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: revdepcheck::revdep_check(timeout = as.difftime(60, units = 'mins'),
-          num_workers = 4)
+        run: |
+          revdepcheck::revdep_check(timeout = as.difftime(60, units = 'mins'), num_workers = 4)
           revdepcheck::revdep_report()
         shell: Rscript {0}
 
