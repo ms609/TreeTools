@@ -39,12 +39,12 @@ namespace TreeTools {
         tmp = arr[i],
         key = sort_by[tmp]
       ;
-      int32 j = i - 1;
-      while (j >= 0 && sort_by[arr[j]] > key) {
-        arr[j + 1] = arr[j];
+      int32 j = i;
+      while (j && sort_by[arr[j - 1]] > key) {
+        arr[j] = arr[j - 1];
         --j;
       }
-      arr[j + 1] = tmp;
+      arr[j] = tmp;
     }
   }
 
@@ -302,7 +302,7 @@ namespace TreeTools {
                                  subtree_size);
     }
     int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
-    for (int32 i = 0; i != n_node; ++i) {
+    for (int32 i = n_node; i--; ) {
       node_order[i] = i + n_tip;
     }
     timsort_by_smallest(node_order, n_node, subtree_size);
