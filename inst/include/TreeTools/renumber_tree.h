@@ -34,7 +34,49 @@ namespace TreeTools {
 
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                          int32* sort_by) {
-    for (int32 i = 1; i < arr_len; ++i) {
+    switch (arr_len) {
+    case 0: return;
+    case 1: return;
+    case 2:
+      if (sort_by[arr[0]] > sort_by[arr[1]]) {
+        swap(&arr[0], &arr[1]);
+      }
+      return;
+    case 3:
+      if (sort_by[arr[0]] > sort_by[arr[1]]) {
+        if (sort_by[arr[1]] >= sort_by[arr[2]]) {
+          // 0 > 1 >= 2
+          swap(&arr[0], &arr[2]);
+        } else {
+          // 0 > 1 < 2
+          if (sort_by[arr[0]] > sort_by[arr[2]]) {
+            // 0 > 2 > 1
+            int32 tmp = arr[0];
+            arr[0] = arr[1];
+            arr[1] = arr[2];
+            arr[2] = tmp;
+          } else {
+            // 2 > 0 > 1
+            int32 tmp = arr[0];
+            arr[0] = arr[2];
+            arr[2] = arr[1];
+            arr[1] = tmp;
+          }
+        }
+      } else {
+        // 0 <= 1
+        if (sort_by[arr[1]] > sort_by[arr[2]]) {
+          if (sort_by[arr[0]] == sort_by[arr[1]]) {
+            swap(&arr[0], &arr[2]);
+          } else {
+            swap(&arr[1], &arr[2]);
+          }
+        }
+      }
+      return;
+    }
+
+    for (int32 i = 1; i != arr_len; ++i) {
       const int32
         tmp = arr[i],
         key = sort_by[tmp]
@@ -300,50 +342,8 @@ namespace TreeTools {
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (int32 node = n_tip; node != node_limit; node++) {
-      int32* kids = children_of[node];
-      int32 n_kids = n_children[node];
-
-      switch (n_kids) {
-      case 2:
-        if (subtree_size[kids[0]] > subtree_size[kids[1]]) {
-          swap(&kids[0], &kids[1]);
-        }
-        break;
-      case 3:
-        if (subtree_size[kids[0]] > subtree_size[kids[1]]) {
-          if (subtree_size[kids[1]] >= subtree_size[kids[2]]) {
-            // 0 > 1 >= 2
-            swap(&kids[0], &kids[2]);
-          } else {
-            // 0 > 1 < 2
-            if (subtree_size[kids[0]] > subtree_size[kids[2]]) {
-              // 0 > 2 > 1
-              int32 tmp = kids[0];
-              kids[0] = kids[1];
-              kids[1] = kids[2];
-              kids[2] = tmp;
-            } else {
-              // 2 > 0 > 1
-              int32 tmp = kids[0];
-              kids[0] = kids[2];
-              kids[2] = kids[1];
-              kids[1] = tmp;
-            }
-          }
-        } else {
-          // 0 <= 1
-          if (subtree_size[kids[1]] > subtree_size[kids[2]]) {
-            if (subtree_size[kids[0]] == subtree_size[kids[1]]) {
-              swap(&kids[0], &kids[2]);
-            } else {
-              swap(&kids[1], &kids[2]);
-            }
-          }
-        }
-        break;
-      default:
-      insertion_sort_by_smallest(kids, n_kids, subtree_size);
-      }
+      insertion_sort_by_smallest(children_of[node], n_children[node],
+                                 subtree_size);
     }
     int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
     for (int32 i = n_node; i--; ) {
