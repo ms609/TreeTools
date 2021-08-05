@@ -1,5 +1,3 @@
-context('tree_generation.R: RandomTree()')
-
 test_that("Random trees are set by R seed", {
 
   set.seed(0)

@@ -1,5 +1,3 @@
-context("parse_files.R")
-
 TestFile <- function (filename = '') {
   system.file('extdata', 'tests', filename, package = 'TreeTools')
 }
@@ -25,7 +23,7 @@ test_that("Nexus file can be parsed", {
   filename <- TestFile('continuous.nex')
   read <- ReadCharacters(filename)
   expect_equal(1L, unique(as.integer(read[1, ])))
-  expect_equivalent('?', read['B_alienus', 4])
+  expect_equal(setNames('?', 'B_alienus'), read['B_alienus', 4])
   expect_equal(3L, unique(as.integer(read[3, ])))
 })
 

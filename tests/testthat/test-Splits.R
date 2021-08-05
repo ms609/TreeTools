@@ -148,9 +148,10 @@ test_that('as.Splits.matrix()', {
   expect_error(as.Splits(arr[-2, ]))
   expect_equal(as.Splits(trees), as.Splits(arr))
 
-  trees <- list(BalancedTree(1:8), PectinateTree(1:8),
-                CollapseNode(BalancedTree(1:8), 10:13))
-  expect_equivalent(as.Splits(trees), as.Splits(arr[-3, ]))
+  for (i in seq_along(trees)) {
+    trees[[i]]$tip.label <- 1:8
+  }
+  expect_equal(as.Splits(trees), as.Splits(arr[-3, ]))
 
   exp <- as.Splits(BalancedTree(8))
   attr(exp, 'tip.label') <- NULL
@@ -281,8 +282,9 @@ test_that("Split combination", {
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree3)))))
   expect_error(c(splits1, as.Splits(tree4)))
   expect_error(c(splits1, as.Splits(tree5)))
-  expect_equivalent(as.raw(c(3L, 24L, 28L, 24L)),
-                    c(splits1, as.Splits(RenumberTips(tree3, letters[1:5])))[, 1])
+  expect_equal(as.raw(c(3L, 24L, 28L, 24L)),
+               unname(c(splits1,
+                        as.Splits(RenumberTips(tree3, letters[1:5])))[, 1]))
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
 
   #TODO: Fully test splits with large (> 8 tip) trees
