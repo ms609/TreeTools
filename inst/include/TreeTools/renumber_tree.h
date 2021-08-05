@@ -116,9 +116,19 @@ namespace TreeTools {
     std::free(found_children);
 
     for (int32 node = n_tip + 1; node != node_limit; node++) {
-      quicksort_by_smallest(children_of[node],
-                            children_of[node] + n_children[node] - 1,
-                            smallest_desc);
+      // Insertion sort chilren by smallest desc
+      const int32 node_children = n_children[node];
+      int32 * arr = children_of[node];
+      for (int32 i = 1; i < node_children; ++i) {
+        int32 tmp = arr[i];
+        int32 key = smallest_desc[tmp];
+        int32 j = i;
+        while (j >= 0 && smallest_desc[arr[j]] > key) {
+          arr[j + 1] = arr[j];
+          --j;
+        }
+        arr[j + 1] = tmp;
+      }
     }
     std::free(smallest_desc);
 
