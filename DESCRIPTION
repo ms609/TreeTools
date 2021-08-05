@@ -34,17 +34,20 @@ Imports:
     fastmatch,
     phangorn (>= 2.2.1),
     R.cache,
-    Rdpack
+    Rdpack,
 Suggests:
     knitr,
     Rcpp,
     rmarkdown,
     shiny,
-    testthat,
-    vdiffr (>= 1.0.0)
+    testthat (>= 3.0),
+    vdiffr (>= 1.0.0),
 Config/Needs/coverage: covr
+Config/Needs/memcheck: devtools, rcmdcheck
 Config/Needs/metadata: codemetar
+Config/Needs/revdeps: revdepcheck
 Config/Needs/website: pkgdown
+Config/testthat/parallel: false
 Config/testthat/edition: 2
 LinkingTo: Rcpp
 RdMacros: Rdpack
