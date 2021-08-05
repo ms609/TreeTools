@@ -1,5 +1,3 @@
-context("root_tree.h")
-
 ApeRoot <- function (tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
 
 test_that("Memory leak not encountered", {

@@ -1,5 +1,3 @@
-context("tree_write.R")
-
 test_that("Write is successful", {
   Test <- function (tree) expect_equal(ape::write.tree(tree), as.Newick(tree))
   Test(BalancedTree(0:7))
@@ -40,5 +38,6 @@ test_that("WriteTntCharacters()", {
   written <- tempfile()
   WriteTntCharacters(dataset, written)
   on.exit(file.remove(written))
-  expect_equivalent(dataset, ReadTntCharacters(written))
+  colnames(dataset) <- NULL
+  expect_equal(dataset, ReadTntCharacters(written))
 })

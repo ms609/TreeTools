@@ -1,5 +1,3 @@
-context("tree_information.R")
-
 test_that("Cladistic info calculated correctly", {
   bal8 <- BalancedTree(8)
   expect_equal(1, TreesMatchingTree(bal8))

@@ -1,5 +1,3 @@
-context("Support.R")
-
 test_that("Node supports calculated correctly", {
   treeSample <- list(
     correct = ape::read.tree(text = "((((((A,B),C),D),E),F),out);"),

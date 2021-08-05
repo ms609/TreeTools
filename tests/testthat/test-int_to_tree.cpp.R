@@ -1,5 +1,3 @@
-context("int_to_tree.cpp")
-
 test_that("Failures are graceful", {
   expect_error(num_to_parent(10, 1))
   expect_error(num_to_parent(10, -1))
