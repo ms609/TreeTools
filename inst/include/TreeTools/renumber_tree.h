@@ -151,10 +151,10 @@ namespace TreeTools {
                             int32 *next_edge, int32 *next_label,
                             const int32 *n_tip, const int32 *n_edge) {
 
-    for (int32 child = 0; child != n_children[node]; child++) {
+    for (int32 child = 0; child != n_children[node]; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
-      int32 this_child = children_of[node][child];
+      const int32 this_child = children_of[node][child];
 
       if (this_child <= *n_tip) {
 
@@ -163,7 +163,8 @@ namespace TreeTools {
 
       } else {
 
-        const int32 child_label = (*next_label)++;
+        *next_label += 1;
+        const int32 child_label = *next_label;
         final_edges(*next_edge, 1) = child_label;
         *next_edge += 1;
 
@@ -183,8 +184,10 @@ namespace TreeTools {
                               "Contact 'TreeTools' maintainer for support.");
     }
 
-    const int32 n_edge = parent.length(),
-               node_limit = n_edge + 2;
+    const int32
+      n_edge = parent.length(),
+      node_limit = n_edge + 2
+    ;
 
     if (child.length() != n_edge) {
       throw std::invalid_argument("Length of parent and child must match");
@@ -222,7 +225,8 @@ namespace TreeTools {
 
     int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
-      children_of[parent[i]][(found_children[parent[i]])++] = child[i];
+      children_of[parent[i]][found_children[parent[i]]] = child[i];
+      found_children[parent[i]] += 1;
     }
     std::free(found_children);
 
@@ -314,7 +318,8 @@ namespace TreeTools {
 
     int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
-      children_of[edge(i, 0)][(found_children[edge(i, 0)])++] = edge(i, 1);
+      children_of[edge(i, 0)][found_children[edge(i, 0)]] = edge(i, 1);
+      found_children[edge(i, 0)] += 1;
     }
     std::free(found_children);
 
