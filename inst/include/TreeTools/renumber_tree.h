@@ -96,7 +96,7 @@ namespace TreeTools {
       k = l
     ;
 
-    while (i < left_len && j < right_len) {
+    while (i != left_len && j != right_len) {
       if (sort_by[left[i]] <= sort_by[right[j]]) {
         arr[k] = left[i];
         i++;
@@ -108,14 +108,14 @@ namespace TreeTools {
     }
 
     // Copy remaining elements of left, if any
-    while (i < left_len) {
+    while (i != left_len) {
       arr[k] = left[i];
       ++k;
       ++i;
     }
 
     // Copy remaining element of right, if any
-    while (j < right_len) {
+    while (j != right_len) {
       arr[k] = right[j];
       ++k;
       ++j;
@@ -309,8 +309,8 @@ namespace TreeTools {
     }
 
     for (int32 i = node_limit; i--; ) {
-      if (parent_of[i] == 0) root_node = i;
-      if (n_children[i] == 0) ++n_tip;
+      if (!parent_of[i]) root_node = i;
+      if (!n_children[i]) ++n_tip;
       children_of[i] = new int32[n_children[i]];
     }
     std::free(parent_of);
