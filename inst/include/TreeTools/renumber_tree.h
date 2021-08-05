@@ -303,7 +303,7 @@ namespace TreeTools {
       int32* kids = children_of[node];
       int32 n_kids = n_children[node];
 
-      switch (n_children[node]) {
+      switch (n_kids) {
       case 2:
         if (subtree_size[kids[0]] > subtree_size[kids[1]]) {
           swap(&kids[0], &kids[1]);
