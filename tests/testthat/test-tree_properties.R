@@ -56,8 +56,7 @@ test_that('NodeOrder() works', {
   expect_equal(ignore_attr = TRUE, rep(2L, 7),
                as.integer(NodeOrder(BalancedTree(8), FALSE)))
   tree <- CollapseNode(BalancedTree(8), 12:15)
-  expect_equal(ignore_attr = TRUE, c(`9` = 5L, `10` = 4L, `11` = 3L),
-               as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
+  expect_equal(5:3, as.integer(NodeOrder(tree$edge, internalOnly = TRUE)))
   expect_equal(list(NodeOrder(tree), NodeOrder(tree)), NodeOrder(c(tree, tree)))
   expect_equal(NodeOrder(c(tree, tree)), NodeOrder(list(tree, tree)))
 
