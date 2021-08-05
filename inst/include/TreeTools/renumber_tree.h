@@ -138,10 +138,10 @@ inline void add_child_edges(const intx node, const intx node_label,
   }
 
 inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
-                       intx *children_of, intx n_edge) {
+                       intx **children_of, intx n_edge) {
     if (!subtree_size[node]) {
-      for (intx i = 0; i != n_children[node]; i++) {
-        subtree_size[node] += get_subtree_size(children_of[node * n_edge + i],
+      for (intx i = n_children[node]; i--; ) {
+        subtree_size[node] += get_subtree_size(children_of[node][i],
                                 subtree_size, n_children, children_of, n_edge);
       }
     }
@@ -164,6 +164,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
       // children_of?
       // Rather than attempt to debug now, I've chosen to place a hard limit on
       // edge.nrow for the time being.  --MS, 2020-05-26
+      // Possibly fixed in branch optim-postorder, to check: 2021-08-05
     }
 
     const intx
@@ -183,24 +184,27 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
 
     intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
          * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
-    if (!children_of) {
-      throw std::length_error("Could not allocate memory in postorder_edges."); // # nocov
-    }
-
-    for (intx i = 0; i != n_edge; i++) {
+         * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx));
+    intx ** children_of = new intx*[node_limit];
+    
+    for (intx i = n_edge; i--; ) {
       parent_of[edge(i, 1)] = edge(i, 0);
-      children_of[edge(i, 0) * n_edge + n_children[edge(i, 0)]] = edge(i, 1);
       ++(n_children[edge(i, 0)]);
     }
 
-    for (intx i = 0; i != node_limit; i++) {
+    for (intx i = node_limit; i--; ) {
       if (parent_of[i] == 0) root_node = i;
       if (n_children[i] == 0) ++n_tip;
+      children_of[i] = new intx[n_children[i]];
     }
     std::free(parent_of);
 
+    intx * found_children = (intx*) std::calloc(node_limit, sizeof(intx));
+    for (intx i = n_edge; i--; ) {
+      children_of[edge(i, 0)][(found_children[edge(i, 0)])++] = edge(i, 1);
+    }
+    std::free(found_children);
+    
     const intx n_node = n_edge - n_tip + 1;
 
     for (intx tip = 0; tip != n_tip; tip++) {
@@ -209,7 +213,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (intx node = n_tip; node != node_limit; node++) {
-      quicksort_by_smallest(&children_of[node * n_edge], subtree_size,
+      quicksort_by_smallest(&children_of[node], subtree_size,
                             0, n_children[node] - 1);
     }
     intx * node_order = (intx*) malloc(n_node * sizeof(intx));
@@ -221,16 +225,19 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
 
     IntegerMatrix ret(n_edge, 2);
     intx this_edge = 0;
-    for (intx i = 0; i != n_node; i++) {
+    for (intx i = 0; i != n_node; ++i) {
       const intx this_parent = node_order[i];
       for (intx j = 0; j != n_children[this_parent]; ++j) {
         ret(this_edge, 0) = this_parent + 1;
-        ret(this_edge, 1) = children_of[this_parent * n_edge + j] + 1;
+        ret(this_edge, 1) = children_of[this_parent][j] + 1;
         ++this_edge;
       }
     }
     std::free(n_children);
-    std::free(children_of);
+    for (intx i = node_limit; i--; ) {
+      delete children_of[i];
+    }
+    delete[] (children_of);
     std::free(node_order);
 
     return (ret);
