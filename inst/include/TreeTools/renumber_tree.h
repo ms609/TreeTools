@@ -140,7 +140,7 @@ inline void add_child_edges(const intx node, const intx node_label,
 inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
                        intx **children_of, intx n_edge) {
     if (!subtree_size[node]) {
-      for (intx i = 0; i != n_children[node]; i++) {
+      for (intx i = n_children[node]; i--; ) {
         subtree_size[node] += get_subtree_size(children_of[node][i],
                                 subtree_size, n_children, children_of, n_edge);
       }
@@ -192,7 +192,7 @@ inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
       ++(n_children[edge(i, 0)]);
     }
 
-    for (intx i = 0; i != node_limit; i++) {
+    for (intx i = node_limit; i--; ) {
       if (parent_of[i] == 0) root_node = i;
       if (n_children[i] == 0) ++n_tip;
       children_of[i] = new intx[n_children[i]];
