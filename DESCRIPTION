@@ -45,6 +45,7 @@ Suggests:
 Config/Needs/coverage: covr
 Config/Needs/metadata: codemetar
 Config/Needs/website: pkgdown
+Config/testthat/edition: 2
 LinkingTo: Rcpp
 RdMacros: Rdpack
 LazyData: true
