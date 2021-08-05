@@ -19,7 +19,8 @@ test_that('Balanced trees are generated correctly', {
                BalancedTree(9L))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
-  expect_equivalent(PectinateTree(escapees), BalancedTree(escapees))
+  expect_equal(ignore_attr = TRUE,
+               PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
   expect_equal('Test', .BalancedBit('Test'))
   expect_true(is.integer(BalancedTree(8)$edge))
