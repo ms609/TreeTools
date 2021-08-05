@@ -89,7 +89,7 @@ bipartition split in a Splits object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9005</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9006</span>
       </span>
     </div>
 
@@ -192,7 +192,7 @@ in the output.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters to pass to <code><a href='as.Splits.html'>as.Splits()</a></code>.</p></td>
+      <td><p>Additional parameters to pass to <code><a href='Splits.html'>as.Splits()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -210,15 +210,16 @@ splits two tips from ten has an imbalance of 10 - 2 = 8.</p>
 <code><a href='LabelSplits.html'>LabelSplits</a>()</code>,
 <code><a href='NSplits.html'>NSplits</a>()</code>,
 <code><a href='NTip.html'>NTip</a>()</code>,
+<code><a href='PolarizeSplits.html'>PolarizeSplits</a>()</code>,
 <code><a href='SplitFrequency.html'>SplitFrequency</a>()</code>,
 <code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
+<code><a href='Splits.html'>Splits</a></code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
-<code><a href='as.Splits.html'>as.Splits</a>()</code>,
 <code><a href='match.html'>match</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span>
-<span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+<span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
 <span class='fu'>TipsInSplits</span><span class='op'>(</span><span class='va'>splits</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 11 12 13 14 15 
 #&gt;  6  5  4  3  2 </div><div class='input'>
