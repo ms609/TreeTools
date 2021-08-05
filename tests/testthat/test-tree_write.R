@@ -38,5 +38,6 @@ test_that("WriteTntCharacters()", {
   written <- tempfile()
   WriteTntCharacters(dataset, written)
   on.exit(file.remove(written))
-  expect_equal(ignore_attr = TRUE, dataset, ReadTntCharacters(written))
+  colnames(dataset) <- NULL
+  expect_equal(dataset, ReadTntCharacters(written))
 })
