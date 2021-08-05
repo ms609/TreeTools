@@ -57,10 +57,12 @@ namespace TreeTools {
       right_len = r - m
     ;
     int32 left[left_len], right[right_len];
-    for (int32 i = left_len; i--; )
+    for (int32 i = left_len; i--; ) {
       left[i] = arr[l + i];
-    for (int32 i = right_len; i--; )
+    }
+    for (int32 i = right_len; i--; ) {
       right[i] = arr[m + 1 + i];
+    }
 
     int32
       i = 0,
@@ -298,8 +300,50 @@ namespace TreeTools {
     get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
 
     for (int32 node = n_tip; node != node_limit; node++) {
-      insertion_sort_by_smallest(children_of[node], n_children[node],
-                                 subtree_size);
+      int32* kids = children_of[node];
+      int32 n_kids = n_children[node];
+
+      switch (n_children[node]) {
+      case 2:
+        if (subtree_size[kids[0]] > subtree_size[kids[1]]) {
+          swap(&kids[0], &kids[1]);
+        }
+        break;
+      case 3:
+        if (subtree_size[kids[0]] > subtree_size[kids[1]]) {
+          if (subtree_size[kids[1]] >= subtree_size[kids[2]]) {
+            // 0 > 1 >= 2
+            swap(&kids[0], &kids[2]);
+          } else {
+            // 0 > 1 < 2
+            if (subtree_size[kids[0]] > subtree_size[kids[2]]) {
+              // 0 > 2 > 1
+              int32 tmp = kids[0];
+              kids[0] = kids[1];
+              kids[1] = kids[2];
+              kids[2] = tmp;
+            } else {
+              // 2 > 0 > 1
+              int32 tmp = kids[0];
+              kids[0] = kids[2];
+              kids[2] = kids[1];
+              kids[1] = tmp;
+            }
+          }
+        } else {
+          // 0 <= 1
+          if (subtree_size[kids[1]] > subtree_size[kids[2]]) {
+            if (subtree_size[kids[0]] == subtree_size[kids[1]]) {
+              swap(&kids[0], &kids[2]);
+            } else {
+              swap(&kids[1], &kids[2]);
+            }
+          }
+        }
+        break;
+      default:
+      insertion_sort_by_smallest(kids, n_kids, subtree_size);
+      }
     }
     int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
     for (int32 i = n_node; i--; ) {
