@@ -1,7 +1,8 @@
 test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
-  expect_equal(c(4, 4, 4, 3, 2, 1), TipsInSplits(efgh), ignore_attr = TRUE)
+  expect_equal(setNames(c(4, 4, 4, 3, 2, 1), 12:17),
+               TipsInSplits(efgh))
   expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
                  '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
 
@@ -21,7 +22,7 @@ test_that('Subsplits', {
   sub <- Subsplit(splits, tips = fourTips)
   expect_equal(as.Splits(c('t32' = FALSE, 't33' = FALSE, 't64' = TRUE,
                            't65' = TRUE)),
-               sub, ignore_attr = TRUE)
+               unname(sub), ignore_attr = TRUE)
 
 
 })
