@@ -17,7 +17,8 @@ namespace TreeTools {
   /* Requires unsigned integers. */
   /* If we chose signed, we'd have to impose a limit on n_children, which
    * would exclude star trees */
-  inline void quicksort_by_smallest(intx *left, const intx *right, const intx *sort_by) {
+  inline void quicksort_by_smallest(intx *left, const intx *right,
+                                    const intx *sort_by) {
     if (left >= right) return;
 
     const intx pivot = sort_by[*right];
