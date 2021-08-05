@@ -22,7 +22,7 @@ namespace TreeTools {
 
     const intx pivot = sort_by[*right];
     intx *centre = left;
-    for (intx i = left; i <= right; i++) {
+    for (intx *i = left; i <= right; i++) {
       if (sort_by[*i] <= pivot) {
         swap(centre, i);
         ++centre;
