@@ -10,8 +10,8 @@ test_that("RenumberTree() fails safely", {
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
   Preorder(PectinateTree(8192 * 2))
 
-  bigEdge <- PectinateTree(16385)$edge
-  expect_error(postorder_edges(bigEdge))
+  bigEdge <- PectinateTree(16385)$edge - 1L
+  expect_error(postorder_edges(bigEdge, TRUE))
   preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2])
 })
 
