@@ -135,7 +135,7 @@ as.TreeNumber.phylo <- function (x, ...) {
   if (nTip > 19L) warning("Trees with > 19 leaves not uniquely identified ",
                           "by 64-bit TreeNumbers")
 
-  edge <- Postorder(edge)
+  edge <- Postorder(edge, sizeSort = TRUE)
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
             tip.labels = TipLabels(x),
