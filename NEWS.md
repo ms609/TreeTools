@@ -33,7 +33,8 @@
 
 - Fast matching functions from "fastmatch".
 
-- Improve efficiency of `Preorder()` and `Postorder()`.
+- Improve efficiency of `Preorder()` and `Postorder()`,
+  and lift limit on tree size.
 
 
 # TreeTools 1.4.5

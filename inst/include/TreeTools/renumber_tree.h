@@ -283,18 +283,6 @@ namespace TreeTools {
   inline IntegerMatrix postorder_edges(const IntegerMatrix edge,
                                        const LogicalVector size_sort)
   {
-    if (1L + edge.nrow() > long(0xFFFF)) {
-      throw std::length_error("Too many edges in tree for postorder_edges: "
-                              "Contact maintainer for advice");
-      // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
-      // or we could change int32 to 32 bit.  The former has caused a seg fault
-      // with invalid permissions on linux builds, possibly related to callocing
-      // children_of?
-      // Rather than attempt to debug now, I've chosen to place a hard limit on
-      // edge.nrow for the time being.  --MS, 2020-05-26
-      // Possibly fixed in branch optim-postorder, to check: 2021-08-05
-    }
-
     const int32
       n_edge = edge.nrow(),
       node_limit = n_edge + 1;
