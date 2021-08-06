@@ -16,9 +16,6 @@ jobs:
 
     name: revdepcheck, macOS, R release
 
-    strategy:
-      fail-fast: false
-
     env:
       _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
       _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
