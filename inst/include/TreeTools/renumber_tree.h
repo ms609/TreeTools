@@ -355,7 +355,7 @@ namespace TreeTools {
     }
     std::free(n_children);
     for (int32 i = node_limit; i--; ) {
-      delete children_of[i];
+      delete[] children_of[i];
     }
     delete[] (children_of);
     std::free(node_order);
