@@ -63,7 +63,7 @@ jobs:
         run: |
           revdepcheck::revdep_check(timeout = as.difftime(60, units = 'mins'), num_workers = 4)
           problems <- readLines('revdep/problems.md', warn = FALSE)
-          if (length(problems) > 1) stop(problems)
+          if (length(problems) > 1) stop(paste0(problems, collapse= "\n"))
         shell: Rscript {0}
 
       - name: Upload check results
@@ -71,4 +71,4 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
+          path: revdep/*.md
