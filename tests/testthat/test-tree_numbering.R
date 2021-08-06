@@ -11,8 +11,7 @@ test_that("RenumberTree() fails safely", {
   Preorder(PectinateTree(8192 * 2))
 
   bigEdge <- PectinateTree(16385)$edge
-  expect_error(postorder_edges(bigEdge, FALSE))
-  expect_error(postorder_edges(bigEdge, TRUE))
+  expect_error(postorder_edges(bigEdge - 1, TRUE))
   preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2])
 })
 
