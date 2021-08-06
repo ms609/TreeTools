@@ -18,9 +18,6 @@ jobs:
 
     name: valgrind, ubuntu-20.04, R release
 
-    strategy:
-      fail-fast: false
-
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
@@ -41,7 +38,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = c('soft', 'Config/Needs/memcheck')), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
@@ -61,9 +58,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_github("KlausVigo/phangorn")
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
+          remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
         shell: Rscript {0}
 
       - name: Install TreeTools

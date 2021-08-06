@@ -1,5 +1,3 @@
-context('phylo.R')
-
 nasty <- structure(list(edge = structure(
   c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
     5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
@@ -24,6 +22,13 @@ test_that("AddTip() at root", {
                AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'))
   AddTip(nasty, 1L)
   AddTip(nasty, 12L)
+})
+
+test_that("AddTip() with tip name", {
+  bal8 <- BalancedTree(8)
+  expect_error(AddTip(bal8, 'invalid tip'))
+  expect_equal(AddTip(bal8, 1L), AddTip(bal8, 't1'))
+  expect_equal(AddTip(nasty, 1L), AddTip(nasty, 'a'))
 })
 
 test_that("AddTip() with edge lengths", {
@@ -52,6 +57,19 @@ test_that('AddTipEverywhere() handles nasty tree', {
   lapply(added, function (tr) expect_true(all(tr$edge > 0)))
   expect_equal(AddTipEverywhere(Preorder(nasty)),
                lapply(added, Preorder))
+})
+
+test_that('AddTipEverywhere() with tiny trees', {
+  added <- AddTipEverywhere(StarTree(2))
+  lapply(added, function (tr) expect_true(all(tr$edge > 0)))
+  expect_equal(2, length(added))
+  expect_equal(3, length(AddTipEverywhere(StarTree(2), include = TRUE)))
+
+  expect_equal(list(PectinateTree(c('t1', 'New tip'))),
+               AddTipEverywhere(StarTree(1)))
+  expect_equal(list(SingleTaxonTree('New tip')),
+               AddTipEverywhere(structure(list(tip.label = character(0)),
+                                          class = 'phylo')))
 })
 
 test_that("Subtree() works", {

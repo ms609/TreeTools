@@ -1,5 +1,3 @@
-context("parse_files.R")
-
 TestFile <- function (filename = '') {
   system.file('extdata', 'tests', filename, package = 'TreeTools')
 }
@@ -25,7 +23,7 @@ test_that("Nexus file can be parsed", {
   filename <- TestFile('continuous.nex')
   read <- ReadCharacters(filename)
   expect_equal(1L, unique(as.integer(read[1, ])))
-  expect_equivalent('?', read['B_alienus', 4])
+  expect_equal(setNames('?', 'B_alienus'), read['B_alienus', 4])
   expect_equal(3L, unique(as.integer(read[3, ])))
 })
 
@@ -109,6 +107,35 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
+test_that("Modified phyDat objects can be converted", {
+  # Obtained by subsetting, i.e. dataset <- biggerDataset[1:4]
+  dataset <- structure(list(a = c(1L, 1L, 1L, 1L), c = c(2L, 1L, 1L, 2L),
+                            d = c(2L, 1L, 2L, 1L), e = c(2L, 2L, 2L, 2L)),
+                       weight = c(3L, 3L, 0L, 0L), nr = 4L, nc = 2L,
+                       index = c(2L, 1L, 1L, 1L, 2L, 2L),
+                       .Label = c("0", "1"), allLevels = c("0", "1"),
+                       type = "USER",
+                       contrast = structure(c(1, 0, 0, 1), .Dim = c(2L, 2L),
+                                            .Dimnames = list(NULL, c("0", "1"))),
+                       class = "phyDat")
+  expect_equal(c(4, 6), dim(PhyDatToMatrix(dataset)))
+})
+
+test_that("MatrixToPhyDat() warns when characters blank", {
+  # May occur when loading an excel file with empty cells
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,'','','',0,1,0,1,2,2,2,2,2,2,2,'?'),
+                nrow = 3, byrow = TRUE)
+  rownames(mat) <- LETTERS[1:3]
+  expect_warning(MatrixToPhyDat(mat))
+})
+
+test_that("StringToPhyDat()", {
+  expect_equal(rep(1:2, each = 4),
+               as.integer(StringToPhyDat('1111????', letters[1:8])))
+  expect_equal(rep(1:2, each = 4),
+               as.integer(StringToPhyDat('----????', letters[1:8])))
+})
+
 test_that('PhyToString() works', {
   longLevels <- phyDat(rbind(x = c('-', '?', 0:12), y = c(12:0, '-', '?')),
                        type = 'USER', levels = c(0:6, '-', 7:12))
@@ -141,9 +168,27 @@ test_that('PhyToString() works', {
   expect_equal(str,
                PhyToString(StringToPhyDat(str, letters[1:4], byTaxon = TRUE),
                            byTaxon = TRUE))
+})
 
+test_that("EndSentence() works correctly", {
+  expect_equal('Hi.', EndSentence('Hi'))
+  expect_equal('Hi.', EndSentence('Hi.'))
+  expect_equal('Hi?', EndSentence('Hi?'))
+  expect_equal('Hi!', EndSentence('Hi!'))
+})
 
+test_that("Unquote() unquotes", {
+  expect_equal("Unquoted", Unquote("'Unquoted'"))
+  expect_equal("Unquoted", Unquote('"Unquoted"'))
+  expect_equal("Unquoted", Unquote("'Unquoted '"))
+  expect_equal("Unquoted", Unquote('" Unquoted "'))
+  expect_equal("Unquoted's", Unquote("'Unquoted's '"))
+  expect_equal("", Unquote('""'))
+  expect_equal("", Unquote("''"))
+})
 
+test_that("MorphoBankDecode() decodes", {
+  expect_equal("' -- x  \n 1--2", MorphoBankDecode("'' - x^n 1-2"))
 })
 
 test_that('NewickTree() works', {

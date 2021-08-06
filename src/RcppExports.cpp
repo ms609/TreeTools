@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // as_newick
 CharacterVector as_newick(IntegerMatrix edge);
 RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {
@@ -14,6 +19,18 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
     rcpp_result_gen = Rcpp::wrap(as_newick(edge));
+    return rcpp_result_gen;
+END_RCPP
+}
+// drop_tip
+IntegerMatrix drop_tip(const IntegerMatrix edge, const IntegerVector drop);
+RcppExport SEXP _TreeTools_drop_tip(SEXP edgeSEXP, SEXP dropSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type drop(dropSEXP);
+    rcpp_result_gen = Rcpp::wrap(drop_tip(edge, drop));
     return rcpp_result_gen;
 END_RCPP
 }

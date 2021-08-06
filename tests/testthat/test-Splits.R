@@ -1,4 +1,7 @@
-context("Splits.R")
+expect_splits_equal <- function (s1, s2, ...) {
+  expect_equal(as.character(PolarizeSplits(s1)),
+               as.character(PolarizeSplits(s2)), ...)
+}
 
 test_that("as.Splits()", {
   A <- FALSE
@@ -145,9 +148,10 @@ test_that('as.Splits.matrix()', {
   expect_error(as.Splits(arr[-2, ]))
   expect_equal(as.Splits(trees), as.Splits(arr))
 
-  trees <- list(BalancedTree(1:8), PectinateTree(1:8),
-                CollapseNode(BalancedTree(1:8), 10:13))
-  expect_equivalent(as.Splits(trees), as.Splits(arr[-3, ]))
+  for (i in seq_along(trees)) {
+    trees[[i]]$tip.label <- 1:8
+  }
+  expect_equal(as.Splits(trees), as.Splits(arr[-3, ]))
 
   exp <- as.Splits(BalancedTree(8))
   attr(exp, 'tip.label') <- NULL
@@ -156,16 +160,17 @@ test_that('as.Splits.matrix()', {
 })
 
 test_that('as.Splits.edge()', {
-  expect_equivalent(matrix(as.raw(0x03)),
-                    as.Splits(BalancedTree(4), asSplits = FALSE))
+  expect_equal(matrix(as.raw(0x0c)), # Or 0x03
+               unname(as.Splits(BalancedTree(4), asSplits = FALSE)))
 })
 
 test_that('as.Splits.logical()', {
   FFTT <- c(FALSE, FALSE, TRUE, TRUE)
   a..d <- letters[1:4]
-  expect_equivalent(as.Splits(BalancedTree(a..d)), as.Splits(!FFTT, a..d))
-  expect_equivalent(as.Splits(FFTT, a..d), as.Splits(t(matrix(FFTT)), a..d))
-  expect_equivalent(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
+  expect_splits_equal(unname(as.Splits(BalancedTree(a..d))),
+                      as.Splits(!FFTT, a..d))
+  expect_splits_equal(as.Splits(FFTT, a..d), as.Splits(t(matrix(FFTT)), a..d))
+  expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
 test_that("&.Splits()", {
@@ -220,9 +225,13 @@ test_that('match.Splits()', {
 })
 
 test_that("print.Splits()", {
+  sp4 <- as.Splits(BalancedTree(4))
   expect_equal(c( "1 bipartition split dividing 4 tips, t1 .. t4",
-                  "    1234", " 6  **.."),
-               capture.output(print(as.Splits(BalancedTree(4)), details = TRUE)))
+                  "    1234", " 7  **.."),
+               capture.output(print(PolarizeSplits(sp4, 1), details = TRUE)))
+  expect_equal(c( "1 bipartition split dividing 4 tips, t1 .. t4",
+                  "    1234", " 7  ..**"),
+               capture.output(print(PolarizeSplits(sp4, 4), details = TRUE)))
 })
 
 test_that("Split operations", {
@@ -248,7 +257,7 @@ test_that("Split operations", {
   expect_error(split1 + split2)
 
   namedSplits <- as.Splits(BalancedTree(8))
-  expect_equal(c('12', '14'), rownames(namedSplits[[c(3, 4)]]))
+  expect_equal(c('13', '14'), rownames(namedSplits[[c(3, 4)]]))
 
   expect_equal(split1[], `[[.Splits`(split1))
   expect_error(c(split1, notSplit1)[[2:1, 1]])
@@ -273,9 +282,24 @@ test_that("Split combination", {
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree3)))))
   expect_error(c(splits1, as.Splits(tree4)))
   expect_error(c(splits1, as.Splits(tree5)))
-  expect_equivalent(as.raw(c(3L, 24L, 28L, 24L)),
-                    c(splits1, as.Splits(RenumberTips(tree3, letters[1:5])))[, 1])
+  expect_equal(as.raw(c(3L, 24L, 28L, 24L)),
+               unname(c(splits1,
+                        as.Splits(RenumberTips(tree3, letters[1:5])))[, 1]))
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
 
   #TODO: Fully test splits with large (> 8 tip) trees
+})
+
+test_that("as.phylo.Splits()", {
+  Test <- function (tr) expect_equal(unroot(tr), as.phylo(as.Splits(tr)))
+  Test(read.tree(text = "((a, b, c), (d, e, f, g));"))
+  Test(read.tree(text = "((a, b, c), (d, e, (f, g)));"))
+  Test(BalancedTree(9))
+})
+
+test_that("PolarizeSplits()", {
+  bal6 <- as.Splits(BalancedTree(6))
+  expect_error(PolarizeSplits(bal6, 'ERROR'))
+  expect_error(PolarizeSplits(bal6, 0))
+  expect_error(PolarizeSplits(bal6, 7))
 })

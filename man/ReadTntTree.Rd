@@ -6,14 +6,14 @@
 \alias{TNTText2Tree}
 \title{Parse TNT Tree}
 \usage{
-ReadTntTree(filename, relativePath = NULL, keepEnd = 1L, tipLabels = NULL)
+ReadTntTree(filepath, relativePath = NULL, keepEnd = 1L, tipLabels = NULL)
 
 TntText2Tree(treeText)
 
 TNTText2Tree(treeText)
 }
 \arguments{
-\item{filename}{character string specifying path to TNT \code{.tre} file,
+\item{filepath}{character string specifying path to TNT \code{.tre} file,
 relative to the R working directory (visible with \code{getwd()}).}
 
 \item{relativePath}{(discouraged) character string specifying location of the
@@ -27,14 +27,14 @@ the file path to conserve when creating relative path (see examples).}
 \item{tipLabels}{(optional) character vector specifying the names of the
 taxa, in the sequence that they appear in the TNT file.  If not specified,
 taxon names will be loaded from the data file linked in the first line of the
-\code{.tre} file specified in \code{filename}.}
+\code{.tre} file specified in \code{filepath}.}
 
 \item{treeText}{Character string describing a tree, in the parenthetical
 format output by TNT.}
 }
 \value{
 \code{ReadTntTree()} returns a tree of class \code{phylo}, corresponding
-to the tree in \code{filename}, or NULL if no trees are found.
+to the tree in \code{filepath}, or NULL if no trees are found.
 }
 \description{
 Read a tree from TNT's parenthetical output.

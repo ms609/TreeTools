@@ -201,6 +201,11 @@ AddTip <- function (tree,
   edgeLengths <- tree$edge.length
   lengths <- !is.null(edgeLengths)
 
+  if (is.character(where)) {
+    tmp <- match(where, TipLabels(tree))
+    if (is.na(tmp)) stop("No tip labelled '", where, "'")
+    where <- tmp
+  }
   ## find the row of 'where' before renumbering
   if (where < 1L || where == rootNode) {
     case <- 1L
@@ -313,6 +318,8 @@ AddTip <- function (tree,
 #' @export
 AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
   nTip <- NTip(tree)
+  if (nTip == 0L) return(list(SingleTaxonTree(label)))
+  if (nTip == 1L) return(list(StarTree(c(tree$tip.label, label))))
   whichNodes <- seq_len(nTip + tree$Nnode)
   edge <- tree$edge
   root <- RootNode(edge)
@@ -321,7 +328,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
     child <- edge[, 2]
     rootChildren <- child[parent == root]
 
-    whichNodes <- if (length(rootChildren) == 2L) {
+    whichNodes <- if (length(rootChildren) == 2L && nTip > 2L) {
       rootChildrenNodes <- rootChildren[rootChildren > nTip]
       whichNodes[-c(root, rootChildrenNodes[1])]
     } else {

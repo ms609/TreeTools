@@ -5,7 +5,7 @@
 \alias{MultiSplitInformation}
 \title{Phylogenetic information content of splitting leaves into two partitions}
 \usage{
-SplitInformation(A, B)
+SplitInformation(A, B = A[1])
 
 MultiSplitInformation(partitionSizes)
 }

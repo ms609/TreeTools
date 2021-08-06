@@ -3,14 +3,28 @@
 \name{ReadCharacters}
 \alias{ReadCharacters}
 \alias{ReadTntCharacters}
+\alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
 \alias{PhyDat}
 \title{Read phylogenetic characters from file}
 \usage{
-ReadCharacters(filepath, character_num = NULL, session = NULL)
+ReadCharacters(
+  filepath,
+  character_num = NULL,
+  encoding = "UTF8",
+  session = NULL
+)
 
-ReadTntCharacters(filepath, character_num = NULL, type = NULL, session = NULL)
+ReadTntCharacters(
+  filepath,
+  character_num = NULL,
+  type = NULL,
+  session = NULL,
+  encoding = "UTF8"
+)
+
+ReadNotes(filepath, encoding = "UTF8")
 
 ReadAsPhyDat(filepath)
 
@@ -24,6 +38,8 @@ PhyDat(dataset)
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
+
+\item{encoding}{Character encoding of input file.}
 
 \item{session}{(Optional) A Shiny session with a \code{numericInput} named
 \code{character_num} whose maximum should be updated.}
@@ -49,6 +65,14 @@ function call was unsuccessful.
 
 \code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
 \code{\link[phangorn:phyDat]{phyDat}} object.
+
+\code{ReadNotes()} returns a list in which each entry corresponds to a
+single character, and itself contains a list of with two elements:
+\enumerate{
+\item A single character object listing any notes associated with the character
+\item A named character vector listing the notes associated with each taxon
+for that character, named with the names of each note-bearing taxon.
+}
 }
 \description{
 Parse a Nexus or TNT file, reading character states and names.
@@ -90,27 +114,14 @@ ReadCharacters(fileName)
 
 fileName <- paste0(system.file(package = 'TreeTools'),
                    '/extdata/tests/continuous.nex')
-continuous <- ReadCharacters(fileName)
+
+continuous <- ReadCharacters(fileName, encoding = 'UTF8')
 
 # To convert from strings to numbers:
 at <- attributes(continuous)
 continuous <- suppressWarnings(as.numeric(continuous))
 attributes(continuous) <- at
 continuous
-
-
-# Read a file with a known encoding that cannot be auto-detected by R
-
-# Specify appropriate encoding:
-fileEncoding <- "UTF-8"
-
-# Open connection to file
-con <- file(fileName, encoding = fileEncoding, open = "r")
-
-ReadCharacters(con)
-
-# Close connection after use
-close(con)
 }
 \references{
 \insertRef{Maddison1997}{TreeTools}

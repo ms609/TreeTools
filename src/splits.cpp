@@ -40,17 +40,17 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
     splits[i] = new uintx[n_bin](); // () zero-initializes
   }
 
-  for (uintx i = 0; i != n_tip; i++) {
+  for (uintx i = 0; i != n_tip; ++i) {
     splits[i][uintx(i / BIN_SIZE)] = powers_of_two[i % BIN_SIZE];
   }
 
-  for (uintx i = 0; i != n_edge - 1; i++) { /* final edge is second root edge */
-    for (uintx j = 0; j != n_bin; j++) {
+  for (uintx i = 0; i != n_edge - 1; ++i) { /* final edge is second root edge */
+    for (uintx j = 0; j != n_bin; ++j) {
       splits[uintx(edge(i, 0) - 1)][j] |= splits[uintx(edge(i, 1) - 1)][j];
     }
   }
 
-  for (uintx i = 0; i != n_tip; i++) {
+  for (uintx i = 0; i != n_tip; ++i) {
     delete[] splits[i];
   }
 
@@ -63,9 +63,9 @@ RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip) {
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
 
-  for (uintx i = n_tip; i != n_node; i++) {
+  for (uintx i = n_tip; i != n_node; ++i) {
     if (i == trivial_origin || i == trivial_two) {
-      n_trivial++;
+      ++n_trivial;
     } else {
       for (uintx j = 0; j != n_bin; j++) {
         ret(i - n_tip - n_trivial, j) = splits[i][j];

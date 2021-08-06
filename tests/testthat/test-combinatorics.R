@@ -1,5 +1,3 @@
-context("Combinatorics.R")
-
 test_that("Factorials are calculated correctly", {
   expect_equal(c(1L, 1L, 1L, 2L, 3L, 2L * 4L, 3L * 5L,
                  2L * 4L * 6L, 3L * 5L * 7L,

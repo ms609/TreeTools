@@ -439,6 +439,7 @@ MRCA <- function(x1, x2, ancestors) {
 #' EdgeDistances(tree)
 #'
 #' @family tree navigation
+#' @importFrom fastmatch %fin%
 #' @template MRS
 #' @export
 EdgeDistances <- function (tree) {
@@ -458,7 +459,7 @@ EdgeDistances <- function (tree) {
       if (length(intersection) > 1L) {
         # On same side of root
         mrca <- max(intersection)
-        if (child[i] %in% ancJ || child[j] %in% ancI) {
+        if (child[i] %fin% ancJ || child[j] %fin% ancI) {
           addOne <- 0L
         } else {
           addOne <- 1L
@@ -579,7 +580,7 @@ NTip.matrix <- function (phy) {
     child <- phy[, 2]
 
     # Return:
-    max(child[!child %in% parent])
+    max(child[!child %fin% parent])
   } else {
     NextMethod()
   }
@@ -665,9 +666,9 @@ NSplits.character <- function (x) {
 #' of unique non-trivial splits in a binary tree with _n_ leaves.
 #'
 #' @examples
-#' tree <- TreeTools::BalancedTree(8)
+#' tree <- BalancedTree(8)
 #' SplitsInBinaryTree(tree)
-#' SplitsInBinaryTree(TreeTools::as.Splits(tree))
+#' SplitsInBinaryTree(as.Splits(tree))
 #' SplitsInBinaryTree(8)
 #' SplitsInBinaryTree(list(tree, tree))
 #' @template MRS
@@ -781,7 +782,7 @@ RootNode.multiPhylo <- RootNode.list
 RootNode.numeric <- function (x) {
   parent <- x[, 1]
   child <- x[, 2]
-  ret <- unique(parent[!parent %in% child])
+  ret <- unique(parent[!parent %fin% child])
   if (length(ret) != 1) {
     warning("Root not unique: found ", paste(ret, collapse = ', '))
   }

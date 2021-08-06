@@ -7,8 +7,6 @@ nasty <- structure(list(edge = structure(
   class = 'phylo') # Danger: Do not plot!
 
 
-context("Tree rearrangements")
-
 test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
@@ -149,10 +147,11 @@ test_that("root_on_node() works", {
 
 test_that("RootOnNode() supports lists of trees", {
   rootOn <- 8L
-  expect_equivalent(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
+  expect_equal(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
                               RootOnNode(as.phylo(2, 5), rootOn)),
-                         class = 'multiPhylo'),
-                    RootOnNode(as.phylo(1:2, 5), rootOn))
+                         class = 'multiPhylo',
+                         tip.label = paste0('t', 1:5)),
+               RootOnNode(as.phylo(1:2, 5), rootOn))
 })
 
 test_that("RootTree() supports star trees", {
@@ -177,19 +176,28 @@ test_that("RootTree() works", {
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
-  expect_equivalent(as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
-                    RootTree(bal8, 't5'))
+  expect_equal(ignore_attr = TRUE,
+               as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
+               RootTree(bal8, 't5'))
   expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
   expect_equal(RootTree(bal8, 5)$edge, RootTree(bal8$edge, 5))
   expect_equal(EnforceOutgroup(bal8, c('t5', 't6')),
                RootTree(bal8, c('t5', 't6')))
   expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
 
-  expect_equivalent(structure(list(RootTree(as.phylo(1, 5), 't5'),
-                                   RootTree(as.phylo(2, 5), 't5')),
-                              class = 'multiPhylo'),
-                    RootTree(as.phylo(1:2, 5), 't5'))
+  expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
+                              RootTree(as.phylo(2, 5), 't5')),
+                         class = 'multiPhylo',
+                         tip.label = paste0('t', 1:5)),
+               RootTree(as.phylo(1:2, 5), 't5'))
 
+  expect_equal(read.tree(text = "((b, c), (a, (d, e)));"),
+               RootTree(read.tree(text = "(a, ((b, c), (d, e)));"), c(1, 4)))
+
+  pec4 <- PectinateTree(4)
+  expect_equal(pec4, RootTree(pec4, c(1, 3)))
+  pec5 <- PectinateTree(5)
+  expect_equal(pec5, RootTree(pec5, c(1, 4)))
 })
 
 test_that("UnrootTree() works", {
@@ -210,8 +218,9 @@ test_that("UnrootTree() works", {
 
   expList <- list(UnrootTree(as.phylo(1, 5)), UnrootTree(as.phylo(2, 5)))
   expect_equal(expList, UnrootTree(list(as.phylo(1, 5), as.phylo(2, 5))))
-  expect_equivalent(structure(expList, class = 'multiPhylo'),
-                    UnrootTree(as.phylo(1:2, 5)))
+  exp <- structure(expList, class = 'multiPhylo')
+  attr(exp, 'tip.label') <- paste0('t', 1:5)
+  expect_equal(exp, UnrootTree(as.phylo(1:2, 5)))
 })
 
 test_that("CollapseNode() works", {
@@ -267,6 +276,13 @@ test_that("DropTip() works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
+test_that("KeepTip() works", {
+  expect_equal(BalancedTree(paste0('t', 5:8)),
+    expect_warning(KeepTip(BalancedTree(8), paste0('t', 5:9))))
+  expect_equal(BalancedTree(paste0('t', 5:8)),
+    expect_warning(KeepTip(BalancedTree(8), 5:9)))
+})
+
 test_that("Binarification is uniform", {
   set.seed(0)
   Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
@@ -294,7 +310,8 @@ test_that("Binarification is uniform", {
 test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
   expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
-  expect_equivalent(BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
+  expect_equal(ignore_attr = TRUE,
+               BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
   expect_equal(rev(BalancedTree(2)$tip),
                    LeafLabelInterchange(BalancedTree(2), 2)$tip)
 

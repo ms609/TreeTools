@@ -65,12 +65,16 @@ RootTree.phylo <- function (tree, outgroupTips) {
     ancestryTable <- table(ancestry)
     lineage <- as.integer(names(ancestryTable))
     lca <- max(lineage[ancestryTable == length(outgroupTips)])
-    rootNode <- length(tipLabels) + 1L
+    nTip <- length(tipLabels)
+    rootNode <- nTip + 1L
     if (lca == rootNode) {
       if (tree$Nnode > 2L) {
         lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+        if (lca > rootNode + nTip - 2L) {
+          return(tree)
+        }
       } else {
-        return (tree)
+        return(tree)
       }
     }
     outgroup <- lca
@@ -146,13 +150,14 @@ RootTree.NULL <- function (tree, outgroupTips) NULL
 #' @export
 RootOnNode <- function (tree, node, resolveRoot = FALSE) UseMethod('RootOnNode')
 
+#' @importFrom fastmatch %fin%
 #' @export
 RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
   nodeParentEdge <- child == node
-  rootEdges <- !parent %in% child
+  rootEdges <- !parent %fin% child
   rootNode <- parent[rootEdges][1]
   rooted <- sum(rootEdges) == 2L
 
@@ -163,7 +168,7 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
                                     stopAt = rootEdges)
 
       rootChildren <- child[rootEdges]
-      if (node %in% rootChildren) {
+      if (node %fin% rootChildren) {
         if (!resolveRoot) {
           if (node < NTip(tree)) {
             node <- rootChildren[rootChildren != node]
@@ -333,6 +338,7 @@ UnrootTree.NULL <- function (tree) NULL
 CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
 
 #' @rdname CollapseNode
+#' @importFrom fastmatch %fin%
 #' @export
 CollapseNode.phylo <- function (tree, nodes) {
   if (length(nodes) == 0) return (tree)
@@ -351,7 +357,7 @@ CollapseNode.phylo <- function (tree, nodes) {
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
   nodes <- unique(nodes)
 
-  if (!all(nodes %in% (nTip + 1L):maxNode)) {
+  if (!all(nodes %fin% (nTip + 1L):maxNode)) {
     stop("nodes must be integers between ", nTip + 1L, " and ", maxNode)
   }
   if (any(nodes == root)) {
@@ -369,7 +375,7 @@ CollapseNode.phylo <- function (tree, nodes) {
     parent[parent == node] <- newParent
   }
 
-  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %in% parent))
+  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %fin% parent))
 
   tree$edge <-cbind(newNumber[parent[keptEdges]], newNumber[child[keptEdges]])
   tree$edge.length <- lengths[keptEdges]
@@ -397,20 +403,18 @@ CollapseEdge <- function (tree, edges) {
 #' incident branches.
 #'
 #' This function is more robust than [`ape::drop.tip()`] as it does not
-#' require any particular internal node numbering schema.  It is not presently
-#' as fast, though it is ripe for optimization; if you are finding this
-#' function is a rate-limiting step, please get in touch and I'll prioritise
-#' writing a faster implementation.
-#'
+#' require any particular internal node numbering schema.#'
 #'
 #' @template treeParam
 #' @param tip Character vector specifying labels of leaves in tree to be dropped,
 #' or integer vector specifying the indices of leaves to be dropped.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
+#' @param preorder Logical specifying whether to [Preorder] the tree before
+#' dropping tips.  Necessary if a tree's edges may be unconventionally numbered.
 #'
-#' @return `DropTip()` returns a tree of class `phylo`, in [Preorder], with the
-#' requested leaves removed.
+#' @return `DropTip()` returns a tree of class `phylo`, with the requested
+#' leaves removed.
 #'
 #' @examples
 #' tree <- BalancedTree(8)
@@ -420,91 +424,83 @@ CollapseEdge <- function (tree, edges) {
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip) UseMethod("DropTip")
+DropTip <- function (tree, tip, preorder = TRUE) UseMethod("DropTip")
 
 #' @rdname DropTip
 #' @export
-DropTip.phylo <- function (tree, tip) {
-  #TODO Rewrite in C.
+DropTip.phylo <- function (tree, tip, preorder = TRUE) {
+  if (preorder) {
+    tree <- Preorder(tree)
+  }
   labels <- tree$tip.label
   nTip <- length(labels)
-  if (is.character(tip)) {
-    found <- tip %in% labels
-    if (!all(found)) warning(paste(tip[!found], collapse = ', '),
-                             " not present in tree")
-    drop <- tree$tip.label %in% tip[found]
+  if (is.null(tip) || any(is.na(tip)) || length(tip) == 0) {
+    drop <- character(0)
+  } else if (is.character(tip)) {
+    drop <- match(tip, tree$tip.label)
+    missing <- is.na(drop)
+    if (any(missing)) {
+      warning(paste(tip[missing], collapse = ', '), " not present in tree")
+      drop <- drop[!missing]
+    }
   } else if (is.numeric(tip)) {
     nNodes <- nTip + tree$Nnode
-    if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
-    if (any(tip < 1L)) warning("tip must be > 0")
+    if (any(tip > nNodes)) {
+      warning("Tree only has ", nNodes, " nodes")
+      tip <- tip[tip <= nNodes]
+    }
+    if (any(tip < 1L)) {
+      warning("`tip` must be > 0")
+      tip <- tip[tip > 0L]
+    }
 
-    drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
+    if (any(tip > nTip)) {
+      drop <- c(tip[tip <= nTip],
+                unlist(Descendants(tree, tip[tip > nTip])))
+    } else {
+      drop <- tip
+    }
   } else {
     stop("`tip` must be of type character or numeric")
   }
 
-  if (any(drop)) {
-    if (all(drop)) {
+  if (length(drop) > 0) {
+    if (length(drop) == nTip) {
       return (NULL)
     }
-    edge <- tree$edge
-    edge <- RenumberTree(edge[, 1], edge[, 2]) # Necessary to handle 'nasty node ordering'
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    external <- child <= nTip
 
-    # Drop tips:
-    keep <- !child %in% which(drop)
-
-    # Drop dangling nodes:
-    repeat {
-      nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
-      if (all(nonDanglers)) break
-      keep[keep] <- nonDanglers
-    }
-
-    parent <- parent[keep]
-    child <- child[keep]
-
-    # Collapse singles:
-    singletons <- tabulate(parent) == 1
-    if (any(singletons)) {
-      #edgeBelowSingles <- sort(match(which(singletons), parent),
-      #                     decreasing = TRUE) # If cladewise but not nasty ordering
-      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
-      sortedSingles <- parent[edgeBelowSingles]
-      edgeAboveSingles <- match(sortedSingles, child)
-
-      for (i in seq_along(sortedSingles)) {
-        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
-      }
-      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
-    } else {
-      edge <- c(parent, child)
-    }
-
-    newNumbers <- integer(max(edge))
-    uniqueInts <- unique(edge)
-    newNumbers[uniqueInts] <- rank(uniqueInts)
-    edge <- matrix(newNumbers[edge], ncol = 2L)
-    # Return:
-    structure(list(
-      edge = edge,
-      tip.label = labels[!drop],
-      Nnode = max(edge) - sum(!drop)
-    ), class = 'phylo', order = 'preorder')
-
-  } else {
-    # Return:
-    Preorder(tree)
+    tree$edge <- drop_tip(tree$edge, drop)
+    attr(tree, 'order') <- 'preorder'
+    tree$tip.label <- labels[-drop]
+    tree$Nnode <- dim(tree$edge)[1] + 1 - (nTip - length(drop))
   }
+
+  # Return:
+  tree
 }
 
 #' @rdname DropTip
 #' @export
-DropTip.multiPhylo <- function (tree, tip) {
-  tree[] <- lapply(tree, DropTip, tip)
+DropTip.multiPhylo <- function (tree, tip, preorder) {
+  tree[] <- lapply(tree, DropTip, tip, preorder)
   tree
+}
+
+#' @rdname DropTip
+#' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
+#' in preorder.
+#' @export
+KeepTip <- function (tree, tip, preorder = TRUE) {
+  labels <- if (is.character(tip)) {
+    TipLabels(tree)
+  } else {
+    seq_len(NTip(tree))
+  }
+  if (!all(tip %in% labels)) {
+    warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
+  }
+  keep <- setdiff(labels, tip)
+  DropTip(tree, keep, preorder)
 }
 
 #' Generate binary tree by collapsing polytomies

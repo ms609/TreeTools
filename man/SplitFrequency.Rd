@@ -80,10 +80,11 @@ Other Splits operations:
 \code{\link{LabelSplits}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
 \code{\link{match}()}
 }
 \author{

@@ -210,6 +210,9 @@ Cladewise.matrix <- function (tree, nTip = min(tree[, 1]) - 1L, edge) {
   }
 }
 
+#' @rdname Reorder
+#' @export
+Cladewise.NULL <- function (tree, nTip = min(tree[, 1]) - 1L, edge) NULL
 
 #' @describeIn Reorder Reorder tree in Postorder using ape's `postorder`
 #' function, which is robust to unconventional node numbering.
@@ -242,6 +245,10 @@ ApePostorder.list <- function (tree, nTip, edge) {
 
 #' @rdname Reorder
 #' @export
+ApePostorder.NULL <- function (tree, nTip, edge) NULL
+
+#' @rdname Reorder
+#' @export
 ApePostorder.multiPhylo <- function (tree, nTip, edge) {
   tree[] <- lapply(tree, ApePostorder)
   attr(tree, 'order') <- 'postorder'
@@ -271,6 +278,10 @@ Postorder.phylo <- function (tree, force = FALSE, renumber = FALSE) {
   }
   tree
 }
+
+#' @rdname Reorder
+#' @export
+Postorder.NULL <- function (tree, force = FALSE, renumber = FALSE) NULL
 
 #' @rdname Reorder
 #' @export
@@ -352,6 +363,11 @@ Pruningwise.multiPhylo <- function (tree, nTip, edge) {
   tree
 }
 
+#' @rdname Reorder
+#' @export
+Pruningwise.NULL <- function (tree, nTip, edge) NULL
+
+
 #' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
 #' @export
 Preorder <- function (tree) UseMethod('Preorder')
@@ -393,6 +409,10 @@ Preorder.multiPhylo <- function (tree) {
 Preorder.list <- function (tree) {
   lapply(tree, Preorder)
 }
+
+#' @rdname Reorder
+#' @export
+Preorder.NULL <- function (tree) NULL
 
 
 #' Renumber a tree's tips
@@ -453,3 +473,7 @@ RenumberTips.multiPhylo <- function (tree, tipOrder) {
 RenumberTips.list <- function (tree, tipOrder) {
   lapply(tree, RenumberTips, tipOrder)
 }
+
+#' @rdname RenumberTips
+#' @export
+RenumberTips.NULL <- function (tree, tipOrder) NULL

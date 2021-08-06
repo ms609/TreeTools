@@ -1,15 +1,61 @@
-# TreeTools 1.4.4.9002
+# TreeTools 1.4.5.9106 (development)
+
+
+## New functions
+- `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
+  that respects constraints.
+  
+- `PolarizeSplits()` places a specified taxon in the ingroup of all splits.
+
+- Add `KeepTip()` and improve performance of `DropTip()`.
+
+- `ImposeConstraint()` makes a tree consistent with topological constraints.
 
 - `RoguePlot()` plots rogue taxa.
-- Add `RootTree.matrix()` method for edge matrices.
+
+- `as.phylo.Splits()` represents a `Splits` object as a tree.
+
+
+## Improved functions
+
+- Warn when empty cells passed to `MatrixToPhyDat()`.
+
+- Warn when `LabelSplits(labels)` lack names.
+
+- `SplitFrequency()` drops tips from `forest` that aren't in `reference`.
+
+- `AddTipEverywhere()` supports trees with < 3 leaves.
+
+- Make `RootTree()` and `PhyDatToMatrix()` more robust.
+
+- Support `encoding` option in `ReadCharacters()` function family.
+
+
+## Optimization
+
+- Fast matching functions from "fastmatch".
+
+- Improve efficiency of `Preorder()` and `Postorder()`.
+
+
+# TreeTools 1.4.5
+
 - Correct calculation of minimum value in `TCIContext()`.
+- Extract tip labels from objects in `StringToPhyDat()`.
+- Support `AddTip(tree, where = "tip name")`.
+- `SplitFrequency()` supports four-leaf trees.
+- Add `RootTree.matrix()` method for edge matrices.
 - Add `TipLabels.phyDat()` method.
+- Add `NULL` methods for tree reordering functions.
+- Additions and improvements to text parsing functions.
+
 
 # TreeTools 1.4.4
 
 - Add `NTip.phyDat()` method.
 - Update `MakeTreeBinary()` docs and tests to reflect updated behaviour of 
   `ape::multi2di()` in 'ape' v5.5.
+
 
 # TreeTools 1.4.3
 
@@ -23,16 +69,19 @@
  - Improvements to `ReadTntCharacters()` character block extraction
    ([#50](https://github.com/ms609/TreeTools/issues/50)).
 
+
 # TreeTools 1.4.2
 
  - Support star trees in `RootTree()`.
  - Improve memory handling in `root_on_node()`.
  - Documentation linkage.
 
+
 # TreeTools 1.4.1
 
  - `MSTEdges()` supports distance matrices with > 256 entries.
  - Package 'vdiffr' used conditionally.
+
 
 # TreeTools 1.4.0
 

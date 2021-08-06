@@ -22,4 +22,9 @@ Lobo.phy
 Phylogenetic data from Zhang \emph{et al.} (2016) in raw (\code{Lobo.data}) and
 \code{phyDat} (\code{Lobo.phy}) formats.
 }
+\examples{
+data("Lobo", package = "TreeTools")
+Lobo.data
+Lobo.phy
+}
 \keyword{datasets}

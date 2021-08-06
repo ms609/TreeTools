@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.4.4.9002
+Version: 1.4.5.9106
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -31,16 +31,24 @@ Depends: R (>= 3.4.0),
 Imports:
     bit64,
     colorspace,
+    fastmatch,
     phangorn (>= 2.2.1),
     R.cache,
-    Rdpack
+    Rdpack,
 Suggests:
     knitr,
     Rcpp,
     rmarkdown,
     shiny,
-    testthat,
-    vdiffr
+    testthat (>= 3.0),
+    vdiffr (>= 1.0.0),
+Config/Needs/coverage: covr
+Config/Needs/memcheck: devtools, rcmdcheck
+Config/Needs/metadata: codemetar
+Config/Needs/revdeps: revdepcheck
+Config/Needs/website: pkgdown
+Config/testthat/parallel: false
+Config/testthat/edition: 2
 LinkingTo: Rcpp
 RdMacros: Rdpack
 LazyData: true

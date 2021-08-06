@@ -200,6 +200,46 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
   tree
 }
 
+#' Constrained neighbour-joining tree
+#'
+#' Constructs an approximation to a neighbour-joining tree, modified in order
+#' to be consistent with a constraint.  Zero-length branches are collapsed
+#' at random.
+#'
+#' @template datasetParam
+#' @template constraintParam
+#' @param weight Numeric specifying degree to upweight characters in
+#' `constraint`.
+#'
+#' @return `ConstrainedNJ()` returns a tree of class `phylo`.
+#' @examples
+#' dataset <- MatrixToPhyDat(matrix(
+#'   c(0, 1, 1, 1, 0, 1,
+#'     0, 1, 1, 0, 0, 1), ncol = 2,
+#'   dimnames = list(letters[1:6], NULL)))
+#' constraint <- MatrixToPhyDat(
+#'   c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
+#' plot(ConstrainedNJ(dataset, constraint))
+#' @template MRS
+#' @importFrom ape nj multi2di
+#' @importFrom phangorn dist.hamming
+#' @export
+ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
+  missing <- setdiff(names(dataset), names(constraint))
+  if (length(missing)) {
+    constraint <- AddUnconstrained(constraint, missing)
+  }
+  constraint <- constraint[names(dataset)]
+  tree <- multi2di(nj((dist.hamming(constraint) * weight) +
+                        dist.hamming(dataset)))
+  tree$edge.length <- NULL
+  tree <- ImposeConstraint(tree, constraint)
+  tree <- RootTree(tree, names(dataset)[1])
+
+  # Return:
+  tree
+}
+
 #' Generate a tree with a specific outgroup
 #'
 #' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
@@ -233,8 +273,9 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 .EnforceOutgroup <- function (tree, outgroup, taxa) {
   if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
 
-  ingroup <- taxa[!(taxa %in% outgroup)]
-  if (!all(outgroup %in% taxa) || length(ingroup) + length(outgroup) != length(taxa)) {
+  ingroup <- taxa[!(taxa %fin% outgroup)]
+  if (!all(outgroup %fin% taxa) ||
+      length(ingroup) + length(outgroup) != length(taxa)) {
     stop ("All outgroup taxa must occur in tree")
   }
 

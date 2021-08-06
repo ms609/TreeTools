@@ -9,12 +9,15 @@
 \alias{Cladewise.list}
 \alias{Cladewise.multiPhylo}
 \alias{Cladewise.matrix}
+\alias{Cladewise.NULL}
 \alias{ApePostorder}
 \alias{ApePostorder.phylo}
 \alias{ApePostorder.list}
+\alias{ApePostorder.NULL}
 \alias{ApePostorder.multiPhylo}
 \alias{Postorder}
 \alias{Postorder.phylo}
+\alias{Postorder.NULL}
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
@@ -23,11 +26,13 @@
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
 \alias{Pruningwise.multiPhylo}
+\alias{Pruningwise.NULL}
 \alias{Preorder}
 \alias{Preorder.phylo}
 \alias{Preorder.numeric}
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
+\alias{Preorder.NULL}
 \title{Reorder trees}
 \usage{
 RenumberTree(parent, child)
@@ -44,17 +49,23 @@ Cladewise(tree, nTip, edge)
 
 \method{Cladewise}{matrix}(tree, nTip = min(tree[, 1]) - 1L, edge)
 
+\method{Cladewise}{`NULL`}(tree, nTip = min(tree[, 1]) - 1L, edge)
+
 ApePostorder(tree, nTip, edge)
 
 \method{ApePostorder}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
 
 \method{ApePostorder}{list}(tree, nTip, edge)
 
+\method{ApePostorder}{`NULL`}(tree, nTip, edge)
+
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
 Postorder(tree, force = FALSE, renumber = FALSE)
 
 \method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE)
+
+\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE)
 
 \method{Postorder}{list}(tree, force = FALSE, renumber = FALSE)
 
@@ -72,6 +83,8 @@ Pruningwise(tree, nTip, edge)
 
 \method{Pruningwise}{multiPhylo}(tree, nTip, edge)
 
+\method{Pruningwise}{`NULL`}(tree, nTip, edge)
+
 Preorder(tree)
 
 \method{Preorder}{phylo}(tree)
@@ -81,6 +94,8 @@ Preorder(tree)
 \method{Preorder}{multiPhylo}(tree)
 
 \method{Preorder}{list}(tree)
+
+\method{Preorder}{`NULL`}(tree)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge

@@ -1,5 +1,3 @@
-context("ArtificalExtinction.R")
-
 nTax <- 6L
 dataset <- matrix(seq_len(nTax), nrow = nTax, ncol = 6,
                   dimnames = list(LETTERS[1:nTax], 1:6))
@@ -13,15 +11,16 @@ test_that("Errors are handled", {
 })
 
 test_that("Replacements ok", {
-  expect_equivalent(rep('?', 6),
-                    ArtificialExtinction(dataset,
-                                         subject = c('A', 'B'),
-                                         template = 'E',
-                                         replaceAmbiguous = 'ambig')[1:2, 4:6])
+  expectation <- matrix(rep('?', 6), 2, 3, dimnames = list(c('A', 'B'), 4:6))
+  expect_equal(expectation,
+               ArtificialExtinction(dataset, subject = c('A', 'B'),
+                                    template = 'E',
+                                    replaceAmbiguous = 'ambig')[1:2, 4:6])
 
-  expect_equivalent(rep('1', 6),
-                    ArtificialExtinction(dataset, c('A', 'B'), 'F',
-                                         'unif', sampleFrom = 'A')[1:2, 4:6])
+  expectation[] <- 1
+  expect_equal(expectation,
+               ArtificialExtinction(dataset, c('A', 'B'), 'F',
+                                    'unif', sampleFrom = 'A')[1:2, 4:6])
 
   expect_true(all(!'?' == ArtificialExtinction(dataset[-6, ], 1:2, 5, 'freq')[1:2, 4:6]))
 
@@ -29,11 +28,10 @@ test_that("Replacements ok", {
   expect_true(all(ArtificialExtinction(dataset, subject = 'E', template = 'F',
                                        replaceAmbiguous = 'binary')['E', 3:6] %in% 0:1))
 
-  expect_equivalent(rep('?', 3),
-                    ArtificialExtinction(dataset, subject = 'E', template = 'F',
-                                         replaceAmbiguous = 'binary',
-                                         replaceAll = FALSE)['E', 4:6])
-
+  expect_equal(setNames(rep('?', 3), 4:6),
+               ArtificialExtinction(dataset, subject = 'E', template = 'F',
+                                    replaceAmbiguous = 'binary',
+                                    replaceAll = FALSE)['E', 4:6])
 
   nChar <- 100
   dataset <- rbind(subj = c(rep(2, nChar)),

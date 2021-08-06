@@ -4,10 +4,10 @@
 \alias{ApeTime}
 \title{Read modification time from 'ape' Nexus file}
 \usage{
-ApeTime(filename, format = "double")
+ApeTime(filepath, format = "double")
 }
 \arguments{
-\item{filename}{Character string specifying path to the file.}
+\item{filepath}{Character string specifying path to the file.}
 
 \item{format}{Format in which to return the time: 'double' as a sortable numeric;
 any other value to return a string in the format

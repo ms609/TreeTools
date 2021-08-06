@@ -5,6 +5,7 @@
 \alias{RenumberTips.phylo}
 \alias{RenumberTips.multiPhylo}
 \alias{RenumberTips.list}
+\alias{RenumberTips.NULL}
 \title{Renumber a tree's tips}
 \usage{
 RenumberTips(tree, tipOrder)
@@ -14,6 +15,8 @@ RenumberTips(tree, tipOrder)
 \method{RenumberTips}{multiPhylo}(tree, tipOrder)
 
 \method{RenumberTips}{list}(tree, tipOrder)
+
+\method{RenumberTips}{`NULL`}(tree, tipOrder)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}

@@ -47,7 +47,8 @@ PhydatToString(
 terminating semi-colon.}
 
 \item{tips}{Character vector corresponding to the names (in order)
-of each taxon in the matrix.}
+of each taxon in the matrix, or an objects such as a tree from which
+tip labels can be extracted.}
 
 \item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
 If \code{FALSE}, write one character followed by the next.}

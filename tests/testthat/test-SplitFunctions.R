@@ -1,9 +1,8 @@
-context('SplitFunctions.R')
-
 test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
-  expect_equivalent(c(4, 4, 4, 3, 2, 1), TipsInSplits(efgh))
+  expect_equal(setNames(c(4, 4, 4, 3, 2, 1), 12:17),
+               TipsInSplits(efgh))
   expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
                  '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
 
@@ -14,16 +13,16 @@ test_that('Subsplits', {
 
   noSplit <- Subsplit(splits - splits, letters[5:8])
   expect_equal(attributes(noSplit)[3:5], attributes(efghF)[3:5])
-  expect_equivalent(raw(1), noSplit[1])
+  expect_equal(ignore_attr = TRUE, raw(1), noSplit[1])
   expect_equal(noSplit[1], Subsplit(splits - splits, 5:8)[1])
 
 
   splits <- as.Splits(PectinateTree(32 + 32 + 10))
   fourTips <- c('t32', 't33', 't64', 't65')
   sub <- Subsplit(splits, tips = fourTips)
-  expect_equivalent(as.Splits(c('t32' = FALSE, 't33' = FALSE,
-                           't64' = TRUE, 't65' = TRUE)),
-                    sub)
+  expect_equal(as.Splits(c('t32' = FALSE, 't33' = FALSE, 't64' = TRUE,
+                           't65' = TRUE)),
+               unname(sub), ignore_attr = TRUE)
 
 
 })
@@ -54,11 +53,11 @@ test_that('Bitwise logic works', {
 
   expect_equal(
     matrix(c(A, A, A, A, A,
-             A, A, A, A, A,
              A, B, A, A, A,
+             A, A, A, A, A,
              A, A, A, B, A,
              A, A, A, A, A), byrow = TRUE, 5, 5,
-           dimnames = list(c(10:12, 14:15), 11:15)),
+           dimnames = list(11:15, 11:15)),
     CompatibleSplits(splits, splits2))
 
   expect_true(.CompatibleSplit(as.raw(3), as.raw(7), nTip = 5))
@@ -125,17 +124,17 @@ test_that("SplitMatchProbability returns expected probabilities", {
 
 
   Test <- function (score, split1, split2) {
-    expect_equivalent(score, SplitMatchProbability(split1, split2))
-    expect_equivalent(score, SplitMatchProbability(split2, split1))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split1, split2))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split2, split1))
 
-    expect_equivalent(score, SplitMatchProbability(split1, !split2))
-    expect_equivalent(score, SplitMatchProbability(split2, !split1))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split1, !split2))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split2, !split1))
 
-    expect_equivalent(score, SplitMatchProbability(!split1, !split2))
-    expect_equivalent(score, SplitMatchProbability(!split2, !split1))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(!split1, !split2))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(!split2, !split1))
 
-    expect_equivalent(score, SplitMatchProbability(!split1, split2))
-    expect_equivalent(score, SplitMatchProbability(!split2, split1))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(!split1, split2))
+    expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(!split2, split1))
 
     score
   }

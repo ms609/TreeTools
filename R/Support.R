@@ -25,15 +25,22 @@
 #'
 #' @template MRS
 #' @family Splits operations
+#' @importFrom ape keep.tip
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
-  forestSplits <- as.Splits(forest,
-                            tipLabels = attr(referenceSplits, 'tip.label'))
+  refLabels <- attr(referenceSplits, 'tip.label')
+  forest[] <- lapply(forest, keep.tip, refLabels)
+  forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
-  ret <- rowSums(vapply(forestSplits,
-                        function (cf) referenceSplits %in% cf,
-                        logical(length(referenceSplits))))
+  logicals <- vapply(forestSplits,
+                     function (cf) referenceSplits %in% cf,
+                     logical(length(referenceSplits)))
+  ret <- if (is.null(dim(logicals))) {
+    sum(logicals)
+  } else {
+    rowSums(logicals)
+  }
   names(ret) <- rownames(referenceSplits)
 
   # Return:
@@ -79,13 +86,26 @@ SplitFrequency <- function(reference, forest) {
 #' @family Splits operations
 #' @export
 LabelSplits <- function (tree, labels = NULL, unit = '', ...) {
+  splits <- as.Splits(tree)
   if (is.null(labels)) {
-    splitNames <- names(as.Splits(tree))
+    splitNames <- names(splits)
     labels <- setNames(splitNames, splitNames)
+  } else if (length(names(labels)) == 0) {
+    if (length(splits) == length(labels)) {
+      labels <- setNames(labels, names(splits))
+    } else {
+      stop("`labels` must bear the same names as `as.Splits(tree)`")
+    }
   }
-  edgelabels(paste0(labels, unit),
-             edge = match(as.integer(names(labels)), tree$edge[, 2]),
-             ...)
+  if (length(setdiff(names(labels), names(splits)))) {
+    warning("Label names do not correspond to splits in tree",
+            immediate. = TRUE)
+  }
+  whichEdge <- match(as.integer(names(labels)), tree$edge[, 2])
+  if (any(is.na(whichEdge))) {
+    warning("Label names do not correspond to splits in tree")
+  }
+  edgelabels(paste0(labels, unit), edge = whichEdge, ...)
   # Return:
   invisible()
 }

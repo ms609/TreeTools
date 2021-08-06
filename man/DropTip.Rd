@@ -4,13 +4,16 @@
 \alias{DropTip}
 \alias{DropTip.phylo}
 \alias{DropTip.multiPhylo}
+\alias{KeepTip}
 \title{Drop tips from tree}
 \usage{
-DropTip(tree, tip)
+DropTip(tree, tip, preorder = TRUE)
 
-\method{DropTip}{phylo}(tree, tip)
+\method{DropTip}{phylo}(tree, tip, preorder = TRUE)
 
-\method{DropTip}{multiPhylo}(tree, tip)
+\method{DropTip}{multiPhylo}(tree, tip, preorder)
+
+KeepTip(tree, tip, preorder = TRUE)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
@@ -19,10 +22,16 @@ DropTip(tree, tip)
 or integer vector specifying the indices of leaves to be dropped.
 Specifying the index of an internal node will drop all descendants of that
 node.}
+
+\item{preorder}{Logical specifying whether to \link{Preorder} the tree before
+dropping tips.  Necessary if a tree's edges may be unconventionally numbered.}
 }
 \value{
-\code{DropTip()} returns a tree of class \code{phylo}, in \link{Preorder}, with the
-requested leaves removed.
+\code{DropTip()} returns a tree of class \code{phylo}, with the requested
+leaves removed.
+
+\code{KeepTip()} returns \code{tree} with all leaves not in \code{tip} removed,
+in preorder.
 }
 \description{
 \code{DropTip()} removes specified tips from a phylogenetic tree, collapsing
@@ -30,10 +39,7 @@ incident branches.
 }
 \details{
 This function is more robust than \code{\link[ape:drop.tip]{ape::drop.tip()}} as it does not
-require any particular internal node numbering schema.  It is not presently
-as fast, though it is ripe for optimization; if you are finding this
-function is a rate-limiting step, please get in touch and I'll prioritise
-writing a faster implementation.
+require any particular internal node numbering schema.#'
 }
 \examples{
 tree <- BalancedTree(8)

@@ -56,6 +56,7 @@ reference:
       - StringToPhyDat
       - TNTText2Tree
       - WriteTntCharacters
+      - has_concept("string parsing functions")
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."

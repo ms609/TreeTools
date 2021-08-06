@@ -47,6 +47,7 @@ ArtificialExtinction <- function (dataset, subject, template,
 }
 
 #' @rdname ArtificialExtinction
+#' @importFrom fastmatch %fin%
 #' @export
 ArtificialExtinction.matrix <- function (dataset, subject, template,
                                          replaceAmbiguous = 'ambig',
@@ -65,7 +66,7 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
     if (is.numeric(template)) {
       -template
     } else {
-      rownames(dataset)[!rownames(dataset) %in% template]
+      rownames(dataset)[!rownames(dataset) %fin% template]
     }
   }
 

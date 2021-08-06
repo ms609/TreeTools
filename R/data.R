@@ -75,6 +75,10 @@
 #'
 #' @template LoboMods
 #'
+#' @examples
+#' data("Lobo", package = "TreeTools")
+#' Lobo.data
+#' Lobo.phy
 #' @source
 #'  \insertRef{Zhang2016}{TreeTools}
 #'

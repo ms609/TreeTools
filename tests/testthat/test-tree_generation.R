@@ -1,5 +1,3 @@
-context('tree_generation.R')
-
 test_that('Pectinate trees are generated', {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
@@ -21,7 +19,8 @@ test_that('Balanced trees are generated correctly', {
                BalancedTree(9L))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
-  expect_equivalent(PectinateTree(escapees), BalancedTree(escapees))
+  expect_equal(ignore_attr = TRUE,
+               PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
   expect_equal('Test', .BalancedBit('Test'))
   expect_true(is.integer(BalancedTree(8)$edge))
@@ -52,6 +51,22 @@ test_that("NJTree() works", {
   expect_equal(BalancedTree(letters[c(1:3, 6:4)]), RootTree(NJTree(bal6), a..f[1:3]))
   expect_equal(c(0, 1, 2, 1, rep(0, 6)),
                Preorder(NJTree(bal6, TRUE))$edge.length * 4L)
+})
+
+test_that("Constrained NJ trees work", {
+  dataset <- MatrixToPhyDat(matrix(
+    c(0, 1, 1, 1, 0, 1,
+      0, 1, 1, 0, 0, 1), ncol = 2,
+    dimnames = list(letters[1:6], NULL)))
+  constraint <- MatrixToPhyDat(c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
+  expect_equal(read.tree(text = "(a, (d, ((c, b), (e, f))));"),
+               ConstrainedNJ(dataset, constraint))
+  # b == c == f, so these three could be resolved in one of three ways. Drop B.
+  expect_equal(DropTip(NJTree(dataset), 'b'),
+               DropTip(ConstrainedNJ(dataset, dataset), 'b'))
+
+  expect_equal(BalancedTree(letters[3:6]),
+               KeepTip(ConstrainedNJ(dataset, constraint[3:6]), letters[3:6]))
 })
 
 test_that("EnforceOutgroup() fails nicely", {
