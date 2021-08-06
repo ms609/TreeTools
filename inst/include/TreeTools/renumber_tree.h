@@ -85,7 +85,11 @@ namespace TreeTools {
       left_len = m - l + 1,
       right_len = r - m
     ;
-    int32 left[left_len], right[right_len];
+
+    auto
+      left = new int32[left_len],
+      right = new int32[right_len]
+    ;
     for (int32 i = left_len; i--; ) {
       left[i] = arr[l + i];
     }
@@ -116,6 +120,7 @@ namespace TreeTools {
       ++k;
       ++i;
     }
+    delete[] left;
 
     // Copy remaining element of right, if any
     while (j != right_len) {
@@ -123,6 +128,7 @@ namespace TreeTools {
       ++k;
       ++j;
     }
+    delete[] right;
   }
 
   inline void timsort_by_smallest(int32* arr, int32 arr_len, int32* sort_by) {
@@ -297,7 +303,7 @@ namespace TreeTools {
     // 6 * checks we've enough memory for all children_of arrays too.
     // 0.9999 leaves room for memory overhead: seems in practice to avoid
     // attempting a doomed call to calloc.
-    if (long(6 * node_limit * sizeof(intx)) > 0.9999L * INTPTR_MAX) {
+    if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
       throw std::length_error("Tree too large for postorder_edges. "            // # nocov
                               "Try running 64-bit R?");                         // # nocov
     }
