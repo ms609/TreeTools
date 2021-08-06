@@ -9,6 +9,8 @@
 using namespace Rcpp;
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);
+#define PARENT(i) edge[(i)]
+#define CHILD(i) edge[(i) + n_edge]
 
 namespace TreeTools {
   inline void swap(int32 *a, int32 *b) {
@@ -280,18 +282,6 @@ namespace TreeTools {
   inline IntegerMatrix postorder_edges(const IntegerMatrix edge,
                                        const LogicalVector size_sort)
   {
-    if (1L + edge.nrow() > long(0x7FFF)) {
-      throw std::length_error("Too many edges in tree for postorder_edges: "
-                              "Contact maintainer for advice");
-      // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
-      // or we could change int32 to 32 bit.  The former has caused a seg fault
-      // with invalid permissions on linux builds, possibly related to callocing
-      // children_of?
-      // Rather than attempt to debug now, I've chosen to place a hard limit on
-      // edge.nrow for the time being.  --MS, 2020-05-26
-      // Possibly fixed in branch optim-postorder, to check: 2021-08-05
-    }
-
     const int32
       n_edge = edge.nrow(),
       node_limit = n_edge + 1;
@@ -314,8 +304,8 @@ namespace TreeTools {
     int32 ** children_of = new int32*[node_limit];
 
     for (int32 i = n_edge; i--; ) {
-      parent_of[edge(i, 1)] = edge(i, 0);
-      n_children[edge(i, 0)] += 1;
+      parent_of[CHILD(i)] = PARENT(i);
+      n_children[PARENT(i)] += 1;
     }
 
     for (int32 i = node_limit; i--; ) {
@@ -327,8 +317,8 @@ namespace TreeTools {
 
     int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
-      children_of[edge(i, 0)][found_children[edge(i, 0)]] = edge(i, 1);
-      found_children[edge(i, 0)] += 1;
+      children_of[PARENT(i)][found_children[PARENT(i)]] = CHILD(i);
+      found_children[PARENT(i)] += 1;
     }
     std::free(found_children);
 
