@@ -1,5 +1,3 @@
-context("tree_numbering.R")
-
 nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
                          5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
                        .Dim = c(12, 2))
@@ -10,11 +8,11 @@ test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
 
   Preorder(PectinateTree(8191)) # Largest handled with 16-bit integers
-  expect_error(Preorder(PectinateTree(8192 * 2)))
+  Preorder(PectinateTree(8192 * 2))
 
   bigEdge <- PectinateTree(16385)$edge
-  expect_error(postorder_edges(bigEdge))
-  expect_error(preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2]))
+  expect_error(postorder_edges(bigEdge - 1, TRUE))
+  preorder_edges_and_nodes(bigEdge[, 1], bigEdge[, 2])
 })
 
 test_that("RenumberTree() handles polytomies", {
@@ -66,7 +64,7 @@ test_that("Replacement reorder functions work correctly", {
   post6 <- Postorder(BalancedTree(6))$edge
   parent6 <- post6[, 1]
   child6 <- post6[, 2]
-  expect_equal(c(9,9,11,11,10,10,8,8,7, 7), parent6)
+  expect_equal(c(9, 9, 11, 11, 8, 8, 10, 10, 7, 7), parent6)
   # Order of tip pairs is arbitrary\
   expect_equal(1:2, sort(child6[parent6 == 9]))
   expect_equal(4:5, sort(child6[parent6 == 11]))
@@ -126,6 +124,7 @@ test_that("Reorder methods work correctly", {
     expect_error(Method(10))
     expect_error(Method(1:2))
     expect_error(Method(matrix('one')))
+    expect_null(Method(NULL))
   }
   Test(ApePostorder, testEdges = FALSE)
   expect_error(ApePostorder(bad))

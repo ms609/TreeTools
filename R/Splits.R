@@ -62,7 +62,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 .as.Splits.edge <- function (edge, tipLabels = NULL, asSplits = TRUE,
                              nTip = NTip(edge), ...) {
-  splits <- cpp_edge_to_splits(Postorder(edge), nTip)
+  splits <- cpp_edge_to_splits(Postorder(edge, FALSE), nTip)
   nSplits <- dim(splits)[1]
 
   # Return:

@@ -12,7 +12,7 @@ extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_minimum_spanning_tree(SEXP);
 extern SEXP _TreeTools_num_to_parent(SEXP, SEXP);
-extern SEXP _TreeTools_postorder_edges(SEXP);
+extern SEXP _TreeTools_postorder_edges(SEXP, SEXP);
 extern SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
 extern SEXP _TreeTools_random_parent(SEXP, SEXP);
 extern SEXP _TreeTools_root_binary(SEXP, SEXP);
@@ -35,7 +35,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
   {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
   {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
-  {"_TreeTools_postorder_edges", (DL_FUNC) &_TreeTools_postorder_edges, 1},
+  {"_TreeTools_postorder_edges", (DL_FUNC) &_TreeTools_postorder_edges, 2},
   {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
   {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
   {"_TreeTools_root_binary", (DL_FUNC) &_TreeTools_root_binary, 2},
