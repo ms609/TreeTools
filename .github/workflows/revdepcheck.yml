@@ -54,7 +54,7 @@ jobs:
           remotes::install_deps(dependencies = c('soft', 'Config/Needs/revdeps'))
         shell: Rscript {0}
 
-      - name: Check
+      - name: Check reverse dependencies
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
@@ -67,5 +67,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@main
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: revdep-results
           path: revdep/*.md

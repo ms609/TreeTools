@@ -9,6 +9,8 @@
 using namespace Rcpp;
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);
+#define PARENT(i) edge[(i)]
+#define CHILD(i) edge[(i) + n_edge]
 
 namespace TreeTools {
   inline void swap(int32 *a, int32 *b) {
@@ -271,9 +273,6 @@ namespace TreeTools {
     }
     return subtree_size[node];
   }
-
-#define PARENT(i) edge[(i)]
-#define CHILD(i) edge[(i) + n_edge]
 
   // "Arkorder" is my term for a specific subset of postorder in which
   // edges are ordered such that all occurrences of each parent node
