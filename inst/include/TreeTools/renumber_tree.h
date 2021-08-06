@@ -266,6 +266,9 @@ namespace TreeTools {
     return subtree_size[node];
   }
 
+#define PARENT(i) edge[(i)]
+#define CHILD(i) edge[(i) + n_edge]
+
   // "Arkorder" is my term for a specific subset of postorder in which
   // edges are ordered such that all occurrences of each parent node
   // occur together.
@@ -308,8 +311,8 @@ namespace TreeTools {
     int32 ** children_of = new int32*[node_limit];
 
     for (int32 i = n_edge; i--; ) {
-      parent_of[edge(i, 1)] = edge(i, 0);
-      n_children[edge(i, 0)] += 1;
+      parent_of[CHILD(i)] = PARENT(i);
+      n_children[PARENT(i)] += 1;
     }
 
     for (int32 i = node_limit; i--; ) {
@@ -321,8 +324,8 @@ namespace TreeTools {
 
     int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
-      children_of[edge(i, 0)][found_children[edge(i, 0)]] = edge(i, 1);
-      found_children[edge(i, 0)] += 1;
+      children_of[PARENT(i)][found_children[PARENT(i)]] = CHILD(i);
+      found_children[PARENT(i)] += 1;
     }
     std::free(found_children);
 
