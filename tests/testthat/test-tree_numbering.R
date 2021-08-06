@@ -124,6 +124,7 @@ test_that("Reorder methods work correctly", {
     expect_error(Method(10))
     expect_error(Method(1:2))
     expect_error(Method(matrix('one')))
+    expect_null(Method(NULL))
   }
   Test(ApePostorder, testEdges = FALSE)
   expect_error(ApePostorder(bad))
