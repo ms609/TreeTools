@@ -1,6 +1,7 @@
 #ifndef TreeTools_renumber_tree_
 #define TreeTools_renumber_tree_
 
+#include <cassert>
 #include <cstdio>
 #include <cstdlib> /* for calloc */
 #include <Rcpp.h>
@@ -34,8 +35,9 @@ namespace TreeTools {
 
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                          int32* sort_by) {
+    assert(arr_len > 0);
     switch (arr_len) {
-    case 0: return;
+    // case 0: return;
     case 1: return;
     case 2:
       if (sort_by[arr[0]] > sort_by[arr[1]]) {
@@ -60,6 +62,7 @@ namespace TreeTools {
 
   inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                              int32* sort_by) {
+    assert(arr_len > 0);
     for (int32 i = 1; i != arr_len; ++i) {
       const int32
         tmp = arr[i],
@@ -180,8 +183,8 @@ namespace TreeTools {
                                                 const IntegerVector child)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
-      throw std::length_error("Too many edges in tree: "
-                              "Contact 'TreeTools' maintainer for support.");
+      throw std::length_error("Too many edges in tree: "                        // #nocov
+                              "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
 
     const int32
