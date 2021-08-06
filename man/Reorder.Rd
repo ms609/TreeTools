@@ -61,17 +61,17 @@ ApePostorder(tree, nTip, edge)
 
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
-Postorder(tree, force = FALSE, renumber = FALSE)
+Postorder(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
 PostorderEdges(edge, renumber = FALSE)
 
@@ -173,8 +173,9 @@ sorted into preorder, until each edge has been visited.
 \code{preorder_edges_and_nodes()}; they do not perform the same checks on input
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
-\code{Postorder()} is modified from the 'ape' function to return a specific
-order: edges are listed from the node that subtends the smallest
+\code{Postorder()} is an optimized implementation that if \code{sizeSort = TRUE}
+return a specific order:
+edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
 in postorder, it will not be rearranged unless \code{force = TRUE}.

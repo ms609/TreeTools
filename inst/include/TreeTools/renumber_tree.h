@@ -268,7 +268,8 @@ namespace TreeTools {
   // occur together.
   // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  inline IntegerMatrix postorder_edges(const IntegerMatrix edge)
+  inline IntegerMatrix postorder_edges(const IntegerMatrix edge,
+                                       const LogicalVector size_sort)
   {
     if (1L + edge.nrow() > long(0x7FFF)) {
       throw std::length_error("Too many edges in tree for postorder_edges: "
@@ -337,7 +338,9 @@ namespace TreeTools {
     for (int32 i = n_node; i--; ) {
       node_order[i] = i + n_tip;
     }
-    timsort_by_smallest(node_order, n_node, subtree_size);
+    if (size_sort[0]) {
+      timsort_by_smallest(node_order, n_node, subtree_size);
+    }
     std::free(subtree_size);
 
     IntegerMatrix ret(n_edge, 2);
