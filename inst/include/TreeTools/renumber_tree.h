@@ -274,7 +274,7 @@ namespace TreeTools {
   inline IntegerMatrix postorder_edges(const IntegerMatrix edge,
                                        const LogicalVector size_sort)
   {
-    if (1L + edge.nrow() > long(0x7FFF)) {
+    if (1L + edge.nrow() > long(0xFFFF)) {
       throw std::length_error("Too many edges in tree for postorder_edges: "
                               "Contact maintainer for advice");
       // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
