@@ -9,7 +9,7 @@ RoguePlot(
   tip,
   p = 1,
   plot = TRUE,
-  Palette = colorRampPalette(c(par("fg"), "red"), space = "Lab"),
+  Palette = colorRampPalette(c(par("fg"), "#009E73"), space = "Lab"),
   nullCol = rgb(colorRamp(unlist(par(c("fg", "bg"))), space = "Lab")(0.8)/255),
   thin = par("lwd"),
   fat = thin + 1L,
