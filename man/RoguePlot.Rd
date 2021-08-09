@@ -10,6 +10,7 @@ RoguePlot(
   p = 1,
   plot = TRUE,
   Palette = colorRampPalette(c(par("fg"), "red"), space = "Lab"),
+  nullCol = "lightgrey",
   thin = par("lwd"),
   fat = thin + 1L,
   ...
@@ -29,6 +30,9 @@ to be represented in the consensus tree (see \code{consensus()}).}
 
 \item{Palette}{Function that takes a parameter \code{n} and generates a colour
 palette with \code{n} entries.}
+
+\item{nullCol}{Colour to paint regions of the tree on which the rogue is
+never found.}
 
 \item{thin, fat}{Numeric specifying width to plot edges if the rogue tip
 never / sometimes does attach to them.}

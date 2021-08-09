@@ -18,6 +18,8 @@
 #' @param plot Logical specifying whether to plot the tree.
 #' @param Palette Function that takes a parameter `n` and generates a colour
 #' palette with `n` entries.
+#' @param nullCol Colour to paint regions of the tree on which the rogue is
+#' never found.
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
 #' @return `RoguePlot()` returns a list whose elements are:
@@ -50,6 +52,7 @@
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        Palette = colorRampPalette(c(par('fg'), 'red'),
                                                   space = 'Lab'),
+                       nullCol = 'lightgrey',
                        thin = par('lwd'), fat = thin + 1L,
                        ...) {
   trees <- RenumberTips(trees, trees[[1]])
@@ -151,12 +154,16 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   }
 
   cons <- DropTip(cons, 'Dummy root')
-  nOnEdge <- nOnEdge[-length(nOnEdge)]
+  nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
+  nAtNode <- nAtNode[-1]
 
   if (plot) {
-    pal <- Palette(length(trees) + 1L)
-    plot.phylo(cons, edge.color = pal[nOnEdge + 1L],
-               node.color = pal[c(double(consTip - 1L), nAtNode) + 1L],
+    pal <- c(NA, Palette(length(trees)))
+    plot.phylo(cons,
+               edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
+               node.color = ifelse(nAtNode > 0,
+                                   pal[c(double(consTip - 1L), nAtNode) + 1L],
+                                   nullCol),
                edge.width = ifelse(nOnEdge > 0, fat, thin),
                node.width = ifelse(c(double(consTip - 1L), nAtNode) > 0,
                                    fat, thin),
