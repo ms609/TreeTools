@@ -60,7 +60,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   noRogue <- trees
   noRogue[] <- lapply(trees, DropTip, tip)
   noRogue[] <- lapply(noRogue, AddTip, 0, 'Dummy root')
-  cons <- Preorder(consensus(noRogue, p = p))
+  cons <- RootTree(consensus(noRogue, p = p), 'Dummy root') # RootTree gives Preorder
   consTip <- NTip(cons)
 
   nTip <- NTip(trees[[1]])
