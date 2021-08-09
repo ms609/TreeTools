@@ -14,7 +14,7 @@ test_that('Simple rogue plot', {
     RoguePlot(trees, 'rogue', Palette = viridisLite::inferno,
               thin = 2, fat = 4, edge.lty = 2)
   }
-  vdiffr::expect_doppelganger('RoguePlot()', RoguePlotTest)
+  vdiffr::expect_doppelganger('RoguePlot(simple)', RoguePlotTest)
 })
 
 # TODO test tree with rogue to left and right of balanced root
