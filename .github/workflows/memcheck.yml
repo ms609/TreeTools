@@ -70,19 +70,12 @@ jobs:
 
       - name: valgrind - memcheck tests
         run: |
-          R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < memcheck/tests.R
+          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/tests.R
 
       - name: valgrind - memcheck examples
         run: |
-          R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < memcheck/examples.R
+          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/examples.R
 
       - name: valgrind - memcheck vignettes
         run: |
-          R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < memcheck/vignettes.R
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
-        with:
-          name: ${{ runner.os }}-rrelease-valgrind-results
-          path: check
+          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/vignettes.R
