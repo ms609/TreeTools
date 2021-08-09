@@ -16,7 +16,15 @@ jobs:
   mem-check:
     runs-on: ubuntu-20.04
 
-    name: valgrind, ubuntu-20.04, R release
+    name: valgrind ${{ matrix.config.test }}, ubuntu, R release
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {test: 'tests'}
+          - {test: 'examples'}
+          - {test: 'vignettes'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -68,14 +76,6 @@ jobs:
           R CMD INSTALL TreeTools*.tar.gz
           cd TreeTools
 
-      - name: valgrind - memcheck tests
+      - name: valgrind - memcheck ${{ matrix.config.test }}
         run: |
-          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/tests.R
-
-      - name: valgrind - memcheck examples
-        run: |
-          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/examples.R
-
-      - name: valgrind - memcheck vignettes
-        run: |
-          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/vignettes.R
+          R -d "valgrind --tool=memcheck --leak-check=full --error-exitcode=1" --vanilla < memcheck/${{ matrix.config.test }}.R
