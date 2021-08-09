@@ -16,7 +16,7 @@ jobs:
   mem-check:
     runs-on: ubuntu-20.04
 
-    name: valgrind ${{ matrix.config.test }}, ubuntu, R release
+    name: valgrind ${{ matrix.config.test }}, ubuntu, R devel
 
     strategy:
       fail-fast: false
@@ -36,7 +36,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: release
+          r-version: devel
 
       - uses: r-lib/actions/setup-pandoc@master
 
