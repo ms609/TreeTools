@@ -124,7 +124,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   nOnEdge <- decipher[cons$edge[, 2]]
 
 
-  nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 1L))
+  nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 2L))
   unmatchedTrees[unmatchedTrees] <- is.na(edgeMatches)
   if (any(unmatchedTrees)) {
     nodeDescs <- vapply(allDescendants(cons)[-seq_len(nTip)], function (tips) {
@@ -132,13 +132,13 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
       ret[tips[tips <= nTip]] <- TRUE
       if (ret[1]) !ret[-1] else ret[-1]
     }, logical(nTip - 1L))
-    aboveRogue <- rbind(FALSE, aboveRogue) # tip A is below rogue by definition
+    # aboveRogue <- rbind(FALSE, aboveRogue) # tip A is below rogue by definition
 
     nNode <- ncol(nodeDescs)
     consEdge <- cons$edge
     parentOf <- c(NA_integer_, vapply(nTip + seq_len(nNode)[-1], function (node) {
       consEdge[consEdge[, 2] == node, 1]
-    }, integer(1))) - nTip
+    }, integer(1))) - nTip - 1L # -1 because we will delete the dummy root node
 
 
     for (i in seq_len(nNode)[-1]) {
@@ -155,15 +155,14 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 
   cons <- DropTip(cons, 'Dummy root')
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
-  nAtNode <- nAtNode[-1]
 
   if (plot) {
-    pal <- c(NA, Palette(length(trees)))
+    #pal <- c(NA, Palette(length(trees)))
+    pal <- Palette(max(c(nOnEdge, nAtNode)) + 1L)
     plot.phylo(cons,
                edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
-               node.color = ifelse(nAtNode > 0,
-                                   pal[c(double(consTip - 1L), nAtNode) + 1L],
-                                   nullCol),
+               node.color = c(double(consTip - 1L),
+                              ifelse(nAtNode > 0, pal[nAtNode + 1L], nullCol)),
                edge.width = ifelse(nOnEdge > 0, fat, thin),
                node.width = ifelse(c(double(consTip - 1L), nAtNode) > 0,
                                    fat, thin),
