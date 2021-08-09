@@ -85,7 +85,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
 
 # Modified from phangorn::allAncestors
 .AllAncestors <- function (edge) {
-  edge <- Postorder(edge)
+  edge <- Postorder(edge, sizeSort = FALSE)
   parents <- edge[, 1]
   child <- edge[, 2]
   res <- vector("list", max(parents))

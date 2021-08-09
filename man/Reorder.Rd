@@ -33,7 +33,7 @@
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
 \alias{Preorder.NULL}
-\title{Reorder trees}
+\title{Reorder tree edges and nodes}
 \usage{
 RenumberTree(parent, child)
 
@@ -61,17 +61,17 @@ ApePostorder(tree, nTip, edge)
 
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
-Postorder(tree, force = FALSE, renumber = FALSE)
+Postorder(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
-\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
 PostorderEdges(edge, renumber = FALSE)
 
@@ -135,12 +135,14 @@ specified numbering scheme.
 corresponding to \code{tree}, with edges listed in postorder
 }
 \description{
+Functions for systematically ordering the internal edges of trees.
+}
+\details{
 \code{Reorder()} is a wrapper for \code{ape:::.reorder_ape}.
 Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 \code{ape::\link[ape:reorder.phylo]{postorder}}
-}
-\details{
+
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
 functions to the corresponding functions in 'ape'. Single nodes may
 need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
@@ -171,8 +173,9 @@ sorted into preorder, until each edge has been visited.
 \code{preorder_edges_and_nodes()}; they do not perform the same checks on input
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
-\code{Postorder()} is modified from the 'ape' function to return a specific
-order: edges are listed from the node that subtends the smallest
+\code{Postorder()} is an optimized implementation that if \code{sizeSort = TRUE}
+return a specific order:
+edges are listed from the node that subtends the smallest
 subtree to the one that subtends the largest (i.e. the root node), with
 all of a node's descendant edges listed adjacently.  If a tree is already
 in postorder, it will not be rearranged unless \code{force = TRUE}.
@@ -182,8 +185,9 @@ be used with caution: malformed input may cause undefined results, including
 crashing R.
 
 Trees with >8191 leaves require additional memory and are not handled
-at present.  If you need to process such large trees, please contact the
-maintainer for advice.
+by \code{Postorder()} at present.
+If you need to process such large trees, please contact the maintainer for
+advice.
 }
 \section{Functions}{
 \itemize{

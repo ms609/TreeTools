@@ -34,6 +34,8 @@ jobs:
         with:
           r-version: release
 
+      - uses: r-lib/actions/setup-pandoc@v1
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
