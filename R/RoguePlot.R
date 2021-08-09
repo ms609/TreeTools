@@ -1,10 +1,11 @@
-#' Visualise position of rogue taxa
+#' Visualize position of rogue taxa
 #'
 #' Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 #' according to the proportion of trees in which the taxon attaches to that
 #' edge, after Klopfstein &amp; Spasojevic (2019).
 #'
-#' Note: this function is currently under development and is not fully tested.
+#' `r lifecycle::badge("experimental")`
+#' This function is currently under development and is not fully tested.
 #' Please check that results are in line with expectations before using the
 #' output, and [report any errors](https://github.com/ms609/TreeTools/issues/53).
 #'

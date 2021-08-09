@@ -2,7 +2,7 @@
 % Please edit documentation in R/RoguePlot.R
 \name{RoguePlot}
 \alias{RoguePlot}
-\title{Visualise position of rogue taxa}
+\title{Visualize position of rogue taxa}
 \usage{
 RoguePlot(
   trees,
@@ -57,6 +57,7 @@ according to the proportion of trees in which the taxon attaches to that
 edge, after Klopfstein & Spasojevic (2019).
 }
 \details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Note: this function is currently under development and is not fully tested.
 Please check that results are in line with expectations before using the
 output, and \href{https://github.com/ms609/TreeTools/issues/53}{report any errors}.

@@ -30,11 +30,12 @@ Depends: R (>= 3.4.0),
     ape (>= 5.1.2)
 Imports:
     bit64,
+    lifecycle,
     colorspace,
     fastmatch,
     phangorn (>= 2.2.1),
     R.cache,
-    Rdpack,
+    Rdpack
 Suggests:
     knitr,
     Rcpp,
