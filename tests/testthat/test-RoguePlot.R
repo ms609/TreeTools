@@ -11,7 +11,8 @@ test_that('Simple rogue plot', {
   skip_if_not_installed('vdiffr')
   RoguePlotTest <- function () {
     par(mar = rep(0, 4))
-    RoguePlot(trees, 'rogue', Palette = viridisLite::inferno,
+    RoguePlot(trees, 'rogue',
+              Palette = function(...) hcl.colors(..., palette = 'inferno'),
               thin = 2, fat = 4, edge.lty = 2)
   }
   vdiffr::expect_doppelganger('RoguePlot(simple)', RoguePlotTest)

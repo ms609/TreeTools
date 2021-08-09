@@ -46,13 +46,13 @@
 #' @template MRS
 #' @importFrom ape consensus
 #' @importFrom fastmatch fmatch %fin%
-#' @importFrom grDevices colorRampPalette
+#' @importFrom grDevices colorRamp colorRampPalette rgb
 #' @importFrom phangorn allDescendants
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        Palette = colorRampPalette(c(par('fg'), 'red'),
                                                   space = 'Lab'),
-                       nullCol = 'lightgrey',
+                       nullCol = rgb(colorRamp(unlist(par(c('fg', 'bg'))), space = 'Lab')(0.8) / 255),
                        thin = par('lwd'), fat = thin + 1L,
                        ...) {
   trees <- RenumberTips(trees, trees[[1]])
