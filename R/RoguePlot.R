@@ -76,7 +76,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   #allTips <- logical(ceiling((nTip) / 8) * 8L + 2L) # Multiple of 8 for packBits
   allTips <- logical(nTip + 1L) # including dummy
   # leaf 1 is defined as outgroup and thus always below rogue.
-  aboveRogue <- vapply(trees, function (tr) {
+  aboveRogue <- .vapply(trees, function (tr) {
     edge <- AddTip(tr, 0, 'Dummy Root')$edge
     parent <- edge[, 1]
     child <- edge[, 2]
@@ -102,9 +102,6 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     }
   #}, raw((length(allTips) - 2L)  / 8L))
   }, logical((length(allTips) - 2L)))
-  if (is.null(dim(aboveRogue))) {
-    aboveRogue <- matrix(aboveRogue, nrow = 1L)
-  }
 
   # Vector, each entry corresponds to a tree
   tipsAboveRogue <- colSums(aboveRogue)
@@ -119,8 +116,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   consSplits <- PolarizeSplits(as.Splits(cons), 1)
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
-  edgeMatches <- match(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
-                       data.frame(t(splits[, -1, drop = FALSE])))
+  edgeMatches <- fmatch(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
+                        data.frame(t(splits[, -1, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
   tab <- table(edgeMatches)
@@ -133,7 +130,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 2L))
   unmatchedTrees[unmatchedTrees] <- is.na(edgeMatches)
   if (any(unmatchedTrees)) {
-    nodeDescs <- vapply(allDescendants(cons)[-seq_len(nTip)], function (tips) {
+    nodeDescs <- .vapply(allDescendants(cons)[-seq_len(nTip)], function (tips) {
       ret <- logical(nTip)
       ret[tips[tips <= nTip]] <- TRUE
       if (ret[1]) !ret[-1] else ret[-1]
@@ -154,7 +151,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     }, logical(sum(unmatchedTrees)))
 
     # active[i, ] != within[i, ], or we'd be on an edge
-    atNode <- table(apply(cbind(active & !within), 1, which.max))
+    atNode <- table(apply(cbind(active & !within), 1,
+                          function (x) 1L + length(x) - which.max(rev(x))))
     nAtNode[as.integer(names(atNode))] <- atNode
 
     # for (i in seq_len(nNode)[-1]) {
@@ -196,7 +194,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 # TODO in r4.1.0 use apply(drop = false)
 .vapply <- function (...) {
   x <- vapply(...)
-  if (is.null(dim(within))) {
+  if (is.null(dim(x))) {
     x <- matrix(x, 1L)
   }
 
