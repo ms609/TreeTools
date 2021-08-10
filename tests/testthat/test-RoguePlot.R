@@ -6,7 +6,6 @@ AllTreesCounted <- function (trees, rogue) {
 }
 
 test_that('Simple rogue plot', {
-  skip_if_not_installed('ape', '5.5.2')
   trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
@@ -16,7 +15,8 @@ test_that('Simple rogue plot', {
                     atNode = double(4)),
                RoguePlot(trees, 'rogue', plot = FALSE))
 
-  skip_if_not_installed('vdiffr')
+  skip_if_not_installed('vdiffr', '1.0')
+  skip_if_not_installed('ape', '5.5.2')
   RoguePlotTest <- function () {
     par(mar = rep(0, 4))
     RoguePlot(trees, 'rogue',
@@ -27,16 +27,22 @@ test_that('Simple rogue plot', {
 })
 
 test_that("polytomy id", {
-  trees <- list(read.tree(text = "(a,(((b,(c,d)),e),f));"),
-                read.tree(text = "(a,((((c,d),e),f),b));"),
-                read.tree(text = "(a,(f,(e,((b,d),c))));"))
-  AllTreesCounted(trees, 'f')
+  trees <- list(read.tree(text = "(a,(((b,(c,d)),e),rogue));"),
+                read.tree(text = "(a,((((c,d),e),rogue),b));"),
+                read.tree(text = "(a,(rogue,(e,((b,d),c))));"))
+  AllTreesCounted(trees, 'rogue')
+
+  skip_if_not_installed('vdiffr', '1.0')
+  RoguePlotTest <- function () {
+    par(mar = rep(0, 4))
+    RoguePlot(trees, 'rogue')
+  }
+  vdiffr::expect_doppelganger('RoguePlot(poly)', RoguePlotTest)
 })
 
 # TODO test tree with rogue to left and right of balanced root
 test_that('Complex rogue plot', {
 
-  skip_if_not_installed('ape', '5.5.2')
   trees1 <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),  # node 9
                  read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),  # node 9
                  read.tree(text = '(a, (b, (c, (rogue, (d, (f, e))))));'),  # node 9
@@ -68,7 +74,8 @@ test_that('Complex rogue plot', {
   trees3 <- lapply(c(9, 10, 13), AddTip, tree = BalancedTree(8), label = 'rogue')
   AllTreesCounted(trees3, 'rogue')
 
-  skip_if_not_installed('vdiffr')
+  skip_if_not_installed('vdiffr', '1.0')
+  skip_if_not_installed('ape', '5.5.2')
   RoguePlotTest <- function () {
     par(mar = rep(0, 4))
     RoguePlot(trees1, 'rogue',

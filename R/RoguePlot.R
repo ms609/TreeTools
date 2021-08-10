@@ -120,7 +120,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   edgeMatches <- match(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
-                       data.frame(t(splits[, -1])))
+                       data.frame(t(splits[, -1, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
   tab <- table(edgeMatches)
@@ -138,25 +138,35 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
       ret[tips[tips <= nTip]] <- TRUE
       if (ret[1]) !ret[-1] else ret[-1]
     }, logical(nTip - 1L))
-    # aboveRogue <- rbind(FALSE, aboveRogue) # tip A is below rogue by definition
 
     nNode <- ncol(nodeDescs)
-    consEdge <- cons$edge
-    parentOf <- c(NA_integer_, vapply(nTip + seq_len(nNode)[-1], function (node) {
-      consEdge[consEdge[, 2] == node, 1]
-    }, integer(1))) - nTip - 1L # -1 because we will delete the dummy root node
+    # consEdge <- cons$edge
+    # parentOf <- c(NA_integer_, vapply(nTip + seq_len(nNode)[-1], function (node) {
+    #   consEdge[consEdge[, 2] == node, 1]
+    # }, integer(1))) - nTip - 1L # -1 because we will delete the dummy root node
 
+    active <- .vapply(seq_len(nNode)[-1], function (i) {
+      apply(aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE], 2, any)
+    }, logical(sum(unmatchedTrees)))
 
-    for (i in seq_len(nNode)[-1]) {
-      overlap <- aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE]
-      active <- apply(overlap, 2, any)
-      within <- apply(overlap, 2, all)
-      unmatchedTrees[unmatchedTrees][active & within] <- FALSE
-      nAtNode[parentOf[i]] <- nAtNode[parentOf[i]] + sum(active & within)
-      if (!any(unmatchedTrees)) {
-        break
-      }
-    }
+    within <- .vapply(seq_len(nNode)[-1], function (i) {
+      apply(aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE], 2, all)
+    }, logical(sum(unmatchedTrees)))
+
+    # active[i, ] != within[i, ], or we'd be on an edge
+    atNode <- table(apply(cbind(active & !within), 1, which.max))
+    nAtNode[as.integer(names(atNode))] <- atNode
+
+    # for (i in seq_len(nNode)[-1]) {
+    #   overlap <- aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE]
+    #   active <- apply(overlap, 2, any)
+    #   within <- apply(overlap, 2, all)
+    #   nAtNode[parentOf[i]] <- nAtNode[parentOf[i]] + sum(active & within)
+    #   unmatchedTrees[unmatchedTrees][active & within] <- FALSE
+    #   if (!any(unmatchedTrees)) {
+    #     break
+    #   }
+    # }
   }
 
   cons <- DropTip(cons, 'Dummy root')
@@ -180,4 +190,16 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 
   # Return:
   list(cons = cons, onEdge = nOnEdge, atNode = nAtNode)
+}
+
+
+# TODO in r4.1.0 use apply(drop = false)
+.vapply <- function (...) {
+  x <- vapply(...)
+  if (is.null(dim(within))) {
+    x <- matrix(x, 1L)
+  }
+
+  # Return:
+  x
 }
