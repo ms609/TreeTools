@@ -1,4 +1,10 @@
 devtools::load_all('c:/research/r/ape')
+
+AllTreesCounted <- function (trees, rogue) {
+  x <- RoguePlot(trees, rogue, plot = FALSE)
+  expect_equal(length(trees), sum(x$onEdge, x$atNode))
+}
+
 test_that('Simple rogue plot', {
   skip_if_not_installed('ape', '5.5.2')
   trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
@@ -18,6 +24,13 @@ test_that('Simple rogue plot', {
               thin = 2, fat = 4, edge.lty = 2)
   }
   vdiffr::expect_doppelganger('RoguePlot(simple)', RoguePlotTest)
+})
+
+test_that("polytomy id", {
+  trees <- list(read.tree(text = "(a,(((b,(c,d)),e),f));"),
+                read.tree(text = "(a,((((c,d),e),f),b));"),
+                read.tree(text = "(a,(f,(e,((b,d),c))));"))
+  AllTreesCounted(trees, 'f')
 })
 
 # TODO test tree with rogue to left and right of balanced root
@@ -53,6 +66,7 @@ test_that('Complex rogue plot', {
                RoguePlot(trees2, 'rogue', plot = FALSE))
 
   trees3 <- lapply(c(9, 10, 13), AddTip, tree = BalancedTree(8), label = 'rogue')
+  AllTreesCounted(trees3, 'rogue')
 
   skip_if_not_installed('vdiffr')
   RoguePlotTest <- function () {
