@@ -27,7 +27,7 @@ URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
 BugReports: https://github.com/ms609/TreeTools/issues/
 SystemRequirements: C++14
 Depends: R (>= 3.4.0),
-    ape (>= 5.1.2)
+    ape (>= 5.5.2)
 Imports:
     bit64,
     lifecycle,
@@ -43,6 +43,7 @@ Suggests:
     shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
+Additional_repositories: https://ms609.github.io/packages/
 Remotes:
     emmanuelparadis/ape,
 Config/Needs/coverage: covr
