@@ -21,6 +21,9 @@
 #' palette with `n` entries.
 #' @param nullCol Colour to paint regions of the tree on which the rogue is
 #' never found.
+#' @param edgeLength Numeric specifying edge lengths of consensus tree;
+#' `NULL` aligns tips by scaling edges proportional to clade size; `1` sets
+#' all edges to unit length.
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
 #' @return `RoguePlot()` returns a list whose elements are:
@@ -53,7 +56,9 @@
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        Palette = colorRampPalette(c(par('fg'), '#009E73'),
                                                   space = 'Lab'),
-                       nullCol = rgb(colorRamp(unlist(par(c('fg', 'bg'))), space = 'Lab')(0.8) / 255),
+                       nullCol = rgb(colorRamp(unlist(par(c('fg', 'bg'))),
+                                               space = 'Lab')(0.8) / 255),
+                       edgeLength = NULL,
                        thin = par('lwd'), fat = thin + 1L,
                        ...) {
   trees <- RenumberTips(trees, trees[[1]])
@@ -155,6 +160,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   }
 
   cons <- DropTip(cons, 'Dummy root')
+  if (!is.null(edgeLength)) {
+    cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
+  }
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
 
   if (plot) {

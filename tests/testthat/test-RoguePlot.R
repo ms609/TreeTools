@@ -1,4 +1,6 @@
+devtools::load_all('c:/research/r/ape')
 test_that('Simple rogue plot', {
+  skip_if_not_installed('ape', '5.5.2')
   trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
                 read.tree(text = '(a, (b, (c, (rogue, (d, e)))));'),
@@ -21,6 +23,7 @@ test_that('Simple rogue plot', {
 # TODO test tree with rogue to left and right of balanced root
 test_that('Complex rogue plot', {
 
+  skip_if_not_installed('ape', '5.5.2')
   trees1 <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),  # node 9
                  read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),  # node 9
                  read.tree(text = '(a, (b, (c, (rogue, (d, (f, e))))));'),  # node 9
@@ -56,13 +59,13 @@ test_that('Complex rogue plot', {
     par(mar = rep(0, 4))
     RoguePlot(trees1, 'rogue',
               Palette = function(...) hcl.colors(..., palette = 'inferno'),
-              thin = 2, fat = 4)
+              edgeLen = 1, thin = 2, fat = 4)
   }
   vdiffr::expect_doppelganger('RoguePlot(trees1)', RoguePlotTest)
 
   RoguePlotTest <- function () {
     par(mar = rep(0, 4))
-    RoguePlot(trees2, 'rogue', thin = 2, fat = 4)
+    RoguePlot(trees2, 'rogue', edgeLength = 1:7, thin = 2, fat = 4)
   }
   vdiffr::expect_doppelganger('RoguePlot(trees2)', RoguePlotTest)
 })
