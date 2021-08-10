@@ -44,8 +44,6 @@ Suggests:
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
 Additional_repositories: https://ms609.github.io/packages/
-Remotes:
-    emmanuelparadis/ape,
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
 Config/Needs/metadata: codemetar
