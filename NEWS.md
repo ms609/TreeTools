@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9006 (development)
+# TreeTools 1.4.5.9007 (development)
 
 
 ## New functions
@@ -13,6 +13,7 @@
 
 - `as.phylo.Splits()` represents a `Splits` object as a tree.
 
+- `ClusterTable()` functionailty imported from "TreeDist".
 
 ## Improved functions
 
