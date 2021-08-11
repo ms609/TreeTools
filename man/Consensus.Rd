@@ -21,6 +21,7 @@ Calculates the consensus of a set of trees.
 }
 \seealso{
 Other consensus tree functions: 
+\code{\link{ConsensusInfo}()},
 \code{\link{ConsensusWithout}()}
 }
 \author{

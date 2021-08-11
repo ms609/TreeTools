@@ -9,6 +9,10 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
+consensus_info <- function(trees, phylo) {
+    .Call(`_TreeTools_consensus_info`, trees, phylo)
+}
+
 drop_tip <- function(edge, drop) {
     .Call(`_TreeTools_drop_tip`, edge, drop)
 }

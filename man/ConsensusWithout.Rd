@@ -84,6 +84,7 @@ Other tree properties:
 \code{\link{TreeIsRooted}()}
 
 Other consensus tree functions: 
+\code{\link{ConsensusInfo}()},
 \code{\link{Consensus}()}
 }
 \author{

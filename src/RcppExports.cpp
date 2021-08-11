@@ -34,6 +34,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// consensus_info
+double consensus_info(const List trees, const LogicalVector phylo);
+RcppExport SEXP _TreeTools_consensus_info(SEXP treesSEXP, SEXP phyloSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type phylo(phyloSEXP);
+    rcpp_result_gen = Rcpp::wrap(consensus_info(trees, phylo));
+    return rcpp_result_gen;
+END_RCPP
+}
 // drop_tip
 IntegerMatrix drop_tip(const IntegerMatrix edge, const IntegerVector drop);
 RcppExport SEXP _TreeTools_drop_tip(SEXP edgeSEXP, SEXP dropSEXP) {
