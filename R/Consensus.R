@@ -8,6 +8,10 @@
 #' default) gives the strict consensus.
 #' @param check.labels Logical specifying whether to check that all trees have
 #' identical labels.  Defaults to `TRUE`, which is slower.
+#'
+#' @return `Consensus()` returns an object of class `phylo`, rooted as in the
+#' first entry of `trees`.
+#' @examples
 #' @template MRS
 #' @family consensus tree functions
 #' @export
@@ -20,7 +24,10 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
   }
   splits <- as.Splits(consensus_tree(trees, p),
                       tipLabels = TipLabels(trees[[1]]))
+  tree1 <- Preorder(trees[[1]])
+  edg <- tree1$edge
+  root <- edg[DescendantEdges(1, edg[, 1], edg[, 2]), 2]
 
   # Return:
-  as.phylo(splits)
+  RootTree(as.phylo(splits), root)
 }
