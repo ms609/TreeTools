@@ -24,9 +24,7 @@ List consensus_tree(const List trees, const IntegerVector p) {
     tables.emplace_back(ClusterTable(List(trees(i))));
   }
 
-  const int16
-    n_tip = tables[0].N(),
-  ;
+  const int16 n_tip = tables[0].N();
 
   std::array<int16, CT_STACK_SIZE * CT_MAX_LEAVES> S;
   std::array<int16, CT_MAX_LEAVES> split_count;
