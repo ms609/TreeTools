@@ -60,6 +60,8 @@ RootTree.phylo <- function (tree, outgroupTips) {
     stop("No outgroup tips selected")
   } else if (length(outgroupTips) == 1L) {
     outgroup <- outgroupTips
+  } else if (length(outgroupTips) == NTip(tree) - 1L) {
+    outgroup <- setdiff(seq_len(NTip(tree)), outgroupTips)
   } else {
     ancestry <- unlist(Ancestors(tree, outgroupTips))
     ancestryTable <- table(ancestry)

@@ -274,6 +274,13 @@ test_that("DropTip() works", {
   expect_equal(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
   #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
+
+  tree <- structure(list(edge = structure(c(7L, 8L, 8L, 7L, 7L, 9L, 9L, 10L,
+                                            10L, 8L, 1L, 6L, 2L, 9L, 3L, 10L,
+                                            4L, 5L), .Dim = c(9L, 2L)),
+                         Nnode = 4L, tip.label = letters[1:6]),
+                    class = "phylo", order = "preorder")
+  RootTree(tree, 1:5)
 })
 
 test_that("KeepTip() works", {
