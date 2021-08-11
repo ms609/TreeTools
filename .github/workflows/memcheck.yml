@@ -5,10 +5,16 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'inst/include/**'
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'inst/include/**'
 
 name: mem-check
 
