@@ -31,6 +31,7 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
   tree1 <- Preorder(trees[[1]])
   edg <- tree1$edge
   root <- edg[DescendantEdges(1, edg[, 1], edg[, 2]), 2]
+  root <- root[root <= NTip(tree1)]
 
   # Return:
   RootTree(as.phylo(splits), root)

@@ -64,10 +64,12 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     tip <- fmatch(tip, trees[[1]]$tip.label)
   }
 
+  dummyRoot <- 'XXTREETOOLSXXDUMMYXXROOTXX'
   noRogue <- trees
   noRogue[] <- lapply(trees, DropTip, tip)
-  noRogue[] <- lapply(noRogue, AddTip, 0, 'Dummy root')
-  cons <- RootTree(Consensus(noRogue, p = p), 'Dummy root') # RootTree gives Preorder
+  noRogue[] <- lapply(noRogue, AddTip, 0, dummyRoot)
+  cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
+                   dummyRoot) # RootTree gives Preorder
   consTip <- NTip(cons)
 
   nTip <- NTip(trees[[1]])
@@ -75,7 +77,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   allTips <- logical(nTip + 1L) # including dummy
   # leaf 1 is defined as outgroup and thus always below rogue.
   aboveRogue <- .vapply(trees, function (tr) {
-    edge <- AddTip(tr, 0, 'Dummy Root')$edge
+    edge <- AddTip(tr, 0, dummyRoot)$edge
     parent <- edge[, 1]
     child <- edge[, 2]
     rogueEdge <- fmatch(tip, child)
@@ -165,7 +167,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     # }
   }
 
-  cons <- DropTip(cons, 'Dummy root')
+  cons <- DropTip(cons, dummyRoot)
   if (!is.null(edgeLength)) {
     cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
   }

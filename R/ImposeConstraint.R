@@ -19,7 +19,6 @@
 #' constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
 #' plot(ImposeConstraint(tree, constraint))
 #' @template MRS
-#' @importFrom ape read.tree
 #' @export
 ImposeConstraint <- function (tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.
@@ -55,8 +54,8 @@ ImposeConstraint <- function (tree, constraint) {
 
   }
 
-  backbone <- Preorder(RenumberTips(read.tree(
-    text = paste0('(', paste0(rownames(const), collapse = ','), ');')),
+  backbone <- Preorder(RenumberTips(
+    .TextToTree('(', paste0(rownames(const), collapse = ','), ');'),
     tips))
 
   .ChildAtEnd <- function (x) {
@@ -86,6 +85,17 @@ ImposeConstraint <- function (tree, constraint) {
 
   # Return:
   backbone
+}
+
+#' @importFrom ape read.tree
+.TextToTree <- function (...) {
+  space <- 'XXTREETOOLSSPACEXX'
+  text <- gsub(' ', space, paste0(...), fixed = TRUE)
+  tree <- read.tree(text = text)
+  tree$tip.label <- gsub(space, ' ', tree$tip.label, fixed = TRUE)
+
+  # Return:
+  tree
 }
 
 #' @describeIn ImposeConstraint Expand a constraint to include unconstrained
