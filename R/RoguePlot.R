@@ -21,9 +21,7 @@
 #' palette with `n` entries.
 #' @param nullCol Colour to paint regions of the tree on which the rogue is
 #' never found.
-#' @param edgeLength Numeric specifying edge lengths of consensus tree;
-#' `NULL` aligns tips by scaling edges proportional to clade size; `1` sets
-#' all edges to unit length.
+#' @template edgeLengthParam
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
 #' @return `RoguePlot()` returns a list whose elements are:
@@ -50,7 +48,7 @@
 #' @template MRS
 #' @importFrom ape consensus
 #' @importFrom fastmatch fmatch %fin%
-#' @importFrom grDevices colorRamp colorRampPalette rgb
+#' @importFrom grDevices colorRamp colorRampPalette par rgb
 #' @importFrom phangorn allDescendants
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
@@ -176,14 +174,14 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   if (plot) {
     #pal <- c(NA, Palette(length(trees)))
     pal <- Palette(max(c(nOnEdge, nAtNode)) + 1L)
-    plot.phylo(cons,
-               edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
-               node.color = c(double(consTip - 1L),
-                              ifelse(nAtNode > 0, pal[nAtNode + 1L], nullCol)),
-               edge.width = ifelse(nOnEdge > 0, fat, thin),
-               node.width = ifelse(c(double(consTip - 1L), nAtNode) > 0,
-                                   fat, thin),
-               ...)
+    plot(cons,
+         edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
+         node.color = c(double(consTip - 1L),
+                        ifelse(nAtNode > 0, pal[nAtNode + 1L], nullCol)),
+         edge.width = ifelse(nOnEdge > 0, fat, thin),
+         node.width = ifelse(c(double(consTip - 1L), nAtNode) > 0,
+                             fat, thin),
+         ...)
   }
 
   # Return:

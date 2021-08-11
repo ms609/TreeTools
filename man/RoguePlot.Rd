@@ -11,6 +11,7 @@ RoguePlot(
   plot = TRUE,
   Palette = colorRampPalette(c(par("fg"), "#009E73"), space = "Lab"),
   nullCol = rgb(colorRamp(unlist(par(c("fg", "bg"))), space = "Lab")(0.8)/255),
+  edgeLength = NULL,
   thin = par("lwd"),
   fat = thin + 1L,
   ...
@@ -33,6 +34,10 @@ palette with \code{n} entries.}
 
 \item{nullCol}{Colour to paint regions of the tree on which the rogue is
 never found.}
+
+\item{edgeLength}{Numeric specifying edge lengths of consensus tree;
+\code{NULL} aligns tips by scaling edges proportional to clade size; \code{1} sets
+all edges to unit length.}
 
 \item{thin, fat}{Numeric specifying width to plot edges if the rogue tip
 never / sometimes does attach to them.}

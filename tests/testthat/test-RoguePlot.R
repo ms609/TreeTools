@@ -1,5 +1,3 @@
-devtools::load_all('c:/research/r/ape')
-
 AllTreesCounted <- function (trees, rogue) {
   x <- RoguePlot(trees, rogue, plot = FALSE)
   expect_equal(length(trees), sum(x$onEdge, x$atNode))
