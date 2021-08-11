@@ -1,6 +1,7 @@
 #' Construct consensus trees
 #'
-#' `Consensus()` calculates the consensus of a set of trees.
+#' `Consensus()` calculates the consensus of a set of trees, using the
+#' algorithm of \insertCite{Day1985}{TreeTools}.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
 #' @param p Proportion of trees that must contain a split for it to be reported
@@ -18,6 +19,8 @@
 #' tree.
 #' @template MRS
 #' @family consensus tree functions
+#' @references
+#' \insertAllCited{}
 #' @export
 Consensus <- function (trees, p = 1, check.labels = TRUE) {
   if (check.labels) {
