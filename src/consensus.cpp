@@ -4,6 +4,9 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
 using namespace TreeTools;
 
+#include <array> /* for array */
+#include <vector> /* for vector */
+
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
 // [[Rcpp::export]]
