@@ -269,7 +269,7 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
 #' @export
 EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
-#' @importFrom ape root drop.tip bind.tree
+#' @importFrom ape root bind.tree
 .EnforceOutgroup <- function (tree, outgroup, taxa) {
   if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
 
@@ -279,8 +279,8 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
     stop ("All outgroup taxa must occur in tree")
   }
 
-  ingroup.branch <- drop.tip(tree, outgroup)
-  outgroup.branch <- drop.tip(tree, ingroup)
+  ingroup.branch <- DropTip(tree, outgroup)
+  outgroup.branch <- DropTip(tree, ingroup)
 
   result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
                  outgroup, resolve.root = TRUE)

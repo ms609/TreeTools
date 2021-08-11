@@ -22,7 +22,7 @@ MarkMissing(tip, position = "bottomleft", ...)
 \item{trees}{A list of phylogenetic trees, of class \code{multiPhylo} or \code{list}.}
 
 \item{tip}{A character vector specifying the names (or numbers) of tips to
-drop (using \code{ape::drop.tip()}).}
+drop (using \code{\link[=DropTip]{DropTip()}}).}
 
 \item{\dots}{Additional parameters to pass on to \code{\link[ape:consensus]{ape::consensus()}} or
 \code{\link[=legend]{legend()}}.}

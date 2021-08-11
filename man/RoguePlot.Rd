@@ -22,7 +22,7 @@ RoguePlot(
 of class \code{phylo} to be summarized.}
 
 \item{tip}{Numeric or character identifying rogue leaf, in format accepted
-by \code{drop.tip()}.}
+by \code{\link[=DropTip]{DropTip()}}.}
 
 \item{p}{A numeric value between 0.5 and 1 giving the proportion for a clade
 to be represented in the consensus tree (see \code{\link[=Consensus]{Consensus()}}).}
