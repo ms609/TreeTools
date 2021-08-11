@@ -56,10 +56,13 @@ RootTree.phylo <- function (tree, outgroupTips) {
     outgroupTips <- which(outgroupTips)
   }
   tree <- Preorder(tree)
+  nTip <- NTip(tree)
   if (length(outgroupTips) == 0) {
     stop("No outgroup tips selected")
   } else if (length(outgroupTips) == 1L) {
     outgroup <- outgroupTips
+  } else if (length(outgroupTips) == nTip - 1L) {
+    outgroup <- setdiff(seq_len(nTip), outgroupTips)
   } else {
     ancestry <- unlist(Ancestors(tree, outgroupTips))
     ancestryTable <- table(ancestry)
@@ -79,6 +82,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
     }
     outgroup <- lca
   }
+  if (outgroup > nTip + tree$Nnode) return (tree)
 
   root_on_node(tree, outgroup)
 }
