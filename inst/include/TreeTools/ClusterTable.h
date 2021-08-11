@@ -25,6 +25,8 @@ using namespace Rcpp;
 
 #define CT_STACK_SIZE 4
 
+#define CT_IS_LEAF(a) (a) <= n_tip
+
 const int_fast32_t
   CT_MAX_LEAVES = 16383
 ;
@@ -57,7 +59,7 @@ namespace TreeTools {
       T,
       visited_nth
       ;
-    std::bitset<DAY_MAX_LEAVES + 1> Xswitch;
+    std::bitset<CT_MAX_LEAVES + 1> Xswitch;
     IntegerMatrix Xarr;
 
   public:
@@ -273,9 +275,9 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > DAY_MAX_LEAVES) {
+    if (leaf_labels.length() > CT_MAX_LEAVES) {
       throw std::length_error("Tree has too many leaves. "
-                                "Contact the 'TreeDist' maintainer.");
+                                "Contact the 'TreeTools' maintainer.");
     }
     n_leaves = leaf_labels.length(); // = N
     n_edge = edge.nrow();
