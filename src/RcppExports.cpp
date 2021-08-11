@@ -23,13 +23,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // consensus_tree
-List consensus_tree(const List trees, const IntegerVector p);
+List consensus_tree(const List trees, const NumericVector p);
 RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
     rcpp_result_gen = Rcpp::wrap(consensus_tree(trees, p));
     return rcpp_result_gen;
 END_RCPP

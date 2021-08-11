@@ -7,7 +7,7 @@ using namespace TreeTools;
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
 // [[Rcpp::export]]
-List consensus_tree(const List trees, const IntegerVector p) {
+List consensus_tree(const List trees, const NumericVector p) {
   int16
     v = 0, w = 0,
     L, R, N, W,
