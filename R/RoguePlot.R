@@ -48,7 +48,8 @@
 #' @template MRS
 #' @importFrom ape consensus
 #' @importFrom fastmatch fmatch %fin%
-#' @importFrom grDevices colorRamp colorRampPalette par rgb
+#' @importFrom graphics par
+#' @importFrom grDevices colorRamp colorRampPalette rgb
 #' @importFrom phangorn allDescendants
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
