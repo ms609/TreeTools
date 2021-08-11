@@ -198,6 +198,15 @@ test_that("RootTree() works", {
   expect_equal(pec4, RootTree(pec4, c(1, 3)))
   pec5 <- PectinateTree(5)
   expect_equal(pec5, RootTree(pec5, c(1, 4)))
+
+  tree <- structure(list(edge = structure(c(7L, 8L, 8L, 7L, 7L, 9L, 9L, 10L,
+                                            10L, 8L, 1L, 6L, 2L, 9L, 3L, 10L,
+                                            4L, 5L), .Dim = c(9L, 2L)),
+                         Nnode = 4L, tip.label = letters[1:6]),
+                    class = "phylo", order = "preorder")
+  expect_equal(RootTree(tree, 1:5), RootTree(tree, 6))
+  # non-contiguous outgroup
+  expect_equal(RootTree(tree, 1:4), RootTree(tree, 5:6))
 })
 
 test_that("UnrootTree() works", {
