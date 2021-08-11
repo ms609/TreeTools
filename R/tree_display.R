@@ -30,6 +30,7 @@
 #' par(oldPar)
 #' @family tree manipulation
 #' @family tree properties
+#' @family consensus tree functions
 #'
 #' @template MRS
 #' @export
