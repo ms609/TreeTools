@@ -11,8 +11,22 @@ using namespace Rcpp;
 #define UNINIT -999
 #define INF INTX_MAX
 
+#define CT_PUSH(a, b, c, d)                                      \
+  S[Spos++] = (a);                                               \
+  S[Spos++] = (b);                                               \
+  S[Spos++] = (c);                                               \
+  S[Spos++] = (d)
+
+#define CT_POP(a, b, c, d)                                       \
+  (d) = S[--Spos];                                               \
+  (c) = S[--Spos];                                               \
+  (b) = S[--Spos];                                               \
+  (a) = S[--Spos]
+
+#define CT_STACK_SIZE 4
+
 const int_fast32_t
-  DAY_MAX_LEAVES = 16383
+  CT_MAX_LEAVES = 16383
 ;
 
 namespace TreeTools {
