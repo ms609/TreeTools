@@ -7,7 +7,7 @@
 #'
 #' @param trees A list of phylogenetic trees, of class `multiPhylo` or `list`.
 #' @param tip A character vector specifying the names (or numbers) of tips to
-#' drop (using `ape::drop.tip()`).
+#' drop (using [`DropTip()`]).
 #'
 #' @return `ConsensusWithout()` returns a consensus tree (of class `phylo`)
 #' without the excluded taxa.

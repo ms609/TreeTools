@@ -12,9 +12,9 @@
 #' @param trees List or `multiPhylo` object containing phylogenetic trees
 #' of class `phylo` to be summarized.
 #' @param tip Numeric or character identifying rogue leaf, in format accepted
-#' by `drop.tip()`.
+#' by [`DropTip()`].
 #' @param p A numeric value between 0.5 and 1 giving the proportion for a clade
-#' to be represented in the consensus tree (see `consensus()`).
+#' to be represented in the consensus tree (see [`Consensus()`]).
 #' @param \dots Additional parameters to `plot.phylo()`.
 #' @param plot Logical specifying whether to plot the tree.
 #' @param Palette Function that takes a parameter `n` and generates a colour
@@ -46,7 +46,6 @@
 #'               read.tree(text = '(a, (b, (c, (d, (rogue, (e, f))))));'))
 #' RoguePlot(trees, 'rogue')
 #' @template MRS
-#' @importFrom ape consensus
 #' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
 #' @importFrom grDevices colorRamp colorRampPalette rgb
@@ -68,7 +67,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   noRogue <- trees
   noRogue[] <- lapply(trees, DropTip, tip)
   noRogue[] <- lapply(noRogue, AddTip, 0, 'Dummy root')
-  cons <- RootTree(consensus(noRogue, p = p), 'Dummy root') # RootTree gives Preorder
+  cons <- RootTree(Consensus(noRogue, p = p), 'Dummy root') # RootTree gives Preorder
   consTip <- NTip(cons)
 
   nTip <- NTip(trees[[1]])

@@ -1,6 +1,6 @@
-#' Consensus trees
+#' Construct consensus trees
 #'
-#' Calculates the consensus of a set of trees.
+#' `Consensus()` calculates the consensus of a set of trees.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
 #' @param p Proportion of trees that must contain a split for it to be reported
@@ -12,6 +12,10 @@
 #' @return `Consensus()` returns an object of class `phylo`, rooted as in the
 #' first entry of `trees`.
 #' @examples
+#' Consensus(as.phylo(0:9, 9))
+#' @seealso
+#' `TreeDist::ConsensusInfo()` calculates the information content of a consensus
+#' tree.
 #' @template MRS
 #' @family consensus tree functions
 #' @export

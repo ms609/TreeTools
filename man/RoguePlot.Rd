@@ -25,7 +25,7 @@ of class \code{phylo} to be summarized.}
 by \code{drop.tip()}.}
 
 \item{p}{A numeric value between 0.5 and 1 giving the proportion for a clade
-to be represented in the consensus tree (see \code{consensus()}).}
+to be represented in the consensus tree (see \code{\link[=Consensus]{Consensus()}}).}
 
 \item{plot}{Logical specifying whether to plot the tree.}
 
