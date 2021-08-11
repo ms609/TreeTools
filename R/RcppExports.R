@@ -5,6 +5,10 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
+consensus_tree <- function(trees, p) {
+    .Call(`_TreeTools_consensus_tree`, trees, p)
+}
+
 drop_tip <- function(edge, drop) {
     .Call(`_TreeTools_drop_tip`, edge, drop)
 }
