@@ -82,9 +82,13 @@ Other tree properties:
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
+
+Other consensus tree functions: 
+\code{\link{Consensus}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{consensus tree functions}
 \concept{tree manipulation}
 \concept{tree properties}

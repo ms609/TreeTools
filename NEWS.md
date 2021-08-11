@@ -13,7 +13,9 @@
 
 - `as.phylo.Splits()` represents a `Splits` object as a tree.
 
-- `ClusterTable()` functionailty imported from "TreeDist".
+- `Consensus()` is a faster C++ implementation of `ape::consensus()`.
+
+- `ClusterTable()` C++ functionailty imported from "TreeDist".
 
 ## Improved functions
 

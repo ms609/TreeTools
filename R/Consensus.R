@@ -18,8 +18,9 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  splits <- consensus_tree(trees, p)
-  splits <- as.Splits(splits, tipLabels = TipLabels(trees[[1]]))
-  summary(splits)
+  splits <- as.Splits(consensus_tree(trees, p),
+                      tipLabels = TipLabels(trees[[1]]))
+
+  # Return:
   as.phylo(splits)
 }
