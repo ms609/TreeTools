@@ -41,7 +41,7 @@ namespace TreeTools {
     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
   };
 
-  static uint_fast32_t bitcounts[65536]; // the bytes representing bit count of each number 0-65535
+  uint_fast32_t bitcounts[65536]; // the bytes representing bit count of each number 0-65535
   __attribute__((constructor))
     inline void initialize_bitcounts() {
       for (int_fast32_t i = 0; i != 65536; i++) {
