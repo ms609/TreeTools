@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9007 (development)
+# TreeTools 1.4.5.9006 (development)
 
 
 ## New functions
@@ -13,9 +13,6 @@
 
 - `as.phylo.Splits()` represents a `Splits` object as a tree.
 
-- `Consensus()` is a faster C++ implementation of `ape::consensus()`.
-
-- `ClusterTable()` C++ functionailty imported from "TreeDist".
 
 ## Improved functions
 
