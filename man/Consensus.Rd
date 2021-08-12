@@ -16,8 +16,15 @@ default) gives the strict consensus.}
 \item{check.labels}{Logical specifying whether to check that all trees have
 identical labels.  Defaults to \code{TRUE}, which is slower.}
 }
+\value{
+\code{Consensus()} returns an object of class \code{phylo}, rooted as in the
+first entry of \code{trees}.
+}
 \description{
 Calculates the consensus of a set of trees.
+}
+\examples{
+Consensus(as.phylo(0:2, 8))
 }
 \seealso{
 Other consensus tree functions: 

@@ -12,6 +12,7 @@
 #' @return `Consensus()` returns an object of class `phylo`, rooted as in the
 #' first entry of `trees`.
 #' @examples
+#' Consensus(as.phylo(0:2, 8))
 #' @template MRS
 #' @family consensus tree functions
 #' @export
