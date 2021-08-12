@@ -17,7 +17,7 @@
 
 #define right16bits splitbit(65535U)
 
-#define SL_BITCOUNT_INIT __attribute__((constructor))          \
+#define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
   void _treetools_initialize_bitcounts() {                     \
   for (int i = 65536; i--; ) {                                 \
     int16 n_bits = 0;                                          \
