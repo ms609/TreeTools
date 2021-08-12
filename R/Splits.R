@@ -299,7 +299,7 @@ as.phylo.Splits <- function (x, ...) {
                         tip.label = TipLabels(x)),
                    order = 'preorder',
                    class = 'phylo')
-  ret$Nnode <- dim(ret$edge)[1] - NTip(ret)
+  ret$Nnode <- dim(ret$edge)[1] + 1 - NTip(ret)
   ret
 }
 
