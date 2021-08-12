@@ -18,6 +18,7 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
   // case 0: return;
   case 1: return;
   case 2:
+    if (sort_by[arr[0]] < sort_by[arr[1]]) {
       swap(&arr[0], &arr[1]);
     }
     return;
@@ -29,6 +30,7 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
       key = sort_by[tmp]
     ;
     int16 j = i;
+    while (j && sort_by[arr[j - 1]] < key) {
       arr[j] = arr[j - 1];
       --j;
     }
