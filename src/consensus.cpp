@@ -29,16 +29,15 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
   }
 
   const int16 n_tip = tables[0].N();
+    n_tip = tables[0].N(),
+    ntip_3 = n_tip - 3
+  ;
 
   std::array<int16, CT_STACK_SIZE * CT_MAX_LEAVES> S;
   std::array<int16, CT_MAX_LEAVES> split_count;
-  std::array<int16, CT_MAX_LEAVES> split_l;
-  std::array<int16, CT_MAX_LEAVES> split_r;
-  std::array<int16, CT_MAX_LEAVES> final_l;
-  std::array<int16, CT_MAX_LEAVES> final_r;
-  std::array<int16, CT_MAX_LEAVES> final_tree;
 
-  const std::size_t ntip_3 = n_tip - 3;
+  LogicalMatrix ret(ntip_3, n_tip);
+
   int16
     i = 0,
     splits_found = 0
@@ -85,15 +84,10 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
                 tables[j].SETSWX(&j_pos);
                 assert(L > 0);
                 ++split_count[L - 1];
-                split_l[L - 1] = L;
-                split_r[L - 1] = R;
-                assert(split_size[L - 1] > 0);
               } else if (tables[i].CLUSTONR(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
                 assert(R > 0);
                 ++split_count[R - 1];
-                split_l[R - 1] = L;
-                split_r[R - 1] = R;
               }
             }
           }
@@ -104,24 +98,23 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
 
     for (int16 k = n_tip; k--; ) {
       if (split_count[k] >= thresh) {
-        final_tree[splits_found] = i;
-        final_l[splits_found] = split_l[k];
-        final_r[splits_found] = split_r[k];
+        // Rcout << splits_found << ": Found tree " << i << "'s split " << k
+        //       << " in " << split_count[k] << " trees.\n";
+        for (int16 j = tables[i].X(k + 1, 0);
+             j != tables[i].X(k + 1, 1) + 1;
+             ++j) {
+          // Rcout << ", " << tables[i].DECODE(j);
+          ret(splits_found, tables[i].DECODE(j) - 1) = true;
+        }
+        // Rcout << "\n\n";
         ++splits_found;
         // If we have a perfectly resolved tree, break.
-        if (splits_found == n_tip - 3) {
-          goto rtn;
+        if (splits_found == ntip_3) {
+          return ret;
         }
       }
     }
   } while (i++ != n_trees - thresh); // All clades in p% consensus must occur in first q% of trees.
-  rtn:
-  LogicalMatrix ret(splits_found, n_tip);
-  for (int16 i = splits_found; i--; ) {
-    ClusterTable tree = tables[final_tree[i]];
-    for (int16 j = final_l[i]; j != final_r[i] + 1; ++j) {
-      ret(i, tree.ENCODE(j) - 1) = true;
-    }
-  }
-  return ret;
+
+  return ret(Range(0, splits_found - 1), _);
 }
