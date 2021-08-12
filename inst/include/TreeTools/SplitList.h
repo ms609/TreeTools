@@ -40,13 +40,15 @@ namespace TreeTools {
     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
   };
 
-  static uint_fast32_t bitcounts[65536]; // the bytes representing bit count of each number 0-65535
+  // Static here means that each translation unit (i.e. file, resulting in an .o)
+  // will have its own copy of the variable (which it will initialize separately).
+  static int16 bitcounts[65536]; // the bytes representing bit count of each number 0-65535
   __attribute__((constructor))
     inline void initialize_bitcounts() {
-      for (int_fast32_t i = 0; i != 65536; i++) {
-        int_fast32_t n_bits = 0;
-        for (int_fast8_t j = 0; j != 16; j++) {
-          if ((i & powers_of_two[j])) ++n_bits;
+      for (int i = 65536; i--; ) {
+        int16 n_bits = 0;
+        for (int j = 16; j--; ) {
+          if (i & powers_of_two[j]) n_bits += 1;
         }
         bitcounts[i] = n_bits;
       }
