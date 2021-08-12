@@ -6,7 +6,6 @@
 #include <cstdlib> /* for calloc */
 #include <Rcpp.h>
 #include "types.h"
-using namespace Rcpp;
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);
 #define PARENT(i) edge[(i)]
@@ -158,7 +157,7 @@ namespace TreeTools {
   inline void add_child_edges(const int32 node, const int32 node_label,
                             int32 const* const* children_of,
                             const int32 *n_children,
-                            IntegerMatrix& final_edges,
+                            Rcpp::IntegerMatrix& final_edges,
                             int32 *next_edge, int32 *next_label) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
@@ -187,8 +186,9 @@ namespace TreeTools {
   }
 
   // [[Rcpp::export]]
-  inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
-                                                const IntegerVector child)
+  inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
+      const Rcpp::IntegerVector parent,
+      const Rcpp::IntegerVector child)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
       throw std::length_error("Too many edges in tree: "                        // #nocov
@@ -250,7 +250,7 @@ namespace TreeTools {
     std::free(smallest_desc);
 
     int32 next_label = n_tip + 2;
-    IntegerMatrix ret(n_edge, 2);
+    Rcpp::IntegerMatrix ret(n_edge, 2);
     add_child_edges(root_node, n_tip + 1, children_of, n_children, ret,
                     &next_edge, &next_label);
 
@@ -281,8 +281,9 @@ namespace TreeTools {
   // occur together.
   // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  inline IntegerMatrix postorder_edges(const IntegerMatrix edge,
-                                       const LogicalVector size_sort)
+  inline Rcpp::IntegerMatrix postorder_edges(
+      const Rcpp::IntegerMatrix edge,
+      const Rcpp::LogicalVector size_sort)
   {
     const int32
       n_edge = edge.nrow(),
@@ -344,7 +345,7 @@ namespace TreeTools {
     }
     std::free(subtree_size);
 
-    IntegerMatrix ret(n_edge, 2);
+    Rcpp::IntegerMatrix ret(n_edge, 2);
     int32 this_edge = 0;
     for (int32 i = 0; i != n_node; ++i) {
       const int32 this_parent = node_order[i];
