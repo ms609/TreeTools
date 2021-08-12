@@ -17,6 +17,17 @@
 
 #define right16bits splitbit(65535U)
 
+#define SL_BITCOUNT_INIT __attribute__((constructor))          \
+  void _treetools_initialize_bitcounts() {                     \
+  for (int i = 65536; i--; ) {                                 \
+    int16 n_bits = 0;                                          \
+    for (int j = 16; j--; ) {                                  \
+      if (i & (1 << j)) n_bits += 1;                           \
+    }                                                          \
+    TreeTools::bitcounts[i] = n_bits;                          \
+  }                                                            \
+}                                                              \
+
 typedef uint_fast64_t splitbit;
 
 namespace TreeTools {
@@ -42,18 +53,7 @@ namespace TreeTools {
 
   // Static here means that each translation unit (i.e. file, resulting in an .o)
   // will have its own copy of the variable (which it will initialize separately).
-  static int16 bitcounts[65536]; // the bytes representing bit count of each number 0-65535
-  __attribute__((constructor))
-    inline void initialize_bitcounts() {
-      for (int i = 65536; i--; ) {
-        int16 n_bits = 0;
-        for (int j = 16; j--; ) {
-          if (i & powers_of_two[j]) n_bits += 1;
-        }
-        bitcounts[i] = n_bits;
-      }
-    }
-
+  static int16 bitcounts[65536];
 
   inline int16 count_bits (splitbit x) {
     /* For 32-bit splitbits: */
