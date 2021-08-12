@@ -39,13 +39,14 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
 }
 
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
-                            int16 (&parent)[SL_MAX_TIPS + SL_MAX_SPLITS]) {
-  if (parent[tip] && parent[tip] != *next_node) {
-    insert_ancestor(parent[tip], next_node, parent);
+                            int16 (&parent)[SL_MAX_TIPS + SL_MAX_SPLITS],
+                            int16 (&patriarch)[SL_MAX_TIPS]) {
+  if (patriarch[tip]) {
+    parent[patriarch[tip]] = *next_node;
   } else {
     parent[tip] = *next_node;
-    // Rcout << "Parent of " << tip << " set to " << next_node << ".\n";
   }
+  patriarch[tip] = *next_node;
 }
 
 // [[Rcpp::export]]
@@ -53,6 +54,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   const SplitList x(splits);
   const int16 n_tip = nTip[0];
   int16 parent[SL_MAX_TIPS + SL_MAX_SPLITS]{};
+  int16 patriarch[SL_MAX_TIPS]{};
 
   int16 split_order[SL_MAX_SPLITS];
   for (int16 i = x.n_splits; i--; ) {
@@ -68,14 +70,14 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
       for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
         const int16 tip = bin_tip + (bin * SL_BIN_SIZE);
         if (chunk & powers_of_two[bin_tip]) {
-          insert_ancestor(tip, &next_node, parent);
+          insert_ancestor(tip, &next_node, parent, patriarch);
         }
       }
     }
     ++next_node;
   }
   for (int16 tip = n_tip; tip--; ) {
-    insert_ancestor(tip, &next_node, parent);
+    insert_ancestor(tip, &next_node, parent, patriarch);
   }
 
   const int16 n_edge = n_tip + x.n_splits;
