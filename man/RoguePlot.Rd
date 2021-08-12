@@ -82,6 +82,12 @@ RoguePlot(trees, 'rogue')
 \references{
 \insertRef{Klopfstein2019}{TreeTools}
 }
+\seealso{
+Other consensus tree functions: 
+\code{\link{ConsensusWithout}()},
+\code{\link{Consensus}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{consensus tree functions}

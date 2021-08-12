@@ -50,6 +50,7 @@
 #' @importFrom graphics par
 #' @importFrom grDevices colorRamp colorRampPalette rgb
 #' @importFrom phangorn allDescendants
+#' @family consensus tree functions
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        Palette = colorRampPalette(c(par('fg'), '#009E73'),

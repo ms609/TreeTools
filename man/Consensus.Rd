@@ -25,7 +25,7 @@ first entry of \code{trees}.
 algorithm of \insertCite{Day1985}{TreeTools}.
 }
 \examples{
-Consensus(as.phylo(0:9, 9))
+Consensus(as.phylo(0:2, 8))
 }
 \references{
 \insertAllCited{}
@@ -35,7 +35,8 @@ Consensus(as.phylo(0:9, 9))
 tree.
 
 Other consensus tree functions: 
-\code{\link{ConsensusWithout}()}
+\code{\link{ConsensusWithout}()},
+\code{\link{RoguePlot}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
