@@ -5,6 +5,8 @@ test_that("Consensus()", {
     # plot(consensus(tr))
     expect_true(all.equal(RootTree(Consensus(tr, p = p), 1),
                           RootTree(ape::consensus(tr, p = p), 1)))
+    dput(RootTree(Consensus(tr, p = p), 1)$edge.label)
+    dput(RootTree(consensus(tr, p = p), 1)$edge.label)
   }
 
   trees <- list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)]
