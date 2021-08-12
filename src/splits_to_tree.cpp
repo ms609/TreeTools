@@ -44,34 +44,31 @@ inline void insert_ancestor(const int16 tip, const int16 next_node,
     insert_ancestor(parent[tip], next_node, parent);
   } else {
     parent[tip] = next_node;
-    Rcout << "Parent of " << tip << " set to " << next_node << ".\n";
+    // Rcout << "Parent of " << tip << " set to " << next_node << ".\n";
   }
 }
 
 // [[Rcpp::export]]
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   const SplitList x(splits);
-  const int16
-    n_tip = nTip[0],
-    n_edge = n_tip + x.n_splits + 1
-  ;
+  const int16 n_tip = nTip[0];
   int16 parent[SL_MAX_TIPS + SL_MAX_SPLITS]{};
 
   int16 split_order[SL_MAX_SPLITS];
   for (int16 i = x.n_splits; i--; ) {
     split_order[i] = i;
   }
-  Rcout << "\n\nsplits_to_edge: " << x.n_splits << " splits loaded.\n";
+  // Rcout << "\n\nsplits_to_edge: " << x.n_splits << " splits loaded.\n";
   insertion_sort_by_smallest(split_order, x.n_splits, x.in_split);
 
   int16 next_node = n_tip;
   for (int16 split = x.n_splits; split--; ) {
-    for (int16 bin = x.n_bins; --bin; ) {
+    for (int16 bin = x.n_bins; bin--; ) {
       const splitbit chunk = x.state[split][bin];
       for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
         const int16 tip = bin_tip + (bin * SL_BIN_SIZE);
         if (chunk & powers_of_two[tip]) {
-          Rcout << "  Split " << split << " contains " << tip << ".\n";
+          // Rcout << "  Split " << split << " contains " << tip << ".\n";
           insert_ancestor(tip, next_node, parent);
         }
       }
@@ -82,10 +79,12 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     insert_ancestor(tip, next_node, parent);
   }
 
+  const int16 n_edge = n_tip + x.n_splits;
   IntegerVector edge1(n_edge), edge2(n_edge);
   for (int16 i = n_edge; i--; ) {
     edge1[i] = parent[i] + 1;
     edge2[i] = i + 1;
+    // Rcout << "   Edge " << i << ": " << edge1[i] << " - " << edge2[i] << ".\n";
   }
 
   return preorder_edges_and_nodes(edge1, edge2);
