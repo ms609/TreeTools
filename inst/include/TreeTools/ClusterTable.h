@@ -1,8 +1,6 @@
 #ifndef _TREETOOLS_CLUSTERTABLE_H
 #define _TREETOOLS_CLUSTERTABLE_H
 
-#include <Rcpp.h>
-using namespace Rcpp;
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
 #include "types.h" /* for int16 */
