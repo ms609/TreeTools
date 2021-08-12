@@ -11,14 +11,13 @@ inline void swap(int16 *a, int16 *b) {
   *b = temp;
 }
 
-inline void insertion_sort_by_smallest(int16* arr, const int16 arr_len,
+inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
                                        const int16* sort_by) {
   assert(arr_len > 0);
   switch (arr_len) {
   // case 0: return;
   case 1: return;
   case 2:
-    if (sort_by[arr[0]] > sort_by[arr[1]]) {
       swap(&arr[0], &arr[1]);
     }
     return;
@@ -30,7 +29,6 @@ inline void insertion_sort_by_smallest(int16* arr, const int16 arr_len,
       key = sort_by[tmp]
     ;
     int16 j = i;
-    while (j && sort_by[arr[j - 1]] > key) {
       arr[j] = arr[j - 1];
       --j;
     }
@@ -59,12 +57,12 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     split_order[i] = i;
   }
   // Rcout << "\n\nsplits_to_edge: " << x.n_splits << " splits loaded.\n";
-  insertion_sort_by_smallest(split_order, x.n_splits, x.in_split);
+  insertion_sort_by_largest(split_order, x.n_splits, x.in_split);
 
   int16 next_node = n_tip;
   for (int16 split = x.n_splits; split--; ) {
     for (int16 bin = x.n_bins; bin--; ) {
-      const splitbit chunk = x.state[split][bin];
+      const splitbit chunk = x.state[split_order[split]][bin];
       for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
         const int16 tip = bin_tip + (bin * SL_BIN_SIZE);
         if (chunk & powers_of_two[bin_tip]) {
