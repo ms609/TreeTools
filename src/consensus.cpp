@@ -28,7 +28,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     tables.emplace_back(ClusterTable(List(trees(i))));
   }
 
-  const int16 n_tip = tables[0].N();
+  const int16
     n_tip = tables[0].N(),
     ntip_3 = n_tip - 3
   ;
