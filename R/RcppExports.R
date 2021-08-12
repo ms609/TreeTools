@@ -33,6 +33,10 @@ cpp_edge_to_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
 }
 
+splits_to_edge <- function(splits, nTip) {
+    .Call(`_TreeTools_splits_to_edge`, splits, nTip)
+}
+
 tips_in_splits <- function(splits) {
     .Call(`_TreeTools_tips_in_splits`, splits)
 }
