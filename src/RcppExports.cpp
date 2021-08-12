@@ -22,18 +22,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// consensus_tree
-LogicalMatrix consensus_tree(const List trees, const NumericVector p);
-RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(consensus_tree(trees, p));
-    return rcpp_result_gen;
-END_RCPP
-}
 // drop_tip
 IntegerMatrix drop_tip(const IntegerMatrix edge, const IntegerVector drop);
 RcppExport SEXP _TreeTools_drop_tip(SEXP edgeSEXP, SEXP dropSEXP) {
