@@ -1,0 +1,5 @@
+devtools::load_all()
+message("Generating trees")
+trs <- as.phylo(0:10, 888)
+message("Generating consensus")
+Consensus(trs)
