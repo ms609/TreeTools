@@ -106,6 +106,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// splits_to_edge
+IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip);
+RcppExport SEXP _TreeTools_splits_to_edge(SEXP splitsSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(splits_to_edge(splits, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // tips_in_splits
 IntegerVector tips_in_splits(RawMatrix splits);
 RcppExport SEXP _TreeTools_tips_in_splits(SEXP splitsSEXP) {

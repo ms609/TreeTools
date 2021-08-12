@@ -294,9 +294,13 @@ as.character.Splits <- function (x, ...) {
 #' @family Splits operations
 #' @export
 as.phylo.Splits <- function (x, ...) {
-  const <- StringToPhyDat(paste0(ifelse(as.logical(x), '1', '0'), collapse = ''),
-                          TipLabels(x), TRUE)
-  ImposeConstraint(StarTree(x), const)
+  ret <- structure(list(edge = splits_to_edge(x, NTip(x)),
+                        Nnode = NA,
+                        tip.label = TipLabels(x)),
+                   order = 'preorder',
+                   class = 'phylo')
+  ret$Nnode <- dim(ret$edge)[1] + 1 - NTip(ret)
+  ret
 }
 
 #' @family Splits operations

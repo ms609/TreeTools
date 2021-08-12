@@ -20,7 +20,7 @@ namespace TreeTools {
   }
 
   inline void quicksort_by_smallest(int32 *left, const int32 *right,
-                             const int32 *sort_by) {
+                                    const int32 *sort_by) {
     if (left >= right) return;
 
     const int32 pivot = sort_by[*right];
@@ -204,9 +204,11 @@ namespace TreeTools {
       throw std::invalid_argument("Length of parent and child must match");
     }
 
-    int32 next_edge = 0,
-         root_node = n_edge * 2, /* Initialize with too-big value */
-         n_tip = 0;
+    int32
+      next_edge = 0,
+      root_node = n_edge * 2, /* Initialize with too-big value */
+      n_tip = 0
+    ;
 
     int32 * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
           * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),

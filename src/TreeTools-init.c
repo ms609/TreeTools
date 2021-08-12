@@ -19,6 +19,7 @@ extern SEXP _TreeTools_random_parent(SEXP, SEXP);
 extern SEXP _TreeTools_root_binary(SEXP, SEXP);
 extern SEXP _TreeTools_root_on_node(SEXP, SEXP);
 extern SEXP _TreeTools_rooted_shape_to_edge(SEXP, SEXP);
+extern SEXP _TreeTools_splits_to_edge(SEXP, SEXP);
 extern SEXP _TreeTools_tips_in_splits(SEXP);
 
 static const R_CMethodDef cMethods[] = {
@@ -43,6 +44,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_root_binary", (DL_FUNC) &_TreeTools_root_binary, 2},
   {"_TreeTools_root_on_node", (DL_FUNC) &_TreeTools_root_on_node, 2},
   {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
+  {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
   {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
   {NULL, NULL, 0}
 };
