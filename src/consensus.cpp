@@ -32,6 +32,8 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
 
   std::array<int16, CT_STACK_SIZE * CT_MAX_LEAVES> S;
   std::array<int16, CT_MAX_LEAVES> split_count;
+  std::array<int16, CT_MAX_LEAVES> split_l;
+  std::array<int16, CT_MAX_LEAVES> split_r;
   std::array<int16, CT_MAX_LEAVES> final_l;
   std::array<int16, CT_MAX_LEAVES> final_r;
   std::array<int16, CT_MAX_LEAVES> final_tree;
@@ -46,8 +48,6 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       continue;
     }
 
-    std::vector<int16> split_l(n_tip);
-    std::vector<int16> split_r(n_tip);
     std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
 
     for (int16 j = i + 1; j != n_trees; j++) {
