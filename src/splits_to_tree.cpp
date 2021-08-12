@@ -5,12 +5,6 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/renumber_tree.h"
 using namespace TreeTools;
 
-inline void swap(int16 *a, int16 *b) {
-  const int16 temp = *a;
-  *a = *b;
-  *b = temp;
-}
-
 inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
                                        const int16* sort_by) {
   assert(arr_len > 0);
@@ -19,7 +13,9 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
   case 1: return;
   case 2:
     if (sort_by[arr[0]] < sort_by[arr[1]]) {
-      swap(&arr[0], &arr[1]);
+      const int16 tmp = arr[0];
+      arr[0] = arr[1];
+      arr[1] = tmp;
     }
     return;
   }
