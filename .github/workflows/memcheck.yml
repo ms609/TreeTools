@@ -69,7 +69,7 @@ jobs:
           remotes::install_github('emmanuelparadis/ape')
           remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
           if ("${{ matrix.config.test }}" == 'tests') {
-            devtools::install_github('brio', 'r-lib', pull = 20) # brio mem leak
+            remotes::install_github('r-lib/brio#20') # brio mem leak
           }
         shell: Rscript {0}
 
