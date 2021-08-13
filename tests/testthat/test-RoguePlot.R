@@ -64,10 +64,14 @@ test_that('Complex rogue plot', {
                  read.tree(text = '(a, ((b, (c, d)), (rogue, (e, f))));'),
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'))
-  expect_equal(list(cons = Preorder(read.tree(text = '(a, (b, (c, d, (e, f))));')),
-                    onEdge = c(0, 0, 0, 2, 0, 0, 3, 0, 0),
-                    atNode = c(0, 1, 0, 0)),
-               RoguePlot(trees2, 'rogue', plot = FALSE))
+  expected <- list(cons = Preorder(read.tree(text = '(a, (b, (c, d), (e, f)));')),
+                   onEdge = c(0, 0, 0, 2, 0, 0, 3, 0, 0),
+                   atNode = c(0, 1, 0, 0))
+  actual <- RoguePlot(trees2, 'rogue', plot = FALSE)
+  expect_equal(names(actual), names(expected))
+  expect_true(all.equal(actual$cons, expected$cons))
+  expect_equal(actual$onEdge, expected$onEdge)
+  expect_equal(actual$atNode, expected$atNode)
 
   trees3 <- lapply(c(9, 10, 13), AddTip, tree = BalancedTree(8), label = 'rogue')
   AllTreesCounted(trees3, 'rogue')

@@ -266,7 +266,7 @@ test_that("CollapseNode() works", {
 
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
-  expect_null(DropTip(bal8, 1:8))
+  expect_equal(NTip(DropTip(bal8, 1:8)), 0)
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))))
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))))
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))))
