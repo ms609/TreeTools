@@ -39,7 +39,7 @@ incident branches.
 }
 \details{
 This function is more robust than \code{\link[ape:drop.tip]{ape::drop.tip()}} as it does not
-require any particular internal node numbering schema.#'
+require any particular internal node numbering schema.
 }
 \examples{
 tree <- BalancedTree(8)
