@@ -14,6 +14,7 @@ test_that("Consensus()", {
   ApeTest <- function (tr, p = 1) {
     # plot(Consensus(tr))
     # plot(consensus(tr))
+    skip_if_not_installed('ape', '5.5.1') # Bug in ape::consensus?
     if (!expect_true(all.equal(RootTree(Consensus(tr, p = p), 1),
                                RootTree(ape::consensus(tr, p = p), 1)))) {
       dput(RootTree(Consensus(tr, p = p), 1)$edge)
