@@ -18,10 +18,12 @@ test_that('AddTipEverywhere() correct', {
 })
 
 test_that("AddTip() at root", {
-  expect_equal(PectinateTree(8),
-               AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'))
+  expect_true(all.equal(
+    AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'),
+    PectinateTree(8)))
   AddTip(nasty, 1L)
   AddTip(nasty, 12L)
+  expect_true(TRUE) # no crashes!
 })
 
 test_that("AddTip() with tip name", {
