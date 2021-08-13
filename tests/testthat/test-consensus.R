@@ -5,8 +5,9 @@ test_that("Consensus() errors", {
   expect_equal(oneLeaf$Nnode, 0)
   expect_identical(Consensus(list(DropTip(bal8, 1:8))[c(1, 1, 1)]),
                    DropTip(bal8, 1:8))
-  expect_equal(expect_warning(Consensus(list(PectinateTree(6), PectinateTree(8)))),
-               PectinateTree(6))
+  expect_true(all.equal(
+    expect_warning(Consensus(list(PectinateTree(6), PectinateTree(8)))),
+    PectinateTree(6)))
 })
 
 test_that("Consensus()", {
@@ -43,15 +44,17 @@ test_that('ConsensusWithout() is robust', {
   expect_identical(ConsensusWithout(tr, paste0('t', 1:4)),
                    Consensus(DropTip(tr, 1:4)))
 
-  expect_equal(BalancedTree(8), ConsensusWithout(BalancedTree(8)))
-  expect_equal(BalancedTree(4),
-               ConsensusWithout(BalancedTree(8), paste0('t', 5:8)))
+  expect_true(all.equal(BalancedTree(8), ConsensusWithout(BalancedTree(8))))
+  expect_true(all.equal(BalancedTree(4),
+                        ConsensusWithout(BalancedTree(8), paste0('t', 5:8))))
   balAndPec <- list(BalancedTree(8), PectinateTree(8))
   t25 <- paste0('t', c(2:5))
-  expect_equal(PectinateTree(paste0('t', c('1', 6:8))),
-               ConsensusWithout(balAndPec, t25))
-  expect_equal(ConsensusWithout(structure(balAndPec, class = 'multiPhylo'), t25),
-               ConsensusWithout(balAndPec, t25))
+  expect_true(all.equal(PectinateTree(paste0('t', c('1', 6:8))),
+                        ConsensusWithout(balAndPec, t25)))
+  expect_true(all.equal(
+    ConsensusWithout(structure(balAndPec, class = 'multiPhylo'), t25),
+    ConsensusWithout(balAndPec, t25))
+  )
 
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
@@ -60,7 +63,7 @@ test_that('ConsensusWithout() is robust', {
     Nnode = 5L,
     tip.label = letters[1:8]),
     class = 'phylo') # Danger: Do not plot!
-  expect_equal(Preorder(nasty), ConsensusWithout(nasty))
-  expect_equal(DropTip(nasty, 2), ConsensusWithout(nasty, 'b'))
+  expect_true(all.equal(Preorder(nasty), ConsensusWithout(nasty)))
+  expect_true(all.equal(DropTip(nasty, 2), ConsensusWithout(nasty, 'b')))
 
 })
