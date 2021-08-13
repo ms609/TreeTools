@@ -17,6 +17,19 @@
 #' @family consensus tree functions
 #' @export
 Consensus <- function (trees, p = 1, check.labels = TRUE) {
+  repeat{
+    nTip <- NTip(trees)
+    if (length(unique(nTip)) > 1) {
+      warning("Tree sizes differ; removing leaves not in smallest.")
+      trees[] <- lapply(trees, KeepTip, trees[[which.min(nTip)]]$tip.label)
+    } else {
+      nTip <- nTip[1]
+      break
+    }
+  }
+  if (nTip < 4L) {
+    return(trees[[1]])
+  }
   if (check.labels) {
     trees <- RenumberTips(trees, trees[[1]])
   }

@@ -470,7 +470,8 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
 
   if (length(drop) > 0) {
     if (length(drop) == nTip) {
-      return (NULL)
+      return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
+                            NNode = 0), class = 'phylo'))
     }
 
     tree$edge <- drop_tip(tree$edge, drop)
@@ -485,7 +486,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
 
 #' @rdname DropTip
 #' @export
-DropTip.multiPhylo <- function (tree, tip, preorder) {
+DropTip.multiPhylo <- function (tree, tip, preorder = TRUE) {
   tree[] <- lapply(tree, DropTip, tip, preorder)
   tree
 }
