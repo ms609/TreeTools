@@ -39,4 +39,6 @@ test_that("ConsensusWithout()", {
   tr <- as.phylo(0:6, 16)
   expect_identical(ConsensusWithout(tr, paste0('t', 1:16)),
                    DropTip(tr[[1]], 1:16))
+  expect_identical(ConsensusWithout(tr, paste0('t', 1:4)),
+                   Consensus(DropTip(tr, 1:4)))
 })
