@@ -46,17 +46,17 @@ test_that("RootOnNode() works", {
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   #t2 <- Preorder(t2)
-  expect_equal(tree, RootOnNode(tree, node = 9L, TRUE))
-  expect_equal(exp8, RootOnNode(tree, node = 8L, TRUE))
-  expect_equal(exp7, RootOnNode(tree, node = 7L, TRUE))
-  expect_equal(tree, RootOnNode(tree, node = 6L, TRUE))
+  expect_true(all.equal(tree, RootOnNode(tree, node = 9L, TRUE)))
+  expect_true(all.equal(exp8, RootOnNode(tree, node = 8L, TRUE)))
+  expect_true(all.equal(exp7, RootOnNode(tree, node = 7L, TRUE)))
+  expect_true(all.equal(tree, RootOnNode(tree, node = 6L, TRUE)))
 
-  expect_equal(exp5, RootOnNode(tree, node = 5L, TRUE))
-  expect_equal(exp4, RootOnNode(tree, node = 4L, TRUE))
-  expect_equal(exp3, RootOnNode(tree, node = 3L, TRUE))
-  expect_equal(exp2, RootOnNode(tree, node = 2L, TRUE))
-  expect_equal(tree, RootOnNode(tree, node = 1L, TRUE))
-  expect_equal(tree, RootOnNode(UnrootTree(tree), node = 1L, TRUE))
+  expect_true(all.equal(exp5, RootOnNode(tree, node = 5L, TRUE)))
+  expect_true(all.equal(exp4, RootOnNode(tree, node = 4L, TRUE)))
+  expect_true(all.equal(exp3, RootOnNode(tree, node = 3L, TRUE)))
+  expect_true(all.equal(exp2, RootOnNode(tree, node = 2L, TRUE)))
+  expect_true(all.equal(tree, RootOnNode(tree, node = 1L, TRUE)))
+  expect_true(all.equal(tree, RootOnNode(UnrootTree(tree), node = 1L, TRUE)))
 
   expb6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3),
                                                1:2, 4:6, 10, 3, 8:9),
@@ -69,19 +69,22 @@ test_that("RootOnNode() works", {
                             tip.label = paste0('t', 1:6), Nnode = 4L),
                        class = "phylo", order = "preorder")
 
-  expect_equal(expb6_8, Preorder(RootOnNode(BalancedTree(6L), 8L)))
-  expect_equal(expp6_8, Preorder(RootOnNode(PectinateTree(6L), 8L)))
+  expect_true(all.equal(expb6_8, Preorder(RootOnNode(BalancedTree(6L), 8L))))
+  expect_true(all.equal(expp6_8, Preorder(RootOnNode(PectinateTree(6L), 8L))))
 
-  expect_equal(UnrootTree(PectinateTree(6L)),
-               RootOnNode(PectinateTree(6L), 1))
+  expect_true(all.equal(UnrootTree(PectinateTree(6L)),
+                        RootOnNode(PectinateTree(6L), 1)))
 
   TestTip <- function (tr, node, rr) {
-    expect_equal(Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
-                 RootOnNode(tr, node, rr))
+    expect_true(all.equal(
+      Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
+      RootOnNode(tr, node, rr))
+    )
   }
   TestInternal <- function (tr, node, rr) {
-    expect_equal(Preorder(ape::root(tr, node = node, resolve.root = rr)),
-                 RootOnNode(tr, node, rr))
+    expect_true(all.equal(
+      Preorder(ape::root(tr, node = node, resolve.root = rr)),
+      RootOnNode(tr, node, rr)))
   }
 
   TestInternal(PectinateTree(8), 14, TRUE)
@@ -102,12 +105,12 @@ test_that("RootOnNode() works", {
   TestInternal(urt, 10, TRUE)
   TestTip(urt, 1, TRUE)
 
-  expect_equal(PectinateTree(8), RootOnNode(PectinateTree(8), 9L, TRUE))
-  expect_equal(UnrootTree(PectinateTree(8)),
-               RootOnNode(PectinateTree(8), 9L, FALSE))
-  expect_equal(urt, RootOnNode(urt, 9L, FALSE))
-  expect_equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
-               RootOnNode(urt, 9L, TRUE))
+  expect_true(all.equal(PectinateTree(8), RootOnNode(PectinateTree(8), 9L, TRUE)))
+  expect_true(all.equal(UnrootTree(PectinateTree(8)),
+                        RootOnNode(PectinateTree(8), 9L, FALSE)))
+  expect_true(all.equal(urt, RootOnNode(urt, 9L, FALSE)))
+  expect_true(all.equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
+                        RootOnNode(urt, 9L, TRUE)))
 
 })
 
@@ -156,8 +159,8 @@ test_that("RootOnNode() supports lists of trees", {
 
 test_that("RootTree() supports star trees", {
   star <- StarTree(8)
-  expect_equal(star, RootTree(star, 5:7))
-  expect_equal(star$edge, RootTree(star$edge, 5:7))
+  expect_true(all.equal(star, RootTree(star, 5:7)))
+  expect_true(all.equal(star$edge, RootTree(star$edge, 5:7)))
 })
 
 test_that("RootOnNode() supports nasty node ordering", {
@@ -176,13 +179,13 @@ test_that("RootTree() works", {
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
-  expect_equal(ignore_attr = TRUE,
+  expect_true(all.equal(
                as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
-               RootTree(bal8, 't5'))
+               RootTree(bal8, 't5')))
   expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
   expect_equal(RootTree(bal8, 5)$edge, RootTree(bal8$edge, 5))
-  expect_equal(EnforceOutgroup(bal8, c('t5', 't6')),
-               RootTree(bal8, c('t5', 't6')))
+  expect_true(all.equal(EnforceOutgroup(bal8, c('t5', 't6')),
+                        RootTree(bal8, c('t5', 't6'))))
   expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
 
   expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
@@ -191,13 +194,13 @@ test_that("RootTree() works", {
                          tip.label = paste0('t', 1:5)),
                RootTree(as.phylo(1:2, 5), 't5'))
 
-  expect_equal(read.tree(text = "((b, c), (a, (d, e)));"),
-               RootTree(read.tree(text = "(a, ((b, c), (d, e)));"), c(1, 4)))
+  expect_true(all.equal(read.tree(text = "((b, c), (a, (d, e)));"),
+               RootTree(read.tree(text = "(a, ((b, c), (d, e)));"), c(1, 4))))
 
   pec4 <- PectinateTree(4)
-  expect_equal(pec4, RootTree(pec4, c(1, 3)))
+  expect_true(all.equal(pec4, RootTree(pec4, c(1, 3))))
   pec5 <- PectinateTree(5)
-  expect_equal(pec5, RootTree(pec5, c(1, 4)))
+  expect_true(all.equal(pec5, RootTree(pec5, c(1, 4))))
 
   tree <- structure(list(edge = structure(c(7L, 8L, 8L, 7L, 7L, 9L, 9L, 10L,
                                             10L, 8L, 1L, 6L, 2L, 9L, 3L, 10L,
@@ -216,8 +219,8 @@ test_that("UnrootTree() works", {
   expect_equal(matrix(c(7, 7, 7, 8, 8, 9, 9, 10, 10,
                         1, 2, 8, 3, 9, 4, 10, 5,  6), ncol = 2L),
                UnrootTree(PectinateTree(6))$edge)
-  expect_equal(BalancedTree(2), UnrootTree(BalancedTree(2)))
-  expect_equal(BalancedTree(1), UnrootTree(BalancedTree(1)))
+  expect_true(all.equal(BalancedTree(2), UnrootTree(BalancedTree(2))))
+  expect_true(all.equal(BalancedTree(1), UnrootTree(BalancedTree(1))))
   expect_equal(matrix(c(9, 9, 10, 10, 10, 9, 11, 11, 12, 12, 9,
                         1, 10, 2,  4,  7, 11, 3, 12,  5,  6, 8), ncol = 2L),
                UnrootTree(nasty)$edge)
@@ -240,7 +243,7 @@ test_that("CollapseNode() works", {
 
   tree <- as.phylo(123, 7)
   tree$edge.length <- 12:1
-  expect_equal(tree, CollapseNode(tree, integer(0)))
+  expect_true(all.equal(tree, CollapseNode(tree, integer(0))))
 
   exp1213 <- matrix(c(8, 8, 9, 10, 10, 9, 11, 11, 11, 11,
                       1, 9, 10, 2, 4, 11, 3, 7, 6, 5), ncol=2)
@@ -255,8 +258,8 @@ test_that("CollapseNode() works", {
   no11 <- CollapseEdge(tree, c(7, 8))
   expect_equal(exp1213, no11$edge)
 
-  expect_equal(CollapseNode(Preorder(nasty), c(11, 12)),
-               Preorder(CollapseNode(nasty, c(11, 13))))
+  expect_true(all.equal(CollapseNode(Preorder(nasty), c(11, 12)),
+                        Preorder(CollapseNode(nasty, c(11, 13)))))
 
   expect_error(CollapseEdge(tree, 9))
 })
@@ -264,14 +267,14 @@ test_that("CollapseNode() works", {
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_null(DropTip(bal8, 1:8))
-  expect_warning(expect_equal(bal8, DropTip(bal8, -1)))
-  expect_warning(expect_equal(bal8, DropTip(bal8, 99)))
-  expect_warning(expect_equal(bal8, DropTip(bal8, 'MissingTip')))
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))))
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))))
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))))
   expect_error(DropTip(bal8, list('Invalid format')))
 
   expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
-  expect_equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8))
-  expect_equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7)))
+  expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
+  expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7))))
 
   expect_equal(DropTip(Preorder(nasty), c(1, 3)),
                Preorder(DropTip(nasty, c(1, 3))))
@@ -280,16 +283,18 @@ test_that("DropTip() works", {
   bigTree <- RandomTree(1284)
   set.seed(1284)
   bigTip <- sample(1:1284, 608)
-  expect_equal(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
+  expect_true(all.equal(drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip)))
   #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
 test_that("KeepTip() works", {
-  expect_equal(BalancedTree(paste0('t', 5:8)),
-    expect_warning(KeepTip(BalancedTree(8), paste0('t', 5:9))))
-  expect_equal(BalancedTree(paste0('t', 5:8)),
-    expect_warning(KeepTip(BalancedTree(8), 5:9)))
+  expect_true(all.equal(
+    BalancedTree(paste0('t', 5:8)),
+    expect_warning(KeepTip(BalancedTree(8), paste0('t', 5:9)))
+  ))
+  expect_true(all.equal(BalancedTree(paste0('t', 5:8)),
+                        expect_warning(KeepTip(BalancedTree(8), 5:9))))
 })
 
 test_that("Binarification is uniform", {
@@ -308,19 +313,19 @@ test_that("Binarification is uniform", {
   Test(CollapseNode(BalancedTree(7), c(10, 13)), NRooted(3) * NRooted(3))
 
   bal7 <- BalancedTree(7)
-  expect_equal(bal7, MakeTreeBinary(bal7))
-  expect_equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7)))
-  expect_equal(structure(list(bal7, bal7), class = 'multiPhylo'),
-               MakeTreeBinary(structure(list(bal7, bal7),
-                                        class = 'multiPhylo')))
+  expect_true(all.equal(bal7, MakeTreeBinary(bal7)))
+  expect_true(all.equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7))))
+  expect_true(all.equal(
+    structure(list(bal7, bal7), class = 'multiPhylo'),
+    MakeTreeBinary(structure(list(bal7, bal7), class = 'multiPhylo'))))
 
 })
 
 test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
   expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
-  expect_equal(ignore_attr = TRUE,
-               BalancedTree(2), LeafLabelInterchange(BalancedTree(2), 2))
+  expect_true(all.equal(BalancedTree(2),
+                        LeafLabelInterchange(BalancedTree(2), 2)))
   expect_equal(rev(BalancedTree(2)$tip),
                    LeafLabelInterchange(BalancedTree(2), 2)$tip)
 

@@ -87,11 +87,13 @@ test_that("RenumberTips() works correctly", {
   b7 <- list(bal7b, bal7b, pec7b)
   mp7 <- structure(l7, class = 'multiPhylo')
 
-  expect_equal(f7, RenumberTips(l7, abcd))
-  expect_equal(b7, RenumberTips(l7, dcba))
+  expect_true(all.equal(f7, RenumberTips(l7, abcd)))
+  expect_true(all.equal(b7, RenumberTips(l7, dcba)))
 
-  expect_equal(structure(f7, class = 'multiPhylo'), RenumberTips(mp7, abcd))
-  expect_equal(structure(b7, class = 'multiPhylo'), RenumberTips(mp7, dcba))
+  expect_true(all.equal(structure(f7, class = 'multiPhylo'),
+                        RenumberTips(mp7, abcd)))
+  expect_true(all.equal(structure(b7, class = 'multiPhylo'),
+                        RenumberTips(mp7, dcba)))
 
   expect_error(RenumberTips(l7, letters[1:5]))
   expect_error(RenumberTips(l7, letters[2:5]))
@@ -111,7 +113,7 @@ test_that("Reorder methods work correctly", {
   Test <- function (Method, ..., testEdges = TRUE) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
-    expect_equal(stt, Method(stt))
+    expect_true(all.equal(Method(stt), stt))
     expect_identical(Method(bal7), Method(Method(bal7)))
     if (testEdges) expect_equal(Method(bal7)$edge, Method(bal7$edge))
     expect_error(Method(10))
