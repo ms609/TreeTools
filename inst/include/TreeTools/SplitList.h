@@ -80,12 +80,12 @@ namespace TreeTools {
 
       if (n_bins < 1) throw std::invalid_argument("No leaves present.");
       if (n_splits < 0) {
-        throw std::invalid_argument("Negative number of splits!?");
+        throw std::invalid_argument("Negative number of splits!?");             // # nocov
       }
       if (n_bins > SL_MAX_BINS) {
-        throw std::length_error("This many leaves cannot be supported. "          // # nocov
-                                  "Please contact the TreeTools maintainer if "   // # nocov
-                                  "you need to use more!");                       // # nocov
+        throw std::length_error("This many leaves cannot be supported. "        // # nocov
+                                "Please contact the TreeTools maintainer if "   // # nocov
+                                "you need to use more!");                       // # nocov
       }
 
       for (int16 split = 0; split != n_splits; split++) {
