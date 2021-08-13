@@ -3,7 +3,7 @@
 ## New functions
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
-  
+
 - `PolarizeSplits()` places a specified taxon in the ingroup of all splits.
 
 - Add `KeepTip()` and improve performance of `DropTip()`.

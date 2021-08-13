@@ -52,8 +52,10 @@ test_that('ConsensusWithout() is robust', {
   t25 <- paste0('t', c(2:5))
   expect_true(all.equal(PectinateTree(paste0('t', c('1', 6:8))),
                         ConsensusWithout(balAndPec, t25)))
-  expect_equal(ConsensusWithout(structure(balAndPec, class = 'multiPhylo'), t25),
-               ConsensusWithout(balAndPec, t25))
+  expect_true(all.equal(
+    ConsensusWithout(structure(balAndPec, class = 'multiPhylo'), t25),
+    ConsensusWithout(balAndPec, t25))
+  )
 
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
