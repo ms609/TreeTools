@@ -8,7 +8,7 @@ test_that("Failures are graceful", {
 
 test_that("Edge cases handled", {
   expect_equal(SingleTaxonTree('singleton'), as.phylo(0, 1, 'singleton'))
-  expect_equal(BalancedTree(2), as.phylo(0, 2))
+  expect_true(all.equal(BalancedTree(2), as.phylo(0, 2)))
   expect_equal(structure(as.integer64(0L), nTip = 2L, tip.labels = c('t1', 't2'),
                          class = c('TreeNumber', 'integer64')),
                as.TreeNumber(as.phylo(0, 2)))
@@ -18,8 +18,9 @@ test_that("Edge cases handled", {
 })
 
 test_that('Trees generated okay', {
-  expect_equal(as.phylo(10, 6, 0:5),
-               Preorder(ape::read.tree(text=("(0, (4, ((1, 5), (2, 3))));"))))
+  expect_true(all.equal(
+    Preorder(ape::read.tree(text=("(0, (4, ((1, 5), (2, 3))));"))),
+    as.phylo(10, 6, 0:5)))
   expect_equal(as.TreeNumber('10', 6, 0:5),
                as.TreeNumber(as.phylo.numeric(10, 6, 0:5)))
   Test <- function (i, nTip) {
