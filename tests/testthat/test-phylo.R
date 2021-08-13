@@ -57,8 +57,8 @@ test_that("AddTip() with edge lengths", {
 test_that('AddTipEverywhere() handles nasty tree', {
   added <- AddTipEverywhere(nasty)
   lapply(added, function (tr) expect_true(all(tr$edge > 0)))
-  expect_equal(AddTipEverywhere(Preorder(nasty)),
-               lapply(added, Preorder))
+  expect_true(all.equal(lapply(added, Preorder),
+                        AddTipEverywhere(Preorder(nasty))))
 })
 
 test_that('AddTipEverywhere() with tiny trees', {
@@ -77,9 +77,9 @@ test_that('AddTipEverywhere() with tiny trees', {
 test_that("Subtree() works", {
   expect_error(Subtree(BalancedTree(8), 10)) # Nodes must be in preorder
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
-  expect_equal(BalancedTree(4), t4)
-  expect_equal(BalancedTree(4), Subtree(t4, 5))
-  expect_equal(SingleTaxonTree('t1'), Subtree(t4, 1))
+  expect_true(all.equal(BalancedTree(4), t4))
+  expect_true(all.equal(BalancedTree(4), Subtree(t4, 5)))
+  expect_true(all.equal(SingleTaxonTree('t1'), Subtree(t4, 1)))
 })
 
 
