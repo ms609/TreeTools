@@ -6,6 +6,7 @@
 #include "ape_reorder.h"
 
 extern SEXP _TreeTools_as_newick(SEXP);
+extern SEXP _TreeTools_consensus_tree(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP);
 extern SEXP _TreeTools_drop_tip(SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
@@ -18,6 +19,7 @@ extern SEXP _TreeTools_random_parent(SEXP, SEXP);
 extern SEXP _TreeTools_root_binary(SEXP, SEXP);
 extern SEXP _TreeTools_root_on_node(SEXP, SEXP);
 extern SEXP _TreeTools_rooted_shape_to_edge(SEXP, SEXP);
+extern SEXP _TreeTools_splits_to_edge(SEXP, SEXP);
 extern SEXP _TreeTools_tips_in_splits(SEXP);
 
 static const R_CMethodDef cMethods[] = {
@@ -29,6 +31,7 @@ static const R_CMethodDef cMethods[] = {
 
 static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
+  {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
   {"_TreeTools_drop_tip", (DL_FUNC) &_TreeTools_drop_tip, 2},
   {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
@@ -41,6 +44,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_root_binary", (DL_FUNC) &_TreeTools_root_binary, 2},
   {"_TreeTools_root_on_node", (DL_FUNC) &_TreeTools_root_on_node, 2},
   {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
+  {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
   {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
   {NULL, NULL, 0}
 };

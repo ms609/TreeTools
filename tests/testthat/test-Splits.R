@@ -296,7 +296,19 @@ test_that("as.phylo.Splits()", {
   }
   Test(read.tree(text = "((a, b, c), (d, e, f, g));"))
   Test(read.tree(text = "((a, b, c), (d, e, (f, g)));"))
-  Test(BalancedTree(9))
+  Test(BalancedTree(64))
+  Test(BalancedTree(65)) # multiple bins
+  Test(PectinateTree(65*6)) # big!
+
+  A <- FALSE
+  B <- TRUE
+  splits <- as.Splits(matrix(c(A, B, A, A, A, A, A, B,
+                               A, B, A, A, A, A, B, B,
+                               A, B, A, A, A, B, B, B,
+                               A, B, A, A, B, B, B, B), 4, byrow = TRUE),
+                      tipLabels = letters[1:8])
+  expect_true(all.equal(as.phylo(splits),
+                        read.tree(text = '(a, c, d, (e, (f, (g, (h, b)))));')))
 })
 
 test_that("PolarizeSplits()", {

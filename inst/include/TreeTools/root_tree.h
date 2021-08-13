@@ -7,9 +7,9 @@
 #include "types.h"
 
 namespace TreeTools {
-  using namespace Rcpp;
-  extern inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
-                                                       const IntegerVector child);
+  extern inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
+      const Rcpp::IntegerVector parent,
+      const Rcpp::IntegerVector child);
 
   // #TODO Write test cases
   // edge must be BINARY
@@ -17,7 +17,8 @@ namespace TreeTools {
   // #TODO establish the extent to which this really outperforms root_on_node.
   // # Plan to replace with that to reduce future maintenance burden.
   //  [[Rcpp::export]]
-  inline IntegerMatrix root_binary(const IntegerMatrix edge, const int outgroup) {
+  inline Rcpp::IntegerMatrix root_binary(const Rcpp::IntegerMatrix edge,
+                                         const int outgroup) {
 
     if (edge(0, 1) == outgroup) return edge;
 
@@ -48,7 +49,7 @@ namespace TreeTools {
 
     }
 
-    IntegerMatrix ret = clone(edge);
+    Rcpp::IntegerMatrix ret = Rcpp::clone(edge);
     intx invert_next = edge_above[outgroup];
 
     // We'll later add an edge from the now-unallocated root node to the outgroup.
@@ -66,7 +67,7 @@ namespace TreeTools {
     ret(invert_next, 1) = edge(root_edges[spare_edge], 1);
     ret(root_edges[spare_edge], 1) = outgroup;
 
-    return preorder_edges_and_nodes(ret(_, 0), ret(_, 1));
+    return preorder_edges_and_nodes(ret(Rcpp::_, 0), ret(Rcpp::_, 1));
   }
 
   // #TODO Write test cases
@@ -75,9 +76,9 @@ namespace TreeTools {
   // NB: root_node must == n_tip + 1
   //
   //  [[Rcpp::export]]
-  inline List root_on_node(const List phy, const int outgroup) {
+  inline Rcpp::List root_on_node(const Rcpp::List phy, const int outgroup) {
 
-    IntegerMatrix edge = phy["edge"];
+    Rcpp::IntegerMatrix edge = phy["edge"];
 
     const intx n_edge = edge.nrow(),
       n_node = phy["Nnode"],
@@ -86,11 +87,15 @@ namespace TreeTools {
       root_node = n_tip + 1
     ;
 
-    edge = preorder_edges_and_nodes(edge(_, 0), edge(_, 1));
-    List ret = clone(phy);
+    edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
+    Rcpp::List ret = Rcpp::clone(phy);
     ret.attr("order") = "preorder";
-    if (outgroup < 1) throw std::range_error("`outgroup` must be a positive integer");
-    if (outgroup > max_node) throw std::range_error("`outgroup` exceeds number of nodes");
+    if (outgroup < 1) {
+      throw std::range_error("`outgroup` must be a positive integer");
+    }
+    if (outgroup > max_node) {
+      throw std::range_error("`outgroup` exceeds number of nodes");
+    }
     if (outgroup == root_node) {
       ret["edge"] = edge;
       return ret;
@@ -118,7 +123,7 @@ namespace TreeTools {
         return phy;
       }
       // #TODO work in situ without clone
-      IntegerMatrix new_edge = clone(edge);
+      Rcpp::IntegerMatrix new_edge = clone(edge);
 
       // We'll later add an edge from the now-unallocated root node to the outgroup.
       new_edge(invert_next, 0) = root_node;
@@ -134,11 +139,12 @@ namespace TreeTools {
       intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
-      ret["edge"] = preorder_edges_and_nodes(new_edge(_, 0), new_edge(_, 1));
+      ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                         new_edge(Rcpp::_, 1));
 
     } else { // Root node will be retained; we need a new root edge
 
-      IntegerMatrix new_edge(n_edge + 1, 2);
+      Rcpp::IntegerMatrix new_edge(n_edge + 1, 2);
       for (int i = n_edge; i--; ) {
         new_edge(i, 0) = edge(i, 0);
         new_edge(i, 1) = edge(i, 1);
@@ -157,7 +163,8 @@ namespace TreeTools {
       }
 
       ret["Nnode"] = n_node + 1;
-      ret["edge"] = preorder_edges_and_nodes(new_edge(_, 0), new_edge(_, 1));
+      ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                         new_edge(Rcpp::_, 1));
 
     }
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
