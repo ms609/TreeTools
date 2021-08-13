@@ -11,7 +11,7 @@ DropTip(tree, tip, preorder = TRUE)
 
 \method{DropTip}{phylo}(tree, tip, preorder = TRUE)
 
-\method{DropTip}{multiPhylo}(tree, tip, preorder)
+\method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE)
 
 KeepTip(tree, tip, preorder = TRUE)
 }
