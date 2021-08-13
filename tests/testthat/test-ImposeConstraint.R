@@ -11,15 +11,17 @@ test_that("ImposeConstraint() works", {
   tips <- letters[1:9]
   tree <- as.phylo(1, 9, tips)
   constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
-  expect_equal(read.tree(text = '((a, (b, c)), (d, (e, (f, (i, (g, h))))));'),
-               ImposeConstraint(tree, constraint))
+  expect_true(all.equal(
+    ImposeConstraint(tree, constraint),
+    read.tree(text = '((a, (b, c)), (d, (e, (f, (i, (g, h))))));')))
 
   expect_equal(ImposeConstraint(tree, constraint),
                ImposeConstraint(tree, PhyDatToMatrix(constraint)))
 
   constraint <- StringToPhyDat('00001111 00011111 0000?110', tips[-5], FALSE)
-  expect_equal(read.tree(text = '((a, (b, c)), (d, (e, (f, (i, (g, h))))));'),
-               ImposeConstraint(tree, constraint))
+  expect_true(all.equal(
+    ImposeConstraint(tree, constraint),
+    read.tree(text = '((a, (b, c)), (d, (e, (f, (i, (g, h))))));')))
 
   constraint <- MatrixToPhyDat(matrix(
     c(0, 0, '?', '?', 1, 1,

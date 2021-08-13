@@ -407,7 +407,7 @@ CollapseEdge <- function (tree, edges) {
 #' incident branches.
 #'
 #' This function is more robust than [`ape::drop.tip()`] as it does not
-#' require any particular internal node numbering schema.#'
+#' require any particular internal node numbering schema.
 #'
 #' @template treeParam
 #' @param tip Character vector specifying labels of leaves in tree to be dropped,
