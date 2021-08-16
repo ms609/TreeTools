@@ -586,6 +586,16 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   enc2utf8(readLines(con, warn = FALSE))
 }
 
+.RegExpMatches <- function (pattern, string, i = TRUE, nMatch = 1) {
+  res <- regexpr(pattern, string, perl = TRUE, ignore.case = i)
+  matches <- regmatches(string, res)
+  res[res < 0] <- NA
+  res[!is.na(res)] <-
+    gsub(pattern, paste0(paste0("\\", seq_len(nMatch)), collapse = ''),
+       matches, ignore.case = i, perl = TRUE)
+  res
+}
+
 #' @rdname ReadCharacters
 #' @return `ReadNotes()` returns a list in which each entry corresponds to a
 #' single character, and itself contains a list of with two elements:
@@ -594,20 +604,21 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 #' 2. A named character vector listing the notes associated with each taxon
 #' for that character, named with the names of each note-bearing taxon.
 #'
+#' @importFrom stats setNames
 #' @export
 ReadNotes <- function (filepath, encoding = 'UTF8') {
   taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
-  charNote.pattern <- "^\\s+TEXT\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
-  stateNote.pattern <- "^\\s+TEXT\\s+TAXON=(\\d+)\\s+CHARACTER=(\\d+)\\s+TEXT='(.*)';\\s*$"
+  nTax.pattern <- "DIMENSIONS\\s+.*NTAX\\s*=\\s*(\\d+)"
 
   lines <- .UTFLines(filepath, encoding)
   upperLines <- toupper(lines)
   trimUpperLines <- trimws(upperLines)
 
   notesStart <- which(trimUpperLines == "BEGIN NOTES;")
-  endBlocks <- which(trimUpperLines == "ENDBLOCK;")
+  endBlocks <- which(trimUpperLines %fin% c("END;", "ENDBLOCK;"))
   taxlabels <- which(trimUpperLines == "TAXLABELS")
   semicolons <- which(trimUpperLines == ";")
+  nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
 
   if (length(notesStart) == 0) {
     return(list("NOTES block not found in Nexus file."))
@@ -617,45 +628,50 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
     return(list("Multiple NOTES blocks found in Nexus file."))
   } else if (length(taxlabels) > 1) {
     return(list("Multiple TAXLABELS found in Nexus file."))
+  } else if (!any(nTaxLines)) {
+    return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
+    nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
+    if (length(unique(nTax)) > 1) {
+      return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
+    }
+    nTax <- as.integer(nTax[1])
+
     taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
     taxaLines <- lines[(taxlabels + 1):taxaEnd]
-    taxon.matches <- grepl(taxon.pattern, taxaLines, perl=TRUE)
-    taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl=TRUE)
-    taxa <- gsub(' ', '_', taxa, fixed=TRUE)
+    taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
+    if (sum(taxon.matches) == nTax) {
+      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+      taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+    } else {
+      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+      taxa <- unlist(strsplit(taxa, ' '))
+      if (length(taxa) != nTax) {
+        return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
+                           " TAXLABELS found in Nexus file.")))
+      }
+    }
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
-    charNote.matches <- grepl(charNote.pattern, notesLines, perl=TRUE)
-    charNotes <- gsub(charNote.pattern, "\\2",
-                      notesLines[charNote.matches], perl=TRUE)
-    charNotes <- EndSentence(MorphoBankDecode(charNotes))
-    charNumbers <- gsub(charNote.pattern, "\\1",
-                        notesLines[charNote.matches], perl=TRUE)
 
-    stateNote.matches <- grepl(stateNote.pattern, notesLines, perl=TRUE)
-    stateNotes <- gsub(stateNote.pattern, "\\3",
-                       notesLines[stateNote.matches], perl=TRUE)
-    stateNotes <- EndSentence(MorphoBankDecode(stateNotes))
-    stateTaxon <- gsub(stateNote.pattern, "\\1",
-                       notesLines[stateNote.matches], perl=TRUE)
-    stateChar  <- gsub(stateNote.pattern, "\\2",
-                       notesLines[stateNote.matches], perl=TRUE)
+    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notesLines))
+    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notesLines))
+    noteText <- EndSentence(MorphoBankDecode(
+      .RegExpMatches("\\bTEXT\\s*=\\s*['\"](.+)['\"];\\s*$", notesLines)))
 
-    seqAlongNotes <- seq_len(max(as.integer(c(stateChar, charNumbers))))
-    charNotes <- lapply(seqAlongNotes, function (i) {
+    seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
+
+    # Return:
+    setNames(lapply(seqAlongNotes, function (i) {
+      byTaxon <- !is.na(noteChar) & noteChar == i & !is.na(noteTaxon)
       ret <- list(
-        charNotes[charNumbers == i],
-        stateNotes[stateChar == i])
-      names(ret[[2]]) <- taxa[as.integer(stateTaxon[stateChar == i])]
+        noteText[!is.na(noteChar) & noteChar == i & is.na(noteTaxon)],
+        setNames(noteText[byTaxon], taxa[noteTaxon[byTaxon]]))
 
       # Return:
       ret
-    })
-    names(charNotes) <- seqAlongNotes
-
-    # Return:
-    charNotes
+    }), seqAlongNotes)
   }
 }
 
@@ -672,10 +688,15 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
 #' @family string parsing functions
 #' @export
 EndSentence <- function (string) {
-  ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
-  ret <- gsub("(\\.[\"'])\\.$", "\\1", ret, perl = TRUE)
-  ret <- gsub("([!\\?])\\.$", "\\1", ret, perl = TRUE)
-  ret
+  if (length(string)) {
+    ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
+    ret <- gsub("(\\.[\"'])\\.$", "\\1", ret, perl = TRUE)
+    ret <- gsub("([!\\?])\\.$", "\\1", ret, perl = TRUE)
+    ret[ret == '.'] <- ''
+    ret
+  } else {
+    string
+  }
 }
 
 #' Remove quotation marks from a string

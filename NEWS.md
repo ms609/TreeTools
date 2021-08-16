@@ -32,6 +32,8 @@
 
 - Support `encoding` option in `ReadCharacters()` function family.
 
+- Support for more formatting quirks in `ReadNotes()`.
+
 
 ## Optimization
 
