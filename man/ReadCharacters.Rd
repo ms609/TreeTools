@@ -57,8 +57,8 @@ and named with the taxon name.}
 }
 \value{
 \code{ReadCharacters()} and \code{ReadTNTCharacters()} return a matrix whose
-row names correspond to
-tip labels, and column names correspond to character labels, with the
+row names correspond to tip labels, and
+column names correspond to character labels, with the
 attribute \code{state.labels} listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.
@@ -81,7 +81,7 @@ Parse a Nexus or TNT file, reading character states and names.
 Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank},
 but should also work more widely; please
 \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
-incorrectly parsed files.
+incompletely or incorrectly parsed files.
 
 Matrices must contain only continuous or only discrete characters;
 maximum one matrix per file.  Continuous characters will be read as strings

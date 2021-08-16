@@ -33,6 +33,8 @@
 
 - Support `encoding` option in `ReadCharacters()` function family.
 
+- Support `CHARSTATELABELS` in `ReadCharacters()`.
+
 - Support for more formatting quirks in `ReadNotes()`.
 
 

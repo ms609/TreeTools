@@ -189,11 +189,40 @@ test_that("Unquote() unquotes", {
 })
 
 test_that("ReadNotes() reads notes", {
-  notes <- ReadNotes(system.file('extdata/input/notes.nex', package = 'TreeTools'))
+  notes <- ReadNotes(system.file('extdata/input/notes.nex',
+                                 package = 'TreeTools'))
   expect_equal(length(unlist(notes$`1`)), 0)
   expect_equal(notes[[2]][[2]], setNames("Taxon 2, char 2.", "taxon_b"))
   expect_equal(notes[[3]][[1]], "Three's a crowd.")
   expect_equal(notes[[3]][[2]], setNames("Tax1-Char3.", "taxon_a"))
+})
+
+test_that("ReadCharacters() reads CHARSTATELABELS", {
+  labels <- ReadCharacters(system.file('extdata/input/dataset.nex',
+                                       package = 'TreeTools'))
+
+
+  expect_equal(colnames(labels), c('Character one',
+                                   'Character two',
+                                   'lots-of-punctuation, and "so on"!',
+                                   'Character n', 'Character 5',  'Character 6',
+                                   'final character'))
+
+  ap <- c('absent', 'present')
+  expect_equal(attr(labels, 'state.labels'),
+               list(ap, ap,
+                    c('here', 'there', 'everywhere'),
+                    c('a long description', 'present'),
+                    c('simple', 'more complex', 'with (parentheses)',
+                      'more complex, 6 still'),
+                    c('this one has', 'multiple lines'), ap));
+
+  labels3 <- ReadCharacters(system.file('extdata/input/dataset.nex',
+                                        package = 'TreeTools'), 3)
+  expect_equal(labels3, labels[, 3, drop = FALSE], ignore_attr = TRUE)
+  expect_equal(attr(labels3, 'state.labels'),
+               attr(labels, 'state.labels')[3])
+
 })
 
 test_that("MorphoBankDecode() decodes", {
