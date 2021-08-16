@@ -171,10 +171,11 @@ test_that('PhyToString() works', {
 })
 
 test_that("EndSentence() works correctly", {
-  expect_equal('Hi.', EndSentence('Hi'))
-  expect_equal('Hi.', EndSentence('Hi.'))
-  expect_equal('Hi?', EndSentence('Hi?'))
-  expect_equal('Hi!', EndSentence('Hi!'))
+  expect_equal(EndSentence('Hi'), 'Hi.')
+  expect_equal(EndSentence('Hi.'), 'Hi.')
+  expect_equal(EndSentence('Hi?'), 'Hi?')
+  expect_equal(EndSentence('Hi!'), 'Hi!')
+  expect_equal(EndSentence(character(0)), character(0))
 })
 
 test_that("Unquote() unquotes", {
@@ -185,6 +186,14 @@ test_that("Unquote() unquotes", {
   expect_equal("Unquoted's", Unquote("'Unquoted's '"))
   expect_equal("", Unquote('""'))
   expect_equal("", Unquote("''"))
+})
+
+test_that("ReadNotes() reads notes", {
+  notes <- ReadNotes(system.file('extdata/input/notes.nex', package = 'TreeTools'))
+  expect_equal(length(unlist(notes$`1`)), 0)
+  expect_equal(notes[[2]][[2]], setNames("Taxon 2, char 2.", "taxon_b"))
+  expect_equal(notes[[3]][[1]], "Three's a crowd.")
+  expect_equal(notes[[3]][[2]], setNames("Tax1-Char3.", "taxon_a"))
 })
 
 test_that("MorphoBankDecode() decodes", {
