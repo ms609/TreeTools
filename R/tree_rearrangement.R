@@ -40,10 +40,22 @@
 #' @importFrom phangorn Ancestors Descendants
 #' @importFrom ape root
 #' @export
-RootTree <- function (tree, outgroupTips) UseMethod('RootTree')
+RootTree <- function (tree, outgroupTips) {
+  if (missing(outgroupTips)) return (tree)
+  if (is.null(outgroupTips) ||
+      length(outgroupTips) == 0) {
+    return(tree)
+  }
+  UseMethod('RootTree')
+}
 
 #' @export
 RootTree.phylo <- function (tree, outgroupTips) {
+  if (missing(outgroupTips) ||
+      is.null(outgroupTips) ||
+      length(outgroupTips) == 0) {
+    return(tree)
+  }
   tipLabels <- tree$tip.label
   if (is.character(outgroupTips)) {
     chosenTips <- match(outgroupTips, tipLabels)
@@ -105,6 +117,11 @@ RootTree.phylo <- function (tree, outgroupTips) {
 #' @export
 RootTree.matrix <- function (tree, outgroupTips) {
   tree <- Preorder(tree)
+  if (missing(outgroupTips) ||
+      is.null(outgroupTips) ||
+      length(outgroupTips) == 0) {
+    return(tree)
+  }
   rootNode <- tree[1]
   nNode <- max(tree[, 1]) - rootNode + 1L
   if (length(outgroupTips) == 0) {

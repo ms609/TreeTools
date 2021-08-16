@@ -14,6 +14,7 @@ RoguePlot(
   edgeLength = NULL,
   thin = par("lwd"),
   fat = thin + 1L,
+  outgroupTips,
   ...
 )
 }
@@ -41,6 +42,11 @@ all edges to unit length.}
 
 \item{thin, fat}{Numeric specifying width to plot edges if the rogue tip
 never / sometimes does attach to them.}
+
+\item{outgroupTips}{Vector of type character, integer or logical, specifying
+the names or indices of the tips to include in the outgroup.  If
+\code{outgroupTips} is a of type character, and a tree contains multiple tips
+with a matching label, the first will be used.}
 
 \item{\dots}{Additional parameters to \code{plot.phylo()}.}
 }

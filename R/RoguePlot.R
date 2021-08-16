@@ -22,6 +22,7 @@
 #' @param nullCol Colour to paint regions of the tree on which the rogue is
 #' never found.
 #' @template edgeLengthParam
+#' @inheritParams RootTree
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
 #' @return `RoguePlot()` returns a list whose elements are:
@@ -59,6 +60,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                                                space = 'Lab')(0.8) / 255),
                        edgeLength = NULL,
                        thin = par('lwd'), fat = thin + 1L,
+                       outgroupTips,
                        ...) {
   trees <- RenumberTips(trees, trees[[1]])
   if (is.character(tip)) {
@@ -168,7 +170,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     # }
   }
 
-  cons <- DropTip(cons, dummyRoot)
+  cons <- RootTree(DropTip(cons, dummyRoot), outgroupTips)
   if (!is.null(edgeLength)) {
     cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
   }

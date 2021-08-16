@@ -170,11 +170,16 @@ test_that("RootOnNode() supports nasty node ordering", {
                RootOnNode(nasty, 13L))
 })
 
+test_that("RootTree() handles null outgroups", {
+  bal8 <- BalancedTree(8)
+  expect_equal(bal8, RootTree(bal8))
+  expect_equal(bal8, RootTree(bal8, NULL))
+  expect_equal(bal8, RootTree(bal8, character(0)))
+})
+
 test_that("RootTree() works", {
   bal8 <- BalancedTree(8)
   expect_error(RootTree(bal8, 1:8 %in% 0))
-  expect_error(RootTree(bal8, character(0)))
-  expect_error(RootTree(bal8, integer(0)))
   expect_error(RootTree(bal8, 'tip_not_there'))
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
