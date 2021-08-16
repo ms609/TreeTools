@@ -17,7 +17,13 @@
 #' @family consensus tree functions
 #' @export
 Consensus <- function (trees, p = 1, check.labels = TRUE) {
-  repeat{
+  if (length(trees) == 1L) {
+    return(trees[[1]])
+  }
+  if (inherits(trees, 'phylo')) {
+    return(trees)
+  }
+  repeat {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
       warning("Tree sizes differ; removing leaves not in smallest.")
