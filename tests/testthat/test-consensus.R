@@ -7,8 +7,12 @@ test_that("Consensus() errors", {
                    DropTip(bal8, 1:8))
   expect_true(all.equal(
     expect_warning(Consensus(list(PectinateTree(6), PectinateTree(8)))),
-    PectinateTree(6))
-  )
+    PectinateTree(6)))
+
+  halfTree <- CollapseNode(bal8, 10:12)
+  expect_equal(Consensus(halfTree), halfTree)
+  expect_equal(Consensus(c(halfTree)), halfTree)
+  expect_equal(Consensus(list(halfTree)), halfTree)
 })
 
 test_that("Consensus()", {
