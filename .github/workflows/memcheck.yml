@@ -5,10 +5,20 @@ on:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'inst/include/**'
+      - 'tests/testthat/**'
+      - 'vignettes/**'
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - 'inst/include/**'
+      - 'tests/testthat/**'
+      - 'vignettes/**'
 
 name: mem-check
 
@@ -16,7 +26,7 @@ jobs:
   mem-check:
     runs-on: ubuntu-20.04
 
-    name: valgrind ${{ matrix.config.test }}, ubuntu, R release
+    name: valgrind ${{ matrix.config.test }}
 
     strategy:
       fail-fast: false
@@ -36,7 +46,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
         with:
-          r-version: release
+          r-version: release # CRAN uses devel, but takes ages to load deps.
 
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -67,10 +77,10 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_github('emmanuelparadis/ape')
-          remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
           if ("${{ matrix.config.test }}" == 'tests') {
             remotes::install_github('r-lib/brio#20') # brio mem leak
           }
+          remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
         shell: Rscript {0}
 
       - name: Install TreeTools
