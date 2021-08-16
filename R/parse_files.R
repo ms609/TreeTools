@@ -428,13 +428,6 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
   } else if (length (matrixStart) > 1) {
     return(list("Multiple MATRIX blocks found in Nexus file."))                 # nocov
   } else {
-    nChar.pattern <- "DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)"
-    nCharLines <- grepl(nChar.pattern, upperLines, perl = TRUE)
-    nChar <- .RegExpMatches("DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)", upperLines[nCharLines])
-    if (length(unique(nChar)) > 1) {
-      return(list("Inconsistent DIMENSIONS NCHAR= counts in Nexus file."))
-    }
-    nChar <- as.integer(nChar[1])
 
     matrixEnd <- semicolons[semicolons > matrixStart][1]
     if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
@@ -442,7 +435,17 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
     tokens <- ExtractTaxa(matrixLines, character_num = character_num,
                           session = session, continuous = continuous)
-    if (is.null(character_num)) character_num <- seq_len(ncol(tokens))
+
+    nChar.pattern <- "DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)"
+    nCharLines <- grepl(nChar.pattern, upperLines, perl = TRUE)
+    nChar <- .RegExpMatches("DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)", upperLines[nCharLines])
+    if (length(unique(nChar)) > 1) {
+      return(list("Inconsistent DIMENSIONS NCHAR= counts in Nexus file."))
+    }
+    nChar <- as.integer(nChar[1])
+    if (is.null(character_num)) {
+      character_num <- seq_len(ncol(tokens))
+    }
 
     ## Written with MorphoBank format in mind: each label on separate line,
     ## each character introduced by integer and terminated with comma.
@@ -517,9 +520,9 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
       }
       cslEscaped <- strsplit(cslEscaped, '__TREETOOLS_ESCAPE_CHAR_SPLITTER__', fixed = TRUE)[[1]]
       cslEscaped <- do.call(rbind, strsplit(cslEscaped, '__TREETOOLS_ESCAPE_SPLITTER__', fixed = TRUE))
-      colnames(tokens) <- gsub('_', ' ', cslEscaped[, 1])
+      colnames(tokens) <- gsub('_', ' ', cslEscaped[, 1])[character_num]
       attr(tokens, 'state.labels') <- lapply(
-        strsplit(cslEscaped[, 2], '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', fixed = TRUE),
+        strsplit(cslEscaped[character_num, 2], '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', fixed = TRUE),
         gsub, pattern = "_", replacement = " ", fixed = TRUE)
     }
   }

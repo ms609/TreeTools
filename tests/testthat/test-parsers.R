@@ -217,6 +217,11 @@ test_that("ReadCharacters() reads CHARSTATELABELS", {
                       'more complex, 6 still'),
                     c('this one has', 'multiple lines'), ap));
 
+  labels3 <- ReadCharacters(system.file('extdata/input/dataset.nex',
+                                        package = 'TreeTools'), 3)
+  expect_equal(labels3, labels[, 3, drop = FALSE], ignore_attr = TRUE)
+  expect_equal(attr(labels3, 'state.labels'),
+               attr(labels, 'state.labels')[3])
 
 })
 
