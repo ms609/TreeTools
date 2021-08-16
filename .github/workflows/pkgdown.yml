@@ -4,6 +4,10 @@ on:
       - main
       - master
     paths:
+      - '**pkgdown.yml'
+      - '*.md'
+      - 'inst/CITATION'
+      - 'inst/*.bib'
       - 'man/**'
       - 'vignettes/**'
 
