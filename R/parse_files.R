@@ -346,7 +346,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' Tested with matrices downloaded from [MorphoBank](https://morphobank.org),
 #' but should also work more widely; please
 #' [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
-#' incorrectly parsed files.
+#' incompletely or incorrectly parsed files.
 #'
 #' Matrices must contain only continuous or only discrete characters;
 #' maximum one matrix per file.  Continuous characters will be read as strings
@@ -375,8 +375,8 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' @template sessionParam
 #'
 #' @return `ReadCharacters()` and `ReadTNTCharacters()` return a matrix whose
-#' row names correspond to
-#' tip labels, and column names correspond to character labels, with the
+#' row names correspond to tip labels, and
+#' column names correspond to character labels, with the
 #' attribute `state.labels` listing the state labels for each character; or
 #' a list of length one containing a character string explaining why the
 #' function call was unsuccessful.
@@ -428,6 +428,14 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
   } else if (length (matrixStart) > 1) {
     return(list("Multiple MATRIX blocks found in Nexus file."))                 # nocov
   } else {
+    nChar.pattern <- "DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)"
+    nCharLines <- grepl(nChar.pattern, upperLines, perl = TRUE)
+    nChar <- .RegExpMatches("DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)", upperLines[nCharLines])
+    if (length(unique(nChar)) > 1) {
+      return(list("Inconsistent DIMENSIONS NCHAR= counts in Nexus file."))
+    }
+    nChar <- as.integer(nChar[1])
+
     matrixEnd <- semicolons[semicolons > matrixStart][1]
     if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
 
@@ -438,7 +446,8 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
 
     ## Written with MorphoBank format in mind: each label on separate line,
     ## each character introduced by integer and terminated with comma.
-    labelStart <- which(upperLines == 'CHARLABELS')
+    labelStart <- grep("^\\s*CHARLABELS\\s*$", upperLines,
+                       ignore.case = TRUE, perl = TRUE)
     if (length(labelStart) == 1) {
       labelEnd <- semicolons[semicolons > labelStart][1]
       if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
@@ -449,7 +458,8 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
         return(list("Multiple CharLabels blocks in Nexus file."))
     }
 
-    stateStart <- which(upperLines == 'STATELABELS')
+    stateStart <- grep("^\\s*STATELABELS\\s*$", upperLines,
+                                 ignore.case = TRUE, perl = TRUE)
     if (length(stateStart) == 1) {
       stateEnd <- semicolons[semicolons > stateStart][1]
       stateLines <- lines[stateStart:stateEnd]
@@ -467,6 +477,50 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
       if (length(labelStart) > 1) {
         return(list("Multiple StateLabels blocks in Nexus file."))
       }
+    }
+
+    charStateLabelsStart <- grep("^\\s*CHARSTATELABELS\\s*$", upperLines,
+                                 ignore.case = TRUE, perl = TRUE)
+    endCommand <- grep(";$", upperLines, perl = TRUE)
+
+    if (length(charStateLabelsStart)) {
+      if (length(charStateLabelsStart) > 1) {
+        return(list("Multiple CHARSTATELABELS blocks found in Nexus file."))
+      }
+      charStateLabelsEnd <- endCommand[endCommand > charStateLabelsStart][1]
+      if (length(charStateLabelsEnd) == 0) {
+        return(list("Unterminated CHARSTATELABELS block in Nexus file."))
+      }
+
+      # csl: charStateLabels
+      csl <- lines[(charStateLabelsStart + 1):charStateLabelsEnd]
+      quote.pattern <- "'[^']*'"
+      cslEscapes <- unlist(regmatches(csl, gregexpr(quote.pattern, csl, perl = TRUE)))
+      cslEscapes <- substr(cslEscapes, 2L, vapply(cslEscapes, nchar, 1) - 1L)
+
+      cslEscaped <- strsplit(paste(gsub(quote.pattern,
+                                        "__TREETOOLS_ESCAPE_SEQUENCE__", csl,
+                                        perl = TRUE), collapse = '  '),
+                             ",\\s+\\d+", perl = TRUE)[[1]]
+      nCsl <- length(cslEscaped)
+      if (nCsl != nChar) {
+        return(list(paste0("CHARSTATELABELS length (", nCsl,
+                           ") does not match NCHAR (", nChar, ")")))
+      }
+      cslEscaped[1] <- sub("^\\s*1\\b", "", cslEscaped[1], perl = TRUE)
+      cslEscaped[nCsl] <- sub('\\s*;\\s*$', '', cslEscaped[nCsl], perl = TRUE)
+      cslEscaped <- trimws(sub("\\s*/\\s*", '__TREETOOLS_ESCAPE_SPLITTER__', cslEscaped, perl = TRUE))
+      cslEscaped <- gsub("\\s+", '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', cslEscaped, perl = TRUE)
+      cslEscaped <- paste(cslEscaped, collapse = '__TREETOOLS_ESCAPE_CHAR_SPLITTER__')
+      for (escape in cslEscapes) {
+        cslEscaped <- sub('__TREETOOLS_ESCAPE_SEQUENCE__', escape, cslEscaped, fixed = TRUE)
+      }
+      cslEscaped <- strsplit(cslEscaped, '__TREETOOLS_ESCAPE_CHAR_SPLITTER__', fixed = TRUE)[[1]]
+      cslEscaped <- do.call(rbind, strsplit(cslEscaped, '__TREETOOLS_ESCAPE_SPLITTER__', fixed = TRUE))
+      colnames(tokens) <- gsub('_', ' ', cslEscaped[, 1])
+      attr(tokens, 'state.labels') <- lapply(
+        strsplit(cslEscaped[, 2], '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', fixed = TRUE),
+        gsub, pattern = "_", replacement = " ", fixed = TRUE)
     }
   }
 
@@ -619,6 +673,7 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   taxlabels <- which(trimUpperLines == "TAXLABELS")
   semicolons <- which(trimUpperLines == ";")
   nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
+
 
   if (length(notesStart) == 0) {
     return(list("NOTES block not found in Nexus file."))
