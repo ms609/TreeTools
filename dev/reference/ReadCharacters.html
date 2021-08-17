@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9008</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9009</span>
       </span>
     </div>
 
@@ -177,9 +177,9 @@
 
 <span class='fu'>ReadNotes</span><span class='op'>(</span><span class='va'>filepath</span>, encoding <span class='op'>=</span> <span class='st'>"UTF8"</span><span class='op'>)</span>
 
-<span class='fu'>ReadAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
+<span class='fu'>ReadAsPhyDat</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>ReadTntAsPhyDat</span><span class='op'>(</span><span class='va'>filepath</span><span class='op'>)</span>
+<span class='fu'>ReadTntAsPhyDat</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
 
 <span class='fu'>PhyDat</span><span class='op'>(</span><span class='va'>dataset</span><span class='op'>)</span></pre>
 
@@ -215,6 +215,10 @@ Leave as <code>NULL</code> (the default) to return all characters in their origi
 sequence.</p></td>
     </tr>
     <tr>
+      <th>...</th>
+      <td><p>Parameters to pass to <code>Read[Tnt]Characters()</code>.</p></td>
+    </tr>
+    <tr>
       <th>dataset</th>
       <td><p>list of taxa and characters, in the format produced by read.nexus.data:
 a list of sequences each made of a single character vector,
@@ -225,8 +229,8 @@ and named with the taxon name.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>ReadCharacters()</code> and <code>ReadTNTCharacters()</code> return a matrix whose
-row names correspond to
-tip labels, and column names correspond to character labels, with the
+row names correspond to tip labels, and
+column names correspond to character labels, with the
 attribute <code>state.labels</code> listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.</p>
@@ -244,7 +248,7 @@ for that character, named with the names of each note-bearing taxon.</p></li>
     <p>Tested with matrices downloaded from <a href='https://morphobank.org'>MorphoBank</a>,
 but should also work more widely; please
 <a href='https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&amp;body=&lt;!--Tell+me+more+and+attach+your+file...--&gt;'>report</a>
-incorrectly parsed files.</p>
+incompletely or incorrectly parsed files.</p>
 <p>Matrices must contain only continuous or only discrete characters;
 maximum one matrix per file.  Continuous characters will be read as strings
 (i.e. base type 'character').</p>
