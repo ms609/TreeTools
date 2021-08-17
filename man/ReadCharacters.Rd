@@ -26,9 +26,9 @@ ReadTntCharacters(
 
 ReadNotes(filepath, encoding = "UTF8")
 
-ReadAsPhyDat(filepath)
+ReadAsPhyDat(...)
 
-ReadTntAsPhyDat(filepath)
+ReadTntAsPhyDat(...)
 
 PhyDat(dataset)
 }
@@ -50,6 +50,8 @@ following a \verb{&[num]} or \verb{&[dna]} tag in a TNT input file, listing \cod
 character blocks before \code{dna} characters.
 Leave as \code{NULL} (the default) to return all characters in their original
 sequence.}
+
+\item{\dots}{Parameters to pass to \verb{Read[Tnt]Characters()}.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
 a list of sequences each made of a single character vector,

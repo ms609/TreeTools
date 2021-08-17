@@ -865,18 +865,17 @@ PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
 }
 
 #' @rdname ReadCharacters
-#' @importFrom phangorn phyDat
 #' @export
-ReadAsPhyDat <- function (filepath) {
-  MatrixToPhyDat(ReadCharacters(filepath))
+ReadAsPhyDat <- function (...) {
+  MatrixToPhyDat(ReadCharacters(...))
 }
 
 
 #' @rdname ReadCharacters
-#' @importFrom phangorn phyDat
+#' @param \dots Parameters to pass to `Read[Tnt]Characters()`.
 #' @export
-ReadTntAsPhyDat <- function (filepath) {
-  MatrixToPhyDat(ReadTntCharacters(filepath))
+ReadTntAsPhyDat <- function (...) {
+  MatrixToPhyDat(ReadTntCharacters(...))
 }
 
 
@@ -895,7 +894,7 @@ ReadTntAsPhyDat <- function (filepath) {
 PhyDat <- function (dataset) {
   nChar <- length(dataset[[1]])
   if (nChar == 1) {
-    mat <- matrix(unlist(dataset), dimnames=list(names(dataset), NULL))
+    mat <- matrix(unlist(dataset), dimnames = list(names(dataset), NULL))
   } else {
     mat <- t(vapply(dataset, I, dataset[[1]]))
   }
