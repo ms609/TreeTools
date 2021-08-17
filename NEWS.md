@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9008 (development)
+# TreeTools 1.4.5.9009 (development)
 
 
 ## New functions
@@ -28,6 +28,8 @@
 - `AddTipEverywhere()` supports trees with < 3 leaves.
 
 - Make `RootTree()` and `PhyDatToMatrix()` more robust.
+
+- `Read[Tnt]AsPhyDat()` passes additional parameters to `Read[Tnt]Characters()`.
 
 - Support `encoding` option in `ReadCharacters()` function family.
 
