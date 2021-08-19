@@ -460,7 +460,14 @@ RenumberTips.phylo <- function (tree, tipOrder) {
   newOrder <- TipLabels(tipOrder, single = TRUE)
   if (identical(startOrder, newOrder)) return (tree)
   if (length(startOrder) != length(newOrder)) {
-    stop("Tree labels and tipOrder must match")
+    startOnly <- setdiff(startOrder, newOrder)
+    newOnly <- setdiff(newOrder, startOrder)
+    stop("Tree labels and tipOrder must match.",
+         if (length(newOnly)) "\n  Missing in `tree`: ",
+         paste0(newOnly, collapse = ', '),
+         if (length(startOnly)) "\n  Missing in `tipOrder`: ",
+         paste0(startOnly, collapse = ', ')
+         )
   }
 
   nTip <- length(startOrder)
@@ -468,7 +475,10 @@ RenumberTips.phylo <- function (tree, tipOrder) {
   tips <- child <= nTip
 
   matchOrder <- match(startOrder, newOrder)
-  if (any(is.na(matchOrder))) stop("All tree labels must occur in tipOrder")
+  if (any(is.na(matchOrder))) {
+    stop("Tree labels ", paste0(startOrder[is.na(matchOrder)], collapse = ', '),
+         " missing from `tipOrder`")
+  }
   tree$edge[tips, 2] <- matchOrder[tree$edge[tips, 2]]
   tree$tip.label <- newOrder
   tree
