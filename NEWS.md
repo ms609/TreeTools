@@ -1,4 +1,4 @@
-# TreeTools 1.4.5.9009 (development)
+# TreeTools 1.4.5.9010 (development)
 
 
 ## New functions
@@ -36,6 +36,8 @@
 - Support `CHARSTATELABELS` in `ReadCharacters()`.
 
 - Support for more formatting quirks in `ReadNotes()`.
+
+- Better support ambiguous tokens in `WriteTntCharacters()`.
 
 
 ## Optimization

@@ -80,7 +80,8 @@ WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
                                        types = NULL,
                                        pre = '', post = '') {
-  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types, pre, post)
+  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types,
+                     pre, post)
 }
 
 #' @rdname WriteTntCharacters
@@ -90,6 +91,9 @@ WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
                                        types = NULL,
                                        pre = '', post = '') {
   EOL <- '\n'
+  dataset <- gsub('(', '[', fixed = TRUE, dataset)
+  dataset <- gsub(')', ']', fixed = TRUE, dataset)
+
   ret <- paste(
     paste(pre, collapse = '\n'),
     paste0("xread '", paste(comment, collapse = ' '), "'"),
