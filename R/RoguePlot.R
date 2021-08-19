@@ -170,7 +170,10 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     # }
   }
 
-  cons <- RootTree(DropTip(cons, dummyRoot), outgroupTips)
+  cons <- DropTip(cons, dummyRoot)
+  if(!missing(outgroupTips)) {
+    cons <- RootTree(cons, intersect(outgroupTips, cons$tip.label))
+  }
   if (!is.null(edgeLength)) {
     cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
   }
