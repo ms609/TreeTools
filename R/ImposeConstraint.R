@@ -20,6 +20,7 @@
 #' plot(ImposeConstraint(tree, constraint))
 #' @template MRS
 #' @importFrom ape read.tree
+#' @family tree manipulation
 #' @export
 ImposeConstraint <- function (tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.

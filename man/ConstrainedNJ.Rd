@@ -35,6 +35,14 @@ constraint <- MatrixToPhyDat(
   c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
 plot(ConstrainedNJ(dataset, constraint))
 }
+\seealso{
+Other tree generation functions: 
+\code{\link{GenerateTree}},
+\code{\link{NJTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{TreeNumber}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree generation functions}

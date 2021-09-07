@@ -60,6 +60,7 @@ plot(StarTree(LETTERS[1:10]))
 }
 \seealso{
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{NJTree}()},
 \code{\link{SingleTaxonTree}()},
 \code{\link{TreeNumber}}

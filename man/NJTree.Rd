@@ -26,6 +26,7 @@ NJTree(Lobo.phy)
 }
 \seealso{
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{SingleTaxonTree}()},
 \code{\link{TreeNumber}}

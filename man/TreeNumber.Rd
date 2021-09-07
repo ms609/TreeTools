@@ -152,6 +152,7 @@ Describe the shape of a tree topology, independent of leaf labels:
 \code{\link[=TreeShape]{TreeShape()}}
 
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
 \code{\link{SingleTaxonTree}()}

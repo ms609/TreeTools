@@ -223,6 +223,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @template MRS
 #' @importFrom ape nj multi2di
 #' @importFrom phangorn dist.hamming
+#' @family tree generation functions
 #' @export
 ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
   missing <- setdiff(names(dataset), names(constraint))
