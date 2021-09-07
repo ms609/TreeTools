@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.1.0
+  - Windows 10, R 4.1.1
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu 20.04
@@ -26,3 +26,8 @@ There was one NOTE:
 >    Newick (22:35)
 
 These spellings have been verified.
+
+## Downstream dependencies
+
+Reverse dependencies have been checked using "revdepcheck" on
+[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/revdepcheck.yml).
