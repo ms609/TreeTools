@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
-  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include:\n  generation of trees with specified shapes;\n  analysis of tree shape;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of node support;\n  calculation of ancestor-descendant relationships;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and analysis of splits and cladistic information.",
+  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include:\n  generation of trees with specified shapes;\n  tree rearrangement;\n  analysis of tree shape;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of split support;\n  calculation of ancestor-descendant relationships,\n  of 'stemwardness' (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>,\n  and of tree balance (Mir et al. 2013) <doi:10.1016/j.mbs.2012.10.005>;\n  artificial extinction (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and analysis of splits and cladistic information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "relatedLink": [
@@ -15,13 +15,13 @@
   ],
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.4.4",
+  "version": "1.4.5.9010",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.4 (2021-02-15)",
+  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
   "author": [
     {
       "@type": "Person",
@@ -110,6 +110,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -122,6 +123,7 @@
       "@type": "SoftwareApplication",
       "identifier": "vdiffr",
       "name": "vdiffr",
+      "version": ">= 1.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -174,6 +176,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=colorspace"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "fastmatch",
+      "name": "fastmatch",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=fastmatch"
     },
     {
       "@type": "SoftwareApplication",
@@ -244,8 +258,10 @@
     "phylogenetics",
     "r-packages",
     "phylogenetic-trees",
-    "evolutionary-biology"
+    "evolutionary-biology",
+    "r-package",
+    "cran"
   ],
-  "fileSize": "1349.702KB",
+  "fileSize": "1347.67KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }
