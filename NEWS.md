@@ -16,7 +16,7 @@
 
 - `Consensus()` is a faster C++ implementation of `ape::consensus()`.
 
-- `ClusterTable()` C++ functionailty imported from "TreeDist".
+- `ClusterTable()` C++ functionality imported from "TreeDist".
 
 
 ## Improved functions

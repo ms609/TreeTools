@@ -29,7 +29,7 @@ with \code{constraint}.
 \description{
 Modify a tree such that it matches a specified constraint.
 This is at present a somewhat crude implementation that attempts to retain
-much of the strucure of \code{tree} whilst guaranteeing compatibility with
+much of the structure of \code{tree} whilst guaranteeing compatibility with
 each entry in \code{constraint}.
 }
 \section{Functions}{

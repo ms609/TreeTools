@@ -208,7 +208,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #'
 #' @template datasetParam
 #' @template constraintParam
-#' @param weight Numeric specifying degree to upweight characters in
+#' @param weight Numeric specifying degree to up-weight characters in
 #' `constraint`.
 #'
 #' @return `ConstrainedNJ()` returns a tree of class `phylo`.

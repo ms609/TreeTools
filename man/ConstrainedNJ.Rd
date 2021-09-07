@@ -15,7 +15,7 @@ perfectly compatible with each character in \code{constraint}.
 See \href{https://ms609.github.io/TreeSearch/articles/inapplicable.html}{vignette}
 for further examples.}
 
-\item{weight}{Numeric specifying degree to upweight characters in
+\item{weight}{Numeric specifying degree to up-weight characters in
 \code{constraint}.}
 }
 \value{
