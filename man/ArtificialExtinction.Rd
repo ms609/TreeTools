@@ -85,6 +85,8 @@ taxon, to simulate the process of fossilization in removing data from
 a phylogenetic dataset.
 }
 \details{
+Further details are provided in \insertCite{Asher2020;textual}{TreeTools}.
+
 Note: this simple implementation does not account for character contingency,
 e.g. characters whose absence imposes inapplicable or absent tokens on
 dependent characters.
@@ -96,6 +98,9 @@ dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
                     dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
                                     paste('char', 1:8)), byrow = TRUE)
 artex <- ArtificialExtinction(dataset, c('A', 'C'), 'FOSSIL')
+}
+\references{
+\insertAllCited{}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

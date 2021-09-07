@@ -39,7 +39,7 @@ Imports:
     fastmatch,
     phangorn (>= 2.2.1),
     R.cache,
-    Rdpack,
+    Rdpack (>= 0.7),
 Suggests:
     knitr,
     Rcpp,
