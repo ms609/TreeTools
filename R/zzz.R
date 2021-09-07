@@ -6,7 +6,8 @@
 release_questions <- function() {
   c(
     "Is the code free of #TODOs?",
-    "Have you checked the Vignettes for sanity?"
+    "Have you checked the Vignettes for sanity?",
+    "Have you updated pagination of Asher2020 (Syst Biol)?"
   )
 }
 
