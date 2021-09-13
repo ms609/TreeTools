@@ -42,6 +42,7 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},

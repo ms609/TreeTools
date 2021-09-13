@@ -32,6 +32,7 @@ reference:
       Functions describing properties of trees.
     contents:
       - has_concept("tree characterization functions")
+      - has_concept("consensus tree functions")
       - NTip
       - NPartitions
       - PairwiseDistances

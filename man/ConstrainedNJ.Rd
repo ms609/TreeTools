@@ -15,7 +15,7 @@ perfectly compatible with each character in \code{constraint}.
 See \href{https://ms609.github.io/TreeSearch/articles/inapplicable.html}{vignette}
 for further examples.}
 
-\item{weight}{Numeric specifying degree to upweight characters in
+\item{weight}{Numeric specifying degree to up-weight characters in
 \code{constraint}.}
 }
 \value{
@@ -35,6 +35,14 @@ constraint <- MatrixToPhyDat(
   c(a = 0, b = 0, c = 0, d = 0, e = 1, f = 1))
 plot(ConstrainedNJ(dataset, constraint))
 }
+\seealso{
+Other tree generation functions: 
+\code{\link{GenerateTree}},
+\code{\link{NJTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{TreeNumber}}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree generation functions}

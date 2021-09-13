@@ -69,6 +69,7 @@ Other tree information functions:
 \code{\link{TreesMatchingTree}()}
 
 Other tree characterization functions: 
+\code{\link{Consensus}()},
 \code{\link{Stemwardness}},
 \code{\link{TotalCopheneticIndex}()}
 }

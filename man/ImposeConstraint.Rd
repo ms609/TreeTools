@@ -29,7 +29,7 @@ with \code{constraint}.
 \description{
 Modify a tree such that it matches a specified constraint.
 This is at present a somewhat crude implementation that attempts to retain
-much of the strucure of \code{tree} whilst guaranteeing compatibility with
+much of the structure of \code{tree} whilst guaranteeing compatibility with
 each entry in \code{constraint}.
 }
 \section{Functions}{
@@ -46,6 +46,24 @@ plot(tree)
 constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
 plot(ImposeConstraint(tree, constraint))
 }
+\seealso{
+Other tree manipulation: 
+\code{\link{AddTip}()},
+\code{\link{CollapseNode}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{DropTip}()},
+\code{\link{EnforceOutgroup}()},
+\code{\link{LeafLabelInterchange}()},
+\code{\link{MakeTreeBinary}()},
+\code{\link{RenumberTips}()},
+\code{\link{RenumberTree}()},
+\code{\link{Renumber}()},
+\code{\link{RootTree}()},
+\code{\link{SingleTaxonTree}()},
+\code{\link{SortTree}()},
+\code{\link{Subtree}()}
+}
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree manipulation}
