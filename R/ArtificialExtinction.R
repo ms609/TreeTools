@@ -4,6 +4,8 @@
 #' taxon, to simulate the process of fossilization in removing data from
 #' a phylogenetic dataset.
 #'
+#' Further details are provided in \insertCite{Asher2020;textual}{TreeTools}.
+#'
 #' Note: this simple implementation does not account for character contingency,
 #' e.g. characters whose absence imposes inapplicable or absent tokens on
 #' dependent characters.
@@ -29,6 +31,9 @@
 #' all taxa not used as a template (including the subjects).
 #' @return A dataset with the same class as `dataset` in which entries that
 #' are ambiguous in `template` are made ambiguous in `subject`.
+#'
+#' @references
+#' \insertAllCited{}
 #' @examples
 #' set.seed(1)
 #' dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),

@@ -208,7 +208,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #'
 #' @template datasetParam
 #' @template constraintParam
-#' @param weight Numeric specifying degree to upweight characters in
+#' @param weight Numeric specifying degree to up-weight characters in
 #' `constraint`.
 #'
 #' @return `ConstrainedNJ()` returns a tree of class `phylo`.
@@ -223,6 +223,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @template MRS
 #' @importFrom ape nj multi2di
 #' @importFrom phangorn dist.hamming
+#' @family tree generation functions
 #' @export
 ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
   missing <- setdiff(names(dataset), names(constraint))

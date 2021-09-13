@@ -218,6 +218,7 @@
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
+      "version": ">= 0.7",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -262,6 +263,6 @@
     "r-package",
     "cran"
   ],
-  "fileSize": "1347.67KB",
+  "fileSize": "1347.916KB",
   "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
 }

@@ -29,6 +29,7 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
@@ -39,6 +40,7 @@ Other tree manipulation:
 \code{\link{Subtree}()}
 
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
 \code{\link{TreeNumber}}

@@ -1,23 +1,31 @@
-# TreeTools 1.4.5.9110 (development)
+# TreeTools 1.5.0.9110 (development)
+
+## New functions
+
+- `RoguePlot()` plots the positions of rogue taxa.
+
+
+# TreeTools 1.5.0
 
 
 ## New functions
+
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
 
-- `PolarizeSplits()` places a specified taxon in the ingroup of all splits.
+- `PolarizeSplits()` marks a specified taxon as representing the ingroup of all
+  splits.
 
 - Add `KeepTip()` and improve performance of `DropTip()`.
 
 - `ImposeConstraint()` makes a tree consistent with topological constraints.
 
-- `RoguePlot()` plots rogue taxa.
-
 - `as.phylo.Splits()` represents a `Splits` object as a tree.
 
 - `Consensus()` is a faster C++ implementation of `ape::consensus()`.
 
-- `ClusterTable()` C++ functionailty imported from "TreeDist".
+- `ClusterTable()` C++ functionality imported from "TreeDist".
+
 
 ## Improved functions
 

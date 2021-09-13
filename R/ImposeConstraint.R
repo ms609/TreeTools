@@ -2,7 +2,7 @@
 #'
 #' Modify a tree such that it matches a specified constraint.
 #' This is at present a somewhat crude implementation that attempts to retain
-#' much of the strucure of `tree` whilst guaranteeing compatibility with
+#' much of the structure of `tree` whilst guaranteeing compatibility with
 #' each entry in `constraint`.
 #'
 #' @template treeParam
@@ -19,6 +19,7 @@
 #' constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
 #' plot(ImposeConstraint(tree, constraint))
 #' @template MRS
+#' @family tree manipulation
 #' @export
 ImposeConstraint <- function (tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.

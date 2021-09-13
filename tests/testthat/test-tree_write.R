@@ -40,5 +40,6 @@ test_that("WriteTntCharacters()", {
   WriteTntCharacters(dataset, written)
   on.exit(file.remove(written))
   colnames(dataset) <- NULL
-  expect_equal(dataset, ReadTntCharacters(written))
+  expect_equal(ReadTntCharacters(written),
+               gsub('(23)', '[23]', fixed = TRUE, dataset))
 })

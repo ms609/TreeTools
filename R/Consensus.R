@@ -19,6 +19,7 @@
 #' tree.
 #' @template MRS
 #' @family consensus tree functions
+#' @family tree characterization functions
 #' @references
 #' \insertAllCited{}
 #' @export
