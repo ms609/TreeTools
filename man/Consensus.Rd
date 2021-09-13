@@ -29,8 +29,14 @@ Consensus(as.phylo(0:2, 8))
 \seealso{
 Other consensus tree functions: 
 \code{\link{ConsensusWithout}()}
+
+Other tree characterization functions: 
+\code{\link{CladisticInfo}()},
+\code{\link{Stemwardness}},
+\code{\link{TotalCopheneticIndex}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{consensus tree functions}
+\concept{tree characterization functions}

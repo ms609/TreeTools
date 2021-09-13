@@ -1,11 +1,12 @@
-# TreeTools 1.4.5.9010 (development)
+# TreeTools 1.5.0
 
 
 ## New functions
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
   
-- `PolarizeSplits()` places a specified taxon in the ingroup of all splits.
+- `PolarizeSplits()` marks a specified taxon as representing the ingroup of all
+  splits.
 
 - Add `KeepTip()` and improve performance of `DropTip()`.
 
@@ -15,7 +16,8 @@
 
 - `Consensus()` is a faster C++ implementation of `ape::consensus()`.
 
-- `ClusterTable()` C++ functionailty imported from "TreeDist".
+- `ClusterTable()` C++ functionality imported from "TreeDist".
+
 
 ## Improved functions
 

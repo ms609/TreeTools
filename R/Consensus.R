@@ -15,6 +15,7 @@
 #' Consensus(as.phylo(0:2, 8))
 #' @template MRS
 #' @family consensus tree functions
+#' @family tree characterization functions
 #' @export
 Consensus <- function (trees, p = 1, check.labels = TRUE) {
   if (length(trees) == 1L) {

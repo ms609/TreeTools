@@ -53,6 +53,7 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
