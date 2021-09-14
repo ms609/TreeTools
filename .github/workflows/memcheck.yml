@@ -8,6 +8,7 @@ on:
     paths:
       - 'src/**'
       - 'inst/include/**'
+      - 'memcheck/**'
       - 'tests/testthat/**'
       - 'vignettes/**'
   pull_request:
@@ -15,8 +16,10 @@ on:
       - main
       - master
     paths:
+      - '.github/workflows/memcheck.yml'
       - 'src/**'
       - 'inst/include/**'
+      - 'memcheck/**'
       - 'tests/testthat/**'
       - 'vignettes/**'
 
