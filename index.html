@@ -18,10 +18,14 @@
   modification and analysis of phylogenetic trees.
   Applications include:
   generation of trees with specified shapes;
+  tree rearrangement;
   analysis of tree shape;
   rooting of trees and extraction of subtrees;
-  calculation and depiction of node support;
-  calculation of ancestor-descendant relationships;
+  calculation and depiction of split support;
+  calculation of ancestor-descendant relationships,
+  of stemwardness (Asher &amp; Smith, 2021) &lt;doi:10.1093/sysbio/syab072&gt;,
+  and of tree balance (Mir et al. 2013) &lt;doi:10.1016/j.mbs.2012.10.005&gt;;
+  artificial extinction (Asher &amp; Smith, 2021) &lt;doi:10.1093/sysbio/syab072&gt;;
   import and export of trees from Newick, Nexus (Maddison et al. 1997)
   &lt;doi:10.1093/sysbio/46.4.590&gt;,
   and TNT &lt;http://www.lillo.org.ar/phylogeny/tnt/&gt; formats;
@@ -50,7 +54,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -129,8 +133,8 @@
 library('TreeTools')</a></code></pre>
 <p>Install the very latest version, which may be under development, with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'ms609/TreeTools'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">'ms609/TreeTools'</span><span class="op">)</span></code></pre></div>
 <p>Please note that the ‘TreeTools’ project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 

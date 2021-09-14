@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -154,9 +154,51 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="treetools-150" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0">
+<a href="#treetools-150" class="anchor"></a>TreeTools 1.5.0<small> 2021-09-08 </small>
+</h1>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li><p><code><a href="../reference/ConstrainedNJ.html">ConstrainedNJ()</a></code> returns an approximation to a neighbour-joining tree that respects constraints.</p></li>
+<li><p><code><a href="../reference/PolarizeSplits.html">PolarizeSplits()</a></code> marks a specified taxon as representing the ingroup of all splits.</p></li>
+<li><p>Add <code><a href="../reference/DropTip.html">KeepTip()</a></code> and improve performance of <code><a href="../reference/DropTip.html">DropTip()</a></code>.</p></li>
+<li><p><code><a href="../reference/ImposeConstraint.html">ImposeConstraint()</a></code> makes a tree consistent with topological constraints.</p></li>
+<li><p><code>as.phylo.Splits()</code> represents a <code>Splits</code> object as a tree.</p></li>
+<li><p><code><a href="../reference/Consensus.html">Consensus()</a></code> is a faster C++ implementation of <code><a href="https://rdrr.io/pkg/ape/man/consensus.html">ape::consensus()</a></code>.</p></li>
+<li><p><code>ClusterTable()</code> C++ functionality imported from “TreeDist”.</p></li>
+</ul>
+</div>
+<div id="improved-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#improved-functions" class="anchor"></a>Improved functions</h2>
+<ul>
+<li><p>Warn when empty cells passed to <code><a href="../reference/MatrixToPhyDat.html">MatrixToPhyDat()</a></code>.</p></li>
+<li><p>Warn when <code><a href="../reference/LabelSplits.html">LabelSplits(labels)</a></code> lack names.</p></li>
+<li><p><code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> drops tips from <code>forest</code> that aren’t in <code>reference</code>.</p></li>
+<li><p><code><a href="../reference/AddTip.html">AddTipEverywhere()</a></code> supports trees with &lt; 3 leaves.</p></li>
+<li><p>Make <code><a href="../reference/RootTree.html">RootTree()</a></code> and <code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> more robust.</p></li>
+<li><p><code>Read[Tnt]AsPhyDat()</code> passes additional parameters to <code>Read[Tnt]Characters()</code>.</p></li>
+<li><p>Support <code>encoding</code> option in <code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code> function family.</p></li>
+<li><p>Support <code>CHARSTATELABELS</code> in <code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code>.</p></li>
+<li><p>Support for more formatting quirks in <code><a href="../reference/ReadCharacters.html">ReadNotes()</a></code>.</p></li>
+<li><p>Better support ambiguous tokens in <code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters()</a></code>.</p></li>
+</ul>
+</div>
+<div id="optimization" class="section level2">
+<h2 class="hasAnchor">
+<a href="#optimization" class="anchor"></a>Optimization</h2>
+<ul>
+<li><p>Fast matching functions from “fastmatch”.</p></li>
+<li><p>Improve efficiency of <code><a href="../reference/RenumberTree.html">Preorder()</a></code> and <code><a href="../reference/RenumberTree.html">Postorder()</a></code>, and lift limit on tree size.</p></li>
+</ul>
+</div>
+</div>
     <div id="treetools-145" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.5">
-<a href="#treetools-145" class="anchor"></a>TreeTools 1.4.5<small> Unreleased </small>
+<a href="#treetools-145" class="anchor"></a>TreeTools 1.4.5<small> 2021-06-23 </small>
 </h1>
 <ul>
 <li>Correct calculation of minimum value in <code><a href="../reference/TotalCopheneticIndex.html">TCIContext()</a></code>.</li>
@@ -223,9 +265,9 @@
 <h1 class="page-header" data-toc-text="1.4.0">
 <a href="#treetools-140" class="anchor"></a>TreeTools 1.4.0<small> 2020-10-19 </small>
 </h1>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/MSTEdges.html">MSTLength()</a></code> reports length of minimum spanning tree.</li>
@@ -263,9 +305,9 @@
 <h1 class="page-header" data-toc-text="1.3.0">
 <a href="#treetools-130" class="anchor"></a>TreeTools 1.3.0<small> 2020-09-22 </small>
 </h1>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/Stemwardness.html">SisterSize()</a></code> and <code><a href="../reference/Stemwardness.html">RootNodeDist()</a></code> measure sister-clade size and root-node distance.</li>
@@ -305,9 +347,9 @@
 <h1 class="page-header" data-toc-text="1.1.0">
 <a href="#treetools-110" class="anchor"></a>TreeTools 1.1.0<small> 2020-07-07 </small>
 </h1>
-<div id="new-functions-2" class="section level2">
+<div id="new-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
+<a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/GenerateTree.html">RandomTree()</a></code>: Draw tree from uniform distribution, instead of via <code><a href="https://rdrr.io/pkg/ape/man/rtree.html">ape::rtree()</a></code>.</li>
@@ -333,9 +375,9 @@
 <h1 class="page-header" data-toc-text="1.0.0">
 <a href="#treetools-100" class="anchor"></a>TreeTools 1.0.0<small> 2020-06-08 </small>
 </h1>
-<div id="new-functions-3" class="section level2">
+<div id="new-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-3" class="anchor"></a>New functions</h2>
+<a href="#new-functions-4" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/CladisticInfo.html">CladisticInfo()</a></code>: Calculate the information content of a tree.</li>
@@ -381,13 +423,13 @@
 <h2 class="hasAnchor">
 <a href="#enhancements-3" class="anchor"></a>Enhancements</h2>
 <ul>
-<li>Improve support for unrooted trees in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
+<li>Improve support for unrooted trees in <code><a href="../reference/Splits.html">as.Splits()</a></code>.</li>
 <li>Use methods so <code>Reorder</code> functions can handle <code>multiPhylo</code> objects and edges.</li>
 <li>Handle funny node orders.</li>
 <li>Support continuous characters in <code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code>.</li>
-<li>Improve performance of <code><a href="../reference/as.Splits.html">as.logical.Splits()</a></code> and related functions.</li>
+<li>Improve performance of <code><a href="../reference/Splits.html">as.logical.Splits()</a></code> and related functions.</li>
 <li>Fail nicely when trees are too large for memory.</li>
-<li>Fix memory leak in <code><a href="../reference/as.Splits.html">as.Splits()</a></code>.</li>
+<li>Fix memory leak in <code><a href="../reference/Splits.html">as.Splits()</a></code>.</li>
 <li>Various under-the-hood improvements to functions.</li>
 <li>Documentation improvements.</li>
 </ul>

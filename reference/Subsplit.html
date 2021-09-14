@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>splits</th>
-      <td><p>An object of class <code><a href='as.Splits.html'>Splits</a></code>.</p></td>
+      <td><p>An object of class <code><a href='Splits.html'>Splits</a></code>.</p></td>
     </tr>
     <tr>
       <th>tips</th>
@@ -197,7 +197,7 @@ leaves <code>tips</code>.</p>
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>splits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>splits</span>
 </div><div class='output co'>#&gt; 6 bipartition splits dividing 9 tips, a .. i</div><div class='input'><span class='va'>efgh</span> <span class='op'>&lt;-</span> <span class='fu'>Subsplit</span><span class='op'>(</span><span class='va'>splits</span>, tips <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>, keepAll <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efgh</span><span class='op'>)</span>

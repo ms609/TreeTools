@@ -89,7 +89,7 @@ incident branches." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -162,13 +162,15 @@ incident branches." />
 incident branches.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
-<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span>
+<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span><span class='op'>)</span></pre>
+<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'>KeepTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,19 +186,23 @@ or integer vector specifying the indices of leaves to be dropped.
 Specifying the index of an internal node will drop all descendants of that
 node.</p></td>
     </tr>
+    <tr>
+      <th>preorder</th>
+      <td><p>Logical specifying whether to <a href='RenumberTree.html'>Preorder</a> the tree before
+dropping tips.  Necessary if a tree's edges may be unconventionally numbered.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>DropTip()</code> returns a tree of class <code>phylo</code>, in <a href='RenumberTree.html'>Preorder</a>, with the
-requested leaves removed.</p>
+    <p><code>DropTip()</code> returns a tree of class <code>phylo</code>, with the requested
+leaves removed.</p>
+<p><code>KeepTip()</code> returns <code>tree</code> with all leaves not in <code>tip</code> removed,
+in preorder.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function is more robust than <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip()</a></code> as it does not
-require any particular internal node numbering schema.  It is not presently
-as fast, though it is ripe for optimization; if you are finding this
-function is a rate-limiting step, please get in touch and I'll prioritise
-writing a faster implementation.</p>
+require any particular internal node numbering schema.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree manipulation: 
@@ -204,6 +210,7 @@ writing a faster implementation.</p>
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='ImposeConstraint.html'>ImposeConstraint</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,

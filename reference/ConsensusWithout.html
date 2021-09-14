@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Consensus without taxa — ConsensusWithout • TreeTools</title>
+<title>Reduced consensus, omitting specified taxa — ConsensusWithout • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,7 +45,7 @@
 
 
 
-<meta property="og:title" content="Consensus without taxa — ConsensusWithout" />
+<meta property="og:title" content="Reduced consensus, omitting specified taxa — ConsensusWithout" />
 <meta property="og:description" content="ConsensusWithout() displays a consensus plot with specified taxa excluded,
 which can be a useful way to increase the resolution of a consensus tree
 when a few wildcard taxa obscure a consistent set of relationships.
@@ -91,7 +91,7 @@ MarkMissing() adds missing taxa as loose leaves on the plot." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -154,8 +154,8 @@ MarkMissing() adds missing taxa as loose leaves on the plot." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Consensus without taxa</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/tree_display.R'><code>R/tree_display.R</code></a></small>
+    <h1>Reduced consensus, omitting specified taxa</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Consensus.R'><code>R/Consensus.R</code></a></small>
     <div class="hidden name"><code>ConsensusWithout.Rd</code></div>
     </div>
 
@@ -216,6 +216,7 @@ without the excluded taxa.</p>
 <code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
 <code><a href='DropTip.html'>DropTip</a>()</code>,
 <code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='ImposeConstraint.html'>ImposeConstraint</a>()</code>,
 <code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
 <code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
 <code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
@@ -230,7 +231,9 @@ without the excluded taxa.</p>
 <code><a href='NTip.html'>NTip</a>()</code>,
 <code><a href='SplitsInBinaryTree.html'>SplitsInBinaryTree</a>()</code>,
 <code><a href='TipLabels.html'>TipLabels</a>()</code>,
-<code><a href='TreeIsRooted.html'>TreeIsRooted</a>()</code></p></div>
+<code><a href='TreeIsRooted.html'>TreeIsRooted</a>()</code></p>
+<p>Other consensus tree functions: 
+<code><a href='Consensus.html'>Consensus</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>

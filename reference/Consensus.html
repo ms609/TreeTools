@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of trees one SPR step away — N1Spr • TreeTools</title>
+<title>Consensus trees — Consensus • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,12 +45,8 @@
 
 
 
-<meta property="og:title" content="Number of trees one SPR step away — N1Spr" />
-<meta property="og:description" content="N1Spr() calculates the number of trees one subtree prune-and-regraft
-operation away from a binary input tree using the formula given by Allen and
-Steel (2001); IC1Spr() calculates the information content of trees at this
-distance: i.e. the entropy corresponding to the proportion of all possible
-n-tip trees whose SPR distance is at most one from a specified tree." />
+<meta property="og:title" content="Consensus trees — Consensus" />
+<meta property="og:description" content="Calculates the consensus of a set of trees." />
 
 
 
@@ -155,52 +151,62 @@ n-tip trees whose SPR distance is at most one from a specified tree." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of trees one SPR step away</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Combinatorics.R'><code>R/Combinatorics.R</code></a></small>
-    <div class="hidden name"><code>N1Spr.Rd</code></div>
+    <h1>Consensus trees</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Consensus.R'><code>R/Consensus.R</code></a></small>
+    <div class="hidden name"><code>Consensus.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>N1Spr()</code> calculates the number of trees one subtree prune-and-regraft
-operation away from a binary input tree using the formula given by Allen and
-Steel (2001); <code>IC1Spr()</code> calculates the information content of trees at this
-distance: i.e. the entropy corresponding to the proportion of all possible
-<em>n</em>-tip trees whose SPR distance is at most one from a specified tree.</p>
+    <p>Calculates the consensus of a set of trees.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>N1Spr</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
-
-<span class='fu'>IC1Spr</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>Consensus</span><span class='op'>(</span><span class='va'>trees</span>, p <span class='op'>=</span> <span class='fl'>1</span>, check.labels <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
-      <td><p>Integer vector specifying the number of tips in a tree.</p></td>
+      <th>trees</th>
+      <td><p>List of trees, optionally of class <code>multiPhylo</code>.</p></td>
+    </tr>
+    <tr>
+      <th>p</th>
+      <td><p>Proportion of trees that must contain a split for it to be reported
+in the consensus.  <code>p = 0.5</code> gives the majority-rule consensus; <code>p = 1</code> (the
+default) gives the strict consensus.</p></td>
+    </tr>
+    <tr>
+      <th>check.labels</th>
+      <td><p>Logical specifying whether to check that all trees have
+identical labels.  Defaults to <code>TRUE</code>, which is slower.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>N1Spr()</code> returns an integer vector denoting the number of trees one
-SPR rearrangement away from the input tree..</p>
-<p><code>IC1Spr()</code> returns an numeric vector giving the phylogenetic
-information content of trees 0 or 1 SPR rearrangement from an <em>n</em>-leaf tree,
-in bits.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p><code>Consensus()</code> returns an object of class <code>phylo</code>, rooted as in the
+first entry of <code>trees</code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Allen BL, Steel MA (2001).
-&#8220;Subtree transfer operations and their induced metrics on evolutionary trees.&#8221;
-<em>Annals of Combinatorics</em>, <b>5</b>(1), 1--15.
-doi: <a href='https://doi.org/10.1007/s00026-001-8006-8'>10.1007/s00026-001-8006-8</a>
-.</p>
+    <div class='dont-index'><p>Other consensus tree functions: 
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code></p>
+<p>Other tree characterization functions: 
+<code><a href='CladisticInfo.html'>CladisticInfo</a>()</code>,
+<code><a href='Stemwardness.html'>Stemwardness</a></code>,
+<code><a href='TotalCopheneticIndex.html'>TotalCopheneticIndex</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>N1Spr</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  2 12 30</div><div class='input'><span class='fu'>IC1Spr</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.2064509</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>Consensus</span><span class='op'>(</span><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, <span class='fl'>8</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
+#&gt; Phylogenetic tree with 8 tips and 6 internal nodes.
+#&gt; 
+#&gt; Tip labels:
+#&gt;   t1, t2, t3, t4, t5, t6, ...
+#&gt; 
+#&gt; Rooted; no branch lengths.</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

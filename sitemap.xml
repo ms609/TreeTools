@@ -31,7 +31,13 @@
     <loc>https://ms609.github.io/TreeTools/reference/CompatibleSplits.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Consensus.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ConstrainedNJ.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/DescendantEdges.html</loc>
@@ -59,6 +65,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc>
@@ -130,6 +139,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/PolarizeSplits.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc>
   </url>
   <url>
@@ -170,6 +182,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Splits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.html</loc>
@@ -230,9 +245,6 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/as.Splits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/as.multiPhylo.html</loc>

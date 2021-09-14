@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -190,11 +190,11 @@
         <td>
           <p><code><a href="ConsensusWithout.html">ConsensusWithout()</a></code> <code><a href="ConsensusWithout.html">MarkMissing()</a></code> </p>
         </td>
-        <td><p>Consensus without taxa</p></td>
+        <td><p>Reduced consensus, omitting specified taxa</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="DropTip.html">DropTip()</a></code> </p>
+          <p><code><a href="DropTip.html">DropTip()</a></code> <code><a href="DropTip.html">KeepTip()</a></code> </p>
         </td>
         <td><p>Drop tips from tree</p></td>
       </tr><tr>
@@ -203,6 +203,12 @@
           <p><code><a href="EnforceOutgroup.html">EnforceOutgroup()</a></code> </p>
         </td>
         <td><p>Generate a tree with a specific outgroup</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ImposeConstraint.html">ImposeConstraint()</a></code> <code><a href="ImposeConstraint.html">AddUnconstrained()</a></code> </p>
+        </td>
+        <td><p>Force a tree to match a constraint</p></td>
       </tr><tr>
         
         <td>
@@ -340,6 +346,12 @@
       <tr>
         
         <td>
+          <p><code><a href="ConstrainedNJ.html">ConstrainedNJ()</a></code> </p>
+        </td>
+        <td><p>Constrained neighbour-joining tree</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="GenerateTree.html">RandomTree()</a></code> <code><a href="GenerateTree.html">PectinateTree()</a></code> <code><a href="GenerateTree.html">BalancedTree()</a></code> <code><a href="GenerateTree.html">StarTree()</a></code> </p>
         </td>
         <td><p>Generate pectinate, balanced or random trees</p></td>
@@ -389,6 +401,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="Consensus.html">Consensus()</a></code> </p>
+        </td>
+        <td><p>Consensus trees</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="Stemwardness.html">SisterSize()</a></code> <code><a href="Stemwardness.html">RootNodeDistance()</a></code> <code><a href="Stemwardness.html">RootNodeDist()</a></code> </p>
         </td>
         <td><p>'Stemwardness' of a leaf</p></td>
@@ -398,6 +416,12 @@
           <p><code><a href="TotalCopheneticIndex.html">TotalCopheneticIndex()</a></code> <code><a href="TotalCopheneticIndex.html">TCIContext()</a></code> </p>
         </td>
         <td><p>Total Cophenetic Index</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ConsensusWithout.html">ConsensusWithout()</a></code> <code><a href="ConsensusWithout.html">MarkMissing()</a></code> </p>
+        </td>
+        <td><p>Reduced consensus, omitting specified taxa</p></td>
       </tr><tr>
         
         <td>
@@ -584,9 +608,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="PolarizeSplits.html">PolarizeSplits()</a></code> </p>
+        </td>
+        <td><p>Polarize splits on a single taxon</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="SplitFrequency.html">SplitFrequency()</a></code> <code><a href="SplitFrequency.html">SplitNumber()</a></code> <code><a href="SplitFrequency.html">ForestSplits()</a></code> <code><a href="SplitFrequency.html">TreeSplits()</a></code> </p>
         </td>
         <td><p>Frequency of splits</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Splits.html">as.Splits()</a></code> <code><a href="Splits.html">as.logical(<i>&lt;Splits&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Convert object to <code>Splits</code></p></td>
       </tr><tr>
         
         <td>
@@ -605,12 +641,6 @@
           <p><code><a href="TipsInSplits.html">TipsInSplits()</a></code> <code><a href="TipsInSplits.html">SplitImbalance()</a></code> </p>
         </td>
         <td><p>Tips contained within splits</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as.Splits.html">as.Splits()</a></code> <code><a href="as.Splits.html">as.logical(<i>&lt;Splits&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Convert object to <code>Splits</code></p></td>
       </tr><tr>
         
         <td>

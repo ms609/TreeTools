@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Number of trees one SPR step away — N1Spr • TreeTools</title>
+<title>Force a tree to match a constraint — ImposeConstraint • TreeTools</title>
 
 
 <!-- jquery -->
@@ -45,12 +45,11 @@
 
 
 
-<meta property="og:title" content="Number of trees one SPR step away — N1Spr" />
-<meta property="og:description" content="N1Spr() calculates the number of trees one subtree prune-and-regraft
-operation away from a binary input tree using the formula given by Allen and
-Steel (2001); IC1Spr() calculates the information content of trees at this
-distance: i.e. the entropy corresponding to the proportion of all possible
-n-tip trees whose SPR distance is at most one from a specified tree." />
+<meta property="og:title" content="Force a tree to match a constraint — ImposeConstraint" />
+<meta property="og:description" content="Modify a tree such that it matches a specified constraint.
+This is at present a somewhat crude implementation that attempts to retain
+much of the structure of tree whilst guaranteeing compatibility with
+each entry in constraint." />
 
 
 
@@ -155,52 +154,87 @@ n-tip trees whose SPR distance is at most one from a specified tree." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Number of trees one SPR step away</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/Combinatorics.R'><code>R/Combinatorics.R</code></a></small>
-    <div class="hidden name"><code>N1Spr.Rd</code></div>
+    <h1>Force a tree to match a constraint</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ms609/TreeTools/blob/master/R/ImposeConstraint.R'><code>R/ImposeConstraint.R</code></a></small>
+    <div class="hidden name"><code>ImposeConstraint.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>N1Spr()</code> calculates the number of trees one subtree prune-and-regraft
-operation away from a binary input tree using the formula given by Allen and
-Steel (2001); <code>IC1Spr()</code> calculates the information content of trees at this
-distance: i.e. the entropy corresponding to the proportion of all possible
-<em>n</em>-tip trees whose SPR distance is at most one from a specified tree.</p>
+    <p>Modify a tree such that it matches a specified constraint.
+This is at present a somewhat crude implementation that attempts to retain
+much of the structure of <code>tree</code> whilst guaranteeing compatibility with
+each entry in <code>constraint</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>N1Spr</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>ImposeConstraint</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>constraint</span><span class='op'>)</span>
 
-<span class='fu'>IC1Spr</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span></pre>
+<span class='fu'>AddUnconstrained</span><span class='op'>(</span><span class='va'>constraint</span>, <span class='va'>toAdd</span>, asPhyDat <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
-      <td><p>Integer vector specifying the number of tips in a tree.</p></td>
+      <th>tree</th>
+      <td><p>A tree of class <code><a href='https://rdrr.io/pkg/ape/man/read.tree.html'>phylo</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>constraint</th>
+      <td><p>An object of class <code>phyDat</code>; returned trees will be
+perfectly compatible with each character in <code>constraint</code>.
+See <a href='https://ms609.github.io/TreeSearch/articles/inapplicable.html'>vignette</a>
+for further examples.</p></td>
+    </tr>
+    <tr>
+      <th>toAdd</th>
+      <td><p>Character vector specifying taxa to add to constraint.</p></td>
+    </tr>
+    <tr>
+      <th>asPhyDat</th>
+      <td><p>Logical: if <code>TRUE</code>, return a <code>phyDat</code> object; if <code>FALSE</code>, return
+a matrix.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>N1Spr()</code> returns an integer vector denoting the number of trees one
-SPR rearrangement away from the input tree..</p>
-<p><code>IC1Spr()</code> returns an numeric vector giving the phylogenetic
-information content of trees 0 or 1 SPR rearrangement from an <em>n</em>-leaf tree,
-in bits.</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <p><code>ImposeConstraint()</code> returns a tree of class <code>phylo</code>, consistent
+with <code>constraint</code>.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
 
-    <p>Allen BL, Steel MA (2001).
-&#8220;Subtree transfer operations and their induced metrics on evolutionary trees.&#8221;
-<em>Annals of Combinatorics</em>, <b>5</b>(1), 1--15.
-doi: <a href='https://doi.org/10.1007/s00026-001-8006-8'>10.1007/s00026-001-8006-8</a>
-.</p>
+    
+<ul>
+<li><p><code>AddUnconstrained</code>: Expand a constraint to include unconstrained
+taxa.</p></li>
+</ul>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other tree manipulation: 
+<code><a href='AddTip.html'>AddTip</a>()</code>,
+<code><a href='CollapseNode.html'>CollapseNode</a>()</code>,
+<code><a href='ConsensusWithout.html'>ConsensusWithout</a>()</code>,
+<code><a href='DropTip.html'>DropTip</a>()</code>,
+<code><a href='EnforceOutgroup.html'>EnforceOutgroup</a>()</code>,
+<code><a href='LeafLabelInterchange.html'>LeafLabelInterchange</a>()</code>,
+<code><a href='MakeTreeBinary.html'>MakeTreeBinary</a>()</code>,
+<code><a href='RenumberTips.html'>RenumberTips</a>()</code>,
+<code><a href='RenumberTree.html'>RenumberTree</a>()</code>,
+<code><a href='Renumber.html'>Renumber</a>()</code>,
+<code><a href='RootTree.html'>RootTree</a>()</code>,
+<code><a href='SingleTaxonTree.html'>SingleTaxonTree</a>()</code>,
+<code><a href='SortTree.html'>SortTree</a>()</code>,
+<code><a href='Subtree.html'>Subtree</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>N1Spr</span><span class='op'>(</span><span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  2 12 30</div><div class='input'><span class='fu'>IC1Spr</span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.2064509</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>tips</span> <span class='op'>&lt;-</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span>
+<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>9</span>, <span class='va'>tips</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
+</div><div class='img'><img src='ImposeConstraint-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>constraint</span> <span class='op'>&lt;-</span> <span class='fu'><a href='StringToPhyDat.html'>StringToPhyDat</a></span><span class='op'>(</span><span class='st'>'0000?1111 000111111 0000??110'</span>, <span class='va'>tips</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>ImposeConstraint</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>constraint</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='ImposeConstraint-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
