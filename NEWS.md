@@ -1,3 +1,7 @@
+# TreeTools 1.5.0.9000 (development)
+
+- `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
+
 # TreeTools 1.5.0
 
 
