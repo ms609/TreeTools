@@ -37,7 +37,7 @@ Imports:
     bit64,
     lifecycle,
     colorspace,
-    fastmatch,
+    fastmatch (>= 1.1.3),
     phangorn (>= 2.2.1),
     R.cache,
     Rdpack (>= 0.7),

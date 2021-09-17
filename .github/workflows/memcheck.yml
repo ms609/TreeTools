@@ -9,6 +9,7 @@ on:
       - '.github/workflows/memcheck.yml'
       - 'src/**'
       - 'inst/include/**'
+      - 'memcheck/**'
       - 'tests/testthat/**'
       - 'vignettes/**'
   pull_request:
@@ -19,6 +20,7 @@ on:
       - '.github/workflows/memcheck.yml'
       - 'src/**'
       - 'inst/include/**'
+      - 'memcheck/**'
       - 'tests/testthat/**'
       - 'vignettes/**'
 
@@ -53,9 +55,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - name: Install valgrind
-        run: sudo apt-get install valgrind texlive-latex-base
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -72,6 +71,7 @@ jobs:
 
       - name: Install system dependencies
         run: |
+          sudo apt-get install valgrind texlive-latex-base
           while read -r cmd
           do
             eval sudo $cmd
@@ -86,7 +86,7 @@ jobs:
           remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
         shell: Rscript {0}
 
-      - name: Install TreeTools
+      - name: Install package
         run: |
           cd ..
           R CMD build --no-manual --no-resave-data TreeTools

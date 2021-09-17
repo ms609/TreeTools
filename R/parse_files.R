@@ -847,6 +847,8 @@ MatrixToPhyDat <- function (tokens) {
 
 #' @rdname MatrixToPhyDat
 #' @param dataset A dataset of class `phyDat`.
+#' @param ambigNA,inappNA Logical specifying whether to denote ambiguous /
+#' inapplicable characters as `NA` values.
 ## @param parentheses Character vector specifying style of parentheses
 ## with which to enclose ambiguous characters, e.g, `c('[', ']')` will render
 ## `[01]`.
@@ -855,13 +857,18 @@ MatrixToPhyDat <- function (tokens) {
 #' @return `PhyDatToMatrix()` returns a matrix corresponding to the
 #' uncompressed character states within a `phyDat` object.
 #' @export
-PhyDatToMatrix <- function (dataset) {#}, parentheses = c('[', ']'), sep = '') {
+PhyDatToMatrix <- function (dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c('[', ']'), sep = '') {
   at <- attributes(dataset)
-  index <- at$index
   allLevels <- as.character(at$allLevels)
+  if (inappNA) {
+    allLevels[allLevels == '-'] <- NA_character_
+  }
+  if (ambigNA) {
+    allLevels[rowSums(at$contrast) != 1L] <- NA_character_
+  }
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
          ncol = at$nr, byrow = TRUE, dimnames = list(at$names, NULL)
-         )[, index, drop = FALSE]
+         )[, at$index, drop = FALSE]
 }
 
 #' @rdname ReadCharacters

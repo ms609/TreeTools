@@ -107,6 +107,19 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
+test_that("PhyDatToMatrix with ambigs", {
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,'{12}','(01)','-','?'),
+                nrow = 3, byrow = TRUE)
+  rownames(mat) <- LETTERS[1:3]
+  expectation <- mat
+  expectation[3, 5:8] <- NA_character_
+  expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, TRUE), expectation)
+  expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, FALSE)[3, 5:8],
+               c(NA, NA, '-', NA))
+  expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), FALSE, TRUE)[3, 5:8],
+               c('{12}', '(01)', NA_character_, '?'))
+})
+
 test_that("Modified phyDat objects can be converted", {
   # Obtained by subsetting, i.e. dataset <- biggerDataset[1:4]
   dataset <- structure(list(a = c(1L, 1L, 1L, 1L), c = c(2L, 1L, 1L, 2L),
