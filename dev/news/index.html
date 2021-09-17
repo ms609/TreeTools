@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.4.5.9010</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.0.9000</span>
       </span>
     </div>
 
@@ -154,21 +154,30 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="treetools-1459010-development" class="section level1">
-<h1 class="page-header" data-toc-text="1.4.5.9010">
-<a href="#treetools-1459010-development" class="anchor"></a>TreeTools 1.4.5.9010 (development)<small> Unreleased </small>
+    <div id="treetools-1509000-development" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0.9000">
+<a href="#treetools-1509000-development" class="anchor"></a>TreeTools 1.5.0.9000 (development)<small> Unreleased </small>
+</h1>
+<ul>
+<li>
+<code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> optionally encodes ambiguous / inapplicable tokens as <code>NA</code>.</li>
+</ul>
+</div>
+    <div id="treetools-150" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0">
+<a href="#treetools-150" class="anchor"></a>TreeTools 1.5.0<small> 2021-09-08 </small>
 </h1>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
 <ul>
 <li><p><code><a href="../reference/ConstrainedNJ.html">ConstrainedNJ()</a></code> returns an approximation to a neighbour-joining tree that respects constraints.</p></li>
-<li><p><code><a href="../reference/PolarizeSplits.html">PolarizeSplits()</a></code> places a specified taxon in the ingroup of all splits.</p></li>
+<li><p><code><a href="../reference/PolarizeSplits.html">PolarizeSplits()</a></code> marks a specified taxon as representing the ingroup of all splits.</p></li>
 <li><p>Add <code><a href="../reference/DropTip.html">KeepTip()</a></code> and improve performance of <code><a href="../reference/DropTip.html">DropTip()</a></code>.</p></li>
 <li><p><code><a href="../reference/ImposeConstraint.html">ImposeConstraint()</a></code> makes a tree consistent with topological constraints.</p></li>
 <li><p><code>as.phylo.Splits()</code> represents a <code>Splits</code> object as a tree.</p></li>
 <li><p><code><a href="../reference/Consensus.html">Consensus()</a></code> is a faster C++ implementation of <code><a href="https://rdrr.io/pkg/ape/man/consensus.html">ape::consensus()</a></code>.</p></li>
-<li><p><code>ClusterTable()</code> C++ functionailty imported from “TreeDist”.</p></li>
+<li><p><code>ClusterTable()</code> C++ functionality imported from “TreeDist”.</p></li>
 </ul>
 </div>
 <div id="improved-functions" class="section level2">
