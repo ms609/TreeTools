@@ -5,9 +5,10 @@ test_that("Consensus() errors", {
   expect_equal(oneLeaf$Nnode, 0)
   expect_identical(Consensus(list(DropTip(bal8, 1:8))[c(1, 1, 1)]),
                    DropTip(bal8, 1:8))
-  expect_true(all.equal(
-    expect_warning(Consensus(list(PectinateTree(6), PectinateTree(8)))),
-    PectinateTree(6)))
+  expect_warning(expect_true(all.equal(
+    Consensus(list(PectinateTree(6), PectinateTree(8))),
+    PectinateTree(6)
+  )))
 
   halfTree <- CollapseNode(bal8, 10:12)
   expect_equal(Consensus(halfTree), halfTree)

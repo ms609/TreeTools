@@ -289,12 +289,15 @@ test_that("DropTip() works", {
 })
 
 test_that("KeepTip() works", {
-  expect_true(all.equal(
+  expect_warning(expect_true(all.equal(
     BalancedTree(paste0('t', 5:8)),
-    expect_warning(KeepTip(BalancedTree(8), paste0('t', 5:9)))
-  ))
-  expect_true(all.equal(BalancedTree(paste0('t', 5:8)),
-                        expect_warning(KeepTip(BalancedTree(8), 5:9))))
+    KeepTip(BalancedTree(8), paste0('t', 5:9))
+  )))
+
+  expect_warning(expect_true(all.equal(
+    BalancedTree(paste0('t', 5:8)),
+    KeepTip(BalancedTree(8), 5:9)
+  )))
 })
 
 test_that("Binarification is uniform", {

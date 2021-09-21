@@ -2,6 +2,8 @@
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
+- Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
+
 # TreeTools 1.5.0
 
 
