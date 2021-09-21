@@ -61,13 +61,13 @@ test_that('Complex rogue plot', {
   expect_equal(list(cons = Preorder(read.tree(text = '(a, (b, (c, d, (e, f))));')),
                     onEdge = c(2, 1, 0, 0, 0, 1, 2, 0, 0),
                     atNode = c(1, 0, 5, 0)),
-               RoguePlot(trees1, 'rogue', plot = FALSE))
+               RoguePlot(trees = trees1, tip = 'rogue', plot = FALSE))
 
   expect_equal(list(cons = Preorder(RenumberTips(
     read.tree(text = '(f, (e, (d, c, (b, a))));'), letters[1:6])),
                     onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
                     atNode = c(0, 0, 5, 0)),
-               RoguePlot(trees1, 'rogue', outgroup = 'f', plot = FALSE))
+               RoguePlot(trees1, 'rogue', outgroupTips = 'f', plot = FALSE))
 
   trees2 <- list(read.tree(text = '(a, (b, (rogue, ((d, c), (e, f)))));'),
                  read.tree(text = '(a, (b, ((rogue, (d, c)), (e, f))));'),
@@ -76,9 +76,9 @@ test_that('Complex rogue plot', {
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'))
   expected <- list(cons = Preorder(read.tree(text = '(a, (b, (c, d), (e, f)));')),
-                   onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
-                   atNode = c(0, 0, 5, 0))
-  actual <- RoguePlot(trees2, 'rogue', plot = FALSE)
+                   onEdge = c(0, 0, 0, 2, 0, 0, 3, 0, 0),
+                   atNode = c(0, 1, 0, 0))
+  actual <- RoguePlot(trees = trees2, tip = 'rogue', plot = FALSE)
   expect_equal(names(actual), names(expected))
   expect_true(all.equal(actual$cons, expected$cons))
   expect_equal(actual$onEdge, expected$onEdge)
