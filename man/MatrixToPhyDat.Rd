@@ -7,7 +7,7 @@
 \usage{
 MatrixToPhyDat(tokens)
 
-PhyDatToMatrix(dataset)
+PhyDatToMatrix(dataset, ambigNA = FALSE, inappNA = ambigNA)
 }
 \arguments{
 \item{tokens}{matrix of tokens, probably created with \code{\link[=ReadCharacters]{ReadCharacters()}}
@@ -16,6 +16,9 @@ labels; column names may optionally correspond to
 character labels.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
+
+\item{ambigNA, inappNA}{Logical specifying whether to denote ambiguous /
+inapplicable characters as \code{NA} values.}
 }
 \value{
 \code{MatrixToPhyDat()} returns an object of class \code{phyDat}.
