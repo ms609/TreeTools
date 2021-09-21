@@ -37,8 +37,14 @@ tree.
 Other consensus tree functions: 
 \code{\link{ConsensusWithout}()},
 \code{\link{RoguePlot}()}
+
+Other tree characterization functions: 
+\code{\link{CladisticInfo}()},
+\code{\link{Stemwardness}},
+\code{\link{TotalCopheneticIndex}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{consensus tree functions}
+\concept{tree characterization functions}

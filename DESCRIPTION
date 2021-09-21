@@ -63,5 +63,5 @@ ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
