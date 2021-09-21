@@ -11,7 +11,7 @@ test_that('Simple rogue plot', {
   expect_equal(list(cons = Preorder(read.tree(text = '(a, (b, (c, (d, e))));')),
                     onEdge = c(0, 0, 0, 0, 0, 3, 0, 1),
                     atNode = double(4)),
-               RoguePlot(trees, 'rogue', plot = FALSE))
+               RoguePlot(trees, tip = 'rogue', plot = FALSE))
 
   skip_if_not_installed('vdiffr', '1.0')
   skip_if_not_installed('ape', '5.5.2')
@@ -29,6 +29,11 @@ test_that("polytomy id", {
                 read.tree(text = "(a,((((c,d),e),rogue),b));"),
                 read.tree(text = "(a,(rogue,(e,((b,d),c))));"))
   AllTreesCounted(trees, 'rogue')
+
+  expect_equal(list(cons = Preorder(read.tree(text = '(a, (b, c, d, e));')),
+                    onEdge = c(0, 2, 0, 0, 0, 0),
+                    atNode = c(0, 1)),
+               RoguePlot(trees, 'rogue', plot = FALSE))
 
   skip_if_not_installed('vdiffr', '1.0')
   RoguePlotTest <- function () {
@@ -58,6 +63,12 @@ test_that('Complex rogue plot', {
                     atNode = c(1, 0, 5, 0)),
                RoguePlot(trees1, 'rogue', plot = FALSE))
 
+  expect_equal(list(cons = Preorder(RenumberTips(
+    read.tree(text = '(f, (e, (d, c, (b, a))));'), letters[1:6])),
+                    onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
+                    atNode = c(0, 0, 5, 0)),
+               RoguePlot(trees1, 'rogue', outgroup = 'f', plot = FALSE))
+
   trees2 <- list(read.tree(text = '(a, (b, (rogue, ((d, c), (e, f)))));'),
                  read.tree(text = '(a, (b, ((rogue, (d, c)), (e, f))));'),
                  read.tree(text = '(a, (b, ((rogue, (d, c)), (e, f))));'),
@@ -65,8 +76,8 @@ test_that('Complex rogue plot', {
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
                  read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'))
   expected <- list(cons = Preorder(read.tree(text = '(a, (b, (c, d), (e, f)));')),
-                   onEdge = c(0, 0, 0, 2, 0, 0, 3, 0, 0),
-                   atNode = c(0, 1, 0, 0))
+                   onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
+                   atNode = c(0, 0, 5, 0))
   actual <- RoguePlot(trees2, 'rogue', plot = FALSE)
   expect_equal(names(actual), names(expected))
   expect_true(all.equal(actual$cons, expected$cons))
@@ -92,4 +103,3 @@ test_that('Complex rogue plot', {
   }
   vdiffr::expect_doppelganger('RoguePlot(trees2)', RoguePlotTest)
 })
-

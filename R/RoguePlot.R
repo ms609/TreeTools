@@ -62,23 +62,30 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        thin = par('lwd'), fat = thin + 1L,
                        outgroupTips,
                        ...) {
-  trees <- RenumberTips(trees, trees[[1]])
-  if (is.character(tip)) {
-    tip <- fmatch(tip, trees[[1]]$tip.label)
-  }
+  tipLabels <- trees[[1]]$tip.label
+  nTip <- length(tipLabels)
 
-  dummyRoot <- 'XXTREETOOLSXXDUMMYXXROOTXX'
+  if(!missing(outgroupTips)) {
+    trees[] <- lapply(trees, RootTree, intersect(outgroupTips, tipLabels))
+  }
+  trees[] <- RenumberTips(trees, tipLabels)
+
   noRogue <- trees
-  noRogue[] <- lapply(trees, DropTip, tip)
+  noRogue[] <- lapply(noRogue, DropTip, tip)
+  dummyRoot <- 'xxTREETOOLSxxDUMMYxxROOTxx'
   noRogue[] <- lapply(noRogue, AddTip, 0, dummyRoot)
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
   consTip <- NTip(cons)
 
-  nTip <- NTip(trees[[1]])
+  if (is.character(tip)) {
+    tip <- fmatch(tip, tipLabels)
+  }
+  pole <- nTip
+
   #allTips <- logical(ceiling((nTip) / 8) * 8L + 2L) # Multiple of 8 for packBits
   allTips <- logical(nTip + 1L) # including dummy
-  # leaf 1 is defined as outgroup and thus always below rogue.
+  # dummyRoot is, by definition, always below rogue.
   aboveRogue <- .vapply(trees, function (tr) {
     edge <- AddTip(tr, 0, dummyRoot)$edge
     parent <- edge[, 1]
@@ -98,29 +105,29 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     splitTips <- splitTips[-tip]
 
     #ret <- packBits(splitTips[-1]) # TODO can do something clever like this?
-    if (splitTips[1]) {
-      !splitTips[-1]
+    if (splitTips[pole]) {
+      !splitTips[-pole]
     } else {
-      splitTips[-1]
+      splitTips[-pole]
     }
   #}, raw((length(allTips) - 2L)  / 8L))
   }, logical((length(allTips) - 2L)))
 
   # Vector, each entry corresponds to a tree
-  tipsAboveRogue <- colSums(aboveRogue)
-  nAtTip <- c(sum(tipsAboveRogue == nTip - 1L), # At first tip
-              double(nTip - 1L))
+  tipsAboveRogue <- colSums(aboveRogue) # includes dummy root
+  nAtTip <- c(double(nTip - 1L),
+              sum(tipsAboveRogue == nTip - 1L)) # At pole
   atTip <- tipsAboveRogue == 1L
-  tipMatches <- 1L + apply(aboveRogue[, atTip, drop = FALSE], 2, which)
+  tipMatches <- apply(aboveRogue[, atTip, drop = FALSE], 2, which)
   tab <- table(as.integer(tipMatches))
   nAtTip[as.integer(names(tab))] <- tab
 
   unmatchedTrees <- !(tipsAboveRogue %fin% c(0L, 1L, nTip - 1L))
-  consSplits <- PolarizeSplits(as.Splits(cons), 1)
+  consSplits <- PolarizeSplits(as.Splits(cons), pole)
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   edgeMatches <- fmatch(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
-                        data.frame(t(splits[, -1, drop = FALSE])))
+                        data.frame(t(splits[, -pole, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
   tab <- table(edgeMatches)
@@ -133,10 +140,11 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 2L))
   unmatchedTrees[unmatchedTrees] <- is.na(edgeMatches)
   if (any(unmatchedTrees)) {
-    nodeDescs <- .vapply(allDescendants(cons)[-seq_len(nTip)], function (tips) {
+    # Ignore the dummy root node
+    nodeDescs <- .vapply(allDescendants(cons)[-seq_len(nTip)][-1], function (tips) {
       ret <- logical(nTip)
       ret[tips[tips <= nTip]] <- TRUE
-      if (ret[1]) !ret[-1] else ret[-1]
+      if (ret[pole]) !ret[-pole] else ret[-pole]
     }, logical(nTip - 1L))
 
     nNode <- ncol(nodeDescs)
@@ -145,17 +153,21 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     #   consEdge[consEdge[, 2] == node, 1]
     # }, integer(1))) - nTip - 1L # -1 because we will delete the dummy root node
 
-    active <- .vapply(seq_len(nNode)[-1], function (i) {
-      apply(aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE], 2, any)
-    }, logical(sum(unmatchedTrees)))
+    unmatchedGroup <- aboveRogue[, unmatchedTrees, drop = FALSE]
+    nUnmatched <- sum(unmatchedTrees)
 
-    within <- .vapply(seq_len(nNode)[-1], function (i) {
-      apply(aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE], 2, all)
-    }, logical(sum(unmatchedTrees)))
+    # nodeOverlapsGroup <- apply(unmatchedGroup, 2, function (gp) {
+    #   apply(nodeDescs[gp, , drop = FALSE], 2, any)
+    # })
+    floors <- .apply(unmatchedGroup, 2, function (gp) {
+       nodeContainsAllGroup <- apply(nodeDescs[gp, , drop = FALSE], 2, all)
+       nodeContainsNonGroup <- apply(nodeDescs[!gp, , drop = FALSE], 2, any)
+       nodeContainsAllGroup & nodeContainsNonGroup
+    })
 
     # active[i, ] != within[i, ], or we'd be on an edge
-    atNode <- table(apply(cbind(active & !within), 1,
-                          function (x) 1L + length(x) - which.max(rev(x))))
+    atNode <- table(apply(cbind(floors), 2,
+                          function (x) 1 + length(x) - which.max(rev(x))))
     nAtNode[as.integer(names(atNode))] <- atNode
 
     # for (i in seq_len(nNode)[-1]) {
@@ -171,9 +183,6 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   }
 
   cons <- DropTip(cons, dummyRoot)
-  if(!missing(outgroupTips)) {
-    cons <- RootTree(cons, intersect(outgroupTips, cons$tip.label))
-  }
   if (!is.null(edgeLength)) {
     cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
   }
@@ -197,9 +206,19 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 }
 
 
-# TODO in r4.1.0 use apply(drop = false)
+# TODO in r4.1.0 use apply(simplify = false)?
 .vapply <- function (...) {
   x <- vapply(...)
+  if (is.null(dim(x))) {
+    x <- matrix(x, 1L)
+  }
+
+  # Return:
+  x
+}
+
+.apply <- function (...) {
+  x <- apply(...)
   if (is.null(dim(x))) {
     x <- matrix(x, 1L)
   }
