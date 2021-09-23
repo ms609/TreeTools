@@ -10,8 +10,8 @@ on:
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
-      - 'tests/testthat/**'
-      - 'vignettes/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
   pull_request:
     branches:
       - main
@@ -21,8 +21,8 @@ on:
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
-      - 'tests/testthat/**'
-      - 'vignettes/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
 
 name: mem-check
 
