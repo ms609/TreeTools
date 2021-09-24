@@ -46,12 +46,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: ASan preload
+      - name: Initialize ASan configuration
         run: |
           export LD_PRELOAD=$(gcc -print-file-name=libasan.so)
 
-      - name: Create Makevars
-        run: |
           echo "PKG_CFLAGS = -fsanitize=address -fno-omit-frame-pointer" > src/Makevars
           echo "PKG_CXXFLAGS = -fsanitize=address -fno-omit-frame-pointer" >> src/Makevars
 
