@@ -1,6 +1,8 @@
-# TreeTools 1.5.0.9000 (development)
+# TreeTools 1.5.0.9001 (development)
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
+
+- Implement `sort.multiPhylo()`.
 
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
