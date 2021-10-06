@@ -19,6 +19,7 @@ sort.multiPhylo <- function (x, decreasing = FALSE, na.last = NA, ...) {
 }
 
 #' @rdname sort.multiPhylo
+#' @param e1,e2 `phylo` objects to be compared.
 #' @export
 `==.phylo` <- function (e1, e2) isTRUE(all.equal(e1, e2))
 

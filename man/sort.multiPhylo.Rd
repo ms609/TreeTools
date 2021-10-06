@@ -17,6 +17,8 @@
 }
 \arguments{
 \item{x, decreasing, na.last, \dots}{As in \code{\link[=sort]{sort()}}.}
+
+\item{e1, e2}{\code{phylo} objects to be compared.}
 }
 \description{
 Trees are sorted alphabetically by their Newick representation after
