@@ -1,27 +1,26 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "TreeTools",
-  "description": "Efficient implementations of functions for the creation, \n  modification and analysis of phylogenetic trees.\n  Applications include:\n  generation of trees with specified shapes;\n  tree rearrangement;\n  analysis of tree shape;\n  rooting of trees and extraction of subtrees;\n  calculation and depiction of split support;\n  calculation of ancestor-descendant relationships,\n  of 'stemwardness' (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>,\n  and of tree balance (Mir et al. 2013) <doi:10.1016/j.mbs.2012.10.005>;\n  artificial extinction (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>;\n  import and export of trees from Newick, Nexus (Maddison et al. 1997)\n  <doi:10.1093/sysbio/46.4.590>,\n  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;\n  and analysis of splits and cladistic information.",
+  "description": "Efficient implementations of functions for the creation, modification and analysis of phylogenetic trees. Applications include: generation of trees with specified shapes; tree rearrangement; analysis of tree shape; rooting of trees and extraction of subtrees; calculation and depiction of split support; calculation of ancestor-descendant relationships, of 'stemwardness' (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>, and of tree balance (Mir et al. 2013) <doi:10.1016/j.mbs.2012.10.005>; artificial extinction (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>; import and export of trees from Newick, Nexus (Maddison et al. 1997) <doi:10.1093/sysbio/46.4.590>, and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats; and analysis of splits and cladistic information.",
   "name": "TreeTools: Create, Modify and Analyse Phylogenetic Trees",
   "codeRepository": "https://github.com/ms609/TreeTools/",
-  "relatedLink": [
-    "https://ms609.github.io/TreeTools",
-    "https://CRAN.R-project.org/package=TreeTools",
-    "https://ms609.github.io/TreeTools/"
-  ],
+  "relatedLink": "https://ms609.github.io/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R Under development (unstable) (2021-10-05 r81008)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -31,7 +30,6 @@
       "@id": "https://orcid.org/0000-0001-5660-1727"
     }
   ],
-  "contributor": {},
   "copyrightHolder": [
     {
       "@type": "Person",
@@ -47,7 +45,6 @@
       "@id": "https://orcid.org/0000-0003-3092-2199"
     }
   ],
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -133,14 +130,14 @@
       "sameAs": "https://CRAN.R-project.org/package=vdiffr"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.4.0"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "ape",
       "name": "ape",
@@ -153,7 +150,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ape"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "bit64",
       "name": "bit64",
@@ -165,7 +162,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=bit64"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "colorspace",
       "name": "colorspace",
@@ -177,7 +174,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=colorspace"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "fastmatch",
       "name": "fastmatch",
@@ -190,7 +187,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=fastmatch"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "phangorn",
       "name": "phangorn",
@@ -203,7 +200,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=phangorn"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "R.cache",
       "name": "R.cache",
@@ -215,7 +212,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.cache"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
@@ -227,11 +224,10 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
-    }
-  ],
-  "releaseNotes": "https://github.com/ms609/TreeTools/blob/master/NEWS.md",
-  "contIntegration": "https://codecov.io/gh/ms609/TreeTools",
-  "developmentStatus": "http://www.repostatus.org/#active",
+    },
+    "SystemRequirements": "C++14"
+  },
+  "fileSize": "1352.746KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -245,25 +241,9 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.5281/zenodo.3522725",
-      "description": "R package version ",
+      "description": "R package version 1.5.1",
       "@id": "https://doi.org/10.5281/zenodo.3522725",
       "sameAs": "https://doi.org/10.5281/zenodo.3522725"
     }
-  ],
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
-  },
-  "keywords": [
-    "phylogenetics",
-    "r-packages",
-    "phylogenetic-trees",
-    "evolutionary-biology",
-    "r-package",
-    "cran"
-  ],
-  "fileSize": "1351.502KB",
-  "readme": "https://github.com/ms609/TreeTools/blob/master/README.md"
+  ]
 }
