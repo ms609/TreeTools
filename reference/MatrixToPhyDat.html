@@ -89,7 +89,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -164,7 +164,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens." />
 
     <pre class="usage"><span class='fu'>MatrixToPhyDat</span><span class='op'>(</span><span class='va'>tokens</span><span class='op'>)</span>
 
-<span class='fu'>PhyDatToMatrix</span><span class='op'>(</span><span class='va'>dataset</span><span class='op'>)</span></pre>
+<span class='fu'>PhyDatToMatrix</span><span class='op'>(</span><span class='va'>dataset</span>, ambigNA <span class='op'>=</span> <span class='cn'>FALSE</span>, inappNA <span class='op'>=</span> <span class='va'>ambigNA</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,6 +179,11 @@ character labels.</p></td>
     <tr>
       <th>dataset</th>
       <td><p>A dataset of class <code>phyDat</code>.</p></td>
+    </tr>
+    <tr>
+      <th>ambigNA, inappNA</th>
+      <td><p>Logical specifying whether to denote ambiguous /
+inapplicable characters as <code>NA</code> values.</p></td>
     </tr>
     </table>
 
