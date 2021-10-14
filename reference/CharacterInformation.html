@@ -46,8 +46,15 @@
 
 
 <meta property="og:title" content="Character information content — CharacterInformation" />
-<meta property="og:description" content="CharacterInformation() calculates the phylogenetic information content
-of a given character." />
+<meta property="og:description" content="CharacterInformation() calculates the cladistic information content
+(Steel and Penny 2006)
+ of a given character, in bits.
+The total information in all characters gives a measure of the potential
+utility of a dataset (Cotton and Wilkinson 2008)
+, which can be
+compared with a profile parsimony score (Faith and Trueman 2001)
+ to
+evaluate the degree of homoplasy within a dataset." />
 
 
 
@@ -158,8 +165,15 @@ of a given character." />
     </div>
 
     <div class="ref-description">
-    <p><code>CharacterInformation()</code> calculates the phylogenetic information content
-of a given character.</p>
+    <p><code>CharacterInformation()</code> calculates the cladistic information content
+(Steel and Penny 2006)
+ of a given character, in bits.
+The total information in all characters gives a measure of the potential
+utility of a dataset (Cotton and Wilkinson 2008)
+, which can be
+compared with a profile parsimony score (Faith and Trueman 2001)
+ to
+evaluate the degree of homoplasy within a dataset.</p>
     </div>
 
     <pre class="usage"><span class='fu'>CharacterInformation</span><span class='op'>(</span><span class='va'>tokens</span><span class='op'>)</span></pre>
@@ -185,7 +199,13 @@ phylogenetic information content of the character (<em>sensu</em> Steel &amp; Pe
 
     
 <ul>
-<li><p>Steel MA, Penny D (2006).
+<li><p>Cotton JA, Wilkinson M (2008).
+&#8220;Quantifying the potential utility of phylogenetic characters.&#8221;
+<em>Taxon</em>, <b>57</b>(1), 131--136.<br /><br /> Faith DP, Trueman JWH (2001).
+&#8220;Towards an inclusive philosophy for phylogenetic inference.&#8221;
+<em>Systematic Biology</em>, <b>50</b>(3), 331--350.
+doi: <a href='https://doi.org/10.1080/10635150118627'>10.1080/10635150118627</a>
+, <a href='http://www.ncbi.nlm.nih.gov/pubmed/12116579'>http://www.ncbi.nlm.nih.gov/pubmed/12116579</a>.<br /><br /> Steel MA, Penny D (2006).
 &#8220;Maximum parsimony and the phylogenetic information in multistate characters.&#8221;
 In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163--178.
 Oxford University Press, Oxford.</p></li>
