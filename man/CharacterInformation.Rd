@@ -19,12 +19,16 @@ phylogenetic information content of the character (\emph{sensu} Steel & Penny
 2006), in bits.
 }
 \description{
-\code{CharacterInformation()} calculates the phylogenetic information content
-of a given character.
+\code{CharacterInformation()} calculates the cladistic information content
+\insertCite{Steel2006}{TreeTools} of a given character, in bits.
+The total information in all characters gives a measure of the potential
+utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
+compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+evaluate the degree of homoplasy within a dataset.
 }
 \references{
 \itemize{
-\item \insertRef{Steel2006}{TreeTools}
+\item \insertAllCited{}
 }
 }
 \seealso{
