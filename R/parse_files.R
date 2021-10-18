@@ -912,8 +912,8 @@ PhyDat <- function (dataset) {
 #'
 #' @param string String of tokens, optionally containing whitespace, with no
 #'   terminating semi-colon.
-#' @param tips Character vector corresponding to the names (in order)
-#' of each taxon in the matrix, or an objects such as a tree from which
+#' @param tips (Optional) Character vector corresponding to the names (in order)
+#' of each taxon in the matrix, or an object such as a tree from which
 #' tip labels can be extracted.
 #' @param byTaxon Logical; if `TRUE`, string is one **taxon's** coding at a
 #' time; if `FALSE`, string is interpreted as one **character's** coding at a
@@ -929,8 +929,12 @@ PhyDat <- function (dataset) {
 #'
 #' @export
 StringToPhyDat <- function (string, tips, byTaxon = TRUE) {
+  tokens <- NexusTokens(string)
+  if (missing(tips)) {
+    tips <- length(tokens)
+  }
   tips <- TipLabels(tips)
-  tokens <- matrix(NexusTokens(string), nrow = length(tips), byrow = byTaxon,
+  tokens <- matrix(tokens, nrow = length(tips), byrow = byTaxon,
                    dimnames = list(tips, NULL))
 
   # Return:

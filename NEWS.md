@@ -1,3 +1,7 @@
+# TreeTools 1.5.1.9000
+
+- Infer `tips` parameter if missing in `StringToPhyDat()`.
+
 # TreeTools 1.5.1
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
