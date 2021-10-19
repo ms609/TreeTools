@@ -687,17 +687,12 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   notesStart <- which(trimUpperLines == "BEGIN NOTES;")
   endBlocks <- which(trimUpperLines %fin% c("END;", "ENDBLOCK;"))
   taxlabels <- which(trimUpperLines == "TAXLABELS")
-  if (length(taxlabels) == 0) {
-    taxlabels <- names(ReadAsPhyDat(filepath))
-  }
   semicolons <- which(trimUpperLines == ";")
   nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
 
 
   if (length(notesStart) == 0) {
     return(list("NOTES block not found in Nexus file."))
-  } else if (length(taxlabels) == 0) {
-    return(list("TAXLABELS not found in Nexus file."))
   } else if (length(notesStart) > 1) {
     return(list("Multiple NOTES blocks found in Nexus file."))
   } else if (length(taxlabels) > 1) {
@@ -705,34 +700,40 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   } else if (!any(nTaxLines)) {
     return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
-    nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
-    if (length(unique(nTax)) > 1) {
-      return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
-    }
-    nTax <- as.integer(nTax[1])
-
-    taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
-    taxaLines <- lines[(taxlabels + 1):taxaEnd]
-    taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
-    if (sum(taxon.matches) == nTax) {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+    if (length(taxlabels) == 0) {
+      taxa <- names(ReadAsPhyDat(filepath))
     } else {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- unlist(strsplit(taxa, ' '))
-      if (length(taxa) != nTax) {
-        return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
-                           " TAXLABELS found in Nexus file.")))
+
+      nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
+      if (length(unique(nTax)) > 1) {
+        return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
+      }
+      nTax <- as.integer(nTax[1])
+
+      taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
+      taxaLines <- lines[(taxlabels + 1):taxaEnd]
+      taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
+      if (sum(taxon.matches) == nTax) {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+      } else {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- unlist(strsplit(taxa, ' '))
+        if (length(taxa) != nTax) {
+          return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
+                             " TAXLABELS found in Nexus file.")))
+        }
       }
     }
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
+    notes <- strsplit(paste0(notesLines, collapse = '\r\n'), '\\r\\n\\s*TEXT\\s+')[[1]]
 
-    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notesLines))
-    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notesLines))
+    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notes))
+    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notes))
     noteText <- EndSentence(MorphoBankDecode(
-      .RegExpMatches("\\bTEXT\\s*=\\s*['\"](.+)['\"];\\s*$", notesLines)))
+      .RegExpMatches("\\bTEXT\\s*=\\s*['\"]([\\s\\S]+)['\"];\\s*$", notes)))
 
     seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
 
