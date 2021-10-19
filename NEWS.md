@@ -1,7 +1,10 @@
-# TreeTools 1.5.1.9000
+# TreeTools 1.5.1.9001
 
 - Infer `tips` parameter if missing in `StringToPhyDat()`.
+
 - Improve parsing of information from nexus files.
+
+- Work around `multiPhylo[] <-` bug in ape [#36](https://github.com/emmanuelparadis/ape/issues/36)
 
 # TreeTools 1.5.1
 
