@@ -728,7 +728,9 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
-    notes <- strsplit(paste0(notesLines, collapse = '\r\n'), '\\r\\n\\s*TEXT\\s+')[[1]]
+    notes <- strsplit(paste0(notesLines, collapse = '\r\n'),
+                      # (?i) makes perl regexp case insensitive
+                      '(?i)\\r\\n\\s*TEXT\\s+', perl = TRUE)[[1]]
 
     noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notes))
     noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notes))
