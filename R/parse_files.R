@@ -472,7 +472,7 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
       if (length(stateStarts) != length(stateEnds)) {
-        warning("Could not parse character states.")
+        warning("Could not parse character states; does each end with a ' or ;?.")
       } else {
         if (length(character_num) != length(stateStarts)) {
           stateNos <- as.integer(stateLines[stateStarts])
