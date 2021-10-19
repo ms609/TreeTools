@@ -465,14 +465,27 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
                                  ignore.case = TRUE, perl = TRUE)
     if (length(stateStart) == 1) {
       stateEnd <- semicolons[semicolons > stateStart][1]
+      if (is.na(stateEnd)) {
+        stop("STATELABELS block missing closing semicolon;")
+      }
       stateLines <- lines[stateStart:stateEnd]
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
       if (length(stateStarts) != length(stateEnds)) {
         warning("Could not parse character states.")
       } else {
+        if (length(character_num) != length(stateStarts)) {
+          stateNos <- as.integer(stateLines[stateStarts])
+          if (all(!is.na(stateNos))) {
+            warning("Missing character state definition for: ",
+                    paste0(setdiff(character_num, stateNos), collapse = ', '))
+          } else {
+            warning("More characters than character state definitions.")
+          }
+        }
+
         attr(tokens, 'state.labels') <-
-          lapply(character_num, function (i)
+          lapply(character_num[seq_along(stateStarts)], function (i)
             Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
       }
