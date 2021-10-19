@@ -687,6 +687,9 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   notesStart <- which(trimUpperLines == "BEGIN NOTES;")
   endBlocks <- which(trimUpperLines %fin% c("END;", "ENDBLOCK;"))
   taxlabels <- which(trimUpperLines == "TAXLABELS")
+  if (length(taxlabels) == 0) {
+    taxlabels <- names(ReadAsPhyDat(filepath))
+  }
   semicolons <- which(trimUpperLines == ";")
   nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
 

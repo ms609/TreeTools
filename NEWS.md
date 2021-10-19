@@ -1,6 +1,7 @@
 # TreeTools 1.5.1.9000
 
 - Infer `tips` parameter if missing in `StringToPhyDat()`.
+- Improve parsing of information from nexus files.
 
 # TreeTools 1.5.1
 
