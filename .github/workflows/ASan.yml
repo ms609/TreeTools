@@ -1,0 +1,102 @@
+# Address Sanitizer: Replicate CRAN's gcc-ASAN 'Additional Test'
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '.github/workflows/gcc-ASAN.yml'
+      - 'src/**'
+      - 'inst/include/**'
+      - 'memcheck/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
+  pull_request:
+    paths:
+      - '.github/workflows/gcc-ASAN.yml'
+      - 'src/**'
+      - 'inst/include/**'
+      - 'memcheck/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
+
+name: gcc-ASAN
+
+jobs:
+  mem-check:
+    runs-on: ubuntu-20.04
+
+    name: AddressSanitizer ${{ matrix.config.test }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {test: 'tests'}
+          - {test: 'examples'}
+          - {test: 'vignettes'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ASAN_OPTIONS: verify_asan_link_order=0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Initialize ASan configuration
+        run: |
+          export LD_PRELOAD=$(gcc -print-file-name=libasan.so)
+
+          echo "PKG_CFLAGS = -fsanitize=address -fno-omit-frame-pointer" > src/Makevars
+          echo "PKG_CXXFLAGS = -fsanitize=address -fno-omit-frame-pointer" >> src/Makevars
+
+          mkdir ~/.R
+          echo "LDFLAGS = -fsanitize=address -fno-omit-frame-pointer" >> ~/.R/Makevars
+
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: release # CRAN uses devel, but takes ages to load deps.
+
+      - name: Setup pandoc
+        if: ${{ matrix.config.test }} == 'vignettes'
+        uses: r-lib/actions/setup-pandoc@master
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = c('soft', 'Config/Needs/memcheck')), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install system dependencies
+        run: |
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = c('soft', 'Config/Needs/memcheck'))
+        shell: Rscript {0}
+
+      - name: Install package
+        run: |
+          cd ..
+          R CMD build --no-build-vignettes --no-manual --no-resave-data TreeTools
+          R CMD INSTALL TreeTools*.tar.gz
+          cd TreeTools
+
+      - name: ASAN - memcheck ${{ matrix.config.test }}
+        run: |
+          Rscript memcheck/${{ matrix.config.test }}.R

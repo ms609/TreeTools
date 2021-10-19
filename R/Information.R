@@ -44,8 +44,12 @@ Log2TreesMatchingSplit <- function (A, B = A[2]) {
 
 #' Character information content
 #'
-#' `CharacterInformation()` calculates the phylogenetic information content
-#' of a given character.
+#' `CharacterInformation()` calculates the cladistic information content
+#' \insertCite{Steel2006}{TreeTools} of a given character, in bits.
+#' The total information in all characters gives a measure of the potential
+#' utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
+#' compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+#' evaluate the degree of homoplasy within a dataset.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
 #' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
@@ -58,7 +62,7 @@ Log2TreesMatchingSplit <- function (A, B = A[2]) {
 #' 2006), in bits.
 #'
 #' @references
-#' - \insertRef{Steel2006}{TreeTools}
+#' - \insertAllCited{}
 #' @family split information functions
 #' @template MRS
 #' @importFrom fastmatch %fin%

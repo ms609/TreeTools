@@ -1,12 +1,19 @@
-# TreeTools 1.5.0.9111 (development)
+# Branch "rogue"
 
 ## New functions
 
 - `RoguePlot()` plots the positions of rogue taxa.
-  * 1.x.x.9111: Correct plotting on custom root.
+
+# TreeTools 1.5.1.9000
+
+- Infer `tips` parameter if missing in `StringToPhyDat()`.
+- Improve parsing of information from nexus files.
+
+# TreeTools 1.5.1
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
+- Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
 # TreeTools 1.5.0
 

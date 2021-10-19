@@ -465,14 +465,27 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
                                  ignore.case = TRUE, perl = TRUE)
     if (length(stateStart) == 1) {
       stateEnd <- semicolons[semicolons > stateStart][1]
+      if (is.na(stateEnd)) {
+        stop("STATELABELS block missing closing semicolon;")
+      }
       stateLines <- lines[stateStart:stateEnd]
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
       if (length(stateStarts) != length(stateEnds)) {
-        warning("Could not parse character states.")
+        warning("Could not parse character states; does each end with a ' or ;?.")
       } else {
+        if (length(character_num) != length(stateStarts)) {
+          stateNos <- as.integer(stateLines[stateStarts])
+          if (all(!is.na(stateNos))) {
+            warning("Missing character state definition for: ",
+                    paste0(setdiff(character_num, stateNos), collapse = ', '))
+          } else {
+            warning("More characters than character state definitions.")
+          }
+        }
+
         attr(tokens, 'state.labels') <-
-          lapply(character_num, function (i)
+          lapply(character_num[seq_along(stateStarts)], function (i)
             Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
       }
@@ -680,8 +693,6 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
 
   if (length(notesStart) == 0) {
     return(list("NOTES block not found in Nexus file."))
-  } else if (length(taxlabels) == 0) {
-    return(list("TAXLABELS not found in Nexus file."))
   } else if (length(notesStart) > 1) {
     return(list("Multiple NOTES blocks found in Nexus file."))
   } else if (length(taxlabels) > 1) {
@@ -689,34 +700,40 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   } else if (!any(nTaxLines)) {
     return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
-    nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
-    if (length(unique(nTax)) > 1) {
-      return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
-    }
-    nTax <- as.integer(nTax[1])
-
-    taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
-    taxaLines <- lines[(taxlabels + 1):taxaEnd]
-    taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
-    if (sum(taxon.matches) == nTax) {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+    if (length(taxlabels) == 0) {
+      taxa <- names(ReadAsPhyDat(filepath))
     } else {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- unlist(strsplit(taxa, ' '))
-      if (length(taxa) != nTax) {
-        return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
-                           " TAXLABELS found in Nexus file.")))
+
+      nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
+      if (length(unique(nTax)) > 1) {
+        return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
+      }
+      nTax <- as.integer(nTax[1])
+
+      taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
+      taxaLines <- lines[(taxlabels + 1):taxaEnd]
+      taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
+      if (sum(taxon.matches) == nTax) {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+      } else {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- unlist(strsplit(taxa, ' '))
+        if (length(taxa) != nTax) {
+          return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
+                             " TAXLABELS found in Nexus file.")))
+        }
       }
     }
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
+    notes <- strsplit(paste0(notesLines, collapse = '\r\n'), '\\r\\n\\s*TEXT\\s+')[[1]]
 
-    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notesLines))
-    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notesLines))
+    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notes))
+    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notes))
     noteText <- EndSentence(MorphoBankDecode(
-      .RegExpMatches("\\bTEXT\\s*=\\s*['\"](.+)['\"];\\s*$", notesLines)))
+      .RegExpMatches("\\bTEXT\\s*=\\s*['\"]([\\s\\S]+)['\"];\\s*$", notes)))
 
     seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
 
@@ -912,8 +929,8 @@ PhyDat <- function (dataset) {
 #'
 #' @param string String of tokens, optionally containing whitespace, with no
 #'   terminating semi-colon.
-#' @param tips Character vector corresponding to the names (in order)
-#' of each taxon in the matrix, or an objects such as a tree from which
+#' @param tips (Optional) Character vector corresponding to the names (in order)
+#' of each taxon in the matrix, or an object such as a tree from which
 #' tip labels can be extracted.
 #' @param byTaxon Logical; if `TRUE`, string is one **taxon's** coding at a
 #' time; if `FALSE`, string is interpreted as one **character's** coding at a
@@ -929,8 +946,12 @@ PhyDat <- function (dataset) {
 #'
 #' @export
 StringToPhyDat <- function (string, tips, byTaxon = TRUE) {
+  tokens <- NexusTokens(string)
+  if (missing(tips)) {
+    tips <- length(tokens)
+  }
   tips <- TipLabels(tips)
-  tokens <- matrix(NexusTokens(string), nrow = length(tips), byrow = byTaxon,
+  tokens <- matrix(tokens, nrow = length(tips), byrow = byTaxon,
                    dimnames = list(tips, NULL))
 
   # Return:

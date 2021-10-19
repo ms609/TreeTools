@@ -46,8 +46,8 @@ PhydatToString(
 \item{string}{String of tokens, optionally containing whitespace, with no
 terminating semi-colon.}
 
-\item{tips}{Character vector corresponding to the names (in order)
-of each taxon in the matrix, or an objects such as a tree from which
+\item{tips}{(Optional) Character vector corresponding to the names (in order)
+of each taxon in the matrix, or an object such as a tree from which
 tip labels can be extracted.}
 
 \item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
