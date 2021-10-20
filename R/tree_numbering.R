@@ -493,7 +493,9 @@ RenumberTips.multiPhylo <- function (tree, tipOrder) {
   at <- attributes(tree)
   tree <- lapply(tree, RenumberTips.phylo, tipOrder)
   attributes(tree) <- at
-  attr(tree, 'TipLabel') <- TipLabels(tipOrder)
+  if (!is.null(at$TipLabel)) {
+    attr(tree, 'TipLabel') <- TipLabels(tipOrder)
+  }
   tree
 }
 
