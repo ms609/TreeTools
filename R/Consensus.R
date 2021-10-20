@@ -28,7 +28,7 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
       warning("Tree sizes differ; removing leaves not in smallest.")
-      trees[] <- lapply(trees, KeepTip, trees[[which.min(nTip)]]$tip.label)
+      trees <- lapply(trees, KeepTip, trees[[which.min(nTip)]]$tip.label)
     } else {
       nTip <- nTip[1]
       break
