@@ -82,7 +82,7 @@ test_that("RenumberTips() works correctly", {
   pec7f <- PectinateTree(abcd)
   pec7b <- PectinateTree(dcba)
 
-  l7 <- list(bal7b, bal7f, pec7f)
+  l7 <- list('bal7b' = bal7b, 'bal7f' = bal7f, 'pec7f' = pec7f)
   f7 <- list(bal7f, bal7f, pec7f)
   b7 <- list(bal7b, bal7b, pec7b)
   mp7 <- structure(l7, class = 'multiPhylo')
