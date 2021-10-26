@@ -288,6 +288,16 @@ test_that("DropTip() works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
+test_that("DropTip.multiPhylo() with attributes", {
+  multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
+  attr(multi, 'TipLabel') <- paste0('t', 1:8)
+
+  expect_equal(attr(DropTip(multi, 't8'), 'TipLabel'),
+               paste0('t', 1:7))
+  expect_equal(names(DropTip(multi, 't8')), names(multi))
+  expect_equal(DropTip(multi[1], 't1')[[1]], DropTip(multi[[1]], 't1'))
+})
+
 test_that("KeepTip() works", {
   expect_warning(expect_true(all.equal(
     BalancedTree(paste0('t', 5:8)),
