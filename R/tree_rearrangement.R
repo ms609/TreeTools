@@ -504,7 +504,12 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
 #' @rdname DropTip
 #' @export
 DropTip.multiPhylo <- function (tree, tip, preorder = TRUE) {
-  tree[] <- lapply(tree, DropTip, tip, preorder)
+  at <- attributes(tree)
+  tree <- lapply(tree, DropTip, tip, preorder)
+  attributes(tree) <- at
+  if (!is.null(at$TipLabel)) {
+    attr(tree, 'TipLabel') <- setdiff(at$TipLabel, tip)
+  }
   tree
 }
 
