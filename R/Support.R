@@ -30,7 +30,7 @@
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
   refLabels <- attr(referenceSplits, 'tip.label')
-  forest[] <- lapply(forest, keep.tip, refLabels)
+  forest <- lapply(forest, keep.tip, refLabels)
   forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
   logicals <- vapply(forestSplits,
