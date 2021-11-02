@@ -92,7 +92,7 @@ split in its left operand." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -223,13 +223,15 @@ It will be deprecated in a future release.</p>
 <code><a href='TipsInSplits.html'>TipsInSplits</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>splits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>splits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='fu'>match</span><span class='op'>(</span><span class='va'>splits1</span>, <span class='va'>splits2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  1 NA  3 NA</div><div class='input'><span class='va'>splits1</span> <span class='op'>%in%</span> <span class='va'>splits2</span>
-</div><div class='output co'>#&gt; [1]  TRUE FALSE  TRUE FALSE</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>splits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>splits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Splits.html'>as.Splits</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>PectinateTree</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>match</span><span class='op'>(</span><span class='va'>splits1</span>, <span class='va'>splits2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  1 NA  3 NA</span>
+<span class='r-in'><span class='va'>splits1</span> <span class='op'>%in%</span> <span class='va'>splits2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  TRUE FALSE  TRUE FALSE</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

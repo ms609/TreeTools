@@ -89,7 +89,7 @@ representation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -211,9 +211,9 @@ nine-digit chunks of the decimal integer corresponding to the tree topology
 <p><code>as.phylo.numeric()</code> returns a tree of class <code>phylo</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>There are <code><a href='NRooted.html'>NUnrooted(n)</a></code> unrooted trees with <em>n</em> leaves.
+    <p>There are <code>NUnrooted(n)</code> unrooted trees with <em>n</em> leaves.
 As such, each <em>n</em>-leaf tree can be uniquely identified by a non-negative
-integer <em>x</em> &lt; <code><a href='NRooted.html'>NUnrooted(n)</a></code>.</p>
+integer <em>x</em> &lt; <code>NUnrooted(n)</code>.</p>
 <p>This integer can be converted by a tree by treating it as a mixed-base
 number, with bases 1, 3, 5, 7, … (2 <em>n</em> - 5).</p>
 <p>Each digit of this mixed base number corresponds to a leaf, and determines
@@ -293,21 +293,25 @@ ISBN 978-3-540-61332-9, doi: <a href='https://doi.org/10.1007/3-540-61332-3_168'
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>10</span>, nTip <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='img'><img src='TreeNumber-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Phylogenetic tree number 10 of 105 
-#&gt;  6 tips: t1 t2 t3 t4 t5 t6</div><div class='input'>
-<span class='co'># Larger trees:</span>
-<span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Phylogenetic tree number 3259279213732796827 of 6332659870762850625 
-#&gt;  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</div><div class='input'>
-<span class='co'># If &gt; 9 digits, represent the tree number as a string.</span>
-<span class='va'>treeNumber</span> <span class='op'>&lt;-</span> <span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='st'>"1234567890123"</span>, nTip <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span>
-<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='va'>treeNumber</span><span class='op'>)</span>
-<span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, nTip <span class='op'>=</span> <span class='fl'>6</span>, tipLabels <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 3 phylogenetic trees</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>10</span>, nTip <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='TreeNumber-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='va'>tree</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Phylogenetic tree number 10 of 105 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  6 tips: t1 t2 t3 t4 t5 t6</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Larger trees:</span></span>
+<span class='r-in'><span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='fl'>19</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Phylogenetic tree number 3259279213732796827 of 6332659870762850625 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># If &gt; 9 digits, represent the tree number as a string.</span></span>
+<span class='r-in'><span class='va'>treeNumber</span> <span class='op'>&lt;-</span> <span class='fu'>as.TreeNumber</span><span class='op'>(</span><span class='st'>"1234567890123"</span>, nTip <span class='op'>=</span> <span class='fl'>14</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'>as.phylo</span><span class='op'>(</span><span class='va'>treeNumber</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>2</span>, nTip <span class='op'>=</span> <span class='fl'>6</span>, tipLabels <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 phylogenetic trees</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -92,7 +92,7 @@ resulting in a vector of numerics that require conversion back to
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@ resulting in a vector of numerics that require conversion back to
       <th>FUN</th>
       <td><p>the function to be applied to each element of <code>X</code>:
     see &#8216;Details&#8217;.  In the case of functions like
-    <code><a href='https://rdrr.io/r/base/Arithmetic.html'>+</a></code>, <code><a href='https://rdrr.io/r/base/matmult.html'>%*%</a></code>, the function name must be backquoted or quoted.</p></td>
+    <code>+</code>, <code>%*%</code>, the function name must be backquoted or quoted.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -201,7 +201,7 @@ resulting in a vector of numerics that require conversion back to
     The default value, <code>TRUE</code>, returns a vector or matrix if appropriate,
     whereas if <code>simplify = "array"</code> the result may be an
     <code><a href='https://rdrr.io/r/base/array.html'>array</a></code> of &#8220;rank&#8221;
-    (\(=\)<code><a href='https://rdrr.io/r/base/length.html'>length(dim(.))</a></code>) one higher than the result
+    (\(=\)<code>length(dim(.))</code>) one higher than the result
     of <code>FUN(X[[i]])</code>.</p></td>
     </tr>
     <tr>
@@ -237,14 +237,17 @@ resulting in a vector of numerics that require conversion back to
     <p>Martin R. Smith (<a href='mailto:martin.smith@durham.ac.uk'>martin.smith@durham.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sapply64</span><span class='op'>(</span><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='va'>as.TreeNumber</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; integer64
-#&gt; [1] 1 2 3 4 5 6</div><div class='input'><span class='fu'>vapply64</span><span class='op'>(</span><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='va'>as.TreeNumber</span>, <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; integer64
-#&gt; [1] 1 2 3 4 5 6</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
-<span class='fu'>replicate64</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fu'><a href='TreeNumber.html'>as.TreeNumber</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>RandomTree</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; integer64
-#&gt; [1] 90 10 77 30 90 68</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>sapply64</span><span class='op'>(</span><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='va'>as.TreeNumber</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> integer64</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1 2 3 4 5 6</span>
+<span class='r-in'><span class='fu'>vapply64</span><span class='op'>(</span><span class='fu'>as.phylo</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='va'>as.TreeNumber</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> integer64</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1 2 3 4 5 6</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>replicate64</span><span class='op'>(</span><span class='fl'>6</span>, <span class='fu'><a href='TreeNumber.html'>as.TreeNumber</a></span><span class='op'>(</span><span class='fu'><a href='GenerateTree.html'>RandomTree</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> integer64</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 90 10 77 30 90 68</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

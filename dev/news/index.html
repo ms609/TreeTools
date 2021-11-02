@@ -87,7 +87,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -154,11 +154,12 @@
       <small>Source: <a href='https://github.com/ms609/TreeTools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="treetools-1519001" class="section level1">
-<h1 class="page-header" data-toc-text="1.5.1.9001">
-<a href="#treetools-1519001" class="anchor"></a>TreeTools 1.5.1.9001<small> Unreleased </small>
+    <div id="treetools-1519002" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.1.9002">
+<a href="#treetools-1519002" class="anchor"></a>TreeTools 1.5.1.9002<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="../reference/GenerateTree.html">RandomTree()</a></code> gains <code>nodes</code> parameter allow the inclusion of polytomies.</p></li>
 <li><p>Infer <code>tips</code> parameter if missing in <code><a href="../reference/StringToPhyDat.html">StringToPhyDat()</a></code>.</p></li>
 <li><p>Improve parsing of information from nexus files.</p></li>
 <li><p>Work around <code>multiPhylo[] &lt;-</code> bug in ape <a href="https://github.com/emmanuelparadis/ape/issues/36"><a href='https://github.com/ms609/TreeTools/issues/36'>#36</a></a></p></li>
@@ -195,7 +196,7 @@
 <a href="#improved-functions" class="anchor"></a>Improved functions</h2>
 <ul>
 <li><p>Warn when empty cells passed to <code><a href="../reference/MatrixToPhyDat.html">MatrixToPhyDat()</a></code>.</p></li>
-<li><p>Warn when <code><a href="../reference/LabelSplits.html">LabelSplits(labels)</a></code> lack names.</p></li>
+<li><p>Warn when <code>LabelSplits(labels)</code> lack names.</p></li>
 <li><p><code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> drops tips from <code>forest</code> that aren’t in <code>reference</code>.</p></li>
 <li><p><code><a href="../reference/AddTip.html">AddTipEverywhere()</a></code> supports trees with &lt; 3 leaves.</p></li>
 <li><p>Make <code><a href="../reference/RootTree.html">RootTree()</a></code> and <code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> more robust.</p></li>
@@ -222,7 +223,7 @@
 <ul>
 <li>Correct calculation of minimum value in <code><a href="../reference/TotalCopheneticIndex.html">TCIContext()</a></code>.</li>
 <li>Extract tip labels from objects in <code><a href="../reference/StringToPhyDat.html">StringToPhyDat()</a></code>.</li>
-<li>Support <code><a href="../reference/AddTip.html">AddTip(tree, where = "tip name")</a></code>.</li>
+<li>Support <code>AddTip(tree, where = "tip name")</code>.</li>
 <li>
 <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> supports four-leaf trees.</li>
 <li>Add <code>RootTree.matrix()</code> method for edge matrices.</li>
@@ -252,7 +253,7 @@
 <li>
 <code><a href="../reference/as.multiPhylo.html">as.multiPhylo()</a></code> converts trees, datasets and Splits objects into <code>multiPhylo</code> objects.</li>
 <li>
-<code><a href="../reference/LabelSplits.html">LabelSplits(labels = NULL)</a></code> labels each split with its associated node.</li>
+<code>LabelSplits(labels = NULL)</code> labels each split with its associated node.</li>
 <li>
 <code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> supports integer-only levels.</li>
 <li>
@@ -297,7 +298,7 @@
 <li>
 <code><a href="../reference/ArtificialExtinction.html">ArtificialExtinction()</a></code> gains <code>replaceAll</code> option.</li>
 <li>
-<code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters(types = ...)</a></code> writes different character types to TNT file.</li>
+<code>WriteTntCharacters(types = ...)</code> writes different character types to TNT file.</li>
 <li>Tree characterization S3 methods: add <code>.default</code> and <code>.NULL</code>.</li>
 </ul>
 </div>

@@ -91,7 +91,7 @@ as many checks on user input.  Bad input could crash R." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -215,17 +215,17 @@ of edges under the ordering sequence specified by <code>whichwise</code>.</p>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>nTip</span> <span class='op'>&lt;-</span> <span class='fl'>8L</span>
-<span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='va'>nTip</span><span class='op'>)</span>
-<span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span>
-<span class='va'>pruningwise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPruningwise</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>tree</span><span class='op'>$</span><span class='va'>Nnode</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>,
-                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>cladewise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1L</span><span class='op'>)</span>
-<span class='va'>postorder</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2L</span><span class='op'>)</span>
-
-<span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span><span class='op'>[</span><span class='va'>pruningwise</span>, <span class='op'>]</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>nTip</span> <span class='op'>&lt;-</span> <span class='fl'>8L</span></span>
+<span class='r-in'><span class='va'>tree</span> <span class='op'>&lt;-</span> <span class='fu'><a href='GenerateTree.html'>BalancedTree</a></span><span class='op'>(</span><span class='va'>nTip</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span></span>
+<span class='r-in'><span class='va'>pruningwise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPruningwise</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>tree</span><span class='op'>$</span><span class='va'>Nnode</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>,</span>
+<span class='r-in'>                                   <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>cladewise</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>1L</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>postorder</span> <span class='op'>&lt;-</span> <span class='fu'>NeworderPhylo</span><span class='op'>(</span><span class='va'>nTip</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>edge</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>edge</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='fl'>2L</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span> <span class='op'>&lt;-</span> <span class='va'>tree</span><span class='op'>$</span><span class='va'>edge</span><span class='op'>[</span><span class='va'>pruningwise</span>, <span class='op'>]</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

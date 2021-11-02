@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
                         <h4 class="author">Martin R. Smith <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 class="date">2021-10-19</h4>
+            <h4 class="date">2021-11-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/vignettes/load-trees.Rmd"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
@@ -160,14 +160,14 @@
 <div id="newick-files" class="section level3">
 <h3 class="hasAnchor">
 <a href="#newick-files" class="anchor"></a>Newick files</h3>
-<p>Newick trees can be read with <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html">ape::read.tree(filename)</a></code>; <code><a href="https://rdrr.io/pkg/phytools/man/read.newick.html">phytools::read.newick(filename)</a></code> does not report an error when a ‘node’ has a single descendant (which will often denote a misspecified tree).</p>
+<p>Newick trees can be read with <code>ape::read.tree(filename)</code>; <code>phytools::read.newick(filename)</code> does not report an error when a ‘node’ has a single descendant (which will often denote a misspecified tree).</p>
 </div>
 <div id="trees-from-tnt" class="section level3">
 <h3 class="hasAnchor">
 <a href="#trees-from-tnt" class="anchor"></a>Trees from TNT</h3>
 <p>Trees saved using <a href="http://www.lillo.org.ar/phylogeny/tnt/">TNT</a> can be opened in R using <code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code>.</p>
 <p>Trees should be saved in parenthetical format (TNT command <code>tsav*</code>), rather than TNT’s compressed format (TNT command <code>tsav</code>).</p>
-<p>The TNT command <code>taxname=</code> will write taxon names to file, which results in larger but easier to read files. Trees in such a file will be read using the terminal names saved within the file. The TNT command <code>taxname-</code> saves just the numbers of the terminals. In order for the trees to be reunited with the names of their tips, terminal labels will be read from the linked matrix file listed in the first line of the .tre file. Ensure that this file exists in the expected location. If it does not, use <code><a href="../reference/ReadTntTree.html">ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')</a></code>, or <code>tipLabels</code> to manually specify the names of the tips (e.g. <code>ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])</code>).</p>
+<p>The TNT command <code>taxname=</code> will write taxon names to file, which results in larger but easier to read files. Trees in such a file will be read using the terminal names saved within the file. The TNT command <code>taxname-</code> saves just the numbers of the terminals. In order for the trees to be reunited with the names of their tips, terminal labels will be read from the linked matrix file listed in the first line of the .tre file. Ensure that this file exists in the expected location. If it does not, use <code>ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')</code>, or <code>tipLabels</code> to manually specify the names of the tips (e.g. <code>ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])</code>).</p>
 </div>
 <div id="other-formats" class="section level3">
 <h3 class="hasAnchor">
@@ -178,7 +178,7 @@
 <div id="export-write-trees" class="section level2">
 <h2 class="hasAnchor">
 <a href="#export-write-trees" class="anchor"></a>Export (write) trees</h2>
-<p>To save a tree to a text file, use <code><a href="https://rdrr.io/pkg/ape/man/write.tree.html">ape::write.tree(tree, file='filename.txt')</a></code> for Newick format (widely supported by most phylogenetic software), or <code><a href="https://rdrr.io/pkg/ape/man/write.nexus.html">ape::write.nexus(tree, file='filename.nex')</a></code> for Nexus format.</p>
+<p>To save a tree to a text file, use <code>ape::write.tree(tree, file='filename.txt')</code> for Newick format (widely supported by most phylogenetic software), or <code>ape::write.nexus(tree, file='filename.nex')</code> for Nexus format.</p>
 </div>
 <div id="what-next" class="section level2">
 <h2 class="hasAnchor">
