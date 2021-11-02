@@ -43,6 +43,17 @@ test_that("Random trees are generated correctly", {
   expect_error(RandomTree(4, root = 999))
   expect_error(RandomTree(4, root = -1))
   expect_error(RandomTree(4, root = NA_integer_))
+  expect_error(RandomTree(4, nodes = 0))
+
+  expect_warning(RandomTree(4, nodes = 4))
+  expect_warning(RandomTree(4, root = FALSE, nodes = 3))
+
+  for (nNode in 1:8) {
+    expect_equal(RandomTree(10, nodes = nNode)$Nnode, nNode)
+  }
+  for (nNode in 1:9) {
+    expect_equal(RandomTree(10, root = TRUE, nodes = nNode)$Nnode, nNode)
+  }
 })
 
 test_that("NJTree() works", {

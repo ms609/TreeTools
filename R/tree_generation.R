@@ -20,6 +20,9 @@ NULL
 #'
 #' @param root Character or integer specifying tip to use as root, if desired;
 #' or `FALSE` for an unrooted tree.
+#' @param nodes Number of nodes to generate.  The default and maximum,
+#' `tips - 1`, generates a binary tree; setting a lower value will induce
+#' polytomies.
 #'
 #' @return `RandomTree()` returns a topology drawn at random from the uniform
 #' distribution (i.e. each binary tree is drawn with equal probability).
@@ -36,9 +39,19 @@ NULL
 #' RandomTree(Lobo.phy)
 #'
 #' @export
-RandomTree <- function (tips, root = FALSE) {
+RandomTree <- function (tips, root = FALSE, nodes) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
+  nodesInBinary <- nTips - ifelse(root, 1L, 2L)
+  if (missing(nodes)) {
+    nodes <- nodesInBinary
+  }
+  if (nodes > nodesInBinary) {
+    warning("`nodes` higher than number in binary tree. Ignoring.")
+  }
+  if (nodes < 1L) {
+    stop("A tree must contain one or more `nodes`")
+  }
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
@@ -58,12 +71,18 @@ RandomTree <- function (tips, root = FALSE) {
                          tip.label = tips,
                          br = NULL),
                     class = 'phylo')
+
   # Until require R >= 3.5.0
   isFALSE <- function (x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
   if (isFALSE(root)) {
     tree <- UnrootTree(tree)
   }
 
+  if (nodes < nodesInBinary) {
+    tree <- CollapseNode(tree,
+                         nTips + 1L + sample.int(nodesInBinary - 1L,
+                                                 tree$Nnode - nodes))
+  }
   # Return:
   tree
 }
