@@ -1,4 +1,6 @@
-# TreeTools 1.5.1.9001
+# TreeTools 1.5.1.9002
+
+- `RandomTree()` gains `nodes` parameter allow the inclusion of polytomies.
 
 - Infer `tips` parameter if missing in `StringToPhyDat()`.
 
