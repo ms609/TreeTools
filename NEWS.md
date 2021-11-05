@@ -1,4 +1,7 @@
-# TreeTools 1.5.1.9002
+# TreeTools 1.5.1.9003
+
+- `DropTip()` gains `check` parameter to allow slightly faster operation where
+  input is guaranteed to be valid.
 
 - `RandomTree()` gains `nodes` parameter allow the inclusion of polytomies.
 
