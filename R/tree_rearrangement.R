@@ -433,6 +433,9 @@ CollapseEdge <- function (tree, edges) {
 #' node.
 #' @param preorder Logical specifying whether to [Preorder] the tree before
 #' dropping tips.  Necessary if a tree's edges may be unconventionally numbered.
+#' @param check Logical specifying whether to check validity of `tip`. If
+#' `FALSE` and `tip` contains entries that do not correspond to leaves of the
+#' tree, undefined behaviour may occur.
 #'
 #' @return `DropTip()` returns a tree of class `phylo`, with the requested
 #' leaves removed.
@@ -445,39 +448,45 @@ CollapseEdge <- function (tree, edges) {
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip, preorder = TRUE) UseMethod("DropTip")
+DropTip <- function (tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
 
 #' @rdname DropTip
 #' @export
-DropTip.phylo <- function (tree, tip, preorder = TRUE) {
+DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
   if (preorder) {
     tree <- Preorder(tree)
   }
   labels <- tree$tip.label
   nTip <- length(labels)
-  if (is.null(tip) || any(is.na(tip)) || length(tip) == 0) {
-    drop <- character(0)
+  if (is.null(tip) || !length(tip) || any(is.na(tip))) {
+    drop <- logical(0)
   } else if (is.character(tip)) {
-    drop <- match(tip, tree$tip.label)
-    missing <- is.na(drop)
-    if (any(missing)) {
-      warning(paste(tip[missing], collapse = ', '), " not present in tree")
-      drop <- drop[!missing]
+    drop <- match(tip, labels)
+    if (check) {
+      missing <- is.na(drop)
+      if (any(missing)) {
+        warning(paste(tip[missing], collapse = ', '), " not present in tree")
+        drop <- drop[!missing]
+      }
     }
   } else if (is.numeric(tip)) {
-    nNodes <- nTip + tree$Nnode
-    if (any(tip > nNodes)) {
-      warning("Tree only has ", nNodes, " nodes")
-      tip <- tip[tip <= nNodes]
-    }
-    if (any(tip < 1L)) {
-      warning("`tip` must be > 0")
-      tip <- tip[tip > 0L]
-    }
+    if (check) {
+      nNodes <- nTip + tree$Nnode
+      if (any(tip > nNodes)) {
+        warning("Tree only has ", nNodes, " nodes")
+        tip <- tip[tip <= nNodes]
+      }
+      if (any(tip < 1L)) {
+        warning("`tip` must be > 0")
+        tip <- tip[tip > 0L]
+      }
 
-    if (any(tip > nTip)) {
-      drop <- c(tip[tip <= nTip],
-                unlist(Descendants(tree, tip[tip > nTip])))
+      if (any(tip > nTip)) {
+        drop <- c(tip[tip <= nTip],
+                  unlist(Descendants(tree, tip[tip > nTip])))
+      } else {
+        drop <- tip
+      }
     } else {
       drop <- tip
     }
@@ -485,16 +494,17 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
     stop("`tip` must be of type character or numeric")
   }
 
-  if (length(drop) > 0) {
-    if (length(drop) == nTip) {
+  nDrop <- length(drop)
+  if (nDrop) {
+    if (nDrop == nTip) {
       return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                            NNode = 0), class = 'phylo'))
+                            Nnode = 0), class = 'phylo'))
     }
 
     tree$edge <- drop_tip(tree$edge, drop)
     attr(tree, 'order') <- 'preorder'
     tree$tip.label <- labels[-drop]
-    tree$Nnode <- dim(tree$edge)[1] + 1 - (nTip - length(drop))
+    tree$Nnode <- dim(tree$edge)[1] + 1L - (nTip - nDrop)
   }
 
   # Return:
@@ -503,7 +513,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE) {
 
 #' @rdname DropTip
 #' @export
-DropTip.multiPhylo <- function (tree, tip, preorder = TRUE) {
+DropTip.multiPhylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
   at <- attributes(tree)
   tree <- lapply(tree, DropTip, tip, preorder)
   attributes(tree) <- at
@@ -517,7 +527,7 @@ DropTip.multiPhylo <- function (tree, tip, preorder = TRUE) {
 #' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
 #' in preorder.
 #' @export
-KeepTip <- function (tree, tip, preorder = TRUE) {
+KeepTip <- function (tree, tip, preorder = TRUE, check = TRUE) {
   labels <- if (is.character(tip)) {
     TipLabels(tree)
   } else {
@@ -527,7 +537,7 @@ KeepTip <- function (tree, tip, preorder = TRUE) {
     warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
   }
   keep <- setdiff(labels, tip)
-  DropTip(tree, keep, preorder)
+  DropTip(tree, keep, preorder, check)
 }
 
 #' Generate binary tree by collapsing polytomies

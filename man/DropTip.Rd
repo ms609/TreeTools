@@ -7,13 +7,13 @@
 \alias{KeepTip}
 \title{Drop tips from tree}
 \usage{
-DropTip(tree, tip, preorder = TRUE)
+DropTip(tree, tip, preorder = TRUE, check = TRUE)
 
-\method{DropTip}{phylo}(tree, tip, preorder = TRUE)
+\method{DropTip}{phylo}(tree, tip, preorder = TRUE, check = TRUE)
 
-\method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE)
+\method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE, check = TRUE)
 
-KeepTip(tree, tip, preorder = TRUE)
+KeepTip(tree, tip, preorder = TRUE, check = TRUE)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
@@ -25,6 +25,10 @@ node.}
 
 \item{preorder}{Logical specifying whether to \link{Preorder} the tree before
 dropping tips.  Necessary if a tree's edges may be unconventionally numbered.}
+
+\item{check}{Logical specifying whether to check validity of \code{tip}. If
+\code{FALSE} and \code{tip} contains entries that do not correspond to leaves of the
+tree, undefined behaviour may occur.}
 }
 \value{
 \code{DropTip()} returns a tree of class \code{phylo}, with the requested

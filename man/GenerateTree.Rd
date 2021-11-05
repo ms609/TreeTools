@@ -8,7 +8,7 @@
 \alias{StarTree}
 \title{Generate pectinate, balanced or random trees}
 \usage{
-RandomTree(tips, root = FALSE)
+RandomTree(tips, root = FALSE, nodes)
 
 PectinateTree(tips)
 
@@ -23,6 +23,10 @@ extract leaf labels.}
 
 \item{root}{Character or integer specifying tip to use as root, if desired;
 or \code{FALSE} for an unrooted tree.}
+
+\item{nodes}{Number of nodes to generate.  The default and maximum,
+\code{tips - 1}, generates a binary tree; setting a lower value will induce
+polytomies.}
 }
 \value{
 Each function returns an unweighted binary tree of class \code{phylo} with
