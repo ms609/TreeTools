@@ -89,7 +89,7 @@ incident branches." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9003</span>
       </span>
     </div>
 
@@ -162,15 +162,15 @@ incident branches." />
 incident branches.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for phylo</span>
-<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for multiPhylo</span>
-<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>KeepTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+<span class='fu'>KeepTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,6 +190,12 @@ node.</p></td>
       <th>preorder</th>
       <td><p>Logical specifying whether to <a href='RenumberTree.html'>Preorder</a> the tree before
 dropping tips.  Necessary if a tree's edges may be unconventionally numbered.</p></td>
+    </tr>
+    <tr>
+      <th>check</th>
+      <td><p>Logical specifying whether to check validity of <code>tip</code>. If
+<code>FALSE</code> and <code>tip</code> contains entries that do not correspond to leaves of the
+tree, undefined behaviour may occur.</p></td>
     </tr>
     </table>
 
