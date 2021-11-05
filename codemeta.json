@@ -8,13 +8,13 @@
   "relatedLink": "https://ms609.github.io/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.5.1.9002",
+  "version": "1.5.1.9003",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2021-10-05 r81008)",
+  "runtimePlatform": "R Under development (unstable) (2021-11-01 r81125)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -227,7 +227,7 @@
     },
     "SystemRequirements": "C++14"
   },
-  "fileSize": "1355.209KB",
+  "fileSize": "1356.156KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -241,7 +241,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.5281/zenodo.3522725",
-      "description": "R package version 1.5.1.9002",
+      "description": "R package version 1.5.1.9003",
       "@id": "https://doi.org/10.5281/zenodo.3522725",
       "sameAs": "https://doi.org/10.5281/zenodo.3522725"
     }
