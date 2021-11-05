@@ -87,13 +87,13 @@ test_that("RenumberTips() works correctly", {
   b7 <- list(bal7b, bal7b, pec7b)
   mp7 <- structure(l7, class = 'multiPhylo')
 
-  expect_true(all.equal(f7, RenumberTips(l7, abcd)))
-  expect_true(all.equal(b7, RenumberTips(l7, dcba)))
+  expect_true(all.equal(f7, unname(RenumberTips(l7, abcd))))
+  expect_true(all.equal(b7, unname(RenumberTips(l7, dcba))))
 
   expect_true(all.equal(structure(f7, class = 'multiPhylo'),
-                        RenumberTips(mp7, abcd)))
+                        unname(RenumberTips(mp7, abcd))))
   expect_true(all.equal(structure(b7, class = 'multiPhylo'),
-                        RenumberTips(mp7, dcba)))
+                        unname(RenumberTips(mp7, dcba))))
 
   expect_error(RenumberTips(l7, letters[1:5]))
   expect_error(RenumberTips(l7, letters[2:5]))
