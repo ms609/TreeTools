@@ -6,7 +6,7 @@
 
 
 
-# TreeTools 1.5.1.9003
+# TreeTools 1.5.1.9004
 
 - `DropTip()` gains `check` parameter to allow slightly faster operation where
   input is guaranteed to be valid.
@@ -18,6 +18,8 @@
 - Improve parsing of information from nexus files.
 
 - Work around `multiPhylo[] <-` bug in ape [#36](https://github.com/emmanuelparadis/ape/issues/36)
+
+- Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
 
 # TreeTools 1.5.1
 

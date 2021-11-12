@@ -511,6 +511,11 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
   tree
 }
 
+#' @describeIn DropTip Direct call to `DropTip.phylo()`, to avoid overhead of
+#' querying object's class.
+#' @export
+DropTipPhylo <- DropTip.phylo
+
 #' @rdname DropTip
 #' @export
 DropTip.multiPhylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
