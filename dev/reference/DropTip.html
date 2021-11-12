@@ -89,7 +89,7 @@ incident branches." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.5.1.9004</span>
       </span>
     </div>
 
@@ -167,6 +167,8 @@ incident branches.</p>
 <span class='co'># S3 method for phylo</span>
 <span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
+<span class='fu'>DropTipPhylo</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
 <span class='co'># S3 method for multiPhylo</span>
 <span class='fu'>DropTip</span><span class='op'>(</span><span class='va'>tree</span>, <span class='va'>tip</span>, preorder <span class='op'>=</span> <span class='cn'>TRUE</span>, check <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
@@ -209,6 +211,13 @@ in preorder.</p>
 
     <p>This function is more robust than <code><a href='https://rdrr.io/pkg/ape/man/drop.tip.html'>ape::drop.tip()</a></code> as it does not
 require any particular internal node numbering schema.</p>
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    
+<ul>
+<li><p><code>DropTipPhylo</code>: Direct call to <code>DropTip.phylo()</code>, to avoid overhead of
+querying object's class.</p></li>
+</ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other tree manipulation: 
