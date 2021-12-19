@@ -32,7 +32,7 @@ BugReports: https://github.com/ms609/TreeTools/issues/
 SystemRequirements: C++14
 Depends:
     R (>= 3.4.0),
-    ape (>= 5.0),
+    ape (>= 5.6),
 Imports:
     bit64,
     lifecycle,
