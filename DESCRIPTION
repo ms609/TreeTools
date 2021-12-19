@@ -48,6 +48,8 @@ Suggests:
     shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
+Remotes:
+    emmanuelparadis/ape
 Additional_repositories: https://ms609.github.io/packages/
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
