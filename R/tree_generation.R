@@ -42,7 +42,12 @@ NULL
 RandomTree <- function (tips, root = FALSE, nodes) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
-  nodesInBinary <- nTips - ifelse(root, 1L, 2L)
+  if (any(is.na(root))) {
+    warning("treating `root = NA` as `FALSE`")
+    root[is.na(root)] <- FALSE
+  }
+  unrooted <- !is.logical(root) || root == FALSE
+  nodesInBinary <- nTips - ifelse(unrooted, 2L, 1L)
   if (missing(nodes)) {
     nodes <- nodesInBinary
   }
