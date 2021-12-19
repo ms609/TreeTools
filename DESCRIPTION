@@ -49,7 +49,7 @@ Suggests:
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
 Remotes:
-    emmanuelparadis/ape
+    ms609/ape@patch-3
 Additional_repositories: https://ms609.github.io/packages/
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
