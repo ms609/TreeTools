@@ -8,6 +8,8 @@ nasty <- structure(list(edge = structure(
 
 
 test_that("RootOnNode() works", {
+  
+  expect_null(RootOnNode(NULL))
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
@@ -221,6 +223,7 @@ test_that("RootTree() works", {
 })
 
 test_that("UnrootTree() works", {
+  expect_null(UnrootTree(NULL))
   expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
                         8, 1, 2, 3, 9, 10, 4,  5, 6), ncol = 2L),
                UnrootTree(BalancedTree(6))$edge)
