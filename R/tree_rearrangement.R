@@ -119,14 +119,12 @@ RootTree.matrix <- function (tree, outgroupTips) {
   tree <- Preorder(tree)
   if (missing(outgroupTips) ||
       is.null(outgroupTips) ||
-      length(outgroupTips) == 0) {
+      length(outgroupTips) == 0L) {
     return(tree)
   }
   rootNode <- tree[1]
   nNode <- max(tree[, 1]) - rootNode + 1L
-  if (length(outgroupTips) == 0) {
-    stop("No outgroup tips selected")
-  } else if (length(outgroupTips) == 1L) {
+  if (length(outgroupTips) == 1L) {
     outgroup <- outgroupTips
   } else {
     ancestry <- unlist(.AllAncestors(tree)[outgroupTips])
