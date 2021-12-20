@@ -173,8 +173,11 @@ test_that("RootOnNode() supports nasty node ordering", {
 test_that("RootTree() handles null outgroups", {
   bal8 <- BalancedTree(8)
   expect_equal(bal8, RootTree(bal8))
+  expect_equal(bal8$edge, RootTree(bal8$edge))
   expect_equal(bal8, RootTree(bal8, NULL))
+  expect_equal(bal8$edge, RootTree(bal8$edge, NULL))
   expect_equal(bal8, RootTree(bal8, character(0)))
+  expect_null(RootTree(NULL))
 })
 
 test_that("RootTree() works", {
