@@ -1,12 +1,11 @@
-# Branch "rogue"
+# TreeTools 1.6.0
 
 ## New functions
 
 - `RoguePlot()` plots the positions of rogue taxa.
 
 
-
-# TreeTools 1.5.1.9004
+## Improvements
 
 - `DropTip()` gains `check` parameter to allow slightly faster operation where
   input is guaranteed to be valid.
@@ -21,14 +20,15 @@
 
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
 
+
 # TreeTools 1.5.1
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
-# TreeTools 1.5.0
 
+# TreeTools 1.5.0
 
 ## New functions
 

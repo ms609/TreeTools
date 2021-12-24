@@ -62,11 +62,9 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                        thin = par('lwd'), fat = thin + 1L,
                        outgroupTips,
                        ...) {
-  tipLabels <- trees[[1]]$tip.label
+  tipLabels <- TipLabels(trees[[1]])
   nTip <- length(tipLabels)
 
-  # TODO replace with tree[] <- ... when fix available for
-  #  https://github.com/emmanuelparadis/ape/issues/36
   at <- attributes(trees)
   if(!missing(outgroupTips)) {
     trees <- lapply(trees, RootTree, intersect(outgroupTips, tipLabels))
@@ -75,13 +73,11 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   attributes(trees) <- at
 
   noRogue <- trees
-
-  # TODO replace with noRogue[] <- ... when fix available for
-  #  https://github.com/emmanuelparadis/ape/issues/36
-  noRogue <- lapply(noRogue, DropTip, tip)
+  attr(noRogue, 'TipLabel') <- NULL
+  noRogue[] <- lapply(noRogue, DropTip, tip)
   dummyRoot <- 'xxTREETOOLSxxDUMMYxxROOTxx'
   # TODO replace with noRogue[] <- again
-  noRogue <- lapply(noRogue, AddTip, 0, dummyRoot)
+  noRogue[] <- lapply(noRogue, AddTip, 0, dummyRoot)
   class(noRogue) <- 'multiPhylo'
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
