@@ -50,8 +50,6 @@ Suggests:
     shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
-Remotes:
-    ms609/ape@patch-3
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
 Config/Needs/metadata: codemetar
