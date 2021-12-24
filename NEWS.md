@@ -16,8 +16,6 @@
 
 - Improve parsing of information from nexus files.
 
-- Work around `multiPhylo[] <-` bug in ape [#36](https://github.com/emmanuelparadis/ape/issues/36)
-
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
 
 
