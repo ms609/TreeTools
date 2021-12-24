@@ -42,7 +42,7 @@ test_that("Random trees are generated correctly", {
   expect_error(RandomTree(4, root = 'not_there'))
   expect_error(RandomTree(4, root = 999))
   expect_error(RandomTree(4, root = -1))
-  expect_error(RandomTree(4, root = NA_integer_))
+  expect_error(expect_warning(RandomTree(4, root = NA_integer_)))
   expect_error(RandomTree(4, nodes = 0))
 
   expect_warning(RandomTree(4, nodes = 4))

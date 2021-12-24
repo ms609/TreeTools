@@ -487,17 +487,9 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
-
-  # TODO replace with tree[] <- ... when fix available for
-  #  https://github.com/emmanuelparadis/ape/issues/36
-  at <- attributes(tree)
-  tree <- lapply(tree, RenumberTips.phylo, tipOrder)
-  attributes(tree) <- at
-  if (!is.null(at$TipLabel)) {
+  tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
+  if (!is.null(attr(tree, 'TipLabel'))) {
     attr(tree, 'TipLabel') <- TipLabels(tipOrder)
-  }
-  if (!is.null(at$names)) {
-    attr(tree, 'names') <- at$names
   }
   tree
 }

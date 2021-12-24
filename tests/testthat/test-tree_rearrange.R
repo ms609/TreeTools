@@ -8,6 +8,8 @@ nasty <- structure(list(edge = structure(
 
 
 test_that("RootOnNode() works", {
+  
+  expect_null(RootOnNode(NULL))
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
@@ -170,11 +172,19 @@ test_that("RootOnNode() supports nasty node ordering", {
                RootOnNode(nasty, 13L))
 })
 
+test_that("RootTree() handles null outgroups", {
+  bal8 <- BalancedTree(8)
+  expect_equal(bal8, RootTree(bal8))
+  expect_equal(bal8$edge, RootTree(bal8$edge))
+  expect_equal(bal8, RootTree(bal8, NULL))
+  expect_equal(bal8$edge, RootTree(bal8$edge, NULL))
+  expect_equal(bal8, RootTree(bal8, character(0)))
+  expect_null(RootTree(NULL))
+})
+
 test_that("RootTree() works", {
   bal8 <- BalancedTree(8)
   expect_error(RootTree(bal8, 1:8 %in% 0))
-  expect_error(RootTree(bal8, character(0)))
-  expect_error(RootTree(bal8, integer(0)))
   expect_error(RootTree(bal8, 'tip_not_there'))
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
@@ -213,6 +223,7 @@ test_that("RootTree() works", {
 })
 
 test_that("UnrootTree() works", {
+  expect_null(UnrootTree(NULL))
   expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
                         8, 1, 2, 3, 9, 10, 4,  5, 6), ncol = 2L),
                UnrootTree(BalancedTree(6))$edge)

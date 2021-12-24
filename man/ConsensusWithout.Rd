@@ -85,7 +85,8 @@ Other tree properties:
 \code{\link{TreeIsRooted}()}
 
 Other consensus tree functions: 
-\code{\link{Consensus}()}
+\code{\link{Consensus}()},
+\code{\link{RoguePlot}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
