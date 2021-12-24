@@ -1,4 +1,11 @@
-# TreeTools 1.5.1.9004
+# TreeTools 1.6.0
+
+## New functions
+
+- `RoguePlot()` plots the positions of rogue taxa.
+
+
+## Improvements
 
 - `DropTip()` gains `check` parameter to allow slightly faster operation where
   input is guaranteed to be valid.
@@ -9,9 +16,8 @@
 
 - Improve parsing of information from nexus files.
 
-- Work around `multiPhylo[] <-` bug in ape [#36](https://github.com/emmanuelparadis/ape/issues/36)
-
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
+
 
 # TreeTools 1.5.1
 
@@ -19,13 +25,14 @@
 
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
+
 # TreeTools 1.5.0
 
-
 ## New functions
+
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
-  
+
 - `PolarizeSplits()` marks a specified taxon as representing the ingroup of all
   splits.
 
@@ -51,8 +58,6 @@
 - `AddTipEverywhere()` supports trees with < 3 leaves.
 
 - Make `RootTree()` and `PhyDatToMatrix()` more robust.
-
-- `Read[Tnt]AsPhyDat()` passes additional parameters to `Read[Tnt]Characters()`.
 
 - Support `encoding` option in `ReadCharacters()` function family.
 

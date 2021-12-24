@@ -14,7 +14,7 @@ release_questions <- function() {
 
 # Additional steps:
 #
-# Propogate changes in README.md to R/TreeTools-package.R
+# Propagate changes in README.md to R/TreeTools-package.R
 
 
 # Additional tests:

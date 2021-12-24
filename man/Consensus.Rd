@@ -2,7 +2,7 @@
 % Please edit documentation in R/Consensus.R
 \name{Consensus}
 \alias{Consensus}
-\title{Consensus trees}
+\title{Construct consensus trees}
 \usage{
 Consensus(trees, p = 1, check.labels = TRUE)
 }
@@ -21,14 +21,22 @@ identical labels.  Defaults to \code{TRUE}, which is slower.}
 first entry of \code{trees}.
 }
 \description{
-Calculates the consensus of a set of trees.
+\code{Consensus()} calculates the consensus of a set of trees, using the
+algorithm of \insertCite{Day1985}{TreeTools}.
 }
 \examples{
 Consensus(as.phylo(0:2, 8))
 }
+\references{
+\insertAllCited{}
+}
 \seealso{
+\code{TreeDist::ConsensusInfo()} calculates the information content of a consensus
+tree.
+
 Other consensus tree functions: 
-\code{\link{ConsensusWithout}()}
+\code{\link{ConsensusWithout}()},
+\code{\link{RoguePlot}()}
 
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},

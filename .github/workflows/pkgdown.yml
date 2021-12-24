@@ -9,8 +9,8 @@ on:
       - '*.md'
       - 'inst/CITATION'
       - 'inst/*.bib'
-      - 'man/**'
-      - 'vignettes/**'
+      - 'man/**.R'
+      - 'vignettes/**.Rmd'
 
 name: pkgdown
 

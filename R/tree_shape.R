@@ -160,7 +160,6 @@ UnrootedTreeWithKey <- function (key, nTip, tipLabels = character(nTip)) {
 }
 
 #' @rdname TreeShape
-#' @importFrom ape drop.tip root
 #' @export
 UnrootedTreeShape <- function (tree) {
   which(UnrootedKeys(NTip(tree)) == UnrootedTreeKey(tree)) - 1L
@@ -170,7 +169,6 @@ UnrootedTreeShape <- function (tree) {
 #' @param asInteger Logical specifying whether to coerce the return value to
 #' mode `integer`: only possible for values < 2^31.
 #' If `FALSE`, values will have class `integer64`.
-#' @importFrom ape drop.tip root
 #' @importFrom bit64 integer64
 #' @export
 UnrootedTreeKey <- function (tree, asInteger = FALSE) {
@@ -192,7 +190,7 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
   }
 
   RootedNumber <- function (nodeChildren) {
-    RootedTreeShape(Postorder(drop.tip(root(tree, nodeChildren[1]), nodeChildren)))
+    RootedTreeShape(Postorder(DropTip(RootTree(tree, nodeChildren[1]), nodeChildren)))
   }
 
   basalTipEdges <- nEdge - (seq_len(4L - unrooted) - 1L)
