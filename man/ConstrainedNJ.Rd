@@ -7,7 +7,7 @@
 ConstrainedNJ(dataset, constraint, weight = 1L)
 }
 \arguments{
-\item{dataset}{A phylogenetic data matrix of class \code{\link[phangorn]{phyDat}},
+\item{dataset}{A phylogenetic data matrix of class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
 \item{constraint}{An object of class \code{phyDat}; returned trees will be

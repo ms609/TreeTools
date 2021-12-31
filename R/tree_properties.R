@@ -751,7 +751,7 @@ TreeIsRooted <- function (tree) {
 #'
 #' Test whether a tree is rooted: [`TreeIsRooted()`]
 #'
-#' phangorn::[`getRoot()`]
+#' `phangorn::getRoot()`
 #'
 #' @export
 RootNode <- function (x) UseMethod('RootNode')

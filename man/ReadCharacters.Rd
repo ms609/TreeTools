@@ -65,8 +65,7 @@ attribute \code{state.labels} listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.
 
-\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
-\code{\link[phangorn:phyDat]{phyDat}} object.
+\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a \code{phyDat} object.
 
 \code{ReadNotes()} returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:

@@ -381,8 +381,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' a list of length one containing a character string explaining why the
 #' function call was unsuccessful.
 #'
-#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
-#' \code{\link[phangorn:phyDat]{phyDat}} object.
+#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a `phyDat` object.
 #'
 #' @references
 #'   \insertRef{Maddison1997}{TreeTools}
@@ -964,11 +963,10 @@ StringToPhydat <- StringToPhyDat
 
 #' Convert between strings and `phyDat` objects
 #'
-#' `PhyDatToString()` converts a [`phyDat`][phangorn::phyDat] object as a
-#' string;
+#' `PhyDatToString()` converts a `phyDat` object as a string;
 #' `StringToPhyDat()` converts a string of character data to a `phyDat` object.
 #'
-#' @param phy An object of class [`phyDat`][phangorn::phyDat].
+#' @param phy An object of class `phyDat`.
 #' @param parentheses Character specifying format of parentheses with which to
 #' surround ambiguous tokens.  Choose from: \code{\{} (default), `[`, `(`, `<`.
 #' @param collapse Character specifying text, perhaps `,`, with which to

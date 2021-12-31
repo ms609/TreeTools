@@ -116,10 +116,10 @@ an unexpected dataset format -- if they don't work on your dataset, please
 [let me know](https://github.com/ms609/TreeTools/issues/new?title=data+to+PhyDat+conversion+issue&body=Please%20describe+the+problem+here:&labels=bug).  
 
 
-Failing that, you can enlist the help of the
-'phangorn' package, which was installed when you installed 'TreeTools':
+Failing that, you can enlist the help of the 'phangorn' package:
 
 ```r
+install.packages('phangorn')
 library('phangorn')
 my_data <- phyDat(raw_data, type='USER', levels=c(0:9, '-'))
 ```

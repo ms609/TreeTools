@@ -37,15 +37,7 @@ test_that("ReadTntCharacter()", {
             .Dimnames = list(c("a", "b", "c", "d", "e", "f"), NULL)),
     ReadTntCharacters(testFile)
   )
-  expect_equal(
-    phangorn::as.phyDat(
-      ReadTntCharacters(testFile),
-      type = 'USER',
-      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
-                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
-      ),
-    ReadTntAsPhyDat(testFile))
-
+  
   dnaTest <- TestFile('tnt-dna.tnt')
   expect_equal(ReadTntCharacters(dnaTest),
                cbind(ReadTntCharacters(dnaTest, type = 'num'),
@@ -53,6 +45,16 @@ test_that("ReadTntCharacter()", {
   expect_equal(ReadTntCharacters(dnaTest),
                ReadTntCharacters(dnaTest, type = c('NUM', 'Dna')))
   expect_message(expect_null(ReadTntCharacters(dnaTest, type = 'NONE')))
+  
+  skip_if_not_installed('phangorn')
+  expect_equal(
+    phangorn::as.phyDat(
+      ReadTntCharacters(testFile),
+      type = 'USER',
+      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
+                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
+    ),
+    ReadTntAsPhyDat(testFile))
 })
 
 test_that("TNT trees parsed correctly", {
