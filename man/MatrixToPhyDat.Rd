@@ -38,4 +38,3 @@ Other phylogenetic matrix conversion functions:
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{phylogenetic matrix conversion functions}
-\keyword{internal}
