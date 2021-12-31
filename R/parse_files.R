@@ -382,7 +382,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' function call was unsuccessful.
 #'
 #' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
-#' [`phyDat`][phangorn::phyDat] object.
+#' \code{\link[phangorn:phyDat]{phyDat}} object.
 #'
 #' @references
 #'   \insertRef{Maddison1997}{TreeTools}
@@ -833,7 +833,7 @@ MorphoBankDecode <- function (string) {
 #'
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
-#' @keywords internal
+#' @importFrom phangorn phyDat
 #' @export
 MatrixToPhyDat <- function (tokens) {
   allTokens <- unique(as.character(tokens))
@@ -994,7 +994,6 @@ StringToPhydat <- StringToPhyDat
 #'
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
-#' @importFrom phangorn phyDat
 #' @export
 PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
