@@ -35,6 +35,7 @@
 #' @family tree manipulation
 #'
 #' @template MRS
+#' @importFrom phangorn Descendants
 #' @export
 SortTree <- function (tree) UseMethod('SortTree')
 

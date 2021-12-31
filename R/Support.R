@@ -125,6 +125,7 @@ SplitNumber <- function (tips, tree, tipIndex, powersOf2) { # nocov start
 }
 
 #' @describeIn SplitFrequency Frequency of splits in a given forest of trees
+#' @importFrom phangorn Descendants
 #' @export
 ForestSplits <- function (forest, powersOf2) {
   .Deprecated("SplitFrequency")
@@ -135,7 +136,7 @@ ForestSplits <- function (forest, powersOf2) {
   # Return:
   table(vapply(forest, function (tr) {
     # +2: Don't consider root node (not a node) or first node (duplicated)
-    vapply(Descendants(tr, nTip + 2L + seq_len(nTip - 3L), type='tips'),
+    vapply(Descendants(tr, nTip + 2L + seq_len(nTip - 3L), type = 'tips'),
            SplitNumber, character(1), tr, tipIndex, powersOf2)
   }, character(nTip - 3L)))
 }

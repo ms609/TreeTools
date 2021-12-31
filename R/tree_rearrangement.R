@@ -507,7 +507,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
         parent <- edge[, 1]
         child <- edge[, 2]
         drop <- c(tip[tip <= nTip],
-                  .Descendants(parent, child, nTip, tip[tip > nTip]))
+                  .DescendantTips(parent, child, nTip, tip[tip > nTip]))
       } else {
         drop <- tip
       }
@@ -536,14 +536,14 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 # nodes must all be internal
-.Descendants <- function (parent, child, nTip, nodes, isDesc = logical(nTip)) {
+.DescendantTips <- function (parent, child, nTip, nodes, isDesc = logical(nTip)) {
   newDescs <- child[parent %in% nodes]
   recurse <- newDescs > nTip
   
   # Return:
   if (any(recurse)) {
     isDesc[newDescs[!recurse]] <- TRUE
-    .Descendants(parent, child, nTip, newDescs[recurse], isDesc)
+    .DescendantTips(parent, child, nTip, newDescs[recurse], isDesc)
   } else {
     isDesc[newDescs] <- TRUE
     which(isDesc)
