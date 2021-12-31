@@ -37,7 +37,7 @@
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom phangorn Ancestors Descendants
+#' @importFrom phangorn Descendants
 #' @importFrom ape root
 #' @export
 RootTree <- function (tree, outgroupTips) {
