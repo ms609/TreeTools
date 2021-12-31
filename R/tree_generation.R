@@ -260,7 +260,8 @@ Hamming <- function (dataset, ratio = TRUE) {
   tokens <- vapply(dataset, function (codings) contrast[codings, ],
                    matrix(NA, at[['nr']], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
-    sum(weight[!apply(tokens[, , ij[1]] & tokens[, , ij[2]], 1, any)])
+    sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
+                        tokens[, , ij[2], drop = FALSE], 1, any)])
   })
   if (ratio) hamming <- hamming / sum(weight)
   attributes(hamming) <- list(
