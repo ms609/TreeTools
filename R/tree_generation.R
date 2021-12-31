@@ -218,10 +218,61 @@ StarTree <- function (tips) {
 #' @family tree generation functions
 #' @export
 NJTree <- function (dataset, edgeLengths = FALSE) {
-  tree <- nj(dist.hamming(dataset))
+  tree <- nj(Hamming(dataset))
   tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
   if (!edgeLengths) tree$edge.length <- NULL
   tree
+}
+
+#' Hamming distance between taxa in a phylogenetic dataset
+#' 
+#' The Hamming distance between a pair of taxa is the number of characters
+#' with a different coding, i.e. the smallest number of evolutionary steps
+#' that must have occurred since their common ancestor.
+#' 
+#' Tokens that contain the inapplicable state are treated as requiring no steps
+#' to transform into any applicable token.
+#' 
+#' @param dataset object of class phyDat
+#' @param ratio Logical specifying whether to weight distance against 
+#' maximum possible.
+#' 
+#' @return `Hamming()` returns an object of class `dist` listing the Hamming
+#' distance between each pair of taxa.
+#' 
+#' @seealso 
+#' Used to construct neighbour joining trees in [`NJTree()`].
+#' 
+#' `dist.hamming()` in the 'phangorn' package provides an alternative
+#' implementation.
+#' 
+#' @template MRS
+#' @export
+Hamming <- function (dataset, ratio = TRUE) {
+  at <- attributes(dataset)
+  contrast <- at[['contrast']] > 0L
+  if ('-' %in% colnames(contrast)) {
+    # TODO This is debatable but perhaps acceptable behaviour.
+    # Is the distance between {0, -} and {1} necessarily zero?
+    contrast[contrast[, '-'], ] <- TRUE
+  }
+  weight <- at[['weight']]
+  tokens <- vapply(dataset, function (codings) contrast[codings, ],
+                   matrix(NA, at[['nr']], dim(contrast)[2]))
+  hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+    sum(weight[!apply(tokens[, , ij[1]] & tokens[, , ij[2]], 1, any)])
+  })
+  if (ratio) hamming <- hamming / sum(weight)
+  attributes(hamming) <- list(
+    Size = length(dataset),
+    Labels = names(dataset),
+    Diag = FALSE,
+    Upper = FALSE,
+    method = 'hamming',
+    class = 'dist')
+  
+  # Return:
+  hamming
 }
 
 #' Constrained neighbour-joining tree
@@ -246,7 +297,6 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' plot(ConstrainedNJ(dataset, constraint))
 #' @template MRS
 #' @importFrom ape nj multi2di
-#' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
 ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
@@ -255,8 +305,8 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
     constraint <- AddUnconstrained(constraint, missing)
   }
   constraint <- constraint[names(dataset)]
-  tree <- multi2di(nj((dist.hamming(constraint) * weight) +
-                        dist.hamming(dataset)))
+  tree <- multi2di(nj((Hamming(constraint) * weight) +
+                        Hamming(dataset)))
   tree$edge.length <- NULL
   tree <- ImposeConstraint(tree, constraint)
   tree <- RootTree(tree, names(dataset)[1])
