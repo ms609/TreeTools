@@ -1,3 +1,10 @@
+# branch "phangone"
+
+- Remove dependency on "phangorn" (and thus allow use on R < 4.1)
+
+- `Hamming()` computes minimum evolutionary distances between pairs of taxa.
+
+
 # TreeTools 1.6.0
 
 ## New functions
