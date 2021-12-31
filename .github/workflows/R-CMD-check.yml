@@ -65,6 +65,7 @@ jobs:
       - name: Install system dependencies
         if: runner.os == 'Linux'
         run: |
+          sudo apt install libcurl4-openssl-dev
           while read -r cmd
           do
             eval sudo $cmd
@@ -72,9 +73,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_github('emmanuelparadis/ape')
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
       - name: Check
