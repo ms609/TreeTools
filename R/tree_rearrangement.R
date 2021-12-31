@@ -37,7 +37,6 @@
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom phangorn Descendants
 #' @importFrom ape root
 #' @export
 RootTree <- function (tree, outgroupTips) {
@@ -504,8 +503,11 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
       }
 
       if (any(tip > nTip)) {
+        edge <- tree$edge
+        parent <- edge[, 1]
+        child <- edge[, 2]
         drop <- c(tip[tip <= nTip],
-                  unlist(Descendants(tree, tip[tip > nTip])))
+                  .Descendants(parent, child, nTip, tip[tip > nTip]))
       } else {
         drop <- tip
       }
@@ -531,6 +533,21 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
 
   # Return:
   tree
+}
+
+# nodes must all be internal
+.Descendants <- function (parent, child, nTip, nodes, isDesc = logical(nTip)) {
+  newDescs <- child[parent %in% nodes]
+  recurse <- newDescs > nTip
+  
+  # Return:
+  if (any(recurse)) {
+    isDesc[newDescs[!recurse]] <- TRUE
+    .Descendants(parent, child, nTip, newDescs[recurse], isDesc)
+  } else {
+    isDesc[newDescs] <- TRUE
+    which(isDesc)
+  }
 }
 
 #' @describeIn DropTip Direct call to `DropTip.phylo()`, to avoid overhead of
