@@ -214,7 +214,6 @@ StarTree <- function (tips) {
 #'
 #' @template MRS
 #' @importFrom ape nj root
-#' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
 NJTree <- function (dataset, edgeLengths = FALSE) {
