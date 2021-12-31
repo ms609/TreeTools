@@ -77,8 +77,8 @@ RootTree.phylo <- function (tree, outgroupTips) {
     outgroup <- setdiff(seq_len(nTip), outgroupTips)
   } else {
     ancestryTable <- .AncestorTable(tree, outgroupTips)
-    lineage <- as.integer(names(ancestryTable))
-    lca <- max(lineage[ancestryTable == length(outgroupTips)])
+    lineage <- ancestryTable[1, ]
+    lca <- max(lineage[ancestryTable[2, ] == length(outgroupTips)])
     nTip <- length(tipLabels)
     rootNode <- nTip + 1L
     if (lca == rootNode) {
@@ -131,10 +131,11 @@ RootTree.phylo <- function (tree, outgroupTips) {
     }
   }
   
-  names(counts) <- seq_along(counts)
+  counted <- counts > 0
   
   # Return:
-  counts[counts > 0]
+  rbind(node = which(counted),
+        count = counts[counted])
 }
 
 #' @export
