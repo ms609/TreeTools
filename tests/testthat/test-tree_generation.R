@@ -86,6 +86,10 @@ test_that("Constrained NJ trees work", {
   ))
 })
 
+test_that("Hamming() fails nicely", {
+  expect_error(Hamming(matrix(1:4, 2, 2)))
+})
+
 test_that("EnforceOutgroup() fails nicely", {
   expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
   expect_error(EnforceOutgroup(BalancedTree(6), c('t1', 'Non-taxon')))
