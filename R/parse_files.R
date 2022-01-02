@@ -888,23 +888,16 @@ MatrixToPhyDat <- function (tokens) {
   allLevels <- levelSet[[1]]
   levels <- levelSet[[2]]
   rownames(contrast) <- NULL
-  duplicate <- duplicated(dat, MARGIN = 2)
-  firstDup <- duplicated(dat, MARGIN = 2, fromLast = TRUE) & !duplicate
-  indices <- which(firstDup)
   
-  index <- cumsum(!duplicate)
-  weight <- rep_len(1L, sum(!duplicate))
+  # See https://stackoverflow.com/questions/70557817
+  listed <- do.call(paste, data.frame(t(dat)))
+  firstOccurrence <- match(listed, listed)
+  tab <- table(firstOccurrence)
+  weight <- unname(tab)
+  tab[] <- seq_along(tab)
+  index <- unname(tab[as.character(firstOccurrence)])
   
-  cf <- duplicate
-  for (i in indices) {
-    cf[seq_len(i)] <- FALSE
-    dups <- apply(dat[, cf, drop = FALSE], 2L,
-                  identical, dat[, i])
-    key <- index[i]
-    index[which(cf)[dups]] <- key
-    weight[key] <- 1 + sum(dups)
-  }
-  
+  duplicate <- duplicated(firstOccurrence)
   phyMat <- matrix(match(dat, allLevels),
                    dim(dat)[1], dim(dat)[2])
   
