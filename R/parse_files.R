@@ -896,25 +896,27 @@ MatrixToPhyDat <- function (tokens) {
   index <- cumsum(!duplicate)
   weight <- rep_len(1L, sum(!duplicate))
   nChar <- dim(dat)[2]
+  
+  cf <- duplicate
+  nChar <- dim(dat)[2]
   for (i in indices) {
-    retain <- i:nChar
-    cf <- duplicate[retain]
-    cf[1] <- TRUE
-    dups <- which(duplicated(dat[, retain], MARGIN = 2L)) + i - 1L
-    index[dups] <- i
-    weight[i] <- 1L + length(dups)
+    cf[seq_len(i)] <- FALSE
+    dups <- apply(dat[, cf, drop = FALSE], 2L,
+                  identical, dat[, i])
+    index[which(cf)[dups]] <- i
+    weight[i] <- 1 + sum(dups)
   }
   
   phyMat <- matrix(match(dat, allLevels),
                    dim(dat)[1], dim(dat)[2])
   
-    # Return:
+  # Return:
   structure(
     lapply(seq_along(tipLabels), function (i) phyMat[i, !duplicate]),
     names  = tipLabels,
+    weight = as.integer(weight),
     nr = length(weight),
     nc = length(levels),
-    weight = weight,
     index = unname(index),
     levels = levels,
     allLevels = allLevels,
