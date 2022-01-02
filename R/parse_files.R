@@ -890,7 +890,6 @@ MatrixToPhyDat <- function (tokens) {
   rownames(contrast) <- NULL
   duplicate <- duplicated(dat, MARGIN = 2)
   firstDup <- duplicated(dat, MARGIN = 2, fromLast = TRUE) & !duplicate
-  indexDat <- dat[, firstDup, drop = FALSE]
   indices <- which(firstDup)
   
   index <- cumsum(!duplicate)
@@ -903,8 +902,9 @@ MatrixToPhyDat <- function (tokens) {
     cf[seq_len(i)] <- FALSE
     dups <- apply(dat[, cf, drop = FALSE], 2L,
                   identical, dat[, i])
-    index[which(cf)[dups]] <- i
-    weight[i] <- 1 + sum(dups)
+    key <- index[as.character(i)]
+    index[which(cf)[dups]] <- key
+    weight[key] <- 1 + sum(dups)
   }
   
   phyMat <- matrix(match(dat, allLevels),
