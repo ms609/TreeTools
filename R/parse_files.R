@@ -910,7 +910,7 @@ MatrixToPhyDat <- function (tokens) {
   
   # Return:
   structure(
-    asplit(phyMat[, !duplicate], 1),
+    asplit(phyMat[, !duplicate, drop = FALSE], 1),
     names  = tipLabels,
     weight = as.integer(weight),
     nr = length(weight),
