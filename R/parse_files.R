@@ -893,9 +893,9 @@ MatrixToPhyDat <- function (tokens) {
   listed <- do.call(paste, data.frame(t(dat)))
   firstOccurrence <- match(listed, listed)
   tab <- table(firstOccurrence)
-  weight <- unname(tab)
+  weight <- as.integer(tab)
   tab[] <- seq_along(tab)
-  index <- unname(tab[as.character(firstOccurrence)])
+  index <- as.integer(tab[as.character(firstOccurrence)])
   
   duplicate <- duplicated(firstOccurrence)
   phyMat <- matrix(match(dat, allLevels),
