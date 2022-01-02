@@ -898,12 +898,12 @@ MatrixToPhyDat <- function (tokens) {
   index <- as.integer(tab[as.character(firstOccurrence)])
   
   duplicate <- duplicated(firstOccurrence)
-  phyMat <- matrix(match(dat, allLevels),
-                   dim(dat)[1], dim(dat)[2])
+  phyMat <- matrix(match(dat[, !duplicate], allLevels),
+                   dim(dat)[1], sum(!duplicate))
   
   # Return:
   structure(
-    asplit(phyMat[, !duplicate, drop = FALSE], 1),
+    asplit(phyMat, 1),
     names  = tipLabels,
     weight = as.integer(weight),
     nr = length(weight),
