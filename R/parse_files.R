@@ -894,10 +894,8 @@ MatrixToPhyDat <- function (tokens) {
   
   index <- cumsum(!duplicate)
   weight <- rep_len(1L, sum(!duplicate))
-  nChar <- dim(dat)[2]
   
   cf <- duplicate
-  nChar <- dim(dat)[2]
   for (i in indices) {
     cf[seq_len(i)] <- FALSE
     dups <- apply(dat[, cf, drop = FALSE], 2L,
