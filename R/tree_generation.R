@@ -245,20 +245,36 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' `dist.hamming()` in the 'phangorn' package provides an alternative
 #' implementation.
 #' 
+#' @examples 
+#' tokens <- matrix(c(0, 0, '0', 0, 0,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', 1, 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
+#' 
+#' Hamming(MatrixToPhyDat(tokens))
 #' @template MRS
 #' @importFrom utils combn
 #' @export
 Hamming <- function (dataset, ratio = TRUE) {
   at <- attributes(dataset)
-  contrast <- at[['contrast']] > 0L
+  if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
+    stop("`dataset` must be a valid `phyDat` object")
+  }
+  contrast <- at[["contrast"]] > 0L
   if ('-' %in% colnames(contrast)) {
     # TODO This is debatable but perhaps acceptable behaviour.
     # Is the distance between {0, -} and {1} necessarily zero?
     contrast[contrast[, '-'], ] <- TRUE
   }
-  weight <- at[['weight']]
+  weight <- at[["weight"]]
   tokens <- vapply(dataset, function (codings) contrast[codings, ],
-                   matrix(NA, at[['nr']], dim(contrast)[2]))
+                   matrix(NA, at[["nr"]], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
     sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
                         tokens[, , ij[2], drop = FALSE], 1, any)])

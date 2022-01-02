@@ -25,6 +25,20 @@ that must have occurred since their common ancestor.
 Tokens that contain the inapplicable state are treated as requiring no steps
 to transform into any applicable token.
 }
+\examples{
+tokens <- matrix(c(0, 0, '0', 0, 0,
+                   0, 0, '1', 0, 1,
+                   0, 0, '1', 0, 1,
+                   0, 0, '2', 0, 1,
+                   1, 1, '-', 1, 0,
+                   1, 1, '2', 1, '{01}'),
+                   nrow = 6, ncol = 5, byrow = TRUE,
+                   dimnames = list(
+                     paste0("Taxon_", LETTERS[1:6]),
+                     paste0("Char_", 1:5)))
+
+Hamming(MatrixToPhyDat(tokens))
+}
 \seealso{
 Used to construct neighbour joining trees in \code{\link[=NJTree]{NJTree()}}.
 
