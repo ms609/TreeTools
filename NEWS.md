@@ -1,9 +1,9 @@
-# branch "phangone"
+# branch "grouping"
 
-- Remove dependency on "phangorn" (and thus allow use on R < 4.1)
-
-- `Hamming()` computes minimum evolutionary distances between pairs of taxa.
-
+- Improve performance of MatrixToPhyDat, using `grouping()`. See:
+  - https://stackoverflow.com/questions/39932515
+  - https://stackoverflow.com/questions/70557817
+  
 
 # TreeTools 1.6.0
 

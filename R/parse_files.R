@@ -870,7 +870,14 @@ MatrixToPhyDat <- function (tokens) {
   }
   dimnames(contrast) <- list(allTokens, levels)
   dat <- .PhyDatWithContrast(tokens, contrast = contrast)
-
+  
+  old <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
+  attr(old, 'weight') <- as.integer(attr(old, 'weight'))
+  if(!identical(dat, old)) {
+    print(waldo::compare(old, dat))
+    stop("Mismatch!")
+  }
+  
   # Return:
   dat
 }
@@ -888,6 +895,18 @@ MatrixToPhyDat <- function (tokens) {
   allLevels <- levelSet[[1]]
   levels <- levelSet[[2]]
   rownames(contrast) <- NULL
+  
+  if (FALSE) {
+    # TODO `grouping` seems like a more efficient alternative.
+    # When I've time, try this approach instead.
+  datList <- lapply(seq_len(dim(dat)[1]), function (i) dat[i, ])
+  groups <- do.call(grouping, datList)
+  ends <- attr(groups, 'ends')
+  index <- rep(seq_along(ends), c(ends[1], diff(ends)))[order(groups)]
+  weight <- table(index)
+  
+  } else {
+  
   duplicate <- duplicated(dat, MARGIN = 2)
   firstDup <- duplicated(dat, MARGIN = 2, fromLast = TRUE) & !duplicate
   indices <- which(firstDup)
@@ -904,13 +923,15 @@ MatrixToPhyDat <- function (tokens) {
     index[which(cf)[dups]] <- key
     weight[key] <- 1 + sum(dups)
   }
-  
+  }
   phyMat <- matrix(match(dat, allLevels),
                    dim(dat)[1], dim(dat)[2])
   
   # Return:
   structure(
     lapply(seq_along(tipLabels), function (i) phyMat[i, !duplicate]),
+    # Or if using the "grouping" approach:
+    # lapply(seq_along(tipLabels), function (i) phyMat[i, !duplicated(index)]),
     names  = tipLabels,
     weight = as.integer(weight),
     nr = length(weight),
