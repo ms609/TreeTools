@@ -153,7 +153,8 @@ test_that("StringToPhyDat()", {
   expect_equal(names(StringToPhyDat('----????')), paste0('t', 1:8))
 })
 
-test_that('PhyToString() works', {
+test_that('PhyToString() supports long levels', {
+  skip_if_not_installed('phangorn')
   longLevels <- phangorn::phyDat(rbind(x = c('-', '?', 0:12),
                                        y = c(12:0, '-', '?')),
                        type = 'USER', levels = c(0:6, '-', 7:12))
@@ -168,7 +169,9 @@ test_that('PhyToString() works', {
                                        y = c(10:1, '-', '?')),
                                  type = 'USER', levels = c(1:6, '-', 7:10))
   expect_equal("-?12345678900987654321-?", PhyToString(longLevels))
-
+})
+  
+test_that('PhyToString() works', {
   phy <- StringToPhyDat('012[01]', letters[1:4])
   expect_equal('012{01}', PhyToString(phy))
   expect_equal('012<01>', PhyToString(phy, parentheses = '<'))
