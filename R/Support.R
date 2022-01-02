@@ -134,7 +134,7 @@ ForestSplits <- function (forest, powersOf2) {
 
   # Return:
   table(vapply(forest, function (tr) {
-    edge <- tree$edge
+    edge <- tr$edge
     parent <- edge[, 1]
     child <- edge[, 2]
     # +2: Don't consider root node (not a node) or first node (duplicated)
