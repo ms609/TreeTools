@@ -823,16 +823,28 @@ MorphoBankDecode <- function (string) {
 #' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
 #' `PhyDatToMatrix()` converts a `phyDat` object to a matrix of tokens.
 #'
-#' @param tokens matrix of tokens, probably created with [`ReadCharacters()`]
-#'               or [`ReadTntCharacters()`]. Row names should correspond to tip
-#'               labels; column names may optionally correspond to
-#'               character labels.
+#' @param tokens matrix of tokens, possibly created with [`ReadCharacters()`]
+#' or [`ReadTntCharacters()`].
+#' Row names should correspond to leaf labels; column names may optionally
+#' correspond to character labels.
 #'
 #' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
 #' @family phylogenetic matrix conversion functions
+#' @examples 
+#' tokens <- matrix(c(0, 0, '0', 0, 0,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', 1, 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
+#'                    
+#' MatrixToPhyDat(tokens)
 #' @template MRS
-#' @importFrom phangorn phyDat
 #' @export
 MatrixToPhyDat <- function (tokens) {
   allTokens <- unique(as.character(tokens))
@@ -857,11 +869,60 @@ MatrixToPhyDat <- function (tokens) {
     t(contrast)
   }
   dimnames(contrast) <- list(allTokens, levels)
-  dat <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
+  dat <- .PhyDatWithContrast(tokens, contrast = contrast)
 
   # Return:
   dat
 }
+
+.PhyDatWithContrast <- function (dat, contrast) {
+  if (is.null(dim(dat))) {
+    dat <- t(t(dat))
+  }
+  tipLabels <- rownames(dat)
+  if (is.null(tipLabels)) {
+    stop("Data rows must be named with tip labels")
+  }
+  
+  levelSet <- dimnames(contrast)
+  allLevels <- levelSet[[1]]
+  levels <- levelSet[[2]]
+  rownames(contrast) <- NULL
+  duplicate <- duplicated(dat, MARGIN = 2)
+  firstDup <- duplicated(dat, MARGIN = 2, fromLast = TRUE) & !duplicate
+  indexDat <- dat[, firstDup, drop = FALSE]
+  indices <- which(firstDup)
+  
+  index <- cumsum(!duplicate)
+  weight <- rep_len(1L, sum(!duplicate))
+  nChar <- dim(dat)[2]
+  for (i in indices) {
+    retain <- i:nChar
+    cf <- duplicate[retain]
+    cf[1] <- TRUE
+    dups <- which(duplicated(dat[, retain], MARGIN = 2L)) + i - 1L
+    index[dups] <- i
+    weight[i] <- 1L + length(dups)
+  }
+  
+  phyMat <- matrix(match(dat, allLevels),
+                   dim(dat)[1], dim(dat)[2])
+  
+    # Return:
+  structure(
+    lapply(seq_along(tipLabels), function (i) phyMat[i, !duplicate]),
+    names  = tipLabels,
+    nr = length(weight),
+    nc = length(levels),
+    weight = weight,
+    index = unname(index),
+    levels = levels,
+    allLevels = allLevels,
+    type = 'USER',
+    contrast = contrast,
+    class = "phyDat")
+}
+
 
 #' @rdname MatrixToPhyDat
 #' @param dataset A dataset of class `phyDat`.
