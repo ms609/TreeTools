@@ -902,7 +902,7 @@ MatrixToPhyDat <- function (tokens) {
     cf[seq_len(i)] <- FALSE
     dups <- apply(dat[, cf, drop = FALSE], 2L,
                   identical, dat[, i])
-    key <- index[as.character(i)]
+    key <- index[i]
     index[which(cf)[dups]] <- key
     weight[key] <- 1 + sum(dups)
   }
