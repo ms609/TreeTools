@@ -246,6 +246,7 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' implementation.
 #' 
 #' @template MRS
+#' @importFrom utils combn
 #' @export
 Hamming <- function (dataset, ratio = TRUE) {
   at <- attributes(dataset)
