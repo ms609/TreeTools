@@ -4,7 +4,7 @@
 \alias{Hamming}
 \title{Hamming distance between taxa in a phylogenetic dataset}
 \usage{
-Hamming(dataset, ratio = TRUE)
+Hamming(dataset, ratio = TRUE, ambig = c("mean", "zero", "one", "na", "nan"))
 }
 \arguments{
 \item{dataset}{object of class phyDat}
@@ -12,6 +12,13 @@ Hamming(dataset, ratio = TRUE)
 \item{ratio}{Logical specifying whether to weight distance against
 maximum possible, given that a token that is ambiguous in either of two taxa
 cannot contribute to the total distance between the pair.}
+
+\item{ambig}{Character specifying value to return when a pair of taxa
+have a zero maximum distance (perhaps due to a preponderance of ambiguous
+tokens).
+"mean" takes the mean of all other distance values;
+"zero" sets to zero; "one" to one;
+"NA" to \code{NA_integer_}; and "NaN" to \code{NaN}.}
 }
 \value{
 \code{Hamming()} returns an object of class \code{dist} listing the Hamming

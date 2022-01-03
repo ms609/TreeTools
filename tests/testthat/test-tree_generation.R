@@ -7,7 +7,7 @@ test_that('Pectinate trees are generated', {
                PectinateTree(ape::read.tree(text = '(a, ((b, c), (d, e)));')))
   data("Lobo", package = 'TreeTools')
   expect_equal(ape::read.tree(text = '(Cricocosmia, (Aysheaia, Siberion));'),
-               PectinateTree(Lobo.phy[2:4]))
+               PectinateTree(.SubsetPhyDat(Lobo.phy, 2:4)))
   expect_true(is.integer(PectinateTree(8)$edge))
 })
 
@@ -67,7 +67,7 @@ test_that("Hamming() works", {
   expect_equal(as.double(Hamming(dataset, ambig = "NAN")), expected)
   ex <- expected
   ex[is.nan(expected)] <- NA
-  expect_equal(as.double(Hamming(dataset, ambig = "NA")), ex)
+  expect_equal(as.double(Hamming(dataset, ambig = c("NA", "mean"))), ex)
   ex[is.nan(expected)] <- 0
   expect_equal(as.double(Hamming(dataset, ambig = 0)), ex)
   ex[is.nan(expected)] <- 1

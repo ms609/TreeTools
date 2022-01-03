@@ -294,7 +294,7 @@ Hamming <- function (dataset, ratio = TRUE,
   
   if (ratio) {
     informative <- apply(!contrast, 1, any)
-    nonAmbig <- vapply(dataset, function (codings) informative[codings],
+    nonAmbig <- .vapply(dataset, function (codings) informative[codings],
                        logical(at[['nr']]))
     bothInformative <- apply(combn(length(dataset), 2L), 2L, function (ij) {
       sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
@@ -361,7 +361,7 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L,
   if (length(missing)) {
     constraint <- AddUnconstrained(constraint, missing)
   }
-  constraint <- constraint[names(dataset)]
+  constraint <- .SubsetPhyDat(constraint, names(dataset))
   tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig) 
                        * weight) +
                         Hamming(dataset, ratio = ratio, ambig = ambig)))
