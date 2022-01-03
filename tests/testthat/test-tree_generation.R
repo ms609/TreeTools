@@ -5,6 +5,7 @@ test_that('Pectinate trees are generated', {
                PectinateTree(letters[1:5]))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
                PectinateTree(ape::read.tree(text = '(a, ((b, c), (d, e)));')))
+  data("Lobo", package = 'TreeTools')
   expect_equal(ape::read.tree(text = '(Cricocosmia, (Aysheaia, Siberion));'),
                PectinateTree(Lobo.phy[2:4]))
   expect_true(is.integer(PectinateTree(8)$edge))
