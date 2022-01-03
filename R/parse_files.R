@@ -861,7 +861,6 @@ MatrixToPhyDat <- function (tokens) {
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
   whichTokens[allTokens == '?'] <- list(levels)
-  
   contrast <- vapply(whichTokens, function (x) levels %fin% x,
                      logical(length(levels)))
   contrast <- 1 * if (is.null(dim(contrast))) {
@@ -871,14 +870,7 @@ MatrixToPhyDat <- function (tokens) {
   }
   dimnames(contrast) <- list(allTokens, levels)
   dat <- .PhyDatWithContrast(tokens, contrast = contrast)
-  
-  # old <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
-  # attr(old, 'weight') <- as.integer(attr(old, 'weight'))
-  # if(!identical(dat, old)) {
-  #   print(waldo::compare(old, dat))
-  #   stop("Mismatch!")
-  # }
-  
+
   # Return:
   dat
 }
