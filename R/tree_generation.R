@@ -271,6 +271,7 @@ NJTree <- function (dataset, edgeLengths = FALSE,
 #' dataset <- MatrixToPhyDat(tokens)
 #' Hamming(dataset)
 #' @template MRS
+#' @importFrom stats median
 #' @importFrom utils combn
 #' @export
 Hamming <- function (dataset, ratio = TRUE,
