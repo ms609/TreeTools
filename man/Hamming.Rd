@@ -11,7 +11,7 @@ Hamming(
 )
 }
 \arguments{
-\item{dataset}{object of class phyDat}
+\item{dataset}{Object of class \code{phyDat}.}
 
 \item{ratio}{Logical specifying whether to weight distance against
 maximum possible, given that a token that is ambiguous in either of two taxa

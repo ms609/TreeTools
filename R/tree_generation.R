@@ -235,7 +235,7 @@ NJTree <- function (dataset, edgeLengths = FALSE,
 #' Tokens that contain the inapplicable state are treated as requiring no steps
 #' to transform into any applicable token.
 #' 
-#' @param dataset object of class phyDat
+#' @param dataset Object of class `phyDat`.
 #' @param ratio Logical specifying whether to weight distance against 
 #' maximum possible, given that a token that is ambiguous in either of two taxa
 #' cannot contribute to the total distance between the pair.
