@@ -37,7 +37,6 @@
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom phangorn Ancestors Descendants
 #' @importFrom ape root
 #' @export
 RootTree <- function (tree, outgroupTips) {
@@ -76,10 +75,9 @@ RootTree.phylo <- function (tree, outgroupTips) {
   } else if (length(outgroupTips) == nTip - 1L) {
     outgroup <- setdiff(seq_len(nTip), outgroupTips)
   } else {
-    ancestry <- unlist(Ancestors(tree, outgroupTips))
-    ancestryTable <- table(ancestry)
-    lineage <- as.integer(names(ancestryTable))
-    lca <- max(lineage[ancestryTable == length(outgroupTips)])
+    ancestryTable <- .AncestorTable(tree, outgroupTips)
+    lineage <- ancestryTable[1, ]
+    lca <- max(lineage[ancestryTable[2, ] == length(outgroupTips)])
     nTip <- length(tipLabels)
     rootNode <- nTip + 1L
     if (lca == rootNode) {
@@ -112,6 +110,31 @@ RootTree.phylo <- function (tree, outgroupTips) {
 
   # Return:
   res
+}
+
+.AncestorTable <- function (tree, outgroupTips) {
+  edge <- tree$edge
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  nVert <- max(parent)
+  parentOf <- rep_len(NA_integer_, nVert)
+  parentOf[child] <- parent
+  
+  counts <- integer(nVert)
+  i <- outgroupTips
+  while (length(i)) {
+    i <- parentOf[i]
+    i <- i[!is.na(i)]
+    for (j in i) {
+      counts[j] <- counts[j] + 1L
+    }
+  }
+  
+  counted <- counts > 0
+  
+  # Return:
+  rbind(node = which(counted),
+        count = counts[counted])
 }
 
 #' @export
@@ -480,8 +503,11 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
       }
 
       if (any(tip > nTip)) {
+        edge <- tree$edge
+        parent <- edge[, 1]
+        child <- edge[, 2]
         drop <- c(tip[tip <= nTip],
-                  unlist(Descendants(tree, tip[tip > nTip])))
+                  .DescendantTips(parent, child, nTip, tip[tip > nTip]))
       } else {
         drop <- tip
       }
@@ -507,6 +533,21 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
 
   # Return:
   tree
+}
+
+# nodes must all be internal
+.DescendantTips <- function (parent, child, nTip, nodes, isDesc = logical(nTip)) {
+  newDescs <- child[parent %in% nodes]
+  recurse <- newDescs > nTip
+  
+  # Return:
+  if (any(recurse)) {
+    isDesc[newDescs[!recurse]] <- TRUE
+    .DescendantTips(parent, child, nTip, newDescs[recurse], isDesc)
+  } else {
+    isDesc[newDescs] <- TRUE
+    which(isDesc)
+  }
 }
 
 #' @describeIn DropTip Direct call to `DropTip.phylo()`, to avoid overhead of

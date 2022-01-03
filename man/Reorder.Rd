@@ -147,7 +147,7 @@ Calling this C function directly is approximately twice as fast as using
 functions to the corresponding functions in 'ape'. Single nodes may
 need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
 can cause crashes if nodes are numbered unconventionally -- sometimes
-encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR}.
+encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR()}.
 
 \code{Preorder()} is more robust: it supports polytomies, nodes can be numbered
 in any sequence, and edges can be listed in any order in the input tree.

@@ -50,7 +50,7 @@ SortTree.phylo <- function (tree) {
     stop("`tree` must be binary.")
   }
 
-  descendants <- Descendants(tree)
+  descendants <- .ListDescendents(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function (tips) min(tipLabels[tips])
   swaps <- vapply(tree.ntip + seq_len(tree$Nnode), function(node) {
@@ -74,6 +74,22 @@ SortTree.phylo <- function (tree) {
   tree$edge[, 2] <- child
   attr(tree, 'order') <- NULL
   Renumber(tree)
+}
+
+.ListDescendents <- function (tree) {
+  edge <- Postorder(tree$edge)
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  # Every node occurs once in `child` except the root
+  descendants <- vector('list', length(child) + 1L)
+  descendants[seq_len(NTip(tree))] <- seq_len(NTip(tree))
+  for (i in seq_along(parent)) {
+    descendants[[parent[i]]] <- c(descendants[[parent[i]]], 
+                                  descendants[[child[i]]])
+  }
+  
+  # Return:
+  descendants
 }
 
 #' @export

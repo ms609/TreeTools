@@ -205,6 +205,8 @@ StarTree <- function (tips) {
 #'
 #' @template datasetParam
 #' @param edgeLengths Logical specifying whether to include edge lengths.
+#' @param ambig,ratio Settings of `ambig` and `ratio` to be used when
+#' computing [`Hamming()`] distances between sequences.
 #'
 #' @return `NJTree` returns an object of class \code{phylo}.
 #'
@@ -214,14 +216,121 @@ StarTree <- function (tips) {
 #'
 #' @template MRS
 #' @importFrom ape nj root
-#' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
-NJTree <- function (dataset, edgeLengths = FALSE) {
-  tree <- nj(dist.hamming(dataset))
+NJTree <- function (dataset, edgeLengths = FALSE,
+                    ratio = TRUE, ambig = "mean") {
+  tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
   tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
   if (!edgeLengths) tree$edge.length <- NULL
   tree
+}
+
+#' Hamming distance between taxa in a phylogenetic dataset
+#' 
+#' The Hamming distance between a pair of taxa is the number of characters
+#' with a different coding, i.e. the smallest number of evolutionary steps
+#' that must have occurred since their common ancestor.
+#' 
+#' Tokens that contain the inapplicable state are treated as requiring no steps
+#' to transform into any applicable token.
+#' 
+#' @param dataset Object of class `phyDat`.
+#' @param ratio Logical specifying whether to weight distance against 
+#' maximum possible, given that a token that is ambiguous in either of two taxa
+#' cannot contribute to the total distance between the pair.
+#' @param ambig Character specifying value to return when a pair of taxa
+#' have a zero maximum distance (perhaps due to a preponderance of ambiguous
+#' tokens).
+#' "median", the default, take the median of all other distance values;
+#' "mean", the mean;
+#' "zero" sets to zero; "one" to one;
+#' "NA" to `NA_integer_`; and "NaN" to `NaN`.
+#' 
+#' @return `Hamming()` returns an object of class `dist` listing the Hamming
+#' distance between each pair of taxa.
+#' 
+#' @seealso 
+#' Used to construct neighbour joining trees in [`NJTree()`].
+#' 
+#' `dist.hamming()` in the \pkg{phangorn} package provides an alternative
+#' implementation.
+#' 
+#' @examples 
+#' tokens <- matrix(c(0, 0, '0', 0, '?',
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', '?', 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
+#' 
+#' dataset <- MatrixToPhyDat(tokens)
+#' Hamming(dataset)
+#' @template MRS
+#' @importFrom stats median
+#' @importFrom utils combn
+#' @export
+Hamming <- function (dataset, ratio = TRUE,
+                     ambig = c("median", "mean", "zero", "one", "na", "nan")) {
+  at <- attributes(dataset)
+  if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
+    stop("`dataset` must be a valid `phyDat` object")
+  }
+  contrast <- at[["contrast"]] > 0L
+  if ('-' %in% colnames(contrast)) {
+    # TODO This is debatable but perhaps acceptable behaviour.
+    # Is the distance between {0, -} and {1} necessarily zero?
+    contrast[contrast[, '-'], ] <- TRUE
+  }
+  weight <- at[["weight"]]
+  tokens <- vapply(dataset, function (codings) contrast[codings, ],
+                   matrix(NA, at[['nr']], dim(contrast)[2]))
+  hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+    sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
+                      tokens[, , ij[2], drop = FALSE], 1, any)])
+  })
+  
+  if (ratio) {
+    informative <- apply(!contrast, 1, any)
+    nonAmbig <- .vapply(dataset, function (codings) informative[codings],
+                       logical(at[['nr']]))
+    bothInformative <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+      sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
+    })
+    hamming <- hamming / bothInformative
+    if (ambig[1] == 0) {
+      ambig <- "zero"
+    } else if (ambig[1] == 1) {
+      ambig <- "one"
+    }
+    nanMethod <- pmatch(tolower(ambig[1]),
+                        c("median", "mean", "zero", "one", "na", "nan"))
+    if (is.na(nanMethod)) {
+      stop("Invalid setting for `ambig`")
+    }
+    hamming[is.nan(hamming)] <- switch(nanMethod,
+      median(hamming[!is.na(hamming)]),
+      mean(hamming[!is.na(hamming)]),
+      0L,
+      1L,
+      NA_integer_,
+      NaN)
+      
+  }
+  attributes(hamming) <- list(
+    Size = length(dataset),
+    Labels = names(dataset),
+    Diag = FALSE,
+    Upper = FALSE,
+    method = 'hamming',
+    class = 'dist')
+  
+  # Return:
+  hamming
 }
 
 #' Constrained neighbour-joining tree
@@ -234,7 +343,8 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @template constraintParam
 #' @param weight Numeric specifying degree to up-weight characters in
 #' `constraint`.
-#'
+#' 
+#' @inheritParams NJTree
 #' @return `ConstrainedNJ()` returns a tree of class `phylo`.
 #' @examples
 #' dataset <- MatrixToPhyDat(matrix(
@@ -246,17 +356,18 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' plot(ConstrainedNJ(dataset, constraint))
 #' @template MRS
 #' @importFrom ape nj multi2di
-#' @importFrom phangorn dist.hamming
 #' @family tree generation functions
 #' @export
-ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
+ConstrainedNJ <- function (dataset, constraint, weight = 1L,
+                           ratio = TRUE, ambig = "mean") {
   missing <- setdiff(names(dataset), names(constraint))
   if (length(missing)) {
     constraint <- AddUnconstrained(constraint, missing)
   }
-  constraint <- constraint[names(dataset)]
-  tree <- multi2di(nj((dist.hamming(constraint) * weight) +
-                        dist.hamming(dataset)))
+  constraint <- .SubsetPhyDat(constraint, names(dataset))
+  tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig) 
+                       * weight) +
+                        Hamming(dataset, ratio = ratio, ambig = ambig)))
   tree$edge.length <- NULL
   tree <- ImposeConstraint(tree, constraint)
   tree <- RootTree(tree, names(dataset)[1])

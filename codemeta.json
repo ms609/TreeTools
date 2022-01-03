@@ -57,6 +57,18 @@
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "spelling",
+      "name": "spelling",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=spelling"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "knitr",
       "name": "knitr",
       "provider": {
@@ -66,6 +78,19 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phangorn",
+      "name": "phangorn",
+      "version": ">= 2.2.1",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phangorn"
     },
     {
       "@type": "SoftwareApplication",
@@ -201,19 +226,6 @@
     },
     "7": {
       "@type": "SoftwareApplication",
-      "identifier": "phangorn",
-      "name": "phangorn",
-      "version": ">= 2.2.1",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=phangorn"
-    },
-    "8": {
-      "@type": "SoftwareApplication",
       "identifier": "R.cache",
       "name": "R.cache",
       "provider": {
@@ -224,7 +236,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.cache"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
@@ -239,7 +251,7 @@
     },
     "SystemRequirements": "C++14"
   },
-  "fileSize": "3999.952KB",
+  "fileSize": "1409.635KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
