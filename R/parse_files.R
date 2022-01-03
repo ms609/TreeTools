@@ -883,6 +883,17 @@ MatrixToPhyDat <- function (tokens) {
   dat
 }
 
+
+`[.phyDat` <- function(x, i, j, ..., drop = FALSE) {
+  if (requireNamespace('phangorn', quietly = TRUE)) {
+    phangorn::`[.phyDat`
+  } else {
+    mat <- PhyDatToMatrix(x)
+    MatrixToPhyDat(mat[i, j, ..., drop = FALSE])
+  }
+}
+
+
 .PhyDatWithContrast <- function (dat, contrast) {
   if (is.null(dim(dat))) {
     dat <- t(t(dat))
