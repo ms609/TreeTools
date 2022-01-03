@@ -242,7 +242,8 @@ NJTree <- function (dataset, edgeLengths = FALSE,
 #' @param ambig Character specifying value to return when a pair of taxa
 #' have a zero maximum distance (perhaps due to a preponderance of ambiguous
 #' tokens).
-#' "mean" takes the mean of all other distance values; 
+#' "median", the default, take the median of all other distance values;
+#' "mean", the mean;
 #' "zero" sets to zero; "one" to one;
 #' "NA" to `NA_integer_`; and "NaN" to `NaN`.
 #' 
@@ -273,7 +274,7 @@ NJTree <- function (dataset, edgeLengths = FALSE,
 #' @importFrom utils combn
 #' @export
 Hamming <- function (dataset, ratio = TRUE,
-                     ambig = c("mean", "zero", "one", "na", "nan")) {
+                     ambig = c("median", "mean", "zero", "one", "na", "nan")) {
   at <- attributes(dataset)
   if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
     stop("`dataset` must be a valid `phyDat` object")
@@ -306,11 +307,12 @@ Hamming <- function (dataset, ratio = TRUE,
       ambig <- "one"
     }
     nanMethod <- pmatch(tolower(ambig[1]),
-                        c("mean", "zero", "one", "na", "nan"))
+                        c("median", "mean", "zero", "one", "na", "nan"))
     if (is.na(nanMethod)) {
       stop("Invalid setting for `ambig`")
     }
     hamming[is.nan(hamming)] <- switch(nanMethod,
+      median(hamming[!is.na(hamming)]),
       mean(hamming[!is.na(hamming)]),
       0L,
       1L,

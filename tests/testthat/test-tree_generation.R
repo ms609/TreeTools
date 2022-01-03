@@ -74,7 +74,20 @@ test_that("Hamming() works", {
   expect_equal(as.double(Hamming(dataset, ambig = "1")), ex)
   ex[is.nan(expected)] <- mean(expected[!is.nan(expected)])
   expect_equal(as.double(Hamming(dataset, ambig = "mean")), ex)
-               
+  ex[is.nan(expected)] <- median(expected[!is.nan(expected)])
+  expect_equal(as.double(Hamming(dataset, ambig = "med")), ex)
+  
+})
+
+test_that("Hamming() handles inapplicables", {
+  dataset <- StringToPhyDat('221100 ---000 ---000 211{-0}?? 10-?10',
+                            letters[1:5], byTaxon = TRUE)
+  expected <- c(1/3, 1/3, 1/3, 3/4,
+                0, NaN, 1/2,
+                NaN, 1/2,
+                1)
+  expect_equal(as.double(Hamming(dataset, ambig = "NaN")), expected)
+  
 })
 
 test_that("NJTree() works", {
