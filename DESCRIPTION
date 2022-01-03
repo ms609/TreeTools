@@ -43,6 +43,7 @@ Imports:
     R.cache,
     Rdpack (>= 0.7),
 Suggests:
+    spelling,
     knitr,
     phangorn (>= 2.2.1),
     Rcpp,
