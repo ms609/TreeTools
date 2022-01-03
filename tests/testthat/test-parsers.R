@@ -109,7 +109,13 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
-test_that("PhyDatToMatrix with ambigs", {
+test_that(".PhYDatWithContrast() fails gracefully", {
+  expect_error(.PhyDatWithContrast(matrix(0, 2, 2),
+                                   matrix(c(1, 0, 0, 1), 2, 2, FALSE,
+                                          list(0:1, 0:1))))
+})
+
+test_that("PhyDatToMatrix() with ambigs", {
   mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,'{12}','(01)','-','?'),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
