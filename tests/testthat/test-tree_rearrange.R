@@ -6,17 +6,23 @@ nasty <- structure(list(edge = structure(
   tip.label = letters[1:8]),
   class = 'phylo') # Danger: Do not plot!
 
+test_that(".DescendantTips() recurses", {
+  nTip <- 19L
+  tree <- BalancedTree(nTip)
+  edge <- tree$edge
+  expect_equal(.DescendantTips(edge[, 1], edge[, 2], nTip, c(23, 32, 35)),
+               c(1:3, 11:13, 16:19))
+})
 
 test_that("RootOnNode() works", {
-  
-  expect_null(RootOnNode(NULL))
+  expect_null(RootOnNode(NULL, 1))
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
                                           .Dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "cladewise")
-
+  
   exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L,
                                             8L, 1L, 2L, 3L, 9L, 4L, 5L),
                                           .Dim = c(8L, 2L)),

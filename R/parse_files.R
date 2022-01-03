@@ -381,8 +381,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' a list of length one containing a character string explaining why the
 #' function call was unsuccessful.
 #'
-#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
-#' [`phyDat`][phangorn::phyDat] object.
+#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a `phyDat` object.
 #'
 #' @references
 #'   \insertRef{Maddison1997}{TreeTools}
@@ -824,16 +823,28 @@ MorphoBankDecode <- function (string) {
 #' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
 #' `PhyDatToMatrix()` converts a `phyDat` object to a matrix of tokens.
 #'
-#' @param tokens matrix of tokens, probably created with [`ReadCharacters()`]
-#'               or [`ReadTntCharacters()`]. Row names should correspond to tip
-#'               labels; column names may optionally correspond to
-#'               character labels.
+#' @param tokens matrix of tokens, possibly created with [`ReadCharacters()`]
+#' or [`ReadTntCharacters()`].
+#' Row names should correspond to leaf labels; column names may optionally
+#' correspond to character labels.
 #'
 #' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
 #' @family phylogenetic matrix conversion functions
+#' @examples 
+#' tokens <- matrix(c(0, 0, '0', 0, 0,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', 1, 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
+#'                    
+#' MatrixToPhyDat(tokens)
 #' @template MRS
-#' @keywords internal
 #' @export
 MatrixToPhyDat <- function (tokens) {
   allTokens <- unique(as.character(tokens))
@@ -858,11 +869,61 @@ MatrixToPhyDat <- function (tokens) {
     t(contrast)
   }
   dimnames(contrast) <- list(allTokens, levels)
-  dat <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
+  dat <- .PhyDatWithContrast(tokens, contrast = contrast)
 
   # Return:
   dat
 }
+
+
+`[.phyDat` <- .SubsetPhyDat <- function(x, i, j, ..., drop = FALSE) {
+  mat <- PhyDatToMatrix(x)
+  MatrixToPhyDat(mat[i, j, ..., drop = FALSE])
+}
+
+
+.PhyDatWithContrast <- function (dat, contrast) {
+  if (is.null(dim(dat))) {
+    dat <- t(t(dat))
+  }
+  tipLabels <- rownames(dat)
+  if (is.null(tipLabels)) {
+    stop("Data rows must be named with tip labels")
+  }
+  
+  levelSet <- dimnames(contrast)
+  allLevels <- levelSet[[1]]
+  levels <- levelSet[[2]]
+  rownames(contrast) <- NULL
+  
+  # See https://stackoverflow.com/questions/70557817
+  listed <- do.call(paste0, data.frame(t(dat)))
+  firstOccurrence <- match(listed, listed)
+  tab <- table(firstOccurrence)
+  weight <- as.integer(tab)
+  tab[] <- seq_along(tab)
+  index <- as.integer(tab[as.character(firstOccurrence)])
+  
+  duplicate <- duplicated(firstOccurrence)
+  phyMat <- matrix(match(dat[, !duplicate], allLevels),
+                   dim(dat)[1], sum(!duplicate))
+  
+  # Return:
+  structure(
+    lapply(seq_along(tipLabels), function (i) phyMat[i, ]),
+    #as.list(asplit(phyMat, 1)),
+    names  = tipLabels,
+    weight = as.integer(weight),
+    nr = length(weight),
+    nc = length(levels),
+    index = unname(index),
+    levels = levels,
+    allLevels = allLevels,
+    type = 'USER',
+    contrast = contrast,
+    class = "phyDat")
+}
+
 
 #' @rdname MatrixToPhyDat
 #' @param dataset A dataset of class `phyDat`.
@@ -964,11 +1025,10 @@ StringToPhydat <- StringToPhyDat
 
 #' Convert between strings and `phyDat` objects
 #'
-#' `PhyDatToString()` converts a [`phyDat`][phangorn::phyDat] object as a
-#' string;
+#' `PhyDatToString()` converts a `phyDat` object as a string;
 #' `StringToPhyDat()` converts a string of character data to a `phyDat` object.
 #'
-#' @param phy An object of class [`phyDat`][phangorn::phyDat].
+#' @param phy An object of class `phyDat`.
 #' @param parentheses Character specifying format of parentheses with which to
 #' surround ambiguous tokens.  Choose from: \code{\{} (default), `[`, `(`, `<`.
 #' @param collapse Character specifying text, perhaps `,`, with which to
@@ -994,7 +1054,6 @@ StringToPhydat <- StringToPhyDat
 #'
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
-#' @importFrom phangorn phyDat
 #' @export
 PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {

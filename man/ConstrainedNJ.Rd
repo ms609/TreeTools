@@ -4,10 +4,10 @@
 \alias{ConstrainedNJ}
 \title{Constrained neighbour-joining tree}
 \usage{
-ConstrainedNJ(dataset, constraint, weight = 1L)
+ConstrainedNJ(dataset, constraint, weight = 1L, ratio = TRUE, ambig = "mean")
 }
 \arguments{
-\item{dataset}{A phylogenetic data matrix of class \code{\link[phangorn]{phyDat}},
+\item{dataset}{A phylogenetic data matrix of class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
 \item{constraint}{An object of class \code{phyDat}; returned trees will be
@@ -17,6 +17,12 @@ for further examples.}
 
 \item{weight}{Numeric specifying degree to up-weight characters in
 \code{constraint}.}
+
+\item{ratio}{Settings of \code{ambig} and \code{ratio} to be used when
+computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
+
+\item{ambig}{Settings of \code{ambig} and \code{ratio} to be used when
+computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 }
 \value{
 \code{ConstrainedNJ()} returns a tree of class \code{phylo}.

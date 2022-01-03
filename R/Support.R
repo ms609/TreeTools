@@ -134,8 +134,12 @@ ForestSplits <- function (forest, powersOf2) {
 
   # Return:
   table(vapply(forest, function (tr) {
+    edge <- tr$edge
+    parent <- edge[, 1]
+    child <- edge[, 2]
     # +2: Don't consider root node (not a node) or first node (duplicated)
-    vapply(Descendants(tr, nTip + 2L + seq_len(nTip - 3L), type='tips'),
+    vapply(.DescendantTips(parent, child, nTip,
+                           nodes = nTip + 2L + seq_len(nTip - 3L)),
            SplitNumber, character(1), tr, tipIndex, powersOf2)
   }, character(nTip - 3L)))
 }

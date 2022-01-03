@@ -50,7 +50,6 @@
 #' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
 #' @importFrom grDevices colorRamp colorRampPalette rgb
-#' @importFrom phangorn allDescendants
 #' @family consensus tree functions
 #' @export
 RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
@@ -145,18 +144,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 2L))
   unmatchedTrees[unmatchedTrees] <- is.na(edgeMatches)
   if (any(unmatchedTrees)) {
-    # Ignore the dummy root node
-    nodeDescs <- .vapply(allDescendants(cons)[-seq_len(nTip)][-1], function (tips) {
-      ret <- logical(nTip)
-      ret[tips[tips <= nTip]] <- TRUE
-      if (ret[pole]) !ret[-pole] else ret[-pole]
-    }, logical(nTip - 1L))
-
-    nNode <- ncol(nodeDescs)
-    # consEdge <- cons$edge
-    # parentOf <- c(NA_integer_, vapply(nTip + seq_len(nNode)[-1], function (node) {
-    #   consEdge[consEdge[, 2] == node, 1]
-    # }, integer(1))) - nTip - 1L # -1 because we will delete the dummy root node
+    nodeDescs <- .NodeDescendants(cons, nTip, pole)
+    nNode <- nrow(nodeDescs)
 
     unmatchedGroup <- aboveRogue[, unmatchedTrees, drop = FALSE]
     nUnmatched <- sum(unmatchedTrees)
@@ -165,8 +154,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     #   apply(nodeDescs[gp, , drop = FALSE], 2, any)
     # })
     floors <- .apply(unmatchedGroup, 2, function (gp) {
-       nodeContainsAllGroup <- apply(nodeDescs[gp, , drop = FALSE], 2, all)
-       nodeContainsNonGroup <- apply(nodeDescs[!gp, , drop = FALSE], 2, any)
+       nodeContainsAllGroup <- apply(nodeDescs[, gp, drop = FALSE], 1, all)
+       nodeContainsNonGroup <- apply(nodeDescs[, !gp, drop = FALSE], 1, any)
        nodeContainsAllGroup & nodeContainsNonGroup
     })
 
@@ -175,16 +164,6 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                           function (x) 1 + length(x) - which.max(rev(x))))
     nAtNode[as.integer(names(atNode))] <- atNode
 
-    # for (i in seq_len(nNode)[-1]) {
-    #   overlap <- aboveRogue[nodeDescs[, i], unmatchedTrees, drop = FALSE]
-    #   active <- apply(overlap, 2, any)
-    #   within <- apply(overlap, 2, all)
-    #   nAtNode[parentOf[i]] <- nAtNode[parentOf[i]] + sum(active & within)
-    #   unmatchedTrees[unmatchedTrees][active & within] <- FALSE
-    #   if (!any(unmatchedTrees)) {
-    #     break
-    #   }
-    # }
   }
 
   cons <- DropTip(cons, dummyRoot)
@@ -210,6 +189,29 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   list(cons = cons, onEdge = nOnEdge, atNode = nAtNode)
 }
 
+# `tree` must be in preorder
+.NodeDescendants <- function (tree, nTip, pole) {
+  parent <- tree$edge[, 1]
+  child <- tree$edge[, 2]
+  descs <- matrix(FALSE, max(parent), nTip)
+  diag(descs[seq_len(nTip), ]) <- TRUE
+  
+  for (i in rev(seq_along(parent))) {
+    descs[parent[i], ] <- descs[parent[i], ] | descs[child[i], ]
+  }
+  
+  # Internal nodes only
+  descs <- descs[-seq_len(nTip), , drop = FALSE]
+  
+  # Ignore the dummy root node
+  descs <- descs[-1, , drop = FALSE]
+  
+  flip <- descs[, pole]
+  descs[flip, ] <- !descs[flip, ]
+  
+  # Return:
+  descs[, -pole, drop = FALSE]
+}
 
 # TODO in r4.1.0 use apply(simplify = false)?
 .vapply <- function (...) {

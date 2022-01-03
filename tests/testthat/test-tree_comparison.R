@@ -8,6 +8,7 @@ test_that('Pairwise distances calculated correctly', {
   trees[[nTrees - 1L]] <- PectinateTree(nTip)
   class(trees) <- 'multiPhylo'
 
+  skip_if_not_installed('phangorn')
   dists <- PairwiseDistances(trees, phangorn::RF.dist)
   expect_equal(as.integer(phangorn::RF.dist(trees)), as.integer(dists))
 })

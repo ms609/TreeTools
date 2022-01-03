@@ -14,6 +14,8 @@
 
 - Infer `tips` parameter if missing in `StringToPhyDat()`.
 
+- Remove dependency on "phangorn" (allowing use on R < 4.1)
+
 - Improve parsing of information from nexus files.
 
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.

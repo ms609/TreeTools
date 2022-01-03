@@ -28,7 +28,7 @@ test_that("ImposeConstraint() works", {
       1, 1,   1, '?', 0, 0), ncol = 2,
     dimnames = list(letters[1:6], NULL)))
 
-  expect_warning(out <- ImposeConstraint(NJTree(constraint), constraint))
+  expect_warning({out <- ImposeConstraint(NJTree(constraint), constraint)})
   expect_true(inherits(out, 'phylo'))
 
   # Need to collapse splits intelligently to avoid error.  From Joe Moysiuk.

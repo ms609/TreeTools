@@ -40,11 +40,12 @@ Imports:
     lifecycle,
     colorspace,
     fastmatch (>= 1.1.3),
-    phangorn (>= 2.2.1),
     R.cache,
     Rdpack (>= 0.7),
 Suggests:
+    spelling,
     knitr,
+    phangorn (>= 2.2.1),
     Rcpp,
     rmarkdown,
     shiny,

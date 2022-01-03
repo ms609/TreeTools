@@ -116,10 +116,10 @@ an unexpected dataset format -- if they don't work on your dataset, please
 [let me know](https://github.com/ms609/TreeTools/issues/new?title=data+to+PhyDat+conversion+issue&body=Please%20describe+the+problem+here:&labels=bug).  
 
 
-Failing that, you can enlist the help of the
-'phangorn' package, which was installed when you installed 'TreeTools':
+Failing that, you can enlist the help of the 'phangorn' package:
 
 ```r
+install.packages('phangorn')
 library('phangorn')
 my_data <- phyDat(raw_data, type='USER', levels=c(0:9, '-'))
 ```
@@ -141,7 +141,7 @@ For more details, see the 'phangorn-specials' vignette in the phangorn package,
    index > package vignettes.
 
 ```{r Contrast matrix}
-contrast.matrix <- matrix(data=c(
+contrast.matrix <- matrix(data = c(
 # 0 1 -  # Each column corresponds to a character-state
   1,0,0, # Each row corresponds to a token, here 0, denoting the 
          # character-state set {0} 
@@ -150,8 +150,8 @@ contrast.matrix <- matrix(data=c(
   1,1,0, # A | {01}
   1,1,0, # + | {01}
   1,1,1  # ? | {01-}
-), ncol=3, # ncol should correspond to the number of columns in the matrix
-byrow=TRUE); 
+), ncol = 3, # ncol should correspond to the number of columns in the matrix
+byrow = TRUE); 
 dimnames(contrast.matrix) <- list(
   c(0, 1, '-', 'A', '+', '?'), # A list of the tokens corresponding to each row
                                # in the contrast matrix
