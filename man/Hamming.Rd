@@ -10,7 +10,8 @@ Hamming(dataset, ratio = TRUE)
 \item{dataset}{object of class phyDat}
 
 \item{ratio}{Logical specifying whether to weight distance against
-maximum possible.}
+maximum possible, given that a token that is ambiguous in either of two taxa
+cannot contribute to the total distance between the pair.}
 }
 \value{
 \code{Hamming()} returns an object of class \code{dist} listing the Hamming
@@ -26,18 +27,19 @@ Tokens that contain the inapplicable state are treated as requiring no steps
 to transform into any applicable token.
 }
 \examples{
-dataset <- matrix(c(0, 0, '0', 0, 0,
-                    0, 0, '1', 0, 1,
-                    0, 0, '1', 0, 1,
-                    0, 0, '2', 0, 1,
-                    1, 1, '-', 1, 0,
-                    1, 1, '2', 1, '{01}'),
-                    nrow = 6, ncol = 5, byrow = TRUE,
-                    dimnames = list(
-                      paste0("Taxon_", LETTERS[1:6]),
-                      paste0("Char_", 1:5)))
+tokens <- matrix(c(0, 0, '0', 0, '?',
+                   0, 0, '1', 0, 1,
+                   0, 0, '1', 0, 1,
+                   0, 0, '2', 0, 1,
+                   1, 1, '-', '?', 0,
+                   1, 1, '2', 1, '{01}'),
+                   nrow = 6, ncol = 5, byrow = TRUE,
+                   dimnames = list(
+                     paste0("Taxon_", LETTERS[1:6]),
+                     paste0("Char_", 1:5)))
 
-Hamming(MatrixToPhyDat(dataset))
+dataset <- MatrixToPhyDat(tokens)
+Hamming(dataset)
 }
 \seealso{
 Used to construct neighbour joining trees in \code{\link[=NJTree]{NJTree()}}.

@@ -234,7 +234,8 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' 
 #' @param dataset object of class phyDat
 #' @param ratio Logical specifying whether to weight distance against 
-#' maximum possible.
+#' maximum possible, given that a token that is ambiguous in either of two taxa
+#' cannot contribute to the total distance between the pair.
 #' 
 #' @return `Hamming()` returns an object of class `dist` listing the Hamming
 #' distance between each pair of taxa.
@@ -246,18 +247,19 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' implementation.
 #' 
 #' @examples 
-#' dataset <- matrix(c(0, 0, '0', 0, 0,
-#'                     0, 0, '1', 0, 1,
-#'                     0, 0, '1', 0, 1,
-#'                     0, 0, '2', 0, 1,
-#'                     1, 1, '-', 1, 0,
-#'                     1, 1, '2', 1, '{01}'),
-#'                     nrow = 6, ncol = 5, byrow = TRUE,
-#'                     dimnames = list(
-#'                       paste0("Taxon_", LETTERS[1:6]),
-#'                       paste0("Char_", 1:5)))
+#' tokens <- matrix(c(0, 0, '0', 0, '?',
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', '?', 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
 #' 
-#' Hamming(MatrixToPhyDat(dataset))
+#' dataset <- MatrixToPhyDat(tokens)
+#' Hamming(dataset)
 #' @template MRS
 #' @importFrom utils combn
 #' @export
@@ -277,10 +279,18 @@ Hamming <- function (dataset, ratio = TRUE) {
                    matrix(NA, at[['nr']], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
     sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
-                        tokens[, , ij[2], drop = FALSE], 1, any)])
+                      tokens[, , ij[2], drop = FALSE], 1, any)])
   })
   
-  if (ratio) hamming <- hamming / sum(weight)
+  if (ratio) {
+    informative <- apply(!contrast, 1, any)
+    nonAmbig <- vapply(dataset, function (codings) informative[codings],
+                       logical(at[['nr']]))
+    bothInformative <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+      sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
+    })
+    hamming <- hamming / bothInformative
+  }
   attributes(hamming) <- list(
     Size = length(dataset),
     Labels = names(dataset),
