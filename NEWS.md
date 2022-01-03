@@ -1,10 +1,3 @@
-# branch "phangone"
-
-- Remove dependency on "phangorn" (and thus allow use on R < 4.1)
-
-- `Hamming()` computes minimum evolutionary distances between pairs of taxa.
-
-
 # TreeTools 1.6.0
 
 ## New functions
@@ -20,6 +13,8 @@
 - `RandomTree()` gains `nodes` parameter allow the inclusion of polytomies.
 
 - Infer `tips` parameter if missing in `StringToPhyDat()`.
+
+- Remove dependency on "phangorn" (allowing use on R < 4.1)
 
 - Improve parsing of information from nexus files.
 
