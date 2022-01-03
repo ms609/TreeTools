@@ -877,12 +877,8 @@ MatrixToPhyDat <- function (tokens) {
 
 
 `[.phyDat` <- function(x, i, j, ..., drop = FALSE) {
-  if (requireNamespace('phangorn', quietly = TRUE)) {
-    phangorn::`[.phyDat`
-  } else {
-    mat <- PhyDatToMatrix(x)
-    MatrixToPhyDat(mat[i, j, ..., drop = FALSE])
-  }
+  mat <- PhyDatToMatrix(x)
+  MatrixToPhyDat(mat[i, j, ..., drop = FALSE])
 }
 
 
