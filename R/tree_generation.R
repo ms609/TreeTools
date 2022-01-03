@@ -242,22 +242,22 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @seealso 
 #' Used to construct neighbour joining trees in [`NJTree()`].
 #' 
-#' `dist.hamming()` in the 'phangorn' package provides an alternative
+#' `dist.hamming()` in the \pkg{phangorn} package provides an alternative
 #' implementation.
 #' 
 #' @examples 
-#' tokens <- matrix(c(0, 0, '0', 0, 0,
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '2', 0, 1,
-#'                    1, 1, '-', 1, 0,
-#'                    1, 1, '2', 1, '{01}'),
-#'                    nrow = 6, ncol = 5, byrow = TRUE,
-#'                    dimnames = list(
-#'                      paste0("Taxon_", LETTERS[1:6]),
-#'                      paste0("Char_", 1:5)))
+#' dataset <- matrix(c(0, 0, '0', 0, 0,
+#'                     0, 0, '1', 0, 1,
+#'                     0, 0, '1', 0, 1,
+#'                     0, 0, '2', 0, 1,
+#'                     1, 1, '-', 1, 0,
+#'                     1, 1, '2', 1, '{01}'),
+#'                     nrow = 6, ncol = 5, byrow = TRUE,
+#'                     dimnames = list(
+#'                       paste0("Taxon_", LETTERS[1:6]),
+#'                       paste0("Char_", 1:5)))
 #' 
-#' Hamming(MatrixToPhyDat(tokens))
+#' Hamming(MatrixToPhyDat(dataset))
 #' @template MRS
 #' @importFrom utils combn
 #' @export
@@ -274,11 +274,12 @@ Hamming <- function (dataset, ratio = TRUE) {
   }
   weight <- at[["weight"]]
   tokens <- vapply(dataset, function (codings) contrast[codings, ],
-                   matrix(NA, at[["nr"]], dim(contrast)[2]))
+                   matrix(NA, at[['nr']], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
     sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
                         tokens[, , ij[2], drop = FALSE], 1, any)])
   })
+  
   if (ratio) hamming <- hamming / sum(weight)
   attributes(hamming) <- list(
     Size = length(dataset),
