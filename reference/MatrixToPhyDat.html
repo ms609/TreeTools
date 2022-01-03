@@ -90,10 +90,10 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><!-- mathjax -
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tokens</dt>
-<dd><p>matrix of tokens, probably created with <code><a href="ReadCharacters.html">ReadCharacters()</a></code>
-or <code><a href="ReadCharacters.html">ReadTntCharacters()</a></code>. Row names should correspond to tip
-labels; column names may optionally correspond to
-character labels.</p></dd>
+<dd><p>matrix of tokens, possibly created with <code><a href="ReadCharacters.html">ReadCharacters()</a></code>
+or <code><a href="ReadCharacters.html">ReadTntCharacters()</a></code>.
+Row names should correspond to leaf labels; column names may optionally
+correspond to character labels.</p></dd>
 <dt>dataset</dt>
 <dd><p>A dataset of class <code>phyDat</code>.</p></dd>
 <dt>ambigNA, inappNA</dt>
@@ -116,6 +116,63 @@ uncompressed character states within a <code>phyDat</code> object.</p>
     <p>Martin R. Smith (<a href="mailto:martin.smith@durham.ac.uk">martin.smith@durham.ac.uk</a>)</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tokens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'0'</span>, <span class="fl">0</span>, <span class="fl">0</span>,</span>
+<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'2'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
+<span class="r-in">                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'-'</span>, <span class="fl">1</span>, <span class="fl">0</span>,</span>
+<span class="r-in">                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'2'</span>, <span class="fl">1</span>, <span class="st">'{01}'</span><span class="op">)</span>,</span>
+<span class="r-in">                   nrow <span class="op">=</span> <span class="fl">6</span>, ncol <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">                   dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span class="r-in">                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Taxon_"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span>,</span>
+<span class="r-in">                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Char_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in">                   </span>
+<span class="r-in"><span class="fu">MatrixToPhyDat</span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_B</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_C</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_D</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 3 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_E</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 4 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Taxon_F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 3 5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"weight")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 1 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"nr")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"nc")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"index")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 2 1 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"levels")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "-" "0" "1" "2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"allLevels")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0"    "1"    "2"    "-"    "{01}"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"type")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "USER"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"contrast")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      - 0 1 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0 1 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0 0 1 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0 0 0 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 1 0 0 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0 1 1 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "phyDat"</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

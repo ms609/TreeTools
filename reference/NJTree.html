@@ -82,16 +82,19 @@ dataset.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">NJTree</span><span class="op">(</span><span class="va">dataset</span>, edgeLengths <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">NJTree</span><span class="op">(</span><span class="va">dataset</span>, edgeLengths <span class="op">=</span> <span class="cn">FALSE</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dataset</dt>
-<dd><p>A phylogenetic data matrix of class <code><a href="https://rdrr.io/pkg/phangorn/man/phyDat.html" class="external-link">phyDat</a></code>,
+<dd><p>A phylogenetic data matrix of class <code>phyDat</code>,
 whose names correspond to the labels of any accompanying tree.</p></dd>
 <dt>edgeLengths</dt>
 <dd><p>Logical specifying whether to include edge lengths.</p></dd>
+<dt>ambig, ratio</dt>
+<dd><p>Settings of <code>ambig</code> and <code>ratio</code> to be used when
+computing <code><a href="Hamming.html">Hamming()</a></code> distances between sequences.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>

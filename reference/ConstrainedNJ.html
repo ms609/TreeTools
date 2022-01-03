@@ -84,13 +84,13 @@ at random.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span>, weight <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span>, weight <span class="op">=</span> <span class="fl">1L</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dataset</dt>
-<dd><p>A phylogenetic data matrix of class <code><a href="https://rdrr.io/pkg/phangorn/man/phyDat.html" class="external-link">phyDat</a></code>,
+<dd><p>A phylogenetic data matrix of class <code>phyDat</code>,
 whose names correspond to the labels of any accompanying tree.</p></dd>
 <dt>constraint</dt>
 <dd><p>An object of class <code>phyDat</code>; returned trees will be
@@ -100,6 +100,12 @@ for further examples.</p></dd>
 <dt>weight</dt>
 <dd><p>Numeric specifying degree to up-weight characters in
 <code>constraint</code>.</p></dd>
+<dt>ratio</dt>
+<dd><p>Settings of <code>ambig</code> and <code>ratio</code> to be used when
+computing <code><a href="Hamming.html">Hamming()</a></code> distances between sequences.</p></dd>
+<dt>ambig</dt>
+<dd><p>Settings of <code>ambig</code> and <code>ratio</code> to be used when
+computing <code><a href="Hamming.html">Hamming()</a></code> distances between sequences.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
