@@ -23,8 +23,6 @@ test_that("RootOnNode() works", {
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "cladewise")
   
-  expect_null(RootOnNode(tree, NULL))
-
   exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L,
                                             8L, 1L, 2L, 3L, 9L, 4L, 5L),
                                           .Dim = c(8L, 2L)),
