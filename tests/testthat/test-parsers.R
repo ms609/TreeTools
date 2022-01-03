@@ -109,7 +109,7 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
-test_that(".PhYDatWithContrast() fails gracefully", {
+test_that(".PhyDatWithContrast() fails gracefully", {
   expect_error(.PhyDatWithContrast(matrix(0, 2, 2),
                                    matrix(c(1, 0, 0, 1), 2, 2, FALSE,
                                           list(0:1, 0:1))))
@@ -148,6 +148,10 @@ test_that("MatrixToPhyDat() warns when characters blank", {
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
   expect_warning(MatrixToPhyDat(mat))
+})
+
+test_that("MatrixToPhyDat() returns phyDat if passed", {
+  expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy))
 })
 
 test_that("StringToPhyDat()", {

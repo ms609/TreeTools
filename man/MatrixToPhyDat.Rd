@@ -10,7 +10,7 @@ MatrixToPhyDat(tokens)
 PhyDatToMatrix(dataset, ambigNA = FALSE, inappNA = ambigNA)
 }
 \arguments{
-\item{tokens}{matrix of tokens, possibly created with \code{\link[=ReadCharacters]{ReadCharacters()}}
+\item{tokens}{Matrix of tokens, possibly created with \code{\link[=ReadCharacters]{ReadCharacters()}}
 or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}.
 Row names should correspond to leaf labels; column names may optionally
 correspond to character labels.}

@@ -190,7 +190,9 @@ RootTree.NULL <- function (tree, outgroupTips) NULL
 #' requested `node` and ordered in [`Preorder`].
 #'
 #' @export
-RootOnNode <- function (tree, node, resolveRoot = FALSE) UseMethod('RootOnNode')
+RootOnNode <- function (tree, node, resolveRoot = FALSE) {
+  UseMethod('RootOnNode', tree)
+}
 
 #' @importFrom fastmatch %fin%
 #' @export

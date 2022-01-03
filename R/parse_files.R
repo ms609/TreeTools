@@ -823,7 +823,7 @@ MorphoBankDecode <- function (string) {
 #' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
 #' `PhyDatToMatrix()` converts a `phyDat` object to a matrix of tokens.
 #'
-#' @param tokens matrix of tokens, possibly created with [`ReadCharacters()`]
+#' @param tokens Matrix of tokens, possibly created with [`ReadCharacters()`]
 #' or [`ReadTntCharacters()`].
 #' Row names should correspond to leaf labels; column names may optionally
 #' correspond to character labels.
@@ -847,6 +847,11 @@ MorphoBankDecode <- function (string) {
 #' @template MRS
 #' @export
 MatrixToPhyDat <- function (tokens) {
+  if (inherits(tokens, 'phyDat')) {
+    # TODO warn.
+    # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
+    return(tokens)
+  }
   allTokens <- unique(as.character(tokens))
   if (any(nchar(allTokens) == 0)) {
     problems <- apply(tokens, 1, function (x) which(nchar(x) == 0))
