@@ -15,6 +15,7 @@ test_that(".DescendantTips() recurses", {
 })
 
 test_that("RootOnNode() works", {
+  expect_null(RootOnNode(NULL, 1))
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
