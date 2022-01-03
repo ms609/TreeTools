@@ -901,7 +901,7 @@ MatrixToPhyDat <- function (tokens) {
   rownames(contrast) <- NULL
   
   # See https://stackoverflow.com/questions/70557817
-  listed <- do.call(paste, data.frame(t(dat)))
+  listed <- do.call(paste0, data.frame(t(dat)))
   firstOccurrence <- match(listed, listed)
   tab <- table(firstOccurrence)
   weight <- as.integer(tab)
