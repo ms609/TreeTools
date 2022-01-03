@@ -57,6 +57,26 @@ test_that("Random trees are generated correctly", {
   }
 })
 
+test_that("Hamming() works", {
+  dataset <- StringToPhyDat('111100 ???000 ???000 111??? 10??10',
+                            letters[1:5], byTaxon = TRUE)
+  expected <- c(1/3, 1/3, 0, 1/2,
+                0, NaN, 1/2,
+                NaN, 1/2,
+                1/2)
+  expect_equal(as.double(Hamming(dataset, ambig = "NAN")), expected)
+  ex <- expected
+  ex[is.nan(expected)] <- NA
+  expect_equal(as.double(Hamming(dataset, ambig = "NA")), ex)
+  ex[is.nan(expected)] <- 0
+  expect_equal(as.double(Hamming(dataset, ambig = 0)), ex)
+  ex[is.nan(expected)] <- 1
+  expect_equal(as.double(Hamming(dataset, ambig = "1")), ex)
+  ex[is.nan(expected)] <- mean(expected[!is.nan(expected)])
+  expect_equal(as.double(Hamming(dataset, ambig = "mean")), ex)
+               
+})
+
 test_that("NJTree() works", {
   a..f <- letters[1:6]
   bal6 <- StringToPhyDat('111100 111000 111000 110000', letters[1:6],

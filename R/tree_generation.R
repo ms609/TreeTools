@@ -205,6 +205,8 @@ StarTree <- function (tips) {
 #'
 #' @template datasetParam
 #' @param edgeLengths Logical specifying whether to include edge lengths.
+#' @param ambig,ratio Settings of `ambig` and `ratio` to be used when
+#' computing [`Hamming()`] distances between sequences.
 #'
 #' @return `NJTree` returns an object of class \code{phylo}.
 #'
@@ -216,8 +218,9 @@ StarTree <- function (tips) {
 #' @importFrom ape nj root
 #' @family tree generation functions
 #' @export
-NJTree <- function (dataset, edgeLengths = FALSE) {
-  tree <- nj(Hamming(dataset))
+NJTree <- function (dataset, edgeLengths = FALSE,
+                    ratio = TRUE, ambig = "mean") {
+  tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
   tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
   if (!edgeLengths) tree$edge.length <- NULL
   tree
@@ -236,6 +239,12 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @param ratio Logical specifying whether to weight distance against 
 #' maximum possible, given that a token that is ambiguous in either of two taxa
 #' cannot contribute to the total distance between the pair.
+#' @param ambig Character specifying value to return when a pair of taxa
+#' have a zero maximum distance (perhaps due to a preponderance of ambiguous
+#' tokens).
+#' "mean" takes the mean of all other distance values; 
+#' "zero" sets to zero; "one" to one;
+#' "NA" to `NA_integer_`; and "NaN" to `NaN`.
 #' 
 #' @return `Hamming()` returns an object of class `dist` listing the Hamming
 #' distance between each pair of taxa.
@@ -263,7 +272,8 @@ NJTree <- function (dataset, edgeLengths = FALSE) {
 #' @template MRS
 #' @importFrom utils combn
 #' @export
-Hamming <- function (dataset, ratio = TRUE) {
+Hamming <- function (dataset, ratio = TRUE,
+                     ambig = c("mean", "zero", "one", "na", "nan")) {
   at <- attributes(dataset)
   if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
     stop("`dataset` must be a valid `phyDat` object")
@@ -290,6 +300,23 @@ Hamming <- function (dataset, ratio = TRUE) {
       sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
     })
     hamming <- hamming / bothInformative
+    if (ambig[1] == 0) {
+      ambig <- "zero"
+    } else if (ambig[1] == 1) {
+      ambig <- "one"
+    }
+    nanMethod <- pmatch(tolower(ambig[1]),
+                        c("mean", "zero", "one", "na", "nan"))
+    if (is.na(nanMethod)) {
+      stop("Invalid setting for `ambig`")
+    }
+    hamming[is.nan(hamming)] <- switch(nanMethod,
+      mean(hamming[!is.na(hamming)]),
+      0L,
+      1L,
+      NA_integer_,
+      NaN)
+      
   }
   attributes(hamming) <- list(
     Size = length(dataset),
@@ -313,7 +340,8 @@ Hamming <- function (dataset, ratio = TRUE) {
 #' @template constraintParam
 #' @param weight Numeric specifying degree to up-weight characters in
 #' `constraint`.
-#'
+#' 
+#' @inheritParams NJTree
 #' @return `ConstrainedNJ()` returns a tree of class `phylo`.
 #' @examples
 #' dataset <- MatrixToPhyDat(matrix(
@@ -327,14 +355,16 @@ Hamming <- function (dataset, ratio = TRUE) {
 #' @importFrom ape nj multi2di
 #' @family tree generation functions
 #' @export
-ConstrainedNJ <- function (dataset, constraint, weight = 1L) {
+ConstrainedNJ <- function (dataset, constraint, weight = 1L,
+                           ratio = TRUE, ambig = "mean") {
   missing <- setdiff(names(dataset), names(constraint))
   if (length(missing)) {
     constraint <- AddUnconstrained(constraint, missing)
   }
   constraint <- constraint[names(dataset)]
-  tree <- multi2di(nj((Hamming(constraint) * weight) +
-                        Hamming(dataset)))
+  tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig) 
+                       * weight) +
+                        Hamming(dataset, ratio = ratio, ambig = ambig)))
   tree$edge.length <- NULL
   tree <- ImposeConstraint(tree, constraint)
   tree <- RootTree(tree, names(dataset)[1])
