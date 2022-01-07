@@ -902,8 +902,10 @@ MatrixToPhyDat <- function (tokens) {
   rownames(contrast) <- NULL
   
   # See https://stackoverflow.com/questions/70557817
-  listed <- do.call(paste0, data.frame(t(dat)))
-  firstOccurrence <- match(listed, listed)
+  groups <- do.call(grouping, as.data.frame(t(dat)))
+  ends <- attr(groups, "ends")
+  i <- rep(seq_along(ends), c(ends[1], diff(ends)))[order(groups)]
+  firstOccurrence <- match(i, i)
   tab <- table(firstOccurrence)
   weight <- as.integer(tab)
   tab[] <- seq_along(tab)
