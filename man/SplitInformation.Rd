@@ -65,7 +65,7 @@ information than multiple uneven splits -- see the examples section below.
 
 Summing the information content of all splits within a tree, perhaps using
 the '\href{https://ms609.github.io/TreeDist/}{TreeDist}' function
-\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}},
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{SplitwiseInfo()}},
 arguably gives a more instructive picture of its resolution than simply
 counting the number of splits that are present -- though with the caveat
 that splits within a tree are not independent of one another, so some
@@ -77,7 +77,7 @@ perhaps using the '\href{https://ms609.github.io/Quartet/}{Quartet}' function
 \href{https://ms609.github.io/Quartet/reference/QuartetState.html}{\code{QuartetStates()}},
 or to use a different take on the information contained within a split, the
 clustering information: see the 'TreeDist' function
-\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{ClusteringInfo()}}
 for details.
 }
 \examples{
