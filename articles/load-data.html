@@ -102,7 +102,7 @@
                         <h4 data-toc-skip class="author">Martin R. Smith <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2022-01-12</h4>
+            <h4 data-toc-skip class="date">2022-01-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/vignettes/load-data.Rmd" class="external-link"><code>vignettes/load-data.Rmd</code></a></small>
       <div class="hidden name"><code>load-data.Rmd</code></div>
@@ -114,9 +114,9 @@
 <p>It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you are not used to working with files in the Nexus format.</p>
 <p>First off, make sure that you are comfortable <a href="filesystem-navigation.html">telling R where to find a file</a>.</p>
 <p>Then you are ready to load raw data:</p>
-<div class="section level2">
-<h2 id="from-an-excel-spreadsheet">From an Excel spreadsheet<a class="anchor" aria-label="anchor" href="#from-an-excel-spreadsheet"></a>
-</h2>
+<div class="section level3">
+<h3 id="from-an-excel-spreadsheet">From an Excel spreadsheet<a class="anchor" aria-label="anchor" href="#from-an-excel-spreadsheet"></a>
+</h3>
 <p>If your data is in an Excel spreadsheet, one way to load it into R is using the <code>xlsx</code> package. First you’ll have to install it:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'xlsx'</span><span class="op">)</span> <span class="co"># You only need to do this once</span></code></pre></div>
@@ -137,9 +137,9 @@
                          
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">taxon_names</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="from-a-nexus-file">From a Nexus file<a class="anchor" aria-label="anchor" href="#from-a-nexus-file"></a>
-</h2>
+<div class="section level3">
+<h3 id="from-a-nexus-file">From a Nexus file<a class="anchor" aria-label="anchor" href="#from-a-nexus-file"></a>
+</h3>
 <p><code>TreeTools</code> contains an inbuilt Nexus parser:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadCharacters.html">ReadCharacters</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
@@ -152,18 +152,18 @@
 <p>Non-standard elements of a Nexus file might be beyond the capabilities of ape’s parser. In particular, you will need to replace spaces in taxon names with an underscore, and to arrange all data into a single block starting <code>BEGIN DATA</code>. You’ll need to strip out comments, character definitions and separate taxon blocks.</p>
 <p>The function <code>readNexus</code> in package <code>phylobase</code> uses the NCL library and promises to be more powerful, but I’ve not been able to get it to work.</p>
 </div>
-<div class="section level2">
-<h2 id="from-a-tnt-file">From a TNT file<a class="anchor" aria-label="anchor" href="#from-a-tnt-file"></a>
-</h2>
+<div class="section level3">
+<h3 id="from-a-tnt-file">From a TNT file<a class="anchor" aria-label="anchor" href="#from-a-tnt-file"></a>
+</h3>
 <p>A TNT format dataset downloaded from <a href="https://morphobank.org" class="external-link">MorphoBank</a> can be parsed with <code>ReadTntCharacters</code>, which might also handle other TNT-compatible files. If there’s a file that’s not being read correctly, please <a href="https://github.com/ms609/TreeTools/issues/new?title=Unsupported+TNT+file&amp;body=Please%20attach%20the%20problematic%20TNT%20file%20and%20describe%20the%20issue&amp;labels=enhancement" class="external-link">let me know</a> and I’ll try to fix it.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadCharacters.html">ReadTntCharacters</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
 <span class="co"># Or, to go straight to PhyDat format:</span>
 <span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ReadCharacters.html">ReadTntAsPhyDat</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="processing-raw-data">Processing raw data<a class="anchor" aria-label="anchor" href="#processing-raw-data"></a>
-</h1>
+<div class="section level2">
+<h2 id="processing-raw-data">Processing raw data<a class="anchor" aria-label="anchor" href="#processing-raw-data"></a>
+</h2>
 <p>The next stage is to get the raw data into a format that most R packages can understand. If you’ve used the <code>ReadAsPhyDat</code> or <code>ReadTntAsPhyDat</code> functions, then you can skip this step – you’re already there.</p>
 <p>Otherwise, you can try</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -211,18 +211,18 @@ byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my.phyDat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phangorn/man/phyDat.html" class="external-link">phyDat</a></span><span class="op">(</span><span class="va">my.data</span>, type<span class="op">=</span><span class="st">'USER'</span>, contrast<span class="op">=</span><span class="va">contrast.matrix</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level1">
-<h1 id="what-next">What next?<a class="anchor" aria-label="anchor" href="#what-next"></a>
-</h1>
+<div class="section level2">
+<h2 id="what-next">What next?<a class="anchor" aria-label="anchor" href="#what-next"></a>
+</h2>
 <p>You might want to:</p>
 <ul>
 <li><p><a href="load-trees.html">Load a phylogenetic tree</a> into R.</p></li>
 <li><p>Conduct parsimony search using Brazeau, Guillerme &amp; Smith’s <span class="citation">(2019)</span> <a href="https://ms609.github.io/TreeSearch/articles/inapplicable.html" class="external-link">approach to inapplicable data</a>, or using <a href="https://ms609.github.io/TreeSearch/articles/profile.html" class="external-link">Profile parsimony</a> <span class="citation">(Faith &amp; Trueman, 2001)</span>.</p></li>
 </ul>
 </div>
-<div class="section level1 unnumbered">
-<h1 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
-</h1>
+<div class="section level2">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
 <div id="ref-Brazeau2018" class="csl-entry">
 Brazeau, M. D., Guillerme, T., &amp; Smith, M. R. (2019). <span class="nocase">An algorithm for morphological phylogenetic analysis with inapplicable data</span>. <em>Systematic Biology</em>, <em>68</em>, 619–631. doi:<a href="https://doi.org/10.1093/sysbio/syy083" class="external-link">10.1093/sysbio/syy083</a>
@@ -251,7 +251,7 @@ Faith, D. P., &amp; Trueman, J. W. H. (2001). <span class="nocase">Towards an in
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
