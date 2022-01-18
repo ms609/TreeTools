@@ -15,7 +15,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
-      - "!**R-cmd-check.yml"
+      - "!**R-CMD-check.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
   pull_request:
@@ -30,7 +30,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
-      - "!**R-cmd-check.yml"
+      - "!**R-CMD-check.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
 
@@ -72,6 +72,9 @@ jobs:
         
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          extra-packages: |
+            phangorn=?ignore-before-r=4.1.0
+          
           needs: |
             check
 
