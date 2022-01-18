@@ -88,9 +88,10 @@ jobs:
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended libcurl4-openssl-dev
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check package
+        uses: r-lib/actions/check-r-package@v2
 
-      - name: Test coverage
+      - name: Code coverage
         if: runner.os == 'Windows'
         run: |
           pkg::pkg_install("covr")
