@@ -92,6 +92,6 @@ jobs:
       - name: Test coverage
         if: runner.os == 'Windows'
         run: |
-          remotes::install_cran("covr")
+          pkg::pkg_install("covr")
           covr::codecov()
         shell: Rscript {0}
