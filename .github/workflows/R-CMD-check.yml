@@ -78,7 +78,7 @@ jobs:
           r-version: ${{ matrix.config.r }}
         
       - name: Set up R dependencies (Windows)
-        if: runner.os == "Windows"
+        if: runner.os == 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: |
@@ -86,7 +86,7 @@ jobs:
             coverage
             
       - name: Set up R dependencies (Non-Windows)
-        if: runner.os != "Windows"
+        if: runner.os != 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
