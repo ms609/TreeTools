@@ -190,10 +190,12 @@ test_that("RootTree() handles null outgroups", {
 
 test_that("RootTree() works", {
   bal8 <- BalancedTree(8)
+  bal15 <- BalancedTree(15)
   expect_error(RootTree(bal8, 1:8 %in% 0))
   expect_error(RootTree(bal8, 'tip_not_there'))
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
+  expect_equal(RootTree(bal15$edge, 9:11), RootTree(bal15, 9:11)$edge)
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
   expect_true(all.equal(
                as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
