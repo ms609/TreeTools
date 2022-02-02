@@ -1,3 +1,7 @@
+# branch drop-tip-rootedness
+
+- `DropTip()` retains (un)rootedness of input tree.
+
 # TreeTools 1.6.0
 
 ## New functions

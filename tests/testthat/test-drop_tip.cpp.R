@@ -12,3 +12,42 @@ test_that("drop_tip() works", {
   testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")
   testEdge <- Preorder(testTree)$edge
 })
+
+test_that("drop_tip() retains rootedness", {
+  Edge <- function (text) ape::read.tree(text = text)$edge
+  
+  expect_equal(drop_tip(Edge("(a, b, (c, d));"), 1),
+               Edge("(a, b, c);"))
+  
+  expect_equal(drop_tip(Edge("(a, b, c, (d, e));"), 1),
+               Edge("(a, b, (c, d));"))
+  
+  expect_equal(drop_tip(Edge("(a, (b, (c, d)));"), 1),
+               Edge("(b, (c, d));"))
+  
+  
+  # Dropping a pair
+  
+  expect_equal(drop_tip(Edge("((a, b), t2, (t3, t4));"), 1:2),
+               Edge("(a, b, c);"))
+  
+  expect_equal(drop_tip(Edge("(a, b, t2, (t3, t4));"), 1:2),
+               Edge("(a, b, c);"))
+  
+  expect_equal(drop_tip(Edge("(a, b, (t2, (t3, t4)));"), 1:2),
+               Edge("(a, b, c);"))
+  
+  expect_equal(drop_tip(Edge("((a, b), (t2, (t3, t4)));"), 1:2),
+               Edge("(a, b, c);"))
+  
+  
+  expect_equal(drop_tip(Edge("(a1, a2, b, c, (d, e));"), 1:2),
+               Edge("(a, b, (c, d));"))
+  
+  expect_equal(drop_tip(Edge("((a1, a2), (b, (c, d)));"), 1:2),
+               Edge("(b, (c, d));"))
+  
+  expect_equal(drop_tip(Edge("(a1, a2, (b, (c, d)));"), 1:2),
+               Edge("(b, (c, d));"))
+  
+})
