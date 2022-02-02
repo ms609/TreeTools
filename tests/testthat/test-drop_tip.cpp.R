@@ -14,7 +14,6 @@ test_that("drop_tip() works", {
 })
 
 test_that("drop_tip() retains rootedness", {
-  Edge <- function (text) 
   RootingTest <- function (text, tips) {
     tree <- ape::read.tree(text = text)
     expect_equal(
