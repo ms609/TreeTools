@@ -22,7 +22,16 @@ test_that("drop_tip() retains rootedness", {
     )
   }
   
+  SeeTree <- function (text, ...) {
+    tree <- ape::read.tree(text = text)
+    plot(tree)
+    nodelabels()
+    edgelabels()
+    tree$edge
+  }
+  
   RootingTest("(a, b, (c, d));", 1)
+  RootingTest("((a, b), (c, d));", 1)
   RootingTest("(a, b, c, (d, e));", 1)
   RootingTest("(a, (b, (c, d)));", 1)
   
