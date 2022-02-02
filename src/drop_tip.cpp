@@ -40,7 +40,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
 
     const int node_parent = parent_of[tip];
 #ifdef MSDEBUG
-    Rcout << " Dropping tip " << tip << " on edge 1+"<<child_on[tip] <<".\n";
+    Rcout << " Dropping tip " << tip << " on edge 1+" << child_on[tip] << ".\n";
     Rcout << "  Parent of tip = " << node_parent << ", instance "
           << as_parent[node_parent] <<"\n";
 #endif
