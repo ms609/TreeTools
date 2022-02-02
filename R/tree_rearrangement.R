@@ -103,7 +103,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
   parents <- edge[, 1]
   child <- edge[, 2]
   res <- vector("list", max(parents))
-  for (i in rev(seq_along(parents))) {
+  for (i in seq_along(parents)) {
     pa <- parents[i]
     res[[child[i]]] <- c(pa, res[[pa]])
   }
