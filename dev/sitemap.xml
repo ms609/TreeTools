@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/articles/load-data.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/articles/load-trees.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/authors.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/news/index.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/AddTip.html</loc>
@@ -65,6 +89,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/Hamming.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc>
@@ -158,6 +185,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/RoguePlot.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/RootNode.html</loc>
@@ -259,6 +289,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
   </url>
   <url>
@@ -272,14 +305,5 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/load-data.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/load-trees.html</loc>
   </url>
 </urlset>
