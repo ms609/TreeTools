@@ -62,9 +62,10 @@ ImposeConstraint <- function (tree, constraint) {
   .ChildAtEnd <- function (x) {
     if (x <= nTip) x else .ChildAtEnd(edge[match(x, edge[, 1]), 2])
   }
+
   edge <- backbone$edge
-  tomies <- table(edge[, 1], dnn = NULL)
-  polytomies <- as.integer(names(tomies[tomies > 2]))
+  polytomies <- which(tabulate(edge[, 1]) > 2)
+  
   for (node in polytomies) {
     nodeKids <- edge[edge[, 1] == node, 2]
     standIns <- vapply(nodeKids, .ChildAtEnd, 1)

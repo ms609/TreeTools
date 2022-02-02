@@ -2,6 +2,14 @@
 
 - `DropTip()` retains (un)rootedness of input tree.
 
+
+# TreeTools 1.6.0.9000
+
+- Fix bug rooting trees on discontinuous outgroups.
+
+- Small improvements to computational efficiency.
+
+
 # TreeTools 1.6.0
 
 ## New functions

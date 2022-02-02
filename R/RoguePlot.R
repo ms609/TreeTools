@@ -123,8 +123,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
               sum(tipsAboveRogue == nTip - 1L)) # At pole
   atTip <- tipsAboveRogue == 1L
   tipMatches <- apply(aboveRogue[, atTip, drop = FALSE], 2, which)
-  tab <- table(as.integer(tipMatches))
-  nAtTip[as.integer(names(tab))] <- tab
+  tab <- tabulate(as.integer(tipMatches))
+  nAtTip[seq_along(tab)] <- tab
 
   unmatchedTrees <- !(tipsAboveRogue %fin% c(0L, 1L, nTip - 1L))
   consSplits <- PolarizeSplits(as.Splits(cons), pole)
@@ -134,8 +134,8 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
                         data.frame(t(splits[, -pole, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
-  tab <- table(edgeMatches)
-  nAtSplit[as.integer(names(tab))] <- tab
+  tab <- tabulate(edgeMatches)
+  nAtSplit[which(as.logical(tab))] <- tab[as.logical(tab)]
   decipher <- c(nAtTip, rep.int(NA, cons$Nnode))
   decipher[as.integer(names(consSplits))] <- nAtSplit
   nOnEdge <- decipher[cons$edge[, 2]]
