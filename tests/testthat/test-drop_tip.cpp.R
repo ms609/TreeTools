@@ -14,40 +14,27 @@ test_that("drop_tip() works", {
 })
 
 test_that("drop_tip() retains rootedness", {
-  Edge <- function (text) ape::read.tree(text = text)$edge
+  Edge <- function (text) 
+  RootingTest <- function (text, tips) {
+    tree <- ape::read.tree(text = text)
+    expect_equal(
+      ape::is.rooted(DropTip(tree, tips)),
+      ape::is.rooted(tree)
+    )
+  }
   
-  expect_equal(drop_tip(Edge("(a, b, (c, d));"), 1),
-               Edge("(a, b, c);"))
-  
-  expect_equal(drop_tip(Edge("(a, b, c, (d, e));"), 1),
-               Edge("(a, b, (c, d));"))
-  
-  expect_equal(drop_tip(Edge("(a, (b, (c, d)));"), 1),
-               Edge("(b, (c, d));"))
-  
+  RootingTest("(a, b, (c, d));", 1)
+  RootingTest("(a, b, c, (d, e));", 1)
+  RootingTest("(a, (b, (c, d)));", 1)
   
   # Dropping a pair
+  RootingTest("((a, b), t2, (t3, t4));", 1:2)
+  RootingTest("(a, b, t2, (t3, t4));", 1:2)
+  RootingTest("(a, b, (t2, (t3, t4)));", 1:2)
   
-  expect_equal(drop_tip(Edge("((a, b), t2, (t3, t4));"), 1:2),
-               Edge("(a, b, c);"))
-  
-  expect_equal(drop_tip(Edge("(a, b, t2, (t3, t4));"), 1:2),
-               Edge("(a, b, c);"))
-  
-  expect_equal(drop_tip(Edge("(a, b, (t2, (t3, t4)));"), 1:2),
-               Edge("(a, b, c);"))
-  
-  expect_equal(drop_tip(Edge("((a, b), (t2, (t3, t4)));"), 1:2),
-               Edge("(a, b, c);"))
-  
-  
-  expect_equal(drop_tip(Edge("(a1, a2, b, c, (d, e));"), 1:2),
-               Edge("(a, b, (c, d));"))
-  
-  expect_equal(drop_tip(Edge("((a1, a2), (b, (c, d)));"), 1:2),
-               Edge("(b, (c, d));"))
-  
-  expect_equal(drop_tip(Edge("(a1, a2, (b, (c, d)));"), 1:2),
-               Edge("(b, (c, d));"))
-  
+  RootingTest("((a, b), (t2, (t3, t4)));", 1:2)
+  RootingTest("(a1, a2, b, c, (d, e));", 1:2)
+
+  RootingTest("((a1, a2), (b, (c, d)));", 1:2)
+  RootingTest("(a1, a2, (b, (c, d)));", 1:2)
 })
