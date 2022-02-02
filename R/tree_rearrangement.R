@@ -151,12 +151,12 @@ RootTree.matrix <- function (tree, outgroupTips) {
     outgroup <- outgroupTips
   } else {
     ancestry <- unlist(.AllAncestors(tree)[outgroupTips])
-    ancestryTable <- table(ancestry)
-    lineage <- as.integer(names(ancestryTable))
-    lca <- max(lineage[ancestryTable == length(outgroupTips)])
-
+    ancestryTable <- tabulate(ancestry)
+    lca <- max(which(ancestryTable == length(outgroupTips)))
+    
     if (lca == rootNode) {
       if (nNode > 2L) {
+        lineage <- which(as.logical(ancestryTable))
         lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
       } else {
         return (tree)
