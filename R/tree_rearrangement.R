@@ -450,8 +450,8 @@ CollapseEdge <- function (tree, edges) {
 #' require any particular internal node numbering schema.
 #'
 #' @template treeParam
-#' @param tip Character vector specifying labels of leaves in tree to be dropped,
-#' or integer vector specifying the indices of leaves to be dropped.
+#' @param tip Character vector specifying labels of leaves in tree to be
+#' dropped, or integer vector specifying the indices of leaves to be dropped.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
 #' @param preorder Logical specifying whether to [Preorder] the tree before
@@ -471,7 +471,9 @@ CollapseEdge <- function (tree, edges) {
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
+DropTip <- function (tree, tip, preorder = TRUE, check = TRUE) {
+  UseMethod("DropTip")
+}
 
 #' @rdname DropTip
 #' @export
