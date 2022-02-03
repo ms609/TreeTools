@@ -319,7 +319,6 @@ test_that("DropTip() retains rootedness", {
       ape::is.rooted(DropTip(tree, tips)),
       ape::is.rooted(tree)
     )
-    DropTip(tree, tips)$edge #TODO REMOVE
   }
   
   SeeTree <- function (text, ...) {
@@ -358,6 +357,7 @@ test_that("DropTip() retains rootedness", {
   RootingTest("((a1, a2), (b, (c, d)));", 1:2)
   RootingTest("(a1, a2, (b, (c, d)));", 1:2)
   
+  # Check internal nodes are renumbered
   rerooter <- ape::read.tree(text = "((a,(b,c,d)),e,x);")
   dropped <- DropTip(rerooter, "x")
   tab <- as.integer(names(table(dropped$edge[, 1])))
