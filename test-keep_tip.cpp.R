@@ -11,13 +11,13 @@ test_that("keep_tip() works", {
   expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(6:4, 8)),
                matrix(c(6, 7, 8, 8, 7, 6, 9, 9,
                         7, 8, 1, 2, 3, 9, 4, 5), 8, 2))
-  expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(5:8, 8)),
+  expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(1:4, 8)),
                BalancedTree(4)$edge)
   
   expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(3:8, 8)),
                BalancedTree(2)$edge)
   
-  expect_equal(keep_tip(unroot(BalancedTree(4))$edge, tabulate(2:4)),
+  expect_equal(keep_tip(unroot(BalancedTree(4))$edge, !tabulate(1, 4)),
                matrix(c(4, 4, 4, 1, 2, 3), 3, 2))
   
   testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")

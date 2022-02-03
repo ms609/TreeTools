@@ -73,31 +73,38 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
 #endif
   
-  const bool rooted = root_edges == 2; // TODO UNUSED
   int writing_edge = -1;
   IntegerMatrix ret(kept_edges, 2);
   for (int i = 0; i != start_edge; ++i) {
     const int
       parent = edge(i, 0),
-      n_children = n_child[parent]
+      n_children = n_child[edge(i, 1)]
     ;
     if (n_children) {
-      const int child = new_child[i];
-      if (n_children > 1) {
-        // Record this edge:
-        ++writing_edge;
-        if (!new_no[parent]) {
-          new_no[parent] = ++next_no;
-        }
-        ret(writing_edge, 0) = new_no[parent];
-        if (!new_no[child]) {
-          new_no[child] = ++next_no;
-        }
-        ret(writing_edge, 1) = new_no[child];
+      // const int child = new_child[i];
+      const int child = edge(i, 1);
+      if (n_children == 1) {
+        new_no[child] = new_no[parent];
+      } else {
+        if (n_child[root_node] == 1) {
+          // Skip this dangling root edge, but mark root as ready to retain
+          n_child[root_node] = RETAIN;
+        } else {
+          // Record this edge:
+          ++writing_edge;
+          if (!new_no[parent]) {
+            new_no[parent] = ++next_no;
+          }
+          ret(writing_edge, 0) = new_no[parent];
+          if (!new_no[child]) {
+            new_no[child] = ++next_no;
+          }
+          ret(writing_edge, 1) = new_no[child];
 #ifdef TTDEBUG
-        Rcout << " > Translate: " << parent << "-" << child
-              << " --> " << new_no[parent] << "-" << new_no[child] << "\n";
+          Rcout << " > Translate: " << edge(i, 0) << "-" << edge(i, 1)
+                << " --> " << new_no[parent] << "-" << new_no[child] << "\n";
 #endif
+        }
       }
     }
   }
