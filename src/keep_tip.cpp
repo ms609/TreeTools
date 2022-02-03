@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <stdexcept>
 using namespace Rcpp;
-#define TTDEBUG
+// #define TTDEBUG
 
 #define RETAIN 999
 
@@ -21,7 +21,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
 
   auto
     n_child = std::make_unique<int[]>(all_nodes),
-    // one_child = std::make_unique<int[]>(all_nodes),
+    one_child = std::make_unique<int[]>(all_nodes),
     new_no = std::make_unique<int[]>(all_nodes)
   ;
   
@@ -31,11 +31,12 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       n_child[i + 1] = RETAIN;
       new_no[i + 1] = ++next_no;
 #ifdef TTDEBUG
-      Rcout << " [" << (i + 1) << " -> " << new_no[i + i] <<"]\n";
+      Rcout << " [" << (i + 1) << " -> " << new_no[i + 1] <<"]\n";
 #endif
     }
   }
   
+  IntegerVector new_child = edge(_, 1);
   int kept_edges = 0;
   for (int i = start_edge; i--; ) {
     const int
@@ -45,8 +46,11 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
     if (edge_children) {
       const int edge_parent = edge(i, 0);
       ++n_child[edge_parent];
-      if (edge_children > 1) {
-        //one_child[edge_parent] = edge_child;
+      if (edge_children == 1) {
+        new_child[i] = one_child[edge_child];
+        one_child[edge_parent] = one_child[edge_child];
+      } else {
+        one_child[edge_parent] = edge_child;
         ++kept_edges;
       }
     }
@@ -66,7 +70,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       n_children = n_child[parent]
     ;
     if (n_children) {
-      const int child = edge(i, 1);
+      const int child = new_child[i];
       if (n_children > 1) {
         // Record this edge:
         ++writing_edge;
@@ -78,9 +82,10 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
           new_no[child] = ++next_no;
         }
         ret(writing_edge, 1) = new_no[child];
-      } else {
-        // Single edge
-        new_no[child] = new_no[parent];
+#ifdef TTDEBUG
+        Rcout << " > Translate: " << parent << "-" << child
+              << " --> " << new_no[parent] << "-" << new_no[child] << "\n";
+#endif
       }
     }
   }
