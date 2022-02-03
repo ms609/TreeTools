@@ -132,6 +132,16 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       dropped_edge[collapse] = true;
       ++dropped;
       new_no[edge(collapse, 1)] = new_root;
+      
+      // Decrement internal nodes
+      for (int i = root + 1; i != all_nodes; ++i) {
+        if (new_no[i] > new_root) {
+#ifdef MSDEBUG
+      Rcout << "  Decrementing new_no[" << i << "], was " << new_no[i] << ".\n";  
+#endif
+          --new_no[i];
+        }
+      }
     }
   }
   
