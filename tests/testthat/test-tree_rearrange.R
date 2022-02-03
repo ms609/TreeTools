@@ -310,6 +310,54 @@ test_that("DropTip() works", {
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })
 
+test_that("DropTip() retains rootedness", {
+  Tree <- function (text) Preorder(ape::read.tree(text = text))
+  RootingTest <- function (text, tips) {
+    tree <- Tree(text)
+    expect_equal(
+      ape::is.rooted(DropTip(tree, tips)),
+      ape::is.rooted(tree)
+    )
+    DropTip(tree, tips)$edge #TODO REMOVE
+  }
+  
+  SeeTree <- function (text, ...) {
+    tree <- ape::read.tree(text = text)
+    plot(tree)
+    nodelabels()
+    edgelabels()
+    tree$edge
+  }
+  
+  # A two-leaf tree ALWAYS appears rooted.
+  # Check this doesn't break anything.
+  expect_equal(DropTip(Tree("((a, b), c);"), 3),
+               Tree("(a, b);"));
+  
+  
+  RootingTest("(a, b, (c, d));", 1)
+  RootingTest("(a, b, (c, (d, e)));", 1:2)
+  RootingTest("(a, (b, c), d);", 4)
+  RootingTest("(a, b, (c, d), (e, f));", 1)
+  RootingTest("((a, b), (c, d));", 1)
+  RootingTest("(a, b, c, (d, e));", 1)
+  RootingTest("(a, (b, (c, d)));", 1)
+  
+  # Dropping a pair
+  RootingTest("((a, b), t2, (t3, t4));", 1:2)
+  RootingTest("(a, b, (c, d), (e, f));", 1:2)
+  RootingTest("(a, b, (c, d, (e, f)));", 1:3)
+  RootingTest("(a, b, (c, d, (e, (f, g))));", 1:4)
+  RootingTest("(a, b, t2, (t3, t4));", 1:2)
+  RootingTest("(a, b, (t2, (t3, t4)));", 1:2)
+  
+  RootingTest("((a, b), (t2, (t3, t4)));", 1:2)
+  RootingTest("(a1, a2, b, c, (d, e));", 1:2)
+  
+  RootingTest("((a1, a2), (b, (c, d)));", 1:2)
+  RootingTest("(a1, a2, (b, (c, d)));", 1:2)
+})
+
 test_that("DropTip.multiPhylo() with attributes", {
   multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
   attr(multi, 'TipLabel') <- paste0('t', 1:8)
