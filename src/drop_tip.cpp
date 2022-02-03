@@ -122,6 +122,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
         }
       }
     }
+    
     if (root_order == 2) {
 #ifdef MSDEBUG
       Rcout << "  Removing root node by removing edge " << collapse 
