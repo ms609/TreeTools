@@ -117,7 +117,7 @@ test_that("RootOnNode() works", {
   expect_true(all.equal(UnrootTree(PectinateTree(8)),
                         RootOnNode(PectinateTree(8), 9L, FALSE)))
   expect_true(all.equal(urt, RootOnNode(urt, 9L, FALSE)))
-  expect_true(all.equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
+  expect_true(all.equal(Preorder(RootTree(urt, letters[1:2])),
                         RootOnNode(urt, 9L, TRUE)))
 
 })
@@ -305,7 +305,8 @@ test_that("DropTip() works", {
   bigTree <- RandomTree(1284)
   set.seed(1284)
   bigTip <- sample(1:1284, 608)
-  expect_true(all.equal(drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip)))
+  expect_true(all.equal(DropTip(bigTree, bigTip),
+                        unroot(drop.tip(bigTree, bigTip))))
   #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
   #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
 })

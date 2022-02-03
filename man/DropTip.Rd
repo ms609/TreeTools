@@ -47,6 +47,8 @@ incident branches.
 \details{
 This function is more robust than \code{\link[ape:drop.tip]{ape::drop.tip()}} as it does not
 require any particular internal node numbering schema.
+It also retains the rootedness of a tree, where \code{drop.tip()}
+can root unrooted trees.
 }
 \section{Functions}{
 \itemize{

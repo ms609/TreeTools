@@ -448,6 +448,8 @@ CollapseEdge <- function (tree, edges) {
 #'
 #' This function is more robust than [`ape::drop.tip()`] as it does not
 #' require any particular internal node numbering schema.
+#' It also retains the rootedness of a tree, where `drop.tip()` 
+#' can root unrooted trees.
 #'
 #' @template treeParam
 #' @param tip Character vector specifying labels of leaves in tree to be

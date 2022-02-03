@@ -17,13 +17,13 @@ EnforceOutgroup(tree, outgroup)
 a character vector listing the names of all the taxa in the tree, from which
 a random tree will be generated.}
 
-\item{outgroup}{Character vector containing the names of taxa to include in the
-outgroup.}
+\item{outgroup}{Character vector containing the names of taxa to include in
+the outgroup.}
 }
 \value{
-\code{EnforceOutgroup()} returns a tree of class \code{phylo} where all outgroup
-taxa are sister to all remaining taxa, without modifying the ingroup
-topology.
+\code{EnforceOutgroup()} returns a tree of class \code{phylo} where all
+outgroup taxa are sister to all remaining taxa, without modifying the
+ingroup topology.
 }
 \description{
 Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup

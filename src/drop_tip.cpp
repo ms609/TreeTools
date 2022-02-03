@@ -4,7 +4,7 @@ using namespace Rcpp;
 
 // Docs do not assert that edge must be in preorder, but warn against
 // "unconventional" ordering.  (See `nasty` tree in test cases.)
-// We require that the root node is numbered nTip + 1.
+// The root node must be numbered nTip + 1.
 // drop is a vector of integers between 1 and nTip marking tips to drop.
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {

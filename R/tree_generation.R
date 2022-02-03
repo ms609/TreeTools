@@ -385,12 +385,12 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L,
 #' @param tree Either a tree of class \code{phylo}; or (for `EnforceOutgroup()`)
 #' a character vector listing the names of all the taxa in the tree, from which
 #' a random tree will be generated.
-#' @param outgroup Character vector containing the names of taxa to include in the
-#' outgroup.
+#' @param outgroup Character vector containing the names of taxa to include in
+#' the outgroup.
 #'
-#' @return `EnforceOutgroup()` returns a tree of class `phylo` where all outgroup
-#' taxa are sister to all remaining taxa, without modifying the ingroup
-#' topology.
+#' @return `EnforceOutgroup()` returns a tree of class `phylo` where all
+#' outgroup taxa are sister to all remaining taxa, without modifying the
+#' ingroup topology.
 #'
 #' @examples
 #' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
@@ -407,12 +407,14 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape root bind.tree
 .EnforceOutgroup <- function (tree, outgroup, taxa) {
-  if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
+  if (length(outgroup) == 1L) {
+    return(root(tree, outgroup, resolve.root = TRUE))
+  }
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
   if (!all(outgroup %fin% taxa) ||
       length(ingroup) + length(outgroup) != length(taxa)) {
-    stop ("All outgroup taxa must occur in tree")
+    stop("All outgroup taxa must occur in tree")
   }
 
   ingroup.branch <- DropTip(tree, outgroup)
