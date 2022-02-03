@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <stdexcept>
 using namespace Rcpp;
-// #define TTDEBUG
+#define TTDEBUG
 
 #define RETAIN 999
 
@@ -16,6 +16,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   const int
     start_edge = edge.nrow(),
     n_tip = keep.length(),
+    root_node = n_tip + 1,
     all_nodes = start_edge + 2
   ;
 
@@ -37,14 +38,20 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
   
   IntegerVector new_child = edge(_, 1);
-  int kept_edges = 0;
+  int
+    kept_edges = 0,
+    root_edges = 0
+  ;
   for (int i = start_edge; i--; ) {
     const int
       edge_child = edge(i, 1),
+      edge_parent = edge(i, 0),
       edge_children = n_child[edge_child]
     ;
+    if (edge_parent == root_node) {
+      ++root_edges;
+    }
     if (edge_children) {
-      const int edge_parent = edge(i, 0);
       ++n_child[edge_parent];
       if (edge_children == 1) {
         new_child[i] = one_child[edge_child];
@@ -55,6 +62,10 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       }
     }
   }
+  if (n_child[root_node] == 1) {
+    // We've deleted one side of the tree entirely, creating a trailing root
+    --kept_edges;
+  }
   
 #ifdef TTDEBUG
   for (int i = 0; i != start_edge; ++i) {
@@ -62,6 +73,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
 #endif
   
+  const bool rooted = root_edges == 2; // TODO UNUSED
   int writing_edge = -1;
   IntegerMatrix ret(kept_edges, 2);
   for (int i = 0; i != start_edge; ++i) {
