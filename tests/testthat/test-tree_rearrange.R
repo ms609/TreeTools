@@ -358,8 +358,14 @@ test_that("DropTip() retains rootedness", {
   RootingTest("(a1, a2, (b, (c, d)));", 1:2)
   
   # Check internal nodes are renumbered
-  rerooter <- ape::read.tree(text = "((a,(b,c,d)),e,x);")
+  rerooter <- Tree("((a,(b,c,d)),e,x);")
   dropped <- DropTip(rerooter, "x")
+  tab <- as.integer(names(table(dropped$edge[, 1])))
+  expect_equal(tab[2], tab[1] + 1L)
+
+  reroot2 <- Tree("(a,(b,((c,d),(e,f))),x);")
+  dropped <- DropTip(reroot2, c("a", "b", "x"))
+  dropped$edge
   tab <- as.integer(names(table(dropped$edge[, 1])))
   expect_equal(tab[2], tab[1] + 1L)
   
