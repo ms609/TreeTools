@@ -58,26 +58,12 @@ jobs:
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-pandoc@v2
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = c('soft', 'Config/Needs/revdeps')), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v2
+      
+      - name: Set up R dependencies (Windows)
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install dependencies
-        run: |
-          remotes::install_github("r-lib/revdepcheck")
-          remotes::install_deps(dependencies = c('soft', 'Config/Needs/revdeps'))
-        shell: Rscript {0}
+          needs: |
+            revdeps
 
       - name: Check reverse dependencies
         env:
