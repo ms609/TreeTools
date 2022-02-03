@@ -42,6 +42,10 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     ++root;
   }
   const bool rooted = n_children[root] == 2;
+#ifdef MSDEBUG
+  Rcout << " " << (rooted ? "R" : "Unr") << "ooted tree with basal node "
+        << root << "\n";
+#endif
 
   for (int i = drop.length(); i--; ) {
     const int tip = drop(i);
@@ -85,7 +89,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       ++dropped;
 
 #ifdef MSDEBUG
-      Rcout << " Summary: Dropped another node: " << i <<". That's "
+      Rcout << " Dropped another node: " << i <<". That's "
             << dropped << " altogether.\n";
 #endif
 #ifndef NDEBUG
@@ -96,7 +100,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       new_no[i] = i - dropped;
 
 #ifdef MSDEBUG
-      Rcout << "  New no for " << i <<": " << new_no[i] << " .\n";
+      Rcout << "  New no for " << i <<": " << new_no[i] << ".\n";
 #endif
     }
   }
