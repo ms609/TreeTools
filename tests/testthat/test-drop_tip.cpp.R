@@ -38,6 +38,7 @@ test_that("drop_tip() retains rootedness", {
   
   
   RootingTest("(a, b, (c, d));", 1)
+  RootingTest("(a, b, (c, (d, e)));", 1:2)
   RootingTest("(a, (b, c), d);", 4)
   RootingTest("(a, b, (c, d), (e, f));", 1)
   RootingTest("((a, b), (c, d));", 1)
