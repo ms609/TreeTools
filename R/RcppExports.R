@@ -25,6 +25,10 @@ edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }
 
+keep_tip <- function(edge, keep) {
+    .Call(`_TreeTools_keep_tip`, edge, keep)
+}
+
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }

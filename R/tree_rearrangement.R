@@ -454,8 +454,9 @@ CollapseEdge <- function (tree, edges) {
 #' or integer vector specifying the indices of leaves to be dropped.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
-#' @param preorder Logical specifying whether to [Preorder] the tree before
-#' dropping tips.  Necessary if a tree's edges may be unconventionally numbered.
+#' @param preorder Logical specifying whether to [Preorder] `tree` before
+#' dropping tips.  Specifying `FALSE` saves a little time, but will result in
+#' undefined behaviour if `tree` is not in preorder.
 #' @param check Logical specifying whether to check validity of `tip`. If
 #' `FALSE` and `tip` contains entries that do not correspond to leaves of the
 #' tree, undefined behaviour may occur.
@@ -464,9 +465,9 @@ CollapseEdge <- function (tree, edges) {
 #' leaves removed.
 #'
 #' @examples
-#' tree <- BalancedTree(8)
+#' tree <- BalancedTree(9)
 #' plot(tree)
-#' plot(DropTip(tree, c('t4', 't5')))
+#' plot(DropTip(tree, c('t5', 't6')))
 #'
 #' @family tree manipulation
 #' @template MRS
@@ -527,7 +528,8 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
                             Nnode = 0), class = 'phylo'))
     }
 
-    tree$edge <- drop_tip(tree$edge, drop)
+    keep <- !tabulate(drop, nbins = nTip)
+    tree$edge <- keep_tip(tree$edge, keep)
     attr(tree, 'order') <- 'preorder'
     tree$tip.label <- labels[-drop]
     tree$Nnode <- dim(tree$edge)[1] + 1L - (nTip - nDrop)

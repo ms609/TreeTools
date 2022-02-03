@@ -363,7 +363,7 @@ test_that("LeafLabelInterchange() works", {
 
   abcd <- letters[1:4]
   sapply(1 + seq_len(100), function (i) {
-    # Check all pertubations
+    # Check all perturbations
     set.seed(i)
     expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))
 
