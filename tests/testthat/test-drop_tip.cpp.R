@@ -14,8 +14,9 @@ test_that("drop_tip() works", {
 })
 
 test_that("drop_tip() retains rootedness", {
+  Tree <- function (text) Preorder(ape::read.tree(text = text))
   RootingTest <- function (text, tips) {
-    tree <- ape::read.tree(text = text)
+    tree <- Tree(text)
     expect_equal(
       ape::is.rooted(DropTip(tree, tips)),
       ape::is.rooted(tree)
@@ -30,13 +31,24 @@ test_that("drop_tip() retains rootedness", {
     tree$edge
   }
   
+  # A two-leaf tree ALWAYS appears rooted.
+  # Check this doesn't break anything.
+  expect_equal(DropTip(Tree("((a, b), c);"), 3),
+               Tree("(a, b);"));
+  
+  
   RootingTest("(a, b, (c, d));", 1)
+  RootingTest("(a, (b, c), d);", 4)
+  RootingTest("(a, b, (c, d), (e, f));", 1)
   RootingTest("((a, b), (c, d));", 1)
   RootingTest("(a, b, c, (d, e));", 1)
   RootingTest("(a, (b, (c, d)));", 1)
   
   # Dropping a pair
   RootingTest("((a, b), t2, (t3, t4));", 1:2)
+  RootingTest("(a, b, (c, d), (e, f));", 1:2)
+  RootingTest("(a, b, (c, d, (e, f)));", 1:3)
+  RootingTest("(a, b, (c, d, (e, f)));", 1:4)
   RootingTest("(a, b, t2, (t3, t4));", 1:2)
   RootingTest("(a, b, (t2, (t3, t4)));", 1:2)
   
