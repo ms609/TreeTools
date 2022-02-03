@@ -358,8 +358,8 @@ test_that("DropTip() retains rootedness", {
   RootingTest("((a1, a2), (b, (c, d)));", 1:2)
   RootingTest("(a1, a2, (b, (c, d)));", 1:2)
   
-  bigTree <- ape::read.tree(text = "((((t006,t146),(t123,t110)),(((((t099,t173),(t073,t114)),((t058,t005),(t179,t196))),t003,t120))),t223,t209);")
-  dropped <- DropTip(bigTree, "t209")
+  rerooter <- ape::read.tree(text = "((a,(b,c,d)),e,x);")
+  dropped <- DropTip(rerooter, "x")
   tab <- as.integer(names(table(dropped$edge[, 1])))
   expect_equal(tab[2], tab[1] + 1L)
   
