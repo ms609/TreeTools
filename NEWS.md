@@ -1,6 +1,6 @@
 # TreeTools 1.6.0.9000
 
-- Fix bug rooting trees on discontinuous outgroups.
+- Fix bug rooting a tree on a discontinuous outgroup.
 
 - Small improvements to computational efficiency.
 
