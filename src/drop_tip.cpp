@@ -101,6 +101,34 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     }
   }
 
+  const int new_root = root - drop.length();
+  if (!rooted && new_root > 3) {
+    // Check to see whether we've inadvertently been left with a root node
+    // Example: drop tip 1 from "(1, 2, (3, 4));" -> "(2, (3, 4));"
+    int
+      root_order = 0,
+      collapse
+    ;
+    for (int i = start_edge; i--; ) {
+      if (new_no[edge(i, 0)] == new_root) {
+        ++root_order;
+        if (new_no[edge(i, 1)] > new_root) {
+          collapse = i;
+        }
+      }
+    }
+    if (root_order == 2) {
+#ifdef MSDEBUG
+      Rcout << "  Removing root node by removing edge " << collapse 
+            << ": " << new_no[edge(collapse, 0)] 
+            << " - " << new_no[edge(collapse, 1)] << ".\n";
+#endif
+      dropped_edge[collapse] = true;
+      ++dropped;
+      new_no[edge(collapse, 1)] = new_root;
+    }
+  }
+  
   IntegerMatrix ret(start_edge - dropped, 2);
   for (int i = start_edge; i--; ) {
     if (dropped_edge[i]) {
