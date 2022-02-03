@@ -114,6 +114,7 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
       collapse
     ;
     for (int i = start_edge; i--; ) {
+      if (dropped_edge[i]) continue;
       if (new_no[edge(i, 0)] == new_root) {
         ++root_order;
         if (new_no[edge(i, 1)] > new_root) {
