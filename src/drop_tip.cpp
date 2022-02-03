@@ -2,6 +2,9 @@
 #include <stdexcept>
 using namespace Rcpp;
 
+// Docs do not assert that edge must be in preorder, but warn against
+// "unconventional" ordering.  (See `nasty` tree in test cases.)
+// We require that the root node is numbered nTip + 1.
 // drop is a vector of integers between 1 and nTip marking tips to drop.
 // [[Rcpp::export]]
 IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
@@ -34,6 +37,11 @@ IntegerMatrix drop_tip (const IntegerMatrix edge, const IntegerVector drop) {
     ++n_children[parent];
     edge_above[child] = i;
   }
+  int root = start_edge / 2 + 2; // Minimum possible value
+  while (edge_above[root]) {
+    ++root;
+  }
+  const bool rooted = n_children[root] == 2;
 
   for (int i = drop.length(); i--; ) {
     const int tip = drop(i);
