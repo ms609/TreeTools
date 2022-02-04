@@ -376,7 +376,7 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L,
   tree
 }
 
-#' Generate a tree with a specific outgroup
+#' Generate a tree with a specified outgroup
 #'
 #' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
 #' and outgroup taxa such that the two are sister taxa across the root, without
@@ -385,12 +385,12 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L,
 #' @param tree Either a tree of class \code{phylo}; or (for `EnforceOutgroup()`)
 #' a character vector listing the names of all the taxa in the tree, from which
 #' a random tree will be generated.
-#' @param outgroup Character vector containing the names of taxa to include in the
-#' outgroup.
+#' @param outgroup Character vector containing the names of taxa to include in
+#' the outgroup.
 #'
-#' @return `EnforceOutgroup()` returns a tree of class `phylo` where all outgroup
-#' taxa are sister to all remaining taxa, without modifying the ingroup
-#' topology.
+#' @return `EnforceOutgroup()` returns a tree of class `phylo` where all
+#' outgroup taxa are sister to all remaining taxa, without modifying the 
+#' ingroup topology.
 #'
 #' @examples
 #' tree <- EnforceOutgroup(letters[1:9], letters[1:3])

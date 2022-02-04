@@ -117,11 +117,10 @@ test_that("RootOnNode() works", {
   expect_true(all.equal(UnrootTree(PectinateTree(8)),
                         RootOnNode(PectinateTree(8), 9L, FALSE)))
   expect_true(all.equal(urt, RootOnNode(urt, 9L, FALSE)))
-  expect_true(all.equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
+  expect_true(all.equal(Preorder(RootTree(urt, letters[1:2])),
                         RootOnNode(urt, 9L, TRUE)))
 
 })
-
 
 test_that("root_on_node() works", {
   tree <- Preorder(BalancedTree(15))
@@ -283,52 +282,6 @@ test_that("CollapseNode() works", {
   expect_error(CollapseEdge(tree, 9))
 })
 
-test_that("DropTip() works", {
-  bal8 <- BalancedTree(8)
-  expect_equal(NTip(DropTip(bal8, 1:8)), 0)
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))))
-  expect_error(DropTip(bal8, list('Invalid format')))
-
-  expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
-  expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
-  expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7))))
-
-  expect_equal(DropTip(Preorder(nasty), c(1, 3)),
-               Preorder(DropTip(nasty, c(1, 3))))
-
-
-  bigTree <- RandomTree(1284)
-  set.seed(1284)
-  bigTip <- sample(1:1284, 608)
-  expect_true(all.equal(drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip)))
-  #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
-  #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
-})
-
-test_that("DropTip.multiPhylo() with attributes", {
-  multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
-  attr(multi, 'TipLabel') <- paste0('t', 1:8)
-
-  expect_equal(attr(DropTip(multi, 't8'), 'TipLabel'),
-               paste0('t', 1:7))
-  expect_equal(names(DropTip(multi, 't8')), names(multi))
-  expect_equal(DropTip(multi[1], 't1')[[1]], DropTip(multi[[1]], 't1'))
-})
-
-test_that("KeepTip() works", {
-  expect_warning(expect_true(all.equal(
-    BalancedTree(paste0('t', 5:8)),
-    KeepTip(BalancedTree(8), paste0('t', 5:9))
-  )))
-
-  expect_warning(expect_true(all.equal(
-    BalancedTree(paste0('t', 5:8)),
-    KeepTip(BalancedTree(8), 5:9)
-  )))
-})
-
 test_that("Binarification is uniform", {
   set.seed(0)
   Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
@@ -363,7 +316,7 @@ test_that("LeafLabelInterchange() works", {
 
   abcd <- letters[1:4]
   sapply(1 + seq_len(100), function (i) {
-    # Check all pertubations
+    # Check all perturbations
     set.seed(i)
     expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))
 
