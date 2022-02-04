@@ -111,7 +111,9 @@ ArtificialExtinction.phyDat <- function (dataset, subject, template,
   MatrixToPhyDat(ArtificialExtinction(PhyDatToMatrix(dataset), subject,
                                       template,
                                       replaceAmbiguous,
-                                      replaceCoded, sampleFrom))
+                                      replaceCoded,
+                                      replaceAll,
+                                      sampleFrom))
 }
 
 #' @rdname ArtificialExtinction

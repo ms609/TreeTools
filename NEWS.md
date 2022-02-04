@@ -16,6 +16,7 @@
 - Remove deprecated function `PostorderEdges()`
   ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
+- Fix bug handling `phyDat` objects in `ArtificialExtinction()`.
 
 # TreeTools 1.6.0
 

@@ -18,11 +18,17 @@ test_that("Replacements ok", {
                                     replaceAmbiguous = 'ambig')[1:2, 4:6])
 
   expectation[] <- 1
-  expect_equal(expectation,
-               ArtificialExtinction(dataset, c('A', 'B'), 'F',
-                                    'unif', sampleFrom = 'A')[1:2, 4:6])
+  colnames(expectation) <- NULL
+  expect_equal(PhyDatToMatrix(ArtificialExtinction(
+                 MatrixToPhyDat(dataset),
+                 c('A', 'B'), 'F', 'unif', sampleFrom = 'A'
+                ))[1:2, 4:6],
+               expectation
+               )
 
-  expect_true(all(!'?' == ArtificialExtinction(dataset[-6, ], 1:2, 5, 'freq')[1:2, 4:6]))
+  expect_true(all(!'?' == ArtificialExtinction(
+    dataset[-6, ], 1:2, 5, "freq"
+    )[1:2, 4:6]))
 
 
   expect_true(all(ArtificialExtinction(dataset, subject = 'E', template = 'F',
