@@ -97,14 +97,12 @@ LabelSplits <- function (tree, labels = NULL, unit = '', ...) {
       stop("`labels` must bear the same names as `as.Splits(tree)`")
     }
   }
+  
   if (length(setdiff(names(labels), names(splits)))) {
     warning("Label names do not correspond to splits in tree",
             immediate. = TRUE)
   }
   whichEdge <- match(as.integer(names(labels)), tree$edge[, 2])
-  if (any(is.na(whichEdge))) {
-    warning("Label names do not correspond to splits in tree")
-  }
   edgelabels(paste0(labels, unit), edge = whichEdge, ...)
   # Return:
   invisible()
