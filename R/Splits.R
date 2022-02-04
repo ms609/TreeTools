@@ -378,13 +378,19 @@ c.Splits <- function (...) {
 length.Splits <- function (x) nrow(x)
 
 #' @family Splits operations
+#' @importFrom stats setNames
 #' @export
 duplicated.Splits <- function (x, incomparables = FALSE, ...) {
   dupX <- !x
   useOrig <- x[, 1] < dupX[, 1]
   dupX[useOrig, ] <- x[useOrig, ]
-
-  duplicated.array(dupX, MARGIN = 1, ...)
+  
+  if (dim(dupX)[2] == 1) {
+    setNames(duplicated.default(dupX, incomparables = incomparables, ...),
+             names(dupX))
+  } else {
+    duplicated.array(dupX, MARGIN = 1, incomparables = incomparables, ...)
+  }
 }
 
 #' @family Splits operations

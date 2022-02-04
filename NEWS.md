@@ -1,12 +1,16 @@
-# TreeTools 1.6.0.9001
+# TreeTools 1.6.0.9002
 
-- `DropTip()` no longer roots unrooted trees.
+- `%in%.Splits()` retains names when comparing small splits
+  ([#40](https://github.com/ms609/TreeTools/issues/40))
+
+- `DropTip()` no longer adds a root to unrooted trees.
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 
-- Fix bug rooting a tree on a discontinuous outgroup.
+- Fix bug when tree is rooted on a discontinuous outgroup.
 
 - Small improvements to computational efficiency.
+
 
 # TreeTools 1.6.0
 
