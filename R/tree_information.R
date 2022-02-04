@@ -50,14 +50,16 @@ Log2TreesMatchingTree <- function (tree) {
 #' specified topology.  A base two logarithm gives an information content in
 #' bits.
 #'
-#' The \acronym{CIC} was originally proposed by Rohlf (1982), and formalised,
-#' with an information-theoretic justification, by Thorley _et al_. (1998).
-#' Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
-#' content' in the context of individual characters.
+#' The \acronym{CIC} was originally proposed by 
+#' \insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
+#' with an information-theoretic justification, by 
+#' \insertCite{Thorley1998;textual}{TreeTools}.
+#' \insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
+#' 'phylogenetic information content' in the context of individual characters.
 #'
 #' The number of binary trees consistent with a cladogram provides a more
 #' satisfactory measure of the resolution of a tree than simply
-#' counting the number of edges resolved (Page, 1992).
+#' counting the number of edges resolved \insertCite{Page1992}{TreeTools}.
 #'
 #' @param x Tree of class `phylo`, or a list thereof.
 #'
@@ -67,14 +69,7 @@ Log2TreesMatchingTree <- function (tree) {
 #' split in turn.
 #'
 #' @references
-#'
-#' \insertRef{Page1992}{TreeTools}
-#'
-#' \insertRef{Rohlf1982}{TreeTools}
-#'
-#' \insertRef{Steel2006}{TreeTools}
-#'
-#' \insertRef{Thorley1998}{TreeTools}
+#' \insertAllCited{}
 #'
 #' @family tree information functions
 #' @family tree characterization functions

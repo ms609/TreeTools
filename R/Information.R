@@ -79,9 +79,9 @@ CharacterInformation <- function (tokens) {
 
 #' Phylogenetic information content of splitting leaves into two partitions
 #'
-#' Calculate the phylogenetic information content (_sensu_
-#' Steel & Penny, 2006) of a split, which reflects the probability that a
-#' uniformly selected random tree will contain the split:
+#' Calculate the phylogenetic information content
+#' \insertCite{@sensu @Steel2006}{TreeTools} of a split, which reflects the
+#' probability that a uniformly selected random tree will contain the split:
 #' a split that is consistent with a smaller number of trees will have a higher
 #' information content.
 #'
@@ -153,8 +153,7 @@ CharacterInformation <- function (tokens) {
 #' # that seven maximally uneven splits on the same leaves:
 #' SplitInformation(25, 25)
 #' 7 * SplitInformation(2, 48)
-#' @references
-#' - \insertRef{Steel2006}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @family split information functions
 #'
@@ -193,7 +192,8 @@ MultiSplitInformation <- function (partitionSizes) {
 #' Number of trees consistent with split
 #'
 #' Calculates the number of unrooted bifurcating trees consistent with the
-#' specified multi-partition split, using the formula of Carter _et al_. (1990).
+#' specified multi-partition split, using theorem two of
+#' \insertCite{Carter1990;textual}{TreeTools}.
 #'
 #' @param \dots A series or vector of integers listing the number of tips in
 #' each of a number of tree splits (e.g. bipartitions).
@@ -205,13 +205,11 @@ MultiSplitInformation <- function (partitionSizes) {
 #'  number of unrooted bifurcating trees consistent with the specified split.
 #'
 #'
+#' @references \insertAllCited{}
+#' 
 #' @examples
-#'  UnrootedTreesMatchingSplit(c(3, 5))
-#'  UnrootedTreesMatchingSplit(3, 2, 1, 2)
-#'
-#' @references
-#' See Theorem 2 in \insertRef{Carter1990}{TreeTools}
-#'
+#' UnrootedTreesMatchingSplit(c(3, 5))
+#' UnrootedTreesMatchingSplit(3, 2, 1, 2)
 #' @template MRS
 #' @family split information functions
 #' @export

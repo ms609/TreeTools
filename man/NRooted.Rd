@@ -72,8 +72,8 @@ Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow Cavalli-Sforza & Edwards (1967) and
-Carter \emph{et al.} 1990, Theorem 2.
+Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+\insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 }
 \section{Functions}{
 \itemize{
@@ -119,9 +119,7 @@ NUnrootedSplits(c(2,4))
 NUnrootedSplits(3, 3)
 }
 \references{
-\insertRef{Carter1990}{TreeTools}
-
-\insertRef{CavalliSforza1967}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other tree information functions: 

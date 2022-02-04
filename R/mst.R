@@ -1,6 +1,7 @@
 #' Minimum spanning tree
 #'
-#' Calculate or plot the minimum spanning tree of a distance matrix.
+#' Calculate or plot the minimum spanning tree \insertCite{Gower1969}{TreeTools}
+#' of a distance matrix.
 #'
 #' @param distances Either a matrix that can be interpreted as a distance
 #' matrix, or an object of class `dist`.
@@ -19,8 +20,7 @@
 #' Slow implementation returning the association matrix of the minimum spanning
 #' tree: [`ape::mst()`].
 #'
-#' @references
-#' \insertRef{Gower1969}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @examples
 #' # Corners of an almost-regular octahedron
