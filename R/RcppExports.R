@@ -33,6 +33,10 @@ mixed_base_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
 }
 
+keep_tip <- function(edge, keep) {
+    .Call(`_TreeTools_keep_tip`, edge, keep)
+}
+
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
