@@ -23,9 +23,9 @@ phylogenetic information content, in bits, of a split that subdivides leaves
 into partitions of the specified sizes.
 }
 \description{
-Calculate the phylogenetic information content (\emph{sensu}
-Steel & Penny, 2006) of a split, which reflects the probability that a
-uniformly selected random tree will contain the split:
+Calculate the phylogenetic information content
+\insertCite{@sensu @Steel2006}{TreeTools} of a split, which reflects the
+probability that a uniformly selected random tree will contain the split:
 a split that is consistent with a smaller number of trees will have a higher
 information content.
 }
@@ -99,9 +99,7 @@ MultiSplitInformation(rep(2, 4))
 
 }
 \references{
-\itemize{
-\item \insertRef{Steel2006}{TreeTools}
-}
+\insertAllCited{}
 }
 \seealso{
 Sum the phylogenetic information content of splits within a tree:

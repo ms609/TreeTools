@@ -1,7 +1,8 @@
 #' Unique integer indices for bifurcating tree topologies
 #'
 #' Functions converting between phylogenetic trees and their unique decimal
-#' representation.
+#' representation, based on a concept by John Tromp, employed in 
+#' \insertCite{Li1996}{TreeTools}.
 #'
 #' There are `NUnrooted(n)` unrooted trees with _n_ leaves.
 #' As such, each _n_-leaf tree can be uniquely identified by a non-negative
@@ -108,6 +109,8 @@
 #' # If > 9 digits, represent the tree number as a string.
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
 #' tree <- as.phylo(treeNumber)
+#' @references
+#' \insertAllCited{}
 #' @encoding UTF-8
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
@@ -160,9 +163,6 @@ as.TreeNumber.character <- function (x, nTip, tipLabels = TipLabels(nTip), ...) 
 #' @rdname TreeNumber
 #' @template MRS
 #' @return `as.phylo.numeric()` returns a tree of class `phylo`.
-#' @references Based on a concept by John Tromp, employed in Li _et al._ 1996.
-#'
-#' \insertRef{Li1996}{TreeTools}
 #'
 #' @examples
 #' as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])

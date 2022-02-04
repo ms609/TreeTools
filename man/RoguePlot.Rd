@@ -65,13 +65,11 @@ of the consensus tree.
 \description{
 Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 according to the proportion of trees in which the taxon attaches to that
-edge, after Klopfstein & Spasojevic (2019).
+edge, after \insertCite{Klopfstein2019;textual}{TreeTools}.
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-This function is currently under development and is not fully tested.
-Please check that results are in line with expectations before using the
-output, and \href{https://github.com/ms609/TreeTools/issues/53}{report any errors}.
+Rogue taxa can be identified using the package \pkg{Rogue}
+\insertCite{SmithCons}{TreeTools}.
 }
 \examples{
 trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
@@ -86,7 +84,7 @@ trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
 RoguePlot(trees, 'rogue')
 }
 \references{
-\insertRef{Klopfstein2019}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other consensus tree functions: 

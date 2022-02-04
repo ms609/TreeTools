@@ -76,11 +76,13 @@ for that character, named with the names of each note-bearing taxon.
 }
 }
 \description{
-Parse a Nexus or TNT file, reading character states and names.
+Parse a Nexus \insertCite{Maddison1997}{TreeTools} or
+TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
+names.
 }
 \details{
-Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank},
-but should also work more widely; please
+Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank}
+\insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incompletely or incorrectly parsed files.
 
@@ -125,7 +127,7 @@ attributes(continuous) <- at
 continuous
 }
 \references{
-\insertRef{Maddison1997}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 \itemize{
