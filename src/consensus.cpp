@@ -116,5 +116,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     }
   } while (i++ != n_trees - thresh); // All clades in p% consensus must occur in first q% of trees.
 
-  return ret(Range(0, splits_found - 1), _);
+  return splits_found ? 
+    ret(Range(0, splits_found - 1), _) :
+    LogicalMatrix(0, n_tip);
 }

@@ -49,8 +49,16 @@ inline void insert_ancestor(const int16 tip, const int16 *next_node,
 
 // [[Rcpp::export]]
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
-  const SplitList x(splits);
   const int16 n_tip = nTip[0];
+  if (splits.nrow() == 0) {
+    IntegerMatrix ret(n_tip, 2);
+    for (int i = n_tip; i--; ) {
+      ret(i, 0) = n_tip + 1;
+      ret(i, 1) = i + 1;
+    }
+    return ret;
+  }
+  const SplitList x(splits);
   int16 parent[SL_MAX_TIPS + SL_MAX_SPLITS]{};
   int16 patriarch[SL_MAX_TIPS]{};
 
