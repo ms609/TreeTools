@@ -63,7 +63,7 @@ test_that("DropTip() works", {
   expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
   expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7))))
   
-  expect_equal(DropTip(Preorder(nasty), c(1, 3)),
+  expect_equal(Preorder(DropTip(Preorder(nasty), c(1, 3))),
                Preorder(DropTip(nasty, c(1, 3))))
   
   

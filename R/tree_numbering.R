@@ -95,8 +95,8 @@ RenumberEdges <- function (parent, child, ...) {
 #' can cause crashes if nodes are numbered unconventionally -- sometimes
 #' encountered after using tree rearrangement functions, e.g. `phangorn::SPR()`.
 #'
-#' `Preorder()` is more robust: it supports polytomies, nodes can be numbered
-#' in any sequence, and edges can be listed in any order in the input tree.
+#' `Preorder()` is more robust: it supports polytomies, nodes may be numbered
+#' in any sequence, and edges may be listed in any order in the input tree.
 #' Its output is guaranteed to be identical for any tree of an equivalent
 #' topology, allowing unique trees to be detected by comparing sorted edge
 #' matrices alone.

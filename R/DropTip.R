@@ -19,7 +19,8 @@
 #' tree, undefined behaviour may occur.
 #'
 #' @return `DropTip()` returns a tree of class `phylo`, with the requested
-#' leaves removed.
+#' leaves removed. The edges of the tree will be numbered in preorder,
+#' but their sequence may not conform to the conventions of [`Preorder()`].
 #'
 #' @examples
 #' tree <- BalancedTree(9)
@@ -91,7 +92,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
     
     keep <- !tabulate(drop, nbins = nTip)
     tree$edge <- keep_tip(tree$edge, keep)
-    attr(tree, 'order') <- 'preorder'
+    attr(tree, 'order') <- 'cladewise' # some nodes may be rotated from preorder
     tree$tip.label <- labels[-drop]
     tree$Nnode <- dim(tree$edge)[1] + 1L - (nTip - nDrop)
   }

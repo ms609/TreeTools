@@ -36,7 +36,8 @@ tree, undefined behaviour may occur.}
 }
 \value{
 \code{DropTip()} returns a tree of class \code{phylo}, with the requested
-leaves removed.
+leaves removed. The edges of the tree will be numbered in preorder,
+but their sequence may not conform to the conventions of \code{\link[=Preorder]{Preorder()}}.
 
 \code{KeepTip()} returns \code{tree} with all leaves not in \code{tip} removed,
 in preorder.
