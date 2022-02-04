@@ -33,6 +33,7 @@ IntegerVector tips_in_splits(RawMatrix splits) {
     n_bin = (n_tip % 8 == 0 ? 0 : 1) + (n_tip / 8)
   ;
   if (n_tip < 1) throw std::out_of_range("nTip < 1");
+  if (!splits.ncol()) return IntegerVector(0);
   if (n_bin != splits.ncol()) throw std::invalid_argument("nTip does not match split size");
 
   IntegerVector ret(n_split);
