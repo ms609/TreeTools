@@ -46,6 +46,15 @@ test_that("keep_tip() works", {
   expect_equal(Preorder(keep_tip(as.phylo(3, 7)$edge, !tabulate(1:4, 7))),
                PectinateTree(3)$edge)
   
+  # Rooted tree may lose root when reaching a polytomy:
+  expect_equal(keep_tip(root(StarTree(6), 4, resolve.root = TRUE)$edge,
+                        !tabulate(4, 6)),
+               StarTree(5)$edge)
+  
+  # But need not:
+  expect_equal(keep_tip(RootTree(BalancedTree(5), 3)$edge, !tabulate(3, 5)),
+               BalancedTree(4)$edge)
+  
   unrooted <- ape::read.tree(text = "(a, b, (c, d, ((e1, e2), (f, g))));")
   expect_equal(keep_tip(unrooted$edge, !tabulate(1:4, 8)),
                ape::unroot(BalancedTree(4))$edge)
