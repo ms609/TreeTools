@@ -26,8 +26,9 @@ or integer vector specifying the indices of leaves to be dropped.
 Specifying the index of an internal node will drop all descendants of that
 node.}
 
-\item{preorder}{Logical specifying whether to \link{Preorder} the tree before
-dropping tips.  Necessary if a tree's edges may be unconventionally numbered.}
+\item{preorder}{Logical specifying whether to \link{Preorder} \code{tree} before
+dropping tips.  Specifying \code{FALSE} saves a little time, but will result in
+undefined behaviour if \code{tree} is not in preorder.}
 
 \item{check}{Logical specifying whether to check validity of \code{tip}. If
 \code{FALSE} and \code{tip} contains entries that do not correspond to leaves of the
@@ -55,9 +56,9 @@ querying object's class.
 }}
 
 \examples{
-tree <- BalancedTree(8)
+tree <- BalancedTree(9)
 plot(tree)
-plot(DropTip(tree, c('t4', 't5')))
+plot(DropTip(tree, c('t5', 't6')))
 
 }
 \seealso{

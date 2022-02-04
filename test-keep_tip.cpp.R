@@ -17,8 +17,18 @@ test_that("keep_tip() works", {
   expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(3:8, 8)),
                BalancedTree(2)$edge)
   
-  expect_equal(keep_tip(unroot(BalancedTree(4))$edge, !tabulate(1, 4)),
+  expect_equal(keep_tip(ape::unroot(BalancedTree(4))$edge, !tabulate(1, 4)),
                matrix(c(4, 4, 4, 1, 2, 3), 3, 2))
+  
+  unrooted <- ape::read.tree(text = "(a, b, (c, d, ((e1, e2), (f, g))));")
+  if(interactive()) {
+    plot(unrooted)
+    nodelabels()
+    tiplabels()
+    edgelabels()
+  }
+  expect_equal(keep_tip(unrooted$edge, !tabulate(1:4, 8)),
+               ape::unroot(BalancedTree(4))$edge)
   
   testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")
   testEdge <- Preorder(testTree)$edge

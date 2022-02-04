@@ -1,9 +1,9 @@
 #include <Rcpp.h>
 #include <stdexcept>
 using namespace Rcpp;
-#define TTDEBUG
+// #define TTDEBUG
 
-#define RETAIN 999
+#define RETAIN 888
 
 // entry 0 of keep is TRUE if leaf "1" should be retained, false otherwise.
 // [[Rcpp::export]]
@@ -37,6 +37,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
     }
   }
   
+  // *** Initialize postorder traversal *** //
   IntegerVector new_child = edge(_, 1);
   int
     kept_edges = 0,
@@ -62,9 +63,11 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       }
     }
   }
+  int new_root = root_node;
   if (n_child[root_node] == 1) {
     // We've deleted one side of the tree entirely, creating a trailing root
     --kept_edges;
+    new_root = one_child[root_node];
   }
   
 #ifdef TTDEBUG
@@ -73,8 +76,17 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
 #endif
   
+  // Keep unrooted trees unrooted
+  const bool rooted = root_edges == 2;
+  bool rm_root = !rooted && n_child[new_root] == 2;
+  if (rm_root) {
+    --kept_edges;
+  }
+  
+  // *** Initialize preorder traversal *** //
   int writing_edge = -1;
   IntegerMatrix ret(kept_edges, 2);
+  
   for (int i = 0; i != start_edge; ++i) {
     const int
       parent = edge(i, 0),
@@ -89,6 +101,13 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
         if (n_child[root_node] == 1) {
           // Skip this dangling root edge, but mark root as ready to retain
           n_child[root_node] = RETAIN;
+        } else if (rm_root && child == parent + 1) {
+          // This is the duplicated root edge
+          rm_root = false; // We will not write it
+          if (!new_no[parent]) {
+            new_no[parent] = ++next_no;
+          }
+          new_no[child] = new_no[parent];
         } else {
           // Record this edge:
           ++writing_edge;
