@@ -3,7 +3,9 @@
 using namespace Rcpp;
 // #define TTDEBUG
 
-#define RETAIN 888
+#define RETAIN 9000
+
+#define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no;
 
 // entry 0 of keep is TRUE if leaf "1" should be retained, false otherwise.
 // [[Rcpp::export]]
@@ -31,31 +33,26 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
     if (keep[i]) {
       n_child[i + 1] = RETAIN;
       new_no[i + 1] = ++next_no;
-#ifdef TTDEBUG
-      Rcout << " [" << (i + 1) << " -> " << new_no[i + 1] <<"]\n";
-#endif
     }
   }
   
   // *** Initialize postorder traversal *** //
-  IntegerVector new_child = edge(_, 1);
   int
     kept_edges = 0,
     root_edges = 0
   ;
   for (int i = start_edge; i--; ) {
     const int
-      edge_child = edge(i, 1),
       edge_parent = edge(i, 0),
-      edge_children = n_child[edge_child]
+      edge_child = edge(i, 1),
+      downstream = n_child[edge_child]
     ;
     if (edge_parent == root_node) {
       ++root_edges;
     }
-    if (edge_children) {
+    if (downstream) {
       ++n_child[edge_parent];
-      if (edge_children == 1) {
-        new_child[i] = one_child[edge_child];
+      if (downstream == 1) {
         one_child[edge_parent] = one_child[edge_child];
       } else {
         one_child[edge_parent] = edge_child;
@@ -71,8 +68,9 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
   
 #ifdef TTDEBUG
+  Rcout << " > New basal node: " << new_root << ".\n";
   for (int i = 0; i != start_edge; ++i) {
-    Rcout << " - " << (1+i) << ": " << n_child[edge(i, 1)] <<".\n";
+    Rcout << " - Edge " << (1+i) << ": " << n_child[edge(i, 1)] << ".\n";
   }
 #endif
   
@@ -90,34 +88,40 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   for (int i = 0; i != start_edge; ++i) {
     const int
       parent = edge(i, 0),
-      n_children = n_child[edge(i, 1)]
+      child = edge(i, 1),
+      n_children = n_child[child]
     ;
     if (n_children) {
-      // const int child = new_child[i];
-      const int child = edge(i, 1);
       if (n_children == 1) {
+        GET_NEW_NO(parent);
         new_no[child] = new_no[parent];
+#ifdef TTDEBUG
+        Rcout << " x Omit: " << edge(i, 0) << "," << edge(i, 1)
+              << " --> \"" << new_no[parent] << "\"\n";
+#endif
       } else {
         if (n_child[root_node] == 1) {
           // Skip this dangling root edge, but mark root as ready to retain
+#ifdef TTDEBUG
+          Rcout << " x Skip dangling root edge " << edge(i, 0) << "-"
+                << edge(i, 1) << ".\n";
+#endif
           n_child[root_node] = RETAIN;
         } else if (rm_root && child == parent + 1) {
           // This is the duplicated root edge
           rm_root = false; // We will not write it
-          if (!new_no[parent]) {
-            new_no[parent] = ++next_no;
-          }
+          GET_NEW_NO(parent);
           new_no[child] = new_no[parent];
+#ifdef TTDEBUG
+          Rcout << " x Skip duplicated root edge " << edge(i, 0) << "-"
+                << edge(i, 1) << " (\"" << new_no[child] << "\").\n";
+#endif
         } else {
           // Record this edge:
           ++writing_edge;
-          if (!new_no[parent]) {
-            new_no[parent] = ++next_no;
-          }
+          GET_NEW_NO(parent);
           ret(writing_edge, 0) = new_no[parent];
-          if (!new_no[child]) {
-            new_no[child] = ++next_no;
-          }
+          GET_NEW_NO(child);
           ret(writing_edge, 1) = new_no[child];
 #ifdef TTDEBUG
           Rcout << " > Translate: " << edge(i, 0) << "-" << edge(i, 1)
