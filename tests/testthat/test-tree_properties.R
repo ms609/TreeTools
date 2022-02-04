@@ -83,6 +83,7 @@ test_that('Rooting and partition counting', {
   expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
   expect_equal(2L, NSplits('((a, b), (c, (d, e)));'))
   expect_equal(0L, NSplits('a'))
+  expect_null(NSplits(NULL))
   expect_equal(0L, NSplits(letters[1:2]))
   expect_equal(3L, NSplits(letters[1:6]))
   expect_error(NPartitions(raw(1)))
@@ -195,4 +196,5 @@ test_that('SplitsInBinaryTree() works', {
   expect_identical(5L, SplitsInBinaryTree(8))
   expect_identical(5L, SplitsInBinaryTree(as.phylo(0, 8)))
   expect_identical(rep(5L, 4), SplitsInBinaryTree(as.phylo(0:3, 8)))
+  expect_null(SplitsInBinaryTree(NULL))
 })
