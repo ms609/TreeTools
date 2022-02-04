@@ -53,7 +53,5 @@ test_that("LabelSplits()", {
     plot(tree)
     labs <- letters[1:6]
     LabelSplits(tree, labs, bg = 'orange')
-    names(labs) <- 15:20
-    expect_warning(LabelSplits(BalancedTree(9), labs, adj = c(-1, 2)))
   })
 })

@@ -70,11 +70,5 @@
 <text x='262.00' y='156.60' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>d</text>
 <text x='513.45' y='207.93' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>e</text>
 <text x='513.45' y='105.26' text-anchor='middle' style='font-size: 12.00px; font-family: sans;' textLength='3.33px' lengthAdjust='spacingAndGlyphs'>f</text>
-<rect x='266.52' y='158.57' width='8.83' height='11.86' style='stroke-width: 0.75; fill: #90EE90;' />
-<rect x='517.96' y='209.90' width='8.83' height='11.86' style='stroke-width: 0.75; fill: #90EE90;' />
-<rect x='517.29' y='107.23' width='8.16' height='11.86' style='stroke-width: 0.75; fill: #90EE90;' />
-<text x='268.68' y='168.98' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>a</text>
-<text x='520.12' y='220.32' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>b</text>
-<text x='519.45' y='117.65' style='font-size: 12.00px; font-family: sans;' textLength='6.00px' lengthAdjust='spacingAndGlyphs'>c</text>
 </g>
 </svg>
