@@ -126,10 +126,9 @@
 as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 
 #' @rdname TreeNumber
-#' @importFrom ape root
 #' @export
 as.TreeNumber.phylo <- function (x, ...) {
-  x <- root(x, 1, resolve.root = TRUE)
+  x <- RootTree(x, 1)
   edge <- x$edge
   nTip <- NTip(x)
   if (nTip > 19L) warning("Trees with > 19 leaves not uniquely identified ",
@@ -281,6 +280,47 @@ print.TreeNumber <- function (x, ...) {
 
 # x: Object of class `TreeNumber`
 #' @keywords internal
-.PrintedTreeNumber <- function (x) {
+.PrintedTreeNumber <- function(x) {
   paste0(structure(x, class = 'integer64'))
+}
+
+#' @rdname TreeNumber
+#' @export
+as.MixedBase <- function(x, ...) UseMethod('as.MixedBase')
+
+#' @rdname TreeNumber
+#' @export
+as.MixedBase.phylo <- function(x, ...) {
+  x <- RootTree(x, 1)
+  edge <- x$edge
+  nTip <- NTip(x)
+  
+  edge <- Postorder(edge, sizeSort = TRUE)
+  structure(edge_to_mixed_base(edge[, 1], edge[, 2], nTip),
+            nTip = nTip,
+            tip.labels = TipLabels(x),
+            binary = TRUE,
+            class = 'MixedBase')
+}
+
+#' @rdname TreeNumber
+#' @export
+as.MixedBase.multiPhylo <- function(x, ...) {
+  lapply(x, as.MixedBase, ...)
+}
+
+#' @rdname TreeNumber
+#' @export
+as.phylo.MixedBase <- function(x, nTip = attr(x, 'nTip'),
+                               tipLabels = attr(x, 'tip.label'), ...) {
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0('t', seq_len(nTip))
+  }
+  edge <- RenumberEdges(mixed_base_to_parent(x, nTip),
+                        seq_len(nTip + nTip - 2L))
+  structure(list(edge = do.call(cbind, edge),
+                 tip.label = tipLabels,
+                 Nnode = nTip - 1L),
+            order = 'preorder',
+            class = 'phylo')
 }

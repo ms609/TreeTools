@@ -1,3 +1,11 @@
+# branch sort.phylo (9003)
+
+- `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
+
+- `sort.multiPhylo()` sorts lists of trees according to their mixed base
+  representation ([#84](https://github.com/ms609/TreeTools/issues/84)).
+
+
 # TreeTools 1.5.0.9001 (development)
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
@@ -6,8 +14,8 @@
 
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
-# TreeTools 1.5.0
 
+# TreeTools 1.5.0
 
 ## New functions
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree

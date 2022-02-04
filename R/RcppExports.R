@@ -25,6 +25,14 @@ edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }
 
+edge_to_mixed_base <- function(parent, child, nTip) {
+    .Call(`_TreeTools_edge_to_mixed_base`, parent, child, nTip)
+}
+
+mixed_base_to_parent <- function(n, nTip) {
+    .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
+}
+
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }

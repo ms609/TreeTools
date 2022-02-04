@@ -83,6 +83,31 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// edge_to_mixed_base
+IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child, IntegerVector nTip);
+RcppExport SEXP _TreeTools_edge_to_mixed_base(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(edge_to_mixed_base(parent, child, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mixed_base_to_parent
+IntegerVector mixed_base_to_parent(const IntegerVector n, const IntegerVector nTip);
+RcppExport SEXP _TreeTools_mixed_base_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(mixed_base_to_parent(n, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // minimum_spanning_tree
 IntegerMatrix minimum_spanning_tree(const IntegerVector order);
 RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP orderSEXP) {

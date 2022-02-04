@@ -9,6 +9,10 @@
 \alias{as.TreeNumber.character}
 \alias{as.phylo.numeric}
 \alias{as.phylo.TreeNumber}
+\alias{as.MixedBase}
+\alias{as.MixedBase.phylo}
+\alias{as.MixedBase.multiPhylo}
+\alias{as.phylo.MixedBase}
 \title{Unique integer indices for bifurcating tree topologies}
 \usage{
 as.TreeNumber(x, ...)
@@ -22,6 +26,14 @@ as.TreeNumber(x, ...)
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
 \method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
+
+as.MixedBase(x, ...)
+
+\method{as.MixedBase}{phylo}(x, ...)
+
+\method{as.MixedBase}{multiPhylo}(x, ...)
+
+\method{as.phylo}{MixedBase}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}

@@ -5,6 +5,9 @@
 \alias{==.phylo}
 \alias{<.phylo}
 \alias{>.phylo}
+\alias{==.MixedBase}
+\alias{<.MixedBase}
+\alias{>.MixedBase}
 \title{Sort a list of phylogenetic trees}
 \usage{
 \method{sort}{multiPhylo}(x, decreasing = FALSE, na.last = NA, ...)
@@ -14,20 +17,22 @@
 \method{<}{phylo}(e1, e2)
 
 \method{>}{phylo}(e1, e2)
+
+\method{==}{MixedBase}(e1, e2)
+
+\method{<}{MixedBase}(e1, e2)
+
+\method{>}{MixedBase}(e1, e2)
 }
 \arguments{
 \item{x, decreasing, na.last, \dots}{As in \code{\link[=sort]{sort()}}.}
 
-\item{e1, e2}{\code{phylo} objects to be compared.}
+\item{e1, e2}{Objects to be compared.}
 }
 \description{
-Trees are sorted alphabetically by their Newick representation after
-numbering tips alphabetically and renumbering tres in \code{\link{Preorder}}.
-}
-\details{
-This method of sorting is inelegant, and will be replaced in a future
-version by a method that is more principled
-(\href{https://github.com/ms609/TreeTools/issues/84}{#84}).
+Trees are sorted by their \href{MixedBase}{mixed base representation},
+treating their leaves in the order of their labels (i.e. alphabetically,
+if leaves are labelled with text).
 }
 \examples{
 sort(as.phylo(0:5, 7))
