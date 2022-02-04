@@ -1,7 +1,7 @@
 # TreeTools 1.6.0.9002
 
 - `%in%.Splits()` retains names when comparing small splits
-  ([#40](https://github.com/ms609/TreeTools/issues/40))
+  ([#40](https://github.com/ms609/TreeTools/issues/40)).
 
 - `DropTip()` no longer adds a root to unrooted trees.
 
@@ -10,6 +10,9 @@
 - Fix bug when tree is rooted on a discontinuous outgroup.
 
 - Small improvements to computational efficiency.
+
+- Remove deprecated function `PostorderEdges()`
+  ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
 
 # TreeTools 1.6.0

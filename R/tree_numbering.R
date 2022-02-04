@@ -330,14 +330,6 @@ Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE,
   }
 }
 
-# nocov start
-#' @rdname Reorder
-#' @export
-PostorderEdges <- function (edge, renumber = FALSE) {
-#  .Deprecated('Postorder') #TODO (#35)
-  Postorder(edge, renumber = renumber)
-} # nocov end
-
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
 Pruningwise <- function (tree, nTip, edge) UseMethod('Pruningwise')
