@@ -2,6 +2,8 @@
 
 - `%in%.Splits()` retains names when comparing small splits
   ([#40](https://github.com/ms609/TreeTools/issues/40)).
+  
+- Imporve handling of zero-split trees.
 
 - `DropTip()` no longer adds a root to unrooted trees.
 
