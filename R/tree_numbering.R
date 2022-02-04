@@ -478,9 +478,15 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 
 #' @rdname RenumberTips
 #' @export
-RenumberTips.multiPhylo <- function (tree, tipOrder) {
+RenumberTips.multiPhylo <- function(tree, tipOrder) {
   labelled <- !is.null(attr(tree, 'TipLabel'))
-  tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
+  if (packageVersion('ape') > '5.6') { #TODO awaiting ms609/ape@patch-3 PR
+    tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
+  } else {
+    at <- attributes(tree)
+    tree <- lapply(tree, RenumberTips.phylo, tipOrder)
+    attributes(tree) <- at
+  }
   if (labelled) {
     attr(tree, 'TipLabel') <- TipLabels(tipOrder)
   }
