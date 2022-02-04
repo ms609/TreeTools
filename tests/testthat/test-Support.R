@@ -42,11 +42,18 @@ test_that("LabelSplits()", {
     names(labs) <- rev(names(as.Splits(tree)))
     LabelSplits(tree, labs, frame = 'circ', cex = 2, bg = 'orange')
   })
+  vdiffr::expect_doppelganger('LabelSplits()-nameless', function() {
+    tree <- BalancedTree(9)
+    plot(tree)
+    LabelSplits(tree, bg = 'orange')
+    expect_warning(LabelSplits(BalancedTree(9), setNames(letters[11:16], 1:6)))
+  })
   vdiffr::expect_doppelganger('LabelSplits()-names', function() {
     tree <- BalancedTree(9)
     plot(tree)
     labs <- letters[1:6]
     LabelSplits(tree, labs, bg = 'orange')
-    expect_warning(LabelSplits(BalancedTree(9), setNames(letters[11:16], 1:6)))
+    names(labs) <- 15:20
+    expect_warning(LabelSplits(BalancedTree(9), labs, adj = c(-1, 2)))
   })
 })
