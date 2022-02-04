@@ -117,11 +117,10 @@ test_that("RootOnNode() works", {
   expect_true(all.equal(UnrootTree(PectinateTree(8)),
                         RootOnNode(PectinateTree(8), 9L, FALSE)))
   expect_true(all.equal(urt, RootOnNode(urt, 9L, FALSE)))
-  expect_true(all.equal(Preorder(EnforceOutgroup(urt, letters[1:2])),
+  expect_true(all.equal(Preorder(RootTree(urt, letters[1:2])),
                         RootOnNode(urt, 9L, TRUE)))
 
 })
-
 
 test_that("root_on_node() works", {
   tree <- Preorder(BalancedTree(15))
