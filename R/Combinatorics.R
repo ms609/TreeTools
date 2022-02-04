@@ -133,8 +133,8 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
 #'
-#' Calculations follow Cavalli-Sforza & Edwards (1967) and
-#' Carter _et al._ 1990, Theorem 2.
+#' Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+#' \insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 #'
 #' @param tips Integer specifying the number of leaves.
 #' @param \dots Integer vector, or series of integers, listing the number of
@@ -142,10 +142,7 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @template MRS
 #'
-#' @references
-#'  \insertRef{Carter1990}{TreeTools}
-#'
-#'  \insertRef{CavalliSforza1967}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @examples
 #' NRooted(10)
@@ -217,8 +214,9 @@ Log2Rooted.int <- function (tips) {
 #' Number of trees one SPR step away
 #'
 #' `N1Spr()` calculates the number of trees one subtree prune-and-regraft
-#' operation away from a binary input tree using the formula given by Allen and
-#' Steel (2001); `IC1Spr()` calculates the information content of trees at this
+#' operation away from a binary input tree using the formula given by 
+#' \insertCite{Allen2001;textual}{TreeTools};
+#' `IC1Spr()` calculates the information content of trees at this
 #' distance: i.e. the entropy corresponding to the proportion of all possible
 #' _n_-tip trees whose SPR distance is at most one from a specified tree.
 #'
@@ -231,8 +229,7 @@ Log2Rooted.int <- function (tips) {
 #' N1Spr(4:6)
 #' IC1Spr(5)
 #'
-#' @references
-#'  \insertRef{Allen2001}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @export
 N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)

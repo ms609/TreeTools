@@ -2,12 +2,10 @@
 #'
 #' Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 #' according to the proportion of trees in which the taxon attaches to that
-#' edge, after Klopfstein &amp; Spasojevic (2019).
-#'
-#' `r lifecycle::badge("experimental")`
-#' This function is currently under development and is not fully tested.
-#' Please check that results are in line with expectations before using the
-#' output, and [report any errors](https://github.com/ms609/TreeTools/issues/53).
+#' edge, after \insertCite{Klopfstein2019;textual}{TreeTools}.
+#' 
+#' Rogue taxa can be identified using the package \pkg{Rogue}
+#' \insertCite{SmithCons}{TreeTools}.
 #'
 #' @param trees List or `multiPhylo` object containing phylogenetic trees
 #' of class `phylo` to be summarized.
@@ -33,8 +31,7 @@
 #' - `atNode`: a vector of integers specifying the number of trees in `trees`
 #' in which the rogue leaf is attached to an edge collapsed into each node
 #' of the consensus tree.
-#' @references
-#' \insertRef{Klopfstein2019}{TreeTools}
+#' @references \insertAllCited{}
 #' @examples
 #' trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
 #'               read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),

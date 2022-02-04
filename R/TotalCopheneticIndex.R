@@ -1,7 +1,7 @@
 #' Total Cophenetic Index
 #'
 #' `TotalCopheneticIndex()` calculates the total cophenetic index
-#' (Mir _et al_. 2013) for any tree, a measure of its balance;
+#' \insertCite{Mir2013}{TreeTools} for any tree, a measure of its balance;
 #' `TCIContext()` lists its possible values.
 #'
 #' The Total Cophenetic Index is a measure of tree balance -- i.e. whether
@@ -17,7 +17,7 @@
 #' Formulae to calculate the expected values under the Yule and Uniform models
 #' of evolution are given in Theorems 17 and 23.
 #'
-#' Full details are provided by Mir _et al._ (2013).
+#' Full details are provided by \insertCite{Mir2013;textual}{TreeTools}.
 #'
 #' @template xPhylo
 #'
@@ -36,7 +36,7 @@
 #' '[CollessLike](https://github.com/LuciaRotger/CollessLike)'
 #' provides an alternative implementation of this index and its predecessors.
 #'
-#' @references \insertRef{Mir2013}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @examples
 #' # Balanced trees have the minimum index for a binary tree;
@@ -57,6 +57,7 @@
 #'
 #' @family tree characterization functions
 #'
+#' @encoding UTF-8
 #' @template MRS
 #' @export
 TotalCopheneticIndex <- function (x) UseMethod('TotalCopheneticIndex')
