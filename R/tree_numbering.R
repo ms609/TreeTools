@@ -479,8 +479,9 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
+  labelled <- !is.null(attr(tree, 'TipLabel'))
   tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
-  if (!is.null(attr(tree, 'TipLabel'))) {
+  if (labelled) {
     attr(tree, 'TipLabel') <- TipLabels(tipOrder)
   }
   tree
