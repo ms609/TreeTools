@@ -477,6 +477,7 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 }
 
 #' @rdname RenumberTips
+#' @importFrom utils packageVersion
 #' @export
 RenumberTips.multiPhylo <- function(tree, tipOrder) {
   labelled <- !is.null(attr(tree, 'TipLabel'))
