@@ -7,6 +7,8 @@ using namespace Rcpp;
 
 #define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no;
 
+#define SKIP_EDGE GET_NEW_NO(parent); new_no[child] = new_no[parent]
+
 // entry 0 of keep is TRUE if leaf "1" should be retained, false otherwise.
 // [[Rcpp::export]]
 IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
@@ -93,8 +95,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
     ;
     if (n_children) {
       if (n_children == 1) {
-        GET_NEW_NO(parent);
-        new_no[child] = new_no[parent];
+        SKIP_EDGE;
 #ifdef TTDEBUG
         Rcout << " x Omit: " << edge(i, 0) << "," << edge(i, 1)
               << " --> \"" << new_no[parent] << "\"\n";
@@ -106,6 +107,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
           Rcout << " x Skip dangling root edge " << edge(i, 0) << "-"
                 << edge(i, 1) << ".\n";
 #endif
+          SKIP_EDGE;
           n_child[root_node] = RETAIN;
         } else if (rm_root && child == parent + 1) {
           // This is the duplicated root edge
