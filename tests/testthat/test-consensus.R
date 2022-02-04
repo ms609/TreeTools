@@ -41,6 +41,10 @@ test_that("Consensus()", {
   ApeTest(as.phylo(0:2, 8))
   ApeTest(as.phylo(0:250, 8))
   ApeTest(as.phylo(0:250, 80))
+  
+  trees <- list(ape::read.tree(text = "((a, b), (c, d));"),
+                ape::read.tree(text = "((a, c), (b, d));"))
+  expect_equal(Consensus(trees), Preorder(StarTree(letters[1:4])))
 })
 
 test_that('ConsensusWithout() is robust', {
