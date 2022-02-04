@@ -46,14 +46,14 @@ PhydatToString(
 \item{string}{String of tokens, optionally containing whitespace, with no
 terminating semi-colon.}
 
-\item{tips}{Character vector corresponding to the names (in order)
-of each taxon in the matrix, or an objects such as a tree from which
+\item{tips}{(Optional) Character vector corresponding to the names (in order)
+of each taxon in the matrix, or an object such as a tree from which
 tip labels can be extracted.}
 
 \item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
 If \code{FALSE}, write one character followed by the next.}
 
-\item{phy}{An object of class \code{\link[phangorn:phyDat]{phyDat}}.}
+\item{phy}{An object of class \code{phyDat}.}
 
 \item{parentheses}{Character specifying format of parentheses with which to
 surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}, \code{<}.}
@@ -78,8 +78,7 @@ each entry.}
 representation of the phylogenetic character state for each taxon in turn.
 }
 \description{
-\code{PhyDatToString()} converts a \code{\link[phangorn:phyDat]{phyDat}} object as a
-string;
+\code{PhyDatToString()} converts a \code{phyDat} object as a string;
 \code{StringToPhyDat()} converts a string of character data to a \code{phyDat} object.
 }
 \examples{

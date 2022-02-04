@@ -224,6 +224,17 @@ test_that('match.Splits()', {
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
 })
 
+test_that("%in%.Splits()", {
+  splits5 <- as.Splits(PectinateTree(5))
+  x <- splits5
+  table <- splits5[[-1]]
+  expect_null(dim(duplicated(c(splits5, splits5[[-1]]))))
+  expect_equal(names(splits5 %in% splits5[[-1]]), names(splits5))
+  
+  splits9 <- as.Splits(PectinateTree(9))
+  expect_equal(names(splits9 %in% splits9[[-4]]), names(splits9))
+})
+
 test_that("print.Splits()", {
   sp4 <- as.Splits(BalancedTree(4))
   expect_equal(c( "1 bipartition split dividing 4 tips, t1 .. t4",

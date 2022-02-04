@@ -341,10 +341,12 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 
 #' Read phylogenetic characters from file
 #'
-#' Parse a Nexus or TNT file, reading character states and names.
+#' Parse a Nexus \insertCite{Maddison1997}{TreeTools} or 
+#' TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
+#' names.
 #'
-#' Tested with matrices downloaded from [MorphoBank](https://morphobank.org),
-#' but should also work more widely; please
+#' Tested with matrices downloaded from [MorphoBank](https://morphobank.org)
+#' \insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 #' [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incompletely or incorrectly parsed files.
 #'
@@ -381,11 +383,9 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #' a list of length one containing a character string explaining why the
 #' function call was unsuccessful.
 #'
-#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a
-#' [`phyDat`][phangorn::phyDat] object.
+#' `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a `phyDat` object.
 #'
-#' @references
-#'   \insertRef{Maddison1997}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @examples
 #' fileName <- paste0(system.file(package = 'TreeTools'),
@@ -465,14 +465,27 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
                                  ignore.case = TRUE, perl = TRUE)
     if (length(stateStart) == 1) {
       stateEnd <- semicolons[semicolons > stateStart][1]
+      if (is.na(stateEnd)) {
+        stop("STATELABELS block missing closing semicolon;")
+      }
       stateLines <- lines[stateStart:stateEnd]
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
       if (length(stateStarts) != length(stateEnds)) {
-        warning("Could not parse character states.")
+        warning("Could not parse character states; does each end with a ' or ;?.")
       } else {
+        if (length(character_num) != length(stateStarts)) {
+          stateNos <- as.integer(stateLines[stateStarts])
+          if (all(!is.na(stateNos))) {
+            warning("Missing character state definition for: ",
+                    paste0(setdiff(character_num, stateNos), collapse = ', '))
+          } else {
+            warning("More characters than character state definitions.")
+          }
+        }
+
         attr(tokens, 'state.labels') <-
-          lapply(character_num, function (i)
+          lapply(character_num[seq_along(stateStarts)], function (i)
             Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
       }
@@ -680,8 +693,6 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
 
   if (length(notesStart) == 0) {
     return(list("NOTES block not found in Nexus file."))
-  } else if (length(taxlabels) == 0) {
-    return(list("TAXLABELS not found in Nexus file."))
   } else if (length(notesStart) > 1) {
     return(list("Multiple NOTES blocks found in Nexus file."))
   } else if (length(taxlabels) > 1) {
@@ -689,34 +700,42 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
   } else if (!any(nTaxLines)) {
     return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
-    nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
-    if (length(unique(nTax)) > 1) {
-      return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
-    }
-    nTax <- as.integer(nTax[1])
-
-    taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
-    taxaLines <- lines[(taxlabels + 1):taxaEnd]
-    taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
-    if (sum(taxon.matches) == nTax) {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+    if (length(taxlabels) == 0) {
+      taxa <- names(ReadAsPhyDat(filepath))
     } else {
-      taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-      taxa <- unlist(strsplit(taxa, ' '))
-      if (length(taxa) != nTax) {
-        return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
-                           " TAXLABELS found in Nexus file.")))
+
+      nTax <- .RegExpMatches(nTax.pattern, trimUpperLines[nTaxLines])
+      if (length(unique(nTax)) > 1) {
+        return(list("Inconsistent DIMENSIONS NTAX= counts in Nexus file."))
+      }
+      nTax <- as.integer(nTax[1])
+
+      taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
+      taxaLines <- lines[(taxlabels + 1):taxaEnd]
+      taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
+      if (sum(taxon.matches) == nTax) {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+      } else {
+        taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
+        taxa <- unlist(strsplit(taxa, ' '))
+        if (length(taxa) != nTax) {
+          return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
+                             " TAXLABELS found in Nexus file.")))
+        }
       }
     }
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
+    notes <- strsplit(paste0(notesLines, collapse = '\r\n'),
+                      # (?i) makes perl regexp case insensitive
+                      '(?i)\\r\\n\\s*TEXT\\s+', perl = TRUE)[[1]]
 
-    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notesLines))
-    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notesLines))
+    noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notes))
+    noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notes))
     noteText <- EndSentence(MorphoBankDecode(
-      .RegExpMatches("\\bTEXT\\s*=\\s*['\"](.+)['\"];\\s*$", notesLines)))
+      .RegExpMatches("\\bTEXT\\s*=\\s*['\"]([\\s\\S]+)['\"];\\s*$", notes)))
 
     seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
 
@@ -805,18 +824,35 @@ MorphoBankDecode <- function (string) {
 #' `MatrixToPhyDat()` converts a matrix of tokens to a `phyDat` object;
 #' `PhyDatToMatrix()` converts a `phyDat` object to a matrix of tokens.
 #'
-#' @param tokens matrix of tokens, probably created with [`ReadCharacters()`]
-#'               or [`ReadTntCharacters()`]. Row names should correspond to tip
-#'               labels; column names may optionally correspond to
-#'               character labels.
+#' @param tokens Matrix of tokens, possibly created with [`ReadCharacters()`]
+#' or [`ReadTntCharacters()`].
+#' Row names should correspond to leaf labels; column names may optionally
+#' correspond to character labels.
 #'
 #' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
 #' @family phylogenetic matrix conversion functions
+#' @examples 
+#' tokens <- matrix(c(0, 0, '0', 0, 0,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '1', 0, 1,
+#'                    0, 0, '2', 0, 1,
+#'                    1, 1, '-', 1, 0,
+#'                    1, 1, '2', 1, '{01}'),
+#'                    nrow = 6, ncol = 5, byrow = TRUE,
+#'                    dimnames = list(
+#'                      paste0("Taxon_", LETTERS[1:6]),
+#'                      paste0("Char_", 1:5)))
+#'                    
+#' MatrixToPhyDat(tokens)
 #' @template MRS
-#' @keywords internal
 #' @export
 MatrixToPhyDat <- function (tokens) {
+  if (inherits(tokens, 'phyDat')) {
+    # TODO warn.
+    # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
+    return(tokens)
+  }
   allTokens <- unique(as.character(tokens))
   if (any(nchar(allTokens) == 0)) {
     problems <- apply(tokens, 1, function (x) which(nchar(x) == 0))
@@ -839,11 +875,63 @@ MatrixToPhyDat <- function (tokens) {
     t(contrast)
   }
   dimnames(contrast) <- list(allTokens, levels)
-  dat <- phangorn::phyDat(tokens, type = 'USER', contrast = contrast)
+  dat <- .PhyDatWithContrast(tokens, contrast = contrast)
 
   # Return:
   dat
 }
+
+
+`[.phyDat` <- .SubsetPhyDat <- function(x, i, j, ..., drop = FALSE) {
+  mat <- PhyDatToMatrix(x)
+  MatrixToPhyDat(mat[i, j, ..., drop = FALSE])
+}
+
+
+.PhyDatWithContrast <- function (dat, contrast) {
+  if (is.null(dim(dat))) {
+    dat <- t(t(dat))
+  }
+  tipLabels <- rownames(dat)
+  if (is.null(tipLabels)) {
+    stop("Data rows must be named with tip labels")
+  }
+  
+  levelSet <- dimnames(contrast)
+  allLevels <- levelSet[[1]]
+  levels <- levelSet[[2]]
+  rownames(contrast) <- NULL
+  
+  # See https://stackoverflow.com/questions/70557817
+  groups <- do.call(grouping, as.data.frame(t(dat)))
+  ends <- attr(groups, "ends")
+  i <- rep(seq_along(ends), c(ends[1], diff(ends)))[order(groups)]
+  firstOccurrence <- match(i, i)
+  tab <- table(firstOccurrence)
+  weight <- as.integer(tab)
+  tab[] <- seq_along(tab)
+  index <- as.integer(tab[as.character(firstOccurrence)])
+  
+  duplicate <- duplicated(firstOccurrence)
+  phyMat <- matrix(match(dat[, !duplicate], allLevels),
+                   dim(dat)[1], sum(!duplicate))
+  
+  # Return:
+  structure(
+    lapply(seq_along(tipLabels), function (i) phyMat[i, ]),
+    #as.list(asplit(phyMat, 1)),
+    names  = tipLabels,
+    weight = as.integer(weight),
+    nr = length(weight),
+    nc = length(levels),
+    index = unname(index),
+    levels = levels,
+    allLevels = allLevels,
+    type = 'USER',
+    contrast = contrast,
+    class = "phyDat")
+}
+
 
 #' @rdname MatrixToPhyDat
 #' @param dataset A dataset of class `phyDat`.
@@ -912,8 +1000,8 @@ PhyDat <- function (dataset) {
 #'
 #' @param string String of tokens, optionally containing whitespace, with no
 #'   terminating semi-colon.
-#' @param tips Character vector corresponding to the names (in order)
-#' of each taxon in the matrix, or an objects such as a tree from which
+#' @param tips (Optional) Character vector corresponding to the names (in order)
+#' of each taxon in the matrix, or an object such as a tree from which
 #' tip labels can be extracted.
 #' @param byTaxon Logical; if `TRUE`, string is one **taxon's** coding at a
 #' time; if `FALSE`, string is interpreted as one **character's** coding at a
@@ -929,8 +1017,12 @@ PhyDat <- function (dataset) {
 #'
 #' @export
 StringToPhyDat <- function (string, tips, byTaxon = TRUE) {
+  tokens <- NexusTokens(string)
+  if (missing(tips)) {
+    tips <- length(tokens)
+  }
   tips <- TipLabels(tips)
-  tokens <- matrix(NexusTokens(string), nrow = length(tips), byrow = byTaxon,
+  tokens <- matrix(tokens, nrow = length(tips), byrow = byTaxon,
                    dimnames = list(tips, NULL))
 
   # Return:
@@ -941,11 +1033,10 @@ StringToPhydat <- StringToPhyDat
 
 #' Convert between strings and `phyDat` objects
 #'
-#' `PhyDatToString()` converts a [`phyDat`][phangorn::phyDat] object as a
-#' string;
+#' `PhyDatToString()` converts a `phyDat` object as a string;
 #' `StringToPhyDat()` converts a string of character data to a `phyDat` object.
 #'
-#' @param phy An object of class [`phyDat`][phangorn::phyDat].
+#' @param phy An object of class `phyDat`.
 #' @param parentheses Character specifying format of parentheses with which to
 #' surround ambiguous tokens.  Choose from: \code{\{} (default), `[`, `(`, `<`.
 #' @param collapse Character specifying text, perhaps `,`, with which to
@@ -971,7 +1062,6 @@ StringToPhydat <- StringToPhyDat
 #'
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
-#' @importFrom phangorn phyDat
 #' @export
 PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {

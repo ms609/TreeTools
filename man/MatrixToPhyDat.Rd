@@ -10,10 +10,10 @@ MatrixToPhyDat(tokens)
 PhyDatToMatrix(dataset, ambigNA = FALSE, inappNA = ambigNA)
 }
 \arguments{
-\item{tokens}{matrix of tokens, probably created with \code{\link[=ReadCharacters]{ReadCharacters()}}
-or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}. Row names should correspond to tip
-labels; column names may optionally correspond to
-character labels.}
+\item{tokens}{Matrix of tokens, possibly created with \code{\link[=ReadCharacters]{ReadCharacters()}}
+or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}.
+Row names should correspond to leaf labels; column names may optionally
+correspond to character labels.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
 
@@ -30,6 +30,20 @@ uncompressed character states within a \code{phyDat} object.
 \code{MatrixToPhyDat()} converts a matrix of tokens to a \code{phyDat} object;
 \code{PhyDatToMatrix()} converts a \code{phyDat} object to a matrix of tokens.
 }
+\examples{
+tokens <- matrix(c(0, 0, '0', 0, 0,
+                   0, 0, '1', 0, 1,
+                   0, 0, '1', 0, 1,
+                   0, 0, '2', 0, 1,
+                   1, 1, '-', 1, 0,
+                   1, 1, '2', 1, '{01}'),
+                   nrow = 6, ncol = 5, byrow = TRUE,
+                   dimnames = list(
+                     paste0("Taxon_", LETTERS[1:6]),
+                     paste0("Char_", 1:5)))
+                   
+MatrixToPhyDat(tokens)
+}
 \seealso{
 Other phylogenetic matrix conversion functions: 
 \code{\link{StringToPhyDat}()}
@@ -38,4 +52,3 @@ Other phylogenetic matrix conversion functions:
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{phylogenetic matrix conversion functions}
-\keyword{internal}

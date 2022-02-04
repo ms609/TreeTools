@@ -5,8 +5,9 @@ test_that('Pectinate trees are generated', {
                PectinateTree(letters[1:5]))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
                PectinateTree(ape::read.tree(text = '(a, ((b, c), (d, e)));')))
+  data("Lobo", package = 'TreeTools')
   expect_equal(ape::read.tree(text = '(Cricocosmia, (Aysheaia, Siberion));'),
-               PectinateTree(Lobo.phy[2:4]))
+               PectinateTree(.SubsetPhyDat(Lobo.phy, 2:4)))
   expect_true(is.integer(PectinateTree(8)$edge))
 })
 
@@ -42,7 +43,51 @@ test_that("Random trees are generated correctly", {
   expect_error(RandomTree(4, root = 'not_there'))
   expect_error(RandomTree(4, root = 999))
   expect_error(RandomTree(4, root = -1))
-  expect_error(RandomTree(4, root = NA_integer_))
+  expect_error(expect_warning(RandomTree(4, root = NA_integer_)))
+  expect_error(RandomTree(4, nodes = 0))
+
+  expect_warning(RandomTree(4, nodes = 4))
+  expect_warning(RandomTree(4, root = FALSE, nodes = 3))
+
+  for (nNode in 1:8) {
+    expect_equal(RandomTree(10, nodes = nNode)$Nnode, nNode)
+  }
+  for (nNode in 1:9) {
+    expect_equal(RandomTree(10, root = TRUE, nodes = nNode)$Nnode, nNode)
+  }
+})
+
+test_that("Hamming() works", {
+  dataset <- StringToPhyDat('111100 ???000 ???000 111??? 10??10',
+                            letters[1:5], byTaxon = TRUE)
+  expected <- c(1/3, 1/3, 0, 1/2,
+                0, NaN, 1/2,
+                NaN, 1/2,
+                1/2)
+  expect_equal(as.double(Hamming(dataset, ambig = "NAN")), expected)
+  ex <- expected
+  ex[is.nan(expected)] <- NA
+  expect_equal(as.double(Hamming(dataset, ambig = c("NA", "mean"))), ex)
+  ex[is.nan(expected)] <- 0
+  expect_equal(as.double(Hamming(dataset, ambig = 0)), ex)
+  ex[is.nan(expected)] <- 1
+  expect_equal(as.double(Hamming(dataset, ambig = "1")), ex)
+  ex[is.nan(expected)] <- mean(expected[!is.nan(expected)])
+  expect_equal(as.double(Hamming(dataset, ambig = "mean")), ex)
+  ex[is.nan(expected)] <- median(expected[!is.nan(expected)])
+  expect_equal(as.double(Hamming(dataset, ambig = "med")), ex)
+  
+})
+
+test_that("Hamming() handles inapplicables", {
+  dataset <- StringToPhyDat('221100 ---000 ---000 211{-0}?? 10-?10',
+                            letters[1:5], byTaxon = TRUE)
+  expected <- c(1/3, 1/3, 1/3, 3/4,
+                0, NaN, 1/2,
+                NaN, 1/2,
+                1)
+  expect_equal(as.double(Hamming(dataset, ambig = "NaN")), expected)
+  
 })
 
 test_that("NJTree() works", {
@@ -73,6 +118,10 @@ test_that("Constrained NJ trees work", {
     KeepTip(ConstrainedNJ(dataset, constraint[3:6]), letters[3:6]),
     BalancedTree(letters[3:6])
   ))
+})
+
+test_that("Hamming() fails nicely", {
+  expect_error(Hamming(matrix(1:4, 2, 2)))
 })
 
 test_that("EnforceOutgroup() fails nicely", {

@@ -11,7 +11,7 @@ An object of class \code{list} of length 48.
 An object of class \code{phyDat} of length 48.
 }
 \source{
-\insertRef{Zhang2016}{TreeTools}
+\insertCite{Zhang2016;textual}{TreeTools}
 }
 \usage{
 Lobo.data
@@ -19,12 +19,15 @@ Lobo.data
 Lobo.phy
 }
 \description{
-Phylogenetic data from Zhang \emph{et al.} (2016) in raw (\code{Lobo.data}) and
-\code{phyDat} (\code{Lobo.phy}) formats.
+Phylogenetic data from \insertCite{Zhang2016;textual}{TreeTools} in raw
+(\code{Lobo.data}) and \code{phyDat} (\code{Lobo.phy}) formats.
 }
 \examples{
 data("Lobo", package = "TreeTools")
 Lobo.data
 Lobo.phy
+}
+\references{
+\insertAllCited{}
 }
 \keyword{datasets}

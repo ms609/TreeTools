@@ -96,6 +96,7 @@ reference:
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
       - as.multiPhylo
+      - Hamming
       - MSTEdges
       - RightmostCharacter
       - SampleOne

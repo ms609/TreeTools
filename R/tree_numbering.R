@@ -93,10 +93,10 @@ RenumberEdges <- function (parent, child, ...) {
 #' functions to the corresponding functions in 'ape'. Single nodes may
 #' need to be collapsed using [ape::collapse.singles] first.  'ape' functions
 #' can cause crashes if nodes are numbered unconventionally -- sometimes
-#' encountered after using tree rearrangement functions, e.g. `phangorn::SPR`.
+#' encountered after using tree rearrangement functions, e.g. `phangorn::SPR()`.
 #'
-#' `Preorder()` is more robust: it supports polytomies, nodes can be numbered
-#' in any sequence, and edges can be listed in any order in the input tree.
+#' `Preorder()` is more robust: it supports polytomies, nodes may be numbered
+#' in any sequence, and edges may be listed in any order in the input tree.
 #' Its output is guaranteed to be identical for any tree of an equivalent
 #' topology, allowing unique trees to be detected by comparing sorted edge
 #' matrices alone.
@@ -330,14 +330,6 @@ Postorder.numeric <- function (tree, force = FALSE, renumber = FALSE,
   }
 }
 
-# nocov start
-#' @rdname Reorder
-#' @export
-PostorderEdges <- function (edge, renumber = FALSE) {
-#  .Deprecated('Postorder') #TODO (#35)
-  Postorder(edge, renumber = renumber)
-} # nocov end
-
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
 Pruningwise <- function (tree, nTip, edge) UseMethod('Pruningwise')
@@ -488,6 +480,9 @@ RenumberTips.phylo <- function (tree, tipOrder) {
 #' @export
 RenumberTips.multiPhylo <- function (tree, tipOrder) {
   tree[] <- lapply(tree, RenumberTips.phylo, tipOrder)
+  if (!is.null(attr(tree, 'TipLabel'))) {
+    attr(tree, 'TipLabel') <- TipLabels(tipOrder)
+  }
   tree
 }
 

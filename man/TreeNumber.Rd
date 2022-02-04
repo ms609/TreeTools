@@ -56,7 +56,8 @@ nine-digit chunks of the decimal integer corresponding to the tree topology
 }
 \description{
 Functions converting between phylogenetic trees and their unique decimal
-representation.
+representation, based on a concept by John Tromp, employed in
+\insertCite{Li1996}{TreeTools}.
 }
 \details{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} leaves.
@@ -155,9 +156,7 @@ as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
 
 }
 \references{
-Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
-
-\insertRef{Li1996}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Describe the shape of a tree topology, independent of leaf labels:

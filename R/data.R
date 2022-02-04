@@ -70,8 +70,8 @@
 
 #' Data from Zhang et al. 2016
 #'
-#' Phylogenetic data from Zhang _et al._ (2016) in raw (`Lobo.data`) and
-#' `phyDat` (`Lobo.phy`) formats.
+#' Phylogenetic data from \insertCite{Zhang2016;textual}{TreeTools} in raw
+#' (`Lobo.data`) and `phyDat` (`Lobo.phy`) formats.
 #'
 #' @template LoboMods
 #'
@@ -79,8 +79,9 @@
 #' data("Lobo", package = "TreeTools")
 #' Lobo.data
 #' Lobo.phy
-#' @source
-#'  \insertRef{Zhang2016}{TreeTools}
+#' @source \insertCite{Zhang2016;textual}{TreeTools}
+#' 
+#' @references \insertAllCited{}
 #'
 #' @keywords datasets
 "Lobo.data"

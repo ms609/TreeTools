@@ -4,13 +4,16 @@
 \alias{NJTree}
 \title{Generate a neighbour joining tree}
 \usage{
-NJTree(dataset, edgeLengths = FALSE)
+NJTree(dataset, edgeLengths = FALSE, ratio = TRUE, ambig = "mean")
 }
 \arguments{
-\item{dataset}{A phylogenetic data matrix of class \code{\link[phangorn]{phyDat}},
+\item{dataset}{A phylogenetic data matrix of class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
 \item{edgeLengths}{Logical specifying whether to include edge lengths.}
+
+\item{ambig, ratio}{Settings of \code{ambig} and \code{ratio} to be used when
+computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 }
 \value{
 \code{NJTree} returns an object of class \code{phylo}.

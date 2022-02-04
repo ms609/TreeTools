@@ -1,6 +1,7 @@
-#' Consensus trees
+#' Construct consensus trees
 #'
-#' Calculates the consensus of a set of trees.
+#' `Consensus()` calculates the consensus of a set of trees, using the
+#' algorithm of \insertCite{Day1985}{TreeTools}.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
 #' @param p Proportion of trees that must contain a split for it to be reported
@@ -13,9 +14,14 @@
 #' first entry of `trees`.
 #' @examples
 #' Consensus(as.phylo(0:2, 8))
+#' @seealso
+#' `TreeDist::ConsensusInfo()` calculates the information content of a consensus
+#' tree.
 #' @template MRS
 #' @family consensus tree functions
 #' @family tree characterization functions
+#' @references
+#' \insertAllCited{}
 #' @export
 Consensus <- function (trees, p = 1, check.labels = TRUE) {
   if (length(trees) == 1L) {
@@ -28,7 +34,7 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
       warning("Tree sizes differ; removing leaves not in smallest.")
-      trees[] <- lapply(trees, KeepTip, trees[[which.min(nTip)]]$tip.label)
+      trees <- lapply(trees, KeepTip, trees[[which.min(nTip)]]$tip.label)
     } else {
       nTip <- nTip[1]
       break

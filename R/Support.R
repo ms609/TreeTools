@@ -30,7 +30,7 @@
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
   refLabels <- attr(referenceSplits, 'tip.label')
-  forest[] <- lapply(forest, keep.tip, refLabels)
+  forest <- lapply(forest, keep.tip, refLabels)
   forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
   logicals <- vapply(forestSplits,
@@ -134,17 +134,22 @@ ForestSplits <- function (forest, powersOf2) {
 
   # Return:
   table(vapply(forest, function (tr) {
+    edge <- tr$edge
+    parent <- edge[, 1]
+    child <- edge[, 2]
     # +2: Don't consider root node (not a node) or first node (duplicated)
-    vapply(Descendants(tr, nTip + 2L + seq_len(nTip - 3L), type='tips'),
+    vapply(.DescendantTips(parent, child, nTip,
+                           nodes = nTip + 2L + seq_len(nTip - 3L)),
            SplitNumber, character(1), tr, tipIndex, powersOf2)
   }, character(nTip - 3L)))
 }
 
 #' @describeIn SplitFrequency Deprecated. Listed the splits in a given tree.
 #' Use as.Splits instead.
+#' @importFrom lifecycle deprecate_warn
 #' @export
 TreeSplits <- function (tree) {
-  .Deprecated("as.Splits")
+  deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
 } # nocov end
 
 #' Colour for node support value

@@ -45,23 +45,19 @@ The \acronym{CIC} is the logarithm of the number of binary trees that include th
 specified topology.  A base two logarithm gives an information content in
 bits.
 
-The \acronym{CIC} was originally proposed by Rohlf (1982), and formalised,
-with an information-theoretic justification, by Thorley \emph{et al}. (1998).
-Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
-content' in the context of individual characters.
+The \acronym{CIC} was originally proposed by
+\insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
+with an information-theoretic justification, by
+\insertCite{Thorley1998;textual}{TreeTools}.
+\insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
+'phylogenetic information content' in the context of individual characters.
 
 The number of binary trees consistent with a cladogram provides a more
 satisfactory measure of the resolution of a tree than simply
-counting the number of edges resolved (Page, 1992).
+counting the number of edges resolved \insertCite{Page1992}{TreeTools}.
 }
 \references{
-\insertRef{Page1992}{TreeTools}
-
-\insertRef{Rohlf1982}{TreeTools}
-
-\insertRef{Steel2006}{TreeTools}
-
-\insertRef{Thorley1998}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other tree information functions: 

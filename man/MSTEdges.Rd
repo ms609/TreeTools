@@ -33,7 +33,8 @@ each edge connects, with the lower value listed first.
 \code{MSTLength()} returns the length of the minimum spanning tree.
 }
 \description{
-Calculate or plot the minimum spanning tree of a distance matrix.
+Calculate or plot the minimum spanning tree \insertCite{Gower1969}{TreeTools}
+of a distance matrix.
 }
 \examples{
 # Corners of an almost-regular octahedron
@@ -47,7 +48,7 @@ plot(points[, 1:2], ann = FALSE, asp = 1)
 MSTEdges(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 }
 \references{
-\insertRef{Gower1969}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Slow implementation returning the association matrix of the minimum spanning

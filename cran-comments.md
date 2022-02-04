@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.1.1
+  - Windows 10, R 4.1.2
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu 20.04
@@ -19,11 +19,8 @@ There were no ERRORs or WARNINGs.
 There was one NOTE:
 
 >  Possibly mis-spelled words in DESCRIPTION:
->    al (22:62)
->    cladistic (25:30)
->    et (22:59)
->    Maddison (22:50)
->    Newick (22:35)
+>    Klopfstein
+>    Spasojevic 
 
 These spellings have been verified.
 

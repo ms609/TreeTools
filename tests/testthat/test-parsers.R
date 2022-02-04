@@ -37,15 +37,7 @@ test_that("ReadTntCharacter()", {
             .Dimnames = list(c("a", "b", "c", "d", "e", "f"), NULL)),
     ReadTntCharacters(testFile)
   )
-  expect_equal(
-    phangorn::as.phyDat(
-      ReadTntCharacters(testFile),
-      type = 'USER',
-      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
-                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
-      ),
-    ReadTntAsPhyDat(testFile))
-
+  
   dnaTest <- TestFile('tnt-dna.tnt')
   expect_equal(ReadTntCharacters(dnaTest),
                cbind(ReadTntCharacters(dnaTest, type = 'num'),
@@ -53,6 +45,16 @@ test_that("ReadTntCharacter()", {
   expect_equal(ReadTntCharacters(dnaTest),
                ReadTntCharacters(dnaTest, type = c('NUM', 'Dna')))
   expect_message(expect_null(ReadTntCharacters(dnaTest, type = 'NONE')))
+  
+  skip_if_not_installed('phangorn')
+  expect_equal(
+    phangorn::as.phyDat(
+      ReadTntCharacters(testFile),
+      type = 'USER',
+      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
+                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
+    ),
+    ReadTntAsPhyDat(testFile))
 })
 
 test_that("TNT trees parsed correctly", {
@@ -107,7 +109,13 @@ test_that("Matrix converts to phyDat", {
   expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
 })
 
-test_that("PhyDatToMatrix with ambigs", {
+test_that(".PhyDatWithContrast() fails gracefully", {
+  expect_error(.PhyDatWithContrast(matrix(0, 2, 2),
+                                   matrix(c(1, 0, 0, 1), 2, 2, FALSE,
+                                          list(0:1, 0:1))))
+})
+
+test_that("PhyDatToMatrix() with ambigs", {
   mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,'{12}','(01)','-','?'),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
@@ -142,15 +150,23 @@ test_that("MatrixToPhyDat() warns when characters blank", {
   expect_warning(MatrixToPhyDat(mat))
 })
 
-test_that("StringToPhyDat()", {
-  expect_equal(rep(1:2, each = 4),
-               as.integer(StringToPhyDat('1111????', letters[1:8])))
-  expect_equal(rep(1:2, each = 4),
-               as.integer(StringToPhyDat('----????', letters[1:8])))
+test_that("MatrixToPhyDat() returns phyDat if passed", {
+  expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy))
 })
 
-test_that('PhyToString() works', {
-  longLevels <- phyDat(rbind(x = c('-', '?', 0:12), y = c(12:0, '-', '?')),
+test_that("StringToPhyDat()", {
+  expect_equal(as.integer(StringToPhyDat('1111????', letters[1:8])),
+               rep(1:2, each = 4))
+  expect_equal(as.integer(StringToPhyDat('----????', letters[1:8])),
+               rep(1:2, each = 4))
+  expect_equal(as.integer(StringToPhyDat('----????')), rep(1:2, each = 4))
+  expect_equal(names(StringToPhyDat('----????')), paste0('t', 1:8))
+})
+
+test_that('PhyToString() supports long levels', {
+  skip_if_not_installed('phangorn')
+  longLevels <- phangorn::phyDat(rbind(x = c('-', '?', 0:12),
+                                       y = c(12:0, '-', '?')),
                        type = 'USER', levels = c(0:6, '-', 7:12))
   expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
 
@@ -159,10 +175,13 @@ test_that('PhyToString() works', {
   expect_error(PhyToString(longLevels))
 
   # 10 → 1
-  longLevels <- phyDat(rbind(x = c('-', '?', 1:10), y = c(10:1, '-', '?')),
-                       type = 'USER', levels = c(1:6, '-', 7:10))
+  longLevels <- phangorn::phyDat(rbind(x = c('-', '?', 1:10),
+                                       y = c(10:1, '-', '?')),
+                                 type = 'USER', levels = c(1:6, '-', 7:10))
   expect_equal("-?12345678900987654321-?", PhyToString(longLevels))
-
+})
+  
+test_that('PhyToString() works', {
   phy <- StringToPhyDat('012[01]', letters[1:4])
   expect_equal('012{01}', PhyToString(phy))
   expect_equal('012<01>', PhyToString(phy, parentheses = '<'))

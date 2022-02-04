@@ -65,8 +65,7 @@ attribute \code{state.labels} listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.
 
-\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
-\code{\link[phangorn:phyDat]{phyDat}} object.
+\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a \code{phyDat} object.
 
 \code{ReadNotes()} returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:
@@ -77,11 +76,13 @@ for that character, named with the names of each note-bearing taxon.
 }
 }
 \description{
-Parse a Nexus or TNT file, reading character states and names.
+Parse a Nexus \insertCite{Maddison1997}{TreeTools} or
+TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
+names.
 }
 \details{
-Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank},
-but should also work more widely; please
+Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank}
+\insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incompletely or incorrectly parsed files.
 
@@ -126,7 +127,7 @@ attributes(continuous) <- at
 continuous
 }
 \references{
-\insertRef{Maddison1997}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 \itemize{

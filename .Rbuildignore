@@ -21,7 +21,7 @@ vignettes/.RData
 /^src\-/
 ^CODE_OF_CONDUCT\.md$
 ^codemeta\.json$
-^CRAN-RELEASE$
+^CRAN-SUBMISSION$
 ^docs$
 ^doc$
 ^data-raw$

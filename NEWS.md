@@ -1,12 +1,49 @@
-# branch sort.phylo (9003)
+# TreeTools 1.6.0.9003 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
 - `sort.multiPhylo()` sorts lists of trees according to their mixed base
   representation ([#84](https://github.com/ms609/TreeTools/issues/84)).
 
+- `%in%.Splits()` retains names when comparing small splits
+  ([#40](https://github.com/ms609/TreeTools/issues/40)).
 
-# TreeTools 1.5.0.9001 (development)
+- `DropTip()` no longer adds a root to unrooted trees.
+
+- Improve speed of `DropTip()`, by an order of magnitude in some cases.
+
+- Fix bug when tree is rooted on a discontinuous outgroup.
+
+- Small improvements to computational efficiency.
+
+- Remove deprecated function `PostorderEdges()`
+  ([#35](https://github.com/ms609/TreeTools/issues/35)).
+
+
+# TreeTools 1.6.0
+
+## New functions
+
+- `RoguePlot()` plots the positions of rogue taxa.
+
+
+## Improvements
+
+- `DropTip()` gains `check` parameter to allow slightly faster operation where
+  input is guaranteed to be valid.
+
+- `RandomTree()` gains `nodes` parameter allow the inclusion of polytomies.
+
+- Infer `tips` parameter if missing in `StringToPhyDat()`.
+
+- Remove dependency on "phangorn" (allowing use on R < 4.1)
+
+- Improve parsing of information from nexus files.
+
+- Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
+
+
+# TreeTools 1.5.1
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
@@ -18,9 +55,10 @@
 # TreeTools 1.5.0
 
 ## New functions
+
 - `ConstrainedNJ()` returns an approximation to a neighbour-joining tree
   that respects constraints.
-  
+
 - `PolarizeSplits()` marks a specified taxon as representing the ingroup of all
   splits.
 
@@ -46,8 +84,6 @@
 - `AddTipEverywhere()` supports trees with < 3 leaves.
 
 - Make `RootTree()` and `PhyDatToMatrix()` more robust.
-
-- `Read[Tnt]AsPhyDat()` passes additional parameters to `Read[Tnt]Characters()`.
 
 - Support `encoding` option in `ReadCharacters()` function family.
 

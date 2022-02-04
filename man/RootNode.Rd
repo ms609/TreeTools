@@ -29,7 +29,7 @@ RootNode(UnrootTree(BalancedTree(8)))
 \seealso{
 Test whether a tree is rooted: \code{\link[=TreeIsRooted]{TreeIsRooted()}}
 
-phangorn::\code{\link[=getRoot]{getRoot()}}
+\code{phangorn::getRoot()}
 
 Other tree navigation: 
 \code{\link{AncestorEdge}()},
