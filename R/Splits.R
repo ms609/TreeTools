@@ -40,7 +40,6 @@
 #' moreSplits %in% splits
 #'
 #' @family Splits operations
-#' @importFrom ape reorder.phylo
 #' @name Splits
 #' @export
 as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
