@@ -1,11 +1,8 @@
-# branch keep-tip
+# TreeTools 1.6.0.9001
 
 - `DropTip()` no longer roots unrooted trees.
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
-
-
-# TreeTools 1.6.0.9000
 
 - Fix bug rooting a tree on a discontinuous outgroup.
 
