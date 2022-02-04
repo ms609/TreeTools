@@ -1,3 +1,11 @@
+nasty <- structure(list(edge = structure(
+  c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+    5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+  .Dim = c(12, 2)),
+  Nnode = 5L,
+  tip.label = letters[1:8]),
+  class = 'phylo') # Danger: Do not plot!
+
 test_that("drop_tip() works", {
   expect_error(drop_tip(BalancedTree(8)$edge[, c(1, 2, 1)], 6:4))
   expect_error(drop_tip(BalancedTree(8)$edge[, 1, drop = FALSE], 6:4))
@@ -36,17 +44,8 @@ test_that("keep_tip() works", {
                matrix(c(4, 4, 4, 1, 2, 3), 3, 2))
   
   unrooted <- ape::read.tree(text = "(a, b, (c, d, ((e1, e2), (f, g))));")
-  if(interactive()) {
-    plot(unrooted)
-    nodelabels()
-    tiplabels()
-    edgelabels()
-  }
   expect_equal(keep_tip(unrooted$edge, !tabulate(1:4, 8)),
                ape::unroot(BalancedTree(4))$edge)
-  
-  testTree <- ape::read.tree(text = "(a, ((b, c), ((d, e, f), g)));")
-  testEdge <- Preorder(testTree)$edge
 })
 
 test_that("DropTip() works", {
@@ -68,9 +67,9 @@ test_that("DropTip() works", {
   bigTree <- RandomTree(1284)
   set.seed(1284)
   bigTip <- sample(1:1284, 608)
-  expect_true(all.equal(drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip)))
-  #microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip), times = 25)
-  #profvis(replicate(25, DropTip(bigTree, bigTip)), interval = 0.005)
+  expect_true(all.equal(unroot(drop.tip(bigTree, bigTip)),
+                        DropTip(bigTree, bigTip)))
+  #microbenchmark::microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
 })
 
 test_that("DropTip.multiPhylo() with attributes", {
