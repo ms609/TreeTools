@@ -9,10 +9,6 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
-drop_tip <- function(edge, drop) {
-    .Call(`_TreeTools_drop_tip`, edge, drop)
-}
-
 num_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_num_to_parent`, n, nTip)
 }
