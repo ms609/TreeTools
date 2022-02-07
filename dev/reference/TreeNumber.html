@@ -26,7 +26,7 @@ representation, based on a concept by John Tromp, employed in
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9003</span>
       </span>
     </div>
 
@@ -97,10 +97,39 @@ representation, based on a concept by John Tromp, employed in
 <span class="co"># S3 method for character</span>
 <span class="fu">as.TreeNumber</span><span class="op">(</span><span class="va">x</span>, <span class="va">nTip</span>, tipLabels <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">nTip</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
+<span class="co"># S3 method for TreeNumber</span>
+<span class="fu">as.TreeNumber</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for MixedBase</span>
+<span class="fu">as.TreeNumber</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for TreeNumber</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for integer64</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for numeric</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
+
 <span class="co"># S3 method for numeric</span>
 <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">x</span>, nTip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"nTip"</span><span class="op">)</span>, tipLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"tip.label"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for TreeNumber</span>
+<span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">x</span>, nTip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"nTip"</span><span class="op">)</span>, tipLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"tip.label"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for MixedBase</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for phylo</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for multiPhylo</span>
+<span class="fu">as.MixedBase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
+
+<span class="co"># S3 method for MixedBase</span>
 <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="va">x</span>, nTip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"nTip"</span><span class="op">)</span>, tipLabels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"tip.label"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
@@ -122,7 +151,7 @@ in a tree, perhaps obtained using <code><a href="TipLabels.html">TipLabels()</a>
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The <code>TreeNumber</code> object has attributes
-<code>nTip</code> and <code>tip.labels</code>.
+<code>nTip</code> and <code>tip.label</code>.
 <code>as.phylo.numeric()</code> returns a tree of class <code>phylo</code>.</p>
     </div>
     <div id="details">
