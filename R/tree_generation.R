@@ -86,7 +86,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (nodes < nodesInBinary) {
     tree <- CollapseNode(tree,
                          nTips + 1L + sample.int(nodesInBinary - 1L,
-                                                 tree$Nnode - nodes))
+                                                 tree[["Nnode"]] - nodes))
   }
   # Return:
   tree
@@ -222,7 +222,9 @@ NJTree <- function(dataset, edgeLengths = FALSE,
                     ratio = TRUE, ambig = "mean") {
   tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
   tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
-  if (!edgeLengths) tree$edge.length <- NULL
+  if (!edgeLengths) {
+    tree[["edge.length"]] <- NULL
+  }
   tree
 }
 
@@ -368,7 +370,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
   tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig) 
                        * weight) +
                         Hamming(dataset, ratio = ratio, ambig = ambig)))
-  tree$edge.length <- NULL
+  tree[["edge.length"]] <- NULL
   tree <- ImposeConstraint(tree, constraint)
   tree <- RootTree(tree, names(dataset)[1])
 
@@ -426,7 +428,7 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 #' @rdname EnforceOutgroup
 #' @export
 EnforceOutgroup.phylo <- function(tree, outgroup) {
-  .EnforceOutgroup(tree, outgroup, tree$tip.label)
+  .EnforceOutgroup(tree, outgroup, tree[["tip.label"]])
 }
 
 #' @rdname EnforceOutgroup

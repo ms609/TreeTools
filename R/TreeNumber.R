@@ -143,7 +143,7 @@ as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 #' @export
 as.TreeNumber.phylo <- function(x, ...) {
   x <- RootTree(x, 1)
-  edge <- x$edge
+  edge <- x[["edge"]]
   nTip <- NTip(x)
   if (nTip > .TT_MAX_TIP) {
     warning("Trees with > 19 leaves not uniquely identified ",
@@ -391,7 +391,7 @@ as.MixedBase.MixedBase <- function(x, ...) x
 #' @export
 as.MixedBase.phylo <- function(x, ...) {
   x <- RootTree(x, 1)
-  edge <- x$edge
+  edge <- x[["edge"]]
   nTip <- NTip(x)
   
   edge <- Postorder(edge, sizeSort = TRUE)

@@ -41,10 +41,10 @@ SortTree <- function(tree) UseMethod('SortTree')
 #' @export
 #' @rdname SortTree
 SortTree.phylo <- function(tree) {
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
-  tipLabels <- tree$tip.label
+  tipLabels <- tree[["tip.label"]]
   tree.ntip <- length(tipLabels)
   if (tree.ntip + tree.ntip - 2L != length(parent)) {
     stop("`tree` must be binary.")
@@ -53,7 +53,7 @@ SortTree.phylo <- function(tree) {
   descendants <- .ListDescendents(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function(tips) min(tipLabels[tips])
-  swaps <- vapply(tree.ntip + seq_len(tree$Nnode), function(node) {
+  swaps <- vapply(tree.ntip + seq_len(tree[["Nnode"]]), function(node) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
     if (all(descs == 1L)) {
@@ -70,14 +70,14 @@ SortTree.phylo <- function(tree) {
     kids <- child[childEdges]
     child[childEdges][2:1] <- kids
   }
-  tree$edge[, 1] <- parent
-  tree$edge[, 2] <- child
+  tree[["edge"]][, 1] <- parent
+  tree[["edge"]][, 2] <- child
   attr(tree, 'order') <- NULL
   Renumber(tree)
 }
 
 .ListDescendents <- function(tree) {
-  edge <- Postorder(tree$edge)
+  edge <- Postorder(tree[["edge"]])
   parent <- edge[, 1]
   child <- edge[, 2]
   # Every node occurs once in `child` except the root

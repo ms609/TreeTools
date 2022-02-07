@@ -77,7 +77,7 @@ TotalCopheneticIndex <- function(x) UseMethod('TotalCopheneticIndex')
 #' @export
 TotalCopheneticIndex.phylo <- function(x) {
   nTip   <- NTip(x)
-  edge   <- Preorder(x)$edge
+  edge   <- Preorder(x)[["edge"]]
   parent <- edge[, 1]
   child  <- edge[, 2]
   depth  <- .Depth(parent, child)
