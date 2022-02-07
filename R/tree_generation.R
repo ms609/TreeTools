@@ -379,8 +379,11 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
   tree
 }
 
+#nocov begin
 #' Generate a tree with a specified outgroup
 #'
+#' Deprecated. Use `RootNode()` instead.
+#' 
 #' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
 #' and outgroup taxa such that the two are sister taxa across the root, without
 #' changing the relationships within the ingroup or within the outgroup.
@@ -410,6 +413,7 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape root bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
+  .Deprecated("RootTree")
   if (length(outgroup) == 1L) return(root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
@@ -439,3 +443,4 @@ EnforceOutgroup.character <- function(tree, outgroup) {
   taxa <- tree
   .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
 }
+#nocov end
