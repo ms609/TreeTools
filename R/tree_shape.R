@@ -76,7 +76,7 @@ utils::globalVariables(c('nRootedShapes',
 #' @name TreeShape
 #' @export
 RootedTreeShape <- function(tree) {
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   nTip <- NTip(tree)
   edge <- Postorder(edge, renumber = FALSE, sizeSort = TRUE)
   .Int64(edge_to_rooted_shape(edge[, 1], edge[, 2], nTip))
@@ -173,7 +173,7 @@ UnrootedTreeShape <- function(tree) {
 #' @export
 UnrootedTreeKey <- function(tree, asInteger = FALSE) {
   tree <- Preorder(tree) # Guarantee unique representation of tree
-  edge <- Postorder(tree$edge, renumber = FALSE, sizeSort = TRUE)
+  edge <- Postorder(tree[["edge"]], renumber = FALSE, sizeSort = TRUE)
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]

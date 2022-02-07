@@ -86,7 +86,7 @@ AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
 #' @family tree navigation
 #' @export
 NDescendants <- function(tree) {
-  NodeOrder(tree$edge, includeAncestor = FALSE)
+  NodeOrder(tree[["edge"]], includeAncestor = FALSE)
 }
 
 #' Distance of each node from tree exterior
@@ -139,9 +139,9 @@ NodeDepth.multiPhylo <- NodeDepth.list
 #' @export
 NodeDepth.phylo <- function(x, shortest = FALSE, includeTips = TRUE) {
   if (is.rooted(x)) {
-    .NodeDepth.rooted(x$edge, shortest, includeTips)
+    .NodeDepth.rooted(x[["edge"]], shortest, includeTips)
   } else {
-    NodeDepth(x$edge, shortest, includeTips)
+    NodeDepth(x[["edge"]], shortest, includeTips)
   }
 }
 
@@ -290,7 +290,7 @@ NodeOrder.multiPhylo <- NodeOrder.list
 
 #' @export
 NodeOrder.phylo <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
-  NodeOrder(x$edge, includeAncestor, internalOnly)
+  NodeOrder(x[["edge"]], includeAncestor, internalOnly)
 }
 
 #' @export
@@ -443,7 +443,7 @@ MRCA <- function(x1, x2, ancestors) {
 #' @template MRS
 #' @export
 EdgeDistances <- function(tree) {
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   nEdge <- dim(edge)[1]
   edge <- RenumberTree(edge[, 1], edge[, 2])
   parent <- edge[, 1]
@@ -475,7 +475,7 @@ EdgeDistances <- function(tree) {
   }
   ret[lower.tri(ret)] <- t(ret)[lower.tri(ret)]
 
-  origOrder <- match(tree$edge[, 2], edge[, 2])
+  origOrder <- match(tree[["edge"]][, 2], edge[, 2])
 
   # Return:
   ret[origOrder, origOrder]
@@ -554,11 +554,15 @@ NTip.Splits <- NTip.default
 
 #' @rdname NTip
 #' @export
-NTip.list <- function(phy) vapply(phy, NTip, integer(1))
+NTip.list <- function(phy) {
+  vapply(phy, NTip, integer(1))
+}
 
 #' @rdname NTip
 #' @export
-NTip.phylo <- function(phy) length(phy$tip.label)
+NTip.phylo <- function(phy) {
+  length(phy[["tip.label"]])
+}
 
 #' @rdname NTip
 #' @export
@@ -616,7 +620,9 @@ NPartitions <- NSplits
 
 #' @rdname NSplits
 #' @export
-NSplits.phylo <- function(x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
+NSplits.phylo <- function(x) {
+  collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+}
 
 #' @rdname NSplits
 #' @export
@@ -723,7 +729,7 @@ SplitsInBinaryTree.phylo <- SplitsInBinaryTree.default
 #' @template MRS
 #' @export
 TreeIsRooted <- function(tree) {
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   sum(parent == min(parent)) < 3L
 }
@@ -758,7 +764,7 @@ RootNode <- function(x) UseMethod('RootNode')
 
 #' @export
 RootNode.phylo <- function(x) {
-  edge <- x$edge
+  edge <- x[["edge"]]
   edgeOrder <- attr(x, "order")
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
