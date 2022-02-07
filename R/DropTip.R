@@ -42,7 +42,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (preorder) {
     tree <- Preorder(tree)
   }
-  labels <- tree$tip.label
+  labels <- tree[["tip.label"]]
   nTip <- length(labels)
   if (is.null(tip) || !length(tip) || any(is.na(tip))) {
     drop <- logical(0)
@@ -57,7 +57,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     }
   } else if (is.numeric(tip)) {
     if (check) {
-      nNodes <- nTip + tree$Nnode
+      nNodes <- nTip + tree[["Nnode"]]
       if (any(tip > nNodes)) {
         warning("Tree only has ", nNodes, " nodes")
         tip <- tip[tip <= nNodes]
@@ -68,7 +68,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
       }
       
       if (any(tip > nTip)) {
-        edge <- tree$edge
+        edge <- tree[["edge"]]
         parent <- edge[, 1]
         child <- edge[, 2]
         drop <- c(tip[tip <= nTip],
@@ -91,10 +91,10 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     }
     
     keep <- !tabulate(drop, nbins = nTip)
-    tree$edge <- keep_tip(tree$edge, keep)
+    tree$edge <- keep_tip(tree[["edge"]], keep)
     attr(tree, 'order') <- 'cladewise' # some nodes may be rotated from preorder
-    tree$tip.label <- labels[-drop]
-    tree$Nnode <- dim(tree$edge)[1] + 1L - (nTip - nDrop)
+    tree[["tip.label"]] <- labels[-drop]
+    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - (nTip - nDrop)
   }
   
   # Return:
@@ -127,8 +127,8 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   at <- attributes(tree)
   tree <- lapply(tree, DropTip, tip, preorder)
   attributes(tree) <- at
-  if (!is.null(at$TipLabel)) {
-    attr(tree, 'TipLabel') <- setdiff(at$TipLabel, tip)
+  if (!is.null(at[["TipLabel"]])) {
+    attr(tree, 'TipLabel') <- setdiff(at[["TipLabel"]], tip)
   }
   tree
 }

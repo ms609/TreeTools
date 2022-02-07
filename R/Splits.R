@@ -55,8 +55,8 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 
   # Return:
-  .as.Splits.edge(x$edge, tipLabels = x[["tip.label"]], asSplits = asSplits,
-                  nTip = NTip(x), ...)
+  .as.Splits.edge(x[["edge"]], tipLabels = x[["tip.label"]],
+                  asSplits = asSplits, nTip = NTip(x), ...)
 }
 
 .as.Splits.edge <- function(edge, tipLabels = NULL, asSplits = TRUE,
@@ -302,7 +302,7 @@ as.phylo.Splits <- function(x, ...) {
                         tip.label = TipLabels(x)),
                    order = 'preorder',
                    class = 'phylo')
-  ret[["Nnode"]] <- dim(ret$edge)[1] + 1 - NTip(ret)
+  ret[["Nnode"]] <- dim(ret[["edge"]])[1] + 1 - NTip(ret)
   ret
 }
 

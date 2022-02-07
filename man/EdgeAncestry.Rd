@@ -11,10 +11,10 @@ EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 should be returned.}
 
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
 \item{stopAt}{Integer or logical vector specifying the edge(s) at which to
 terminate the search; defaults to the edges with the smallest parent,

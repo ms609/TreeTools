@@ -25,7 +25,7 @@ sort.multiPhylo <- function(x, decreasing = FALSE, na.last = NA, ...) {
 }
 
 .Comparable <- function(tree) {
-  as.MixedBase(RenumberTips(tree, sort(tree$tip.label)))
+  as.MixedBase(RenumberTips(tree, sort(tree[["tip.label"]])))
 }
 
 .Sortable <- function(tree, maxTip = NTip(tree)) {

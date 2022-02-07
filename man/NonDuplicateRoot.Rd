@@ -8,13 +8,13 @@ NonDuplicateRoot(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
 \item{nEdge}{(optional) integer specifying the number of edges of a tree of
-class \code{\link{phylo}}, i.e. \code{dim(tree$edge)[1]}}
+class \code{\link{phylo}}, i.e. \code{dim(tree[["edge"]])[1]}}
 }
 \value{
 \code{NonDuplicateRoot()} returns a logical vector of length \code{nEdge},

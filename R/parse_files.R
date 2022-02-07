@@ -1072,9 +1072,12 @@ PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
   }
   phyChars <- at$nr
   phyContrast <- at$contrast == 1
-  phyIndex <- if (useIndex) at$index else seq_len(phyChars)
+  phyIndex <- if (useIndex) {
+    at[["index"]]
+  } else {
+    seq_len(phyChars)
+  }
   outLevels <- at$levels
-  inappLevel <- outLevels == '-'
 
   levelLengths <- vapply(outLevels, nchar, integer(1))
   longLevels <- levelLengths > 1
@@ -1097,8 +1100,8 @@ PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
 
   levelTranslation <- apply(phyContrast, 1, function(x)
     ifelse(sum(x) == 1, as.character(outLevels[x]),
-           paste0(c(openBracket, paste0(outLevels[x], collapse=collapse),
-                    closeBracket), collapse=''))
+           paste0(c(openBracket, paste0(outLevels[x], collapse = collapse),
+                    closeBracket), collapse = ''))
   )
   if (any(ambigToken <- apply(phyContrast, 1, all))) {
     levelTranslation[ambigToken] <- '?'
@@ -1108,10 +1111,10 @@ PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
                 character(length(phyIndex)))
   ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
     if (!byTaxon) ret <- t(ret)
-    paste0(c(ret, ps), collapse='')
+    paste0(c(ret, ps), collapse = '')
   } else {
     if (byTaxon) ret <- t(ret)
-    paste0(apply(ret, 1, paste0, collapse=''), ps)
+    paste0(apply(ret, 1, paste0, collapse = ''), ps)
   }
   # Return:
   ret

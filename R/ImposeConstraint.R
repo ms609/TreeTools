@@ -26,7 +26,7 @@ ImposeConstraint <- function(tree, constraint) {
   # But it just about does the job.
   tree <- Preorder(tree)
   const <- AddUnconstrained(constraint,
-                            setdiff(tree$tip.label, names(constraint)),
+                            setdiff(tree[["tip.label"]], names(constraint)),
                             asPhyDat = FALSE)
 
   info <- apply(const, 2,
@@ -34,7 +34,7 @@ ImposeConstraint <- function(tree, constraint) {
   smallest <- ifelse(apply(const, 2, function(x) sum(x == '0') < sum(x == '1')),
                      '0', '1')
 
-  tips <- tree$tip.label
+  tips <- tree[["tip.label"]]
   nTip <- length(tips)
   for (i in order(info)) {
     constI <- const[, i]
@@ -63,7 +63,7 @@ ImposeConstraint <- function(tree, constraint) {
     if (x <= nTip) x else .ChildAtEnd(edge[match(x, edge[, 1]), 2])
   }
 
-  edge <- backbone$edge
+  edge <- backbone[["edge"]]
   polytomies <- which(tabulate(edge[, 1]) > 2)
   
   for (node in polytomies) {
@@ -81,8 +81,8 @@ ImposeConstraint <- function(tree, constraint) {
     edge <- rbind(edge[edge[, 1] != node, ], kept)
   }
   edge <- edge[order(edge[, 1]), ]
-  backbone$edge <- RenumberTree(edge[, 1], edge[, 2])
-  backbone$Nnode <- max(backbone$edge[, 1]) - nTip
+  backbone[["edge"]] <- RenumberTree(edge[, 1], edge[, 2])
+  backbone[["Nnode"]] <- max(backbone[["edge"]][, 1]) - nTip
 
 
   # Return:
@@ -94,7 +94,7 @@ ImposeConstraint <- function(tree, constraint) {
   space <- 'XXTREETOOLSSPACEXX'
   text <- gsub(' ', space, paste0(...), fixed = TRUE)
   tree <- read.tree(text = text)
-  tree$tip.label <- gsub(space, ' ', tree$tip.label, fixed = TRUE)
+  tree[["tip.label"]] <- gsub(space, " ", tree[["tip.label"]], fixed = TRUE)
 
   # Return:
   tree

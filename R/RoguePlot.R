@@ -88,7 +88,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   allTips <- logical(nTip + 1L) # including dummy
   # dummyRoot is, by definition, always below rogue.
   aboveRogue <- .vapply(trees, function(tr) {
-    edge <- AddTip(tr, 0, dummyRoot)$edge
+    edge <- AddTip(tr, 0, dummyRoot)[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
     rogueEdge <- fmatch(tip, child)
@@ -133,12 +133,12 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   nAtSplit <- double(nSplits)
   tab <- tabulate(edgeMatches)
   nAtSplit[which(as.logical(tab))] <- tab[as.logical(tab)]
-  decipher <- c(nAtTip, rep.int(NA, cons$Nnode))
+  decipher <- c(nAtTip, rep.int(NA, cons[["Nnode"]]))
   decipher[as.integer(names(consSplits))] <- nAtSplit
-  nOnEdge <- decipher[cons$edge[, 2]]
+  nOnEdge <- decipher[cons[["edge"]][, 2]]
 
 
-  nAtNode <- c(nAtTip[length(nAtTip)], double(cons$Nnode - 2L))
+  nAtNode <- c(nAtTip[length(nAtTip)], double(cons[["Nnode"]] - 2L))
   unmatchedTrees[unmatchedTrees] <- is.na(edgeMatches)
   if (any(unmatchedTrees)) {
     nodeDescs <- .NodeDescendants(cons, nTip, pole)
@@ -165,7 +165,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   cons <- DropTip(cons, dummyRoot)
   if (!is.null(edgeLength)) {
-    cons$edge.length <- rep_len(edgeLength, dim(cons$edge)[1])
+    cons$edge.length <- rep_len(edgeLength, dim(cons[["edge"]])[1])
   }
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
 
@@ -188,8 +188,9 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
 # `tree` must be in preorder
 .NodeDescendants <- function(tree, nTip, pole) {
-  parent <- tree$edge[, 1]
-  child <- tree$edge[, 2]
+  edge <- tree[["edge"]]
+  parent <- edge[, 1]
+  child <- edge[, 2]
   descs <- matrix(FALSE, max(parent), nTip)
   diag(descs[seq_len(nTip), ]) <- TRUE
   

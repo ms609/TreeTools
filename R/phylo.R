@@ -27,8 +27,8 @@
 #' @export
 Renumber <- function(tree) {
   tree   <- ApePostorder(tree)
-  edge   <- tree$edge
-  nTip   <- length(tree$tip.label)
+  edge   <- tree[["edge"]]
+  nTip   <- NTip(tree)
   parent <- edge[, 1L]
   child  <- edge[, 2L]
   NODES  <- child > nTip
@@ -37,8 +37,8 @@ Renumber <- function(tree) {
 
   tip <- child[TIPS]
   name <- vector("character", length(tip))
-  name[1:nTip] <- tree$tip.label[tip]
-  tree$tip.label <- name
+  name[1:nTip] <- tree[["tip.label"]][tip]
+  tree[["tip.label"]] <- name
   child[TIPS] <- 1:nTip
 
   old.node.number <- unique(parent)
@@ -49,8 +49,8 @@ Renumber <- function(tree) {
   nodeseq <- (1L:nNode) * 2L
   parent <- renumbering.schema[parent - nTip]
 
-  tree$edge[,1] <- parent
-  tree$edge[,2] <- child
+  tree[["edge"]][,1] <- parent
+  tree[["edge"]][,2] <- child
   Cladewise(tree)
 }
 
@@ -107,12 +107,12 @@ Subtree <- function(tree, node) {
   if (is.null(treeOrder <- attr(tree, 'order')) || treeOrder != 'preorder') {
     stop("Tree must be in preorder")
   }
-  tipLabel <- tree$tip.label
+  tipLabel <- tree[["tip.label"]]
   nTip <- length(tipLabel)
   if (node <= nTip) return(SingleTaxonTree(tipLabel[node]))
   if (node == nTip + 1L) return(tree)
 
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   subtreeParentEdge <- match(node, child)
@@ -188,17 +188,17 @@ Subtree <- function(tree, node) {
 #'
 #' @export
 AddTip <- function(tree,
-                    where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
-                    label = "New tip",
-                    edgeLength = 0,
-                    lengthBelow = NULL,
-                    nTip = NTip(tree),
-                    nNode = tree$Nnode,
-                    rootNode = RootNode(tree)
-                    ) {
+                   where = sample.int(tree[["Nnode"]] * 2 + 2L, size = 1) - 1L,
+                   label = "New tip",
+                   edgeLength = 0,
+                   lengthBelow = NULL,
+                   nTip = NTip(tree),
+                   nNode = tree[["Nnode"]],
+                   rootNode = RootNode(tree)
+                   ) {
   newTipNumber <- nTip + 1L
-  treeEdge <- tree$edge
-  edgeLengths <- tree$edge.length
+  treeEdge <- tree[["edge"]]
+  edgeLengths <- tree[["edge.length"]]
   lengths <- !is.null(edgeLengths)
 
   if (is.character(where)) {
@@ -269,7 +269,7 @@ AddTip <- function(tree,
   tree$tip.label <- c(tree$tip.label, label)
 
   nNode <- nNode + 1L
-  tree$Nnode <- nNode
+  tree[["Nnode"]] <- nNode
 
   ## renumber nodes:
   newNumbering <- integer(nNode)
@@ -282,8 +282,10 @@ AddTip <- function(tree,
     newTipNumber + 2:nNode
   treeEdge[, 1] <- newNumbering[-treeEdge[, 1]]
 
-  tree$edge <- treeEdge
-  if (lengths) tree$edge.length <- edgeLengths
+  tree[["edge"]] <- treeEdge
+  if (lengths) {
+    tree[["edge.length"]] <- edgeLengths
+  }
 
   # Return:
   tree
@@ -316,12 +318,12 @@ AddTip <- function(tree,
 #'
 #' @importFrom ape is.rooted
 #' @export
-AddTipEverywhere <- function(tree, label = 'New tip', includeRoot = FALSE) {
+AddTipEverywhere <- function(tree, label = "New tip", includeRoot = FALSE) {
   nTip <- NTip(tree)
   if (nTip == 0L) return(list(SingleTaxonTree(label)))
-  if (nTip == 1L) return(list(StarTree(c(tree$tip.label, label))))
-  whichNodes <- seq_len(nTip + tree$Nnode)
-  edge <- tree$edge
+  if (nTip == 1L) return(list(StarTree(c(tree[["tip.label"]], label))))
+  whichNodes <- seq_len(nTip + tree[["Nnode"]])
+  edge <- tree[["edge"]]
   root <- RootNode(edge)
   if (!includeRoot) {
     parent <- edge[, 1]
@@ -461,7 +463,7 @@ CladeSizes <- function(tree, internal = FALSE, nodes = NULL) {
     internal <- isTRUE(internal)
   }
 
-  edge <- Postorder(tree$edge, renumber = FALSE, sizeSort = TRUE)
+  edge <- Postorder(tree[["edge"]], renumber = FALSE, sizeSort = TRUE)
   nTip <- NTip(tree)
 
   size <- c(rep.int(1L, nTip), rep.int(internal, max(edge[, 1]) - nTip))

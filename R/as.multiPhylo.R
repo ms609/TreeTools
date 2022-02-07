@@ -28,7 +28,7 @@ as.multiPhylo.list <- function(x) structure(x, class = 'multiPhylo')
 #' @export
 as.multiPhylo.phyDat <- function(x) {
   at <- attributes(x)
-  cont <- at$contrast
+  cont <- at[["contrast"]]
   if ('-' %fin% colnames(cont)) {
     cont[cont[, '-'] > 0, ] <- 1
   }
@@ -56,7 +56,7 @@ as.multiPhylo.phyDat <- function(x) {
                               }, character(1)), collapse = '), ('),
                               '));'))
     }
-  })[at$index], class = 'multiPhylo')
+  })[at[["index"]]], class = 'multiPhylo')
 }
 
 #' @rdname as.multiPhylo
