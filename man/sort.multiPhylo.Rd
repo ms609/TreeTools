@@ -35,7 +35,7 @@ treating their leaves in the order of their labels (i.e. alphabetically,
 if leaves are labelled with text).
 }
 \examples{
-sort(as.phylo(0:5, 7))
+sort(as.phylo(5:0, 7))
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

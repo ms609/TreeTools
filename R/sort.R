@@ -7,7 +7,7 @@
 #' @param x,decreasing,na.last,\dots As in [`sort()`].
 #'
 #' @examples
-#' sort(as.phylo(0:5, 7))
+#' sort(as.phylo(5:0, 7))
 #' @template MRS
 #' @export
 sort.multiPhylo <- function(x, decreasing = FALSE, na.last = NA, ...) {
