@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9004</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@ Identical trees are assumed to have zero distance.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">trees</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="GenerateTree.html">StarTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">TCIDiff</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">tree1</span>, <span class="va">tree2</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="va">TCIDiff</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tree1</span>, <span class="va">tree2</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="fu"><a href="TotalCopheneticIndex.html">TotalCopheneticIndex</a></span><span class="op">(</span><span class="va">tree1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="TotalCopheneticIndex.html">TotalCopheneticIndex</a></span><span class="op">(</span><span class="va">tree2</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="fu">PairwiseDistances</span><span class="op">(</span><span class="va">trees</span>, <span class="va">TCIDiff</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -116,7 +116,7 @@ Identical trees are assumed to have zero distance.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     -40  16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 -40      56</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  16  56    </span>
-<span class="r-in"><span class="va">TCIRange</span> <span class="op">&lt;-</span> <span class="kw">function</span> <span class="op">(</span><span class="va">tree1</span>, <span class="va">tree2</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="va">TCIRange</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">tree1</span>, <span class="va">tree2</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="TotalCopheneticIndex.html">TotalCopheneticIndex</a></span><span class="op">(</span><span class="va">tree1</span><span class="op">)</span>, <span class="fu"><a href="TotalCopheneticIndex.html">TotalCopheneticIndex</a></span><span class="op">(</span><span class="va">tree2</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"><span class="fu">PairwiseDistances</span><span class="op">(</span><span class="va">trees</span>, <span class="va">TCIRange</span>, <span class="fl">2</span><span class="op">)</span></span>

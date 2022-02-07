@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9004</span>
       </span>
     </div>
 
@@ -82,12 +82,12 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">AddTip</span><span class="op">(</span>
   <span class="va">tree</span>,
-  where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">tree</span><span class="op">$</span><span class="va">Nnode</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2L</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,
+  where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2L</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,
   label <span class="op">=</span> <span class="st">"New tip"</span>,
   edgeLength <span class="op">=</span> <span class="fl">0</span>,
   lengthBelow <span class="op">=</span> <span class="cn">NULL</span>,
   nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>,
-  nNode <span class="op">=</span> <span class="va">tree</span><span class="op">$</span><span class="va">Nnode</span>,
+  nNode <span class="op">=</span> <span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span>,
   rootNode <span class="op">=</span> <span class="fu"><a href="RootNode.html">RootNode</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
 <span class="op">)</span>
 
