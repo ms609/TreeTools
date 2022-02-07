@@ -1,7 +1,7 @@
 #ifndef TreeTools_root_tree_
 #define TreeTools_root_tree_
 
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include <memory> /* for std::unique_ptr */
 #include "renumber_tree.h"
 #include "types.h"
