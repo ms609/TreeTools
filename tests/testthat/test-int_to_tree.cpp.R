@@ -1,18 +1,22 @@
 test_that("Failures are graceful", {
   expect_error(num_to_parent(10, 1))
   expect_error(num_to_parent(10, -1))
+  expect_error(mixed_base_to_parent(10, 1))
+  expect_error(mixed_base_to_parent(10, -1))
   expect_error(edge_to_num(1:10, 1:11, 6))
   expect_error(edge_to_num(1:10, 1:10, 5))
+  expect_error(edge_to_mixed_base(1:10, 1:11, 6))
+  expect_error(edge_to_mixed_base(1:10, 1:10, 5))
   expect_error(as.phylo(0, 0))
 })
 
 test_that("Edge cases handled", {
   expect_equal(SingleTaxonTree('singleton'), as.phylo(0, 1, 'singleton'))
   expect_true(all.equal(BalancedTree(2), as.phylo(0, 2)))
-  expect_equal(structure(as.integer64(0L), nTip = 2L, tip.labels = c('t1', 't2'),
+  expect_equal(structure(as.integer64(0L), nTip = 2L, tip.label = c('t1', 't2'),
                          class = c('TreeNumber', 'integer64')),
                as.TreeNumber(as.phylo(0, 2)))
-  expect_equal(structure(integer64(1), nTip = 1L, tip.labels = 't1',
+  expect_equal(structure(integer64(1), nTip = 1L, tip.label = 't1',
                          class = c('TreeNumber', 'integer64')),
                as.TreeNumber(SingleTaxonTree()))
 })
@@ -36,4 +40,8 @@ test_that('Trees generated okay', {
   nTip <- 14L
   treeNumber <- as.TreeNumber('123456789876', nTip, seq_len(nTip) - 1L)
   expect_equal(treeNumber, as.TreeNumber(as.phylo(treeNumber)))
+  treeNumber <- as.TreeNumber('123456789876', nTip, seq_len(nTip) - 1L)
+  expect_equal(treeNumber, as.TreeNumber(as.phylo(treeNumber)))
+  
+  expect_equal
 })

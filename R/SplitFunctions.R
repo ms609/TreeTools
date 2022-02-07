@@ -261,11 +261,15 @@ TipLabels.phylo <- function (x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.default <- function (x, single = TRUE) attr(x, 'tip.label')
+TipLabels.default <- function (x, single = TRUE) attr(x, "tip.label")
 
 #' @rdname TipLabels
 #' @export
 TipLabels.phyDat <- function (x, single = TRUE) names(x)
+
+#' @rdname TipLabels
+#' @export
+TipLabels.MixedBase <- TipLabels.default
 
 #' @rdname TipLabels
 #' @export
@@ -279,7 +283,7 @@ TipLabels.Splits <- TipLabels.default
 #' @rdname TipLabels
 #' @export
 TipLabels.list <- function (x, single = FALSE) {
-  if (!is.null(attr(x, 'tip.label'))) return (attr(x, 'tip.label'))
+  if (!is.null(attr(x, 'tip.label'))) return (attr(x, "tip.label"))
   xTipLabel <- x$tip.label
   if (!is.null(xTipLabel)) {
     if (is.list(xTipLabel) && !is.null(xTipLabel$tip.label)) {

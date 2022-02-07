@@ -7,9 +7,15 @@
 \alias{as.TreeNumber.phylo}
 \alias{as.TreeNumber.multiPhylo}
 \alias{as.TreeNumber.character}
+\alias{as.TreeNumber.TreeNumber}
+\alias{as.TreeNumber.MixedBase}
+\alias{as.MixedBase.TreeNumber}
+\alias{as.MixedBase.integer64}
+\alias{as.MixedBase.numeric}
 \alias{as.phylo.numeric}
 \alias{as.phylo.TreeNumber}
 \alias{as.MixedBase}
+\alias{as.MixedBase.MixedBase}
 \alias{as.MixedBase.phylo}
 \alias{as.MixedBase.multiPhylo}
 \alias{as.phylo.MixedBase}
@@ -23,11 +29,23 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip), ...)
 
+\method{as.TreeNumber}{TreeNumber}(x, ...)
+
+\method{as.TreeNumber}{MixedBase}(x, ...)
+
+\method{as.MixedBase}{TreeNumber}(x, ...)
+
+\method{as.MixedBase}{integer64}(x, tipLabels = NULL, ...)
+
+\method{as.MixedBase}{numeric}(x, ...)
+
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
 \method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
 as.MixedBase(x, ...)
+
+\method{as.MixedBase}{MixedBase}(x, ...)
 
 \method{as.MixedBase}{phylo}(x, ...)
 
@@ -50,7 +68,7 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The \code{TreeNumber} object has attributes
-\code{nTip} and \code{tip.labels}.
+\code{nTip} and \code{tip.label}.
 
 \code{as.phylo.numeric()} returns a tree of class \code{phylo}.
 }
