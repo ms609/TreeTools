@@ -12,14 +12,12 @@
 #' As trees are plotted from 'bottom up', the largest clades will 'sink' to the
 #' bottom of a plotted tree.
 #'
-#TODO:
-#' `tree` must (presently) be binary ([#25](https://github.com/ms609/TreeTools/issues/25)).
-#'
 #' @param tree One or more trees of class `phylo`, optionally as a list
 #' or a `multiPhylo` object.
 #'
 #' @return `SortTree()` returns tree in the format of `tree`, with each node
-#' in each tree sorted such that the larger clade is first.
+#' in each tree sorted such that the larger clade is first, thus appearing
+#' lower when plotted.
 #'
 #' @seealso `Preorder()` also rearranges trees into a consistent shape, but
 #' based on the index of leaves rather than the size of subtrees.
@@ -32,10 +30,10 @@
 #' plot(sorted)
 #' ape::nodelabels()
 #' ape::edgelabels()
-#'
+#' ape::tiplabels(adj = c(2, 1/3))
+#' @template MRS
 #' @family tree manipulation
 #'
-#' @template MRS
 #' @export
 SortTree <- function(tree) UseMethod('SortTree')
 
@@ -46,32 +44,23 @@ SortTree.phylo <- function(tree) {
   parent <- edge[, 1]
   child <- edge[, 2]
   tipLabels <- tree[["tip.label"]]
-  tree.ntip <- length(tipLabels)
-  if (tree.ntip + tree.ntip - 2L != length(parent)) {
-    stop("`tree` must be binary.")
+  nTip <- length(tipLabels)
+  if (!is.null(tree[["edge.length"]])) {
+    warning("Edge lengths are not supported (#49)")
+    tree[["edge.length"]] <- NULL
   }
-
+  
   descendants <- .ListDescendents(tree)
   nDescendants <- vapply(descendants, length, integer(1))
   MinKid <- function(tips) min(tipLabels[tips])
-  swaps <- vapply(tree.ntip + seq_len(tree[["Nnode"]]), function(node) {
-    kids <- child[parent == node]
-    descs <- nDescendants[kids]
-    if (all(descs == 1L)) {
-      order(tipLabels[kids], method = 'radix')[1] == 1
-    } else if (descs[1] == descs[2]) {
-      order(vapply(descendants[kids], MinKid, character(1)),
-            method = 'radix')[1] == 1
-    } else {
-      descs[1] < descs[2]
-    }
-  }, logical(1))
-  for (node in tree.ntip + rev(which(swaps))) {
+  for (node in nTip + seq_len(tree[["Nnode"]])) {
     childEdges <- parent == node
     kids <- child[childEdges]
-    child[childEdges][2:1] <- kids
+    newOrder <- order(nDescendants[kids],
+                      vapply(descendants[kids], MinKid, tipLabels[1]),
+                      method = "radix", decreasing = TRUE)
+    child[childEdges] <- kids[newOrder]
   }
-  tree[["edge"]][, 1] <- parent
   tree[["edge"]][, 2] <- child
   attr(tree, 'order') <- NULL
   Renumber(tree)

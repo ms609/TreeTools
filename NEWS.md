@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9003 #
+# TreeTools 1.6.0.9004 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -15,6 +15,9 @@
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 
 - Fix bug when tree is rooted on a discontinuous outgroup.
+
+- `SortTree()` handles non-binary trees
+  ([#25](https://github.com/ms609/TreeTools/issues/25)).
 
 - Small improvements to computational efficiency.
 

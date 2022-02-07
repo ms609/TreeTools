@@ -21,7 +21,8 @@ or a \code{multiPhylo} object.}
 }
 \value{
 \code{SortTree()} returns tree in the format of \code{tree}, with each node
-in each tree sorted such that the larger clade is first.
+in each tree sorted such that the larger clade is first, thus appearing
+lower when plotted.
 }
 \description{
 \code{SortTree()} sorts each node into a consistent order, so that node rotation
@@ -36,8 +37,6 @@ of minimum leaf number, so (2, 3) will occur before (1, 4).
 
 As trees are plotted from 'bottom up', the largest clades will 'sink' to the
 bottom of a plotted tree.
-
-\code{tree} must (presently) be binary (\href{https://github.com/ms609/TreeTools/issues/25}{#25}).
 }
 \examples{
 messyTree <- as.phylo(10, 6)
@@ -47,7 +46,7 @@ sorted <- SortTree(messyTree)
 plot(sorted)
 ape::nodelabels()
 ape::edgelabels()
-
+ape::tiplabels(adj = c(2, 1/3))
 }
 \seealso{
 \code{Preorder()} also rearranges trees into a consistent shape, but
