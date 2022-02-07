@@ -62,7 +62,6 @@ plot(RootOnNode(tree, 2))
 \seealso{
 \itemize{
 \item \code{\link[ape:root]{ape::root()}}
-\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
 
 Other tree manipulation: 

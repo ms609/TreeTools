@@ -32,7 +32,6 @@
 #'
 #' @seealso
 #' - [`ape::root()`]
-#' - [`EnforceOutgroup()`]
 #'
 #' @family tree manipulation
 #'
