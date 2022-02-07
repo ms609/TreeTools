@@ -46,9 +46,9 @@ NeworderPruningwise <- function(nTip, nNode, parent, child, nEdge) {
 #' of edges under the ordering sequence specified by `whichwise`.
 #' @keywords internal
 #' @export
-NeworderPhylo <- function(nTip, parent, child, nb.edge, whichwise) {
+NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
   .C('ape_neworder_phylo', as.integer(nTip), as.integer(parent),
-     as.integer(child), as.integer(nb.edge), integer(nb.edge),
+     as.integer(child), as.integer(nEdge), integer(nEdge),
      as.integer(whichwise), NAOK = TRUE)[[5]]
 }
 
@@ -229,11 +229,15 @@ ApePostorder.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == "postorder") {
     return(tree)
   }
-  nb.edge <- dim(edge)[1]
-  nb.node <- tree[["Nnode"]]
-  if (nb.node == 1) return(tree)
-  if (nb.node >= nTip) stop("`tree` apparently badly conformed")
-  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2L)
+  nEdge <- dim(edge)[1]
+  nNode <- tree[["Nnode"]]
+  if (nNode == 1) {
+    return(tree)
+  }
+  if (nNode >= nTip) {
+    stop("`tree` apparently badly conformed")
+  }
+  neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nEdge, 2L)
   tree[["edge"]] <- edge[neworder, ]
   if (!is.null(tree[["edge.length"]])) {
     tree[["edge.length"]] <- tree[["edge.length"]][neworder]
@@ -342,18 +346,17 @@ Pruningwise.phylo <- function(tree, nTip = NTip(tree),
   if (!is.null(attr(tree, "order")) && attr(tree, "order") == 'pruningwise') {
     return(tree)
   }
-  nb.edge <- dim(edge)[1]
-  nb.node <- tree[["Nnode"]]
-  if (nb.node == 1) {
+  nEdge <- dim(edge)[1]
+  nNode <- tree[["Nnode"]]
+  if (nNode == 1) {
     return(tree)
   }
-  if (nb.node >= nTip) {
+  if (nNode >= nTip) {
     stop("`tree` apparently badly conformed")
   }
   tree <- Cladewise(tree, nTip, edge)
   edge <- tree[["edge"]]
-  neworder <- NeworderPruningwise(nTip, nb.node, edge[, 1],
-                                  edge[, 2], nb.edge)
+  neworder <- NeworderPruningwise(nTip, nNode, edge[, 1], edge[, 2], nEdge)
   tree[["edge"]] <- tree[["edge"]][neworder, ]
   if (!is.null(tree[["edge.length"]])) {
     tree[["edge.length"]] <- tree[["edge.length"]][neworder]
