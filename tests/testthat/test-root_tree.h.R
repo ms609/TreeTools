@@ -1,4 +1,4 @@
-ApeRoot <- function (tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
+ApeRoot <- function(tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
 
 test_that("Memory leak not encountered", {
   # Example from TreeDist::ClusterTable
@@ -16,7 +16,7 @@ test_that("Memory leak not encountered", {
 })
 
 test_that('Binary trees are rootable', {
-  Test <- function (tree, root) {
+  Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root]))$edge,
                  root_binary(tree$edge, root))
   }
@@ -27,7 +27,7 @@ test_that('Binary trees are rootable', {
 })
 
 test_that('Polytomous trees are rootable', {
-  Test <- function (tree, root) {
+  Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root])),
                  root_on_node(tree, root))
   }

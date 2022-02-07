@@ -25,19 +25,19 @@
 #'
 #' @family tree information functions
 #' @export
-TreesMatchingTree <- function (tree) {
+TreesMatchingTree <- function(tree) {
   prod(NUnrooted(NodeOrder(tree)))
 }
 
 #' @rdname TreesMatchingTree
 #' @export
-LnTreesMatchingTree <- function (tree) {
+LnTreesMatchingTree <- function(tree) {
   sum(LnUnrooted(NodeOrder(tree)))
 }
 
 #' @rdname TreesMatchingTree
 #' @export
-Log2TreesMatchingTree <- function (tree) {
+Log2TreesMatchingTree <- function(tree) {
   sum(Log2Unrooted(NodeOrder(tree)))
 }
 
@@ -76,31 +76,31 @@ Log2TreesMatchingTree <- function (tree) {
 #'
 #' @template MRS
 #' @export
-CladisticInfo <- function (x) UseMethod('CladisticInfo')
+CladisticInfo <- function(x) UseMethod('CladisticInfo')
 
 #' @rdname CladisticInfo
 #' @export
-PhylogeneticInfo <- function (x) {                                              # nocov start
+PhylogeneticInfo <- function(x) {                                              # nocov start
   .Deprecated('CladisticInfo()')
   UseMethod('CladisticInfo')
 }                                                                               # nocov end
 
 #' @rdname CladisticInfo
 #' @export
-CladisticInfo.phylo <- function (x) {
+CladisticInfo.phylo <- function(x) {
   Log2Unrooted(NTip(x)) - Log2TreesMatchingTree(x)
 }
 
 #' @rdname CladisticInfo
 #' @export
-CladisticInfo.Splits <- function (x) {
+CladisticInfo.Splits <- function(x) {
   Log2Unrooted(NTip(x)) -
     apply(cbind(TipsInSplits(x), TipsInSplits(!x)), 1, Log2TreesMatchingSplit)
 }
 
 #' @rdname CladisticInfo
 #' @export
-CladisticInfo.list <- function (x) vapply(x, CladisticInfo, 0)
+CladisticInfo.list <- function(x) vapply(x, CladisticInfo, 0)
 #' @rdname CladisticInfo
 #' @export
 CladisticInfo.multiPhylo <- CladisticInfo.list

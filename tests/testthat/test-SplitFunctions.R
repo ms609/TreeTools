@@ -32,7 +32,7 @@ test_that('Bitwise logic works', {
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
   B <- FALSE
-  .CSB <- function (a, b) .CompatibleSplit(packBits(as.logical(a)),
+  .CSB <- function(a, b) .CompatibleSplit(packBits(as.logical(a)),
                                            packBits(as.logical(b)),
                                            length(a))
   expect_true(.CSB(rep(0, 8), rep(0, 8)))
@@ -123,7 +123,7 @@ test_that("SplitMatchProbability returns expected probabilities", {
                 SplitMatchProbability(splitAI, splitAB))
 
 
-  Test <- function (score, split1, split2) {
+  Test <- function(score, split1, split2) {
     expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split1, split2))
     expect_equal(ignore_attr = TRUE, score, SplitMatchProbability(split2, split1))
 

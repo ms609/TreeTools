@@ -35,10 +35,10 @@
 #' @template MRS
 #' @importFrom graphics lines
 #' @export
-MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
+MSTEdges <- function(distances, plot = FALSE, x = NULL, y = NULL, ...) {
   ends <- MinimumSpanningTree(distances)
   if (plot) {
-    apply(ends, 1, function (edge)
+    apply(ends, 1, function(edge)
       lines(x[edge], y[edge], ...))
     invisible(ends)
   } else {
@@ -51,19 +51,19 @@ MSTEdges <- function (distances, plot = FALSE, x = NULL, y = NULL, ...) {
 #' format returned by `MSTEdges()`; if `NULL`, calculated from `distances`.
 #' @return `MSTLength()` returns the length of the minimum spanning tree.
 #' @export
-MSTLength <- function (distances, mst = NULL) {
+MSTLength <- function(distances, mst = NULL) {
   distMat <- as.matrix(distances)
   if (is.null(mst)) mst <- MSTEdges(distances)
-  sum(apply(mst, 1L, function (x) distMat[x[1], x[2]]))
+  sum(apply(mst, 1L, function(x) distMat[x[1], x[2]]))
 }
 
 MinimumSpanningTree <- function(distances) UseMethod("MinimumSpanningTree")
 
-MinimumSpanningTree.dist <- function (distances) {
+MinimumSpanningTree.dist <- function(distances) {
   minimum_spanning_tree(order(distances, decreasing = TRUE) - 1L)
 }
 
-MinimumSpanningTree.matrix <- function (distances) {
+MinimumSpanningTree.matrix <- function(distances) {
   dists <- distances[lower.tri(distances)]
   minimum_spanning_tree(order(dists, decreasing = TRUE) - 1L)
 }

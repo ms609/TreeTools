@@ -42,14 +42,14 @@
 #' @family Splits operations
 #' @name Splits
 #' @export
-as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
+as.Splits <- function(x, tipLabels = NULL, ...) UseMethod('as.Splits')
 
 #' @rdname Splits
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
 #' @export
-as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
+as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
@@ -59,7 +59,7 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
                   nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function (edge, tipLabels = NULL, asSplits = TRUE,
+.as.Splits.edge <- function(edge, tipLabels = NULL, asSplits = TRUE,
                              nTip = NTip(edge), ...) {
   splits <- cpp_edge_to_splits(Postorder(edge, FALSE), nTip)
   nSplits <- dim(splits)[1]
@@ -78,14 +78,14 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname Splits
 #' @export
-as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
+as.Splits.multiPhylo <- function(x, tipLabels = x[[1]]$tip.label,
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
 
 #' @rdname Splits
 #' @export
-as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
+as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
     # Nothing needs doing.
     # Return:
@@ -123,7 +123,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
 
 #' @rdname Splits
 #' @export
-as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
+as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], 'phylo')) {
     if (is.null(tipLabels)) {
       tipLabels <- x[[1]]$tip.label
@@ -144,7 +144,7 @@ as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname Splits
 #' @export
-as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
+as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
   if (all(c('edge', 'Nnode') %in% rownames(x))) {
     col1 <- x[, 1]
     if (is.list(col1)) {
@@ -157,7 +157,7 @@ as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
           rownames(x)[nrow(x)] <- 'tip.label'
         }
       }
-      lapply(seq_len(ncol(x)), function (i) {
+      lapply(seq_len(ncol(x)), function(i) {
         as.Splits(structure(x[, i], class = 'phylo'), tipLabels = tipLabels)
       })
     } else {
@@ -172,7 +172,7 @@ as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
 
 #' @rdname Splits
 #' @export
-as.Splits.logical <- function (x, tipLabels = NULL, ...) {
+as.Splits.logical <- function(x, tipLabels = NULL, ...) {
   powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
   if (is.null(dimX)) {
@@ -214,7 +214,7 @@ as.Splits.logical <- function (x, tipLabels = NULL, ...) {
 
 #' @rdname Splits
 #' @export
-as.logical.Splits <- function (x, tipLabels = NULL, ...) {
+as.logical.Splits <- function(x, tipLabels = NULL, ...) {
   nTip <- attr(x, 'nTip')
   if (dim(x)[1] == 0) {
     ret <- matrix(logical(0), 0, nTip)
@@ -228,7 +228,7 @@ as.logical.Splits <- function (x, tipLabels = NULL, ...) {
 
 #' @family Splits operations
 #' @export
-print.Splits <- function (x, details = FALSE, ...) {
+print.Splits <- function(x, details = FALSE, ...) {
   nTip <- attr(x, 'nTip')
   tipLabels <- attr(x, 'tip.label')
   trivial <- TrivialSplits(x)
@@ -243,7 +243,7 @@ print.Splits <- function (x, details = FALSE, ...) {
     if (!is.null(splitNames)) {
 
       nameLengths <- vapply(splitNames, nchar, 0)
-      namePads <- vapply(nameLengths, function (thisLength)
+      namePads <- vapply(nameLengths, function(thisLength)
         paste0(rep.int(' ', max(nameLengths) - thisLength), collapse=''), character(1))
       splitNames <- paste0(splitNames, namePads)
     } else {
@@ -265,7 +265,7 @@ print.Splits <- function (x, details = FALSE, ...) {
 
 #' @family Splits operations
 #' @export
-summary.Splits <- function (object, ...) {
+summary.Splits <- function(object, ...) {
   print(object, details = TRUE, ...)
   nTip <- attr(object, 'nTip')
   if (is.null(attr(object, 'tip.label'))) {
@@ -283,11 +283,11 @@ names.Splits <- rownames
 
 #' @family Splits operations
 #' @export
-as.character.Splits <- function (x, ...) {
+as.character.Splits <- function(x, ...) {
   tipLabels <- attr(x, 'tip.label')
   nTip <- attr(x, 'nTip')
 
-  apply(as.logical(x), 1L, function (inSplit) {
+  apply(as.logical(x), 1L, function(inSplit) {
     paste0(paste(tipLabels[inSplit], collapse=' '), ' | ',
            paste(tipLabels[!inSplit], collapse=' '))
   })
@@ -296,7 +296,7 @@ as.character.Splits <- function (x, ...) {
 
 #' @family Splits operations
 #' @export
-as.phylo.Splits <- function (x, ...) {
+as.phylo.Splits <- function(x, ...) {
   ret <- structure(list(edge = splits_to_edge(x, NTip(x)),
                         Nnode = NA,
                         tip.label = TipLabels(x)),
@@ -308,11 +308,11 @@ as.phylo.Splits <- function (x, ...) {
 
 #' @family Splits operations
 #' @export
-names.Splits <- function (x) rownames(x)
+names.Splits <- function(x) rownames(x)
 
 #' @family Splits operations
 #' @export
-c.Splits <- function (...) {
+c.Splits <- function(...) {
   splits <- list(...)
   nTip <- unique(vapply(splits, attr, 1, 'nTip'))
   if (length(nTip) > 1L) {
@@ -334,18 +334,18 @@ c.Splits <- function (...) {
 
 #' @family Splits operations
 #' @export
-`+.Splits` <- function (...) c(...)
+`+.Splits` <- function(...) c(...)
 
 
 #' @family Splits operations
 #' @export
-`-.Splits` <- function (x, y) {
+`-.Splits` <- function(x, y) {
   x[[!x %in% y]]
 }
 
 #' @family Splits operations
 #' @export
-`[[.Splits` <- function (x, ..., drop = TRUE) {
+`[[.Splits` <- function(x, ..., drop = TRUE) {
   elements <- list(...)
   if (length(elements) == 0L) {
     x[]
@@ -363,7 +363,7 @@ c.Splits <- function (...) {
 
 #' @family Splits operations
 #' @export
-`!.Splits` <- function (x) {
+`!.Splits` <- function(x) {
   nTip <- attr(x, 'nTip')
   x[] <- !x[]
   remainder <- (8L - nTip) %% 8L
@@ -378,12 +378,12 @@ c.Splits <- function (...) {
 
 #' @family Splits operations
 #' @export
-length.Splits <- function (x) nrow(x)
+length.Splits <- function(x) nrow(x)
 
 #' @family Splits operations
 #' @importFrom stats setNames
 #' @export
-duplicated.Splits <- function (x, incomparables = FALSE, ...) {
+duplicated.Splits <- function(x, incomparables = FALSE, ...) {
   dupX <- !x
   useOrig <- x[, 1] < dupX[, 1]
   dupX[useOrig, ] <- x[useOrig, ]
@@ -398,7 +398,7 @@ duplicated.Splits <- function (x, incomparables = FALSE, ...) {
 
 #' @family Splits operations
 #' @export
-unique.Splits <- function (x, incomparables = FALSE, ...) {
+unique.Splits <- function(x, incomparables = FALSE, ...) {
   at <- attributes(x)
   dups <- duplicated(x, incomparables, ...)
   x <- x[!dups, , drop = FALSE]
@@ -462,13 +462,13 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' @family Splits operations
 #' @method match Splits
 #' @export
-match.Splits <- function (x, table, ...) {
+match.Splits <- function(x, table, ...) {
   nomatch <- as.integer(c(...)['nomatch'])
   if (length(nomatch) != 1L) {
     nomatch <- NA_integer_
   }
 
-  vapply(seq_along(x), function (i) {
+  vapply(seq_along(x), function(i) {
     ret <- which(table %in% x[[i]])
     if (length(ret) == 0) ret <- nomatch
     ret
@@ -477,7 +477,7 @@ match.Splits <- function (x, table, ...) {
 
 #' @rdname match
 #' @export
-match.list <- function (x, table, ...) {
+match.list <- function(x, table, ...) {
   if (inherits(x, 'Splits')) {
     match.Splits(x, table, ...)
   } else {
@@ -512,7 +512,7 @@ match.list <- function (x, table, ...) {
 #'
 #' @method %in% Splits
 #' @export
-`%in%.Splits` <- function (x, table) {
+`%in%.Splits` <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
 
@@ -530,7 +530,7 @@ in.Splits <- `%in%.Splits`
 #' represented by a zero bit
 #' @family Splits operations
 #' @export
-PolarizeSplits <- function (x, pole = 1L) {
+PolarizeSplits <- function(x, pole = 1L) {
   nTip <- attr(x, 'nTip')
   if (!is.numeric(pole)) {
     pole <- match(pole, attr(x, 'tip.label'))
@@ -548,7 +548,7 @@ PolarizeSplits <- function (x, pole = 1L) {
   poleMask <- logical(8 * ceiling(nTip / 8))
   poleMask[pole] <- T
   poleMask <- packBits(poleMask)
-  flip <- !apply(t(x) & poleMask, 2, function (x) any(as.logical(x)))
+  flip <- !apply(t(x) & poleMask, 2, function(x) any(as.logical(x)))
 
   x[flip, ] <- !x[flip, ]
   remainder <- (8L - nTip) %% 8L

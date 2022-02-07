@@ -39,7 +39,7 @@
 #' @template MRS
 #' @importFrom ape root
 #' @export
-RootTree <- function (tree, outgroupTips) {
+RootTree <- function(tree, outgroupTips) {
   if (missing(outgroupTips)) return (tree)
   if (is.null(outgroupTips) ||
       length(outgroupTips) == 0) {
@@ -49,7 +49,7 @@ RootTree <- function (tree, outgroupTips) {
 }
 
 #' @export
-RootTree.phylo <- function (tree, outgroupTips) {
+RootTree.phylo <- function(tree, outgroupTips) {
   if (missing(outgroupTips) ||
       is.null(outgroupTips) ||
       length(outgroupTips) == 0) {
@@ -98,7 +98,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
 }
 
 # Modified from phangorn::allAncestors
-.AllAncestors <- function (edge) {
+.AllAncestors <- function(edge) {
   edge <- Postorder(edge, sizeSort = FALSE)
   parents <- edge[, 1]
   child <- edge[, 2]
@@ -112,7 +112,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
   res
 }
 
-.AncestorTable <- function (tree, outgroupTips) {
+.AncestorTable <- function(tree, outgroupTips) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -138,7 +138,7 @@ RootTree.phylo <- function (tree, outgroupTips) {
 }
 
 #' @export
-RootTree.matrix <- function (tree, outgroupTips) {
+RootTree.matrix <- function(tree, outgroupTips) {
   tree <- Preorder(tree)
   if (missing(outgroupTips) ||
       is.null(outgroupTips) ||
@@ -169,18 +169,18 @@ RootTree.matrix <- function (tree, outgroupTips) {
 }
 
 #' @export
-RootTree.list <- function (tree, outgroupTips) {
+RootTree.list <- function(tree, outgroupTips) {
   lapply(tree, RootTree, outgroupTips)
 }
 
 #' @export
-RootTree.multiPhylo <- function (tree, outgroupTips) {
+RootTree.multiPhylo <- function(tree, outgroupTips) {
   tree[] <- RootTree.list(tree, outgroupTips)
   tree
 }
 
 #' @export
-RootTree.NULL <- function (tree, outgroupTips) NULL
+RootTree.NULL <- function(tree, outgroupTips) NULL
 
 #' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
@@ -190,13 +190,13 @@ RootTree.NULL <- function (tree, outgroupTips) NULL
 #' requested `node` and ordered in [`Preorder`].
 #'
 #' @export
-RootOnNode <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode <- function(tree, node, resolveRoot = FALSE) {
   UseMethod('RootOnNode', tree)
 }
 
 #' @importFrom fastmatch %fin%
 #' @export
-RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -283,24 +283,24 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
 }
 
 #' @export
-RootOnNode.list <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode.list <- function(tree, node, resolveRoot = FALSE) {
   lapply(tree, RootOnNode, node, resolveRoot)
 }
 
 #' @export
-RootOnNode.multiPhylo <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode.multiPhylo <- function(tree, node, resolveRoot = FALSE) {
   tree[] <- RootOnNode.list(tree, node, resolveRoot)
   tree
 }
 
 #' @export
-RootOnNode.NULL <- function (tree, node, resolveRoot = FALSE) NULL
+RootOnNode.NULL <- function(tree, node, resolveRoot = FALSE) NULL
 
 #' @rdname RootTree
 #' @return `UnrootTree()` returns `tree`, in preorder,
 #' having collapsed the first child of the root node in each tree.
 #' @export
-UnrootTree <- function (tree) UseMethod('UnrootTree')
+UnrootTree <- function(tree) UseMethod('UnrootTree')
 
 #' @export
 UnrootTree.phylo <- function(tree) {
@@ -324,16 +324,16 @@ UnrootTree.phylo <- function(tree) {
 }
 
 #' @export
-UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
+UnrootTree.list <- function(tree) lapply(tree, UnrootTree)
 
 #' @export
-UnrootTree.multiPhylo <- function (tree) {
+UnrootTree.multiPhylo <- function(tree) {
   tree[] <- UnrootTree.list(tree)
   tree
 }
 
 #' @export
-UnrootTree.NULL <- function (tree) NULL
+UnrootTree.NULL <- function(tree) NULL
 
 #' Collapse nodes on a phylogenetic tree
 #'
@@ -379,12 +379,12 @@ UnrootTree.NULL <- function (tree) NULL
 #' @family tree manipulation
 #' @author  Martin R. Smith
 #' @export
-CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
+CollapseNode <- function(tree, nodes) UseMethod('CollapseNode')
 
 #' @rdname CollapseNode
 #' @importFrom fastmatch %fin%
 #' @export
-CollapseNode.phylo <- function (tree, nodes) {
+CollapseNode.phylo <- function(tree, nodes) {
   if (length(nodes) == 0) return (tree)
 
   edge <- tree$edge
@@ -432,7 +432,7 @@ CollapseNode.phylo <- function (tree, nodes) {
 
 #' @rdname CollapseNode
 #' @export
-CollapseEdge <- function (tree, edges) {
+CollapseEdge <- function(tree, edges) {
   nodesToCollapse <- tree$edge[edges, 2]
   if (any(nodesToCollapse < NTip(tree))) {
     stop("Cannot collapse external edges: ",
@@ -462,12 +462,12 @@ CollapseEdge <- function (tree, edges) {
 #' @template treeParam
 #' @family tree manipulation
 #' @export
-MakeTreeBinary <- function (tree) {
+MakeTreeBinary <- function(tree) {
   UseMethod('MakeTreeBinary')
 }
 
 #' @export
-MakeTreeBinary.phylo <- function (tree) {
+MakeTreeBinary.phylo <- function(tree) {
   tree <- Preorder(tree)
   degree <- NodeOrder(tree, internalOnly = TRUE)
   degree[1] <- degree[1] + 1L # Root node
@@ -513,10 +513,10 @@ MakeTreeBinary.phylo <- function (tree) {
 }
 
 #' @export
-MakeTreeBinary.list <- function (tree) lapply(tree, MakeTreeBinary)
+MakeTreeBinary.list <- function(tree) lapply(tree, MakeTreeBinary)
 
 #' @export
-MakeTreeBinary.multiPhylo <- function (tree) {
+MakeTreeBinary.multiPhylo <- function(tree) {
   structure(MakeTreeBinary.list(tree), class = 'multiPhylo')
 }
 
@@ -547,7 +547,7 @@ MakeTreeBinary.multiPhylo <- function (tree) {
 #' @template MRS
 #' @family tree manipulation
 #' @export
-LeafLabelInterchange <- function (tree, n = 2L) {
+LeafLabelInterchange <- function(tree, n = 2L) {
 
   if (n < 2L) return (tree)
   tipLabel <- tree$tip.label
@@ -581,7 +581,7 @@ LeafLabelInterchange <- function (tree, n = 2L) {
   cycles <- cycles[cycles > 0L]
   nCycles <- length(cycles)
   start <- cumsum(c(0L, cycles[-nCycles]))
-  to <- unlist(lapply(seq_along(cycles), function (i) {
+  to <- unlist(lapply(seq_along(cycles), function(i) {
      c(seq_len(cycles[i] - 1L) + 1L, 1L) + start[i]
   }))
 

@@ -60,7 +60,7 @@
 #' @encoding UTF-8
 #' @template MRS
 #' @export
-TotalCopheneticIndex <- function (x) UseMethod('TotalCopheneticIndex')
+TotalCopheneticIndex <- function(x) UseMethod('TotalCopheneticIndex')
 
 .Depth <- function(parent, child) {
   root   <- min(parent)
@@ -75,7 +75,7 @@ TotalCopheneticIndex <- function (x) UseMethod('TotalCopheneticIndex')
 
 #' @importFrom fastmatch %fin%
 #' @export
-TotalCopheneticIndex.phylo <- function (x) {
+TotalCopheneticIndex.phylo <- function(x) {
   nTip   <- NTip(x)
   edge   <- Preorder(x)$edge
   parent <- edge[, 1]
@@ -86,7 +86,7 @@ TotalCopheneticIndex.phylo <- function (x) {
                       function(node) ListAncestors(parent, child, node))
 
   lca.depth <- vapply(seq_len(nTip), function(i) {
-    vapply(seq_len(nTip), function (j) {
+    vapply(seq_len(nTip), function(j) {
       anc.i <- ancestors[[i]]
       anc.j <- ancestors[[j]]
       lca <- max(anc.i[anc.i %fin% anc.j])
@@ -108,14 +108,14 @@ TotalCopheneticIndex.multiPhylo <- TotalCopheneticIndex.list
 
 #' @rdname TotalCopheneticIndex
 #' @export
-TCIContext <- function (x) UseMethod('TCIContext')
+TCIContext <- function(x) UseMethod('TCIContext')
 
 #' @export
-TCIContext.phylo <- function (x) {
+TCIContext.phylo <- function(x) {
   TCIContext.numeric(NTip(x))
 }
 
-.MCI <- function (n) { # Lemma 14 in Mir er al 2013
+.MCI <- function(n) { # Lemma 14 in Mir er al 2013
   if (n < 3L) return (0L)
   halfN <- n / 2L
   topHalf <- ceiling(halfN)
@@ -127,8 +127,8 @@ TCIContext.phylo <- function (x) {
 #' @rdname TotalCopheneticIndex
 #' @export
 TCIContext.numeric <- function(x) {
-  H  <- function (n) sum(1 / (seq_len(n)))
-  H2 <- function (n) sum(1 / (seq_len(n) ^ 2))
+  H  <- function(n) sum(1 / (seq_len(n)))
+  H2 <- function(n) sum(1 / (seq_len(n) ^ 2))
 
   maximum <- choose(x, 3L)
   minimum <- .MCI(x)

@@ -1,6 +1,6 @@
 # Memoizing this function makes it MUCH slower...
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
-LogDoubleFactorial <- (function (x) {
+LogDoubleFactorial <- (function(x) {
   x[x < 2L] <- 1L
   odds <- as.logical(x %% 2L)
 
@@ -21,7 +21,7 @@ LogDoubleFactorial <- (function (x) {
 logDoubleFactorials <- vapply(seq_len(50000), LogDoubleFactorial, double(1))
 log2DoubleFactorials <- logDoubleFactorials / log(2)
 
-DoubleFactorial <- function (x) {
+DoubleFactorial <- function(x) {
   if (any(x > 300)) stop("301!! is too large to represent numerically. Use LogDoubleFactorial instead.")
 
 

@@ -21,7 +21,7 @@
 #' @template MRS
 #' @family tree manipulation
 #' @export
-ImposeConstraint <- function (tree, constraint) {
+ImposeConstraint <- function(tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.
   # But it just about does the job.
   tree <- Preorder(tree)
@@ -30,8 +30,8 @@ ImposeConstraint <- function (tree, constraint) {
                             asPhyDat = FALSE)
 
   info <- apply(const, 2,
-                function (x) SplitInformation(sum(x == '0'), sum(x == '1')))
-  smallest <- ifelse(apply(const, 2, function (x) sum(x == '0') < sum(x == '1')),
+                function(x) SplitInformation(sum(x == '0'), sum(x == '1')))
+  smallest <- ifelse(apply(const, 2, function(x) sum(x == '0') < sum(x == '1')),
                      '0', '1')
 
   tips <- tree$tip.label
@@ -46,7 +46,7 @@ ImposeConstraint <- function (tree, constraint) {
       next
     }
     collapsing <- apply(const[collapsers, , drop = FALSE], 2,
-                        function (x) setdiff(x, '?')[1])
+                        function(x) setdiff(x, '?')[1])
 
     const <- const[setdiff(rownames(const), collapseNames[-1]), , drop = FALSE]
     const[collapseNames[1], ] <- collapsing
@@ -59,7 +59,7 @@ ImposeConstraint <- function (tree, constraint) {
     .TextToTree('(', paste0(rownames(const), collapse = ','), ');'),
     tips))
 
-  .ChildAtEnd <- function (x) {
+  .ChildAtEnd <- function(x) {
     if (x <= nTip) x else .ChildAtEnd(edge[match(x, edge[, 1]), 2])
   }
 
@@ -90,7 +90,7 @@ ImposeConstraint <- function (tree, constraint) {
 }
 
 #' @importFrom ape read.tree
-.TextToTree <- function (...) {
+.TextToTree <- function(...) {
   space <- 'XXTREETOOLSSPACEXX'
   text <- gsub(' ', space, paste0(...), fixed = TRUE)
   tree <- read.tree(text = text)
@@ -106,7 +106,7 @@ ImposeConstraint <- function (tree, constraint) {
 #' @param asPhyDat Logical: if `TRUE`, return a `phyDat` object; if `FALSE`, return
 #' a matrix.
 #' @export
-AddUnconstrained <- function (constraint, toAdd, asPhyDat = TRUE) {
+AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
   ret <- if (inherits(constraint, 'phyDat')) {
     PhyDatToMatrix(constraint)
   } else {

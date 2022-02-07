@@ -1,4 +1,4 @@
-TestFile <- function (filename = '') {
+TestFile <- function(filename = '') {
   system.file('extdata', 'tests', filename, package = 'TreeTools')
 }
 

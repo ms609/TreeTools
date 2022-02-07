@@ -26,17 +26,17 @@
 #'
 #' @template MRS
 #' @export
-as.Newick <- function (x) UseMethod('as.Newick')
+as.Newick <- function(x) UseMethod('as.Newick')
 
 #' @rdname as.Newick
 #' @export
-as.Newick.phylo <- function (x) {
+as.Newick.phylo <- function(x) {
   as_newick(Preorder(x)$edge - 1L)
 }
 
 #' @rdname as.Newick
 #' @export
-as.Newick.list <- function (x) {
+as.Newick.list <- function(x) {
   vapply(x, as.Newick, character(1L))
 }
 
@@ -67,7 +67,7 @@ as.Newick.multiPhylo <- as.Newick.list
 #' # WriteTntCharacters(Lobo.phy, 'example_file.tnt')
 #' @template MRS
 #' @export
-WriteTntCharacters <- function (dataset, filepath = NULL,
+WriteTntCharacters <- function(dataset, filepath = NULL,
                                 comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
                                 types = NULL,
                                 pre = '', post = '') {
@@ -76,7 +76,7 @@ WriteTntCharacters <- function (dataset, filepath = NULL,
 
 #' @rdname WriteTntCharacters
 #' @export
-WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
+WriteTntCharacters.phyDat <- function(dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
                                        types = NULL,
                                        pre = '', post = '') {
@@ -86,7 +86,7 @@ WriteTntCharacters.phyDat <- function (dataset, filepath = NULL,
 
 #' @rdname WriteTntCharacters
 #' @export
-WriteTntCharacters.matrix <- function (dataset, filepath = NULL,
+WriteTntCharacters.matrix <- function(dataset, filepath = NULL,
                                        comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
                                        types = NULL,
                                        pre = '', post = '') {

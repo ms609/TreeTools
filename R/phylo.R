@@ -25,7 +25,7 @@
 #' @template MRS
 #' @family tree manipulation
 #' @export
-Renumber <- function (tree) {
+Renumber <- function(tree) {
   tree   <- ApePostorder(tree)
   edge   <- tree$edge
   nTip   <- length(tree$tip.label)
@@ -72,7 +72,7 @@ Renumber <- function (tree) {
 #' @family tree manipulation
 #' @family tree generation functions
 #' @export
-SingleTaxonTree <- function (label = 't1') {
+SingleTaxonTree <- function(label = 't1') {
   structure(list(edge = matrix(c(2L,1L), 1, 2), tip.label = label, Nnode = 1L),
             class = 'phylo')
 }
@@ -103,7 +103,7 @@ SingleTaxonTree <- function (label = 't1') {
 #' @template MRS
 #' @family tree manipulation
 #' @export
-Subtree <- function (tree, node) {
+Subtree <- function(tree, node) {
   if (is.null(treeOrder <- attr(tree, 'order')) || treeOrder != 'preorder') {
     stop("Tree must be in preorder")
   }
@@ -187,7 +187,7 @@ Subtree <- function (tree, node) {
 #' @family tree manipulation
 #'
 #' @export
-AddTip <- function (tree,
+AddTip <- function(tree,
                     where = sample.int(tree$Nnode * 2 + 2L, size = 1) - 1L,
                     label = "New tip",
                     edgeLength = 0,
@@ -316,7 +316,7 @@ AddTip <- function (tree,
 #'
 #' @importFrom ape is.rooted
 #' @export
-AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
+AddTipEverywhere <- function(tree, label = 'New tip', includeRoot = FALSE) {
   nTip <- NTip(tree)
   if (nTip == 0L) return(list(SingleTaxonTree(label)))
   if (nTip == 1L) return(list(StarTree(c(tree$tip.label, label))))
@@ -392,7 +392,7 @@ AddTipEverywhere <- function (tree, label = 'New tip', includeRoot = FALSE) {
 #'
 #' @family tree navigation
 #' @export
-ListAncestors <- function (parent, child, node = NULL) {
+ListAncestors <- function(parent, child, node = NULL) {
   if (is.null(node)) {
     AllAncestors(parent, child)
   } else {
@@ -424,7 +424,7 @@ ListAncestors <- function (parent, child, node = NULL) {
 #' @template MRS
 #' @family tree navigation
 #' @export
-AllAncestors <- function (parent, child) {
+AllAncestors <- function(parent, child) {
   res <- lapply(integer(max(parent)), integer)
   for (i in seq_along(parent)) {
     pa <- parent[i]
@@ -455,7 +455,7 @@ AllAncestors <- function (parent, child) {
 #'
 #' @family tree navigation
 #' @export
-CladeSizes <- function (tree, internal = FALSE, nodes = NULL) {
+CladeSizes <- function(tree, internal = FALSE, nodes = NULL) {
   if (length(internal) > 1 || !is.logical(internal)) {
     warning("`internal` should be a single logical value.")
     internal <- isTRUE(internal)

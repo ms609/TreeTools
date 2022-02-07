@@ -35,7 +35,7 @@ test_that("LabelSplits()", {
   expect_error(LabelSplits(BalancedTree(8), 1:8))
   skip_if_not_installed('vdiffr', minimum_version = "1.0.0")
   skip_if(packageVersion("graphics") < "4.1.0")
-  vdiffr::expect_doppelganger('LabelSplits()',  function () {
+  vdiffr::expect_doppelganger('LabelSplits()',  function() {
     tree <- BalancedTree(9)
     plot(tree)
     labs <- letters[6:1]

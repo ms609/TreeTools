@@ -43,7 +43,7 @@
 #' artex <- ArtificialExtinction(dataset, c('A', 'C'), 'FOSSIL')
 #' @template MRS
 #' @export
-ArtificialExtinction <- function (dataset, subject, template,
+ArtificialExtinction <- function(dataset, subject, template,
                                   replaceAmbiguous = 'ambig',
                                   replaceCoded = 'original',
                                   replaceAll = TRUE,
@@ -54,7 +54,7 @@ ArtificialExtinction <- function (dataset, subject, template,
 #' @rdname ArtificialExtinction
 #' @importFrom fastmatch %fin%
 #' @export
-ArtificialExtinction.matrix <- function (dataset, subject, template,
+ArtificialExtinction.matrix <- function(dataset, subject, template,
                                          replaceAmbiguous = 'ambig',
                                          replaceCoded = 'original',
                                          replaceAll = TRUE,
@@ -75,7 +75,7 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
     }
   }
 
-  .DoReplace <- function (dataset, subject, columns, replace) {
+  .DoReplace <- function(dataset, subject, columns, replace) {
     nCols <- sum(columns)
     replaceWith <- switch(replace,
       dataset[subject, columns], # Original
@@ -88,7 +88,7 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
     )
 
     # Until require R >= 3.5.0
-    isFALSE <- function (x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+    isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
     if (isFALSE(replaceAll)) {
       replaceWith[dataset[subject, columns] == '?'] <- '?'
     }
@@ -103,7 +103,7 @@ ArtificialExtinction.matrix <- function (dataset, subject, template,
 
 #' @rdname ArtificialExtinction
 #' @export
-ArtificialExtinction.phyDat <- function (dataset, subject, template,
+ArtificialExtinction.phyDat <- function(dataset, subject, template,
                                          replaceAmbiguous = 'ambig',
                                          replaceCoded = 'original',
                                          replaceAll = TRUE,

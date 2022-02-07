@@ -56,11 +56,11 @@
 #' @name Stemwardness
 #' @family tree characterization functions
 #' @export
-SisterSize <- function (tree, tip) UseMethod('SisterSize', tip)
+SisterSize <- function(tree, tip) UseMethod('SisterSize', tip)
 
 #' @rdname Stemwardness
 #' @export
-SisterSize.numeric <- function (tree, tip) {
+SisterSize.numeric <- function(tree, tip) {
   edge <- tree$edge
   parent <- edge[edge[, 2] == tip, 1]
 
@@ -70,18 +70,18 @@ SisterSize.numeric <- function (tree, tip) {
 
 #' @rdname Stemwardness
 #' @export
-SisterSize.character <- function (tree, tip) {
+SisterSize.character <- function(tree, tip) {
   SisterSize(tree, which(tree$tip.label == tip))
 }
 
 
 #' @rdname Stemwardness
 #' @export
-RootNodeDistance <- function (tree, tip) UseMethod('RootNodeDistance', tip)
+RootNodeDistance <- function(tree, tip) UseMethod('RootNodeDistance', tip)
 
 #' @rdname Stemwardness
 #' @export
-RootNodeDistance.numeric <- function (tree, tip) {
+RootNodeDistance.numeric <- function(tree, tip) {
   edge <- tree$edge
   parent <- edge[edge[, 2] == tip, 1]
   depths <- NodeDepth(tree)
@@ -93,7 +93,7 @@ RootNodeDistance.numeric <- function (tree, tip) {
 
 #' @rdname Stemwardness
 #' @export
-RootNodeDistance.character <- function (tree, tip) {
+RootNodeDistance.character <- function(tree, tip) {
   RootNodeDistance(tree, which(tree$tip.label == tip))
 }
 

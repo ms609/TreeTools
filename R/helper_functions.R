@@ -14,7 +14,7 @@
 #' @template MRS
 #' @keywords internal
 #' @export
-SampleOne <- function (x, len = length(x)) {
+SampleOne <- function(x, len = length(x)) {
   x[sample.int(len, 1L, FALSE, NULL, FALSE)]
 }
 
@@ -50,7 +50,7 @@ SampleOne <- function (x, len = length(x)) {
 #' @template MRS
 #'
 #' @export
-UnshiftTree <- function (add, treeList) {
+UnshiftTree <- function(add, treeList) {
   if (inherits(treeList, 'multiPhylo')) {
     structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
   } else if (inherits(treeList, 'phylo')) {
@@ -79,21 +79,21 @@ UnshiftTree <- function (add, treeList) {
 #' @template MRS
 #' @seealso [`bit64::integer64()`][bit64-package]
 #' @export
-sapply64 <- function (X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
+sapply64 <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
   structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')
 }
 
 #' @rdname sapply64
 #' @export
-vapply64 <- function (X, FUN, FUN.LEN = 1, ...) {
+vapply64 <- function(X, FUN, FUN.LEN = 1, ...) {
   structure(vapply(X, FUN, FUN.VALUE = numeric(FUN.LEN), ...),
             class = 'integer64')
 }
 
 #' @rdname sapply64
 #' @export
-replicate64 <- function (n, expr, simplify = "array") {
-  sapply64(integer(n), eval.parent(substitute(function (...) expr)),
+replicate64 <- function(n, expr, simplify = "array") {
+  sapply64(integer(n), eval.parent(substitute(function(...) expr)),
            simplify = simplify)
 }
 

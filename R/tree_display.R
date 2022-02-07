@@ -36,11 +36,11 @@
 #'
 #' @template MRS
 #' @export
-SortTree <- function (tree) UseMethod('SortTree')
+SortTree <- function(tree) UseMethod('SortTree')
 
 #' @export
 #' @rdname SortTree
-SortTree.phylo <- function (tree) {
+SortTree.phylo <- function(tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -52,7 +52,7 @@ SortTree.phylo <- function (tree) {
 
   descendants <- .ListDescendents(tree)
   nDescendants <- vapply(descendants, length, integer(1))
-  MinKid <- function (tips) min(tipLabels[tips])
+  MinKid <- function(tips) min(tipLabels[tips])
   swaps <- vapply(tree.ntip + seq_len(tree$Nnode), function(node) {
     kids <- child[parent == node]
     descs <- nDescendants[kids]
@@ -76,7 +76,7 @@ SortTree.phylo <- function (tree) {
   Renumber(tree)
 }
 
-.ListDescendents <- function (tree) {
+.ListDescendents <- function(tree) {
   edge <- Postorder(tree$edge)
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -94,11 +94,11 @@ SortTree.phylo <- function (tree) {
 
 #' @export
 #' @rdname SortTree
-SortTree.list <- function (tree) lapply(tree, SortTree)
+SortTree.list <- function(tree) lapply(tree, SortTree)
 
 #' @export
 #' @rdname SortTree
-SortTree.multiPhylo <- function (tree) {
+SortTree.multiPhylo <- function(tree) {
   tree[] <- SortTree.list(tree)
   tree
 }

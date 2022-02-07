@@ -1,5 +1,5 @@
 test_that("Trees from Mir et al. 2013 are scored correctly", {
-  Tree <- function (text) ape::read.tree(text = text)
+  Tree <- function(text) ape::read.tree(text = text)
   expect_identical(0L,  TotalCopheneticIndex(Tree('(1,2,3,4,5);')))
   expect_identical(1L,  TotalCopheneticIndex(Tree('((1,2),3,4,5);')))
   expect_identical(2L,  TotalCopheneticIndex(Tree('((1,2),(3,4),5);')))

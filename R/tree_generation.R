@@ -39,7 +39,7 @@ NULL
 #' RandomTree(Lobo.phy)
 #'
 #' @export
-RandomTree <- function (tips, root = FALSE, nodes) {
+RandomTree <- function(tips, root = FALSE, nodes) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
   if (any(is.na(root))) {
@@ -78,7 +78,7 @@ RandomTree <- function (tips, root = FALSE, nodes) {
                     class = 'phylo')
 
   # Until require R >= 3.5.0
-  isFALSE <- function (x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+  isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
   if (isFALSE(root)) {
     tree <- UnrootTree(tree)
   }
@@ -104,7 +104,7 @@ RandomTree <- function (tips, root = FALSE, nodes) {
 #' @keywords internal
 #' @importFrom stats runif
 #' @export
-.RandomParent <- function (n, seed = sample.int(2147483647L, 1L)) {
+.RandomParent <- function(n, seed = sample.int(2147483647L, 1L)) {
   random_parent(n, seed)
 }
 
@@ -114,7 +114,7 @@ RandomTree <- function (tips, root = FALSE, nodes) {
 #' plot(PectinateTree(LETTERS[1:10]))
 #'
 #' @export
-PectinateTree <- function (tips) {
+PectinateTree <- function(tips) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
 
@@ -143,7 +143,7 @@ PectinateTree <- function (tips) {
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
 #' @export
-BalancedTree <- function (tips) {
+BalancedTree <- function(tips) {
   tips <- TipLabels(tips)
   nTip <- length(tips)
   if (nTip < 2L) {
@@ -157,7 +157,7 @@ BalancedTree <- function (tips) {
 }
 
 #' @keywords internal
-.BalancedBit <- function (tips, nTips = length(tips), rootNode = nTips + 1L) {
+.BalancedBit <- function(tips, nTips = length(tips), rootNode = nTips + 1L) {
   if (nTips < 4L) {
     if (nTips == 2L) {
       matrix(c(rootNode, rootNode, tips), 2L, 2L)
@@ -184,7 +184,7 @@ BalancedTree <- function (tips) {
 #' plot(StarTree(LETTERS[1:10]))
 #'
 #' @export
-StarTree <- function (tips) {
+StarTree <- function(tips) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
 
@@ -218,7 +218,7 @@ StarTree <- function (tips) {
 #' @importFrom ape nj root
 #' @family tree generation functions
 #' @export
-NJTree <- function (dataset, edgeLengths = FALSE,
+NJTree <- function(dataset, edgeLengths = FALSE,
                     ratio = TRUE, ambig = "mean") {
   tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
   tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
@@ -274,7 +274,7 @@ NJTree <- function (dataset, edgeLengths = FALSE,
 #' @importFrom stats median
 #' @importFrom utils combn
 #' @export
-Hamming <- function (dataset, ratio = TRUE,
+Hamming <- function(dataset, ratio = TRUE,
                      ambig = c("median", "mean", "zero", "one", "na", "nan")) {
   at <- attributes(dataset)
   if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
@@ -287,18 +287,18 @@ Hamming <- function (dataset, ratio = TRUE,
     contrast[contrast[, '-'], ] <- TRUE
   }
   weight <- at[["weight"]]
-  tokens <- vapply(dataset, function (codings) contrast[codings, ],
+  tokens <- vapply(dataset, function(codings) contrast[codings, ],
                    matrix(NA, at[['nr']], dim(contrast)[2]))
-  hamming <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+  hamming <- apply(combn(length(dataset), 2L), 2L, function(ij) {
     sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
                       tokens[, , ij[2], drop = FALSE], 1, any)])
   })
   
   if (ratio) {
     informative <- apply(!contrast, 1, any)
-    nonAmbig <- .vapply(dataset, function (codings) informative[codings],
+    nonAmbig <- .vapply(dataset, function(codings) informative[codings],
                        logical(at[['nr']]))
-    bothInformative <- apply(combn(length(dataset), 2L), 2L, function (ij) {
+    bothInformative <- apply(combn(length(dataset), 2L), 2L, function(ij) {
       sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
     })
     hamming <- hamming / bothInformative
@@ -358,7 +358,7 @@ Hamming <- function (dataset, ratio = TRUE,
 #' @importFrom ape nj multi2di
 #' @family tree generation functions
 #' @export
-ConstrainedNJ <- function (dataset, constraint, weight = 1L,
+ConstrainedNJ <- function(dataset, constraint, weight = 1L,
                            ratio = TRUE, ambig = "mean") {
   missing <- setdiff(names(dataset), names(constraint))
   if (length(missing)) {
@@ -403,10 +403,10 @@ ConstrainedNJ <- function (dataset, constraint, weight = 1L,
 #' @template MRS
 #' @family tree manipulation
 #' @export
-EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
+EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape root bind.tree
-.EnforceOutgroup <- function (tree, outgroup, taxa) {
+.EnforceOutgroup <- function(tree, outgroup, taxa) {
   if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
@@ -425,14 +425,14 @@ EnforceOutgroup <- function (tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @rdname EnforceOutgroup
 #' @export
-EnforceOutgroup.phylo <- function (tree, outgroup) {
+EnforceOutgroup.phylo <- function(tree, outgroup) {
   .EnforceOutgroup(tree, outgroup, tree$tip.label)
 }
 
 #' @rdname EnforceOutgroup
 #' @importFrom ape root
 #' @export
-EnforceOutgroup.character <- function (tree, outgroup) {
+EnforceOutgroup.character <- function(tree, outgroup) {
   taxa <- tree
   .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
 }

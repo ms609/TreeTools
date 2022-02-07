@@ -90,7 +90,7 @@ test_that('Rooting and partition counting', {
 })
 
 test_that("NTip() works", {
-  Test <- function (n) {
+  Test <- function(n) {
     tr <- BalancedTree(n)
     pec <- PectinateTree(n)
     expect_identical(n, NTip(tr))

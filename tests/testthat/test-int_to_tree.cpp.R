@@ -27,7 +27,7 @@ test_that('Trees generated okay', {
     as.phylo(10, 6, 0:5)))
   expect_equal(as.TreeNumber('10', 6, 0:5),
                as.TreeNumber(as.phylo.numeric(10, 6, 0:5)))
-  Test <- function (i, nTip) {
+  Test <- function(i, nTip) {
     expect_equal(as.integer64(i),
                  as.integer64(as.TreeNumber(as.phylo(i, nTip, seq_len(nTip) - 1L))))
   }

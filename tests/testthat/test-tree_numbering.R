@@ -122,7 +122,7 @@ test_that("Reorder methods work correctly", {
   bad$Nnode <- 100
   attr(bad, 'order') <- NULL
   mp7 <- structure(list7, class = 'multiPhylo')
-  Test <- function (Method, ..., testEdges = TRUE) {
+  Test <- function(Method, ..., testEdges = TRUE) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
     expect_true(all.equal(Method(stt), stt))

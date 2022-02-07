@@ -1,13 +1,13 @@
 suppressPackageStartupMessages(devtools::load_all())
 
-.UnrootedKeys <- function (nTip) {
+.UnrootedKeys <- function(nTip) {
   if (nTip > 28L) {
     stop("Too many shapes to calculate with ", nTip, " tips.")
   } else if (nTip > 5L) {
     #TODO make efficient - this is horrible!
     shapes <- as.integer(structure(
       vapply(seq_len(as.integer(NRootedShapes(nTip))) - 1L,
-             function (shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
+             function(shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
              integer64(1L)),
       class = 'integer64'))
     uniqueShapes <- unique(shapes)

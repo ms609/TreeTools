@@ -19,7 +19,7 @@
 #' edge in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
-DescendantEdges <- function (edge = NULL, parent, child,
+DescendantEdges <- function(edge = NULL, parent, child,
                              nEdge = length(parent)) {
   if (is.null(edge)) return(AllDescendantEdges(parent, child, nEdge))
   ret <- logical(nEdge)
@@ -53,7 +53,7 @@ DescendantEdges <- function (edge = NULL, parent, child,
 #' (or the edge itself).
 #'
 #' @export
-AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
+AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
   blankLogical <- logical(nEdge)
   allEdges <- seq_len(nEdge)
@@ -85,7 +85,7 @@ AllDescendantEdges <- function (parent, child, nEdge = length(parent)) {
 #' @template MRS
 #' @family tree navigation
 #' @export
-NDescendants <- function (tree) {
+NDescendants <- function(tree) {
   NodeOrder(tree$edge, includeAncestor = FALSE)
 }
 
@@ -123,12 +123,12 @@ NDescendants <- function (tree) {
 #'
 #'
 #' @export
-NodeDepth <- function (x, shortest = FALSE, includeTips = TRUE) {
+NodeDepth <- function(x, shortest = FALSE, includeTips = TRUE) {
   UseMethod('NodeDepth')
 }
 
 #' @export
-NodeDepth.list <- function (x, shortest = FALSE, includeTips = TRUE) {
+NodeDepth.list <- function(x, shortest = FALSE, includeTips = TRUE) {
   lapply(x, NodeDepth, shortest = shortest, includeTips = includeTips)
 }
 
@@ -137,7 +137,7 @@ NodeDepth.multiPhylo <- NodeDepth.list
 
 #' @importFrom ape is.rooted
 #' @export
-NodeDepth.phylo <- function (x, shortest = FALSE, includeTips = TRUE) {
+NodeDepth.phylo <- function(x, shortest = FALSE, includeTips = TRUE) {
   if (is.rooted(x)) {
     .NodeDepth.rooted(x$edge, shortest, includeTips)
   } else {
@@ -146,12 +146,12 @@ NodeDepth.phylo <- function (x, shortest = FALSE, includeTips = TRUE) {
 }
 
 #' @export
-NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
+NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
 
 
-  .NodeDepth.short <- function () {
+  .NodeDepth.short <- function() {
 
-    depths <- c(leaf0s, vapply(minVertex:nVertex, function (node)
+    depths <- c(leaf0s, vapply(minVertex:nVertex, function(node)
       if (any(!is.na(leaf0s[child[parent == node]]))) 1L else NA_integer_
       , 0L))
     maxDepth <- 1L
@@ -178,9 +178,9 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
     depths
   }
 
-  .NodeDepth.long <- function () {
+  .NodeDepth.long <- function() {
 
-    depths <- c(leaf0s, vapply(minVertex:nVertex, function (node)
+    depths <- c(leaf0s, vapply(minVertex:nVertex, function(node)
       if (any(is.na(leaf0s[child[parent == node]]))) NA_integer_ else 1L
       , 0L))
     maxDepth <- 1L
@@ -224,7 +224,7 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 
 }
 
-.NodeDepth.rooted <- function (x, shortest = FALSE, includeTips = TRUE) {
+.NodeDepth.rooted <- function(x, shortest = FALSE, includeTips = TRUE) {
 
   parent <- x[, 1]
   child <- x[, 2]
@@ -239,7 +239,7 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
   Func <- if (shortest) min else max
 
   while(any(uncalculated)) {
-    depths[uncalculated] <- vapply(which(uncalculated), function (node) {
+    depths[uncalculated] <- vapply(which(uncalculated), function(node) {
       Func(depths[child[parent == node]])
     }, 0L) + 1L
     uncalculated <- is.na(depths)
@@ -275,13 +275,13 @@ NodeDepth.matrix <- function (x, shortest = FALSE, includeTips = TRUE) {
 #' @template MRS
 #' @family tree navigation
 #' @export
-NodeOrder <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+NodeOrder <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
   UseMethod('NodeOrder')
 }
 
 
 #' @export
-NodeOrder.list <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+NodeOrder.list <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
   lapply(x, NodeOrder, includeAncestor, internalOnly)
 }
 
@@ -289,12 +289,12 @@ NodeOrder.list <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
 NodeOrder.multiPhylo <- NodeOrder.list
 
 #' @export
-NodeOrder.phylo <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+NodeOrder.phylo <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
   NodeOrder(x$edge, includeAncestor, internalOnly)
 }
 
 #' @export
-NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
+NodeOrder.matrix <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
   if (includeAncestor) {
     if (internalOnly) {
       tabulate(x)[-seq_len(min(x[, 1]) - 1L)]
@@ -325,7 +325,7 @@ NodeOrder.matrix <- function (x, includeAncestor = TRUE, internalOnly = FALSE) {
 #' @keywords internal
 #' @family tree navigation
 #' @export
-AncestorEdge <- function (edge, parent, child) child == parent[edge]
+AncestorEdge <- function(edge, parent, child) child == parent[edge]
 
 #' Ancestors of an edge
 #'
@@ -355,7 +355,7 @@ AncestorEdge <- function (edge, parent, child) child == parent[edge]
 #' @template MRS
 #' @family tree navigation
 #' @export
-EdgeAncestry <- function (edge, parent, child,
+EdgeAncestry <- function(edge, parent, child,
                           stopAt = (parent == min(parent))) {
   ret <- edge <- AncestorEdge(edge, parent, child)
   if (any(ret)) repeat {
@@ -442,7 +442,7 @@ MRCA <- function(x1, x2, ancestors) {
 #' @importFrom fastmatch %fin%
 #' @template MRS
 #' @export
-EdgeDistances <- function (tree) {
+EdgeDistances <- function(tree) {
   edge <- tree$edge
   nEdge <- dim(edge)[1]
   edge <- RenumberTree(edge[, 1], edge[, 2])
@@ -514,7 +514,7 @@ EdgeDistances <- function (tree) {
 #' @template MRS
 #' @family tree navigation
 #' @export
-NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
+NonDuplicateRoot <- function(parent, child, nEdge = length(parent)) {
   notDuplicateRoot <- !logical(nEdge)
   rightSide <- DescendantEdges(1, parent, child, nEdge)
   nEdgeRight <- sum(rightSide)
@@ -541,7 +541,7 @@ NonDuplicateRoot <- function (parent, child, nEdge = length(parent)) {
 #'
 #' @family tree properties
 #' @export
-NTip <- function (phy) UseMethod('NTip')
+NTip <- function(phy) UseMethod('NTip')
 
 #' @rdname NTip
 #' @export
@@ -554,27 +554,27 @@ NTip.Splits <- NTip.default
 
 #' @rdname NTip
 #' @export
-NTip.list <- function (phy) vapply(phy, NTip, integer(1))
+NTip.list <- function(phy) vapply(phy, NTip, integer(1))
 
 #' @rdname NTip
 #' @export
-NTip.phylo <- function (phy) length(phy$tip.label)
+NTip.phylo <- function(phy) length(phy$tip.label)
 
 #' @rdname NTip
 #' @export
-NTip.multiPhylo <- function (phy) {
+NTip.multiPhylo <- function(phy) {
   vapply(phy, NTip.phylo, integer(1))
 }
 
 #' @rdname NTip
 #' @export
-NTip.phyDat <- function (phy) {
+NTip.phyDat <- function(phy) {
   length(phy)
 }
 
 #' @rdname NTip
 #' @export
-NTip.matrix <- function (phy) {
+NTip.matrix <- function(phy) {
   if (is.numeric(phy)) {
     parent <- phy[, 1]
     child <- phy[, 2]
@@ -608,7 +608,7 @@ NTip.matrix <- function (phy) {
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
-NSplits <- function (x) UseMethod('NSplits')
+NSplits <- function(x) UseMethod('NSplits')
 
 #' @rdname NSplits
 #' @export
@@ -616,11 +616,11 @@ NPartitions <- NSplits
 
 #' @rdname NSplits
 #' @export
-NSplits.phylo <- function (x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
+NSplits.phylo <- function(x) collapse.singles(x)$Nnode - 1L - TreeIsRooted(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.list <- function (x) vapply(x, NSplits, numeric(1L))
+NSplits.list <- function(x) vapply(x, NSplits, numeric(1L))
 
 #' @rdname NSplits
 #' @export
@@ -628,24 +628,24 @@ NSplits.multiPhylo <- NSplits.list
 
 #' @rdname NSplits
 #' @export
-NSplits.Splits <- function (x) nrow(x)
+NSplits.Splits <- function(x) nrow(x)
 
 #' @rdname NSplits
 #' @export
-NSplits.numeric <- function (x) pmax(0L, x - 3L)
+NSplits.numeric <- function(x) pmax(0L, x - 3L)
 
 #' @rdname NSplits
 #' @export
-NSplits.NULL <- function (x) NULL
+NSplits.NULL <- function(x) NULL
 
 #' @rdname NSplits
 #' @export
-NSplits.ClusterTable <- function (x) nrow(as.matrix(x)) - 3L # Root + Ingroup + All-leaves
+NSplits.ClusterTable <- function(x) nrow(as.matrix(x)) - 3L # Root + Ingroup + All-leaves
 
 #' @rdname NSplits
 #' @importFrom ape read.tree
 #' @export
-NSplits.character <- function (x) {
+NSplits.character <- function(x) {
   lengthX <- length(x)
   if (lengthX == 1) {
     tree <- read.tree(text = x)
@@ -676,11 +676,11 @@ NSplits.character <- function (x) {
 #' @family tree properties
 #' @family Splits operations
 #' @export
-SplitsInBinaryTree <- function (tree) UseMethod('SplitsInBinaryTree')
+SplitsInBinaryTree <- function(tree) UseMethod('SplitsInBinaryTree')
 
 #' @rdname SplitsInBinaryTree
 #' @export
-SplitsInBinaryTree.list <- function (tree) vapply(tree, SplitsInBinaryTree, 0L)
+SplitsInBinaryTree.list <- function(tree) vapply(tree, SplitsInBinaryTree, 0L)
 
 #' @rdname SplitsInBinaryTree
 #' @export
@@ -688,7 +688,7 @@ SplitsInBinaryTree.multiPhylo <- SplitsInBinaryTree.list
 
 #' @rdname SplitsInBinaryTree
 #' @export
-SplitsInBinaryTree.numeric <- function (tree) as.integer(tree) - 3L
+SplitsInBinaryTree.numeric <- function(tree) as.integer(tree) - 3L
 
 #' @rdname SplitsInBinaryTree
 #' @export
@@ -722,7 +722,7 @@ SplitsInBinaryTree.phylo <- SplitsInBinaryTree.default
 #'
 #' @template MRS
 #' @export
-TreeIsRooted <- function (tree) {
+TreeIsRooted <- function(tree) {
   edge <- tree$edge
   parent <- edge[, 1]
   sum(parent == min(parent)) < 3L
@@ -754,10 +754,10 @@ TreeIsRooted <- function (tree) {
 #' `phangorn::getRoot()`
 #'
 #' @export
-RootNode <- function (x) UseMethod('RootNode')
+RootNode <- function(x) UseMethod('RootNode')
 
 #' @export
-RootNode.phylo <- function (x) {
+RootNode.phylo <- function(x) {
   edge <- x$edge
   edgeOrder <- attr(x, "order")
   if (!is.null(edgeOrder)) {
@@ -771,7 +771,7 @@ RootNode.phylo <- function (x) {
 }
 
 #' @export
-RootNode.list <- function (x) {
+RootNode.list <- function(x) {
   vapply(x, RootNode, 0L)
 }
 
@@ -779,7 +779,7 @@ RootNode.list <- function (x) {
 RootNode.multiPhylo <- RootNode.list
 
 #' @export
-RootNode.numeric <- function (x) {
+RootNode.numeric <- function(x) {
   parent <- x[, 1]
   child <- x[, 2]
   ret <- unique(parent[!parent %fin% child])

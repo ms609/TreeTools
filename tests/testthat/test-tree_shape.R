@@ -74,12 +74,12 @@ test_that('Rooted tree shapes calculated', {
   expect_equal(as.integer64(4L), RootedTreeShape(ape::read.tree(text='((a, b), ((c, d), (e, f)));')))
   expect_equal(as.integer64(5L), RootedTreeShape(BalancedTree(0:5)))
 
-  PectinateTest <- function (i) {
+  PectinateTest <- function(i) {
     expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(i)))
   }
   lapply(4:16, PectinateTest)
 
-  BalancedTest <- function (i) {
+  BalancedTest <- function(i) {
     expect_equal(NRootedShapes(i) - 1L,
                  RootedTreeShape(BalancedTree(i)))
   }
@@ -93,7 +93,7 @@ test_that('Rooted tree shapes calculated', {
   expect_equal(c(0:2, 4:5, 7), .UnrootedKeys(9))
 })
 
-expect_treequal <- function (...) expect_true(all.equal(...))
+expect_treequal <- function(...) expect_true(all.equal(...))
 test_that('Rooted tree shapes built', {
   expect_error(RootedTreeWithShape(-1, 5))
 

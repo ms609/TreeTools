@@ -20,7 +20,7 @@
 #'
 #' @family split information functions
 #' @export
-TreesMatchingSplit <- function (A, B = A[2]) {
+TreesMatchingSplit <- function(A, B = A[2]) {
   if (A[1] == 0) NUnrooted(B) else
   if (B == 0) NUnrooted(A[1]) else
   NRooted(A[1]) * NRooted(B)
@@ -28,7 +28,7 @@ TreesMatchingSplit <- function (A, B = A[2]) {
 
 #' @rdname TreesMatchingSplit
 #' @export
-LnTreesMatchingSplit <- function (A, B = A[2]) {
+LnTreesMatchingSplit <- function(A, B = A[2]) {
   if (A[1] == 0) LnUnrooted.int(B) else
   if (B == 0) LnUnrooted.int(A[1]) else
   LnRooted.int(A[1]) + LnRooted.int(B)
@@ -36,7 +36,7 @@ LnTreesMatchingSplit <- function (A, B = A[2]) {
 
 #' @rdname TreesMatchingSplit
 #' @export
-Log2TreesMatchingSplit <- function (A, B = A[2]) {
+Log2TreesMatchingSplit <- function(A, B = A[2]) {
   if (A[1] == 0) Log2Unrooted.int(B) else
   if (B == 0) Log2Unrooted.int(A[1]) else
   Log2Rooted.int(A[1]) + Log2Rooted.int(B)
@@ -67,7 +67,7 @@ Log2TreesMatchingSplit <- function (A, B = A[2]) {
 #' @template MRS
 #' @importFrom fastmatch %fin%
 #' @export
-CharacterInformation <- function (tokens) {
+CharacterInformation <- function(tokens) {
   tokenCounts <- table(tokens)
   # Our character splits our taxa into groups with the same token
   # ?s and -s are best ignored
@@ -170,7 +170,7 @@ CharacterInformation <- function (tokens) {
 #'
 #' @template MRS
 #' @export
-SplitInformation <- function (A, B = A[1]) {
+SplitInformation <- function(A, B = A[1]) {
   -(Log2TreesMatchingSplit(A, B) - Log2Unrooted.int(A + B))
 }
 
@@ -185,7 +185,7 @@ SplitInformation <- function (A, B = A[1]) {
 #'
 #'
 #' @export
-MultiSplitInformation <- function (partitionSizes) {
+MultiSplitInformation <- function(partitionSizes) {
   Log2Unrooted.int(sum(partitionSizes)) - Log2UnrootedMult(partitionSizes)
 }
 
@@ -213,12 +213,12 @@ MultiSplitInformation <- function (partitionSizes) {
 #' @template MRS
 #' @family split information functions
 #' @export
-UnrootedTreesMatchingSplit <- function (...) {
+UnrootedTreesMatchingSplit <- function(...) {
   # use exp and log as it's just as fast, but less likely to overflow to Inf
   exp(LnUnrootedTreesMatchingSplit(...))
 }
 
-.LogUTMS <- function (LogXDoubleFactorial, splits) {
+.LogUTMS <- function(LogXDoubleFactorial, splits) {
 
   splits <- splits[splits > 0L]
   totalTips <- sum(splits)
@@ -231,12 +231,12 @@ UnrootedTreesMatchingSplit <- function (...) {
 
 #' @rdname UnrootedTreesMatchingSplit
 #' @export
-LnUnrootedTreesMatchingSplit <- function (...) {
+LnUnrootedTreesMatchingSplit <- function(...) {
   .LogUTMS(LnDoubleFactorial, c(...))
 }
 
 #' @rdname UnrootedTreesMatchingSplit
 #' @export
-Log2UnrootedTreesMatchingSplit <- function (...) {
+Log2UnrootedTreesMatchingSplit <- function(...) {
   .LogUTMS(Log2DoubleFactorial, c(...))
 }

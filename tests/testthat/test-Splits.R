@@ -1,4 +1,4 @@
-expect_splits_equal <- function (s1, s2, ...) {
+expect_splits_equal <- function(s1, s2, ...) {
   expect_equal(as.character(PolarizeSplits(s1)),
                as.character(PolarizeSplits(s2)), ...)
 }
@@ -143,7 +143,7 @@ test_that('as.Splits.matrix()', {
                                 dimnames = list(c('edge', 'Nnode'), NULL))))
   trees <- list(BalancedTree(8), PectinateTree(8),
                 CollapseNode(BalancedTree(8), 10:13))
-  arr <- sapply(1:3, function (i) trees[[i]])
+  arr <- sapply(1:3, function(i) trees[[i]])
 
   expect_error(as.Splits(arr[-2, ]))
   expect_equal(as.Splits(trees), as.Splits(arr))
@@ -302,7 +302,7 @@ test_that("Split combination", {
 })
 
 test_that("as.phylo.Splits()", {
-  Test <- function (tr) {
+  Test <- function(tr) {
     expect_true(all.equal(as.phylo(as.Splits(tr)), unroot(tr)))
   }
   Test(read.tree(text = "((a, b, c), (d, e, f, g));"))

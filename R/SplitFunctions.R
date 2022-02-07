@@ -24,7 +24,7 @@
 #'
 #' @family split manipulation functions
 #' @export
-Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
+Subsplit <- function(splits, tips, keepAll = FALSE, unique = TRUE) {
   if (is.list(splits)) {
     lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
   } else if (length(splits) == 0) {
@@ -67,7 +67,7 @@ Subsplit <- function (splits, tips, keepAll = FALSE, unique = TRUE) {
 #'
 #' TrivialSplits(efgh)
 #' @export
-TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+TrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
   inSplit <- TipsInSplits(splits)
   inSplit < 2L | inSplit > nTip - 2L
 }
@@ -78,7 +78,7 @@ TrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #' @examples
 #' summary(WithoutTrivialSplits(efgh))
 #' @export
-WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
+WithoutTrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
   splits[[!TrivialSplits(splits, nTip)]]
 }
 
@@ -101,11 +101,11 @@ WithoutTrivialSplits <- function (splits, nTip = attr(splits, 'nTip')) {
 #'
 #' @template MRS
 #' @export
-CompatibleSplits <- function (splits, splits2) {
+CompatibleSplits <- function(splits, splits2) {
   splits <- as.Splits(splits)
   nTip <- attr(splits, 'nTip')
   splits2 <- as.Splits(splits2, splits)
-  apply(splits2, 1, function (split)
+  apply(splits2, 1, function(split)
     apply(splits, 1, .CompatibleSplit, split, nTip))
 }
 
@@ -115,7 +115,7 @@ CompatibleSplits <- function (splits, splits2) {
 #' @rdname CompatibleSplits
 #' @keywords internal
 #' @export
-.CompatibleSplit <- function (a, b, nTip) {
+.CompatibleSplit <- function(a, b, nTip) {
   rawMask <- if (nTip %% 8L) {
     as.raw(c(2^(nTip %% 8L) - 1L, rep.int(255L, nTip %/% 8)))
   } else {
@@ -132,7 +132,7 @@ CompatibleSplits <- function (splits, splits2) {
 #' raws are compatible.
 #' @keywords internal
 #' @export
-.CompatibleRaws <- function (rawA, rawB, bitmask) {
+.CompatibleRaws <- function(rawA, rawB, bitmask) {
   !any(as.logical(rawA & rawB)) ||
   !any(as.logical(rawA & !rawB)) ||
   !any(as.logical(!rawA & rawB)) ||
@@ -158,7 +158,7 @@ CompatibleSplits <- function (splits, splits2) {
 #' @family split information functions
 #' @template MRS
 #' @export
-SplitMatchProbability <- function (split1, split2) {
+SplitMatchProbability <- function(split1, split2) {
 
   if (NTip(split1) != NTip(split2)) stop("Splits pertain to different tips")
 
@@ -183,7 +183,7 @@ SplitMatchProbability <- function (split1, split2) {
   # It turns out that this is called a confusion matrix, association matrix
   # or contingency table; see Meila 2007
   arrangements <- vapply(minA1B2:iMax,
-                         function (i) c(A1 - i, i, i + A2 - A1, B2 - i),
+                         function(i) c(A1 - i, i, i + A2 - A1, B2 - i),
                          double(4))
 
   #H <- function(p) -sum(p[p > 0] * log(p[p > 0]))
@@ -218,7 +218,7 @@ SplitMatchProbability <- function (split1, split2) {
 #' @examples
 #' LnSplitMatchProbability(split1, split2)
 #' @export
-LnSplitMatchProbability <- function (split1, split2) {
+LnSplitMatchProbability <- function(split1, split2) {
   log(SplitMatchProbability(split1, split2))
 }
 
@@ -249,23 +249,23 @@ LnSplitMatchProbability <- function (split1, split2) {
 #' @family tree properties
 #' @template MRS
 #' @export
-TipLabels <- function (x, single = TRUE) UseMethod('TipLabels')
+TipLabels <- function(x, single = TRUE) UseMethod('TipLabels')
 
 #' @rdname TipLabels
 #' @export
-TipLabels.matrix <- function (x, single = TRUE) colnames(x)
+TipLabels.matrix <- function(x, single = TRUE) colnames(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phylo <- function (x, single = TRUE) x$tip.label
+TipLabels.phylo <- function(x, single = TRUE) x$tip.label
 
 #' @rdname TipLabels
 #' @export
-TipLabels.default <- function (x, single = TRUE) attr(x, "tip.label")
+TipLabels.default <- function(x, single = TRUE) attr(x, "tip.label")
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phyDat <- function (x, single = TRUE) names(x)
+TipLabels.phyDat <- function(x, single = TRUE) names(x)
 
 #' @rdname TipLabels
 #' @export
@@ -282,7 +282,7 @@ TipLabels.Splits <- TipLabels.default
 
 #' @rdname TipLabels
 #' @export
-TipLabels.list <- function (x, single = FALSE) {
+TipLabels.list <- function(x, single = FALSE) {
   if (!is.null(attr(x, 'tip.label'))) return (attr(x, "tip.label"))
   xTipLabel <- x$tip.label
   if (!is.null(xTipLabel)) {
@@ -297,11 +297,11 @@ TipLabels.list <- function (x, single = FALSE) {
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels <- function (x) UseMethod('AllTipLabels')
+AllTipLabels <- function(x) UseMethod('AllTipLabels')
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.list <- function (x) {
+AllTipLabels.list <- function(x) {
   unique(unlist(lapply(x, TipLabels)))
 }
 
@@ -315,18 +315,18 @@ AllTipLabels.phylo <- function(x) TipLabels.phylo(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.Splits <- function (x) TipLabels.Splits(x)
+AllTipLabels.Splits <- function(x) TipLabels.Splits(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.TreeNumber <- function (x) TipLabels.TreeNumber(x)
+AllTipLabels.TreeNumber <- function(x) TipLabels.TreeNumber(x)
 
 #' @rdname TipLabels
 #' @export
-AllTipLabels.matrix <- function (x) TipLabels.matrix(x)
+AllTipLabels.matrix <- function(x) TipLabels.matrix(x)
 
 #' @keywords internal
-.ListLabels <- function (x, single, Func) {
+.ListLabels <- function(x, single, Func) {
   if (length(x)) {
     if (single) {
       Func(x[[1]])
@@ -343,7 +343,7 @@ AllTipLabels.matrix <- function (x) TipLabels.matrix(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.multiPhylo <- function (x, single = FALSE) {
+TipLabels.multiPhylo <- function(x, single = FALSE) {
   xTipLabel <- x$tip.label
   if (!is.null(xTipLabel)) {
     if (is.list(xTipLabel) && !is.null(xTipLabel$tip.label)) {
@@ -362,11 +362,11 @@ TipLabels.multiPhylo <- function (x, single = FALSE) {
 
 #' @rdname TipLabels
 #' @export
-TipLabels.character <- function (x, single = TRUE) x
+TipLabels.character <- function(x, single = TRUE) x
 
 #' @rdname TipLabels
 #' @export
-TipLabels.numeric <- function (x, single = TRUE) {
+TipLabels.numeric <- function(x, single = TRUE) {
   if (length(x) == 1L) {
     paste0('t', seq_len(x))}
   else {
@@ -376,11 +376,11 @@ TipLabels.numeric <- function (x, single = TRUE) {
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phyDat <- function (x, single = TRUE) names(x)
+TipLabels.phyDat <- function(x, single = TRUE) names(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.default <- function (x, single = TRUE) {
+TipLabels.default <- function(x, single = TRUE) {
   if (is.null(names(x))) {
     if (any(duplicated(x))) {
       NULL
@@ -430,7 +430,7 @@ TipLabels.default <- function (x, single = TRUE) {
 #' NPartitionPairs(c(2, 1, 1, 3))
 #' @template MRS
 #' @export
-NPartitionPairs <- function (configuration) {
+NPartitionPairs <- function(configuration) {
   choose(sum(configuration[c(1, 3)]), configuration[1]) *
     choose(sum(configuration[c(2, 4)]), configuration[2])
 }

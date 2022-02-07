@@ -22,7 +22,7 @@ test_that("Factorials are calculated correctly", {
 })
 
 test_that("N consistent with splits calculated correctly", {
-  Test <- function (nExpectation, ...) {
+  Test <- function(nExpectation, ...) {
     expect_equal(nExpectation, NUnrootedSplits(...))
     expect_equal(log(nExpectation), LnUnrootedSplits(...))
     expect_equal(log2(nExpectation), Log2UnrootedSplits(...))
@@ -33,7 +33,7 @@ test_that("N consistent with splits calculated correctly", {
          doubleFactorials[4 + 4 - 3] ^ 3, c(4, 4, 4))
 
 
-  Test <- function (...) {
+  Test <- function(...) {
     splits <- c(...)
     if (length(splits) < 3L) stop ("Designed to test through to NUnrootedMult")
     splits <- splits[splits > 0]
@@ -53,7 +53,7 @@ test_that("N consistent with splits calculated correctly", {
 })
 
 test_that("N[Un]RootedMult() works", {
-  Test <- function (...) {
+  Test <- function(...) {
     splits <- c(...)
     splits <- splits[splits > 0]
     totalTips <- sum(splits)

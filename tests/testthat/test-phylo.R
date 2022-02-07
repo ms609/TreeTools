@@ -56,14 +56,14 @@ test_that("AddTip() with edge lengths", {
 
 test_that('AddTipEverywhere() handles nasty tree', {
   added <- AddTipEverywhere(nasty)
-  lapply(added, function (tr) expect_true(all(tr$edge > 0)))
+  lapply(added, function(tr) expect_true(all(tr$edge > 0)))
   expect_true(all.equal(lapply(added, Preorder),
                         AddTipEverywhere(Preorder(nasty))))
 })
 
 test_that('AddTipEverywhere() with tiny trees', {
   added <- AddTipEverywhere(StarTree(2))
-  lapply(added, function (tr) expect_true(all(tr$edge > 0)))
+  lapply(added, function(tr) expect_true(all(tr$edge > 0)))
   expect_equal(2, length(added))
   expect_equal(3, length(AddTipEverywhere(StarTree(2), include = TRUE)))
 

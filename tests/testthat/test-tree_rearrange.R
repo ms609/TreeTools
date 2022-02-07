@@ -83,13 +83,13 @@ test_that("RootOnNode() works", {
   expect_true(all.equal(UnrootTree(PectinateTree(6L)),
                         RootOnNode(PectinateTree(6L), 1)))
 
-  TestTip <- function (tr, node, rr) {
+  TestTip <- function(tr, node, rr) {
     expect_true(all.equal(
       Preorder(ape::root(tr, outgroup = node, resolve.root = rr)),
       RootOnNode(tr, node, rr))
     )
   }
-  TestInternal <- function (tr, node, rr) {
+  TestInternal <- function(tr, node, rr) {
     expect_true(all.equal(
       Preorder(ape::root(tr, node = node, resolve.root = rr)),
       RootOnNode(tr, node, rr)))
@@ -125,13 +125,13 @@ test_that("RootOnNode() works", {
 test_that("root_on_node() works", {
   tree <- Preorder(BalancedTree(15))
   edge <- tree$edge
-  TipTest <- function (i) {
+  TipTest <- function(i) {
     tr.rooted <- root_on_node(tree, i)
     expect_equal(SortTree(root(tree, i, resolve.root = TRUE)),
                  SortTree(tr.rooted))
   }
-  StaticTest <- function (i) expect_equal(tree, root_on_node(tree, i))
-  NodeTest <- function (i) {
+  StaticTest <- function(i) expect_equal(tree, root_on_node(tree, i))
+  NodeTest <- function(i) {
     tr.rooted <- root_on_node(tree, i)
     expect_equal(SortTree(root(tree, node = i, resolve.root = TRUE)),
                  SortTree(tr.rooted))
@@ -284,7 +284,7 @@ test_that("CollapseNode() works", {
 
 test_that("Binarification is uniform", {
   set.seed(0)
-  Test <- function (tree, nTree, nSamples = 200L, ape = FALSE) {
+  Test <- function(tree, nTree, nSamples = 200L, ape = FALSE) {
     counts <- table(replicate64(nSamples, as.TreeNumber(MakeTreeBinary(tree))))
     expect_equal(nTree, length(counts))
     expect_gt(chisq.test(counts)$p.value, 0.001)
@@ -315,7 +315,7 @@ test_that("LeafLabelInterchange() works", {
                    LeafLabelInterchange(BalancedTree(2), 2)$tip)
 
   abcd <- letters[1:4]
-  sapply(1 + seq_len(100), function (i) {
+  sapply(1 + seq_len(100), function(i) {
     # Check all perturbations
     set.seed(i)
     expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))

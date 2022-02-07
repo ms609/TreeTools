@@ -13,12 +13,12 @@
 #' @export
 #' @template MRS
 #'
-ApeTime <- function (filepath, format = 'double') {
+ApeTime <- function(filepath, format = 'double') {
   if (length(filepath) > 1L) {
     stop("`filepath` must be a character string of length 1")
   }
   comment <- readLines(filepath, n = 2)[2]
-  Month <- function (month) {
+  Month <- function(month) {
     months <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     whichMonth <- months == month
@@ -135,7 +135,7 @@ ApeTime <- function (filepath, format = 'double') {
 #' @template MRS
 #' @importFrom ape read.tree
 #' @export
-ReadTntTree <- function (filepath, relativePath = NULL, keepEnd = 1L,
+ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   fileText <- readLines(filepath)
   treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
@@ -196,7 +196,7 @@ ReadTntTree <- function (filepath, relativePath = NULL, keepEnd = 1L,
       }
     }
 
-    trees <- lapply(trees, function (tree) {
+    trees <- lapply(trees, function(tree) {
       tree$tip.label <- tipLabels[as.integer(tree$tip.label) + 1L]
       tree
     })
@@ -218,7 +218,7 @@ ReadTntTree <- function (filepath, relativePath = NULL, keepEnd = 1L,
 #' @param treeText Character string describing a tree, in the parenthetical
 #'                 format output by TNT.
 #' @export
-TntText2Tree <- function (treeText) {
+TntText2Tree <- function(treeText) {
   treeText <- gsub("([\\w'\\.\\-]+)", "\\1,", treeText, perl = TRUE)
   treeText <- gsub(")(", "),(", treeText, fixed = TRUE)
   treeText <- gsub("*", ";", treeText, fixed = TRUE)
@@ -257,14 +257,14 @@ TNTText2Tree <- TntText2Tree
 #'
 #' @keywords internal
 #' @export
-ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
+ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
                          continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
 
   taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
-  previousTaxon <- vapply(which(!taxonLines), function (x) {
+  previousTaxon <- vapply(which(!taxonLines), function(x) {
     max(taxonLineNumber[taxonLineNumber < x])
   }, integer(1))
 
@@ -286,7 +286,7 @@ ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
   } else {
     tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed = TRUE), fixed = TRUE)
     tokens <- vapply(uniqueTaxa,
-                     function (taxon) paste0(tokens[taxa == taxon],
+                     function(taxon) paste0(tokens[taxa == taxon],
                                              collapse = ''),
                      character(1))
     tokens <- NexusTokens(tokens, character_num = character_num,
@@ -308,7 +308,7 @@ ExtractTaxa <- function (matrixLines, character_num = NULL, session = NULL,
 #' @examples
 #' NexusTokens('01[01]-?')
 #' @export
-NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
+NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
   tokens.pattern <- "\\([^\\)]+\\)|\\[[^\\]]+\\]|\\{[^\\}]+\\}|\\S"
   matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
 
@@ -327,7 +327,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
   }
 
   tokens <- t(vapply(regmatches(tokens, matches),
-                     function (x) x[character_num, drop=FALSE],
+                     function(x) x[character_num, drop=FALSE],
                      character(length(character_num))))
   if (length(character_num) == 1) {
     tokens <- t(tokens)
@@ -409,7 +409,7 @@ NexusTokens <- function (tokens, character_num = NULL, session = NULL) {
 #'
 #' - Write characters to TNT-format file: [`WriteTntCharacters()`]
 #' @export
-ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
+ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
                             session = NULL) {
 
   lines <- .UTFLines(filepath, encoding)
@@ -485,7 +485,7 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
         }
 
         attr(tokens, 'state.labels') <-
-          lapply(character_num[seq_along(stateStarts)], function (i)
+          lapply(character_num[seq_along(stateStarts)], function(i)
             Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
       }
@@ -547,7 +547,7 @@ ReadCharacters <- function (filepath, character_num = NULL, encoding = 'UTF8',
 
 #' @rdname ReadCharacters
 #' @export
-ReadTntCharacters <- function (filepath, character_num = NULL,
+ReadTntCharacters <- function(filepath, character_num = NULL,
                                type = NULL, session = NULL, encoding = 'UTF8') {
 
   lines <- .UTFLines(filepath, encoding)
@@ -636,7 +636,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 
     # State labels
     stateNames <- gsub(charLine.pattern, "\\2", charLines, perl = TRUE)
-    attr(tokens, 'state.labels') <- lapply(stateNames, function (line) {
+    attr(tokens, 'state.labels') <- lapply(stateNames, function(line) {
       states <- strsplit(trimws(line), "\\s+", perl = TRUE)[[1]]
       trimws(gsub("_", " ", states, fixed = TRUE))
     })
@@ -649,14 +649,14 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
   tokens
 }
 
-.UTFLines <- function (filepath, encoding) {
+.UTFLines <- function(filepath, encoding) {
   con <- file(filepath, encoding = encoding)
   on.exit(close(con))
   # Missing EOL might occur in user-generated file, so warning not helpful
   enc2utf8(readLines(con, warn = FALSE))
 }
 
-.RegExpMatches <- function (pattern, string, i = TRUE, nMatch = 1) {
+.RegExpMatches <- function(pattern, string, i = TRUE, nMatch = 1) {
   res <- regexpr(pattern, string, perl = TRUE, ignore.case = i)
   matches <- regmatches(string, res)
   res[res < 0] <- NA
@@ -676,7 +676,7 @@ ReadTntCharacters <- function (filepath, character_num = NULL,
 #'
 #' @importFrom stats setNames
 #' @export
-ReadNotes <- function (filepath, encoding = 'UTF8') {
+ReadNotes <- function(filepath, encoding = 'UTF8') {
   taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
   nTax.pattern <- "DIMENSIONS\\s+.*NTAX\\s*=\\s*(\\d+)"
 
@@ -740,7 +740,7 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
     seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
 
     # Return:
-    setNames(lapply(seqAlongNotes, function (i) {
+    setNames(lapply(seqAlongNotes, function(i) {
       byTaxon <- !is.na(noteChar) & noteChar == i & !is.na(noteTaxon)
       ret <- list(
         noteText[!is.na(noteChar) & noteChar == i & is.na(noteTaxon)],
@@ -764,7 +764,7 @@ ReadNotes <- function (filepath, encoding = 'UTF8') {
 #' @author Martin R. Smith
 #' @family string parsing functions
 #' @export
-EndSentence <- function (string) {
+EndSentence <- function(string) {
   if (length(string)) {
     ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
     ret <- gsub("(\\.[\"'])\\.$", "\\1", ret, perl = TRUE)
@@ -788,7 +788,7 @@ EndSentence <- function (string) {
 #' @author Martin R. Smith
 #' @family string parsing functions
 #' @export
-Unquote <- function (string) {
+Unquote <- function(string) {
   noSingle <- vapply(string, gsub, character(1),
                      pattern = "^\\s*'\\s*(.*?)\\s*'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
   vapply(noSingle, gsub, character(1),
@@ -806,7 +806,7 @@ Unquote <- function (string) {
 #' @family string parsing functions
 #' @author Martin R. Smith
 #' @export
-MorphoBankDecode <- function (string) {
+MorphoBankDecode <- function(string) {
   string <- gsub("^n", "  \n", string, fixed = TRUE)
   string <- gsub("''", "'", string, fixed = TRUE)
   string <- gsub(" - ", " -- ", string, fixed = TRUE)
@@ -847,7 +847,7 @@ MorphoBankDecode <- function (string) {
 #' MatrixToPhyDat(tokens)
 #' @template MRS
 #' @export
-MatrixToPhyDat <- function (tokens) {
+MatrixToPhyDat <- function(tokens) {
   if (inherits(tokens, 'phyDat')) {
     # TODO warn.
     # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
@@ -855,7 +855,7 @@ MatrixToPhyDat <- function (tokens) {
   }
   allTokens <- unique(as.character(tokens))
   if (any(nchar(allTokens) == 0)) {
-    problems <- apply(tokens, 1, function (x) which(nchar(x) == 0))
+    problems <- apply(tokens, 1, function(x) which(nchar(x) == 0))
     problemTaxa <- vapply(problems, length, 1) > 0
     problemTaxa <- names(problemTaxa[problemTaxa])
     warning("Blank tokens ('') found in taxa: ",
@@ -867,7 +867,7 @@ MatrixToPhyDat <- function (tokens) {
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
   whichTokens[allTokens == '?'] <- list(levels)
-  contrast <- vapply(whichTokens, function (x) levels %fin% x,
+  contrast <- vapply(whichTokens, function(x) levels %fin% x,
                      logical(length(levels)))
   contrast <- 1 * if (is.null(dim(contrast))) {
     as.matrix(contrast)
@@ -888,7 +888,7 @@ MatrixToPhyDat <- function (tokens) {
 }
 
 
-.PhyDatWithContrast <- function (dat, contrast) {
+.PhyDatWithContrast <- function(dat, contrast) {
   if (is.null(dim(dat))) {
     dat <- t(t(dat))
   }
@@ -918,7 +918,7 @@ MatrixToPhyDat <- function (tokens) {
   
   # Return:
   structure(
-    lapply(seq_along(tipLabels), function (i) phyMat[i, ]),
+    lapply(seq_along(tipLabels), function(i) phyMat[i, ]),
     #as.list(asplit(phyMat, 1)),
     names  = tipLabels,
     weight = as.integer(weight),
@@ -945,7 +945,7 @@ MatrixToPhyDat <- function (tokens) {
 #' @return `PhyDatToMatrix()` returns a matrix corresponding to the
 #' uncompressed character states within a `phyDat` object.
 #' @export
-PhyDatToMatrix <- function (dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c('[', ']'), sep = '') {
+PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c('[', ']'), sep = '') {
   at <- attributes(dataset)
   allLevels <- as.character(at$allLevels)
   if (inappNA) {
@@ -961,7 +961,7 @@ PhyDatToMatrix <- function (dataset, ambigNA = FALSE, inappNA = ambigNA) {#, par
 
 #' @rdname ReadCharacters
 #' @export
-ReadAsPhyDat <- function (...) {
+ReadAsPhyDat <- function(...) {
   MatrixToPhyDat(ReadCharacters(...))
 }
 
@@ -969,7 +969,7 @@ ReadAsPhyDat <- function (...) {
 #' @rdname ReadCharacters
 #' @param \dots Parameters to pass to `Read[Tnt]Characters()`.
 #' @export
-ReadTntAsPhyDat <- function (...) {
+ReadTntAsPhyDat <- function(...) {
   MatrixToPhyDat(ReadTntCharacters(...))
 }
 
@@ -986,7 +986,7 @@ ReadTntAsPhyDat <- function (...) {
 #'                and named with the taxon name.
 #'
 #' @export
-PhyDat <- function (dataset) {
+PhyDat <- function(dataset) {
   nChar <- length(dataset[[1]])
   if (nChar == 1) {
     mat <- matrix(unlist(dataset), dimnames = list(names(dataset), NULL))
@@ -1016,7 +1016,7 @@ PhyDat <- function (dataset) {
 #' # Gazelle  1230?-
 #'
 #' @export
-StringToPhyDat <- function (string, tips, byTaxon = TRUE) {
+StringToPhyDat <- function(string, tips, byTaxon = TRUE) {
   tokens <- NexusTokens(string)
   if (missing(tips)) {
     tips <- length(tokens)
@@ -1063,7 +1063,7 @@ StringToPhydat <- StringToPhyDat
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
 #' @export
-PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
+PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
   at <- attributes(phy)
   phyLevels <- at$allLevels
@@ -1095,7 +1095,7 @@ PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
          ']' = {openBracket <- '['; closeBracket = ']'},
          {openBracket <- '{'; closeBracket = '}'})
 
-  levelTranslation <- apply(phyContrast, 1, function (x)
+  levelTranslation <- apply(phyContrast, 1, function(x)
     ifelse(sum(x) == 1, as.character(outLevels[x]),
            paste0(c(openBracket, paste0(outLevels[x], collapse=collapse),
                     closeBracket), collapse=''))
@@ -1104,7 +1104,7 @@ PhyToString <- function (phy, parentheses = '{', collapse = '', ps = '',
     levelTranslation[ambigToken] <- '?'
   }
   ret <- vapply(phy,
-                function (x) levelTranslation[x[phyIndex]],
+                function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
   ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
     if (!byTaxon) ret <- t(ret)
@@ -1139,7 +1139,7 @@ PhydatToString <- PhyToString
 #' @template MRS
 #' @export
 #' @family string parsing functions
-RightmostCharacter <- function (string, len = nchar(string)) {
+RightmostCharacter <- function(string, len = nchar(string)) {
   substr(string, len, len)
 }
 

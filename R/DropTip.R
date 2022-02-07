@@ -34,11 +34,11 @@
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function (tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
+DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
 
 #' @rdname DropTip
 #' @export
-DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
+DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (preorder) {
     tree <- Preorder(tree)
   }
@@ -102,7 +102,7 @@ DropTip.phylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 # nodes must all be internal
-.DescendantTips <- function (parent, child, nTip, nodes, isDesc = logical(nTip)) {
+.DescendantTips <- function(parent, child, nTip, nodes, isDesc = logical(nTip)) {
   newDescs <- child[parent %in% nodes]
   recurse <- newDescs > nTip
   
@@ -123,7 +123,7 @@ DropTipPhylo <- DropTip.phylo
 
 #' @rdname DropTip
 #' @export
-DropTip.multiPhylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
+DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   at <- attributes(tree)
   tree <- lapply(tree, DropTip, tip, preorder)
   attributes(tree) <- at
@@ -137,7 +137,7 @@ DropTip.multiPhylo <- function (tree, tip, preorder = TRUE, check = TRUE) {
 #' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
 #' in preorder.
 #' @export
-KeepTip <- function (tree, tip, preorder = TRUE, check = TRUE) {
+KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
   labels <- if (is.character(tip)) {
     TipLabels(tree)
   } else {

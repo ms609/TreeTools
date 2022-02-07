@@ -1,9 +1,9 @@
-AllTreesCounted <- function (trees, rogue) {
+AllTreesCounted <- function(trees, rogue) {
   x <- RoguePlot(trees, rogue, plot = FALSE)
   expect_equal(length(trees), sum(x$onEdge, x$atNode))
 }
 
-ExpectedCons <- function (text) {
+ExpectedCons <- function(text) {
   expected <- Preorder(read.tree(text = text))
   attr(expected, 'order') <- 'cladewise'
   expected
@@ -23,7 +23,7 @@ test_that('Simple rogue plot', {
 
   skip_if_not_installed("vdiffr", "1.0")
   skip_if_not_installed("ape", "5.5.2")
-  RoguePlotTest <- function () {
+  RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees, 'rogue',
               Palette = function(...) hcl.colors(..., palette = 'inferno'),
@@ -44,7 +44,7 @@ test_that("polytomy id", {
                RoguePlot(trees, "rogue", plot = FALSE))
 
   skip_if_not_installed('vdiffr', '1.0')
-  RoguePlotTest <- function () {
+  RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees, 'rogue')
   }
@@ -101,7 +101,7 @@ test_that('Complex rogue plot', {
 
   skip_if_not_installed('vdiffr', '1.0')
   skip_if_not_installed('ape', '5.5.2')
-  RoguePlotTest <- function () {
+  RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees1, 'rogue',
               Palette = function(...) hcl.colors(..., palette = 'inferno'),
@@ -109,7 +109,7 @@ test_that('Complex rogue plot', {
   }
   vdiffr::expect_doppelganger('RoguePlot(trees1)', RoguePlotTest)
 
-  RoguePlotTest <- function () {
+  RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees2, 'rogue', edgeLength = 1:7, thin = 2, fat = 4)
   }

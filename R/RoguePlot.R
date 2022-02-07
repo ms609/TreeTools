@@ -49,7 +49,7 @@
 #' @importFrom grDevices colorRamp colorRampPalette rgb
 #' @family consensus tree functions
 #' @export
-RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
+RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
                        Palette = colorRampPalette(c(par('fg'), '#009E73'),
                                                   space = 'Lab'),
                        nullCol = rgb(colorRamp(unlist(par(c('fg', 'bg'))),
@@ -87,7 +87,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   #allTips <- logical(ceiling((nTip) / 8) * 8L + 2L) # Multiple of 8 for packBits
   allTips <- logical(nTip + 1L) # including dummy
   # dummyRoot is, by definition, always below rogue.
-  aboveRogue <- .vapply(trees, function (tr) {
+  aboveRogue <- .vapply(trees, function(tr) {
     edge <- AddTip(tr, 0, dummyRoot)$edge
     parent <- edge[, 1]
     child <- edge[, 2]
@@ -147,10 +147,10 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
     unmatchedGroup <- aboveRogue[, unmatchedTrees, drop = FALSE]
     nUnmatched <- sum(unmatchedTrees)
 
-    # nodeOverlapsGroup <- apply(unmatchedGroup, 2, function (gp) {
+    # nodeOverlapsGroup <- apply(unmatchedGroup, 2, function(gp) {
     #   apply(nodeDescs[gp, , drop = FALSE], 2, any)
     # })
-    floors <- .apply(unmatchedGroup, 2, function (gp) {
+    floors <- .apply(unmatchedGroup, 2, function(gp) {
        nodeContainsAllGroup <- apply(nodeDescs[, gp, drop = FALSE], 1, all)
        nodeContainsNonGroup <- apply(nodeDescs[, !gp, drop = FALSE], 1, any)
        nodeContainsAllGroup & nodeContainsNonGroup
@@ -158,7 +158,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 
     # active[i, ] != within[i, ], or we'd be on an edge
     atNode <- table(apply(cbind(floors), 2,
-                          function (x) 1 + length(x) - which.max(rev(x))))
+                          function(x) 1 + length(x) - which.max(rev(x))))
     nAtNode[as.integer(names(atNode))] <- atNode
 
   }
@@ -187,7 +187,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 }
 
 # `tree` must be in preorder
-.NodeDescendants <- function (tree, nTip, pole) {
+.NodeDescendants <- function(tree, nTip, pole) {
   parent <- tree$edge[, 1]
   child <- tree$edge[, 2]
   descs <- matrix(FALSE, max(parent), nTip)
@@ -211,7 +211,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
 }
 
 # TODO in r4.1.0 use apply(simplify = false)?
-.vapply <- function (...) {
+.vapply <- function(...) {
   x <- vapply(...)
   if (is.null(dim(x))) {
     x <- matrix(x, 1L)
@@ -221,7 +221,7 @@ RoguePlot <- function (trees, tip, p = 1, plot = TRUE,
   x
 }
 
-.apply <- function (...) {
+.apply <- function(...) {
   x <- apply(...)
   if (is.null(dim(x))) {
     x <- matrix(x, 1L)

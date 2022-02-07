@@ -23,7 +23,7 @@
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function (trees, p = 1, check.labels = TRUE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -96,19 +96,19 @@ Consensus <- function (trees, p = 1, check.labels = TRUE) {
 #'
 #' @template MRS
 #' @export
-ConsensusWithout <- function (trees, tip = character(0), ...) {
+ConsensusWithout <- function(trees, tip = character(0), ...) {
   UseMethod('ConsensusWithout')
 }
 
 #' @rdname ConsensusWithout
 #' @export
-ConsensusWithout.phylo <- function (trees, tip = character(0), ...) {
+ConsensusWithout.phylo <- function(trees, tip = character(0), ...) {
   DropTip(trees, tip = tip)
 }
 
 #' @rdname ConsensusWithout
 #' @export
-ConsensusWithout.multiPhylo <- function (trees, tip = character(0), ...) {
+ConsensusWithout.multiPhylo <- function(trees, tip = character(0), ...) {
   Consensus(lapply(trees, DropTip, tip = tip), ...)
 }
 
@@ -125,7 +125,7 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' `tip`s as a legend.
 #' @importFrom graphics legend
 #' @export
-MarkMissing <- function (tip, position = 'bottomleft', ...) {                   # nocov start
+MarkMissing <- function(tip, position = 'bottomleft', ...) {                   # nocov start
   if (length(tip) > 0) {
     legend(position, legend = gsub('_', ' ', tip, fixed = TRUE),
            lwd = 1, lty = 2, bty = 'n', ...)

@@ -18,7 +18,7 @@ test_that("Consensus() errors", {
 
 test_that("Consensus()", {
 
-  ApeTest <- function (tr, p = 1) {
+  ApeTest <- function(tr, p = 1) {
     # plot(Consensus(tr))
     # plot(consensus(tr))
     skip_if_not_installed('ape', '5.5.1') # Bug in ape::consensus?

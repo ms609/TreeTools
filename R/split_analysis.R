@@ -23,11 +23,11 @@
 #'
 #' @family Splits operations
 #' @export
-TipsInSplits <- function (splits, keep.names = TRUE, ...) UseMethod('TipsInSplits')
+TipsInSplits <- function(splits, keep.names = TRUE, ...) UseMethod('TipsInSplits')
 
 #' @rdname TipsInSplits
 #' @export
-TipsInSplits.Splits <- function (splits, keep.names = TRUE, ...) {
+TipsInSplits.Splits <- function(splits, keep.names = TRUE, ...) {
   ret <- tips_in_splits(splits)
   if (keep.names) names(ret) <- names(splits)
   ret
@@ -35,7 +35,7 @@ TipsInSplits.Splits <- function (splits, keep.names = TRUE, ...) {
 
 #' @rdname TipsInSplits
 #' @export
-TipsInSplits.phylo <- function (splits, keep.names = TRUE, ...) {
+TipsInSplits.phylo <- function(splits, keep.names = TRUE, ...) {
   TipsInSplits(as.Splits(splits, ...), keep.names = keep.names)
 }
 
@@ -45,11 +45,11 @@ TipsInSplits.phylo <- function (splits, keep.names = TRUE, ...) {
 #' i.e. a split that divides leaves evenly has an imbalance of zero; one that
 #' splits two tips from ten has an imbalance of 10 - 2 = 8.
 #' @export
-SplitImbalance <- function (splits, keep.names = TRUE, ...) UseMethod('SplitImbalance')
+SplitImbalance <- function(splits, keep.names = TRUE, ...) UseMethod('SplitImbalance')
 
 #' @rdname TipsInSplits
 #' @export
-SplitImbalance.Splits <- function (splits, keep.names = TRUE, ...) {
+SplitImbalance.Splits <- function(splits, keep.names = TRUE, ...) {
   nTip <- NTip(splits)
   inSplit <- TipsInSplits(splits, keep.names = TRUE, ...)
   outSplit <- nTip - inSplit
