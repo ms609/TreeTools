@@ -116,7 +116,7 @@ TCIContext.phylo <- function(x) {
 }
 
 .MCI <- function(n) { # Lemma 14 in Mir er al 2013
-  if (n < 3L) return (0L)
+  if (n < 3L) return(0L)
   halfN <- n / 2L
   topHalf <- ceiling(halfN)
   btmHalf <- floor(halfN)

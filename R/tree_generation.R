@@ -407,7 +407,7 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape root bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
-  if (length(outgroup) == 1L) return (root(tree, outgroup, resolve.root = TRUE))
+  if (length(outgroup) == 1L) return(root(tree, outgroup, resolve.root = TRUE))
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
   if (!all(outgroup %fin% taxa) ||

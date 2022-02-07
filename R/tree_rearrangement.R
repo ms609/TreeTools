@@ -40,7 +40,7 @@
 #' @importFrom ape root
 #' @export
 RootTree <- function(tree, outgroupTips) {
-  if (missing(outgroupTips)) return (tree)
+  if (missing(outgroupTips)) return(tree)
   if (is.null(outgroupTips) ||
       length(outgroupTips) == 0) {
     return(tree)
@@ -92,7 +92,7 @@ RootTree.phylo <- function(tree, outgroupTips) {
     }
     outgroup <- lca
   }
-  if (outgroup > nTip + tree$Nnode) return (tree)
+  if (outgroup > nTip + tree$Nnode) return(tree)
 
   root_on_node(tree, outgroup)
 }
@@ -159,7 +159,7 @@ RootTree.matrix <- function(tree, outgroupTips) {
         lineage <- which(as.logical(ancestryTable))
         lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
       } else {
-        return (tree)
+        return(tree)
       }
     }
     outgroup <- lca
@@ -306,12 +306,12 @@ UnrootTree <- function(tree) UseMethod('UnrootTree')
 UnrootTree.phylo <- function(tree) {
   tree <- Preorder(tree)
   edge <- tree$edge
-  if (dim(edge)[1] < 3) return (tree)
+  if (dim(edge)[1] < 3) return(tree)
 
   parent <- edge[, 1]
   rootNode <- parent[1]
   rootEdge2 <- parent[-1] == rootNode
-  if (sum(rootEdge2) > 1L) return (tree)
+  if (sum(rootEdge2) > 1L) return(tree)
 
   deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
   renumber <- edge > rootNode
@@ -385,7 +385,7 @@ CollapseNode <- function(tree, nodes) UseMethod('CollapseNode')
 #' @importFrom fastmatch %fin%
 #' @export
 CollapseNode.phylo <- function(tree, nodes) {
-  if (length(nodes) == 0) return (tree)
+  if (length(nodes) == 0) return(tree)
 
   edge <- tree$edge
   lengths <- tree$edge.length
@@ -549,7 +549,7 @@ MakeTreeBinary.multiPhylo <- function(tree) {
 #' @export
 LeafLabelInterchange <- function(tree, n = 2L) {
 
-  if (n < 2L) return (tree)
+  if (n < 2L) return(tree)
   tipLabel <- tree$tip.label
   nTip <- length(tipLabel)
   if (n > nTip) {

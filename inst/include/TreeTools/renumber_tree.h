@@ -261,7 +261,7 @@ namespace TreeTools {
     }
     delete[] children_of;
 
-    return (ret);
+    return(ret);
   }
 
   inline int32 get_subtree_size(int32 node, int32 *subtree_size,
@@ -362,7 +362,7 @@ namespace TreeTools {
     delete[] (children_of);
     std::free(node_order);
 
-    return (ret);
+    return(ret);
   }
 }
 

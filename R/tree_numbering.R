@@ -450,7 +450,7 @@ RenumberTips <- function(tree, tipOrder) UseMethod('RenumberTips')
 RenumberTips.phylo <- function(tree, tipOrder) {
   startOrder <- tree$tip.label
   newOrder <- TipLabels(tipOrder, single = TRUE)
-  if (identical(startOrder, newOrder)) return (tree)
+  if (identical(startOrder, newOrder)) return(tree)
   if (length(startOrder) != length(newOrder)) {
     startOnly <- setdiff(startOrder, newOrder)
     newOnly <- setdiff(newOrder, startOrder)
