@@ -37,7 +37,7 @@ as.TreeNumber(x, ...)
 
 \method{as.MixedBase}{integer64}(x, tipLabels = NULL, ...)
 
-\method{as.MixedBase}{numeric}(x, ...)
+\method{as.MixedBase}{numeric}(x, tipLabels = NULL, ...)
 
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 

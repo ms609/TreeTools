@@ -74,8 +74,9 @@ test_that("as.MixedBase()", {
   expect_equal(as.phylo(1337, 16), as.phylo(mb16, tipLabels = NULL))
   
   expect_error(as.MixedBase(42, TipLabels(2)))
-  expect_equal(as.MixedBase(as.phylo(1337, 16)),
-               as.MixedBase(1337, 16))
+  expect_true(as.MixedBase(as.phylo(1337, 16)) == as.MixedBase(1337, 16))
+  expect_true(as.MixedBase(44) > as.MixedBase(42))
+  expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
   expect_equal(sum(as.integer(as.MixedBase(as.integer64(2^61))) *
                      rev(.TT_BASE)),
                as.integer64(2^61))
