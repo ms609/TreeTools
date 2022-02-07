@@ -398,10 +398,10 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' outgroup taxa are sister to all remaining taxa, without modifying the 
 #' ingroup topology.
 #'
-#' @examples
-#' tree <- EnforceOutgroup(letters[1:9], letters[1:3])
-#' plot(tree)
-#'
+# @examples
+# tree <- EnforceOutgroup(letters[1:9], letters[1:3])
+# plot(tree)
+#
 #' @seealso For a more robust implementation, see [`RootTree()`], which will
 #' eventually replace this function
 #' ([#30](https://github.com/ms609/TreeTools/issues/30)).

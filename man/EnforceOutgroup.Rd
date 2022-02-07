@@ -26,14 +26,12 @@ outgroup taxa are sister to all remaining taxa, without modifying the
 ingroup topology.
 }
 \description{
+Deprecated. Use \code{RootNode()} instead.
+}
+\details{
 Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup
 and outgroup taxa such that the two are sister taxa across the root, without
 changing the relationships within the ingroup or within the outgroup.
-}
-\examples{
-tree <- EnforceOutgroup(letters[1:9], letters[1:3])
-plot(tree)
-
 }
 \seealso{
 For a more robust implementation, see \code{\link[=RootTree]{RootTree()}}, which will
