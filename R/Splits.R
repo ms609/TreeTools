@@ -55,7 +55,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 
   # Return:
-  .as.Splits.edge(x$edge, tipLabels = x$tip.label, asSplits = asSplits,
+  .as.Splits.edge(x$edge, tipLabels = x[["tip.label"]], asSplits = asSplits,
                   nTip = NTip(x), ...)
 }
 
@@ -78,7 +78,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
 
 #' @rdname Splits
 #' @export
-as.Splits.multiPhylo <- function(x, tipLabels = x[[1]]$tip.label,
+as.Splits.multiPhylo <- function(x, tipLabels = x[[1]][["tip.label"]],
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
@@ -126,7 +126,7 @@ as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
 as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], 'phylo')) {
     if (is.null(tipLabels)) {
-      tipLabels <- x[[1]]$tip.label
+      tipLabels <- x[[1]][["tip.label"]]
     }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else if (inherits(x[[1]], 'Splits')) {
@@ -149,9 +149,9 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
     col1 <- x[, 1]
     if (is.list(col1)) {
       if (is.null(tipLabels)) {
-        tipLabels <- col1$tip.label
+        tipLabels <- col1[["tip.label"]]
         if (is.null(tipLabels)) {
-          nTip <- dim(col1$edge)[1] - col1$Nnode + 1L
+          nTip <- dim(col1[["edge"]])[1] - col1[["Nnode"]] + 1L
           tipLabels <- seq_len(nTip)
           x <- rbind(x, replicate(ncol(x), list(tip.label = tipLabels)))
           rownames(x)[nrow(x)] <- 'tip.label'
@@ -302,7 +302,7 @@ as.phylo.Splits <- function(x, ...) {
                         tip.label = TipLabels(x)),
                    order = 'preorder',
                    class = 'phylo')
-  ret$Nnode <- dim(ret$edge)[1] + 1 - NTip(ret)
+  ret[["Nnode"]] <- dim(ret$edge)[1] + 1 - NTip(ret)
   ret
 }
 
@@ -352,12 +352,12 @@ c.Splits <- function(...) {
   } else if (length(elements) == 1L) {
     ret <- x[elements[[1]], , drop = FALSE]
     at <- attributes(x)
-    at$dim<- dim(ret)
-    at$dimnames[[1]] <- rownames(x)[elements[[1]]]
+    at[["dim"]] <- dim(ret)
+    at[["dimnames"]][[1]] <- rownames(x)[elements[[1]]]
     attributes(ret) <- at
     ret
   } else {
-    stop ("Too many dimensions specified")
+    stop("Too many dimensions specified")
   }
 }
 
@@ -402,8 +402,8 @@ unique.Splits <- function(x, incomparables = FALSE, ...) {
   at <- attributes(x)
   dups <- duplicated(x, incomparables, ...)
   x <- x[!dups, , drop = FALSE]
-  at$dim <- dim(x)
-  at$dimnames <- dimnames(x)
+  at[["dim"]] <- dim(x)
+  at[["dimnames"]] <- dimnames(x)
   attributes(x) <- at
   x
 }

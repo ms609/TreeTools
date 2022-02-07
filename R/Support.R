@@ -102,7 +102,7 @@ LabelSplits <- function(tree, labels = NULL, unit = '', ...) {
     warning("Label names do not correspond to splits in tree",
             immediate. = TRUE)
   }
-  whichEdge <- match(as.integer(names(labels)), tree$edge[, 2])
+  whichEdge <- match(as.integer(names(labels)), tree[["edge"]][, 2])
   edgelabels(paste0(labels, unit), edge = whichEdge, ...)
   # Return:
   invisible()
@@ -118,7 +118,7 @@ LabelSplits <- function(tree, labels = NULL, unit = '', ...) {
 #' @export
 SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
-  included <- tipIndex %in% tree$tip.label[tips]
+  included <- tipIndex %in% tree[["tip.label"]][tips]
   as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
 }
 
@@ -127,12 +127,12 @@ SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
 ForestSplits <- function(forest, powersOf2) {
   .Deprecated("SplitFrequency")
   if (inherits(forest, 'phylo')) forest <- c(forest)
-  tipIndex <- sort(forest[[1]]$tip.label)
+  tipIndex <- sort(forest[[1]][["tip.label"]])
   nTip <- length(tipIndex)
 
   # Return:
   table(vapply(forest, function(tr) {
-    edge <- tr$edge
+    edge <- tr[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
     # +2: Don't consider root node (not a node) or first node (duplicated)
