@@ -40,7 +40,7 @@ RenumberEdges(parent, child, ...)
 
 Cladewise(tree, nTip, edge)
 
-\method{Cladewise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Cladewise}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{Cladewise}{list}(tree, nTip, edge)
 
@@ -52,7 +52,7 @@ Cladewise(tree, nTip, edge)
 
 ApePostorder(tree, nTip, edge)
 
-\method{ApePostorder}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{ApePostorder}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{ApePostorder}{list}(tree, nTip, edge)
 
@@ -74,7 +74,7 @@ Postorder(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
 
 Pruningwise(tree, nTip, edge)
 
-\method{Pruningwise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Pruningwise}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{Pruningwise}{list}(tree, nTip, edge)
 
