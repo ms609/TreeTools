@@ -35,7 +35,9 @@ test_that("N consistent with splits calculated correctly", {
 
   Test <- function(...) {
     splits <- c(...)
-    if (length(splits) < 3L) stop ("Designed to test through to NUnrootedMult")
+    if (length(splits) < 3L) {
+      stop("Designed to test through to NUnrootedMult")
+    }
     splits <- splits[splits > 0]
     totalTips <- sum(splits)
     expect_equal(

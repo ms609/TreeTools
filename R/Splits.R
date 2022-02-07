@@ -99,7 +99,7 @@ as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
         attr(x, 'tip.label') <- tipLabels
         x
       } else {
-        stop (length(tipLabels), " labels provided; expecting ", nTip)
+        stop(length(tipLabels), " labels provided; expecting ", nTip)
       }
     } else if (!identical(oldLabels, tipLabels)) {
       nTip <- attr(x, 'nTip')
@@ -112,7 +112,7 @@ as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
                             [, match(tipLabels, oldLabels), drop = FALSE],
                             tipLabels = tipLabels)
         } else {
-          stop ("Old and new labels must match")
+          stop("Old and new labels must match")
         }
       }
     } else {

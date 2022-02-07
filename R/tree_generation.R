@@ -63,7 +63,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (!is.logical(root) && !(length(root) == 1L && root == 1L)) {
     if (isTRUE(root)) root <- 1L
     if (is.character(root)) root <- which(tips == root)
-    if (length(root) == 0L) stop ("No match found for `root`")
+    if (length(root) == 0L) stop("No match found for `root`")
     if (!is.integer(root)) root <- as.integer(root)
     if (length(root) > 1L) {
       root <- root[1]
@@ -313,7 +313,7 @@ Hamming <- function(dataset, ratio = TRUE,
     nanMethod <- pmatch(tolower(ambig[1]),
                         c("median", "mean", "zero", "one", "na", "nan"))
     if (is.na(nanMethod)) {
-      stop("Invalid setting for `ambig`")
+      stop("Invalid `ambig` value specified")
     }
     hamming[is.nan(hamming)] <- switch(nanMethod,
       median(hamming[!is.na(hamming)]),
@@ -415,7 +415,7 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
   ingroup <- taxa[!(taxa %fin% outgroup)]
   if (!all(outgroup %fin% taxa) ||
       length(ingroup) + length(outgroup) != length(taxa)) {
-    stop ("All outgroup taxa must occur in tree")
+    stop("All outgroup taxa must occur in tree")
   }
 
   ingroup.branch <- DropTip(tree, outgroup)

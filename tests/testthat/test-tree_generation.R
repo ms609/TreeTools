@@ -76,7 +76,7 @@ test_that("Hamming() works", {
   expect_equal(as.double(Hamming(dataset, ambig = "mean")), ex)
   ex[is.nan(expected)] <- median(expected[!is.nan(expected)])
   expect_equal(as.double(Hamming(dataset, ambig = "med")), ex)
-  
+  expect_error(Hamming(dataset, ambig = "ERROR"))
 })
 
 test_that("Hamming() handles inapplicables", {
