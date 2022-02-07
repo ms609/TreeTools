@@ -101,6 +101,7 @@ reference:
       - RightmostCharacter
       - SampleOne
       - sapply64
+      - sort.multiPhylo
       - UnshiftTree
 
 template:

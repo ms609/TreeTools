@@ -1,4 +1,9 @@
-# TreeTools 1.6.0.9002
+# TreeTools 1.6.0.9003 #
+
+- `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
+
+- `sort.multiPhylo()` sorts lists of trees according to their mixed base
+  representation ([#84](https://github.com/ms609/TreeTools/issues/84)).
 
 - `%in%.Splits()` retains names when comparing small splits
   ([#40](https://github.com/ms609/TreeTools/issues/40)).
@@ -44,6 +49,8 @@
 # TreeTools 1.5.1
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
+
+- Implement `sort.multiPhylo()`.
 
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 

@@ -94,9 +94,21 @@ test_that("RenumberTips() works correctly", {
                         unname(RenumberTips(mp7, abcd))))
   expect_true(all.equal(structure(b7, class = 'multiPhylo'),
                         unname(RenumberTips(mp7, dcba))))
+  
+  expect_null(RenumberTips(NULL))
 
   expect_error(RenumberTips(l7, letters[1:5]))
   expect_error(RenumberTips(l7, letters[2:5]))
+  
+  
+  expect_equal(
+    attr(
+      RenumberTips(structure(b7, TipLabel = dcba, class = 'multiPhylo'), abcd),
+      'TipLabel'
+    ),
+    abcd
+  )
+    
 })
 
 test_that("Reorder methods work correctly", {

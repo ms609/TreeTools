@@ -25,6 +25,14 @@ edge_to_num <- function(parent, child, nTip) {
     .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
 }
 
+edge_to_mixed_base <- function(parent, child, nTip) {
+    .Call(`_TreeTools_edge_to_mixed_base`, parent, child, nTip)
+}
+
+mixed_base_to_parent <- function(n, nTip) {
+    .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
+}
+
 keep_tip <- function(edge, keep) {
     .Call(`_TreeTools_keep_tip`, edge, keep)
 }

@@ -14,6 +14,7 @@ test_that("as.phylo.numeric()", {
 
 test_that("as.TreeNumber() error handling", {
   expect_error(as.phylo(integer64(1), NULL, NULL))
+  expect_error(as.TreeNumber(StarTree(5)))
   expect_warning(as.TreeNumber(BalancedTree(20)))
 })
 
@@ -36,8 +37,48 @@ test_that("as.TreeNumber()", {
 
   tn16 <- as.TreeNumber(as.phylo(1, 16, letters[1:16]))
   expect_equal(as.phylo(1, 16), as.phylo(tn16, tipLabels = NULL))
+  expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
 
   bigNumber <- as.integer64(11 * 2^31 + 1234)
   tn16 <- as.TreeNumber(as.phylo(bigNumber, 16, letters[1:16]))
   expect_equal(as.phylo(bigNumber, 16), as.phylo(tn16, tipLabels = NULL))
+  expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
+  
+})
+
+test_that("as.MixedBase()", {
+  expect_equal(as.MixedBase(as.phylo(0, 6)),
+               structure(integer(3),
+                         nTip = 6,
+                         tip.label = paste0('t', 1:6),
+                         binary = TRUE,
+                         class = "MixedBase"))
+  
+  expect_equal(as.MixedBase(as.phylo(105, 20)),
+               structure(tabulate(17 - 3, 17),
+                         nTip = 20,
+                         tip.label = paste0('t', 1:20),
+                         binary = TRUE,
+                         class = "MixedBase"))
+  
+  expect_equal(unlist(lapply(1:3, function(n) as.MixedBase(as.phylo(n, 6)))),
+               unlist(as.MixedBase(as.phylo(1:3, 6))))
+  
+  mb3 <- as.MixedBase(as.phylo(1, 3, letters[1:3]))
+  expect_equal(as.phylo(1, 3), as.phylo(mb3, tipLabels = NULL))
+  
+  mb6 <- as.MixedBase(as.phylo(1, 6, letters[1:6]))
+  expect_equal(as.phylo(1, 6), as.phylo(mb6, tipLabels = NULL))
+  
+  mb16 <- as.TreeNumber(as.phylo(1337, 16, letters[1:16]))
+  expect_equal(as.phylo(1337, 16), as.phylo(mb16, tipLabels = NULL))
+  
+  expect_error(as.MixedBase(42, TipLabels(2)))
+  expect_true(as.MixedBase(as.phylo(1337, 16)) == as.MixedBase(1337, 16))
+  expect_true(as.MixedBase(44) > as.MixedBase(42))
+  expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
+  expect_equal(sum(as.integer(as.MixedBase(as.integer64(2^61))) *
+                     rev(.TT_BASE)),
+               as.integer64(2^61))
+  
 })
