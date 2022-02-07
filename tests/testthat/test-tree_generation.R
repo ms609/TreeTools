@@ -123,14 +123,3 @@ test_that("Constrained NJ trees work", {
 test_that("Hamming() fails nicely", {
   expect_error(Hamming(matrix(1:4, 2, 2)))
 })
-
-test_that("EnforceOutgroup() fails nicely", {
-  expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
-  expect_error(EnforceOutgroup(BalancedTree(6), c('t1', 'Non-taxon')))
-  expect_true(all.equal(
-    BalancedTree(letters[5:6]),
-    Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15)
-    ))
-  expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
-               EnforceOutgroup(BalancedTree(8), 't1'))
-})
