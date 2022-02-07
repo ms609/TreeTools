@@ -266,7 +266,7 @@ AddTip <- function(tree,
 
     }
   )
-  tree$tip.label <- c(tree$tip.label, label)
+  tree[["tip.label"]] <- c(tree[["tip.label"]], label)
 
   nNode <- nNode + 1L
   tree[["Nnode"]] <- nNode
@@ -374,7 +374,7 @@ AddTipEverywhere <- function(tree, label = "New tip", includeRoot = FALSE) {
 #'
 #' @examples
 #' tree <- PectinateTree(5)
-#' edge   <- tree$edge
+#' edge <- tree[["edge"]]
 #'
 #' # Identify desired node with:
 #' plot(tree)

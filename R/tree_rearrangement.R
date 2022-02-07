@@ -226,7 +226,7 @@ RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
           child <- child[!deletedEdge]
           parent[parent > node] <- parent[parent > node] - 1L
           child[child > node] <- child[child > node] - 1L
-          tree$Nnode <- tree[["Nnode"]] - 1L
+          tree[["Nnode"]] <- tree[["Nnode"]] - 1L
         }
         inverters <- logical(length(parent))
       } else {
@@ -253,7 +253,7 @@ RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
           parent[parent > rootNode] <- parent[parent > rootNode] - 1L
           child[child > rootNode] <- child[child > rootNode] - 1L
 
-          tree$Nnode <- tree[["Nnode"]] - 1L
+          tree[["Nnode"]] <- tree[["Nnode"]] - 1L
         }
       }
     } else {
@@ -263,14 +263,14 @@ RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
         parent <- c(parent, newNode)
         child <- c(child, parent[nodeParentEdge])
         parent[nodeParentEdge] <- newNode
-        tree$Nnode <- 1L + tree[["Nnode"]]
+        tree[["Nnode"]] <- 1L + tree[["Nnode"]]
       } else {
         inverters <- EdgeAncestry(which(nodeParentEdge), parent, child,
                                   stopAt = rootEdges)
       }
     }
-    tree$edge <- RenumberTree(ifelse(inverters, child, parent),
-                              ifelse(inverters, parent, child))
+    tree[["edge"]] <- RenumberTree(ifelse(inverters, child, parent),
+                                   ifelse(inverters, parent, child))
     attr(tree, 'order') <- 'preorder'
     tree
   } else {

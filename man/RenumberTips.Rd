@@ -22,7 +22,7 @@ RenumberTips(tree, tipOrder)
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tipOrder}{A character vector containing the values of
-\code{tree$tip.label} in the desired sort order, or an object
+\code{tree[["tip.label"]]} in the desired sort order, or an object
 (perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
 }
 \value{
@@ -31,7 +31,7 @@ representation numbered to match \code{tipOrder}.
 }
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree \code{tree}
-such that the indices in \code{tree$edge[, 2]} correspond to the order of
+such that the indices in \code{tree[["edge"]][, 2]} correspond to the order of
 leaves given in \code{tipOrder}.
 }
 \examples{

@@ -287,7 +287,7 @@ TipLabels.list <- function(x, single = FALSE) {
   xTipLabel <- x[["tip.label"]]
   if (!is.null(xTipLabel)) {
     if (is.list(xTipLabel) && !is.null(xTipLabel[["tip.label"]])) {
-      return(xTipLabel$tip.label)
+      return(xTipLabel[["tip.label"]])
     } else {
       return(xTipLabel)
     }
@@ -354,7 +354,7 @@ TipLabels.multiPhylo <- function(x, single = FALSE) {
   }
   if (single) {
     firstEntry <- x[[1]]
-    if (!is.null(firstEntry$tip.label)) {
+    if (!is.null(firstEntry[["tip.label"]])) {
       return(firstEntry[["tip.label"]])
     }
   } else {

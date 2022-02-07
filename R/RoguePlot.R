@@ -165,7 +165,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   cons <- DropTip(cons, dummyRoot)
   if (!is.null(edgeLength)) {
-    cons$edge.length <- rep_len(edgeLength, dim(cons[["edge"]])[1])
+    cons[["edge.length"]] <- rep_len(edgeLength, dim(cons[["edge"]])[1])
   }
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
 

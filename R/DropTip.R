@@ -91,7 +91,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     }
     
     keep <- !tabulate(drop, nbins = nTip)
-    tree$edge <- keep_tip(tree[["edge"]], keep)
+    tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
     attr(tree, 'order') <- 'cladewise' # some nodes may be rotated from preorder
     tree[["tip.label"]] <- labels[-drop]
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - (nTip - nDrop)

@@ -13,8 +13,9 @@
 number generator in C++.}
 }
 \value{
-Integer vector corresponding to the 'parent' entry of \code{tree$edge},
-where the 'child' entry, i.e. column 2, is numbered sequentially from \code{1:n}.
+Integer vector corresponding to the 'parent' entry of
+\code{tree[["edge"]]}, where the 'child' entry, i.e. column 2, is numbered
+sequentially from \code{1:n}.
 }
 \description{
 Random parent vector

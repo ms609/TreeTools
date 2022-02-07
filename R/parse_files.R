@@ -1070,14 +1070,14 @@ PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
   if (sum(phyLevels == '-') > 1) {
     stop("More than one inapplicable level identified.  Is phy$levels malformed?")
   }
-  phyChars <- at$nr
-  phyContrast <- at$contrast == 1
+  phyChars <- at[["nr"]]
+  phyContrast <- at[["contrast"]] == 1
   phyIndex <- if (useIndex) {
     at[["index"]]
   } else {
     seq_len(phyChars)
   }
-  outLevels <- at$levels
+  outLevels <- at[["levels"]]
 
   levelLengths <- vapply(outLevels, nchar, integer(1))
   longLevels <- levelLengths > 1

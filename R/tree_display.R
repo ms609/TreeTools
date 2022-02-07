@@ -3,7 +3,8 @@
 #' `SortTree()` sorts each node into a consistent order, so that node rotation
 #' does not obscure similarities between similar trees.
 #'
-#' At each node, clades will be listed in `tree$edge` in decreasing size order.
+#' At each node, clades will be listed in `tree[["edge"]]` in decreasing size
+#' order.
 #'
 #' Clades that contain the same number of leaves are sorted in decreasing order
 #' of minimum leaf number, so (2, 3) will occur before (1, 4).

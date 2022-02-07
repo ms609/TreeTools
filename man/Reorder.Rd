@@ -108,7 +108,7 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 \item{nTip}{Integer specifying number of tips (leaves).}
 
 \item{edge}{Two-column matrix listing the parent and child of each edge in a
-tree, corresponding to \code{tree$edge}. Optional in \code{Cladewise()}.}
+tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
 postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}

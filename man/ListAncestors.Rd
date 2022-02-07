@@ -46,7 +46,7 @@ This will be true of trees listed in \link{Preorder}.
 
 \examples{
 tree <- PectinateTree(5)
-edge   <- tree$edge
+edge <- tree[["edge"]]
 
 # Identify desired node with:
 plot(tree)

@@ -98,8 +98,9 @@ RandomTree <- function(tips, root = FALSE, nodes) {
 #' @param seed (Optional) Integer with which to seed Mersenne Twister random
 #' number generator in C++.
 #'
-#' @return Integer vector corresponding to the 'parent' entry of `tree$edge`,
-#' where the 'child' entry, i.e. column 2, is numbered sequentially from `1:n`.
+#' @return Integer vector corresponding to the 'parent' entry of
+#' `tree[["edge"]]`, where the 'child' entry, i.e. column 2, is numbered
+#' sequentially from `1:n`.
 #' @template MRS
 #' @keywords internal
 #' @importFrom stats runif

@@ -152,7 +152,7 @@ UnrootedTreeWithShape <- function(shape, nTip, tipLabels = character(nTip)) {
 #' @export
 UnrootedTreeWithKey <- function(key, nTip, tipLabels = character(nTip)) {
   AddRoot <- function(x) {
-    x$root.edge <- 1L
+    x[["root.edge"]] <- 1L
     x
   }
   SingleTaxonTree(tipLabels[1]) + SingleTaxonTree(tipLabels[2]) +

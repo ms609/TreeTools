@@ -39,13 +39,13 @@ as many checks on user input.  Bad input could crash R.
 \examples{
 nTip <- 8L
 tree <- BalancedTree(nTip)
-edge <- tree$edge
+edge <- tree[["edge"]]
 pruningwise <- NeworderPruningwise(nTip, tree$Nnode, edge[, 1], edge[, 2],
                                    dim(edge)[1])
 cladewise <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 1L)
 postorder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 2L)
 
-tree$edge <- tree$edge[pruningwise, ]
+tree[["edge"]] <- tree[["edge"]][pruningwise, ]
 
 }
 \seealso{

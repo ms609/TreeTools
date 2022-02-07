@@ -28,7 +28,8 @@ in each tree sorted such that the larger clade is first.
 does not obscure similarities between similar trees.
 }
 \details{
-At each node, clades will be listed in \code{tree$edge} in decreasing size order.
+At each node, clades will be listed in \code{tree[["edge"]]} in decreasing size
+order.
 
 Clades that contain the same number of leaves are sorted in decreasing order
 of minimum leaf number, so (2, 3) will occur before (1, 4).

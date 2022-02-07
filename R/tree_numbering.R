@@ -17,13 +17,13 @@
 #' @examples
 #' nTip <- 8L
 #' tree <- BalancedTree(nTip)
-#' edge <- tree$edge
+#' edge <- tree[["edge"]]
 #' pruningwise <- NeworderPruningwise(nTip, tree$Nnode, edge[, 1], edge[, 2],
 #'                                    dim(edge)[1])
 #' cladewise <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 1L)
 #' postorder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 2L)
 #'
-#' tree$edge <- tree$edge[pruningwise, ]
+#' tree[["edge"]] <- tree[["edge"]][pruningwise, ]
 #'
 #' @author
 #'  - C algorithm: Emmanuel Paradis
@@ -139,7 +139,7 @@ RenumberEdges <- function(parent, child, ...) {
 #' @template treeParam
 #' @template nTipParam
 #' @param edge Two-column matrix listing the parent and child of each edge in a
-#' tree, corresponding to `tree$edge`. Optional in `Cladewise()`.
+#' tree, corresponding to `tree[["edge"]]`. Optional in `Cladewise()`.
 #' @param renumber Logical specifying whether to renumber nodes such that they
 #' increase in number away from the root.
 #'
@@ -234,7 +234,7 @@ ApePostorder.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
   if (nb.node == 1) return(tree)
   if (nb.node >= nTip) stop("`tree` apparently badly conformed")
   neworder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nb.edge, 2L)
-  tree$edge <- edge[neworder, ]
+  tree[["edge"]] <- edge[neworder, ]
   if (!is.null(tree[["edge.length"]])) {
     tree[["edge.length"]] <- tree[["edge.length"]][neworder]
   }
@@ -431,12 +431,12 @@ Preorder.NULL <- function(tree) NULL
 #' Renumber a tree's tips
 #'
 #' `RenumberTips(tree, tipOrder)` sorts the tips of a phylogenetic tree `tree`
-#' such that the indices in `tree$edge[, 2]` correspond to the order of
+#' such that the indices in `tree[["edge"]][, 2]` correspond to the order of
 #' leaves given in `tipOrder`.
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
-#'        \code{tree$tip.label} in the desired sort order, or an object
+#'        `tree[["tip.label"]]` in the desired sort order, or an object
 #'        (perhaps of class `phylo` or `Splits`) with tip labels.
 #'
 #' @return `RenumberTips()` returns `tree`, with the tips' internal

@@ -69,7 +69,7 @@ ImposeConstraint <- function(tree, constraint) {
   for (node in polytomies) {
     nodeKids <- edge[edge[, 1] == node, 2]
     standIns <- vapply(nodeKids, .ChildAtEnd, 1)
-    kept <- KeepTip(tree, standIns)$edge
+    kept <- KeepTip(tree, standIns)[["edge"]]
     newNodes <- kept > length(standIns)
     kept[newNodes] <- kept[newNodes] - kept[1] + max(edge[, 1])
     kept[kept == kept[1]] <- node
