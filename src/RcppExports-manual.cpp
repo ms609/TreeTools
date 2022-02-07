@@ -1,5 +1,5 @@
 #include "../inst/include/TreeTools.h"
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 
 using namespace Rcpp;
 

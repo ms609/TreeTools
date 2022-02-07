@@ -1,4 +1,4 @@
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include <random>
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
