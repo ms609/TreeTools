@@ -548,9 +548,12 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
 #' @rdname ReadCharacters
 #' @export
 ReadTntCharacters <- function(filepath, character_num = NULL,
-                               type = NULL, session = NULL, encoding = 'UTF8') {
+                              type = NULL, session = NULL, encoding = "UTF8") {
 
   lines <- .UTFLines(filepath, encoding)
+  lines <- gsub("(?:;\\s*)+(\\S)", ";!TREETOOLS_LINE_BREAK!\\1", lines,
+                perl = TRUE)
+  lines <- unlist(strsplit(lines, "!TREETOOLS_LINE_BREAK!"))
   tntComment.pattern <- "'[^']*'"
   lines <- gsub(tntComment.pattern, "", lines, perl = TRUE)
   multilineComments <- grep("'", lines, fixed = TRUE)
@@ -566,8 +569,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   semicolons <- grep(';', lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep('^XREAD\\b', lines, ignore.case = TRUE, perl = TRUE)
-  if (length(xread) < 1) return(NULL)
+  xread <- grep("^XREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
+  if (length(xread) < 1) {
+    return(NULL)
+  }
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
             "contact 'TreeTools' maintainer to request.",
@@ -579,21 +584,37 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   if (lines[xreadEnd] == ';') {
     xreadEnd <- xreadEnd - 1L
   }
-  xreadLines <- lines[xread:xreadEnd]
-  xDimPos <- regexec("'?\\s*(\\d+)\\s*(\\d+)\\s*$", xreadLines)
-  xDimLine <- which(vapply(xDimPos, `[`, 1, 1) > -1)[1]
-  dimText <- xreadLines[xDimLine]
-  dimHit <- xDimPos[[xDimLine]]
-  nChar <- as.integer(substr(dimText, dimHit[2], dimHit[2] + attr(dimHit, 'match.length')[2] - 1L))
-  nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] + attr(dimHit, 'match.length')[3] - 1L))
-  matrixLines <- xreadLines[-seq_len(xDimLine)]
+  xreadCommand <- paste(lines[xread:xreadEnd], collapse = " ")
+  .RegMatches <- function(expr, txt, ...) {
+    matches <- regexec(expr, txt, perl = TRUE, ...)[[1]]
+    if (matches[1] == -1L) {
+      return(NULL)
+    }
+    nMatch <- length(matches)
+    lengths <- attr(matches, "match.length")
+    vapply(seq_len(nMatch), function(match) {
+      substr(txt, matches[match], matches[match] + lengths[match] - 1L)
+    }, character(1))
+  }
+  xDim <- .RegMatches("^xread\\s+(\\d+)\\s*(\\d+)\\s*", xreadCommand)
+  if (is.null(xDim)) {
+    stop("xread command malformed; could not find nchar / ndim")
+  }
+  
+  nChar <- as.integer(xDim[2])
+  nTip <- as.integer(xDim[3])
+  
+  
 
-  ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
+  ctypes <- .RegMatches("^&\\[[\\w\\s]+\\]$", xreadCommand)
+  
+  ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", xreadCommand, perl = TRUE)
   if (is.null(type)) {
-    if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
+    xreadCommand <- gsub("\\[[\\w\\s]+\\]", "", xreadCommand)
   } else {
     types <- matrixLines[ctypeLines]
-    blocks <- lapply(paste0("\\b", type, "\\b"), grep, types, ignore.case = TRUE)
+    blocks <- lapply(paste0("\\b", type, "\\b"), grep, types,
+                     ignore.case = TRUE)
     nBlocks <- vapply(blocks, length, 0)
     if (any(nBlocks == 0)) {
       message("Tags ", paste0(type[nBlocks == 0], collapse = ', '),
@@ -605,14 +626,30 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
       apply(blockSpan[unlist(blocks), , drop = FALSE],  1,
             function(x) seq.int(from = x[1], to = x[2])))]
   }
-
+  
+  ret <- matrix(NA_character_, nTip, nChar)
+  pointer <- nchar(xDim[1]) + 1L
+  xreadChar <- nchar(xreadCommand)
+  while (pointer < nchar(xreadCommand)) {
+    mtch <- .RegMatches("^\\s*[\\w_@]+",
+                        substr(xreadCommand, pointer, xreadChar))
+    if(is.null(mtch)) {
+      indent <- nchar("Error: Couldn't parse TNT data at:")
+      stop("Couldn't parse TNT data at: \n",
+           rep("█", max(0L, indent - pointer)),
+           substr(xreadCommand, max(pointer - indent, 0), pointer - 1L),
+           "<<HERE>>",
+           substr(xreadCommand, pointer, pointer + indent))
+    }
+  }
+    
   tokens <- ExtractTaxa(matrixLines, character_num, session)
   if (nrow(tokens) != nTip) {
     warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
             ": please check output and report bugs.")                           # nocov
   }
-  labelStart <- which(upperLines == 'CHARLABELS')
-  if (length(labelStart) == 1) {
+  labelStart <- grep("^CHARLABELS\\b", lines, ignore.case = TRUE, perl = TRUE)
+   if (length(labelStart) == 1) {
     labelEnd <- semicolons[semicolons > labelStart][1]
     if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
     #attr(dat, 'char.labels')
@@ -622,8 +659,8 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
       return(list("Multiple CharLabels blocks in Nexus file."))
   }
 
-
-  labelStart <- which(upperLines == 'CNAMES')
+  
+  labelStart <- grep("^CNAMES\\b", lines, ignore.case = TRUE, perl = TRUE)
   if (length(labelStart) == 1) {
     labelEnd <- semicolons[semicolons > labelStart][1]
     if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
