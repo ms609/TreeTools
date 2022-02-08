@@ -119,11 +119,16 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
 
 #' @export
 #' @rdname SortTree
-SortTree.list <- function(tree) lapply(tree, SortTree)
+SortTree.list <- function(tree, how = "cladesize",
+                          order = TipLabels(tree[[1]])) {
+  lapply(tree, SortTree, how = how, order = order)
+}
 
 #' @export
 #' @rdname SortTree
-SortTree.multiPhylo <- function(tree) {
+SortTree.multiPhylo <- function(tree,
+                                how = "cladesize",
+                                order = TipLabels(tree[[1]])) {
   tree[] <- SortTree.list(tree)
   tree
 }

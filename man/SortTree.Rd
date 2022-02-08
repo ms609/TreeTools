@@ -11,9 +11,9 @@ SortTree(tree, how = "cladesize", order = TipLabels(tree))
 
 \method{SortTree}{phylo}(tree, how = "cladesize", order = TipLabels(tree))
 
-\method{SortTree}{list}(tree)
+\method{SortTree}{list}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
 
-\method{SortTree}{multiPhylo}(tree)
+\method{SortTree}{multiPhylo}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
 }
 \arguments{
 \item{tree}{One or more trees of class \code{phylo}, optionally as a list
