@@ -19,7 +19,10 @@
 #' thus appearing lower when plotted;
 #' `"TipLabels"` rotates nodes such that labels listed sooner in `order`
 #' are listed first, and thus plot lower.
-#' @param order Sequence of tip labels
+#' @param order Character vector listing tip labels in sequence they should
+#' appear on tree. Clades containing a taxon earlier in this list will be listed
+#' sooner and thus plot lower on a tree.  Taxa not listed in `order` will be
+#' treated as if they were last in the list.
 #'
 #' @return `SortTree()` returns tree in the format of `tree`, with each node
 #' in each tree sorted 

@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9005 #
+# TreeTools 1.6.0.9006 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -17,7 +17,8 @@
 - Fix bug when tree is rooted on a discontinuous outgroup.
 
 - `SortTree()` handles non-binary trees
-  ([#25](https://github.com/ms609/TreeTools/issues/25)).
+  ([#25](https://github.com/ms609/TreeTools/issues/25)) and gains option to
+  sort by tip labels.
 
 - Use lighter Rcpp headers.
 
