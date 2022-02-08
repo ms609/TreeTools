@@ -4,7 +4,7 @@
 #include <cassert>
 #include <cstdio>
 #include <cstdlib> /* for calloc */
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include "types.h"
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);

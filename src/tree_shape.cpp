@@ -1,4 +1,4 @@
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include "../inst/include/TreeTools/types.h"
 using namespace Rcpp;
 using namespace std;

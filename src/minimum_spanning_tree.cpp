@@ -1,4 +1,4 @@
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include <vector> /* for vector */
 #include <cmath> /* for ceil, sqrt() */
 #include "../inst/include/TreeTools/types.h"

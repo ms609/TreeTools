@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.6.0.9004
+Version: 1.6.0.9005
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -46,7 +46,7 @@ Suggests:
     spelling,
     knitr,
     phangorn (>= 2.2.1),
-    Rcpp,
+    Rcpp (>= 1.0.8),
     rmarkdown,
     shiny,
     testthat (>= 3.0),
