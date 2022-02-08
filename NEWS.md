@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9005 #
+# TreeTools 1.6.0.9007 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -22,6 +22,8 @@
 - Use lighter Rcpp headers.
 
 - Small improvements to computational efficiency.
+
+- `SpectrumLegend()` adds gradients to plot legends.
 
 - Remove deprecated function `PostorderEdges()`
   ([#35](https://github.com/ms609/TreeTools/issues/35)).
