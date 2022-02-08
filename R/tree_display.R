@@ -14,10 +14,15 @@
 #'
 #' @param tree One or more trees of class `phylo`, optionally as a list
 #' or a `multiPhylo` object.
+#' @param how Character vector specifying sort method:
+#' `"Cladesize"` rotates each node such that the larger clade is first,
+#' thus appearing lower when plotted;
+#' `"TipLabels"` rotates nodes such that labels listed sooner in `order`
+#' are listed first, and thus plot lower.
+#' @param order Sequence of tip labels
 #'
 #' @return `SortTree()` returns tree in the format of `tree`, with each node
-#' in each tree sorted such that the larger clade is first, thus appearing
-#' lower when plotted.
+#' in each tree sorted 
 #'
 #' @seealso `Preorder()` also rearranges trees into a consistent shape, but
 #' based on the index of leaves rather than the size of subtrees.
@@ -31,15 +36,19 @@
 #' ape::nodelabels()
 #' ape::edgelabels()
 #' ape::tiplabels(adj = c(2, 1/3))
+#' 
+#' plot(SortTree(messyTree, how = "tip"))
 #' @template MRS
 #' @family tree manipulation
 #'
 #' @export
-SortTree <- function(tree) UseMethod('SortTree')
+SortTree <- function(tree, how = "cladesize", order = TipLabels(tree)) {
+  UseMethod('SortTree')
+}
 
 #' @export
 #' @rdname SortTree
-SortTree.phylo <- function(tree) {
+SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -51,16 +60,39 @@ SortTree.phylo <- function(tree) {
   }
   
   descendants <- .ListDescendents(tree)
-  nDescendants <- vapply(descendants, length, integer(1))
-  MinKid <- function(tips) min(tipLabels[tips])
-  for (node in nTip + seq_len(tree[["Nnode"]])) {
-    childEdges <- parent == node
-    kids <- child[childEdges]
-    newOrder <- order(nDescendants[kids],
-                      vapply(descendants[kids], MinKid, tipLabels[1]),
-                      method = "radix", decreasing = TRUE)
-    child[childEdges] <- kids[newOrder]
+  method <- pmatch(tolower(how), c("cladesize", "tiplabels"))
+  if (is.na(method)) {
+    warning("`how` must be an unambiguous contraction of ",
+              "\"cladesize\" or \"tiplabels\"")
+    method <- 1L
   }
+    
+  
+  switch(method,
+    { # Clade Size
+      nDescendants <- vapply(descendants, length, integer(1))
+      MinKid <- function(tips) min(tipLabels[tips])
+      for (node in nTip + seq_len(tree[["Nnode"]])) {
+        childEdges <- parent == node
+        kids <- child[childEdges]
+        newOrder <- order(nDescendants[kids],
+                          vapply(descendants[kids], MinKid, tipLabels[1]),
+                          method = "radix", decreasing = TRUE)
+        child[childEdges] <- kids[newOrder]
+      }
+    }, { # Tip labels
+      weights <- match(TipLabels(tree), order, nomatch = NTip(tree) + 1L)
+      MinKid <- function(tips) min(weights[tips])
+      for (node in nTip + seq_len(tree[["Nnode"]])) {
+        childEdges <- parent == node
+        kids <- child[childEdges]
+        newOrder <- order(vapply(descendants[kids], MinKid, integer(1)),
+                          method = "radix")
+        child[childEdges] <- kids[newOrder]
+    }
+  })
+  
+ 
   tree[["edge"]][, 2] <- child
   attr(tree, 'order') <- NULL
   Renumber(tree)
