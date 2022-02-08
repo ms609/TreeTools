@@ -2,7 +2,7 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include "../inst/include/TreeTools.h"
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 
 using namespace Rcpp;
 
@@ -31,18 +31,6 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
     rcpp_result_gen = Rcpp::wrap(consensus_tree(trees, p));
-    return rcpp_result_gen;
-END_RCPP
-}
-// drop_tip
-IntegerMatrix drop_tip(const IntegerMatrix edge, const IntegerVector drop);
-RcppExport SEXP _TreeTools_drop_tip(SEXP edgeSEXP, SEXP dropSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector >::type drop(dropSEXP);
-    rcpp_result_gen = Rcpp::wrap(drop_tip(edge, drop));
     return rcpp_result_gen;
 END_RCPP
 }
