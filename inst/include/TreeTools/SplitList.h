@@ -1,7 +1,7 @@
 #ifndef _TREETOOLS_SPLITLIST_H
 #define _TREETOOLS_SPLITLIST_H
 
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 
 #include "types.h" /* for int16 */
 
@@ -12,7 +12,8 @@
 #define SL_MAX_SPLITS SL_MAX_TIPS /* -3, but quicker if a power of two? */
 
 #define INLASTBIN(n, size) ((size) - ((size) - ((n) % (size))) % (size))
-#define INSUBBIN(bin, offset) splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
+#define INSUBBIN(bin, offset)                                  \
+  splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
 
 #define right16bits splitbit(65535U)

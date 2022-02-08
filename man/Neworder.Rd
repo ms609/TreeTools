@@ -8,7 +8,7 @@
 \usage{
 NeworderPruningwise(nTip, nNode, parent, child, nEdge)
 
-NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
+NeworderPhylo(nTip, parent, child, nEdge, whichwise)
 }
 \arguments{
 \item{nTip, nNode, nEdge}{Integer specifying the number of tips, nodes
