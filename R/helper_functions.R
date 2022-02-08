@@ -106,11 +106,9 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' 
 #' @param x0,y0,x1,y1 Coordinates of the bottom-left and top-right end of the
 #' bar.
-#' @param absolute Logical specifying whether `x0`, `y1`, etc denote
+#' @param absolute Logical specifying whether `x` and `y` values denote
 #' coordinates (`TRUE`) or relative position, where (0, 0) denotes the
 #' bottom-left of the plot area and (1, 1) the top right.
-#' @param xSize,ySize Length of bar, in absolute units or as a proportion of the
-#' plotting area.
 #' @param legend Character vector with which to label points on `palette`.
 #' @param palette Colour palette to depict.
 #' @param lwd,lty,lend Additional parameters to [`segments()`],
@@ -125,6 +123,7 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
 #'                legend = seq(1, 9, by = 2), palette = 1:9, pos = 1)
 #' @template MRS
+#' @importFrom graphics segments text
 #' @export
 SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            x1 = x0, y1 = y0 + 0.2,

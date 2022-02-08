@@ -23,7 +23,7 @@ SpectrumLegend(
 \item{x0, y0, x1, y1}{Coordinates of the bottom-left and top-right end of the
 bar.}
 
-\item{absolute}{Logical specifying whether \code{x0}, \code{y1}, etc denote
+\item{absolute}{Logical specifying whether \code{x} and \code{y} values denote
 coordinates (\code{TRUE}) or relative position, where (0, 0) denotes the
 bottom-left of the plot area and (1, 1) the top right.}
 
@@ -35,9 +35,6 @@ bottom-left of the plot area and (1, 1) the top right.}
 controlling line style.}
 
 \item{pos, \dots}{Additional parameters to \code{\link[=text]{text()}}.}
-
-\item{xSize, ySize}{Length of bar, in absolute units or as a proportion of the
-plotting area.}
 }
 \description{
 Prints an annotated vertical bar coloured according to a continuous palette.
