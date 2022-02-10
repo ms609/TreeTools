@@ -96,14 +96,14 @@ namespace TreeTools {
       edge = reweighted[1];
       weight = reweighted[2];
     }
-    Rcpp::List ret = Rcpp::clone(phy);
-    ret.attr("order") = "preorder";
     if (outgroup < 1) {
       throw std::range_error("`outgroup` must be a positive integer");
     }
     if (outgroup > max_node) {
       throw std::range_error("`outgroup` exceeds number of nodes");
     }
+    Rcpp::List ret = Rcpp::clone(phy);
+    ret.attr("order") = "preorder";
     if (outgroup == root_node) {
       ret["edge"] = edge;
       ret["edge.weight"] = weight;
@@ -131,7 +131,7 @@ namespace TreeTools {
           edge(root_edges[1], 1) == outgroup) {
         return phy;
       }
-      // #TODO work in situ without clone
+      // #TODO work in situ without clone?
       Rcpp::IntegerMatrix new_edge = clone(edge);
 
       // We'll later add an edge from the now-unallocated root node to the outgroup.
@@ -148,8 +148,16 @@ namespace TreeTools {
       intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
-      ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                             new_edge(Rcpp::_, 1));
+      if (weight == R_NilValue) {
+        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                               new_edge(Rcpp::_, 1));
+      } else {
+        List preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
+                                              new_edge(Rcpp::_, 1),
+                                              weight);
+        ret["edge"] = preorder_res[1];
+        ret["edge.length"] = preorder_res[2];
+      }
 
     } else { // Root node will be retained; we need a new root edge
 
@@ -172,9 +180,18 @@ namespace TreeTools {
       }
 
       ret["Nnode"] = n_node + 1;
-      ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                             new_edge(Rcpp::_, 1));
-
+      if (weight == R_NilValue) {
+        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                               new_edge(Rcpp::_, 1));
+      } else {
+        List preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
+                                              new_edge(Rcpp::_, 1),
+                                              // TODO NEW WEIGHT
+                                              weight);
+        ret["edge"] = preorder_res[1];
+        ret["edge.length"] = preorder_res[2];
+      }
+      
     }
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
