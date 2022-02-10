@@ -159,6 +159,11 @@ test_that("Reorder methods retain edge weights", {
   attr(bal7, 'order') <- NULL
   expect_equal(Preorder(bal7)[["edge.length"]],
                bal7$edge.)
+  expect_equal(Preorder(Cladewise(bal7))[["edge.length"]],
+               bal7$edge.)
+  # TODO
+  # expect_equal(Preorder(Postorder(bal7))[["edge.length"]],
+  #              bal7$edge.)
 })
 
 test_that("Malformed trees don't cause crashes", {

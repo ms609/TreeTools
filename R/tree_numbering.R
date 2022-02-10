@@ -178,8 +178,12 @@ Cladewise.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
   }
   nEdge <- dim(edge)[1]
   nNode <- tree[["Nnode"]]
-  if (nNode == 1) return(tree)
-  if (nNode >= nTip) stop("`tree` apparently badly conformed")
+  if (nNode == 1) {
+    return(tree)
+  }
+  if (nNode >= nTip) {
+    stop("`tree` apparently badly conformed")
+  }
 
   newOrder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nEdge, 1)
 
