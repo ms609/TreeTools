@@ -408,7 +408,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' @export
 EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
-#' @importFrom ape root bind.tree
+#' @importFrom ape bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
   if (length(outgroup) == 1L) return(root(tree, outgroup, resolve.root = TRUE))
 
@@ -421,8 +421,8 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
   ingroup.branch <- DropTip(tree, outgroup)
   outgroup.branch <- DropTip(tree, ingroup)
 
-  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
-                 outgroup, resolve.root = TRUE)
+  result <- RootTree(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
+                     outgroup)
   RenumberTips(Renumber(result), taxa)
 }
 
@@ -433,7 +433,6 @@ EnforceOutgroup.phylo <- function(tree, outgroup) {
 }
 
 #' @rdname EnforceOutgroup
-#' @importFrom ape root
 #' @export
 EnforceOutgroup.character <- function(tree, outgroup) {
   taxa <- tree

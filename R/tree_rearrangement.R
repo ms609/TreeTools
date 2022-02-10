@@ -34,7 +34,6 @@
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom ape root
 #' @export
 RootTree <- function(tree, outgroupTips) {
   if (missing(outgroupTips)) return(tree)
