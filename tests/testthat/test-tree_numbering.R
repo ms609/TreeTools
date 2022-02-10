@@ -6,6 +6,7 @@ nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
 
 test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
+  expect_error(RenumberTree(1:3, 1:4, 5:6))
   expect_error(RenumberTree(1:4, 1:4, 5:6))
 })
 
@@ -34,8 +35,8 @@ test_that("RenumberTree() handles polytomies", {
   expectation <- structure(c(5L, 6L, 6L, 5L, 7L, 7L,
                              6L, 1L, 2L, 7L, 3L, 4L),
                            .Dim = c(6L, 2L))
-  expect_equal(expectation,
-               RenumberTree(edge[, 1], edge[, 2]))
+  expect_equal(RenumberTree(edge[, 1], edge[, 2]),
+               expectation)
 
   expect_equal(c(9, 10, 10, 11, 11, 11, 10, 12, 12, 13, 13, 9,
                  10, 1, 11,  2,  4,  7, 12,  3, 13,  5,  6, 8),
@@ -44,9 +45,9 @@ test_that("RenumberTree() handles polytomies", {
 
 test_that("RenumberTree() handles singles", {
   withSingles <- ape::read.tree(text='(a, (b, (c), (((d), (e)))));')
-  expect_equal(c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
-                 1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5),
-               as.integer(Preorder(withSingles)$edge))
+  expect_equal(as.integer(Preorder(withSingles)$edge),
+               c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
+                 1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5))
 })
 
 test_that("Replacement reorder functions work correctly", {

@@ -406,11 +406,11 @@ Preorder.phylo <- function(tree) {
     child <- edge[, 2]
     lengths <- tree[["edge.length"]]
     if (is.null(lengths)) {
+      tree[["edge"]] <- RenumberTree(parent, child)
+    } else {
       edge <- RenumberTree(parent, child, lengths)
       tree[["edge"]] <- edge[[1]]
       tree[["edge.length"]] <- edge[[2]]
-    } else {
-      tree[["edge"]] <- RenumberTree(parent, child)
     }
     attr(tree, 'order') <- 'preorder'
 
