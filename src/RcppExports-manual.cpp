@@ -39,6 +39,20 @@ RcppExport SEXP _TreeTools_postorder_edges(SEXP edgeSEXP, SEXP sortSEXP) {
   return rcpp_result_gen;
   END_RCPP
 }
+// postorder_weighted
+RcppExport SEXP _TreeTools_postorder_weighted(SEXP edgeSEXP, 
+                                              SEXP weightSEXP,
+                                              SEXP sortSEXP) {
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+  Rcpp::traits::input_parameter< const NumericVector >::type weight(weightSEXP);
+  Rcpp::traits::input_parameter< const LogicalVector >::type sortSize(sortSEXP);
+  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_edges(edge, weight, sortSize));
+  return rcpp_result_gen;
+  END_RCPP
+}
 // root_binary
 RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP

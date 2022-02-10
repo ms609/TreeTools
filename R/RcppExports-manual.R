@@ -10,6 +10,10 @@ postorder_edges <- function(edge, sizeSort) {
   .Call(`_TreeTools_postorder_edges`, edge, sizeSort)
 }
 
+postorder_weighted <- function(edge, weight, sizeSort) {
+  .Call(`_TreeTools_postorder_weighted`, edge, weight, sizeSort)
+}
+
 root_binary <- function(edge, outgroup) {
   .Call(`_TreeTools_root_binary`, edge, outgroup)
 }
