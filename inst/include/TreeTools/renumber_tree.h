@@ -190,15 +190,16 @@ namespace TreeTools {
                             const int32 *n_children,
                             const double *wt_above,
                             Rcpp::IntegerMatrix& final_edges,
-                            Rcpp::NumericMatrix& final_weight,
+                            Rcpp::NumericVector& final_weight,
                             int32 *next_edge, int32 *next_label) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
-      final_weight[*next_edge] = wt_above[node];
-
+      
       const int32 this_child = children_of[node][child];
+      final_weight[*next_edge] = wt_above[this_child];
+      
       if (n_children[this_child]) {
 
         const int32 child_label = *next_label;
@@ -373,7 +374,7 @@ namespace TreeTools {
       
       int32 next_label = n_tip + 2;
       Rcpp::IntegerMatrix ret(n_edge, 2);
-      Rcpp::NumericMatrix ret_wt(n_edge, 1);
+      Rcpp::NumericVector ret_wt(n_edge);
       add_child_edges(root_node, n_tip + 1, children_of, n_children, wt_above,
                       ret, ret_wt, &next_edge, &next_label);
       

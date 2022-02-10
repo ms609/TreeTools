@@ -135,6 +135,7 @@ test_that("Reorder methods work correctly", {
     expect_error(Method(matrix('one')))
     expect_null(Method(NULL))
   }
+  
   Test(ApePostorder, testEdges = FALSE)
   expect_error(ApePostorder(bad))
 
@@ -150,6 +151,14 @@ test_that("Reorder methods work correctly", {
   Test(Pruningwise, testEdges = FALSE)
   expect_error(Pruningwise(bad))
 
+})
+
+test_that("Reorder methods retain edge weights", {
+  bal7 <- BalancedTree(7)
+  bal7$edge.length <- 1:12 * 10
+  attr(bal7, 'order') <- NULL
+  expect_equal(Preorder(bal7)[["edge.length"]],
+               bal7$edge.)
 })
 
 test_that("Malformed trees don't cause crashes", {
