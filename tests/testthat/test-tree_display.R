@@ -28,9 +28,11 @@ test_that("SortTree() works", {
                       ncol = 2))
   expect_equal(sorted5[["edge.length"]], c(3, 5, 7, 6, 4, 2, 1))
   expect_equal('cladewise', attr(SortTree(PectinateTree(5)), 'order'))
+  expect_equal(SortTree(sorted5, 'tip',
+                        paste0('t', c(1, 2, 4, 5, 3)))[["edge.length"]],
+               c(1:3, 5:7, 4))
 
   
-    
   skip_if_not_installed("vdiffr", "1.0")
   vdiffr::expect_doppelganger('sorted-tree', function() {
     par(mar = rep(0, 4))
