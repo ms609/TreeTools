@@ -53,16 +53,13 @@ SortTree <- function(tree, how = "cladesize", order = TipLabels(tree)) {
 #' @rdname SortTree
 SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   edge <- tree[["edge"]]
+  weight <- tree[["edge.length"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   tipLabels <- tree[["tip.label"]]
   nTip <- length(tipLabels)
-  if (!is.null(tree[["edge.length"]])) {
-    warning("Edge lengths are not supported (#49)")
-    tree[["edge.length"]] <- NULL
-  }
   
-  descendants <- .ListDescendents(tree)
+  descendants <- .ListDescendants(tree)
   method <- pmatch(tolower(how), c("cladesize", "tiplabels"))
   if (is.na(method)) {
     warning("`how` must be an unambiguous contraction of ",
@@ -82,26 +79,36 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
                           vapply(descendants[kids], MinKid, tipLabels[1]),
                           method = "radix", decreasing = TRUE)
         child[childEdges] <- kids[newOrder]
+        if (!is.null(weight)) {
+          weight[childEdges] <- weight[childEdges][newOrder]
+        }
       }
     }, { # Tip labels
-      weights <- match(TipLabels(tree), order, nomatch = NTip(tree) + 1L)
-      MinKid <- function(tips) min(weights[tips])
+      #TODO would it be quicker to do this using RenumberTips() |> Preorder()?
+      # If not, perhaps we can accellerate preorder?
+      mass <- match(TipLabels(tree), order, nomatch = NTip(tree) + 1L)
+      MinKid <- function(tips) min(mass[tips])
       for (node in nTip + seq_len(tree[["Nnode"]])) {
         childEdges <- parent == node
         kids <- child[childEdges]
         newOrder <- order(vapply(descendants[kids], MinKid, integer(1)),
                           method = "radix")
         child[childEdges] <- kids[newOrder]
+        if (!is.null(weight)) {
+          weight[childEdges] <- weight[childEdges][newOrder]
+        }
+      }
     }
-  })
+  )
   
  
   tree[["edge"]][, 2] <- child
+  tree[["edge.length"]] <- weight
   attr(tree, 'order') <- NULL
   Renumber(tree)
 }
 
-.ListDescendents <- function(tree) {
+.ListDescendants <- function(tree) {
   edge <- Postorder(tree[["edge"]])
   parent <- edge[, 1]
   child <- edge[, 2]

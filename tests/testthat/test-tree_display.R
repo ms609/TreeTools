@@ -21,12 +21,12 @@ test_that("SortTree() works", {
   
   unrooted5 <- UnrootTree(PectinateTree(5))
   unrooted5$edge.length <- 1:7
-  expect_warning(sorted5 <- SortTree(unrooted5)) #49
+  sorted5 <- SortTree(unrooted5)
   expect_equal(sorted5$edge,
                matrix(c(6, 7, 8, 8, 7, 6, 6,
                         7, 8, order(sorted5[["tip.label"]], decreasing = TRUE)),
                       ncol = 2))
-  expect_null(sorted5[["edge.length"]])
+  expect_equal(sorted5[["edge.length"]], c(3, 5, 7, 6, 4, 2, 1))
   expect_equal('cladewise', attr(SortTree(PectinateTree(5)), 'order'))
 
   
