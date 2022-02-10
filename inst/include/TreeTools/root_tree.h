@@ -79,15 +79,23 @@ namespace TreeTools {
   inline Rcpp::List root_on_node(const Rcpp::List phy, const int outgroup) {
 
     Rcpp::IntegerMatrix edge = phy["edge"];
+    Rcpp::NumericMatrix weight = phy["edge.length"];
 
-    const intx n_edge = edge.nrow(),
+    const intx 
+      n_edge = edge.nrow(),
       n_node = phy["Nnode"],
       max_node = n_edge + 1,
       n_tip = max_node - n_node,
       root_node = n_tip + 1
     ;
 
-    edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
+    if (weight == R_NilValue) {
+      edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
+    } else {
+      List reweighted = preorder_weights(edge(Rcpp::_, 0), edge(Rcpp::_, 1), weight);
+      edge = reweighted[1];
+      weight = reweighted[2];
+    }
     Rcpp::List ret = Rcpp::clone(phy);
     ret.attr("order") = "preorder";
     if (outgroup < 1) {
@@ -98,6 +106,7 @@ namespace TreeTools {
     }
     if (outgroup == root_node) {
       ret["edge"] = edge;
+      ret["edge.weight"] = weight;
       return ret;
     }
 
@@ -140,7 +149,7 @@ namespace TreeTools {
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
       ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                         new_edge(Rcpp::_, 1));
+                                             new_edge(Rcpp::_, 1));
 
     } else { // Root node will be retained; we need a new root edge
 
@@ -164,7 +173,7 @@ namespace TreeTools {
 
       ret["Nnode"] = n_node + 1;
       ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                         new_edge(Rcpp::_, 1));
+                                             new_edge(Rcpp::_, 1));
 
     }
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
