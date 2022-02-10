@@ -229,6 +229,16 @@ test_that("RootTree() works", {
   expect_equal(RootTree(tree, 1:4), RootTree(tree, 5:6))
 })
 
+test_that("RootTree() retains edge lengths", {
+  bal7 <- BalancedTree(7)
+  bal7$edge.length <- 1:12 * 10
+  attr(bal7, 'order') <- NULL
+  expect_equal(RootTree(bal7, 1:4),
+               structure(bal7, order = "preorder"))
+  expect_equal(RootTree(RootTree(bal7, 1), 1:4),
+               structure(bal7, order = "preorder"))
+})
+
 test_that("UnrootTree() works", {
   expect_null(UnrootTree(NULL))
   expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
