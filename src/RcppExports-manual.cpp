@@ -49,7 +49,7 @@ RcppExport SEXP _TreeTools_postorder_weighted(SEXP edgeSEXP,
   Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
   Rcpp::traits::input_parameter< const NumericVector >::type weight(weightSEXP);
   Rcpp::traits::input_parameter< const LogicalVector >::type sortSize(sortSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_edges(edge, weight, sortSize));
+  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_weighted(edge, weight, sortSize));
   return rcpp_result_gen;
   END_RCPP
 }

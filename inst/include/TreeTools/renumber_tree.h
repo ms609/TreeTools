@@ -493,7 +493,7 @@ namespace TreeTools {
   inline Rcpp::List postorder_weighted(
       const Rcpp::IntegerMatrix edge,
       const Rcpp::NumericVector weights,
-      const Rcpp::LogicalVector size_sort,
+      const Rcpp::LogicalVector size_sort
       )
   {
     const int32
@@ -512,14 +512,18 @@ namespace TreeTools {
                               "Try running 64-bit R?");                         // # nocov
     }
 
-    int32 * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
-          * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
-          * subtree_size = (int32*) std::calloc(node_limit, sizeof(int32));
+    int32
+      * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
+      * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
+      * subtree_size = (int32*) std::calloc(node_limit, sizeof(int32))
+    ;
+    double * wt_above = (double*) std::calloc(node_limit, sizeof(double));
     int32 ** children_of = new int32*[node_limit];
 
     for (int32 i = n_edge; i--; ) {
       parent_of[CHILD(i)] = PARENT(i);
       n_children[PARENT(i)] += 1;
+      wt_above[CHILD(i)] = weights[i];
     }
 
     for (int32 i = node_limit; i--; ) {
@@ -557,12 +561,14 @@ namespace TreeTools {
     std::free(subtree_size);
 
     Rcpp::IntegerMatrix ret(n_edge, 2);
+    Rcpp::NumericVector ret_wt(n_edge);
     int32 this_edge = 0;
     for (int32 i = 0; i != n_node; ++i) {
       const int32 this_parent = node_order[i];
       for (int32 j = 0; j != n_children[this_parent]; ++j) {
         ret(this_edge, 0) = this_parent + 1;
         ret(this_edge, 1) = children_of[this_parent][j] + 1;
+        ret_wt[this_edge] = wt_above[children_of[this_parent][j]];
         ++this_edge;
       }
     }
@@ -573,7 +579,7 @@ namespace TreeTools {
     delete[] (children_of);
     std::free(node_order);
 
-    return Rcpp::List(ret, ret_wt);
+    return Rcpp::List::create(ret, ret_wt);
   }
 }
 
