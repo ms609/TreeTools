@@ -309,18 +309,31 @@ UnrootTree <- function(tree) UseMethod('UnrootTree')
 UnrootTree.phylo <- function(tree) {
   tree <- Preorder(tree)
   edge <- tree[["edge"]]
-  if (dim(edge)[1] < 3) return(tree)
+  if (dim(edge)[1] < 3) {
+    return(tree)
+  }
 
   parent <- edge[, 1]
   rootNode <- parent[1]
   rootEdge2 <- parent[-1] == rootNode
-  if (sum(rootEdge2) > 1L) return(tree)
+  if (sum(rootEdge2) > 1L) {
+    return(tree)
+  }
 
-  deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
+  deleted <- if (edge[1, 2] < rootNode) {
+    1L + which(rootEdge2) 
+  } else {
+    1L
+  }
   renumber <- edge > rootNode
   edge[renumber] <- edge[renumber] - 1L
   tree[["edge"]] <- edge[-deleted, ]
   tree[["Nnode"]] <- tree[["Nnode"]] - 1L
+  weight <- tree[["edge.length"]]
+  if (!is.null(weight)) {
+    weight[1] <- weight[1] + weight[deleted]
+    tree[["edge.length"]] <- weight
+  }
 
   # Return:
   tree
