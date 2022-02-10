@@ -229,7 +229,7 @@ test_that("RootTree() works", {
   expect_equal(RootTree(tree, 1:4), RootTree(tree, 5:6))
 })
 
-test_that("RootTree() retains edge lengths", {
+test_that("RootTree() & UnrootTree() retain edge lengths", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
   attr(bal7, 'order') <- NULL
@@ -264,12 +264,6 @@ test_that("UnrootTree() works", {
   exp <- structure(expList, class = 'multiPhylo')
   attr(exp, 'tip.label') <- paste0('t', 1:5)
   expect_equal(exp, UnrootTree(as.phylo(1:2, 5)))
-})
-
-test_that("UnrootTree() retains edge lengths", {
-  bal7 <- BalancedTree(7)
-  bal7$edge.length <- 1:12 * 10
-  attr(bal7, 'order') <- NULL
 })
 
 test_that("CollapseNode() works", {
