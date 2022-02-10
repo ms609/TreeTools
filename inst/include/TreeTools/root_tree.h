@@ -79,7 +79,7 @@ namespace TreeTools {
   inline Rcpp::List root_on_node(const Rcpp::List phy, const int outgroup) {
 
     Rcpp::IntegerMatrix edge = phy["edge"];
-    Rcpp::NumericMatrix weight = phy["edge.length"];
+    Rcpp::NumericVector weight;
 
     const intx 
       n_edge = edge.nrow(),
@@ -88,13 +88,18 @@ namespace TreeTools {
       n_tip = max_node - n_node,
       root_node = n_tip + 1
     ;
+    const bool weighted = phy.containsElementNamed("edge.length");
 
-    if (weight == R_NilValue) {
-      edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
+    if (weighted) {
+      Rcpp::List reweighted = preorder_weighted(
+        edge(Rcpp::_, 0),
+        edge(Rcpp::_, 1),
+        phy["edge.length"]
+      );
+      Rcpp::IntegerMatrix edge = reweighted[0];
+      Rcpp::NumericVector weight = reweighted[1];
     } else {
-      List reweighted = preorder_weights(edge(Rcpp::_, 0), edge(Rcpp::_, 1), weight);
-      edge = reweighted[1];
-      weight = reweighted[2];
+      edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
     }
     if (outgroup < 1) {
       throw std::range_error("`outgroup` must be a positive integer");
@@ -106,7 +111,9 @@ namespace TreeTools {
     ret.attr("order") = "preorder";
     if (outgroup == root_node) {
       ret["edge"] = edge;
-      ret["edge.weight"] = weight;
+      if (weighted) {
+        ret["edge.weight"] = weight;
+      }
       return ret;
     }
 
@@ -152,11 +159,12 @@ namespace TreeTools {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
       } else {
-        List preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
-                                              new_edge(Rcpp::_, 1),
-                                              weight);
-        ret["edge"] = preorder_res[1];
-        ret["edge.length"] = preorder_res[2];
+        Rcpp::List preorder_res;
+        preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
+                                         new_edge(Rcpp::_, 1),
+                                         weight);
+        ret["edge"] = preorder_res[0];
+        ret["edge.length"] = preorder_res[1];
       }
 
     } else { // Root node will be retained; we need a new root edge
@@ -184,12 +192,14 @@ namespace TreeTools {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
       } else {
-        List preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
-                                              new_edge(Rcpp::_, 1),
-                                              // TODO NEW WEIGHT
-                                              weight);
-        ret["edge"] = preorder_res[1];
-        ret["edge.length"] = preorder_res[2];
+        Rcpp::List preorder_res;
+        preorder_res  = preorder_weighted(
+          new_edge(Rcpp::_, 0),
+          new_edge(Rcpp::_, 1),
+          // TODO NEW WEIGHT
+          weight);
+        ret["edge"] = preorder_res[0];
+        ret["edge.length"] = preorder_res[1];
       }
       
     }
