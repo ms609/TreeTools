@@ -14,14 +14,16 @@
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 
-- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()` ([#49](
-  (https://github.com/ms609/TreeTools/issues/49)).
+- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()`
+  ([#49](https://github.com/ms609/TreeTools/issues/49),
+  [#89](https://github.com/ms609/TreeTools/issues/89)).
 
 - Fix bug when tree is rooted on a discontinuous outgroup.
 
-- `SortTree()` handles non-binary trees
-  ([#25](https://github.com/ms609/TreeTools/issues/25)) and gains option to
-  sort by tip labels.
+- `SortTree()` handles weighted and non-binary trees
+  ([#25](https://github.com/ms609/TreeTools/issues/25),
+  [#25](https://github.com/ms609/TreeTools/issues/49)),
+  and gains option to sort by tip labels.
 
 - Use lighter Rcpp headers.
 
