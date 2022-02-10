@@ -263,6 +263,12 @@ test_that("UnrootTree() works", {
   expect_equal(exp, UnrootTree(as.phylo(1:2, 5)))
 })
 
+test_that("UnrootTree() retains edge lengths", {
+  bal7 <- BalancedTree(7)
+  bal7$edge.length <- 1:12 * 10
+  attr(bal7, 'order') <- NULL
+})
+
 test_that("CollapseNode() works", {
   tree8  <- read.tree(text="(((a, (b, (c, d))), (e, f)), (g, h));")
   expect_error(CollapseNode(1:5, tree8))
