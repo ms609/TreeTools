@@ -329,7 +329,7 @@ UnrootTree.phylo <- function(tree) {
   weight <- tree[["edge.length"]]
   if (!is.null(weight)) {
     weight[1] <- weight[1] + weight[deleted]
-    tree[["edge.length"]] <- weight
+    tree[["edge.length"]] <- weight[-deleted]
   }
 
   # Return:
