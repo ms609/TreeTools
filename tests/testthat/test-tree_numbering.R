@@ -115,7 +115,7 @@ test_that("RenumberTips() works correctly", {
 
 test_that("Reorder methods work correctly", {
   bal7 <- BalancedTree(7)
-  bal7$edge.length <- 1:12
+  bal7$edge.length <- 1:12 * 10
   attr(bal7, 'order') <- NULL
   pec7 <- PectinateTree(7)
   list7 <- list(bal7, pec7)
