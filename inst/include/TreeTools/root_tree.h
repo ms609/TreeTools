@@ -11,6 +11,11 @@ namespace TreeTools {
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child);
 
+  extern inline Rcpp::List preorder_weighted(
+    const Rcpp::IntegerVector parent,
+    const Rcpp::IntegerVector child,
+    const Rcpp::DoubleVector weight);
+
   // #TODO Write test cases
   // edge must be BINARY
   // edge must be in preorder
@@ -28,10 +33,16 @@ namespace TreeTools {
       root_node = n_tip + 1,
       max_node = n_node + n_tip;
 
-    if (outgroup < 1) throw std::range_error("`outgroup` must be a positive integer");
-    if (outgroup > max_node) throw std::range_error("`outgroup` exceeds number of nodes");
-    if (outgroup == root_node) return edge;
-
+    if (outgroup < 1) {
+      throw std::range_error("`outgroup` must be a positive integer");
+    }
+    if (outgroup > max_node) {
+      throw std::range_error("`outgroup` exceeds number of nodes");
+    }
+    if (outgroup == root_node) {
+      return edge;
+    }
+    
 
     std::unique_ptr<intx[]> edge_above = std::make_unique<intx[]>(max_node + 1);
     intx root_edges[2] = {0, 0};
@@ -118,14 +129,16 @@ namespace TreeTools {
     }
 
 
-    std::unique_ptr<intx[]> edge_above = std::make_unique<intx[]>(max_node + 1);
+    auto edge_above = std::make_unique<intx[]>(max_node + 1);
     intx root_edges[] = {0, 0};
     intx root_edges_found = 0;
 
     for (intx i = n_edge; i--; ) {
       edge_above[edge(i, 1)] = i;
       if (edge(i, 0) == root_node) {
-        if (root_edges_found < 2) root_edges[root_edges_found] = i;
+        if (root_edges_found < 2) {
+          root_edges[root_edges_found] = i;
+        }
         ++root_edges_found;
       }
     }
@@ -151,25 +164,33 @@ namespace TreeTools {
         new_edge(invert_next, 1) = edge(invert_next, 0);
       } while (edge(invert_next, 0) != root_node);
 
-      // further root edges must be replaced with root -> outgroup.
+      // Further root edges must be replaced with root -> outgroup.
       intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
-      if (weight == R_NilValue) {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
-      } else {
+      if (weighted) {
         Rcpp::List preorder_res;
         preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
                                          new_edge(Rcpp::_, 1),
-                                         weight);
+                                         phy["edge.length"]);
         ret["edge"] = preorder_res[0];
         ret["edge.length"] = preorder_res[1];
+      } else {
+        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                               new_edge(Rcpp::_, 1));
       }
 
     } else { // Root node will be retained; we need a new root edge
 
       Rcpp::IntegerMatrix new_edge(n_edge + 1, 2);
+      Rcpp::NumericVector new_wt(n_edge + 1);
+      if (weighted) {
+        weight = phy["edge.length"];
+        for (int i = n_edge; i--; ) {
+          new_wt[i] = weight[i];
+        }
+        assert(new_wt(n_edge) == 0);
+      }
       for (int i = n_edge; i--; ) {
         new_edge(i, 0) = edge(i, 0);
         new_edge(i, 1) = edge(i, 1);
@@ -188,18 +209,17 @@ namespace TreeTools {
       }
 
       ret["Nnode"] = n_node + 1;
-      if (weight == R_NilValue) {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
-      } else {
+      if (weighted) {
         Rcpp::List preorder_res;
         preorder_res  = preorder_weighted(
           new_edge(Rcpp::_, 0),
           new_edge(Rcpp::_, 1),
-          // TODO NEW WEIGHT
-          weight);
+          new_wt);
         ret["edge"] = preorder_res[0];
         ret["edge.length"] = preorder_res[1];
+      } else {
+        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
+                                               new_edge(Rcpp::_, 1));
       }
       
     }
