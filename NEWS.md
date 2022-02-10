@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9007 #
+# TreeTools 1.6.0.9008 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -13,6 +13,9 @@
 - `DropTip()` no longer adds a root to unrooted trees.
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
+
+- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()` ([#49](
+  (https://github.com/ms609/TreeTools/issues/49)).
 
 - Fix bug when tree is rooted on a discontinuous outgroup.
 

@@ -98,8 +98,10 @@ test_that("NJTree() works", {
     RootTree(NJTree(bal6), a..f[1:3]),
     BalancedTree(letters[c(1:3, 6:4)])
   ))
+  expect_equal(NJTree(bal6, edgeLengths = TRUE),
+               Preorder(NJTree(bal6, edgeLengths = TRUE)))
   expect_equal(c(0, 1, 2, 1, rep(0, 6)),
-               Preorder(NJTree(bal6, TRUE))$edge.length * 4L)
+               RootTree(NJTree(bal6, edgeLengths = TRUE), 6)$edge.length * 4L)
 })
 
 test_that("Constrained NJ trees work", {

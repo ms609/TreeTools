@@ -7,9 +7,6 @@
 #' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 #' preorder.
 #'
-#' Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
-#' a GitHub issue if you would find this useful.
-#'
 #' @template tree(s)Param
 #' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.  If
@@ -37,7 +34,6 @@
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom ape root
 #' @export
 RootTree <- function(tree, outgroupTips) {
   if (missing(outgroupTips)) return(tree)
@@ -309,18 +305,33 @@ UnrootTree <- function(tree) UseMethod('UnrootTree')
 UnrootTree.phylo <- function(tree) {
   tree <- Preorder(tree)
   edge <- tree[["edge"]]
-  if (dim(edge)[1] < 3) return(tree)
+  if (dim(edge)[1] < 3) {
+    return(tree)
+  }
 
   parent <- edge[, 1]
   rootNode <- parent[1]
   rootEdge2 <- parent[-1] == rootNode
-  if (sum(rootEdge2) > 1L) return(tree)
+  if (sum(rootEdge2) > 1L) {
+    return(tree)
+  }
 
-  deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
+  if (edge[1, 2] < rootNode) {
+    deleted <- 1L + which(rootEdge2)
+    weightTo <- 1L
+  } else {
+    deleted <- 1L
+    weightTo <- 1L + which(rootEdge2)
+  }
   renumber <- edge > rootNode
   edge[renumber] <- edge[renumber] - 1L
   tree[["edge"]] <- edge[-deleted, ]
   tree[["Nnode"]] <- tree[["Nnode"]] - 1L
+  weight <- tree[["edge.length"]]
+  if (!is.null(weight)) {
+    weight[weightTo] <- weight[weightTo] + weight[deleted]
+    tree[["edge.length"]] <- weight[-deleted]
+  }
 
   # Return:
   tree

@@ -56,6 +56,8 @@ NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
 #'
 #' @template treeParent
 #' @template treeChild
+#' @param weight Optional vector specifying the weight of each edge,
+#' corresponding to the `edge.length` property of a `phylo` object.
 #'
 #' @return `RenumberTree()` returns an edge matrix for a tree of class `phylo`
 #' following the preorder convention for edge and node numbering.
@@ -63,8 +65,12 @@ NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
 #' @family tree manipulation
 #' @family C wrappers
 #' @export
-RenumberTree <- function(parent, child) {
-  .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+RenumberTree <- function(parent, child, weight) {
+  if (missing(weight)) {
+    .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+  } else {
+    .Call(`_TreeTools_preorder_weighted`, parent, child, weight)
+  }
 }
 
 #' @rdname Reorder
@@ -101,7 +107,8 @@ RenumberEdges <- function(parent, child, ...) {
 #' topology, allowing unique trees to be detected by comparing sorted edge
 #' matrices alone.
 #'
-#' A tree in preorder is numbered starting from the root node.
+#' Nodes and edges in a preorder tree are numbered starting from the deepest
+#' node.
 #' Each node is numbered in the sequence in which it is encountered, and
 #' each edge is listed in the sequence in which it is visited.
 #'
@@ -172,8 +179,12 @@ Cladewise.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
   }
   nEdge <- dim(edge)[1]
   nNode <- tree[["Nnode"]]
-  if (nNode == 1) return(tree)
-  if (nNode >= nTip) stop("`tree` apparently badly conformed")
+  if (nNode == 1) {
+    return(tree)
+  }
+  if (nNode >= nTip) {
+    stop("`tree` apparently badly conformed")
+  }
 
   newOrder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], nEdge, 1)
 
@@ -398,7 +409,14 @@ Preorder.phylo <- function(tree) {
     edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
-    tree[["edge"]] <- RenumberTree(parent, child)
+    lengths <- tree[["edge.length"]]
+    if (is.null(lengths)) {
+      tree[["edge"]] <- RenumberTree(parent, child)
+    } else {
+      edge <- RenumberTree(parent, child, lengths)
+      tree[["edge"]] <- edge[[1]]
+      tree[["edge.length"]] <- edge[[2]]
+    }
     attr(tree, 'order') <- 'preorder'
 
     # Return:
