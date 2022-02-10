@@ -237,9 +237,9 @@ test_that("RootTree() retains edge lengths", {
                structure(bal7, order = "preorder"))
   expect_equal(RootTree(RootTree(bal7, 1), 1:4),
                structure(bal7, order = "preorder"))
-  expect_equal(RootTree(UnrootTree(bal7), 1:4),
-               structure(bal7, order = "preorder",
-                        edge.length = c(1 + 8, 2:7, 9:12)))
+  exp <- structure(bal7, order = "preorder")
+  exp$edge.length = 10 * c(1 + 8, 2:7, 0, 9:12)
+  expect_equal(RootTree(UnrootTree(bal7), 1:4), exp)
 })
 
 test_that("UnrootTree() works", {
