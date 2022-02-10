@@ -379,6 +379,7 @@ namespace TreeTools {
                       ret, ret_wt, &next_edge, &next_label);
       
       std::free(n_children);
+      std::free(wt_above);
       
       for (int32 i = 1; i != node_limit; i++) {
         delete[] children_of[i];
@@ -573,6 +574,7 @@ namespace TreeTools {
       }
     }
     std::free(n_children);
+    std::free(wt_above);
     for (int32 i = node_limit; i--; ) {
       delete[] children_of[i];
     }
