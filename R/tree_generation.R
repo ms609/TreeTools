@@ -216,13 +216,13 @@ StarTree <- function(tips) {
 #' NJTree(Lobo.phy)
 #'
 #' @template MRS
-#' @importFrom ape nj root
+#' @importFrom ape nj
 #' @family tree generation functions
 #' @export
 NJTree <- function(dataset, edgeLengths = FALSE,
                     ratio = TRUE, ambig = "mean") {
   tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
-  tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
+  tree <- RootTree(tree, names(dataset)[1])
   if (!edgeLengths) {
     tree[["edge.length"]] <- NULL
   }
