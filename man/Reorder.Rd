@@ -34,7 +34,7 @@
 \alias{Preorder.NULL}
 \title{Reorder tree edges and nodes}
 \usage{
-RenumberTree(parent, child)
+RenumberTree(parent, child, weight)
 
 RenumberEdges(parent, child, ...)
 
@@ -100,6 +100,9 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
+
+\item{weight}{Optional vector specifying the weight of each edge,
+corresponding to the \code{edge.length} property of a \code{phylo} object.}
 
 \item{\dots}{Deprecated; included for compatibility with previous versions.}
 
