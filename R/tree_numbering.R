@@ -293,9 +293,16 @@ Postorder.phylo <- function(tree, force = FALSE, renumber = FALSE,
       || (force &&
           (is.null(attr(tree, 'suborder')) ||
            attr(tree, 'suborder') != 'TreeTools'))) {
-    tree[["edge"]] <- Postorder(tree[["edge"]], renumber = renumber,
-                           sizeSort = sizeSort)
-    tree[["edge.length"]] <- NULL
+    if (is.null(tree[["edge.length"]])) {
+      tree[["edge"]] <- Postorder(tree[["edge"]], renumber = renumber,
+                                  sizeSort = sizeSort)
+    } else {
+      po <- postorder_weighted(tree[["edge"]], tree[["edge.length"]],
+                               sizeSort)
+      tree[["edge"]] <- po[[1]]
+      tree[["edge.length"]] <- po[[2]]
+    }
+    
     attr(tree, "order") <- "postorder"
     attr(tree, "suborder") <- "TreeTools"
   }
