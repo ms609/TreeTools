@@ -257,8 +257,12 @@ namespace TreeTools {
     }
 
     for (int32 i = 1; i != node_limit; i++) {
-      if (!parent_of[i]) root_node = i;
-      if (!n_children[i]) ++n_tip;
+      if (!parent_of[i]) {
+        root_node = i;
+      }
+      if (!n_children[i]) {
+        ++n_tip;
+      }
       children_of[i] = new int32[n_children[i]];
     }
 
@@ -344,8 +348,12 @@ namespace TreeTools {
       }
       
       for (int32 i = 1; i != node_limit; i++) {
-        if (!parent_of[i]) root_node = i;
-        if (!n_children[i]) ++n_tip;
+        if (!parent_of[i]) {
+          root_node = i;
+        }
+        if (!n_children[i]) {
+          ++n_tip;
+        }
         children_of[i] = new int32[n_children[i]];
       }
       
