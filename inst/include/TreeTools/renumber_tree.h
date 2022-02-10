@@ -188,15 +188,15 @@ namespace TreeTools {
   inline void add_child_edges(const int32 node, const int32 node_label,
                             int32 const* const* children_of,
                             const int32 *n_children,
-                            const int32 *len_above,
+                            const double *wt_above,
                             Rcpp::IntegerMatrix& final_edges,
-                            Rcpp::IntegerMatrix& final_len,
+                            Rcpp::NumericMatrix& final_weight,
                             int32 *next_edge, int32 *next_label) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
-      final_len[*next_edge] = len_above[node];
+      final_weight[*next_edge] = wt_above[node];
 
       const int32 this_child = children_of[node][child];
       if (n_children[this_child]) {
@@ -208,7 +208,8 @@ namespace TreeTools {
         *next_edge += 1;
 
         add_child_edges(this_child, child_label, children_of, n_children,
-                        final_edges, next_edge, next_label);
+                        wt_above,
+                        final_edges, final_weight, next_edge, next_label);
 
       } else {
 
@@ -295,14 +296,14 @@ namespace TreeTools {
     }
     delete[] children_of;
 
-    return(ret);
+    return ret;
   }
 
 // [[Rcpp::export]]
-  inline Rcpp::IntegerMatrix preorder_lengths(
+  inline Rcpp::List preorder_weighted(
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child,
-      const Rcpp::IntegerVector edge_len)
+      const Rcpp::DoubleVector weight)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
       throw std::length_error("Too many edges in tree: "                        // #nocov
@@ -317,8 +318,8 @@ namespace TreeTools {
     if (child.length() != n_edge) {
       throw std::invalid_argument("Length of parent and child must match");
     }
-    if (edge_len.length() != n_edge) {
-      throw std::invalid_argument("edge_length must match number of edges");
+    if (weight.length() != n_edge) {
+      throw std::invalid_argument("weights must match number of edges");
     }
     
     int32
@@ -330,13 +331,13 @@ namespace TreeTools {
     int32 
       * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
       * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
-      * len_above = (int32*) std::calloc(node_limit, sizeof(int32)),
       * smallest_desc = (int32*) std::calloc(node_limit, sizeof(int32))
     ;
+    double * wt_above = (double*) std::calloc(node_limit, sizeof(double));
     int32 ** children_of = new int32*[node_limit];
       
       for (int32 i = n_edge; i--; ) {
-        len_above[child[i]] = edge_len[i];
+        wt_above[child[i]] = weight[i];
         parent_of[child[i]] = parent[i];
         n_children[parent[i]] += 1;
       }
@@ -372,9 +373,9 @@ namespace TreeTools {
       
       int32 next_label = n_tip + 2;
       Rcpp::IntegerMatrix ret(n_edge, 2);
-      Rcpp::IntegerMatrix ret_len(n_edge, 2);
-      add_child_edges(root_node, n_tip + 1, children_of, n_children, len_above,
-                      ret, ret_len, &next_edge, &next_label);
+      Rcpp::NumericMatrix ret_wt(n_edge, 1);
+      add_child_edges(root_node, n_tip + 1, children_of, n_children, wt_above,
+                      ret, ret_wt, &next_edge, &next_label);
       
       std::free(n_children);
       
@@ -383,8 +384,7 @@ namespace TreeTools {
       }
       delete[] children_of;
       
-      ret.attr("edge.length") = ret_len;
-      return(ret);
+      return Rcpp::List::create(ret, ret_wt);
   }
 
   inline int32 get_subtree_size(int32 node, int32 *subtree_size,

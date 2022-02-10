@@ -3,6 +3,20 @@
 
 using namespace Rcpp;
 
+// preorder_weighted
+RcppExport SEXP _TreeTools_preorder_weighted(SEXP parentSEXP,
+                                             SEXP childSEXP,
+                                             SEXP lengthsSEXP) {
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+  Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+  Rcpp::traits::input_parameter< const NumericVector >::type weight(lengthsSEXP);
+  rcpp_result_gen = Rcpp::wrap(TreeTools::preorder_weighted(parent, child, weight));
+  return rcpp_result_gen;
+  END_RCPP
+}
 // preorder_edges_and_nodes
 RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childSEXP) {
   BEGIN_RCPP

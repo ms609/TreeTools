@@ -56,6 +56,8 @@ NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
 #'
 #' @template treeParent
 #' @template treeChild
+#' @param weight Optional vector specifying the weight of each edge,
+#' corresponding to the `edge.length` property of a `phylo` object.
 #'
 #' @return `RenumberTree()` returns an edge matrix for a tree of class `phylo`
 #' following the preorder convention for edge and node numbering.
@@ -63,8 +65,12 @@ NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
 #' @family tree manipulation
 #' @family C wrappers
 #' @export
-RenumberTree <- function(parent, child) {
-  .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+RenumberTree <- function(parent, child, weight) {
+  if (missing(weight)) {
+    .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+  } else {
+    .Call(`_TreeTools_preorder_weighted`, parent, child, weight)
+  }
 }
 
 #' @rdname Reorder
@@ -398,7 +404,14 @@ Preorder.phylo <- function(tree) {
     edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
-    tree[["edge"]] <- RenumberTree(parent, child)
+    lengths <- tree[["edge.length"]]
+    if (is.null(lengths)) {
+      edge <- RenumberTree(parent, child, lengths)
+      tree[["edge"]] <- edge[[1]]
+      tree[["edge.length"]] <- edge[[2]]
+    } else {
+      tree[["edge"]] <- RenumberTree(parent, child)
+    }
     attr(tree, 'order') <- 'preorder'
 
     # Return:

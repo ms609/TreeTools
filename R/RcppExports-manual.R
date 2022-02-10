@@ -2,6 +2,10 @@ preorder_edges_and_nodes <- function(parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
+preorder_weighted <- function(parent, child, edgeLen) {
+  .Call(`_TreeTools_preorder_weighted`, parent, child, edgeLen)
+}
+
 postorder_edges <- function(edge, sizeSort) {
   .Call(`_TreeTools_postorder_edges`, edge, sizeSort)
 }

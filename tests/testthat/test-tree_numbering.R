@@ -6,6 +6,7 @@ nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
 
 test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
+  expect_error(RenumberTree(1:4, 1:4, 5:6))
 })
 
 test_that("RenumberTree() handles polytomies", {
