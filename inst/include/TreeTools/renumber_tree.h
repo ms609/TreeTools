@@ -304,7 +304,7 @@ namespace TreeTools {
   inline Rcpp::List preorder_weighted(
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child,
-      const Rcpp::DoubleVector weight)
+      const Rcpp::NumericVector weight)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
       throw std::length_error("Too many edges in tree: "                        // #nocov
@@ -344,8 +344,12 @@ namespace TreeTools {
       }
       
       for (int32 i = 1; i != node_limit; i++) {
-        if (!parent_of[i]) root_node = i;
-        if (!n_children[i]) ++n_tip;
+        if (!parent_of[i]) {
+          root_node = i;
+        }
+        if (!n_children[i]) {
+          ++n_tip;
+        }
         children_of[i] = new int32[n_children[i]];
       }
       
@@ -541,7 +545,6 @@ namespace TreeTools {
     }
     std::free(found_children);
 
-    const int32 n_node = n_edge - n_tip + 1;
 
     for (int32 tip = n_tip; tip--; ) {
       subtree_size[tip] = 1;
@@ -552,6 +555,7 @@ namespace TreeTools {
       insertion_sort_by_smallest(children_of[node], n_children[node],
                                  subtree_size);
     }
+    const int32 n_node = n_edge - n_tip + 1;
     int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
     for (int32 i = n_node; i--; ) {
       node_order[i] = i + n_tip;
@@ -569,7 +573,7 @@ namespace TreeTools {
       for (int32 j = 0; j != n_children[this_parent]; ++j) {
         ret(this_edge, 0) = this_parent + 1;
         ret(this_edge, 1) = children_of[this_parent][j] + 1;
-        ret_wt[this_edge] = wt_above[children_of[this_parent][j]];
+        ret_wt[this_edge] = wt_above[children_of[this_parent][j] + 1];
         ++this_edge;
       }
     }

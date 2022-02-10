@@ -14,7 +14,7 @@ namespace TreeTools {
   extern inline Rcpp::List preorder_weighted(
     const Rcpp::IntegerVector parent,
     const Rcpp::IntegerVector child,
-    const Rcpp::DoubleVector weight);
+    const Rcpp::NumericVector weight);
 
   // #TODO Write test cases
   // edge must be BINARY
