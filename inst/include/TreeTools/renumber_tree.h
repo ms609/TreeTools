@@ -299,7 +299,7 @@ namespace TreeTools {
   }
 
 // [[Rcpp::export]]
-  inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
+  inline Rcpp::IntegerMatrix preorder_lengths(
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child,
       const Rcpp::IntegerVector edge_len)
