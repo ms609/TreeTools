@@ -9,3 +9,22 @@ test_that("UnshiftTree() works", {
   attr(expectation, 'tip.label') <- NULL
   expect_equal(expectation, UnshiftTree(t1, as.phylo(2, 8)))
 })
+
+
+test_that("SpectrumLegend()", {
+  skip_if(packageVersion("graphics") < "4.1")
+  skip_if(packageVersion("vdiffr") < "1.0")
+  vdiffr::expect_doppelganger('SpectrumLegend', function() {
+    
+    # Set up blank plot
+    plot(0:1, 10:11, asp = 1, type = "n", frame.plot = FALSE,
+         xlab = "x", ylab = "y")
+    SpectrumLegend(legend = c("Bottom", "Middle", "Top"),
+                   lwd = 5,
+                   palette = rev(hcl.colors(256L, "RdYlBu")))
+    SpectrumLegend(0.4, 10.6, 0.2, 11, abs = TRUE,
+                   legend = seq(0, 10, by = 2), palette = 0:10,
+                   lty = 'dotted', pos = 2,
+                   lmitre = 2, lend = "round", ljoin = "round")
+  })
+})

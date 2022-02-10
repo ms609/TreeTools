@@ -30,6 +30,9 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (inherits(trees, 'phylo')) {
     return(trees)
   }
+  if (!is.list(trees) || is.data.frame(trees)) {
+    stop("Expecting `trees` to be a list.")
+  }
   repeat {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
