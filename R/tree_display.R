@@ -27,8 +27,8 @@
 #' @return `SortTree()` returns tree in the format of `tree`, with each node
 #' in each tree sorted 
 #'
-#' @seealso `Preorder()` also rearranges trees into a consistent shape, but
-#' based on the index of leaves rather than the size of subtrees.
+#' @seealso `Preorder()` also rearranges trees into a consistent shape,
+#' based on the index of leaves.
 #'
 #' @examples
 #' messyTree <- as.phylo(10, 6)

@@ -7,9 +7,6 @@
 #' encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 #' preorder.
 #'
-#' Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
-#' a GitHub issue if you would find this useful.
-#'
 #' @template tree(s)Param
 #' @param outgroupTips Vector of type character, integer or logical, specifying
 #' the names or indices of the tips to include in the outgroup.  If

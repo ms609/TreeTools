@@ -155,7 +155,8 @@ Its output is guaranteed to be identical for any tree of an equivalent
 topology, allowing unique trees to be detected by comparing sorted edge
 matrices alone.
 
-A tree in preorder is numbered starting from the root node.
+Nodes and edges in a preorder tree are numbered starting from the deepest
+node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.
 

@@ -61,8 +61,8 @@ ape::tiplabels(adj = c(2, 1/3))
 plot(SortTree(messyTree, how = "tip"))
 }
 \seealso{
-\code{Preorder()} also rearranges trees into a consistent shape, but
-based on the index of leaves rather than the size of subtrees.
+\code{Preorder()} also rearranges trees into a consistent shape,
+based on the index of leaves.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},
