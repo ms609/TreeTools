@@ -317,10 +317,12 @@ UnrootTree.phylo <- function(tree) {
     return(tree)
   }
 
-  deleted <- if (edge[1, 2] < rootNode) {
-    1L + which(rootEdge2) 
+  if (edge[1, 2] < rootNode) {
+    deleted <- 1L + which(rootEdge2)
+    weightTo <- 1L
   } else {
-    1L
+    deleted <- 1L
+    weightTo <- 1L + which(rootEdge2)
   }
   renumber <- edge > rootNode
   edge[renumber] <- edge[renumber] - 1L
@@ -328,7 +330,7 @@ UnrootTree.phylo <- function(tree) {
   tree[["Nnode"]] <- tree[["Nnode"]] - 1L
   weight <- tree[["edge.length"]]
   if (!is.null(weight)) {
-    weight[1] <- weight[1] + weight[deleted]
+    weight[weightTo] <- weight[weightTo] + weight[deleted]
     tree[["edge.length"]] <- weight[-deleted]
   }
 
