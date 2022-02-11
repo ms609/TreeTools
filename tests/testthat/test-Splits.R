@@ -23,7 +23,7 @@ test_that("as.Splits()", {
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
   expect_equal(as.character(splits1),
-               c('8' = 'a b | c d e', '9' = 'd e | a b c'))
+               c("7" = 'a b c | d e', "8" = "a b | c d e"))
   
   pec6 <- as.Splits(PectinateTree(letters[1:6]))
   expect_equal(as.character(as.Splits(pec6)),
