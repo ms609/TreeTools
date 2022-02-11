@@ -463,7 +463,7 @@ CladeSizes <- function(tree, internal = FALSE, nodes = NULL) {
     internal <- isTRUE(internal)
   }
 
-  edge <- Postorder(tree[["edge"]], renumber = FALSE, sizeSort = TRUE)
+  edge <- Postorder(tree[["edge"]])
   nTip <- NTip(tree)
 
   size <- c(rep.int(1L, nTip), rep.int(internal, max(edge[, 1]) - nTip))

@@ -413,9 +413,7 @@ namespace TreeTools {
   // occur together.
   // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  inline Rcpp::IntegerMatrix postorder_edges(
-      const Rcpp::IntegerMatrix edge,
-      const Rcpp::LogicalVector size_sort)
+  inline Rcpp::IntegerMatrix postorder_edges(const Rcpp::IntegerMatrix edge)
   {
     const int32
       n_edge = edge.nrow(),
@@ -472,9 +470,7 @@ namespace TreeTools {
     for (int32 i = n_node; i--; ) {
       node_order[i] = i + n_tip;
     }
-    if (size_sort[0]) {
-      timsort_by_smallest(node_order, n_node, subtree_size);
-    }
+    timsort_by_smallest(node_order, n_node, subtree_size);
     std::free(subtree_size);
 
     Rcpp::IntegerMatrix ret(n_edge, 2);

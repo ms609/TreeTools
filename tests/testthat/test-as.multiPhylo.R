@@ -26,11 +26,10 @@ test_that("as.multiPhylo()", {
   expect_equal(mpChar2[[2]], mpChar2[[4]])
 
   mpSplits <- as.Splits(PectinateTree(letters[1:6]))
-  expect_true(all.equal(structure(list(
+  expect_true(all.equal(as.multiPhylo(mpSplits), structure(list(
     '9' = ape::read.tree(text = '((a, b), (c, d, e, f));'),
     '10' = ape::read.tree(text = '((a, b, c), (d, e, f));'),
     '11' = ape::read.tree(text = '((a, b, c, d), (e, f));')),
-    class = 'multiPhylo'),
-    as.multiPhylo(mpSplits)))
+    class = 'multiPhylo')))
 
 })

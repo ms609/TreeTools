@@ -29,13 +29,12 @@ RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childS
   END_RCPP
 }
 // postorder_edges
-RcppExport SEXP _TreeTools_postorder_edges(SEXP edgeSEXP, SEXP sortSEXP) {
+RcppExport SEXP _TreeTools_postorder_edges(SEXP edgeSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-  Rcpp::traits::input_parameter< const LogicalVector >::type sortSize(sortSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_edges(edge, sortSize));
+  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_edges(edge));
   return rcpp_result_gen;
   END_RCPP
 }

@@ -4,6 +4,18 @@ nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
 nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
                    class = 'phylo')
 
+expect_postorder <- function(edge) {
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  visited <- logical(max(parent))
+  root <- min(parent)
+  for (i in seq_along(parent)) {
+    visited[parent[i]] <- TRUE
+    expect_true(child[i] < root || visited[child[i]])
+  }
+  expect_equal(visited, c(logical(root - 1), !logical(max(parent) + 1 - root)))
+}
+
 test_that("RenumberTree() fails safely", {
   expect_error(RenumberTree(1:3, 1:4))
   expect_error(RenumberTree(1:3, 1:4, 5:6))
@@ -44,7 +56,7 @@ test_that("RenumberTree() handles polytomies", {
 })
 
 test_that("RenumberTree() handles singles", {
-  withSingles <- ape::read.tree(text='(a, (b, (c), (((d), (e)))));')
+  withSingles <- ape::read.tree(text = '(a, (b, (c), (((d), (e)))));')
   expect_equal(as.integer(Preorder(withSingles)$edge),
                c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
                  1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5))
@@ -57,9 +69,10 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(ape::reorder.phylo(tree, 'pruningwise'), Pruningwise(tree))
 
   post6 <- Postorder(BalancedTree(6))$edge
+  expect_postorder(post6)
   parent6 <- post6[, 1]
   child6 <- post6[, 2]
-  expect_equal(c(9, 9, 11, 11, 8, 8, 10, 10, 7, 7), parent6)
+
   # Order of tip pairs is arbitrary\
   expect_equal(1:2, sort(child6[parent6 == 9]))
   expect_equal(4:5, sort(child6[parent6 == 11]))
@@ -124,6 +137,7 @@ test_that("Reorder methods work correctly", {
   bad$Nnode <- 100
   attr(bad, 'order') <- NULL
   mp7 <- structure(list7, class = 'multiPhylo')
+  
   Test <- function(Method, ..., testEdges = TRUE) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
@@ -140,8 +154,7 @@ test_that("Reorder methods work correctly", {
   expect_error(ApePostorder(bad))
 
   Test(Postorder, testEdges = FALSE) # Different order if edge lengths present
-  expect_equal(c(rep(13:11, each = 2), 11, 10, 10, 10, 9, 9),
-               Postorder(nastyEdge, renumber = TRUE)[, 1])
+  expect_postorder(Postorder(nastyEdge))
 
   Test(Cladewise)
   expect_error(Cladewise(bad))
@@ -214,8 +227,6 @@ test_that("Malformed trees don't cause crashes", {
 
   reordered <- Postorder(nasty)$edge
   expect_equal(12L, dim(reordered)[1])
-  # Original node numbers retained
-  expect_equal(c(2L, 3L, 2L, 2L, 3L), tabulate(reordered[, 1])[9:13])
-
+  expect_postorder(reordered)
 })
 

@@ -127,11 +127,8 @@ RenumberEdges <- function(parent, child, ...) {
 #' as `Preorder()` and are intended for use where performance is at a premium.
 #'
 #'
-#' `Postorder()` is an optimized implementation that if `sizeSort = TRUE`
-#' return a specific order:
-#' edges are listed from the node that subtends the smallest
-#' subtree to the one that subtends the largest (i.e. the root node), with
-#' all of a node's descendant edges listed adjacently.  If a tree is already
+#' `Postorder()` numbers nodes as in `Preorder()`, and lists edges in
+#' descending order of parent node number.  If a tree is already
 #' in postorder, it will not be rearranged unless `force = TRUE`.
 #'
 #' Methods applied to numeric inputs do not check input for sanity, so should
@@ -279,15 +276,13 @@ ApePostorder.multiPhylo <- function(tree, nTip, edge) {
 #' @param force Logical specifying whether to rearrange trees already in
 #' postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.
 #' @export
-Postorder <- function(tree, force = FALSE, renumber = FALSE,
-                       sizeSort = TRUE) {
+Postorder <- function(tree, force = FALSE) {
   UseMethod('Postorder')
 }
 
 #' @rdname Reorder
 #' @export
-Postorder.phylo <- function(tree, force = FALSE, renumber = FALSE,
-                             sizeSort = TRUE) {
+Postorder.phylo <- function(tree, force = FALSE) {
   if (is.null(attr(tree, "order"))
       || attr(tree, "order") != "postorder"
       || (force &&
@@ -299,12 +294,19 @@ Postorder.phylo <- function(tree, force = FALSE, renumber = FALSE,
       parent <- edge[, 1]
       child <- edge[, 2]
       edge <- RenumberTree(parent, child, weight)
-      newOrder <- order(edge[[1]][, 1], decreasing = TRUE, method = "radix")
-      tree[["edge"]] <- edge[[1]][newOrder, ]
+      ed <- edge[[1]]
+      newOrder <- order(ed[, 1], ed[, 2], decreasing = TRUE, method = "radix")
+      tree[["edge"]] <- ed[newOrder, , drop = FALSE]
       tree[["edge.length"]] <- edge[[2]][newOrder]
     } else {
-      tree[["edge"]] <- Postorder(tree[["edge"]], renumber = renumber,
-                             sizeSort = sizeSort)
+      #tree[["edge"]] <- Postorder(tree[["edge"]])
+      edge <- tree[["edge"]]
+      parent <- edge[, 1]
+      child <- edge[, 2]
+      edge <- RenumberTree(parent, child)
+      newOrder <- order(edge[, 1], edge[, 2], decreasing = TRUE,
+                        method = "radix")
+      tree[["edge"]] <- edge[newOrder, , drop = FALSE]
     }
     attr(tree, "order") <- "postorder"
     attr(tree, "suborder") <- "TreeTools"
@@ -314,24 +316,19 @@ Postorder.phylo <- function(tree, force = FALSE, renumber = FALSE,
 
 #' @rdname Reorder
 #' @export
-Postorder.NULL <- function(tree, force = FALSE, renumber = FALSE,
-                            sizeSort = TRUE) NULL
+Postorder.NULL <- function(tree, force = FALSE) NULL
 
 #' @rdname Reorder
 #' @export
-Postorder.list <- function(tree, force = FALSE, renumber = FALSE,
-                            sizeSort = TRUE) {
-  lapply(tree, Postorder, force = force, renumber = renumber,
-         sizeSort = sizeSort)
+Postorder.list <- function(tree, force = FALSE) {
+  lapply(tree, Postorder, force = force)
 }
 
 
 #' @rdname Reorder
 #' @export
-Postorder.multiPhylo <- function(tree, force = FALSE, renumber = FALSE,
-                                  sizeSort = TRUE) {
-  tree[] <- lapply(tree, Postorder, force = force, renumber = renumber,
-                   sizeSort = sizeSort)
+Postorder.multiPhylo <- function(tree, force = FALSE) {
+  tree[] <- lapply(tree, Postorder, force = force)
   attr(tree, 'order') <- 'postorder'
   tree
 }
@@ -341,19 +338,10 @@ Postorder.multiPhylo <- function(tree, force = FALSE, renumber = FALSE,
 #' `edge` entry of a tree of class `phylo`, and returns a two-column array
 #' corresponding to `tree`, with edges listed in postorder
 #' @export
-Postorder.numeric <- function(tree, force = FALSE, renumber = FALSE,
-                               sizeSort = TRUE) {
-  ret <- postorder_edges(tree - 1L, sizeSort[1])
-  if (renumber) {
-    internals <- unique(tree[, 1])
-    nTip <- min(internals) - 1L
-    newNumbers <- c(seq_len(nTip), nTip + rank(-unique(internals)))
-
-    # Return:
-    matrix(newNumbers[ret], ncol = 2L)
-  } else {
-    ret
-  }
+Postorder.numeric <- function(tree, force = FALSE) {
+  edge <- postorder_edges(tree - 1L)
+  #edge[order(edge[, 1], edge[, 2], decreasing = TRUE, method = "radix"), ]
+  edge
 }
 
 #' @describeIn Reorder Reorder tree Pruningwise.
