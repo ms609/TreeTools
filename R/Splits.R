@@ -55,19 +55,19 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
   edge <- x[["edge"]]
   nEdge <- dim(edge)[1]
-  postorder <- switch(attr(x, "order"),
+  edgeOrder <- switch(attr(x, "order"),
                       "preorder" = nEdge:1,
                       "postorder" = seq_len(nEdge),
                       postorder_order(edge))
 
   # Return:
-  .as.Splits.edge(edge, postorder, tipLabels = x[["tip.label"]],
+  .as.Splits.edge(edge, edgeOrder, tipLabels = x[["tip.label"]],
                   asSplits = asSplits, nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function(edge, postorder, tipLabels = NULL, asSplits = TRUE,
+.as.Splits.edge <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
                              nTip = NTip(edge), ...) {
-  splits <- cpp_edge_to_splits(edge, postorder - 1L, nTip)
+  splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
   nSplits <- dim(splits)[1]
 
   # Return:

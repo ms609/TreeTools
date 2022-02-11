@@ -20,8 +20,8 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
   if (1UL + edge.rows() > UINTX_MAX - 1U) { /* UINT_MAX denotes NOT_TRIVAL */
-    throw(std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
-                            "Contact maintainer for advice"));                  // # nocov
+    throw std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
+                            "Contact maintainer for advice");                   // # nocov
   }
   if (nTip[0] < 1) {
     throw(std::length_error("Tree must contain tips."));
@@ -30,7 +30,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   // Initialize
   const uintx n_edge = edge.rows(),
               n_node = n_edge + 1,
-              root_node = PO_PARENT(n_edge),
+              root_node = PO_PARENT(n_edge - 1),
               n_tip = nTip[0],
               n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
 
@@ -41,6 +41,9 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
     throw(std::length_error("Not enough edges in tree for edge_to_splits."));
+  }
+  if (n_edge != order.length()) {
+    stop("Length of `order` must equal number of edges");
   }
 
   uintx** splits = new uintx*[n_node];
