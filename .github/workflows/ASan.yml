@@ -33,8 +33,6 @@ jobs:
       matrix:
         config:
           - {test: 'tests'}
-          - {test: 'examples'}
-          - {test: 'vignettes'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
