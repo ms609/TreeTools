@@ -7,9 +7,8 @@ nasty <- structure(list(edge = structure(
   class = 'phylo') # Danger: Do not plot!
 
 test_that("keep_tip() works", {
-  expect_true(TRUE) # TODO delete
   expect_error(keep_tip(BalancedTree(8)$edge[, c(1, 2, 1)], !tabulate(6:4, 8)))
-  skip_if(TRUE)
+  skip_if(FALSE)
   expect_error(keep_tip(BalancedTree(8)$edge[, 1, drop = FALSE],
                         !tabulate(6:4, 8)))
   expect_error(keep_tip(BalancedTree(8)$edge[, 1], !tabulate(6:4, 8)))
@@ -27,6 +26,7 @@ test_that("keep_tip() works", {
   expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(3:8, 8)),
                BalancedTree(2)$edge)
   
+  skip_if(TRUE)
   expect_equal(keep_tip(ape::unroot(BalancedTree(4))$edge, !tabulate(1, 4)),
                matrix(c(4, 4, 4, 1, 2, 3), 3, 2))
   

@@ -20,7 +20,6 @@ test_that("Random trees are set by R seed", {
 })
 
 test_that("Random trees drawn from uniform distribution", {
-  skip_if(TRUE) #TODO pinpoint error 2
   # NB We're also testing sapply64 and vapply64 in this chunk
   expect_error(.RandomParent(1))
   expect_error(.RandomParent(0))
