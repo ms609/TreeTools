@@ -2,7 +2,7 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include "../inst/include/TreeTools.h"
-#include <Rcpp/Lightest>
+#include <Rcpp.h>
 
 using namespace Rcpp;
 
@@ -120,14 +120,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_edge_to_splits
-RawMatrix cpp_edge_to_splits(IntegerMatrix edge, IntegerVector nTip);
-RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
+RawMatrix cpp_edge_to_splits(const IntegerMatrix edge, const IntegerVector order, const IntegerVector nTip);
+RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP orderSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits(edge, nTip));
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits(edge, order, nTip));
     return rcpp_result_gen;
 END_RCPP
 }
