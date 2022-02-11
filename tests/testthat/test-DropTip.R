@@ -8,8 +8,8 @@ nasty <- structure(list(edge = structure(
 
 test_that("keep_tip() works", {
   expect_true(TRUE) # TODO delete
-  skip_if(TRUE)
   expect_error(keep_tip(BalancedTree(8)$edge[, c(1, 2, 1)], !tabulate(6:4, 8)))
+  skip_if(TRUE)
   expect_error(keep_tip(BalancedTree(8)$edge[, 1, drop = FALSE],
                         !tabulate(6:4, 8)))
   expect_error(keep_tip(BalancedTree(8)$edge[, 1], !tabulate(6:4, 8)))
