@@ -60,17 +60,17 @@ ApePostorder(tree, nTip, edge)
 
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
-Postorder(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+Postorder(tree, force = FALSE)
 
-\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{phylo}(tree, force = FALSE)
 
-\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{`NULL`}(tree, force = FALSE)
 
-\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{list}(tree, force = FALSE)
 
-\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{multiPhylo}(tree, force = FALSE)
 
-\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{numeric}(tree, force = FALSE)
 
 Pruningwise(tree, nTip, edge)
 
@@ -174,11 +174,8 @@ sorted into preorder, until each edge has been visited.
 \code{preorder_edges_and_nodes()}; they do not perform the same checks on input
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
-\code{Postorder()} is an optimized implementation that if \code{sizeSort = TRUE}
-return a specific order:
-edges are listed from the node that subtends the smallest
-subtree to the one that subtends the largest (i.e. the root node), with
-all of a node's descendant edges listed adjacently.  If a tree is already
+\code{Postorder()} numbers nodes as in \code{Preorder()}, and lists edges in
+descending order of parent node number.  If a tree is already
 in postorder, it will not be rearranged unless \code{force = TRUE}.
 
 Methods applied to numeric inputs do not check input for sanity, so should
@@ -196,8 +193,6 @@ advice.
 
 \item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
 function, which is robust to unconventional node numbering.
-
-\item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
 
 \item \code{Pruningwise}: Reorder tree Pruningwise.
 
