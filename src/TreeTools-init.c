@@ -7,7 +7,7 @@
 
 extern SEXP _TreeTools_as_newick(SEXP);
 extern SEXP _TreeTools_consensus_tree(SEXP, SEXP);
-extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP);
+extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_mixed_base(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
@@ -36,7 +36,7 @@ static const R_CMethodDef cMethods[] = {
 static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
   {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
-  {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 2},
+  {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
   {"_TreeTools_edge_to_mixed_base", (DL_FUNC) &_TreeTools_edge_to_mixed_base, 3},
   {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
   {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},

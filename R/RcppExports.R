@@ -37,8 +37,8 @@ minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
 
-cpp_edge_to_splits <- function(edge, nTip) {
-    .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
+cpp_edge_to_splits <- function(edge, order, nTip) {
+    .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
 
 splits_to_edge <- function(splits, nTip) {

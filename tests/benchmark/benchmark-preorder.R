@@ -14,7 +14,8 @@ mb(Preorder(trees1k), # 59-66 --> 38
                                Postorder(treesRl), # 34-38 --> 30
                                times = times)
 
-mb(Postorder(trees1k[[1]]),
+ub(Postorder(trees1k[[1]]$edge),
+   OldPostorder(trees1k[[1]]$edge),
    postorder_order(trees1k[[1]]$edge))
 
 message(Sys.time(), ": End.")

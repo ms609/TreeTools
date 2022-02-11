@@ -6,22 +6,32 @@ expect_splits_equal <- function(s1, s2, ...) {
 test_that("as.Splits()", {
   A <- FALSE
   B <- TRUE
-  expect_equal(c("1 bipartition split dividing 4 tips, t1 .. t4",
+  expect_equal(strsplit(capture_output(summary(as.Splits(c(A, A, B, B)))),
+                        '\n')[[1]],
+               c("1 bipartition split dividing 4 tips, t1 .. t4",
                  "   1234",
                  "   ..**", "",
-                 " Tip 1: t1\t Tip 2: t2\t Tip 3: t3\t Tip 4: t4\t"),
-               strsplit(capture_output(summary(as.Splits(c(A, A, B, B)))), '\n')[[1]])
+                 " Tip 1: t1\t Tip 2: t2\t Tip 3: t3\t Tip 4: t4\t"))
   logical80 <- c(rep(TRUE, 40), rep(FALSE, 16), rep(TRUE, 24))
-  expect_equal(
-    paste0(c('   ', ifelse(logical80, '*', '.')), collapse=''),
-    strsplit(capture_output(print(as.Splits(logical80), detail = TRUE)), '\n')[[1]][3]
+  expect_equal(strsplit(capture_output(print(
+    as.Splits(logical80), detail = TRUE)), '\n')[[1]][3],
+    paste0(c('   ', ifelse(logical80, '*', '.')), collapse = '')
   )
   expect_equal(as.logical(as.logical(as.Splits(logical80))), logical80)
-  expect_equal(t(matrix(c(A, A, B, B), dimnames=list(paste0('t', 1:4)))),
-               as.logical(as.Splits(c(A, A, B, B))))
+  expect_equal(as.logical(as.Splits(c(A, A, B, B))),
+               t(matrix(c(A, A, B, B), dimnames = list(paste0('t', 1:4)))))
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
-  expect_equal(c('8' = 'a b | c d e', '9' = 'd e | a b c'), as.character(splits1))
+  expect_equal(as.character(splits1),
+               c('8' = 'a b | c d e', '9' = 'd e | a b c'))
+  
+  pec6 <- as.Splits(PectinateTree(letters[1:6]))
+  expect_equal(as.character(as.Splits(pec6)),
+               c("9" = "c d e f | a b",
+                 "10" = "d e f | a b c",
+                 "11" = "e f | a b c d"))
+  
+  
   logicalSplits <- as.Splits(matrix(c(B, B, A, A, A,  A, A, A, B, B),
                                     nrow = 2, byrow = TRUE),
                              tipLabels = letters[1:5])
@@ -29,10 +39,10 @@ test_that("as.Splits()", {
   expect_equal(splits1, logicalSplits)
   expect_equal(splits1, as.Splits(splits1))
 
-  splitsC <- as.Splits(ape::read.tree(text="(((a, d), e), (b, (f, c)));"))
-  splitsD <- as.Splits(ape::read.tree(text="((a, b, c), (d, (e, f)));"))
-  splitsU <- as.Splits(ape::read.tree(text="(a, b, c, d, e, f);"))
-  oneSplit <- as.Splits(ape::read.tree(text="((a, b, c), (d, e, f));"))
+  splitsC <- as.Splits(ape::read.tree(text = "(((a, d), e), (b, (f, c)));"))
+  splitsD <- as.Splits(ape::read.tree(text = "((a, b, c), (d, (e, f)));"))
+  splitsU <- as.Splits(ape::read.tree(text = "(a, b, c, d, e, f);"))
+  oneSplit <- as.Splits(ape::read.tree(text = "((a, b, c), (d, e, f));"))
   expect_equal(attr(splitsC, 'tip.label'),
                attr(as.Splits(splitsU, splitsC), 'tip.label'))
   expect_equal(attr(splitsC, 'tip.label'),
@@ -42,7 +52,7 @@ test_that("as.Splits()", {
 
   expect_equal(letters[1:5], colnames(as.logical(logicalSplits)))
 
-  polytomy <- ape::read.tree(text='(a, b, c, d, e);')
+  polytomy <- ape::read.tree(text = '(a, b, c, d, e);')
   expect_equal("0 bipartition splits dividing 5 tips, a .. e",
                capture_output(print(as.Splits(polytomy))))
 
