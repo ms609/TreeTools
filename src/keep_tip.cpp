@@ -14,7 +14,7 @@ using namespace Rcpp;
 IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   
   if (edge.ncol() != 2) {
-    throw std::invalid_argument("edge must have two columns");
+    Rcpp::stop("`edge` must have two columns");
   }
   
   const int
