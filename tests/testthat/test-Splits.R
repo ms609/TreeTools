@@ -25,20 +25,19 @@ test_that("as.Splits()", {
   expect_equal(as.character(splits1),
                c("7" = 'a b c | d e', "8" = "a b | c d e"))
   
+  logicalSplits <- as.Splits(matrix(c(B, B, B, A, A,  B, B, A, A, A),
+                                    nrow = 2, byrow = TRUE),
+                             tipLabels = letters[1:5])
+  rownames(logicalSplits) <- rownames(splits1)
+  expect_equal(splits1, logicalSplits)
+  expect_equal(splits1, as.Splits(splits1))
+  
   pec6 <- as.Splits(PectinateTree(letters[1:6]))
   expect_equal(as.character(as.Splits(pec6)),
                c("9" = "c d e f | a b",
                  "10" = "d e f | a b c",
                  "11" = "e f | a b c d"))
   
-  
-  logicalSplits <- as.Splits(matrix(c(B, B, A, A, A,  A, A, A, B, B),
-                                    nrow = 2, byrow = TRUE),
-                             tipLabels = letters[1:5])
-  rownames(logicalSplits) <- rownames(splits1)
-  expect_equal(splits1, logicalSplits)
-  expect_equal(splits1, as.Splits(splits1))
-
   splitsC <- as.Splits(ape::read.tree(text = "(((a, d), e), (b, (f, c)));"))
   splitsD <- as.Splits(ape::read.tree(text = "((a, b, c), (d, (e, f)));"))
   splitsU <- as.Splits(ape::read.tree(text = "(a, b, c, d, e, f);"))

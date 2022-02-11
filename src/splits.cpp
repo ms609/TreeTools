@@ -56,8 +56,8 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     splits[i][uintx(i / BIN_SIZE)] = powers_of_two[i % BIN_SIZE];
   }
 
-  int32 root_children = 1; // Last edge must come from root
-  uintx root_child = UINTX_MAX;
+  uintx root_child = PO_CHILD(n_edge - 1);
+  int32 root_children = 1;
   for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
     const uintx parent = PO_PARENT(i);
     const uintx child = PO_CHILD(i);

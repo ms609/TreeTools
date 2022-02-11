@@ -55,10 +55,15 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
   edge <- x[["edge"]]
   nEdge <- dim(edge)[1]
-  edgeOrder <- switch(attr(x, "order"),
-                      "preorder" = nEdge:1,
-                      "postorder" = seq_len(nEdge),
-                      postorder_order(edge))
+  order <- attr(x, "order")[1]
+  edgeOrder <- if (is.null(order)) {
+    postorder_order(edge)
+  } else {
+    switch(order,
+           "preorder" = nEdge:1,
+           "postorder" = seq_len(nEdge),
+           postorder_order(edge))
+  }
 
   # Return:
   .as.Splits.edge(edge, edgeOrder, tipLabels = x[["tip.label"]],
