@@ -14,7 +14,8 @@
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 
-- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()`
+- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()` and
+  (provisionally) `Postorder()`
   ([#49](https://github.com/ms609/TreeTools/issues/49),
   [#89](https://github.com/ms609/TreeTools/issues/89)).
 

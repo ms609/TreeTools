@@ -139,7 +139,7 @@ test_that("Reorder methods work correctly", {
   Test(ApePostorder, testEdges = FALSE)
   expect_error(ApePostorder(bad))
 
-  Test(Postorder)
+  Test(Postorder, testEdges = FALSE) # Different order if edge lengths present
   expect_equal(c(rep(13:11, each = 2), 11, 10, 10, 10, 9, 9),
                Postorder(nastyEdge, renumber = TRUE)[, 1])
 

@@ -275,7 +275,7 @@ ApePostorder.multiPhylo <- function(tree, nTip, edge) {
   tree
 }
 
-#' @describeIn Reorder Reorder tree in Postorder. Edge lengths are not retained.
+#' @rdname Reorder
 #' @param force Logical specifying whether to rearrange trees already in
 #' postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.
 #' @export
