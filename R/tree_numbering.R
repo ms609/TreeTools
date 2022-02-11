@@ -339,9 +339,13 @@ Postorder.multiPhylo <- function(tree, force = FALSE) {
 #' corresponding to `tree`, with edges listed in postorder
 #' @export
 Postorder.numeric <- function(tree, force = FALSE) {
-  edge <- postorder_edges(tree - 1L)
-  #edge[order(edge[, 1], edge[, 2], decreasing = TRUE, method = "radix"), ]
-  edge
+  edge <- RenumberTree(tree[, 1], tree[, 2])
+  ordr <- order(edge[, 1], edge[, 2], decreasing = TRUE, method = "radix")
+  edge[ordr, , drop = FALSE]
+}
+
+OldPostorder <- function(tree, force = FALSE) {
+  postorder_edges(tree - 1L)
 }
 
 #' @describeIn Reorder Reorder tree Pruningwise.

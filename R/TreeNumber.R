@@ -150,7 +150,7 @@ as.TreeNumber.phylo <- function(x, ...) {
             "by 64-bit TreeNumbers")
   }
 
-  edge <- Postorder(edge)
+  edge <- OldPostorder(edge)
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
             tip.label = TipLabels(x),
@@ -394,7 +394,7 @@ as.MixedBase.phylo <- function(x, ...) {
   edge <- x[["edge"]]
   nTip <- NTip(x)
   
-  edge <- Postorder(edge)
+  edge <- OldPostorder(edge)
   structure(edge_to_mixed_base(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.label = TipLabels(x),
