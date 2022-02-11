@@ -11,8 +11,9 @@ test_that("Node supports calculated correctly", {
 
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
-  expect_equal(c('10' = 4, '11' = 4, '12' = 4, '13' = 3),
-               SplitFrequency(balanced, treeSample))
+  freq <- SplitFrequency(balanced, treeSample)
+  expect_equal(freq,
+               c("9" = 4, "10" = 4, "11" = 4, "12" = 4, "13" = 3)[names(freq)])
 
 })
 
