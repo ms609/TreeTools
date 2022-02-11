@@ -133,6 +133,6 @@ test_that("EnforceOutgroup() fails nicely", {
     BalancedTree(letters[5:6]),
     Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15)
     ))
-  expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
-               EnforceOutgroup(BalancedTree(8), 't1'))
+  expect_equal(EnforceOutgroup(BalancedTree(8), 't1'),
+               Preorder(ape::root(BalancedTree(8), 't1', resolve.root = TRUE)))
 })
