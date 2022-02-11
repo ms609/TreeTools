@@ -6,10 +6,6 @@ preorder_weighted <- function(parent, child, edgeLen) {
   .Call(`_TreeTools_preorder_weighted`, parent, child, edgeLen)
 }
 
-postorder_edges <- function(edge) {
-  .Call(`_TreeTools_postorder_edges`, edge)
-}
-
 postorder_order <- function(edge) {
   .Call(`_TreeTools_postorder_order`, edge)
 }
