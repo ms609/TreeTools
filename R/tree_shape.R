@@ -172,8 +172,7 @@ UnrootedTreeShape <- function(tree) {
 #' @importFrom bit64 integer64
 #' @export
 UnrootedTreeKey <- function(tree, asInteger = FALSE) {
-  tree <- Preorder(tree) # Guarantee unique representation of tree
-  edge <- Postorder(tree[["edge"]])
+  edge <- Postorder(tree)[["edge"]]
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]
