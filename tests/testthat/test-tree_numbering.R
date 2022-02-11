@@ -143,6 +143,8 @@ test_that("Reorder methods work correctly", {
     expect_identical(Method(pec7, ...), Method(mp7, ...)[[2]])
     expect_true(all.equal(Method(stt), stt))
     expect_identical(Method(bal7), Method(Method(bal7)))
+    expect_equal(Method(bal7),
+                 Method(Preorder(Postorder(Cladewise(Pruningwise(bal7))))))
     if (testEdges) expect_equal(Method(bal7)$edge, Method(bal7$edge))
     expect_error(Method(10))
     expect_error(Method(1:2))
@@ -174,9 +176,8 @@ test_that("Reorder methods retain edge weights", {
                bal7$edge.)
   expect_equal(Preorder(Cladewise(bal7))[["edge.length"]],
                bal7$edge.)
-  # TODO
-  # expect_equal(Preorder(Postorder(bal7))[["edge.length"]],
-  #              bal7$edge.)
+  expect_equal(Preorder(Postorder(bal7))[["edge.length"]],
+               bal7$edge.)
 })
 
 test_that("Malformed trees don't cause crashes", {

@@ -190,6 +190,7 @@ Cladewise.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
     tree[["edge.length"]] <- tree[["edge.length"]][newOrder]
   }
   attr(tree, "order") <- "cladewise"
+  attr(tree, "suborder") <- NULL
 
   # Return:
   tree
@@ -206,6 +207,7 @@ Cladewise.list <- function(tree, nTip, edge) {
 Cladewise.multiPhylo <- function(tree, nTip, edge) {
   tree[] <- lapply(tree, Cladewise)
   attr(tree, 'order') <- 'cladewise'
+  attr(tree, "suborder") <- NULL
   tree
 }
 
@@ -251,6 +253,7 @@ ApePostorder.phylo <- function(tree, nTip = NTip(tree), edge = tree[["edge"]]) {
     tree[["edge.length"]] <- tree[["edge.length"]][neworder]
   }
   attr(tree, "order") <- "postorder"
+  attr(tree, "suborder") <- "ape"
   tree
 }
 
@@ -269,6 +272,7 @@ ApePostorder.NULL <- function(tree, nTip, edge) NULL
 ApePostorder.multiPhylo <- function(tree, nTip, edge) {
   tree[] <- lapply(tree, ApePostorder)
   attr(tree, 'order') <- 'postorder'
+  attr(tree, "suborder") <- "ape"
   tree
 }
 
@@ -371,6 +375,7 @@ Pruningwise.phylo <- function(tree, nTip = NTip(tree),
     tree[["edge.length"]] <- tree[["edge.length"]][neworder]
   }
   attr(tree, "order") <- "pruningwise"
+  attr(tree, "suborder") <- NULL
   tree
 }
 
@@ -385,6 +390,7 @@ Pruningwise.list <- function(tree, nTip, edge) {
 Pruningwise.multiPhylo <- function(tree, nTip, edge) {
   tree[] <- lapply(tree, Pruningwise)
   attr(tree, 'order') <- 'pruningwise'
+  attr(tree, "suborder") <- NULL
   tree
 }
 
@@ -416,6 +422,7 @@ Preorder.phylo <- function(tree) {
       tree[["edge.length"]] <- edge[[2]]
     }
     attr(tree, 'order') <- 'preorder'
+    attr(tree, "suborder") <- NULL
 
     # Return:
     tree
@@ -433,6 +440,7 @@ Preorder.numeric <- function(tree) {
 Preorder.multiPhylo <- function(tree) {
   tree[] <- lapply(tree, Preorder)
   attr(tree, 'order') <- 'preorder'
+  attr(tree, "suborder") <- NULL
   tree
 }
 
