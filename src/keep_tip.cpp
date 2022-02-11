@@ -15,7 +15,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   
   if (edge.ncol() != 2) {
     Rcpp::stop("`edge` must have two columns");
-  }
+  } else {
   
   const int
     start_edge = edge.nrow(),
@@ -135,4 +135,5 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   }
   
   return ret;
+  }
 }
