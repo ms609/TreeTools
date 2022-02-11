@@ -463,11 +463,11 @@ CladeSizes <- function(tree, internal = FALSE, nodes = NULL) {
     internal <- isTRUE(internal)
   }
 
-  edge <- OldPostorder(tree[["edge"]])
   nTip <- NTip(tree)
+  edge <- tree[["edge"]]
 
   size <- c(rep.int(1L, nTip), rep.int(internal, max(edge[, 1]) - nTip))
-  for (i in seq_len(nrow(edge))) {
+  for (i in postorder_order(tree[["edge"]])) {
     edgeI <- edge[i, ]
     parent <- edgeI[1]
     child <- edgeI[2]

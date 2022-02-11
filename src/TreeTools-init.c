@@ -16,6 +16,7 @@ extern SEXP _TreeTools_minimum_spanning_tree(SEXP);
 extern SEXP _TreeTools_mixed_base_to_parent(SEXP, SEXP);
 extern SEXP _TreeTools_num_to_parent(SEXP, SEXP);
 extern SEXP _TreeTools_postorder_edges(SEXP);
+extern SEXP _TreeTools_postorder_order(SEXP);
 extern SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
 extern SEXP _TreeTools_preorder_weighted(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_random_parent(SEXP, SEXP);
@@ -44,6 +45,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_mixed_base_to_parent", (DL_FUNC) &_TreeTools_mixed_base_to_parent, 2},
   {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
   {"_TreeTools_postorder_edges", (DL_FUNC) &_TreeTools_postorder_edges, 1},
+  {"_TreeTools_postorder_order", (DL_FUNC) &_TreeTools_postorder_order, 1},
   {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
   {"_TreeTools_preorder_weighted", (DL_FUNC) &_TreeTools_preorder_weighted, 3},
   {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},

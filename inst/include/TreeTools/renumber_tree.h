@@ -492,6 +492,44 @@ namespace TreeTools {
 
     return(ret);
   }
+  
+  // [[Rcpp::export]]
+  inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
+  {
+    const int32
+      n_edge = edge.nrow(),
+      node_limit = n_edge + 1;
+    
+    
+    if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
+      throw std::length_error("Tree too large for postorder_order. "            // # nocov
+                              "Try running 64-bit R?");                         // # nocov
+    }
+    
+    int32 * missing_children = (int32*) std::calloc(node_limit, sizeof(int32));
+    for (int32 i = n_edge; i--; ) {
+      ++missing_children[PARENT(i)];
+    }
+    
+    int32 found = 0;
+    bool * matched = (bool*) std::calloc(node_limit, sizeof(bool));
+    Rcpp::IntegerVector ret(n_edge);
+    do {
+      for (int32 i = n_edge; i--; ) {
+        if (!matched[i]) {
+          if (!missing_children[CHILD(i)]) {
+            matched[i] = true;
+            --missing_children[PARENT(i)];
+            ret[found++] = i + 1;
+          }
+        }
+      }
+    } while (found != n_edge);
+    std::free(missing_children);
+    std::free(matched);
+    
+    return ret;
+  }
 }
 
 #endif

@@ -38,6 +38,16 @@ RcppExport SEXP _TreeTools_postorder_edges(SEXP edgeSEXP) {
   return rcpp_result_gen;
   END_RCPP
 }
+// postorder_order
+RcppExport SEXP _TreeTools_postorder_order(SEXP edgeSEXP) {
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_order(edge));
+  return rcpp_result_gen;
+  END_RCPP
+}
 // root_binary
 RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP

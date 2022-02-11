@@ -126,6 +126,19 @@ test_that("RenumberTips() works correctly", {
     
 })
 
+test_that("postorder_order() works", {
+  edg7 <- BalancedTree(7)$edge
+  expect_postorder(edg7[postorder_order(edg7), ])
+  
+  test2 <- edg7[c(1:4, 9, 8, 12, 11, 10, 7:5), ]
+  expect_postorder(test2[postorder_order(test2), ])
+  
+  nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+                           5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+                         .Dim = c(12, 2))
+  expect_postorder(nastyEdge[postorder_order(nastyEdge), ])
+})
+
 test_that("Reorder methods work correctly", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
