@@ -1,5 +1,5 @@
 test_that("TipsInSplits() family", {
-  expect_identical(test, c("7" = 3L, "8" = 2L, "9" = 2L)[names(test)])
+  test <- TipsInSplits(BalancedTree(letters[1:5]))
   expect_identical(test, c("7" = 3L, "8" = 2L, "9" = 2L)[names(test)])
   expect_identical(15:2, TipsInSplits(PectinateTree(17), keep.names = FALSE))
 
