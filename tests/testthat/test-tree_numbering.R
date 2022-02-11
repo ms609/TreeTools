@@ -137,6 +137,13 @@ test_that("postorder_order() works", {
                            5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
                          .Dim = c(12, 2))
   expect_postorder(nastyEdge[postorder_order(nastyEdge), ])
+  
+  poly <- ape::read.tree(text = "((a, b, c), (d, (e, f)));")$edge
+  expect_postorder(poly[postorder_order(poly), ])
+  
+  star <- ape::read.tree(text = "(a, b, c, d, e, f);")$edge
+  expect_postorder(star[postorder_order(star), ])
+  
 })
 
 test_that("Reorder methods work correctly", {
