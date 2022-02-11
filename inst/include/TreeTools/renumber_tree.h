@@ -506,7 +506,7 @@ namespace TreeTools {
                               "Try running 64-bit R?");                         // # nocov
     }
     
-    int32 * missing_children = (int32*) std::calloc(node_limit, sizeof(int32));
+    int32 * missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
       ++missing_children[PARENT(i)];
     }
