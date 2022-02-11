@@ -78,7 +78,7 @@ utils::globalVariables(c('nRootedShapes',
 RootedTreeShape <- function(tree) {
   edge <- tree[["edge"]]
   nTip <- NTip(tree)
-  edge <- OldPostorder(edge)
+  edge <- Postorder(edge)
   .Int64(edge_to_rooted_shape(edge[, 1], edge[, 2], nTip))
 }
 
