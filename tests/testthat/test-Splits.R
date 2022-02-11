@@ -103,6 +103,14 @@ test_that('as.Splits.phylo()', {
   expect_equal(c(61L, 8L), dim(as.Splits(PectinateTree(64L))))
   expect_equal(c(62L, 9L), dim(as.Splits(PectinateTree(65L))))
   expect_equal(c(125L, 16L), dim(as.Splits(PectinateTree(128L))))
+  expect_equal(as.Splits(Postorder(PectinateTree(64L))),
+               as.Splits(PectinateTree(64L)))
+  expect_true(all(
+    as.Splits(ape::reorder.phylo(BalancedTree(66L), 'postorder')) %in% 
+               as.Splits(BalancedTree(66L))))
+  expect_false(all(
+    as.Splits(ape::reorder.phylo(PectinateTree(66L), 'postorder')) %in% 
+               as.Splits(BalancedTree(66L))))
 
   # Should be viable on 32-bit systems
   expect_equal(c(7997L, 1000L), dim(as.Splits(PectinateTree(8000L))))

@@ -344,10 +344,6 @@ Postorder.numeric <- function(tree, force = FALSE) {
   edge[ordr, , drop = FALSE]
 }
 
-OldPostorder <- function(tree, force = FALSE) {
-  postorder_edges(tree - 1L)
-}
-
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
 Pruningwise <- function(tree, nTip, edge) UseMethod('Pruningwise')
