@@ -310,7 +310,7 @@ test_that("Split combination", {
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree3)))))
   expect_error(c(splits1, as.Splits(tree4)))
   expect_error(c(splits1, as.Splits(tree5)))
-  expect_equal(as.raw(c(3L, 24L, 28L, 24L)),
+  expect_equal(c(as.raw(splits1), as.raw(as.Splits(PectinateTree(5)))),
                unname(c(splits1,
                         as.Splits(RenumberTips(tree3, letters[1:5])))[, 1]))
   expect_equal(2L, length(unique(c(splits1, as.Splits(tree2)))))
