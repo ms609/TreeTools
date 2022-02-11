@@ -169,8 +169,9 @@ test_that('as.Splits.matrix()', {
 })
 
 test_that('as.Splits.edge()', {
-  expect_equal(matrix(as.raw(0x0c)), # Or 0x03
-               unname(as.Splits(BalancedTree(4), asSplits = FALSE)))
+  test <- unname(as.Splits(BalancedTree(4), asSplits = FALSE))
+  expect_true(identical(test, matrix(as.raw(0x0c))) ||
+              identical(test, matrix(as.raw(0x03))))
 })
 
 test_that('as.Splits.logical()', {
