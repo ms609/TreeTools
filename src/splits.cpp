@@ -57,14 +57,14 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   }
 
   int32 root_children = 1; // Last edge must come from root
-  int32 root_child = UINTX_MAX;
+  uintx root_child = UINTX_MAX;
   for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
     const uintx parent = PO_PARENT(i);
     const uintx child = PO_CHILD(i);
     if (parent == root_node) {
       ++root_children;
-      if (child <= n_tip) {
-        root_child = child;
+      if (child > n_tip) {
+        root_child = uintx(child);
       }
     }
     for (uintx j = 0; j != n_bin; ++j) {
