@@ -10,9 +10,6 @@ PathLengths(tree, fullMatrix = FALSE)
 \item{tree}{Original tree of class \code{phylo}, in \code{\link{Preorder}}.}
 
 \item{fullMatrix}{Logical specifying return format; see "value" section`.}
-
-\item{keptTips}{Logical vector stating whether each leaf should be retained.
-Sequence corresponds to \code{tree[["tip.label"]]}.}
 }
 \value{
 If \code{fullMatrix = TRUE}, \code{PathLengths()} returns a square matrix in

@@ -16,8 +16,8 @@ KeptPaths(paths, keptVerts)
 \item{paths}{\code{data.frame} of paths in master tree, perhaps generated using
 \code{\link[=PathLengths]{PathLengths()}}.}
 
-\item{kept}{Logical specifying whether each entry is retained in the reduced
-tree, perhaps generated using \code{\link[=KeptVerts]{KeptVerts()}}.}
+\item{keptVerts}{Logical specifying whether each entry is retained in the
+reduced tree, perhaps generated using \code{\link[=KeptVerts]{KeptVerts()}}.}
 }
 \value{
 \code{KeptPaths()} returns a logical vector specifying whether each path

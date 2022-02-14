@@ -5,8 +5,8 @@
 #' 
 #' @param paths `data.frame` of paths in master tree, perhaps generated using
 #' [`PathLengths()`].
-#' @param kept Logical specifying whether each entry is retained in the reduced
-#' tree, perhaps generated using [`KeptVerts()`].
+#' @param keptVerts Logical specifying whether each entry is retained in the
+#' reduced tree, perhaps generated using [`KeptVerts()`].
 #' @return `KeptPaths()` returns a logical vector specifying whether each path
 #' in `paths` occurs when `keptVerts` vertices are retained.
 #' @family tree manipulation

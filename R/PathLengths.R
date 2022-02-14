@@ -4,8 +4,6 @@
 #' from each vertex to each of its descendant vertices.
 #' 
 #' @param tree Original tree of class `phylo`, in [`Preorder`].
-#' @param keptTips Logical vector stating whether each leaf should be retained.
-#' Sequence corresponds to `tree[["tip.label"]]`.
 #' @param fullMatrix Logical specifying return format; see "value" section`.
 #' @return If `fullMatrix = TRUE`, `PathLengths()` returns a square matrix in
 #' which entry `[i, j]` denotes the distance from internal node `i` to the
