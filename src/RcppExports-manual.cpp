@@ -39,11 +39,12 @@ RcppExport SEXP _TreeTools_postorder_order(SEXP edgeSEXP) {
   END_RCPP
 }
 // root_binary
+IntegerMatrix TreeTools::root_binary(const IntegerMatrix edge, const int outgroup);
 RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
-  Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+  Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type edge(edgeSEXP);
   Rcpp::traits::input_parameter< const int >::type outgroup(outgroupSEXP);
   rcpp_result_gen = Rcpp::wrap(TreeTools::root_binary(edge, outgroup));
   return rcpp_result_gen;

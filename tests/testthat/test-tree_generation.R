@@ -36,7 +36,6 @@ test_that("StarTree() works", {
 })
 
 test_that("Random trees are generated correctly", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
   expect_equal(c(4, 4, 5, 5, 1, 5, 2, 3), RandomTree(3, root = TRUE)$edge[1:8])
   expect_true(all.equal(RandomTree(3, root = 't2'),
     PectinateTree(c('t2', 't3', 't1'))))
