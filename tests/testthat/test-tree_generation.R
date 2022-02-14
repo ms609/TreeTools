@@ -26,8 +26,8 @@ test_that('Balanced trees are generated correctly', {
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equal(ignore_attr = TRUE,
                PectinateTree(escapees), BalancedTree(escapees))
-  skip_if(Sys.getenv("USING_ASAN") != "") # Unclear why this is needed...
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
+  skip_if(Sys.getenv("USING_ASAN") != "") # Unclear why this is needed...
   expect_equal("Test", .BalancedBit('Test'))
   expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
