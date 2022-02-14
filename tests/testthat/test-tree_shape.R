@@ -1,8 +1,8 @@
 test_that("Errors are handled", {
   expect_error(RootedTreeWithShape(as.integer64(-1)))
-  expect_error(RootedTreeWithShape(as.integer64(2^31)))
   expect_error(UnrootedTreeWithShape(31, 31))
   expect_error(.UnrootedKeys(29L))
+  expect_error(RootedTreeWithShape(as.integer64(2)^31), " large ")
 })
 
 test_that('Tree shapes counted', {
