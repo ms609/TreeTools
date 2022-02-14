@@ -1,5 +1,4 @@
-test_that('Pectinate trees are generated', {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+test_that("Pectinate trees are generated", {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
