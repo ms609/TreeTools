@@ -119,6 +119,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// path_lengths
+NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight);
+RcppExport SEXP _TreeTools_path_lengths(SEXP edgeSEXP, SEXP weightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const DoubleVector >::type weight(weightSEXP);
+    rcpp_result_gen = Rcpp::wrap(path_lengths(edge, weight));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_edge_to_splits
 RawMatrix cpp_edge_to_splits(const IntegerMatrix edge, const IntegerVector order, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP orderSEXP, SEXP nTipSEXP) {

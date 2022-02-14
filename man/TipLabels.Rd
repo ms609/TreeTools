@@ -95,6 +95,7 @@ Other tree properties:
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TreeIsRooted}()}
 
