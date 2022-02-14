@@ -73,11 +73,16 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
       i_prime = i + prime,
       i_prime_r = i_prime + c_to_r
     ;
-
-    std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
-    intx where = place(rng);
-    if (where >= i) {
-      where += prime + 2 - i;
+    
+    intx where;
+    if (i == 2) {
+      where = 1;
+    } else {
+      std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
+      intx where = place(rng);
+      if (where >= i) {
+        where += prime + 2 - i;
+      }
     }
 
     edge(i_prime) = edge(where);
