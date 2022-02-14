@@ -41,7 +41,7 @@ test_that("as.TreeNumber()", {
   expect_equal(as.phylo(1, 16), as.phylo(tn16, tipLabels = NULL))
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), as.TreeNumber(tn16))
 
-  bigNumber <- as.integer64(11 * 2^31 + 1234)
+  bigNumber <- as.integer64(2) ^ 31 * 11 + 1234
   tn16 <- as.TreeNumber(as.phylo(bigNumber, 16, letters[1:16]))
   expect_equal(as.phylo(bigNumber, 16), as.phylo(tn16, tipLabels = NULL))
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
