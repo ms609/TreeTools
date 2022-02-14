@@ -2,7 +2,7 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include "../inst/include/TreeTools.h"
-#include <Rcpp/Lightest>
+#include <Rcpp.h>
 
 using namespace Rcpp;
 
@@ -105,6 +105,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
     Rcpp::traits::input_parameter< const LogicalVector >::type keep(keepSEXP);
     rcpp_result_gen = Rcpp::wrap(keep_tip(edge, keep));
+    return rcpp_result_gen;
+END_RCPP
+}
+// kept_vertices
+IntegerVector kept_vertices(const IntegerMatrix edge, const LogicalVector kept);
+RcppExport SEXP _TreeTools_kept_vertices(SEXP edgeSEXP, SEXP keptSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type kept(keptSEXP);
+    rcpp_result_gen = Rcpp::wrap(kept_vertices(edge, kept));
     return rcpp_result_gen;
 END_RCPP
 }
