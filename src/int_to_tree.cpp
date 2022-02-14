@@ -61,9 +61,9 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
     prime = n_tip - 2
   ;
   intx base;
-
-//  std::mt19937 rng(seed[0]);
-  std::mt19937 rng(0);
+  
+  std::mt19937 rng;
+  rng.seed(seed[0]);
 
   IntegerVector edge(n_tip + n_tip - 2);
   edge(0) = root_node;
