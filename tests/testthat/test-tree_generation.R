@@ -13,6 +13,7 @@ test_that('Pectinate trees are generated', {
 })
 
 test_that('Balanced trees are generated correctly', {
+  skip_if(Sys.getenv("USING_ASAN") != "")
   # nTip even
   expect_equal(ape::read.tree(text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));'),
                BalancedTree(8L))

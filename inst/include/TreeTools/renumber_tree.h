@@ -386,6 +386,7 @@ namespace TreeTools {
       add_child_edges(root_node, n_tip + 1, children_of, n_children, wt_above,
                       ret, ret_wt, &next_edge, &next_label);
       
+      std::free(wt_above);
       std::free(n_children);
       
       for (int32 i = 1; i != node_limit; i++) {

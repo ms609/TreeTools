@@ -42,7 +42,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     /* Cannot calculate trivial_two below. */
     throw(std::length_error("Not enough edges in tree for edge_to_splits."));
   }
-  if (n_edge != order.length()) {
+  if (n_edge != uintx(order.length())) {
     stop("Length of `order` must equal number of edges");
   }
 

@@ -211,7 +211,7 @@ namespace TreeTools {
       ret["Nnode"] = n_node + 1;
       if (weighted) {
         Rcpp::List preorder_res;
-        preorder_res  = preorder_weighted(
+        preorder_res = preorder_weighted(
           new_edge(Rcpp::_, 0),
           new_edge(Rcpp::_, 1),
           new_wt);
