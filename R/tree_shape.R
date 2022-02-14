@@ -133,7 +133,7 @@ RootedTreeWithShape.integer64 <- function(shape, nTip,
 #' @export
 UnrootedTreeWithShape <- function(shape, nTip, tipLabels = character(nTip)) {
   if (nTip > 30) {
-    stop("Only trees with < 31 tips are presently handled")
+    stop("Only trees with < 31 leaves are presently handled")
   }
   nShapes <- nUnrootedShapes[nTip]
   if (shape >= as.integer(nShapes)) {

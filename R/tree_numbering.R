@@ -128,8 +128,9 @@ RenumberEdges <- function(parent, child, ...) {
 #'
 #'
 #' `Postorder()` numbers nodes as in `Preorder()`, and lists edges in
-#' descending order of parent node number.  If a tree is already
-#' in postorder, it will not be rearranged unless `force = TRUE`.
+#' descending order of parent node number, breaking ties by listing child
+#' nodes in increasing order.  If a tree is already in postorder, it will not
+#' be rearranged unless `force = TRUE`.
 #'
 #' Methods applied to numeric inputs do not check input for sanity, so should
 #' be used with caution: malformed input may cause undefined results, including
@@ -340,7 +341,8 @@ Postorder.multiPhylo <- function(tree, force = FALSE) {
 #' @export
 Postorder.numeric <- function(tree, force = FALSE) {
   edge <- RenumberTree(tree[, 1], tree[, 2])
-  ordr <- order(edge[, 1], edge[, 2], decreasing = TRUE, method = "radix")
+  ordr <- order(edge[, 1], edge[, 2],
+                decreasing = c(TRUE, FALSE), method = "radix")
   edge[ordr, , drop = FALSE]
 }
 

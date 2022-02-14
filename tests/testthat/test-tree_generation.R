@@ -1,5 +1,4 @@
-test_that('Pectinate trees are generated', {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+test_that("Pectinate trees are generated", {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
@@ -13,20 +12,24 @@ test_that('Pectinate trees are generated', {
 })
 
 test_that('Balanced trees are generated correctly', {
-  skip_if(Sys.getenv("USING_ASAN") != "")
   # nTip even
-  expect_equal(ape::read.tree(text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));'),
-               BalancedTree(8L))
+  expect_equal(BalancedTree(8L),
+               ape::read.tree(
+                 text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));')
+               )
   # nTip odd
-  expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));'),
-               BalancedTree(9L))
+  expect_equal(BalancedTree(9L),
+               ape::read.tree(
+                 text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));')
+               )
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equal(ignore_attr = TRUE,
                PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
-  expect_equal('Test', .BalancedBit('Test'))
-  expect_true(is.integer(BalancedTree(8)$edge))
+  skip_if(Sys.getenv("USING_ASAN") != "") # Unclear why this is needed...
+  expect_equal("Test", .BalancedBit('Test'))
+  expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
 test_that("StarTree() works", {
