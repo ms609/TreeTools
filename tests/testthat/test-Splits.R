@@ -182,6 +182,11 @@ test_that('as.Splits.edge()', {
               identical(test, matrix(as.raw(0x03))))
 })
 
+test_that("Logical splits don't get caught by as.matrix", {
+  expect_equal(as.raw(as.Splits(matrix(FALSE, 2, 2))), raw(2))
+  expect_equal(as.raw(as.Splits(matrix(TRUE, 3, 3))), as.raw(rep(7, 3)))
+})
+
 test_that('as.Splits.logical()', {
   FFTT <- c(FALSE, FALSE, TRUE, TRUE)
   a..d <- letters[1:4]

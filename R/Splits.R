@@ -174,7 +174,7 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
     } else {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
-  } else if (dim(x)[2] == 2) {
+  } else if (is.numeric(x) && dim(x)[2] == 2) {
     .as.Splits.edge(x, postorder_order(x),
                     tipLabels = NULL, asSplits = TRUE, ...)
   } else {
