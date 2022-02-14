@@ -49,11 +49,10 @@ IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
   return edge;
 }
 
+// Checking that nTip > 1 is caller's responsibility.
 // [[Rcpp::export]]
 IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) {
-  if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
-  }
+
   const intx
     n_tip = nTip[0],
     root_node = n_tip + n_tip - 1,

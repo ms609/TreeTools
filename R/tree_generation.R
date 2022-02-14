@@ -106,6 +106,9 @@ RandomTree <- function(tips, root = FALSE, nodes) {
 #' @importFrom stats runif
 #' @export
 .RandomParent <- function(n, seed = sample.int(2147483647L, 1L)) {
+  if (n[0] < 2) {
+    stop("nTip must be > 1");
+  }
   random_parent(n, seed)
 }
 
