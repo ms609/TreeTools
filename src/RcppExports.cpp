@@ -108,6 +108,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// kept_vertices
+IntegerVector kept_vertices(const IntegerMatrix edge, const LogicalVector kept);
+RcppExport SEXP _TreeTools_kept_vertices(SEXP edgeSEXP, SEXP keptSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type kept(keptSEXP);
+    rcpp_result_gen = Rcpp::wrap(kept_vertices(edge, kept));
+    return rcpp_result_gen;
+END_RCPP
+}
 // minimum_spanning_tree
 IntegerMatrix minimum_spanning_tree(const IntegerVector order);
 RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP orderSEXP) {
