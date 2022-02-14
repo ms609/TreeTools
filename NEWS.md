@@ -36,6 +36,8 @@
 
 - Fix bug handling `phyDat` objects in `ArtificialExtinction()`.
 
+- `RenumberTips()` allows `tipOrder` to contain elements not present in `tree`.
+
 # TreeTools 1.6.0
 
 ## New functions
