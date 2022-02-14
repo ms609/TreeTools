@@ -175,8 +175,9 @@ sorted into preorder, until each edge has been visited.
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
 \code{Postorder()} numbers nodes as in \code{Preorder()}, and lists edges in
-descending order of parent node number.  If a tree is already
-in postorder, it will not be rearranged unless \code{force = TRUE}.
+descending order of parent node number, breaking ties by listing child
+nodes in increasing order.  If a tree is already in postorder, it will not
+be rearranged unless \code{force = TRUE}.
 
 Methods applied to numeric inputs do not check input for sanity, so should
 be used with caution: malformed input may cause undefined results, including
