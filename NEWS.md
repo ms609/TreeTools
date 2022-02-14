@@ -8,6 +8,8 @@
 - `%in%.Splits()` retains names when comparing small splits
   ([#40](https://github.com/ms609/TreeTools/issues/40)).
   
+- `KeptVerts()` and `KeptPath()` identify elements in reduced trees.
+  
 - Improve handling of zero-split trees.
 
 - `DropTip()` no longer adds a root to unrooted trees.
@@ -35,6 +37,8 @@
   ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
 - Fix bug handling `phyDat` objects in `ArtificialExtinction()`.
+
+- `RenumberTips()` allows `tipOrder` to contain elements not present in `tree`.
 
 # TreeTools 1.6.0
 

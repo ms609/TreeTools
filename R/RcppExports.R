@@ -33,6 +33,10 @@ keep_tip <- function(edge, keep) {
     .Call(`_TreeTools_keep_tip`, edge, keep)
 }
 
+kept_vertices <- function(edge, kept) {
+    .Call(`_TreeTools_kept_vertices`, edge, kept)
+}
+
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }

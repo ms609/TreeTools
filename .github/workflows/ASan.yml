@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - master
+      - '**asan**'
     paths:
       - '.github/workflows/gcc-ASAN.yml'
       - 'src/**'

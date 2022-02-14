@@ -423,7 +423,6 @@ ListAncestors <- function(parent, child, node = NULL) {
 #' # Alias:
 #' AllAncestors(edge[, 1], edge[, 2])
 #'
-#' @template MRS
 #' @family tree navigation
 #' @export
 AllAncestors <- function(parent, child) {

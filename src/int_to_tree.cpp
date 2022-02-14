@@ -49,11 +49,10 @@ IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
   return edge;
 }
 
+// Checking that nTip > 1 is caller's responsibility.
 // [[Rcpp::export]]
 IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) {
-  if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
-  }
+
   const intx
     n_tip = nTip[0],
     root_node = n_tip + n_tip - 1,
@@ -74,11 +73,16 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
       i_prime = i + prime,
       i_prime_r = i_prime + c_to_r
     ;
-
-    std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
-    intx where = place(rng);
-    if (where >= i) {
-      where += prime + 2 - i;
+    
+    intx where;
+    if (i == 2) {
+      where = 1;
+    } else {
+      std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
+      intx where = place(rng);
+      if (where >= i) {
+        where += prime + 2 - i;
+      }
     }
 
     edge(i_prime) = edge(where);

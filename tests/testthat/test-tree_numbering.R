@@ -112,7 +112,8 @@ test_that("RenumberTips() works correctly", {
   
   expect_null(RenumberTips(NULL))
 
-  expect_error(RenumberTips(l7, letters[1:5]))
+  expect_equal(RenumberTips(l7, c("extra tip", letters[1:5])),
+               RenumberTips(l7, letters[1:4]))
   expect_error(RenumberTips(l7, letters[2:5]))
   
   

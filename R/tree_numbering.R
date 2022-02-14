@@ -481,16 +481,21 @@ RenumberTips <- function(tree, tipOrder) UseMethod('RenumberTips')
 RenumberTips.phylo <- function(tree, tipOrder) {
   startOrder <- tree[["tip.label"]]
   newOrder <- TipLabels(tipOrder, single = TRUE)
-  if (identical(startOrder, newOrder)) return(tree)
+  if (identical(startOrder, newOrder)) {
+    return(tree)
+  }
   if (length(startOrder) != length(newOrder)) {
     startOnly <- setdiff(startOrder, newOrder)
     newOnly <- setdiff(newOrder, startOrder)
-    stop("Tree labels and tipOrder must match.",
-         if (length(newOnly)) "\n  Missing in `tree`: ",
-         paste0(newOnly, collapse = ', '),
-         if (length(startOnly)) "\n  Missing in `tipOrder`: ",
-         paste0(startOnly, collapse = ', ')
-         )
+    if (length(startOnly)) {
+      stop("Tree labels and tipOrder must match.",
+           if (length(newOnly)) "\n  Missing in `tree`: ",
+           paste0(newOnly, collapse = ', '),
+           if (length(startOnly)) "\n  Missing in `tipOrder`: ",
+           paste0(startOnly, collapse = ', ')
+           )
+    }
+    newOrder <- intersect(newOrder, startOrder)
   }
 
   nTip <- length(startOrder)

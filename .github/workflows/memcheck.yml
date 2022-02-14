@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+      - '**valgrind**'
     paths:
       - '.github/workflows/memcheck.yml'
       - 'src/**'
