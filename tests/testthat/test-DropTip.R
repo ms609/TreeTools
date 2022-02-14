@@ -94,4 +94,13 @@ test_that("KeepTip() works", {
     BalancedTree(paste0('t', 5:8)),
     KeepTip(BalancedTree(8), 5:9)
   )))
+  
+  bal9 <- BalancedTree(9)
+  bal9$edge.length <- 10 * 1:16
+  expect_equal(KeepTip(bal9, c(1, 3, 5, 7, 9))[["edge.length"]],
+               c(10, 20, 30 + 40,
+                 60,
+                 70 + 90,
+                 100, 110 + 130,
+                 140 + 160))
 })
