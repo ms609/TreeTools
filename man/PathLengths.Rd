@@ -4,18 +4,25 @@
 \alias{PathLengths}
 \title{Calculate length of paths between each pair of vertices within tree}
 \usage{
-PathLengths(tree)
+PathLengths(tree, fullMatrix = FALSE)
 }
 \arguments{
 \item{tree}{Original tree of class \code{phylo}, in \code{\link{Preorder}}.}
+
+\item{fullMatrix}{Logical specifying return format; see "value" section`.}
 
 \item{keptTips}{Logical vector stating whether each leaf should be retained.
 Sequence corresponds to \code{tree[["tip.label"]]}.}
 }
 \value{
-\code{PathLengths()} returns a square matrix in which entry \verb{[i, j]}
-denotes the distance from internal node \code{i} to the descendant vertex \code{j}.
+If \code{fullMatrix = TRUE}, \code{PathLengths()} returns a square matrix in
+which entry \verb{[i, j]} denotes the distance from internal node \code{i} to the
+descendant vertex \code{j}.
 Vertex pairs without a continuous directed path are denoted \code{NA}.
+If \code{fullMatrix = FALSE}, \code{PathLengths()} returns a \code{data.frame} with three
+columns: \code{start} lists the deepest node in each path (i.e. that closest
+to the root); \code{end} lists the shallowest node (i.e. that closest to a leaf);
+\code{length} lists the total length of that path.
 }
 \description{
 Given a weighted rooted tree \code{tree}, \code{PathLengths()} returns the distance

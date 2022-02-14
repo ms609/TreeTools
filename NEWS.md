@@ -8,11 +8,11 @@
 - `%in%.Splits()` retains names when comparing small splits
   ([#40](https://github.com/ms609/TreeTools/issues/40)).
   
-- `KeptVerts()` and `KeptPath()` identify elements in reduced trees.
+- `KeptVerts()` and `KeptPaths()` identify elements in reduced trees.
   
 - Improve handling of zero-split trees.
 
-- `DropTip()` no longer adds a root to unrooted trees.
+- `DropTip()` no longer adds a root to unrooted trees, and retains edge lengths.
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 

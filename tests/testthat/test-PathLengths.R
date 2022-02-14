@@ -5,10 +5,10 @@ test_that("PathLengths() works", {
                "weight")
   bal9 <- BalancedTree(9)
   bal9$edge.length <- 1:16
-  pl <- PathLengths(bal9)
+  pl <- PathLengths(bal9, fullMatrix = TRUE)
   expect_equal(dim(pl), rep(17L, 2))
   Test <- function(tr) {
-    calculated <- PathLengths(tr)
+    calculated <- PathLengths(tr, full = TRUE)
     edge <- tr$edge
     parent <- edge[, 1]
     child <- edge[, 2]

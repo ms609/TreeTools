@@ -31,5 +31,3 @@ KeptVerts.matrix <- function(tree, keptTips) {
   # Return:
   ret[-1] > 1L
 }
-
- 

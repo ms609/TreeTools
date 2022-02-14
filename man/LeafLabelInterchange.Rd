@@ -41,6 +41,7 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
 \code{\link{KeptVerts}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
