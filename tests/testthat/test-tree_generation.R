@@ -28,7 +28,6 @@ test_that('Balanced trees are generated correctly', {
                PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
   expect_equal("Test", .BalancedBit('Test'))
-  skip_if(Sys.getenv("USING_ASAN") != "") # Unclear why this is needed...
   expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
