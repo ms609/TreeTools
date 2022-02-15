@@ -10,4 +10,18 @@ test_that("KeptVerts() works", {
                c(1:12 %in% 4:6, rep(N, 4), rep(Y, 2), rep(N, 5)))
   expect_equal(KeptVerts(bal12, 1:12 %in% c(1, 2, 6, 12)),
                c(1:12 %in% c(1, 2, 6, 12), Y, Y, N, Y, N, N, N, N, N, N, N))
+  
+  pec9 <- UnrootTree(PectinateTree(9))
+  kept <- c(1, 3, 8, 9)
+  expect_equal(which(KeptVerts(pec9, 1:9 %in% kept)),
+               c(kept, 10, 16))
+  
+  real <- read.tree(text = 
+  "(t1:3,t2:1,((t3:1,t4:1):3,(t5:2,(t6:1,(t7:6,((t8:8,(t9:2,t10:4):3):2,(t11:1,t12:2):5):1):2):1):1):2);")
+  kept <- c(1L, 3L, 4L, 8L, 9L)
+  # Duplicate root is not retained.
+  expect_equal(
+    which(KeptVerts(real, as.logical(tabulate(kept, NTip(real))))),
+    c(kept, 13, 15, 20))
+  
 })
