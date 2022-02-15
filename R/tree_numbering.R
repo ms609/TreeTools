@@ -346,6 +346,38 @@ Postorder.numeric <- function(tree, force = FALSE) {
   edge[ordr, , drop = FALSE]
 }
 
+#' @rdname Reorder
+#' @return `PostorderOrder()` returns an integer vector. Visiting edges in this
+#' order will traverse the tree in postorder.
+#' @export
+PostorderOrder <- function(tree) UseMethod("PostorderOrder")
+
+#' @rdname Reorder
+#' @export
+PostorderOrder.phylo <- function(tree) {
+  order <- attr(tree, "order")
+  if (is.null(order)) {
+    order <- character(1)
+  }
+  edge <- tree[["edge"]]
+  
+  # Return:
+  switch(order,
+         "preorder" = dim(edge)[1]:1,
+         "postorder" = seq_len(dim(edge)[1]),
+         postorder_order(edge))
+}
+
+#' @rdname Reorder
+#' @export
+PostorderOrder.numeric <- function(tree) {
+  dims <- dim(tree)
+  if (is.null(dims) || dims[2] != 2) {
+    stop("`tree` must be the edge matrix of a `phylo` object.")
+  }
+  postorder_order(tree)
+}
+
 #' @describeIn Reorder Reorder tree Pruningwise.
 #' @export
 Pruningwise <- function(tree, nTip, edge) UseMethod('Pruningwise')

@@ -145,6 +145,15 @@ test_that("postorder_order() works", {
   star <- ape::read.tree(text = "(a, b, c, d, e, f);")$edge
   expect_postorder(star[postorder_order(star), ])
   
+  expect_error(PostorderOrder(1:5), "edge matrix of a `phylo` obj")
+  expect_error(PostorderOrder(matrix(1, 3, 3)), "edge matrix of a `phylo` obj")
+  expect_equal(PostorderOrder(BalancedTree(4)),
+               rev(seq_len(nrow(BalancedTree(4)$edge))))
+  expect_equal(PostorderOrder(Postorder(BalancedTree(4))),
+               seq_len(nrow(BalancedTree(4)$edge)))
+  expect_postorder(nastyEdge[PostorderOrder(nastyEdge), ])
+  expect_postorder(nastyEdge[PostorderOrder(nasty), ])
+  
 })
 
 test_that("Reorder methods work correctly", {
