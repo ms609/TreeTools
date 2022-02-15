@@ -3,14 +3,14 @@
 \name{KeptVerts}
 \alias{KeptVerts}
 \alias{KeptVerts.phylo}
-\alias{KeptVerts.matrix}
+\alias{KeptVerts.numeric}
 \title{Identify vertices retained when leaves are dropped}
 \usage{
 KeptVerts(tree, keptTips)
 
 \method{KeptVerts}{phylo}(tree, keptTips)
 
-\method{KeptVerts}{matrix}(tree, keptTips)
+\method{KeptVerts}{numeric}(tree, keptTips)
 }
 \arguments{
 \item{tree}{Original tree of class \code{phylo}, in \code{\link{Preorder}}.}

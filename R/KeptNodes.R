@@ -26,9 +26,13 @@ KeptVerts.phylo <- function(tree, keptTips) {
 
 #' @rdname KeptVerts
 #' @export
-KeptVerts.matrix <- function(tree, keptTips) {
+KeptVerts.numeric <- function(tree, keptTips) {
   if (!is.logical(keptTips)) {
     stop("`keptTips` must be a logical vector")
+  }
+  dims <- dim(tree)
+  if (is.null(dims) || dims[2] != 2L) {
+    stop("`tree` must be the numeric edge matrix of a `phylo` object")
   }
   ret <- kept_vertices(tree, keptTips)
   # Return:
