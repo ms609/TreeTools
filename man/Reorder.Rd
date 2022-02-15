@@ -21,6 +21,9 @@
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
+\alias{PostorderOrder}
+\alias{PostorderOrder.phylo}
+\alias{PostorderOrder.numeric}
 \alias{Pruningwise}
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
@@ -71,6 +74,12 @@ Postorder(tree, force = FALSE)
 \method{Postorder}{multiPhylo}(tree, force = FALSE)
 
 \method{Postorder}{numeric}(tree, force = FALSE)
+
+PostorderOrder(tree)
+
+\method{PostorderOrder}{phylo}(tree)
+
+\method{PostorderOrder}{numeric}(tree)
 
 Pruningwise(tree, nTip, edge)
 
@@ -133,6 +142,9 @@ specified numbering scheme.
 \code{Postorder.numeric} accepts a numeric matrix corresponding to the
 \code{edge} entry of a tree of class \code{phylo}, and returns a two-column array
 corresponding to \code{tree}, with edges listed in postorder
+
+\code{PostorderOrder()} returns an integer vector. Visiting edges in this
+order will traverse the tree in postorder.
 }
 \description{
 Functions for systematically ordering the internal edges of trees.

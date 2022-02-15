@@ -20,6 +20,8 @@
   `Postorder()` ([#49](https://github.com/ms609/TreeTools/issues/49),
   [#89](https://github.com/ms609/TreeTools/issues/89)).
 
+- `PostorderOrder()` describes a postorder traversal of a tree.
+
 - Fix bug when tree is rooted on a discontinuous outgroup.
 
 - `SortTree()` handles weighted and non-binary trees
