@@ -27,6 +27,9 @@ KeptVerts.phylo <- function(tree, keptTips) {
 #' @rdname KeptVerts
 #' @export
 KeptVerts.matrix <- function(tree, keptTips) {
+  if (!is.logical(keptTips)) {
+    stop("`keptTips` must be a logical vector")
+  }
   ret <- kept_vertices(tree, keptTips)
   # Return:
   ret[-1] > 1L

@@ -1,5 +1,6 @@
 test_that("KeptVerts() works", {
   bal12 <- BalancedTree(12)
+  expect_error(KeptVerts(bal12, 1:9), "must be a logical vector")
   Y <- TRUE
   N <- FALSE
   expect_equal(KeptVerts(bal12, 1:12 %in% 1:9),
