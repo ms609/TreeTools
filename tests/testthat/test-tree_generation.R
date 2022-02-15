@@ -1,4 +1,4 @@
-test_that('Pectinate trees are generated', {
+test_that("Pectinate trees are generated", {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
@@ -13,18 +13,22 @@ test_that('Pectinate trees are generated', {
 
 test_that('Balanced trees are generated correctly', {
   # nTip even
-  expect_equal(ape::read.tree(text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));'),
-               BalancedTree(8L))
+  expect_equal(BalancedTree(8L),
+               ape::read.tree(
+                 text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));')
+               )
   # nTip odd
-  expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));'),
-               BalancedTree(9L))
+  expect_equal(BalancedTree(9L),
+               ape::read.tree(
+                 text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));')
+               )
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equal(ignore_attr = TRUE,
                PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
-  expect_equal('Test', .BalancedBit('Test'))
-  expect_true(is.integer(BalancedTree(8)$edge))
+  expect_equal("Test", .BalancedBit('Test'))
+  expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
 test_that("StarTree() works", {
@@ -133,6 +137,6 @@ test_that("EnforceOutgroup() fails nicely", {
     BalancedTree(letters[5:6]),
     Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15)
     ))
-  expect_equal(ape::root(BalancedTree(8), 't1', resolve.root = TRUE),
-               EnforceOutgroup(BalancedTree(8), 't1'))
+  expect_equal(EnforceOutgroup(BalancedTree(8), 't1'),
+               Preorder(ape::root(BalancedTree(8), 't1', resolve.root = TRUE)))
 })

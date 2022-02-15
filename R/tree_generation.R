@@ -106,8 +106,8 @@ RandomTree <- function(tips, root = FALSE, nodes) {
 #' @importFrom stats runif
 #' @export
 .RandomParent <- function(n, seed = sample.int(2147483647L, 1L)) {
-  if (!is.numeric(n) || is.na(n) || n[1] < 2) {
-    stop("nTip must be > 1");
+  if (!is.numeric(n) || is.na(n) || n[1] < 3) {
+    stop("nTip must be > 2");
   }
   random_parent(as.integer(n), as.integer(seed))
 }
@@ -413,7 +413,9 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
 #' @importFrom ape bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
-  if (length(outgroup) == 1L) return(root(tree, outgroup, resolve.root = TRUE))
+  if (length(outgroup) == 1L) {
+    return(RootTree(tree, outgroup))
+  }
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
   if (!all(outgroup %fin% taxa) ||

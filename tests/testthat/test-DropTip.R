@@ -6,11 +6,16 @@ nasty <- structure(list(edge = structure(
   tip.label = letters[1:8]),
   class = 'phylo') # Danger: Do not plot!
 
-test_that("keep_tip() works", {
-  expect_error(keep_tip(BalancedTree(8)$edge[, c(1, 2, 1)], !tabulate(6:4, 8)))
+test_that("keep_tip() fails with small edge", {
+  # False positives with ASaN
+  skip_if(Sys.getenv("USING_ASAN") != "")
   expect_error(keep_tip(BalancedTree(8)$edge[, 1, drop = FALSE],
                         !tabulate(6:4, 8)))
   expect_error(keep_tip(BalancedTree(8)$edge[, 1], !tabulate(6:4, 8)))
+})
+
+test_that("keep_tip() works", {
+  expect_error(keep_tip(BalancedTree(8)$edge[, c(1, 2, 1)], !tabulate(6:4, 8)))
   
   expect_equal(keep_tip(BalancedTree(9)$edge, !tabulate(5:8, 9)),
                matrix(c(6, 7, 8, 9, 9, 8, 7, 6,

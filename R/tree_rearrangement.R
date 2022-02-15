@@ -96,13 +96,13 @@ RootTree.phylo <- function(tree, outgroupTips) {
   root_on_node(tree, outgroup)
 }
 
-# Modified from phangorn::allAncestors
 .AllAncestors <- function(edge) {
-  edge <- Postorder(edge, sizeSort = FALSE)
+  edge <- Preorder(edge)
   parents <- edge[, 1]
   child <- edge[, 2]
+  nEdge <- length(child)
   res <- vector("list", max(parents))
-  for (i in seq_along(parents)) {
+  for (i in seq_len(nEdge)) {
     pa <- parents[i]
     res[[child[i]]] <- c(pa, res[[pa]])
   }

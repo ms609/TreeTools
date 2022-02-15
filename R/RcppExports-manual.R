@@ -6,8 +6,8 @@ preorder_weighted <- function(parent, child, edgeLen) {
   .Call(`_TreeTools_preorder_weighted`, parent, child, edgeLen)
 }
 
-postorder_edges <- function(edge, sizeSort) {
-  .Call(`_TreeTools_postorder_edges`, edge, sizeSort)
+postorder_order <- function(edge) {
+  .Call(`_TreeTools_postorder_order`, edge)
 }
 
 root_binary <- function(edge, outgroup) {

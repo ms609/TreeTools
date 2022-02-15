@@ -109,13 +109,13 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
 }
 
 .ListDescendants <- function(tree) {
-  edge <- Postorder(tree[["edge"]])
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   # Every node occurs once in `child` except the root
   descendants <- vector('list', length(child) + 1L)
   descendants[seq_len(NTip(tree))] <- seq_len(NTip(tree))
-  for (i in seq_along(parent)) {
+  for (i in postorder_order(edge)) {
     descendants[[parent[i]]] <- c(descendants[[parent[i]]], 
                                   descendants[[child[i]]])
   }

@@ -53,15 +53,26 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
+  edge <- x[["edge"]]
+  nEdge <- dim(edge)[1]
+  order <- attr(x, "order")[1]
+  edgeOrder <- if (is.null(order)) {
+    postorder_order(edge)
+  } else {
+    switch(order,
+           "preorder" = nEdge:1,
+           "postorder" = seq_len(nEdge),
+           postorder_order(edge))
+  }
 
   # Return:
-  .as.Splits.edge(x[["edge"]], tipLabels = x[["tip.label"]],
+  .as.Splits.edge(edge, edgeOrder, tipLabels = x[["tip.label"]],
                   asSplits = asSplits, nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function(edge, tipLabels = NULL, asSplits = TRUE,
+.as.Splits.edge <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
                              nTip = NTip(edge), ...) {
-  splits <- cpp_edge_to_splits(Postorder(edge, FALSE), nTip)
+  splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
   nSplits <- dim(splits)[1]
 
   # Return:
@@ -163,8 +174,9 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
     } else {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
-  } else if (dim(x)[2] == 2) {
-    .as.Splits.edge(x, tipLabels = NULL, asSplits = TRUE, ...)
+  } else if (is.numeric(x) && dim(x)[2] == 2) {
+    .as.Splits.edge(x, postorder_order(x),
+                    tipLabels = NULL, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }

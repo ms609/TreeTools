@@ -386,6 +386,7 @@ namespace TreeTools {
       add_child_edges(root_node, n_tip + 1, children_of, n_children, wt_above,
                       ret, ret_wt, &next_edge, &next_label);
       
+      std::free(wt_above);
       std::free(n_children);
       
       for (int32 i = 1; i != node_limit; i++) {
@@ -408,93 +409,42 @@ namespace TreeTools {
     return subtree_size[node];
   }
 
-  // "Arkorder" is my term for a specific subset of postorder in which
-  // edges are ordered such that all occurrences of each parent node
-  // occur together.
-  // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  inline Rcpp::IntegerMatrix postorder_edges(
-      const Rcpp::IntegerMatrix edge,
-      const Rcpp::LogicalVector size_sort)
+  inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
     const int32
       n_edge = edge.nrow(),
       node_limit = n_edge + 1;
-
-    int32
-      root_node = 0,
-      n_tip = 0;
-
-    // 6 * checks we've enough memory for all children_of arrays too.
-    // 0.9999 leaves room for memory overhead: seems in practice to avoid
-    // attempting a doomed call to calloc.
+    
+    
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
-      throw std::length_error("Tree too large for postorder_edges. "            // # nocov
+      throw std::length_error("Tree too large for postorder_order. "            // # nocov
                               "Try running 64-bit R?");                         // # nocov
     }
-
-    int32 * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
-          * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
-          * subtree_size = (int32*) std::calloc(node_limit, sizeof(int32));
-    int32 ** children_of = new int32*[node_limit];
-
+    
+    int32 * missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
     for (int32 i = n_edge; i--; ) {
-      parent_of[CHILD(i)] = PARENT(i);
-      n_children[PARENT(i)] += 1;
+      ++missing_children[PARENT(i)];
     }
-
-    for (int32 i = node_limit; i--; ) {
-      if (!parent_of[i]) root_node = i;
-      if (!n_children[i]) ++n_tip;
-      children_of[i] = new int32[n_children[i]];
-    }
-    std::free(parent_of);
-
-    int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
-    for (int32 i = n_edge; i--; ) {
-      children_of[PARENT(i)][found_children[PARENT(i)]] = CHILD(i);
-      found_children[PARENT(i)] += 1;
-    }
-    std::free(found_children);
-
-    const int32 n_node = n_edge - n_tip + 1;
-
-    for (int32 tip = n_tip; tip--; ) {
-      subtree_size[tip] = 1;
-    }
-    get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
-
-    for (int32 node = n_tip; node != node_limit; node++) {
-      insertion_sort_by_smallest(children_of[node], n_children[node],
-                                 subtree_size);
-    }
-    int32 * node_order = (int32*) malloc(n_node * sizeof(int32));
-    for (int32 i = n_node; i--; ) {
-      node_order[i] = i + n_tip;
-    }
-    if (size_sort[0]) {
-      timsort_by_smallest(node_order, n_node, subtree_size);
-    }
-    std::free(subtree_size);
-
-    Rcpp::IntegerMatrix ret(n_edge, 2);
-    int32 this_edge = 0;
-    for (int32 i = 0; i != n_node; ++i) {
-      const int32 this_parent = node_order[i];
-      for (int32 j = 0; j != n_children[this_parent]; ++j) {
-        ret(this_edge, 0) = this_parent + 1;
-        ret(this_edge, 1) = children_of[this_parent][j] + 1;
-        ++this_edge;
+    
+    int32 found = 0;
+    bool * matched = (bool*) std::calloc(node_limit, sizeof(bool));
+    Rcpp::IntegerVector ret(n_edge);
+    do {
+      for (int32 i = n_edge; i--; ) {
+        if (!matched[i]) {
+          if (!missing_children[CHILD(i)]) {
+            matched[i] = true;
+            --missing_children[PARENT(i)];
+            ret[found++] = i + 1;
+          }
+        }
       }
-    }
-    std::free(n_children);
-    for (int32 i = node_limit; i--; ) {
-      delete[] children_of[i];
-    }
-    delete[] (children_of);
-    std::free(node_order);
-
-    return(ret);
+    } while (found != n_edge);
+    std::free(missing_children);
+    std::free(matched);
+    
+    return ret;
   }
 }
 

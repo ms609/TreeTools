@@ -16,9 +16,11 @@
 
 - Improve speed of `DropTip()`, by an order of magnitude in some cases.
 
-- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()`
-  ([#49](https://github.com/ms609/TreeTools/issues/49),
+- Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()` and
+  `Postorder()` ([#49](https://github.com/ms609/TreeTools/issues/49),
   [#89](https://github.com/ms609/TreeTools/issues/89)).
+
+- `PostorderOrder()` describes a postorder traversal of a tree.
 
 - Fix bug when tree is rooted on a discontinuous outgroup.
 

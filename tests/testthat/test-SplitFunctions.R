@@ -51,14 +51,11 @@ test_that('Bitwise logic works', {
   expect_false(.CSB(c(1, 0, 0, 0, 0, 0, 1, 1),
                     c(0, 0, 0, 0, 1, 1, 1, 1)))
 
-  expect_equal(
-    matrix(c(A, A, A, A, A,
-             A, B, A, A, A,
-             A, A, A, A, A,
-             A, A, A, B, A,
-             A, A, A, A, A), byrow = TRUE, 5, 5,
-           dimnames = list(11:15, 11:15)),
-    CompatibleSplits(splits, splits2))
+  expectation <- matrix(TRUE, 5, 5,
+                        dimnames = list(names(splits), names(splits2)))
+  expectation["12", "12"] <- FALSE
+  expectation["14", "14"] <- FALSE
+  expect_equal(CompatibleSplits(splits, splits2), expectation)
 
   expect_true(.CompatibleSplit(as.raw(3), as.raw(7), nTip = 5))
   expect_false(.CompatibleSplit(as.raw(3), as.raw(6), nTip = 5))

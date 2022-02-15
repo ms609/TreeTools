@@ -93,10 +93,10 @@ test_that("NTip() works", {
   Test <- function(n) {
     tr <- BalancedTree(n)
     pec <- PectinateTree(n)
-    expect_identical(n, NTip(tr))
-    expect_identical(n, NTip(tr$edge))
-    expect_identical(n, NTip(Postorder(tr$edge)))
-    expect_identical(n, NTip(list(tr)))
+    expect_identical(NTip(tr), n)
+    expect_identical(NTip(tr$edge), n)
+    expect_identical(NTip(Postorder(tr$edge)), n)
+    expect_identical(NTip(list(tr)), n)
     expect_identical(rep(n, 2L), NTip(list(tr, tr)))
     expect_identical(rep(n, 3L),
                      NTip(structure(list(tr, tr, pec), class = 'multiPhylo')))
