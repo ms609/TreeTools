@@ -30,7 +30,10 @@ nodelabels()
 allTips <- master[["tip.label"]]
 keptTips <- sample(allTips, 8)
 plot(KeepTip(master, keptTips))
-KeptVerts(master, allTips \%in\% keptTips)
+kept <- KeptVerts(master, allTips \%in\% keptTips)
+
+map <- which(kept)
+# Node `i` in the reduced tree corresponds to node `map[i]` in the original.
 }
 \seealso{
 Other tree manipulation: 
