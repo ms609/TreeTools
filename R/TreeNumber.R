@@ -136,6 +136,8 @@ as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
   "316234143225", "13749310575", "654729075", "34459425", "2027025", "135135",
   "10395", "945", "105", "15", "3", "1"))
 
+.TTBases <- function (n) .TT_BASE[length(.TT_BASE) - n + seq_len(n)]
+
 #' @rdname TreeNumber
 #' @export
 as.TreeNumber.phylo <- function(x, ...) {
@@ -181,7 +183,7 @@ as.TreeNumber.MixedBase <- function(x, ...) {
   }
   
   # Return:
-  structure(sum(as.integer(x) * .TT_BASE[rev(seq_along(x))]),
+  structure(sum(as.integer(x) * .TTBases(length(x))),
             nTip = NTip(x),
             tip.label = TipLabels(x),
             class = c("TreeNumber", "integer64"))
@@ -194,7 +196,7 @@ as.MixedBase.TreeNumber <- function(x, ...) {
   outLength <- nTip - 3L
   baseLength <- min(outLength, length(.TT_BASE))
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   n <- as.integer64(x)
   for (i in seq_len(baseLength)) {
@@ -216,7 +218,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
   baseLength <- if (x > max(.TT_BASE)) {
     length(.TT_BASE)
   } else {
-    which.max(.TT_BASE > x) - 1L
+    which.max(rev(.TT_BASE) > x)
   }
   tipLabels <- TipLabels(tipLabels)
   if (is.null(tipLabels)) {
@@ -228,7 +230,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
     stop("Number of tips too low; is tipLabels truncated?")
   }
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   
   for (i in seq_len(baseLength)) {

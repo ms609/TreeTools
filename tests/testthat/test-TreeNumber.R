@@ -1,6 +1,7 @@
 test_that("Integers fit into integer sizes", {
   INT_MAX <- 2147483647L
   expect_equal(as.integer64(INT_MAX), as.integer64("2147483647"))
+  expect_gt(.TT_BASE[1], .TT_BASE[2])
 })
 
 test_that("as.phylo.numeric()", {
@@ -56,10 +57,14 @@ test_that("as.TreeNumber()", {
                    as.integer64(as.TreeNumber(as.phylo(bigNumber - 1, 16))))
                
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
-  
 })
 
 test_that("as.MixedBase()", {
+  expect_equal(as.integer(as.TreeNumber(as.phylo(16, 16))), 16)
+  nTip <- 9
+  expect_equal(as.integer(as.MixedBase(as.TreeNumber(as.phylo(16, nTip)))),
+               c(rep(0, nTip - 3 - 3), 1, 0, 1))
+  
   expect_equal(as.MixedBase(as.phylo(0, 6)),
                structure(integer(3),
                          nTip = 6,
@@ -91,6 +96,6 @@ test_that("as.MixedBase()", {
   expect_true(as.MixedBase(44) > as.MixedBase(as.MixedBase(42)))
   expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
   bigNo <- as.integer64(2) ^ 62 + 1337
-  expect_equal(sum(as.integer(as.MixedBase(bigNo)) * rev(.TT_BASE)), bigNo)
+  expect_equal(sum(as.integer(as.MixedBase(bigNo)) * .TT_BASE), bigNo)
   
 })
