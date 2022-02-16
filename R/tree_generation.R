@@ -57,14 +57,21 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (nodes < 1L) {
     stop("A tree must contain one or more `nodes`")
   }
+  
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
   if (!is.logical(root) 
       && !(length(root) == 1L && root == 1L)) {
-    if (is.character(root)) root <- which(tips == root)
-    if (length(root) == 0L) stop("No match found for `root`")
-    if (!is.integer(root)) root <- as.integer(root)
+    if (is.character(root)) {
+      root <- which(tips == root)
+    }
+    if (length(root) == 0L) {
+      stop("No match found for `root`")
+    }
+    if (!is.integer(root)) {
+      root <- as.integer(root)
+    }
     if (length(root) > 1L) {
       root <- root[1]
       warning("More than one entry in `root`; using ", root)
