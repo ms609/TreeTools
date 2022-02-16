@@ -64,13 +64,32 @@ test_that("DropTip() works", {
   
   expect_equal(Preorder(DropTip(Preorder(nasty), c(1, 3))),
                Preorder(DropTip(nasty, c(1, 3))))
-  
-  
-  bigTree <- RandomTree(1284)
-  set.seed(1284)
-  bigTip <- sample(1:1284, 608)
-  expect_true(all.equal(unroot(drop.tip(bigTree, bigTip)),
-                        DropTip(bigTree, bigTip)))
+})
+
+test_that("DropTip() root relocation", {
+  nTip <- 12
+  nKept <- nTip / 2L
+  for (i in c(8, 30, 324)) { # A selection of interesting failure cases
+    set.seed(i)
+    
+    bigTree <- RandomTree(nTip)
+    bigDrop <- sample.int(nTip, nKept)
+    bigKeep <- setdiff(seq_len(nTip), bigDrop)
+    
+    reduced <- DropTip(bigTree, bigDrop)
+    expect_true(all.equal(reduced,
+                          unroot(drop.tip(bigTree, bigDrop))))
+    
+    map <- which(KeptVerts(bigTree, !tabulate(bigDrop, nTip)))
+    expect_equal(map[seq_len(nKept)], sort(bigKeep))
+    newDesc <- .ListDescendants(reduced)
+    bigDesc <- .ListDescendants(bigTree)
+    
+    for (newNode in (nKept + 1):(nKept * 2 - 2)) {
+      expect_equal(sort(map[newDesc[[newNode]]]),
+                   sort(intersect(bigDesc[[map[newNode]]], bigKeep)))
+    }
+  }
   #microbenchmark::microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
 })
 
