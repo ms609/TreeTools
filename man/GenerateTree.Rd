@@ -42,7 +42,7 @@ basal position.  Otherwise, the tree will be rooted on \code{root}.
 
 \code{PectinateTree()} returns a pectinate (caterpillar) tree.
 
-\code{BalancedTree()} returns a balanced (symmetrical) tree.
+\code{BalancedTree()} returns a balanced (symmetrical) tree, in preorder.
 
 \code{StarTree()} returns a completely unresolved (star) tree.
 }

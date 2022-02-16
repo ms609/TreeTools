@@ -61,7 +61,7 @@ tree <- BalancedTree(9)
 plot(tree)
 plot(DropTip(tree, c('t5', 't6')))
 
-unrooted <- unroot(tree)
+unrooted <- UnrootTree(tree)
 plot(unrooted)
 plot(DropTip(unrooted, 4:5))
 
