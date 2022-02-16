@@ -109,7 +109,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
 #endif
           SKIP_EDGE;
           n_child[root_node] = RETAIN;
-        } else if (rm_root && parent == root_node && child > n_tip) {
+        } else if (rm_root && parent == new_root && child > n_tip) {
           // This is the duplicated root edge
           rm_root = false; // We will not write it
           GET_NEW_NO(parent);
