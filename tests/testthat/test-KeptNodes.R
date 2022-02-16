@@ -1,5 +1,5 @@
 test_that("KeptVerts() works", {
-  Keepers <- function (n, nTip) as.logical(tabulate(n, nTip))
+  Keepers <- function(n, nTip) as.logical(tabulate(n, nTip))
   
   bal12 <- BalancedTree(12)
   Y <- TRUE
@@ -36,6 +36,9 @@ test_that("KeptVerts() works", {
                c(10:12, 21))
   expect_equal(which(KeptVerts(urb12, Keepers(1:6, 12))),
                c(1:6, 13, 15:17))
+  col19 <- Preorder(CollapseNode(bal12, 19))
+  expect_equal(which(KeptVerts(col19, Keepers(6:12, 12))),
+               c(6:12, 13, 19:22))
   
   
   # Duplicate keep_tip tests
