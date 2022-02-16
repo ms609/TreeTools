@@ -63,14 +63,13 @@
 TotalCopheneticIndex <- function(x) UseMethod('TotalCopheneticIndex')
 
 .Depth <- function(parent, child) {
-  root   <- min(parent)
   depth  <- integer(max(parent))
   for (i in seq_along(parent)) {
     depth[child[i]] <- depth[parent[i]] + 1L
   }
 
   # Return:
-  as.integer(depth)
+  depth
 }
 
 #' @importFrom fastmatch %fin%
@@ -101,7 +100,9 @@ TotalCopheneticIndex.phylo <- function(x) {
 }
 
 #' @export
-TotalCopheneticIndex.list <- function(x) vapply(x, TotalCopheneticIndex, integer(1))
+TotalCopheneticIndex.list <- function(x) {
+  vapply(x, TotalCopheneticIndex, integer(1))
+}
 
 #' @export
 TotalCopheneticIndex.multiPhylo <- TotalCopheneticIndex.list

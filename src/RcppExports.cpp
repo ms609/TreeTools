@@ -35,12 +35,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // num_to_parent
-IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip);
+IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type n(nSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(num_to_parent(n, nTip));
     return rcpp_result_gen;

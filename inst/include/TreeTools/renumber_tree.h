@@ -262,8 +262,9 @@ namespace TreeTools {
       }
       if (!n_children[i]) {
         ++n_tip;
+      } else {
+        children_of[i] = new int32[n_children[i]];
       }
-      children_of[i] = new int32[n_children[i]];
     }
 
     for (int32 tip = 1; tip != n_tip + 1; ++tip) {
@@ -296,7 +297,7 @@ namespace TreeTools {
 
     std::free(n_children);
 
-    for (int32 i = 1; i != node_limit; i++) {
+    for (int32 i = n_tip + 1; i != node_limit; i++) {
       delete[] children_of[i];
     }
     delete[] children_of;
