@@ -1,4 +1,6 @@
 test_that("KeptVerts() works", {
+  Keepers <- function (n, nTip) as.logical(tabulate(n, nTip))
+  
   bal12 <- BalancedTree(12)
   Y <- TRUE
   N <- FALSE
@@ -21,7 +23,7 @@ test_that("KeptVerts() works", {
   kept <- c(1L, 3L, 4L, 8L, 9L)
   # Duplicate root is not retained.
   expect_equal(
-    which(KeptVerts(real, as.logical(tabulate(kept, NTip(real))))),
+    which(KeptVerts(real, Keepers(kept, 12))),
     c(kept, 13, 15, 20))
   
 })
