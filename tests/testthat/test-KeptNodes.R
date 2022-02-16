@@ -26,4 +26,32 @@ test_that("KeptVerts() works", {
     which(KeptVerts(real, Keepers(kept, 12))),
     c(kept, 13, 15, 20))
   
+  # Duplicate keep_tip tests
+  expect_equal(which(KeptVerts(BalancedTree(9)$edge, !tabulate(5:8, 9))),
+               c(1:4, 9, 10:13))
+  
+  expect_equal(which(KeptVerts(BalancedTree(8)$edge, !tabulate(6:4, 8))),
+               c(1:3, 7:8, 9:11, 15))
+  expect_equal(which(KeptVerts(BalancedTree(8)$edge, !tabulate(1:4, 8))),
+               c(5:8, 13:15))
+  
+  expect_equal(which(KeptVerts(BalancedTree(8)$edge, !tabulate(3:8, 8))),
+               c(1:2, 11))
+  
+  expect_equal(which(KeptVerts(ape::unroot(BalancedTree(4)), !tabulate(1, 4))),
+               c(2:4, 5))
+  
+  expect_equal(which(KeptVerts(as.phylo(3, 7)$edge, !tabulate(1:4, 7))),
+               c(5:7, 9, 11))
+  
+  # Rooted tree may lose root when reaching a polytomy:
+  expect_equal(which(KeptVerts(root(StarTree(6), 4, resolve.root = TRUE),
+                               !tabulate(4, 6))),
+               c(1:3, 5:6, 8))
+  
+  # But need not:
+  expect_equal(which(KeptVerts(RootTree(BalancedTree(5), 3)$edge,
+                               !tabulate(3, 5))),
+               c(1:2, 4:5, 7:9))
+  
 })
