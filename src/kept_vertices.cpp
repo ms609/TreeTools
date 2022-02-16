@@ -55,6 +55,9 @@ IntegerVector kept_vertices(const IntegerMatrix edge,
   const bool rooted = root_edges == 2;
   if (!rooted && ret[new_root] == 2) {
     // In preorder, first node after root is its descendant
+    // We could relax the requirement for the tree to be in preorder if we
+    // traversed the edges until we found PARENT(i) == new_root,
+    // as a small penalty in run time.
     ret[new_root + 1] = -1;
   }
   

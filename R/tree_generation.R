@@ -142,7 +142,7 @@ PectinateTree <- function(tips) {
 
 #' @rdname GenerateTree
 #'
-#' @return `BalancedTree()` returns a balanced (symmetrical) tree.
+#' @return `BalancedTree()` returns a balanced (symmetrical) tree, in preorder.
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
@@ -157,7 +157,7 @@ BalancedTree <- function(tips) {
   # Return:
   structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
                        tip.label = as.character(tips)),
-            order = 'cladewise', class = 'phylo') # Actually in preorder
+            order = 'preorder', class = 'phylo')
 }
 
 #' @keywords internal

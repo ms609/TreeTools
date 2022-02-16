@@ -75,7 +75,8 @@ test_that('AddTipEverywhere() with tiny trees', {
 })
 
 test_that("Subtree() works", {
-  expect_error(Subtree(BalancedTree(8), 10)) # Nodes must be in preorder
+  expect_error(Subtree(read.tree(text = "((a,b),(c,d));", 7)),
+               " be in preorder")
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
   expect_true(all.equal(BalancedTree(4), t4))
   expect_true(all.equal(BalancedTree(4), Subtree(t4, 5)))
