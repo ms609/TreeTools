@@ -77,8 +77,7 @@ test_that("DropTip() root relocation", {
     bigKeep <- setdiff(seq_len(nTip), bigDrop)
     
     reduced <- DropTip(bigTree, bigDrop)
-    expect_true(all.equal(reduced,
-                          unroot(drop.tip(bigTree, bigDrop))))
+    expect_true(all.equal(reduced, unroot(drop.tip(bigTree, bigDrop))))
     
     map <- which(KeptVerts(bigTree, !tabulate(bigDrop, nTip)))
     expect_equal(map[seq_len(nKept)], sort(bigKeep))
@@ -91,6 +90,15 @@ test_that("DropTip() root relocation", {
     }
   }
   #microbenchmark::microbenchmark(ape::drop.tip(bigTree, bigTip), DropTip(bigTree, bigTip))
+  
+  nTip <- 1284
+  set.seed(43)
+  bigTree <- RandomTree(nTip)
+  bigDrop <- sample.int(nTip, nKept)
+  bigKeep <- setdiff(seq_len(nTip), bigDrop)
+  
+  reduced <- DropTip(bigTree, bigDrop)
+  expect_true(all.equal(reduced, unroot(drop.tip(bigTree, bigDrop))))
 })
 
 test_that("DropTip.multiPhylo() with attributes", {
