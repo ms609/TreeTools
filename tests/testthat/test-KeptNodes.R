@@ -26,6 +26,16 @@ test_that("KeptVerts() works", {
     which(KeptVerts(real, Keepers(kept, 12))),
     c(kept, 13, 15, 20))
   
+  # Basic tests with unrooted trees
+  urb12 <- UnrootTree(bal12)
+  expect_equal(which(KeptVerts(urb12, Keepers(7:12, 12))),
+               c(7:12, 18, 20:22))
+  expect_equal(which(KeptVerts(urb12, Keepers(10:12, 12))),
+               c(10:12, 21))
+  expect_equal(which(KeptVerts(urb12, Keepers(1:6, 12))),
+               c(1:6, 13, 15:17))
+  
+  
   # Duplicate keep_tip tests
   expect_equal(which(KeptVerts(BalancedTree(9)$edge, !tabulate(5:8, 9))),
                c(1:4, 9, 10:13))
