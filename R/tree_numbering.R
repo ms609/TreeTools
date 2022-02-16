@@ -436,8 +436,9 @@ Preorder <- function(tree) UseMethod('Preorder')
 #' @rdname Reorder
 #' @export
 Preorder.phylo <- function(tree) {
-  startOrder <- attr(tree, 'order')
-  if (length(startOrder) && startOrder == 'preorder') {
+  startOrder <- attr(tree, "order")
+  if (length(startOrder) && startOrder == "preorder") {
+    # length(x) is twice as fast as !is.null(x)
     tree
   } else {
     edge <- tree[["edge"]]
