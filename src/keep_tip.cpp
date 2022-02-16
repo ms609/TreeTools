@@ -97,7 +97,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       if (n_children == 1) {
         SKIP_EDGE;
 #ifdef TTDEBUG
-        Rcout << " x Omit: " << edge(i, 0) << "," << edge(i, 1)
+        Rcout << " x Omit " << (1 + i) << ": " << edge(i, 0) << "-" << edge(i, 1)
               << " --> \"" << new_no[parent] << "\"\n";
 #endif
       } else {
@@ -109,7 +109,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
 #endif
           SKIP_EDGE;
           n_child[root_node] = RETAIN;
-        } else if (rm_root && child == parent + 1) {
+        } else if (rm_root && parent == root_node && child > n_tip) {
           // This is the duplicated root edge
           rm_root = false; // We will not write it
           GET_NEW_NO(parent);

@@ -95,6 +95,13 @@ test_that("KeepTip() works", {
     KeepTip(BalancedTree(8), 5:9)
   )))
   
+  expect_true(all.equal(
+    KeepTip(Postorder(UnrootTree(BalancedTree(letters[1:12]))), 6:12),
+    read.tree(text = "(f, (i, (g, h)), (l, (j, k)));")
+  ))
+})
+
+test_that("KeepTip() retains edge lengths", {
   bal9 <- BalancedTree(9)
   bal9$edge.length <- 10 * 1:16
   expect_equal(KeepTip(bal9, c(1, 3, 5, 7, 9))[["edge.length"]],
