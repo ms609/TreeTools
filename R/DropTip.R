@@ -34,7 +34,9 @@
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
+DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  UseMethod("DropTip")
+}
 
 #' @rdname DropTip
 #' @export

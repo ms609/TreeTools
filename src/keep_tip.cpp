@@ -34,6 +34,9 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
   for (int i = 0; i != n_tip; ++i) {
     if (keep[i]) {
       n_child[i + 1] = RETAIN;
+#ifdef TTDEBUG
+      n_child[i + 1] = RETAIN + i + 1;
+#endif
       new_no[i + 1] = ++next_no;
     }
   }
@@ -97,8 +100,8 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
       if (n_children == 1) {
         SKIP_EDGE;
 #ifdef TTDEBUG
-        Rcout << " x Omit " << (1 + i) << ": " << edge(i, 0) << "-" << edge(i, 1)
-              << " --> \"" << new_no[parent] << "\"\n";
+        Rcout << " x Omit " << edge(i, 0) << "-" << edge(i, 1)
+              << ": \"" << new_no[parent] << "\"\n";
 #endif
       } else {
         if (n_child[root_node] == 1) {
@@ -121,12 +124,14 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
         } else {
           // Record this edge:
           ++writing_edge;
+          assert(writing_edge < kept_edges);
           GET_NEW_NO(parent);
           ret(writing_edge, 0) = new_no[parent];
           GET_NEW_NO(child);
           ret(writing_edge, 1) = new_no[child];
 #ifdef TTDEBUG
-          Rcout << " > Translate: " << edge(i, 0) << "-" << edge(i, 1)
+          Rcout << " > Write to " << writing_edge << ": " 
+                << edge(i, 0) << "-" << edge(i, 1)
                 << " --> " << new_no[parent] << "-" << new_no[child] << "\n";
 #endif
         }
