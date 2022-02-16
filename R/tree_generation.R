@@ -206,7 +206,7 @@ StarTree <- function(tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = 1L,
     tip.label = tips
-  ), order = 'cladewise', class = 'phylo')
+  ), order = 'cladewise', class = "phylo")
 }
 
 #' Generate a neighbour joining tree

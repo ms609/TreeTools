@@ -28,8 +28,8 @@ test_that("KeptVerts() works", {
   expect_equal(which(KeptVerts(pec9, 1:9 %in% kept)),
                c(kept, 10, 16))
   
-  real <- read.tree(text = 
-  "(t1:3,t2:1,((t3:1,t4:1):3,(t5:2,(t6:1,(t7:6,((t8:8,(t9:2,t10:4):3):2,(t11:1,t12:2):5):1):2):1):1):2);")
+  real <- Preorder(read.tree(text = 
+  "(t1:3,t2:1,((t3:1,t4:1):3,(t5:2,(t6:1,(t7:6,((t8:8,(t9:2,t10:4):3):2,(t11:1,t12:2):5):1):2):1):1):2);"))
   kept <- c(1L, 3L, 4L, 8L, 9L)
   # Duplicate root is not retained.
   expect_equal(
@@ -68,8 +68,7 @@ test_that("KeptVerts() works", {
                c(5:7, 9, 11))
   
   # Rooted tree may lose root when reaching a polytomy:
-  expect_equal(which(KeptVerts(root(StarTree(6), 4, resolve.root = TRUE),
-                               !tabulate(4, 6))),
+  expect_equal(which(KeptVerts(RootTree(StarTree(6), 4), !tabulate(4, 6))),
                c(1:3, 5:6, 8))
   
   # But need not:
