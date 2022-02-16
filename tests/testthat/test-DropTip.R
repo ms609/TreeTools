@@ -94,4 +94,9 @@ test_that("KeepTip() works", {
     BalancedTree(paste0('t', 5:8)),
     KeepTip(BalancedTree(8), 5:9)
   )))
+  
+  expect_true(all.equal(
+    KeepTip(Postorder(UnrootTree(BalancedTree(letters[1:12]))), 6:12),
+    read.tree(text = "(f, (i, (g, h)), (l, (j, k)));")
+  ))
 })
