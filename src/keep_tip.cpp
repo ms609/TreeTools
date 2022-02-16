@@ -10,8 +10,7 @@ using namespace Rcpp;
 #define SKIP_EDGE                                              \
   GET_NEW_NO(parent);                                          \
    new_no[child] = new_no[parent];                             \
-   if (rm_root && (                                            \
- parent == root_placeholder || parent == root_node)) {         \
+   if (rm_root && parent <= root_placeholder) {                \
      root_placeholder = child;                                 \
    }
    
@@ -126,7 +125,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
           SKIP_EDGE;
           n_child[root_node] = RETAIN;
         } else if (rm_root
-                     && (parent == new_root || parent == root_placeholder)
+                     && parent <= root_placeholder
                      && child > n_tip) {
           // This is the duplicated root edge
           rm_root = false; // We will not write it
@@ -145,7 +144,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
           GET_NEW_NO(child);
           ret(writing_edge, 1) = new_no[child];
 #ifdef TTDEBUG
-          Rcout << " > Write to " << writing_edge << ": " 
+          Rcout << " > Translating: " 
                 << edge(i, 0) << "-" << edge(i, 1)
                 << " --> " << new_no[parent] << "-" << new_no[child] << "\n";
 #endif
