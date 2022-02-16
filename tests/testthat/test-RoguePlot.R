@@ -4,9 +4,7 @@ AllTreesCounted <- function(trees, rogue) {
 }
 
 ExpectedCons <- function(text) {
-  expected <- Preorder(read.tree(text = text))
-  attr(expected, 'order') <- 'cladewise'
-  expected
+  Preorder(read.tree(text = text))
 }
 
 test_that('Simple rogue plot', {
@@ -75,7 +73,7 @@ test_that('Complex rogue plot', {
 
   expectedCons <- Preorder(RenumberTips(
     read.tree(text = '(f, (e, (d, c, (b, a))));'), letters[1:6]))
-  attr(expectedCons, 'order') <- "cladewise"
+  
   expect_equal(list(cons = expectedCons,
                     onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
                     atNode = c(0, 0, 5, 0)),

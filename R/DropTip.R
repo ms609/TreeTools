@@ -34,7 +34,9 @@
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
+DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  UseMethod("DropTip")
+}
 
 #' @rdname DropTip
 #' @export
@@ -91,10 +93,21 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     }
     
     keep <- !tabulate(drop, nbins = nTip)
+    weights <- tree[["edge.length"]]
+    if (!is.null(weights)) {
+      original <- PathLengths(tree)
+      rownames(original) <- apply(original[, 1:2], 1, paste, collapse = " ")
+      verts <- KeptVerts(tree, keep)
+    }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
-    attr(tree, 'order') <- 'cladewise' # some nodes may be rotated from preorder
     tree[["tip.label"]] <- labels[-drop]
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - (nTip - nDrop)
+    
+    if (!is.null(weights)) {
+      tree[["edge.length"]] <- original[
+        apply(matrix(which(verts)[tree[["edge"]]], ncol = 2L),
+              1, paste, collapse = " "), "length"]
+    }
   }
   
   # Return:

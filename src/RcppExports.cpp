@@ -35,12 +35,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // num_to_parent
-IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip);
+IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type n(nSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(num_to_parent(n, nTip));
     return rcpp_result_gen;
@@ -128,6 +128,18 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
     rcpp_result_gen = Rcpp::wrap(minimum_spanning_tree(order));
+    return rcpp_result_gen;
+END_RCPP
+}
+// path_lengths
+NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight);
+RcppExport SEXP _TreeTools_path_lengths(SEXP edgeSEXP, SEXP weightSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const DoubleVector >::type weight(weightSEXP);
+    rcpp_result_gen = Rcpp::wrap(path_lengths(edge, weight));
     return rcpp_result_gen;
 END_RCPP
 }

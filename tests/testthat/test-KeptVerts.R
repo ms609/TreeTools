@@ -2,9 +2,17 @@ test_that("KeptVerts() works", {
   Keepers <- function(n, nTip) as.logical(tabulate(n, nTip))
   
   bal12 <- BalancedTree(12)
+  expect_error(KeptVerts(bal12, 1:9), "must be a logical vector")
   Y <- TRUE
   N <- FALSE
+  expect_error(KeptVerts(matrix(FALSE, 4, 2), c(Y, Y, N, Y)),
+               "no applicable method")
+  expect_error(KeptVerts(matrix(0, 4, 3), c(Y, Y, N, Y)),
+               "edge matrix of a `phylo` obj")
+  expect_error(KeptVerts(1:8, c(Y, Y, N, Y)),
+               "edge matrix of a `phylo` obj")
   expect_error(KeptVerts(Postorder(bal12), Keepers(1:10, 12)), "in preorder")
+
   expect_equal(KeptVerts(bal12, 1:12 %in% 1:9),
                c(1:12 %in% 1:9, rep(Y, 6), N, Y, Y, N, N))
   expect_equal(KeptVerts(bal12, 1:12 %in% 7:12),
@@ -60,8 +68,7 @@ test_that("KeptVerts() works", {
                c(5:7, 9, 11))
   
   # Rooted tree may lose root when reaching a polytomy:
-  expect_equal(which(KeptVerts(RootTree(StarTree(6), 4),
-                               !tabulate(4, 6))),
+  expect_equal(which(KeptVerts(RootTree(StarTree(6), 4), !tabulate(4, 6))),
                c(1:3, 5:6, 8))
   
   # But need not:
