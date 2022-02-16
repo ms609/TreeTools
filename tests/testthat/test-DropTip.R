@@ -30,7 +30,7 @@ test_that("keep_tip() works", {
   expect_equal(keep_tip(BalancedTree(8)$edge, !tabulate(3:8, 8)),
                BalancedTree(2)$edge)
   
-  expect_equal(keep_tip(ape::unroot(BalancedTree(4))$edge, !tabulate(1, 4)),
+  expect_equal(keep_tip(UnrootTree(BalancedTree(4))$edge, !tabulate(1, 4)),
                matrix(c(4, 4, 4, 1, 2, 3), 3, 2))
   
   expect_equal(Preorder(keep_tip(as.phylo(3, 7)$edge, !tabulate(1:4, 7))),
@@ -47,7 +47,7 @@ test_that("keep_tip() works", {
   
   unrooted <- ape::read.tree(text = "(a, b, (c, d, ((e1, e2), (f, g))));")
   expect_equal(keep_tip(unrooted$edge, !tabulate(1:4, 8)),
-               ape::unroot(BalancedTree(4))$edge)
+               UnrootTree(BalancedTree(4))$edge)
 })
 
 test_that("DropTip() works", {
@@ -94,4 +94,9 @@ test_that("KeepTip() works", {
     BalancedTree(paste0('t', 5:8)),
     KeepTip(BalancedTree(8), 5:9)
   )))
+  
+  expect_true(all.equal(
+    KeepTip(Postorder(UnrootTree(BalancedTree(letters[1:12]))), 6:12),
+    read.tree(text = "(f, (i, (g, h)), (l, (j, k)));")
+  ))
 })

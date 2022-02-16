@@ -21,6 +21,10 @@ KeptVerts <- function(tree, keptTips) UseMethod("KeptVerts")
 #' @rdname KeptVerts
 #' @export
 KeptVerts.phylo <- function(tree, keptTips) {
+  order <- attr(tree, "order")
+  if (is.null(order) || order != "preorder") {
+    stop("`tree` must be in preorder; try `Preorder(tree)`")
+  }
   KeptVerts(tree[["edge"]], keptTips)
 }
 

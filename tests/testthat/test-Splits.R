@@ -333,7 +333,7 @@ test_that("Split combination", {
 
 test_that("as.phylo.Splits()", {
   Test <- function(tr) {
-    expect_true(all.equal(as.phylo(as.Splits(tr)), unroot(tr)))
+    expect_true(all.equal(as.phylo(as.Splits(tr)), UnrootTree(tr)))
   }
   Test(read.tree(text = "((a, b, c), (d, e, f, g));"))
   Test(read.tree(text = "((a, b, c), (d, e, (f, g)));"))

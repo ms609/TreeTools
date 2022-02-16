@@ -18,6 +18,7 @@ test_that('Pairwise distances calculated correctly', {
                TCIRange(trees[[3]], trees[[6]])[1])
   
   skip_if_not_installed('phangorn')
+  trees <- reorder(trees, "cladewise")
   dists <- PairwiseDistances(trees, phangorn::RF.dist)
   expect_equal(as.integer(phangorn::RF.dist(trees)), as.integer(dists))
 })

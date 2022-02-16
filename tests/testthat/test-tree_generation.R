@@ -14,14 +14,15 @@ test_that("Pectinate trees are generated", {
 test_that('Balanced trees are generated correctly', {
   # nTip even
   expect_equal(BalancedTree(8L),
-               ape::read.tree(
+               Preorder(ape::read.tree(
                  text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));')
-               )
+               ))
   # nTip odd
   expect_equal(BalancedTree(9L),
-               ape::read.tree(
+               Preorder(ape::read.tree(
                  text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));')
-               )
+               ))
+  expect_equal(BalancedTree(9L)$edge, Preorder(BalancedTree(9L)$edge))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equal(ignore_attr = TRUE,
