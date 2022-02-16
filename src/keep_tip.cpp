@@ -5,9 +5,16 @@ using namespace Rcpp;
 
 #define RETAIN 9000
 
-#define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no;
+#define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no
 
-#define SKIP_EDGE GET_NEW_NO(parent); new_no[child] = new_no[parent]
+#define SKIP_EDGE                                              \
+  GET_NEW_NO(parent);                                          \
+   new_no[child] = new_no[parent];                             \
+   if (rm_root && (                                            \
+ parent == root_placeholder || parent == root_node)) {         \
+     root_placeholder = child;                                 \
+   }
+   
 
 // entry 0 of keep is TRUE if leaf "1" should be retained, false otherwise.
 // [[Rcpp::export]]
@@ -104,10 +111,6 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
     ;
     if (n_children) {
       if (n_children == 1) {
-        if (rm_root && (
-            parent == root_placeholder || parent == root_node)) {
-          root_placeholder = child;
-        }
         SKIP_EDGE;
 #ifdef TTDEBUG
         Rcout << " x Omit " << edge(i, 0) << "-" << edge(i, 1)
