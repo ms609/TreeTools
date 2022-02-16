@@ -91,7 +91,6 @@ test_that("as.MixedBase()", {
   expect_true(as.MixedBase(44) > as.MixedBase(as.MixedBase(42)))
   expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
   bigNo <- as.integer64(2) ^ 62 + 1337
-  expect_equal(sum(as.integer(as.MixedBase(bigNo)) * rev(.TT_BASE)),
-               bigNo)
+  expect_equal(sum(as.integer(as.MixedBase(bigNo)) * rev(.TT_BASE)), bigNo)
   
 })
