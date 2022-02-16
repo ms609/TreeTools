@@ -12,14 +12,15 @@ NumericMatrix path_lengths (const IntegerMatrix edge, const DoubleVector weight)
     root_node = edge[0],
     n_tip = root_node - 1,
     n_edge = edge.nrow(),
-    n_vert = n_edge + 1
+    n_vert = n_edge + 1,
+    r_to_c = 1
   ;
   
   NumericMatrix ret(n_vert + 1, n_vert + 1);
   ret.fill(NumericVector::get_na());
   auto
-    parent_of = std::make_unique<intx[]>(n_vert),
-    parent_edge = std::make_unique<intx[]>(n_vert)
+    parent_of = std::make_unique<intx[]>(n_vert + r_to_c),
+    parent_edge = std::make_unique<intx[]>(n_vert + r_to_c)
   ;
   for (intx i = n_edge; i--; ) {
     parent_of[CHILD(i)] = PARENT(i);
