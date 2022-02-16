@@ -12,7 +12,6 @@ NumericMatrix path_lengths (const IntegerMatrix edge, const DoubleVector weight)
     root_node = edge[0],
     n_tip = root_node - 1,
     n_edge = edge.nrow(),
-    n_vert = n_edge + 1
     n_vert = n_edge + 1,
     r_to_c = 1
   ;
