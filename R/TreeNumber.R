@@ -302,7 +302,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0('t', seq_len(nTip))
+  }
   if (nTip == 1) {
     SingleTaxonTree(tipLabels)
   } else {
@@ -328,6 +330,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
   INT_MAX <- as.integer64(2147483647L)
   i64 <- as.integer64(i64)
   if (i64 > INT_MAX) {
+    if (i64 > INT_MAX * INT_MAX) {
+      stop("Number too large for 64-bit representation")
+    }
     as.integer(c(i64 %/% INT_MAX, i64 %% INT_MAX))
   } else {
     as.integer(i64[1])
