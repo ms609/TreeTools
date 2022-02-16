@@ -57,14 +57,21 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (nodes < 1L) {
     stop("A tree must contain one or more `nodes`")
   }
+  
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
   if (!is.logical(root) 
       && !(length(root) == 1L && root == 1L)) {
-    if (is.character(root)) root <- which(tips == root)
-    if (length(root) == 0L) stop("No match found for `root`")
-    if (!is.integer(root)) root <- as.integer(root)
+    if (is.character(root)) {
+      root <- which(tips == root)
+    }
+    if (length(root) == 0L) {
+      stop("No match found for `root`")
+    }
+    if (!is.integer(root)) {
+      root <- as.integer(root)
+    }
     if (length(root) > 1L) {
       root <- root[1]
       warning("More than one entry in `root`; using ", root)
@@ -142,7 +149,7 @@ PectinateTree <- function(tips) {
 
 #' @rdname GenerateTree
 #'
-#' @return `BalancedTree()` returns a balanced (symmetrical) tree.
+#' @return `BalancedTree()` returns a balanced (symmetrical) tree, in preorder.
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
@@ -157,7 +164,7 @@ BalancedTree <- function(tips) {
   # Return:
   structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
                        tip.label = as.character(tips)),
-            order = 'cladewise', class = 'phylo') # Actually in preorder
+            order = 'preorder', class = 'phylo')
 }
 
 #' @keywords internal
