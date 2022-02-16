@@ -1,3 +1,8 @@
+test_that("Integers fit into integer sizes", {
+  INT_MAX <- 2147483647L
+  expect_equal(as.integer64(INT_MAX), as.integer64("2147483647"))
+})
+
 test_that("as.phylo.numeric()", {
   expect_true(all.equal(as.phylo(0:2, 6, letters[1:6])[[1]],
                         PectinateTree(letters[c(1, 3:6, 2)])))
@@ -42,9 +47,14 @@ test_that("as.TreeNumber()", {
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), as.TreeNumber(tn16))
 
   expect_error(as.phylo(as.integer64(2) ^ 62, 16), "too large ")
-  bigNumber <- as.integer64(2) ^ 61 + 786306048
+  bigNumber <- as.integer64(2) ^ 61 + 1
+  # Not necessarily equal to as.integer64(2 ^ 61 + 1), due to numeric conversion
   tn16 <- as.TreeNumber(as.phylo(bigNumber, 16, letters[1:16]))
   expect_equal(as.phylo(bigNumber, 16), as.phylo(tn16, tipLabels = NULL))
+  # Rounding:
+  expect_identical(as.integer64(as.TreeNumber(as.phylo(bigNumber, 16))) - 1,
+                   as.integer64(as.TreeNumber(as.phylo(bigNumber - 1, 16))))
+               
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
   
 })

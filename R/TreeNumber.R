@@ -272,7 +272,9 @@ as.phylo.numeric <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0('t', seq_len(nTip))
+  }
   if (nTip == 1) {
     SingleTaxonTree(tipLabels)
   } else {
