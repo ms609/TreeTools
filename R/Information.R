@@ -58,8 +58,8 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #' replaced with `?`.
 #'
 #' @return `CharacterInformation()` returns a numeric specifying the
-#' phylogenetic information content of the character (_sensu_ Steel & Penny
-#' 2006), in bits.
+#' phylogenetic information content of the character (_sensu_ 
+#' \insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 #'
 #' @references
 #' - \insertAllCited{}
@@ -79,11 +79,11 @@ CharacterInformation <- function(tokens) {
 
 #' Phylogenetic information content of splitting leaves into two partitions
 #'
-#' Calculate the phylogenetic information content
-#' \insertCite{@sensu @Steel2006}{TreeTools} of a split, which reflects the
-#' probability that a uniformly selected random tree will contain the split:
-#' a split that is consistent with a smaller number of trees will have a higher
-#' information content.
+#' Calculate the phylogenetic information content (_sensu_ 
+#' \insertCite{Steel2006;nobrackets}{TreeTools}) of a split, which
+#' reflects the probability that a uniformly selected random tree will contain#
+#' the split: a split that is consistent with a smaller number of trees will
+#' have a higher information content.
 #'
 #' `SplitInformation()` addresses bipartition splits, which correspond to
 #' edges in an unrooted phylogeny; `MultiSplitInformation()` supports splits

@@ -41,7 +41,7 @@ Imports:
     colorspace,
     fastmatch (>= 1.1.3),
     R.cache,
-    Rdpack (>= 0.7),
+    Rdpack (> 2.1.3),
 Suggests:
     spelling,
     knitr,
@@ -51,6 +51,7 @@ Suggests:
     shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
+Remotes: GeoBosh/Rdpack
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
