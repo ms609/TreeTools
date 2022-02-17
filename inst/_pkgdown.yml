@@ -32,12 +32,10 @@ reference:
       Functions describing properties of trees.
     contents:
       - has_concept("tree characterization functions")
+      - has_concept("tree properties")
       - has_concept("consensus tree functions")
-      - NTip
       - NPartitions
       - PairwiseDistances
-      - TipLabels
-      - TreeIsRooted
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
@@ -101,6 +99,7 @@ reference:
       - RightmostCharacter
       - SampleOne
       - sapply64
+      - SpectrumLegend
       - sort.multiPhylo
       - UnshiftTree
 
