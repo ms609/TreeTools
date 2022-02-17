@@ -319,9 +319,13 @@ test_that("Binarification is uniform", {
 
 })
 
+test_that("LeafLabelInterchange() fails", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
+})
+
 test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
-  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
   expect_true(all.equal(BalancedTree(2),
                         LeafLabelInterchange(BalancedTree(2), 2)))
   expect_equal(rev(BalancedTree(2)$tip),

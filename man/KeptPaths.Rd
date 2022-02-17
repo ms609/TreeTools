@@ -6,11 +6,11 @@
 \alias{KeptPaths.matrix}
 \title{Paths present in reduced tree}
 \usage{
-KeptPaths(paths, keptVerts)
+KeptPaths(paths, keptVerts, all = TRUE)
 
-\method{KeptPaths}{data.frame}(paths, keptVerts)
+\method{KeptPaths}{data.frame}(paths, keptVerts, all = TRUE)
 
-\method{KeptPaths}{matrix}(paths, keptVerts)
+\method{KeptPaths}{matrix}(paths, keptVerts, all = TRUE)
 }
 \arguments{
 \item{paths}{\code{data.frame} of paths in master tree, perhaps generated using
@@ -18,6 +18,11 @@ KeptPaths(paths, keptVerts)
 
 \item{keptVerts}{Logical specifying whether each entry is retained in the
 reduced tree, perhaps generated using \code{\link[=KeptVerts]{KeptVerts()}}.}
+
+\item{all}{Logical: if \code{TRUE}, return all paths that occur in the reduced
+tree; if \code{FALSE}, return only those paths that correspond to a single edge.
+that correspond to edges in the reduced tree.
+Ignored if \code{paths} is a matrix.}
 }
 \value{
 \code{KeptPaths()} returns a logical vector specifying whether each path
@@ -26,6 +31,14 @@ in \code{paths} occurs when \code{keptVerts} vertices are retained.
 \description{
 Lists which paths present in a master tree are present when leaves are
 dropped.
+}
+\examples{
+master <- BalancedTree(9)
+paths <- PathLengths(master)
+keptTips <- c(1, 5, 7, 9)
+keptVerts <- KeptVerts(master, keptTips)
+KeptPaths(paths, keptVerts)
+paths[KeptPaths(paths, keptVerts, all = FALSE), ]
 }
 \seealso{
 Other tree manipulation: 

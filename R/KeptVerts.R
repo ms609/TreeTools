@@ -1,8 +1,13 @@
 #' Identify vertices retained when leaves are dropped
 #' 
 #' @param tree Original tree of class `phylo`, in [`Preorder`].
-#' @param keptTips Logical vector stating whether each leaf should be retained.
-#' Sequence corresponds to `tree[["tip.label"]]`.
+#' @param keptTips Either: 
+#' - a logical vector stating whether each leaf should be retained, in a
+#' sequence corresponding to `tree[["tip.label"]]`; or
+#' - a character vector listing the leaf labels to retain; or
+#' - a numeric vector listing the indices of leaves to retain.
+#' @param tipLabels Optional character vector naming the leaves of `tree`,
+#' if `keptTips` is not logical.  Inferred from `tree` if unspecified.
 #' @examples 
 #' master <- BalancedTree(12)
 #' master <- Preorder(master) # Nodes must be listed in Preorder sequence
@@ -19,24 +24,35 @@
 #' @template MRS
 #' @export
 #' @family tree manipulation
-KeptVerts <- function(tree, keptTips) UseMethod("KeptVerts")
-
-#' @rdname KeptVerts
-#' @export
-KeptVerts.phylo <- function(tree, keptTips) {
-  order <- attr(tree, "order")
-  if (is.null(order) || order != "preorder") {
-    stop("`tree` must be in preorder; try `Preorder(tree)`")
-  }
-  KeptVerts(tree[["edge"]], keptTips)
+KeptVerts <- function(tree, keptTips, tipLabels = TipLabels(tree)) {
+  UseMethod("KeptVerts")
 }
 
 #' @rdname KeptVerts
 #' @export
-KeptVerts.numeric <- function(tree, keptTips) {
-  if (!is.logical(keptTips)) {
-    stop("`keptTips` must be a logical vector")
+KeptVerts.phylo <- function(tree, keptTips, tipLabels = TipLabels(tree)) {
+  order <- attr(tree, "order")
+  if (is.null(order) || order != "preorder") {
+    stop("`tree` must be in preorder; try `Preorder(tree)`")
   }
+  KeptVerts(tree[["edge"]], keptTips, tipLabels = tipLabels)
+}
+
+#' @rdname KeptVerts
+#' @export
+KeptVerts.numeric <- function(tree, keptTips, tipLabels = TipLabels(tree)) {
+  switch(mode(keptTips),
+         "numeric" = {
+           x <- logical(length(tipLabels))
+           x[keptTips] <- TRUE
+           keptTips <- x
+         },
+         "character" = {
+           keptTips <- tipLabels %in% keptTips
+         },
+         "logical" = {},
+         stop("Unrecognized format for `keptTips`")
+  )
   dims <- dim(tree)
   if (is.null(dims) || dims[2] != 2L) {
     stop("`tree` must be the numeric edge matrix of a `phylo` object")
