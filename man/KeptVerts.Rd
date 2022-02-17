@@ -22,6 +22,9 @@ sequence corresponding to \code{tree[["tip.label"]]}; or
 \item a character vector listing the leaf labels to retain; or
 \item a numeric vector listing the indices of leaves to retain.
 }}
+
+\item{tipLabels}{Optional character vector naming the leaves of \code{tree},
+if \code{keptTips} is not logical.  Inferred from \code{tree} if unspecified.}
 }
 \description{
 Identify vertices retained when leaves are dropped

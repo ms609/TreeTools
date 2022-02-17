@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9009 #
+# TreeTools 1.6.0.9010 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -8,6 +8,8 @@
 - `%in%.Splits()` retains names when comparing small splits
   ([#40](https://github.com/ms609/TreeTools/issues/40)).
   
+- `PathLengths()` describes all paths within a tree.
+
 - `KeptVerts()` and `KeptPaths()` identify elements in reduced trees.
   
 - Improve handling of zero-split trees.
