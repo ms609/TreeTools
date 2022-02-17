@@ -46,9 +46,9 @@ Log2TreesMatchingTree <- function(tree) {
 #' `CladisticInfo()` calculates the cladistic (phylogenetic) information
 #' content of a phylogenetic object, _sensu_ Thorley _et al._ (1998).
 #'
-#' The \acronym{CIC} is the logarithm of the number of binary trees that include the
-#' specified topology.  A base two logarithm gives an information content in
-#' bits.
+#' The \acronym{CIC} is the logarithm of the number of binary trees that
+#' include the specified topology.
+#' A base two logarithm gives an information content in bits.
 #'
 #' The \acronym{CIC} was originally proposed by 
 #' \insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
@@ -80,7 +80,7 @@ CladisticInfo <- function(x) UseMethod('CladisticInfo')
 
 #' @rdname CladisticInfo
 #' @export
-PhylogeneticInfo <- function(x) {                                              # nocov start
+PhylogeneticInfo <- function(x) {                                               # nocov start
   .Deprecated('CladisticInfo()')
   UseMethod('CladisticInfo')
 }                                                                               # nocov end
