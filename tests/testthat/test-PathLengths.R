@@ -1,8 +1,6 @@
 test_that("PathLengths() works", {
   expect_error(PathLengths(matrix(0, 2, 2)),
                "object of class")
-  expect_error(PathLengths(BalancedTree(9)),
-               "weight")
   bal9 <- BalancedTree(9)
   bal9$edge.length <- 1:16
   pl <- PathLengths(bal9, fullMatrix = TRUE)
@@ -27,4 +25,8 @@ test_that("PathLengths() works", {
   pec8 <- CollapseNode(PectinateTree(8), 12:13)
   pec8$edge.length <- 1:12
   Test(pec8)
+  
+  bal9$edge.length <- rep_len(1, 16)
+  expect_equal(PathLengths(BalancedTree(9)), PathLengths(bal9))
+  
 })

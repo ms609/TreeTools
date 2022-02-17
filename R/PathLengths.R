@@ -29,7 +29,7 @@ PathLengths <- function(tree, fullMatrix = FALSE) {
   }
   weights <- tree[["edge.length"]]
   if (is.null(weights)) {
-    stop("`tree` must be weighted using the `edge.length` element.")
+    weights <- rep_len(1L, dim(tree[["edge"]])[1])
   }
   mat <- path_lengths(tree[["edge"]], weights)
   
