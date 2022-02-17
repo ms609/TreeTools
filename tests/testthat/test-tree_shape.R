@@ -4,6 +4,9 @@ test_that("Errors are handled", {
   expect_error(RootedTreeWithShape(as.integer64(2)^31), " large ")
   expect_error(UnrootedTreeWithShape(31, 31), " < 31 leaves")
   expect_error(.UnrootedKeys(29L), " 29 leaves")
+  
+  expect_error(NRootedShapes(56L), "Too many shapes ")
+  expect_error(NUnrootedShapes(61L), "Too many shapes ")
 })
 
 test_that("Tree shapes counted", {
@@ -15,9 +18,6 @@ test_that("Tree shapes counted", {
                structure(vapply(seq_along(unrootedKeys),
                                 NUnrootedShapes,
                                 integer64(1)),
-
-  expect_error(NRootedShapes(56L))
-  expect_error(NUnrootedShapes(61L))
                          class = "integer64"))
 })
 
