@@ -4,8 +4,8 @@ test_that("Errors are handled", {
   expect_error(RootedTreeWithShape(as.integer64(2)^31), " large ")
   expect_error(UnrootedTreeWithShape(31, 31), " < 31 leaves")
   expect_error(.UnrootedKeys(29L), " 29 leaves")
-  
-  expect_error(NRootedShapes(56L), "Too many shapes ")
+
+    expect_error(NRootedShapes(56L), "Too many shapes ")
   expect_error(NUnrootedShapes(61L), "Too many shapes ")
 })
 
@@ -31,7 +31,7 @@ test_that("Nasty node order not fatal", {
     class = "phylo") # Danger: Do not plot!
   expect_equal(RootedTreeShape(Preorder(nastyBinary)),
                RootedTreeShape(nastyBinary))
-  
+
   skip_if(Sys.getenv("USING_ASAN") != "")
   expect_error(edge_to_rooted_shape(1:10, 1:11, 6), "must be the same length")
   expect_error(edge_to_rooted_shape(1:10, 1:10, 5), "is tree binary\\?")
@@ -52,12 +52,10 @@ test_that("Rooted tree shapes counted", {
 test_that("Rooted tree shapes fail gracefully", {
   skip_if(Sys.getenv("USING_ASAN") != "")
   expect_error(RootedTreeShape(BalancedTree(56)), "> 55 leaves")
-  
 })
 
 test_that("Rooted tree shapes calculated", {
   expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
-  # MAX_SHAPE_TIP = 200
   expect_equal(NRootedShapes(54) - 1L, RootedTreeShape(BalancedTree(54)))
   expect_equal(NRootedShapes(55), RootedTreeShape(BalancedTree(55)))
 
@@ -90,7 +88,7 @@ test_that("Rooted tree shapes calculated", {
     expect_equal(NRootedShapes(i) - 1L,
                  RootedTreeShape(BalancedTree(i)))
   }
-  lapply(c(2^(1:4), 10), BalancedTest)
+  lapply(c(2 ^ (1:4), 10), BalancedTest)
 
   expect_equal(0L, .UnrootedKeys(4))
   expect_equal(0L, .UnrootedKeys(5))
@@ -115,18 +113,21 @@ test_that("Rooted tree shapes built", {
   expect_treequal(RootedTreeWithShape(0L, 6L), PectinateTree(blank6))
   expect_treequal(RootedTreeWithShape(1L, 6L), as.phylo(58, 6, blank6))
   expect_treequal(RootedTreeWithShape(2L, 6L), as.phylo(1, 6, blank6))
-  expect_treequal(RootedTreeWithShape(3L, 6L), ape::read.tree(text="((,),(,(,(,))));"))
-  expect_treequal(RootedTreeWithShape(4L, 6L), ape::read.tree(text="((,),((,),(,)));"))
+  expect_treequal(RootedTreeWithShape(3L, 6L),
+                  ape::read.tree(text = "((,),(,(,(,))));"))
+  expect_treequal(RootedTreeWithShape(4L, 6L),
+                  ape::read.tree(text = "((,),((,),(,)));"))
   expect_treequal(RootedTreeWithShape(5L, 6L), BalancedTree(blank6))
 
   expect_treequal(RootedTreeWithShape(0, 8), PectinateTree(rep("", 8)))
-  expect_treequal(RootedTreeWithShape(NRootedShapes(8), 8), BalancedTree(rep("", 8)))
+  expect_treequal(RootedTreeWithShape(NRootedShapes(8), 8),
+                  BalancedTree(rep("", 8)))
 
-  BalancedTest <- function (i) {
+  BalancedTest <- function(i) {
     expect_treequal(BalancedTree(rep("", i)),
                     RootedTreeWithShape(NRootedShapes(i) - 1L, i))
   }
-  lapply(2^(1:4), BalancedTest)
+  lapply(2 ^ (1:4), BalancedTest)
 })
 
 test_that("Unrooted tree shapes fail gracefully", {
@@ -137,7 +138,7 @@ test_that("Unrooted tree shapes fail gracefully", {
 test_that("Unrooted tree shapes built", {
   expect_treequal(UnrootedTreeWithShape(0, 9),
                   UnrootTree(PectinateTree(rep("", 9))))
-  TestSym <- function (tree, shape) {
+  TestSym <- function(tree, shape) {
     expect_equal(shape, UnrootedTreeShape(tree))
     expect_equal(UnrootedTreeKey(tree),
                  UnrootedTreeKey(UnrootedTreeWithShape(shape, NTip(tree))))

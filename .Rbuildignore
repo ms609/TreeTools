@@ -8,6 +8,7 @@ memcheck
 vignettes/.RData
 .github
 ^\.git/
+^\.lintr/
 ^_pkgdown\.yml$
 ^.*\.o$
 ^.*\.dll$
