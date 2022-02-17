@@ -47,7 +47,6 @@ test_that("Rooted tree shapes counted", {
                               "7862958391", "18632325319", "44214569100")),
                structure(vapply(1:34, NRootedShapes, integer64(1)),
                                            class = "integer64"))
-
 })
 
 test_that("Rooted tree shapes fail gracefully", {
@@ -76,8 +75,10 @@ test_that("Rooted tree shapes calculated", {
   expect_equal(0L, UnrootedTreeShape(PectinateTree(0:5)))
   expect_equal(as.integer64(1L), RootedTreeShape(as.phylo(58, 6)))
   expect_equal(as.integer64(2L), RootedTreeShape(as.phylo(1, 6)))
-  expect_equal(as.integer64(3L), RootedTreeShape(ape::read.tree(text="((a, b), (c, (d, (e, f))));")))
-  expect_equal(as.integer64(4L), RootedTreeShape(ape::read.tree(text="((a, b), ((c, d), (e, f)));")))
+  expect_equal(as.integer64(3L), RootedTreeShape(
+    ape::read.tree(text = "((a, b), (c, (d, (e, f))));")))
+  expect_equal(as.integer64(4L), RootedTreeShape(
+    ape::read.tree(text = "((a, b), ((c, d), (e, f)));")))
   expect_equal(as.integer64(5L), RootedTreeShape(BalancedTree(0:5)))
 
   PectinateTest <- function(i) {
