@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9010</span>
       </span>
     </div>
 
@@ -101,6 +101,14 @@
           <p><code><a href="ImposeConstraint.html">ImposeConstraint()</a></code> <code><a href="ImposeConstraint.html">AddUnconstrained()</a></code> </p>
         </td>
         <td><p>Force a tree to match a constraint</p></td>
+      </tr><tr><td>
+          <p><code><a href="KeptPaths.html">KeptPaths()</a></code> </p>
+        </td>
+        <td><p>Paths present in reduced tree</p></td>
+      </tr><tr><td>
+          <p><code><a href="KeptVerts.html">KeptVerts()</a></code> </p>
+        </td>
+        <td><p>Identify vertices retained when leaves are dropped</p></td>
       </tr><tr><td>
           <p><code><a href="LeafLabelInterchange.html">LeafLabelInterchange()</a></code> </p>
         </td>
@@ -230,21 +238,21 @@
         </td>
         <td><p>Reduced consensus, omitting specified taxa</p></td>
       </tr><tr><td>
-          <p><code><a href="RoguePlot.html">RoguePlot()</a></code> </p>
+          <p><code><a href="NSplits.html">NSplits</a></code> </p>
         </td>
-        <td><p>Visualize position of rogue taxa</p></td>
+        <td><p>Number of distinct splits</p></td>
       </tr><tr><td>
           <p><code><a href="NTip.html">NTip()</a></code> </p>
         </td>
         <td><p>Number of leaves in a phylogenetic tree</p></td>
       </tr><tr><td>
-          <p><code><a href="NSplits.html">NSplits</a></code> </p>
+          <p><code><a href="PathLengths.html">PathLengths()</a></code> </p>
         </td>
-        <td><p>Number of distinct splits</p></td>
+        <td><p>Calculate length of paths between each pair of vertices within tree</p></td>
       </tr><tr><td>
-          <p><code><a href="PairwiseDistances.html">PairwiseDistances()</a></code> </p>
+          <p><code><a href="SplitsInBinaryTree.html">SplitsInBinaryTree</a></code> </p>
         </td>
-        <td><p>Distances between each pair of trees</p></td>
+        <td><p>Maximum splits in an <em>n</em>-leaf tree</p></td>
       </tr><tr><td>
           <p><code><a href="TipLabels.html">TipLabels()</a></code> <code><a href="TipLabels.html">AllTipLabels()</a></code> </p>
         </td>
@@ -253,6 +261,14 @@
           <p><code><a href="TreeIsRooted.html">TreeIsRooted()</a></code> </p>
         </td>
         <td><p>Is tree rooted?</p></td>
+      </tr><tr><td>
+          <p><code><a href="RoguePlot.html">RoguePlot()</a></code> </p>
+        </td>
+        <td><p>Visualize position of rogue taxa</p></td>
+      </tr><tr><td>
+          <p><code><a href="PairwiseDistances.html">PairwiseDistances()</a></code> </p>
+        </td>
+        <td><p>Distances between each pair of trees</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="phylogenetic-data">Phylogenetic data <a href="#phylogenetic-data" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions for modifying and evaluating datasets.</p>
@@ -489,6 +505,10 @@
           <p><code><a href="sapply64.html">sapply64()</a></code> <code><a href="sapply64.html">vapply64()</a></code> <code><a href="sapply64.html">replicate64()</a></code> </p>
         </td>
         <td><p>Apply a function that returns 64-bit integers over a list or vector</p></td>
+      </tr><tr><td>
+          <p><code><a href="SpectrumLegend.html">SpectrumLegend()</a></code> </p>
+        </td>
+        <td><p>Produce a legend for continuous gradient scales</p></td>
       </tr><tr><td>
           <p><code><a href="sort.multiPhylo.html">sort(<i>&lt;multiPhylo&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`==`(<i>&lt;phylo&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`&lt;`(<i>&lt;phylo&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`&gt;`(<i>&lt;phylo&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`==`(<i>&lt;MixedBase&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`&lt;`(<i>&lt;MixedBase&gt;</i>)</a></code> <code><a href="sort.multiPhylo.html">`&gt;`(<i>&lt;MixedBase&gt;</i>)</a></code> </p>
         </td>

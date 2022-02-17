@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9010</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RenumberTree</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RenumberTree</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, <span class="va">weight</span><span class="op">)</span>
 
 <span class="fu">RenumberEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -115,22 +115,30 @@
 <span class="co"># S3 method for multiPhylo</span>
 <span class="fu">ApePostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">nTip</span>, <span class="va">edge</span><span class="op">)</span>
 
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S3 method for phylo</span>
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S3 method for `NULL`</span>
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S3 method for list</span>
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S3 method for multiPhylo</span>
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># S3 method for numeric</span>
-<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span>, renumber <span class="op">=</span> <span class="cn">FALSE</span>, sizeSort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">Postorder</span><span class="op">(</span><span class="va">tree</span>, force <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+
+<span class="fu">PostorderOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
+
+<span class="co"># S3 method for phylo</span>
+<span class="fu">PostorderOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
+
+<span class="co"># S3 method for numeric</span>
+<span class="fu">PostorderOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
 
 <span class="fu">Pruningwise</span><span class="op">(</span><span class="va">tree</span>, <span class="va">nTip</span>, <span class="va">edge</span><span class="op">)</span>
 
@@ -172,6 +180,9 @@ matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.h
 <dt>child</dt>
 <dd><p>Integer vector corresponding to the second column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 2]</code>.</p></dd>
+<dt>weight</dt>
+<dd><p>Optional vector specifying the weight of each edge,
+corresponding to the <code>edge.length</code> property of a <code>phylo</code> object.</p></dd>
 <dt>...</dt>
 <dd><p>Deprecated; included for compatibility with previous versions.</p></dd>
 <dt>tree</dt>
@@ -198,7 +209,9 @@ whose two entries correspond to the new parent and child vectors.
 specified numbering scheme.
 <code>Postorder.numeric</code> accepts a numeric matrix corresponding to the
 <code>edge</code> entry of a tree of class <code>phylo</code>, and returns a two-column array
-corresponding to <code>tree</code>, with edges listed in postorder</p>
+corresponding to <code>tree</code>, with edges listed in postorder
+<code>PostorderOrder()</code> returns an integer vector. Visiting edges in this
+order will traverse the tree in postorder.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -216,7 +229,8 @@ in any sequence, and edges may be listed in any order in the input tree.
 Its output is guaranteed to be identical for any tree of an equivalent
 topology, allowing unique trees to be detected by comparing sorted edge
 matrices alone.</p>
-<p>A tree in preorder is numbered starting from the root node.
+<p>Nodes and edges in a preorder tree are numbered starting from the deepest
+node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.</p>
 <p>At each node, child edges are sorted from left to right in order of the
@@ -230,12 +244,10 @@ sorted into preorder, until each edge has been visited.</p>
 <p><code>RenumberTree()</code> and <code>RenumberEdges()</code> are wrappers for the C function
 <code>preorder_edges_and_nodes()</code>; they do not perform the same checks on input
 as <code>Preorder()</code> and are intended for use where performance is at a premium.</p>
-<p><code>Postorder()</code> is an optimized implementation that if <code>sizeSort = TRUE</code>
-return a specific order:
-edges are listed from the node that subtends the smallest
-subtree to the one that subtends the largest (i.e. the root node), with
-all of a node's descendant edges listed adjacently.  If a tree is already
-in postorder, it will not be rearranged unless <code>force = TRUE</code>.</p>
+<p><code>Postorder()</code> numbers nodes as in <code>Preorder()</code>, and lists edges in
+descending order of parent node number, breaking ties by listing child
+nodes in increasing order.  If a tree is already in postorder, it will not
+be rearranged unless <code>force = TRUE</code>.</p>
 <p>Methods applied to numeric inputs do not check input for sanity, so should
 be used with caution: malformed input may cause undefined results, including
 crashing R.</p>
@@ -250,7 +262,6 @@ advice.</p>
 <ul><li><p><code>Cladewise</code>: Reorder tree cladewise.</p></li>
 <li><p><code>ApePostorder</code>: Reorder tree in Postorder using ape's <code>postorder</code>
 function, which is robust to unconventional node numbering.</p></li>
-<li><p><code>Postorder</code>: Reorder tree in Postorder. Edge lengths are not retained.</p></li>
 <li><p><code>Pruningwise</code>: Reorder tree Pruningwise.</p></li>
 <li><p><code>Preorder</code>: Reorder tree in Preorder (special case of cladewise).</p></li>
 </ul></div>
@@ -264,6 +275,8 @@ function, which is robust to unconventional node numbering.</p></li>
 <code><a href="DropTip.html">DropTip</a>()</code>,
 <code><a href="EnforceOutgroup.html">EnforceOutgroup</a>()</code>,
 <code><a href="ImposeConstraint.html">ImposeConstraint</a>()</code>,
+<code><a href="KeptPaths.html">KeptPaths</a>()</code>,
+<code><a href="KeptVerts.html">KeptVerts</a>()</code>,
 <code><a href="LeafLabelInterchange.html">LeafLabelInterchange</a>()</code>,
 <code><a href="MakeTreeBinary.html">MakeTreeBinary</a>()</code>,
 <code><a href="RenumberTips.html">RenumberTips</a>()</code>,
