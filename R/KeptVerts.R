@@ -6,6 +6,8 @@
 #' sequence corresponding to `tree[["tip.label"]]`; or
 #' - a character vector listing the leaf labels to retain; or
 #' - a numeric vector listing the indices of leaves to retain.
+#' @param tipLabels Optional character vector naming the leaves of `tree`,
+#' if `keptTips` is not logical.  Inferred from `tree` if unspecified.
 #' @examples 
 #' master <- BalancedTree(12)
 #' master <- Preorder(master) # Nodes must be listed in Preorder sequence
