@@ -6,17 +6,22 @@
 \alias{KeptVerts.numeric}
 \title{Identify vertices retained when leaves are dropped}
 \usage{
-KeptVerts(tree, keptTips)
+KeptVerts(tree, keptTips, tipLabels = TipLabels(tree))
 
-\method{KeptVerts}{phylo}(tree, keptTips)
+\method{KeptVerts}{phylo}(tree, keptTips, tipLabels = TipLabels(tree))
 
-\method{KeptVerts}{numeric}(tree, keptTips)
+\method{KeptVerts}{numeric}(tree, keptTips, tipLabels = TipLabels(tree))
 }
 \arguments{
 \item{tree}{Original tree of class \code{phylo}, in \code{\link{Preorder}}.}
 
-\item{keptTips}{Logical vector stating whether each leaf should be retained.
-Sequence corresponds to \code{tree[["tip.label"]]}.}
+\item{keptTips}{Either:
+\itemize{
+\item a logical vector stating whether each leaf should be retained, in a
+sequence corresponding to \code{tree[["tip.label"]]}; or
+\item a character vector listing the leaf labels to retain; or
+\item a numeric vector listing the indices of leaves to retain.
+}}
 }
 \description{
 Identify vertices retained when leaves are dropped

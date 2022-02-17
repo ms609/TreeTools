@@ -2,7 +2,7 @@ test_that("KeptVerts() works", {
   Keepers <- function(n, nTip) as.logical(tabulate(n, nTip))
   
   bal12 <- BalancedTree(12)
-  expect_error(KeptVerts(bal12, 1:9), "must be a logical vector")
+  expect_error(KeptVerts(bal12, raw(0)), "`keptTips`")
   Y <- TRUE
   N <- FALSE
   expect_error(KeptVerts(matrix(FALSE, 4, 2), c(Y, Y, N, Y)),
@@ -22,6 +22,13 @@ test_that("KeptVerts() works", {
   expect_equal(KeptVerts(bal12, 1:12 %in% c(1, 2, 6, 12)),
                c(1:12 %in% c(1, 2, 6, 12), Y, Y, N, Y, N, N, N, N, N, N, N))
   expect_equal(KeptVerts(bal12, rep(Y, 12)), rep(TRUE, 23))
+  
+  # Input format
+  keeps <- c(1, 3, 5, 7, 9, 10)
+  expect_equal(KeptVerts(bal12, keeps),
+               KeptVerts(bal12, 1:12 %in% keeps))
+  expect_equal(KeptVerts(bal12, bal12$tip.label[keeps]),
+               KeptVerts(bal12, as.integer(keeps)))
   
   pec9 <- UnrootTree(PectinateTree(9))
   kept <- c(1, 3, 8, 9)
