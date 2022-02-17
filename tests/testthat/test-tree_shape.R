@@ -31,9 +31,10 @@ test_that("Nasty node order not fatal", {
     class = "phylo") # Danger: Do not plot!
   expect_equal(RootedTreeShape(Preorder(nastyBinary)),
                RootedTreeShape(nastyBinary))
-
-  expect_error(edge_to_rooted_shape(1:10, 1:11, 6))
-  expect_error(edge_to_rooted_shape(1:10, 1:10, 5))
+  
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(edge_to_rooted_shape(1:10, 1:11, 6), "must be the same length")
+  expect_error(edge_to_rooted_shape(1:10, 1:10, 5), "is tree binary\\?")
 })
 
 test_that("Rooted tree shapes counted", {
@@ -49,13 +50,17 @@ test_that("Rooted tree shapes counted", {
 
 })
 
+test_that("Rooted tree shapes fail gracefully", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(RootedTreeShape(BalancedTree(56)), "> 55 leaves")
+  
+})
+
 test_that("Rooted tree shapes calculated", {
   expect_equal(NRootedShapes(8) - 1L, RootedTreeShape(BalancedTree(0:7)))
   # MAX_SHAPE_TIP = 200
   expect_equal(NRootedShapes(54) - 1L, RootedTreeShape(BalancedTree(54)))
   expect_equal(NRootedShapes(55), RootedTreeShape(BalancedTree(55)))
-  expect_error(NRootedShapes(56))
-  expect_error(RootedTreeShape(BalancedTree(56)))
 
   expect_equal(as.integer64(0L), RootedTreeShape(PectinateTree(0:3)))
   expect_equal(as.integer64(0L), RootedTreeShape(SortTree(PectinateTree(0:3))))
@@ -123,9 +128,12 @@ test_that("Rooted tree shapes built", {
   lapply(2^(1:4), BalancedTest)
 })
 
-test_that("Unrooted tree shapes built", {
-  expect_error(UnrootedTreeWithShape(4, 8)) # Out of range
+test_that("Unrooted tree shapes fail gracefully", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(UnrootedTreeWithShape(4, 8), "must be between 0 and 3")
+})
 
+test_that("Unrooted tree shapes built", {
   expect_treequal(UnrootedTreeWithShape(0, 9),
                   UnrootTree(PectinateTree(rep("", 9))))
   TestSym <- function (tree, shape) {

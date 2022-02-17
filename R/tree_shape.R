@@ -137,7 +137,7 @@ UnrootedTreeWithShape <- function(shape, nTip, tipLabels = character(nTip)) {
   }
   nShapes <- nUnrootedShapes[nTip]
   if (shape >= as.integer(nShapes)) {
-    stop("Shape must be between 0 and ", nShapes)
+    stop("Shape must be between 0 and ", nShapes - 1L)
   }
 
   key <- UnrootedKeys(nTip)[shape + 1L]
