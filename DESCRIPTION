@@ -51,7 +51,6 @@ Suggests:
     shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
-Remotes: GeoBosh/Rdpack
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools, rcmdcheck
