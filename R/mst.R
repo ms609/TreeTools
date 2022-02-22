@@ -64,6 +64,10 @@ MinimumSpanningTree.dist <- function(distances) {
 }
 
 MinimumSpanningTree.matrix <- function(distances) {
+  dims <- dim(distances)
+  if (dims[1] != dims[2]) {
+    stop("`distances` must be a square matrix.")
+  }
   dists <- distances[lower.tri(distances)]
   minimum_spanning_tree(order(dists, decreasing = TRUE) - 1L)
 }
