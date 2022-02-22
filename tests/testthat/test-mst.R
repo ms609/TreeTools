@@ -1,6 +1,6 @@
 test_that("MSTEdges handles bad input", {
   expect_error(MSTEdges(matrix(1:12, 6, 2)), "distance")
-}
+})
 
 test_that("MST edges calculated correctly", {
   set.seed(0)
