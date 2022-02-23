@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9010 #
+# TreeTools 1.6.0.9011 #
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -30,6 +30,8 @@
   ([#25](https://github.com/ms609/TreeTools/issues/25),
   [#25](https://github.com/ms609/TreeTools/issues/49)),
   and gains option to sort by tip labels.
+
+- `TipsInSplits(smallest = TRUE)` counts tips in smaller bipartition.
 
 - Use lighter Rcpp headers.
 

@@ -9,11 +9,11 @@
 \alias{SplitImbalance.phylo}
 \title{Tips contained within splits}
 \usage{
-TipsInSplits(splits, keep.names = TRUE, ...)
+TipsInSplits(splits, keep.names = TRUE, smallest = FALSE, ...)
 
-\method{TipsInSplits}{Splits}(splits, keep.names = TRUE, ...)
+\method{TipsInSplits}{Splits}(splits, keep.names = TRUE, smallest = FALSE, ...)
 
-\method{TipsInSplits}{phylo}(splits, keep.names = TRUE, ...)
+\method{TipsInSplits}{phylo}(splits, keep.names = TRUE, smallest = FALSE, ...)
 
 SplitImbalance(splits, keep.names = TRUE, ...)
 
@@ -26,6 +26,9 @@ SplitImbalance(splits, keep.names = TRUE, ...)
 
 \item{keep.names}{Logical specifying whether to include the names of \code{splits}
 in the output.}
+
+\item{smallest}{Logical; if \code{TRUE}, return the number of leaves in the
+smaller bipartition.}
 
 \item{\dots}{Additional parameters to pass to \code{as.Splits()}.}
 }

@@ -5,7 +5,7 @@ using namespace Rcpp;
 
 #define RETAIN 9000
 
-#define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no
+#define GET_NEW_NO(n)  if (!new_no[n]) new_no[n] = ++next_no
 
 #define SKIP_EDGE                                              \
   GET_NEW_NO(parent);                                          \

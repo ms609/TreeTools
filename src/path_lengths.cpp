@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // edge must be a two-column edge matrix in preorder
 // [[Rcpp::export]]
-NumericMatrix path_lengths (const IntegerMatrix edge, const DoubleVector weight) {
+NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) {
   const intx
     root_node = edge[0],
     n_tip = root_node - 1,

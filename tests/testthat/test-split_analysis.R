@@ -1,6 +1,8 @@
 test_that("TipsInSplits() family", {
   test <- TipsInSplits(BalancedTree(letters[1:5]))
   expect_identical(test, c("7" = 3L, "8" = 2L, "9" = 2L)[names(test)])
+  expect_equal(TipsInSplits(PectinateTree(7), smallest = TRUE),
+               c("10" = 2, "11" = 3, "12" = 3, "13" = 2))
   expect_identical(15:2, TipsInSplits(PectinateTree(17), keep.names = FALSE))
 
   test <- SplitImbalance(BalancedTree(7))
