@@ -24,7 +24,7 @@ bipartition split in a Splits object."><meta name="robots" content="noindex"><!-
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9010</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9011</span>
       </span>
     </div>
 
@@ -82,13 +82,13 @@ bipartition split in a <code>Splits</code> object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, smallest <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for Splits</span>
-<span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, smallest <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for phylo</span>
-<span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu">TipsInSplits</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, smallest <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="fu">SplitImbalance</span><span class="op">(</span><span class="va">splits</span>, keep.names <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span>
 
@@ -106,6 +106,9 @@ bipartition split in a <code>Splits</code> object.</p>
 <dt>keep.names</dt>
 <dd><p>Logical specifying whether to include the names of <code>splits</code>
 in the output.</p></dd>
+<dt>smallest</dt>
+<dd><p>Logical; if <code>TRUE</code>, return the number of leaves in the
+smaller bipartition.</p></dd>
 <dt>...</dt>
 <dd><p>Additional parameters to pass to <code><a href="Splits.html">as.Splits()</a></code>.</p></dd>
 </dl></div>
