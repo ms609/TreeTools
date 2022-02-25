@@ -47,15 +47,16 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   labels <- tree[["tip.label"]]
   nTip <- length(labels)
   if (is.null(tip) || !length(tip) || any(is.na(tip))) {
-    drop <- logical(0)
+    drop <- logical(nTip)
   } else if (is.character(tip)) {
-    drop <- match(tip, labels)
     if (check) {
-      missing <- is.na(drop)
-      if (any(missing)) {
-        warning(paste(tip[missing], collapse = ', '), " not present in tree")
-        drop <- drop[!missing]
+      drop <- labels %in% tip
+      if (sum(drop) != length(tip)) {
+        warning(paste(tip[!tip %in% labels], collapse = ', '),
+                " not present in tree")
       }
+    } else {
+      drop <- labels %in% tip
     }
   } else if (is.numeric(tip)) {
     if (check) {
@@ -73,35 +74,43 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
         edge <- tree[["edge"]]
         parent <- edge[, 1]
         child <- edge[, 2]
-        drop <- c(tip[tip <= nTip],
-                  .DescendantTips(parent, child, nTip, tip[tip > nTip]))
+        drop <- tabulate(c(tip[tip <= nTip],
+                           .DescendantTips(parent, child, nTip,
+                                           tip[tip > nTip])),
+                         nbins = nTip)
       } else {
-        drop <- tip
+        drop <- as.logical(tabulate(tip, nbins = nTip))
       }
     } else {
-      drop <- tip
+      drop <- as.logical(tabulate(tip, nbins = nTip))
     }
+  } else if (is.logical(tip)) {
+    if (check) {
+      if (length(tip) != nTip) {
+        stop("`tip` must list `TRUE` or `FALSE` for each leaf.")
+      }
+    }
+    drop <- tip
   } else {
     stop("`tip` must be of type character or numeric")
   }
   
-  nDrop <- length(drop)
-  if (nDrop) {
-    if (nDrop == nTip) {
-      return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                            Nnode = 0), class = 'phylo'))
-    }
-    
-    keep <- !tabulate(drop, nbins = nTip)
+  if (all(drop)) {
+    return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
+                          Nnode = 0), class = 'phylo'))
+  }
+  
+  if (any(drop)) {
     weights <- tree[["edge.length"]]
+    keep <- !drop
     if (!is.null(weights)) {
       original <- PathLengths(tree)
       rownames(original) <- apply(original[, 1:2], 1, paste, collapse = " ")
       verts <- KeptVerts(tree, keep)
     }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
-    tree[["tip.label"]] <- labels[-drop]
-    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - (nTip - nDrop)
+    tree[["tip.label"]] <- labels[keep]
+    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(keep)
     
     if (!is.null(weights)) {
       tree[["edge.length"]] <- original[

@@ -39,7 +39,9 @@ TipsInSplits.Splits <- function(splits, keep.names = TRUE, smallest = FALSE,
     big <- ret > nTip / 2
     ret[big] <- nTip - ret[big]
   }
-  if (keep.names) names(ret) <- names(splits)
+  if (keep.names) {
+    names(ret) <- names(splits)
+  }
   ret
 }
 
