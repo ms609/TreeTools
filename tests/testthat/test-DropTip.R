@@ -142,7 +142,7 @@ test_that("DropTip.Splits()", {
                            structure(raw(0), .Dim = c(0L, 0L)))
   expect_equal(thin_splits(s19, 1:19 %in% 2:19),
                structure(raw(0), .Dim = c(0L, 1L)))
-  expect_equal(thin_splits(s9, logical(9)), s9), ignore_attr = TRUE)
+  expect_equal(thin_splits(s9, logical(9)), s9, ignore_attr = TRUE)
 })
 
 test_that("KeepTip() works", {
