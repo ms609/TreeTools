@@ -196,13 +196,27 @@ test_that('as.Splits.logical()', {
   expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
-test_that("&.Splits()", {
+test_that("xor, |, &.Splits()", {
   splits <- structure(as.raw(c(0x07, 0x03, 0x18, 0xe0, 0x60, 0x80)),
                       .Dim = c(3L, 2L), nTip = 9L, class = "Splits")
-  mask <- as.raw(c(0x0f, 0x00))
-  expect_equal(structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
-                         .Dim = c(2L, 3L)),
-               t(splits) & mask)
+  expect_equal(splits & splits, splits)
+  expect_equal(splits | splits, splits)
+  expect_equal(xor(splits, splits),
+               structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
+  mask <- structure(as.raw(c(0x0f, 0x00)), .Dim = c(1L, 2L), nTip = 9L,
+                    class = "Splits")
+  mask <- c(mask, mask, mask)
+  expect_equal(t(splits[] & mask[]),
+               structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
+                         .Dim = c(2L, 3L)))
+  expect_equal(splits & mask,
+               structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
+                         .Dim = c(2L, 3L), nTip = 9L, class = "Splits"))
+  expect_equal(splits | mask, 
+               structure(unclass(splits) | unclass(mask),
+                         nTip = 9L, class = "Splits"))
+  expect_equal(xor(splits, mask),
+               (splits | mask) & !(splits & mask))
 })
 
 test_that('empty as.X.Splits()', {

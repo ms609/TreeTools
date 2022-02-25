@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9012 #
+# TreeTools 1.6.0.9013 #
 
 ## New methods and functions
 
@@ -21,6 +21,8 @@
 - `PostorderOrder()` describes a postorder traversal of a tree.
 
 - `SpectrumLegend()` adds gradients to plot legends.
+
+- Bitwise manipulation of splits with `|`, `&`, `xor`.
 
 ## Improvements
 

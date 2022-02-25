@@ -155,11 +155,8 @@ LogicalVector duplicated_splits(const RawMatrix splits,
   } else {
     for (intx i = n_split; i--; ) {
       if (splits(i, 0) % 2) {
-        // Rcout << " Flipping split " << i << ": " 
-        //       << uintx(splits(i, check_bins - 1)) << " ^ " << bin_mask[n_spare]<< " = " 
-        //       << (splits(i, check_bins - 1) ^ bin_mask[n_spare]) << "\n";
-        compare(i, check_bins - 1) =
-          splits(i, check_bins - 1) ^ bin_mask[n_spare];
+        compare(i, check_bins - 1) = splits(i, check_bins - 1) ^
+          bin_mask[n_spare];
         for (intx j = check_bins - 1; j--; ) {
           compare(i, j) = ~splits(i, j);
         }

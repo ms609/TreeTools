@@ -373,11 +373,8 @@ c.Splits <- function(...) {
   }
 }
 
-#' @family Splits operations
-#' @export
-`!.Splits` <- function(x) {
-  nTip <- attr(x, 'nTip')
-  x[] <- !x[]
+.MaskSplits <- function(x) {
+  nTip <- attr(x, "nTip")
   remainder <- (8L - nTip) %% 8L
   if (remainder) {
     lastSplit <- dim(x)[2]
@@ -387,6 +384,39 @@ c.Splits <- function(...) {
   x
 }
 
+#' @family Splits operations
+#' @method ! Splits
+#' @export
+`!.Splits` <- function(x) {
+  x[] <- !x[]
+  .MaskSplits(x)
+}
+
+#' @family Splits operations
+#' @method & Splits
+#' @export
+`&.Splits` <- function(e1, e2) {
+  e1[] <- e1[] & e2[]
+  e1
+}
+
+#' @family Splits operations
+#' @method | Splits
+#' @export
+`|.Splits` <- function(e1, e2) {
+  e1[] <- e1[] | e2[]
+  e1
+}
+
+#' @family Splits operations
+#' @export
+xor.Splits <- function(e1, e2) {
+  e1[] <- xor(e1[], e2[])
+  .MaskSplits(x)
+}
+
+#' @export
+t.Splits <- function(x) t(x[])
 
 #' @family Splits operations
 #' @export
