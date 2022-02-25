@@ -210,8 +210,8 @@ test_that("xor, |, &.Splits()", {
                structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
                          .Dim = c(2L, 3L)))
   expect_equal(splits & mask,
-               structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
-                         .Dim = c(2L, 3L), nTip = 9L, class = "Splits"))
+               structure(as.raw(c(0x07, 0x03, 0x08, 0x00, 0x00, 0x00)),
+                         .Dim = c(3L, 2L), nTip = 9L, class = "Splits"))
   expect_equal(splits | mask, 
                structure(unclass(splits) | unclass(mask),
                          nTip = 9L, class = "Splits"))
