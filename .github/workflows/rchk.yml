@@ -30,18 +30,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - uses: r-lib/actions/run-rchk@v2
+    - name: Set up rchk
+      uses: r-lib/actions/run-rchk@v2
       with:
         setup-only: true
         
-    - name: Install `pak` from source
+    - uses: randy3k/gh-actions/r-install-deps@main
+      with:
+        cache-version: rchk-${{ inputs.cache-version }}
+        
+    - name: Install package
       run: |
-        install.packages("pak", repos = "https://cran.rstudio.com/")
+        remotes::install_local()
       shell: Rscript {0}
       
-    - uses: r-lib/actions/setup-r-dependencies@v1
-      with:
-        cache-version: rchk-1
     - uses: r-lib/actions/run-rchk@v2
       with:
         run-only: true
