@@ -114,6 +114,58 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   tree
 }
 
+#' @rdname DropTip
+#' @examples summary(DropTip(as.Splits(tree), 4:5))
+#' @family split manipulation functions
+#' @export
+DropTip.Splits <- function(tree, tip, preorder, check = TRUE) {
+  labels <- TipLabels(tree)
+  if (is.null(tip) || !length(tip) || any(is.na(tip))) {
+    return(tree)
+  } else if (is.character(tip)) {
+    if (check) {
+      drop <- match(tip, labels)
+      missing <- is.na(drop)
+      if (any(missing)) {
+        warning(paste(tip[missing], collapse = ', '), " not present in tree")
+        drop <- drop[!missing]
+      }
+      drop <- as.logical(tabulate(drop, NTip(tree)))
+    } else {
+      drop <- labels %in% tip
+    }
+  } else if (is.numeric(tip)) {
+    nTip <- NTip(tree)
+    if (check) {
+      if (any(tip > nTip)) {
+        warning("Tree only has ", nTip, " leaves")
+        tip <- tip[tip <= nTip]
+      }
+      if (any(tip < 1L)) {
+        warning("`tip` must be > 0")
+        tip <- tip[tip > 0L]
+      }
+    }
+    drop <- as.logical(tabulate(tip, nTip))
+  } else if (is.logical(tip)) {
+    if (check && length(tip) != NTip(tree)) {
+      stop("`tip` must contain an entry for each leaf of `tree`.")
+    }
+    drop <- tip
+  } else {
+    stop("`tip` must be of type character, numeric or logical")
+  }
+  
+  keep <- !drop
+  thinner <- structure(thin_splits(tree, drop),
+                       nTip = sum(keep),
+                       tip.label = labels[keep],
+                       class = "Splits")
+  
+  # Return:
+  unique(thinner, fromLast = TRUE)
+}
+
 # nodes must all be internal
 .DescendantTips <- function(parent, child, nTip, nodes, isDesc = logical(nTip)) {
   newDescs <- child[parent %in% nodes]

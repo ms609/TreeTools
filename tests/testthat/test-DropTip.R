@@ -111,6 +111,17 @@ test_that("DropTip.multiPhylo() with attributes", {
   expect_equal(DropTip(multi[1], 't1')[[1]], DropTip(multi[[1]], 't1'))
 })
 
+test_that("DropTip.Splits()", {
+  bal9 <- BalancedTree(9)
+  s9 <- as.Splits(bal9)
+  
+  expect_error(DropTip(s9, c(T, F)), "each leaf\\b")
+  
+  expect_equal(unname(DropTip(s9, 4:5)), unname(as.Splits(DropTip(bal9, 4:5))))
+  expect_equal(unname(KeepTip(s9, c(1:4, 7:9))),
+               unname(as.Splits(DropTip(bal9, 6:5))))
+})
+
 test_that("KeepTip() works", {
   expect_warning(expect_true(all.equal(
     BalancedTree(paste0('t', 5:8)),

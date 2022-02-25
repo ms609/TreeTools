@@ -7,6 +7,12 @@ using namespace TreeTools;
 #include <array> /* for array */
 #include <vector> /* for vector */
 
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
+
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
 // [[Rcpp::export]]
@@ -82,11 +88,11 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
             if (N == R - L + 1) { // L..R is contiguous, and must be tested
               if (tables[i].CLUSTONL(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
-                assert(L > 0);
+                ASSERT(L > 0);
                 ++split_count[L - 1];
               } else if (tables[i].CLUSTONR(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
-                assert(R > 0);
+                ASSERT(R > 0);
                 ++split_count[R - 1];
               }
             }

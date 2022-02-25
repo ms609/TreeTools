@@ -6,6 +6,12 @@
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
+
 #define UNINIT -999
 #define INF INTX_MAX
 
@@ -163,14 +169,14 @@ namespace TreeTools {
     }
 
     inline int16 X(int16 row, int16 col) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       return Xarr(col, row - 1);
     }
 
     inline void setX(int16 row, int16 col, int16 value) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       Xarr(col, row - 1) = value;
     }
 

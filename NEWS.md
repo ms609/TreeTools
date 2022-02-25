@@ -1,4 +1,10 @@
-# TreeTools 1.6.0.9011 #
+# TreeTools 1.6.0.9012 #
+
+## New methods and functions
+
+- `rev.Splits()` reverses order in which splits are listed.
+
+- `KeepTip.Splits()` is a faster alternative to `SubSplit()`.
 
 - `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
 
@@ -11,7 +17,13 @@
 - `PathLengths()` describes all paths within a tree.
 
 - `KeptVerts()` and `KeptPaths()` identify elements in reduced trees.
-  
+
+- `PostorderOrder()` describes a postorder traversal of a tree.
+
+- `SpectrumLegend()` adds gradients to plot legends.
+
+## Improvements
+
 - Improve handling of zero-split trees.
 
 - `DropTip()` no longer adds a root to unrooted trees, and retains edge lengths.
@@ -21,8 +33,6 @@
 - Support edge lengths in `Preorder()`, `RootTree()`, `UnrootTree()` and
   `Postorder()` ([#49](https://github.com/ms609/TreeTools/issues/49),
   [#89](https://github.com/ms609/TreeTools/issues/89)).
-
-- `PostorderOrder()` describes a postorder traversal of a tree.
 
 - Fix bug when tree is rooted on a discontinuous outgroup.
 
@@ -37,14 +47,14 @@
 
 - Small improvements to computational efficiency.
 
-- `SpectrumLegend()` adds gradients to plot legends.
-
-- Remove deprecated function `PostorderEdges()`
-  ([#35](https://github.com/ms609/TreeTools/issues/35)).
-
 - Fix bug handling `phyDat` objects in `ArtificialExtinction()`.
 
 - `RenumberTips()` allows `tipOrder` to contain elements not present in `tree`.
+
+## Deprecations
+
+- Remove deprecated function `PostorderEdges()`
+  ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
 # TreeTools 1.6.0
 

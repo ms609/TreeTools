@@ -156,6 +156,30 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// duplicated_splits
+LogicalVector duplicated_splits(const RawMatrix splits, const LogicalVector fromLast);
+RcppExport SEXP _TreeTools_duplicated_splits(SEXP splitsSEXP, SEXP fromLastSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type fromLast(fromLastSEXP);
+    rcpp_result_gen = Rcpp::wrap(duplicated_splits(splits, fromLast));
+    return rcpp_result_gen;
+END_RCPP
+}
+// thin_splits
+RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop);
+RcppExport SEXP _TreeTools_thin_splits(SEXP splitsSEXP, SEXP dropSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type drop(dropSEXP);
+    rcpp_result_gen = Rcpp::wrap(thin_splits(splits, drop));
+    return rcpp_result_gen;
+END_RCPP
+}
 // splits_to_edge
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_splits_to_edge(SEXP splitsSEXP, SEXP nTipSEXP) {

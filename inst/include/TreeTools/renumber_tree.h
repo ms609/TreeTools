@@ -11,6 +11,12 @@
 #define PARENT(i) edge[(i)]
 #define CHILD(i) edge[(i) + n_edge]
 
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
+
 namespace TreeTools {
   inline void swap(int32 *a, int32 *b) {
     const int32 temp = *a;
@@ -36,7 +42,7 @@ namespace TreeTools {
 
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                          int32* sort_by) {
-    assert(arr_len > 0);
+    ASSERT(arr_len > 0);
     switch (arr_len) {
     // case 0: return;
     case 1: return;
@@ -63,7 +69,7 @@ namespace TreeTools {
 
   inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                              int32* sort_by) {
-    assert(arr_len > 0);
+    ASSERT(arr_len > 0);
     for (int32 i = 1; i != arr_len; ++i) {
       const int32
         tmp = arr[i],

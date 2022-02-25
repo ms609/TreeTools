@@ -3,6 +3,12 @@
 using namespace Rcpp;
 // #define TTDEBUG
 
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
+
 #define RETAIN 9000
 
 #define GET_NEW_NO(n)  if (!new_no[n]) new_no[n] = ++next_no
@@ -138,7 +144,7 @@ IntegerMatrix keep_tip (const IntegerMatrix edge, const LogicalVector keep) {
         } else {
           // Record this edge:
           ++writing_edge;
-          assert(writing_edge < kept_edges);
+          ASSERT(writing_edge < kept_edges);
           GET_NEW_NO(parent);
           ret(writing_edge, 0) = new_no[parent];
           GET_NEW_NO(child);

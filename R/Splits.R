@@ -395,28 +395,55 @@ length.Splits <- function(x) nrow(x)
 #' @family Splits operations
 #' @importFrom stats setNames
 #' @export
-duplicated.Splits <- function(x, incomparables = FALSE, ...) {
-  dupX <- !x
-  useOrig <- x[, 1] < dupX[, 1]
-  dupX[useOrig, ] <- x[useOrig, ]
-  
-  if (dim(dupX)[2] == 1) {
-    setNames(duplicated.default(dupX, incomparables = incomparables, ...),
-             names(dupX))
+duplicated.Splits <- function(x, incomparables, fromLast = FALSE,
+                              withNames = TRUE, ...) {
+  if (missing(incomparables)) {
+    ret <- duplicated_splits(x, isTRUE(fromLast))
+    if (withNames) names(ret) <- names(x)
+    ret
   } else {
-    duplicated.array(dupX, MARGIN = 1, incomparables = incomparables, ...)
+    dupX <- !x
+    useOrig <- x[, 1] < dupX[, 1]
+    dupX[useOrig, ] <- x[useOrig, ]
+    
+    if (dim(dupX)[2] == 1) {
+      ret <- duplicated.default(dupX, incomparables = incomparables, 
+                         fromLast = fromLast, ...)
+      if (withNames) {
+        setNames(ret, names(dupX))
+      } else {
+        ret
+      }
+    } else {
+      ret <- duplicated.array(dupX, MARGIN = 1, incomparables = incomparables,
+                              fromLast = fromLast, ...)
+      if (withNames) {
+        ret
+      } else {
+        as.logical(ret)
+      }
+    }
   }
 }
 
 #' @family Splits operations
 #' @export
-unique.Splits <- function(x, incomparables = FALSE, ...) {
+unique.Splits <- function(x, incomparables, ...) {
   at <- attributes(x)
   dups <- duplicated(x, incomparables, ...)
   x <- x[!dups, , drop = FALSE]
   at[["dim"]] <- dim(x)
   at[["dimnames"]] <- dimnames(x)
   attributes(x) <- at
+  x
+}
+
+#' @family Splits operations
+#' @export
+rev.Splits <- function(x) {
+  newOrder <- seq.int(dim(x)[1], 1)
+  x[] <- x[newOrder, ]
+  rownames(x) <- rownames(x)[newOrder]
   x
 }
 

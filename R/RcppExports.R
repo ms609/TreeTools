@@ -49,6 +49,14 @@ cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
 
+duplicated_splits <- function(splits, fromLast) {
+    .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
+}
+
+thin_splits <- function(splits, drop) {
+    .Call(`_TreeTools_thin_splits`, splits, drop)
+}
+
 splits_to_edge <- function(splits, nTip) {
     .Call(`_TreeTools_splits_to_edge`, splits, nTip)
 }

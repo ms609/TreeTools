@@ -6,6 +6,12 @@
 #include "renumber_tree.h"
 #include "types.h"
 
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
+
 namespace TreeTools {
   extern inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
       const Rcpp::IntegerVector parent,
@@ -189,7 +195,7 @@ namespace TreeTools {
         for (int i = n_edge; i--; ) {
           new_wt[i] = weight[i];
         }
-        assert(new_wt(n_edge) == 0);
+        ASSERT(new_wt(n_edge) == 0);
       }
       for (int i = n_edge; i--; ) {
         new_edge(i, 0) = edge(i, 0);

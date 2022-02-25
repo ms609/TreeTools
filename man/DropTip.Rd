@@ -3,6 +3,7 @@
 \name{DropTip}
 \alias{DropTip}
 \alias{DropTip.phylo}
+\alias{DropTip.Splits}
 \alias{DropTipPhylo}
 \alias{DropTip.multiPhylo}
 \alias{KeepTip}
@@ -11,6 +12,8 @@
 DropTip(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{phylo}(tree, tip, preorder = TRUE, check = TRUE)
+
+\method{DropTip}{Splits}(tree, tip, preorder, check = TRUE)
 
 DropTipPhylo(tree, tip, preorder = TRUE, check = TRUE)
 
@@ -65,6 +68,7 @@ unrooted <- UnrootTree(tree)
 plot(unrooted)
 plot(DropTip(unrooted, 4:5))
 
+summary(DropTip(as.Splits(tree), 4:5))
 }
 \seealso{
 Other tree manipulation: 
@@ -84,8 +88,13 @@ Other tree manipulation:
 \code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
 \code{\link{Subtree}()}
+
+Other split manipulation functions: 
+\code{\link{Subsplit}()},
+\code{\link{TrivialSplits}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{split manipulation functions}
 \concept{tree manipulation}

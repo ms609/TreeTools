@@ -6,10 +6,16 @@ using namespace Rcpp;
 using namespace TreeTools;
 
 TREETOOLS_SPLITLIST_INIT
+  
+#ifdef DEBUG
+#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
+#else
+#define ASSERT(x)
+#endif
 
 inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
-                                       const int16* sort_by) {
-  assert(arr_len > 0);
+                                      const int16* sort_by) {
+  ASSERT(arr_len > 0);
   switch (arr_len) {
   // case 0: return;
   case 1: return;
