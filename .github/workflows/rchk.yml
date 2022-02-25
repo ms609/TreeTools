@@ -30,3 +30,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: r-lib/actions/run-rchk@v2
+      with:
+        setup-only: true
+    - uses: r-lib/actions/setup-r-dependencies@v1
+      with:
+        cache-version: rchk-1
+    - uses: r-lib/actions/run-rchk@v2
+      with:
+        run-only: true
