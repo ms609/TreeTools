@@ -12,8 +12,8 @@ test_that("Bad data results in error", {
                "Not enough edges") # Impossible anyway...
   
   s9 <- as.Splits(BalancedTree(9))
-  expect_error(duplicated_splits(structure(s9, nTip = NULL)[], TRUE),
+  expect_error(duplicated_splits(structure(s9, nTip = NULL), TRUE),
                "`nTip` attribute")
-  expect_error(duplicated_splits(stucture(s9, nTip = 999L), TRUE),
+  expect_error(duplicated_splits(structure(s9, nTip = 999L), TRUE),
                "tip number")
 })
