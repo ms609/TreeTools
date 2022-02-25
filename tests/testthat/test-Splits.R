@@ -247,6 +247,26 @@ test_that('match.Splits()', {
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
 })
 
+test_that("duplicated.Splits(internal)", {
+  for (nTip in c(7:8, 23:26)) { # n %% BIN_SIZE ==0, ==1, >1
+    x <- c(as.Splits(PectinateTree(nTip)), !as.Splits(BalancedTree(nTip)))
+    
+    expect_equal(duplicated(x, withNames = FALSE),
+                 duplicated(x, FALSE, withNames = FALSE))
+    
+    expect_equal(as.logical(duplicated(x, fromLast = TRUE)),
+                 as.logical(duplicated(x, FALSE, fromLast = TRUE)))
+    
+    expect_equal(names(duplicated(x, fromLast = TRUE)),
+                 names(duplicated(x, FALSE, fromLast = TRUE)))
+    
+    expect_equal(duplicated(PolarizeSplits(x, nTip / 2)), duplicated(x))
+    
+    expect_equal(duplicated(x, fromLast = TRUE),
+                 rev(duplicated(rev(x), fromLast = FALSE)))
+  }
+})
+
 test_that("%in%.Splits()", {
   splits5 <- as.Splits(PectinateTree(5))
   x <- splits5
@@ -357,24 +377,4 @@ test_that("PolarizeSplits()", {
   expect_error(PolarizeSplits(bal6, 'ERROR'))
   expect_error(PolarizeSplits(bal6, 0))
   expect_error(PolarizeSplits(bal6, 7))
-})
-
-test_that("duplicated.Splits(internal)", {
-  for (nTip in c(7:8, 23:26)) { # n %% BIN_SIZE ==0, ==1, >1
-    x <- c(as.Splits(PectinateTree(nTip)), as.Splits(BalancedTree(nTip)))
-    
-    expect_equal(duplicated(x, withNames = FALSE),
-                 duplicated(x, FALSE, withNames = FALSE))
-    
-    expect_equal(as.logical(duplicated(x, fromLast = TRUE)),
-                 as.logical(duplicated(x, FALSE, fromLast = TRUE)))
-    
-    expect_equal(names(duplicated(x, fromLast = TRUE)),
-                 names(duplicated(x, FALSE, fromLast = TRUE)))
-    
-    expect_equal(duplicated(PolarizeSplits(x, nTip / 2)), duplicated(x))
-    
-    expect_equal(duplicated(x, fromLast = TRUE),
-                 rev(duplicated(rev(x), fromLast = FALSE)))
-  }
 })

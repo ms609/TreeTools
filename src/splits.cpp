@@ -127,8 +127,6 @@ LogicalVector duplicated_splits(const RawMatrix splits,
   if (n_bin != splits.cols()) {
     Rcpp::stop("`splits` tip number is mis-specified.");
   }
-  // Rcout << n_tip << " tips; " << n_split << " splits; " << n_spare
-  //       << " spare; " << n_bin << " bins, " << check_bins << " to check. \n";
   
   RawMatrix compare(n_split, check_bins);
   if (n_spare == 0) {
@@ -258,7 +256,7 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
   
   const intx last_bin = (kept_tip - 1) / BIN_SIZE;
   if (!kept_splits) {
-    return RawMatrix(0, last_bin);
+    return RawMatrix(0, last_bin + 1);
   }
   
   CharacterVector names = rownames(splits);

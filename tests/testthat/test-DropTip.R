@@ -114,6 +114,7 @@ test_that("DropTip.multiPhylo() with attributes", {
 test_that("DropTip.Splits()", {
   bal9 <- BalancedTree(9)
   s9 <- as.Splits(bal9)
+  s19 <- as.Splits(PectinateTree(19))
   
   expect_error(DropTip(s9, c(T, F)), "each leaf\\b")
   expect_warning(
@@ -133,6 +134,15 @@ test_that("DropTip.Splits()", {
   expect_equal(unname(DropTip(s9, 4:5)), unname(as.Splits(DropTip(bal9, 4:5))))
   expect_equal(unname(KeepTip(s9, c(1:4, 7:9))),
                unname(as.Splits(DropTip(bal9, 6:5))))
+  
+  expect_equal(DropTip(s9[[1:5]], 8:9),
+               DropTip(s9, 8:9))
+  
+  expect_equal(thin_splits(s9, !logical(9)),
+                           structure(raw(0), .Dim = c(0L, 0L)))
+  expect_equal(thin_splits(s19, 1:19 %in% 2:19),
+               structure(raw(0), .Dim = c(0L, 1L)))
+  expect_equal(thin_splits(s9, logical(9)), s9), ignore_attr = TRUE)
 })
 
 test_that("KeepTip() works", {
