@@ -29,16 +29,16 @@ jobs:
       options: --user=root
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Install `pak` from source
-      run: |
-        install.packages("pak", repos = "https://cran.rstudio.com/")
-      shell: Rscript {0}
       
     - uses: r-lib/actions/run-rchk@v2
       with:
         setup-only: true
         
+    - name: Install `pak` from source
+      run: |
+        install.packages("pak", repos = "https://cran.rstudio.com/")
+      shell: Rscript {0}
+      
     - uses: r-lib/actions/setup-r-dependencies@v1
       with:
         cache-version: rchk-1
