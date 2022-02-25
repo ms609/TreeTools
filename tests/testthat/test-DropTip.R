@@ -116,6 +116,19 @@ test_that("DropTip.Splits()", {
   s9 <- as.Splits(bal9)
   
   expect_error(DropTip(s9, c(T, F)), "each leaf\\b")
+  expect_warning(
+    expect_warning(
+      expect_equal(DropTip(s9, c(0, 9:10)), DropTip(s9, !tabulate(1:8, 9))),
+      "only has 9 leaves"),
+    "`tip` must be > 0"
+  )
+  expect_error(DropTip(s9, raw(1)), "`tip` must be of type")
+  
+  expect_equal(s9, DropTip(s9, NULL))
+  expect_warning(
+    expect_equal(DropTip(s9, c("t7", "missing")),
+                 DropTip(s9, "t7", check = FALSE)),
+    "not present in tree")
   
   expect_equal(unname(DropTip(s9, 4:5)), unname(as.Splits(DropTip(bal9, 4:5))))
   expect_equal(unname(KeepTip(s9, c(1:4, 7:9))),
