@@ -203,6 +203,8 @@ test_that("xor, |, &.Splits()", {
   expect_equal(splits | splits, splits)
   expect_equal(xor(splits, splits),
                structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
+  expect_equal(xor2(splits, splits),
+               structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
   mask <- structure(as.raw(c(0x0f, 0x00)), .Dim = c(1L, 2L), nTip = 9L,
                     class = "Splits")
   mask <- c(mask, mask, mask)
@@ -218,17 +220,21 @@ test_that("xor, |, &.Splits()", {
   expect_equal(xor(splits, mask),
                (splits | mask) & !(splits & mask))
   
-  s1 <- as.Splits(PectinateTree(145))
-  s2 <- as.Splits(BalancedTree(145))
-  
-  expect_equal((s1 & s2)[], s1[] & s2[], ignore_attr = TRUE)
-  expect_equal((s1 | s2)[], s1[] | s2[], ignore_attr = TRUE)
-  expect_equal(xor(s1,  s2)[], xor(s1[], s2[]), ignore_attr = TRUE)
-  expect_equal(xor(s1,  s2)[], xor2(s1, s2)[])
-
-  expect_equal(attributes(s1 | s2), attributes(s1))
-  expect_equal(attributes(s1 & s2), attributes(s1))
-  expect_equal(attributes(xor(s1, s2)), attributes(s1))
+  Test <- function (s1, s2) {
+    s1 <- as.Splits(s1)
+    s2 <- as.Splits(s2)
+    expect_equal((s1 & s2)[], s2[] & s1[], ignore_attr = TRUE)
+    expect_equal((s1 | s2)[], s2[] | s1[], ignore_attr = TRUE)
+    expect_equal(xor(s1,  s2), xor(s2[], s1[]), ignore_attr = TRUE)
+    
+    expect_equal(attributes(s1 | s2), attributes(s1))
+    expect_equal(attributes(s1 & s2), attributes(s1))
+    expect_equal(attributes(xor(s1, s2)), attributes(s1))
+  }
+  Test(PectinateTree(145), BalancedTree(145))
+  Test(PectinateTree(64 * 3), BalancedTree(64 * 3))
+  Test(PectinateTree(64 * 3 + 1), BalancedTree(64 * 3 + 1))
+  Test(PectinateTree(64 * 3 - 1), BalancedTree(64 * 3 - 1))
 })
 
 test_that('empty as.X.Splits()', {

@@ -226,13 +226,19 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
     last_bin = x.cols() - 1,
     unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
   ;
-  const int unset_mask = ~(powers_of_two[BIN_SIZE] - 1) >> unset_tips;
   
   RawMatrix ret = clone(x);
-  for (int16 i = x.rows(); i--; ) {
-    ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & unset_mask;
-    for (int16 bin = last_bin; bin--; ) {
-      ret(i, bin) ^= y(i,  bin);
+  if (unset_tips == 0) {
+    for (int16 i = x.size(); i--; ) {
+      ret[i] ^= y[i];
+    }
+  } else {
+    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    for (int16 i = x.rows(); i--; ) {
+      ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & unset_mask;
+    }
+    for (int16 i = x.rows() * last_bin; i--; ) {
+      ret[i] ^= y[i];
     }
   }
   return ret;
