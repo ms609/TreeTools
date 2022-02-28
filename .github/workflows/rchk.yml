@@ -37,7 +37,7 @@ jobs:
         
     - uses: randy3k/gh-actions/r-install-deps@main
       with:
-        cache-version: rchk-${{ inputs.cache-version }}
+        cache-version: rchk-1
         
     - name: Install package
       run: |
