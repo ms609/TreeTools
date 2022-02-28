@@ -53,6 +53,14 @@ duplicated_splits <- function(splits, fromLast) {
     .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
 }
 
+mask_splits <- function(x) {
+    .Call(`_TreeTools_mask_splits`, x)
+}
+
+not_splits <- function(x) {
+    .Call(`_TreeTools_not_splits`, x)
+}
+
 xor_splits <- function(x, y) {
     .Call(`_TreeTools_xor_splits`, x, y)
 }

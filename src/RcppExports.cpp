@@ -168,6 +168,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// mask_splits
+RawMatrix mask_splits(RawMatrix x);
+RcppExport SEXP _TreeTools_mask_splits(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< RawMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(mask_splits(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// not_splits
+RawMatrix not_splits(const RawMatrix x);
+RcppExport SEXP _TreeTools_not_splits(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(not_splits(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // xor_splits
 RawMatrix xor_splits(const RawMatrix x, const RawMatrix y);
 RcppExport SEXP _TreeTools_xor_splits(SEXP xSEXP, SEXP ySEXP) {

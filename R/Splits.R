@@ -374,23 +374,18 @@ c.Splits <- function(...) {
 }
 
 .MaskSplits <- function(x) {
-  nTip <- attr(x, "nTip")
-  remainder <- (8L - nTip) %% 8L
-  if (remainder) {
-    lastSplit <- dim(x)[2]
-    endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
-    x[, lastSplit] <- x[, lastSplit] & endMask
-  }
-  x
+  mask_splits(x)
 }
 
 #' @family Splits operations
 #' @method ! Splits
 #' @export
 `!.Splits` <- function(x) {
-  x[] <- !x[]
-  .MaskSplits(x)
+  not_splits(x)
 }
+
+
+
 
 #' @family Splits operations
 #' @method & Splits

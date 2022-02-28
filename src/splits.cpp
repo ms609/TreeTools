@@ -206,6 +206,56 @@ LogicalVector duplicated_splits(const RawMatrix splits,
 }
 
 // [[Rcpp::export]]
+RawMatrix mask_splits(RawMatrix x) {
+  if (!x.hasAttribute("nTip")) {
+    Rcpp::stop("`x` lacks nTip attribute");
+  }
+  const int16
+    n_tip = x.attr("nTip"),
+    last_bin = x.cols() - 1,
+    unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
+  ;
+  
+  if (unset_tips == 0) {
+    return x;
+  } else {
+    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    for (int16 i = x.rows(); i--; ) {
+      x(i, last_bin) &= unset_mask;
+    }
+  }
+  return x;
+}
+
+// [[Rcpp::export]]
+RawMatrix not_splits(const RawMatrix x) {
+  if (!x.hasAttribute("nTip")) {
+    Rcpp::stop("`x` lacks nTip attribute");
+  }
+  const int16
+    n_tip = x.attr("nTip"),
+    last_bin = x.cols() - 1,
+    unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
+  ;
+  
+  RawMatrix ret = clone(x);
+  if (unset_tips == 0) {
+    for (int16 i = x.size(); i--; ) {
+      ret[i] = ~ret[i];
+    }
+  } else {
+    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    for (int16 i = x.rows(); i--; ) {
+      ret(i, last_bin) = ~ret(i, last_bin) & unset_mask;
+    }
+    for (int16 i = x.rows() * last_bin; i--; ) {
+      ret[i] = ~ret[i];
+    }
+  }
+  return ret;
+}
+
+// [[Rcpp::export]]
 RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
   const int16 n_split = x.rows();
   if (n_split != y.rows()) {
