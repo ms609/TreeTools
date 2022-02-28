@@ -3,14 +3,9 @@
 
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
+#include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 #define UNINIT -999
 #define INF INTX_MAX

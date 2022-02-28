@@ -3,14 +3,9 @@
 
 #include <Rcpp/Lightest>
 #include <memory> /* for std::unique_ptr */
+#include "assert.h" /* for ASSERT */
 #include "renumber_tree.h"
 #include "types.h"
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 namespace TreeTools {
   extern inline Rcpp::IntegerMatrix preorder_edges_and_nodes(

@@ -1,21 +1,15 @@
 #ifndef TreeTools_renumber_tree_
 #define TreeTools_renumber_tree_
 
-#include <cassert>
 #include <cstdio>
 #include <cstdlib> /* for calloc */
 #include <Rcpp/Lightest>
+#include "assert.h" /* for ASSERT */
 #include "types.h"
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);
 #define PARENT(i) edge[(i)]
 #define CHILD(i) edge[(i) + n_edge]
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 namespace TreeTools {
   inline void swap(int32 *a, int32 *b) {

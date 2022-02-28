@@ -1,13 +1,9 @@
 #include <Rcpp/Lightest>
 #include <stdexcept>
+#include "../inst/include/TreeTools/assert.h" /* for ASSERT */
+
 using namespace Rcpp;
 // #define TTDEBUG
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 #define RETAIN 9000
 

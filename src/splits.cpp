@@ -1,5 +1,6 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
+#include "../inst/include/TreeTools/assert.h"
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
@@ -10,12 +11,6 @@ const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]

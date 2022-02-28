@@ -1,17 +1,12 @@
 #include <Rcpp/Lightest>
 using namespace Rcpp;
 
+#include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
 using namespace TreeTools;
 
 #include <array> /* for array */
 #include <vector> /* for vector */
-
-#ifdef DEBUG
-#define ASSERT(x) if (!(x)) Rcpp::stop("Failed assertion.")
-#else
-#define ASSERT(x)
-#endif
 
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
