@@ -28,6 +28,9 @@ extern SEXP _TreeTools_rooted_shape_to_edge(SEXP, SEXP);
 extern SEXP _TreeTools_splits_to_edge(SEXP, SEXP);
 extern SEXP _TreeTools_thin_splits(SEXP, SEXP);
 extern SEXP _TreeTools_tips_in_splits(SEXP);
+extern SEXP _TreeTools_xor_splits(SEXP, SEXP);
+extern SEXP _TreeTools_and_splits(SEXP, SEXP);
+extern SEXP _TreeTools_or_splits(SEXP, SEXP);
 
 static const R_CMethodDef cMethods[] = {
   {"ape_neworder_phylo",       (DL_FUNC) &ape_neworder_phylo, 6, ape_neworder_phylo_t},
@@ -60,6 +63,9 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
   {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
   {"_TreeTools_thin_splits", (DL_FUNC) &_TreeTools_thin_splits, 2},
+  {"_TreeTools_xor_splits", (DL_FUNC) &_TreeTools_xor_splits, 2},
+  {"_TreeTools_and_splits", (DL_FUNC) &_TreeTools_and_splits, 2},
+  {"_TreeTools_or_splits", (DL_FUNC) &_TreeTools_or_splits, 2},
   {NULL, NULL, 0}
 };
 

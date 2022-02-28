@@ -396,23 +396,20 @@ c.Splits <- function(...) {
 #' @method & Splits
 #' @export
 `&.Splits` <- function(e1, e2) {
-  e1[] <- e1[] & e2[]
-  e1
+  and_splits(e1, e2)
 }
 
 #' @family Splits operations
 #' @method | Splits
 #' @export
 `|.Splits` <- function(e1, e2) {
-  e1[] <- e1[] | e2[]
-  e1
+  or_splits(e1, e2)
 }
 
 #' @family Splits operations
 #' @export
 xor.Splits <- function(e1, e2) {
-  e1[] <- xor(e1[], e2[])
-  .MaskSplits(x)
+  xor_splits(e1, e2)
 }
 
 #' @export

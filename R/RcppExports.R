@@ -53,6 +53,18 @@ duplicated_splits <- function(splits, fromLast) {
     .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
 }
 
+xor_splits <- function(x, y) {
+    .Call(`_TreeTools_xor_splits`, x, y)
+}
+
+and_splits <- function(x, y) {
+    .Call(`_TreeTools_and_splits`, x, y)
+}
+
+or_splits <- function(x, y) {
+    .Call(`_TreeTools_or_splits`, x, y)
+}
+
 thin_splits <- function(splits, drop) {
     .Call(`_TreeTools_thin_splits`, splits, drop)
 }

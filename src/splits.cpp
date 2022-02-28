@@ -205,6 +205,87 @@ LogicalVector duplicated_splits(const RawMatrix splits,
   return ret;
 }
 
+// [[Rcpp::export]]
+RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
+  const int16 n_split = x.rows();
+  if (n_split != y.rows()) {
+    throw std::invalid_argument("Input splits contain same number of splits.");
+  }
+  if (!x.hasAttribute("nTip")) {
+    Rcpp::stop("`x` lacks nTip attribute");
+  }
+  if (!y.hasAttribute("nTip")) {
+    Rcpp::stop("`y` lacks nTip attribute");
+  }
+  const int16 n_tip = x.attr("nTip");
+  if (n_tip != int16(y.attr("nTip"))) {
+    Rcpp::stop("`x` and `y` differ in `nTip`");
+  }
+  
+  const int16
+    last_bin = x.cols() - 1,
+    unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
+  ;
+  const int unset_mask = ~(powers_of_two[BIN_SIZE] - 1) >> unset_tips;
+  
+  RawMatrix ret = clone(x);
+  for (int16 i = x.rows(); i--; ) {
+    ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & unset_mask;
+    for (int16 bin = last_bin; bin--; ) {
+      ret(i, bin) ^= y(i,  bin);
+    }
+  }
+  return ret;
+}
+
+// [[Rcpp::export]]
+RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
+  const int16 n_split = x.rows();
+  if (n_split != y.rows()) {
+    throw std::invalid_argument("Input splits contain same number of splits.");
+  }
+  if (!x.hasAttribute("nTip")) {
+    Rcpp::stop("`x` lacks nTip attribute");
+  }
+  if (!y.hasAttribute("nTip")) {
+    Rcpp::stop("`y` lacks nTip attribute");
+  }
+  const int16 n_tip = x.attr("nTip");
+  if (n_tip != int16(y.attr("nTip"))) {
+    Rcpp::stop("`x` and `y` differ in `nTip`");
+  }
+  
+  RawMatrix ret = clone(x);
+  for (int16 i = x.size(); i--; ) {
+    ret[i] &= y[i];
+  }
+  return ret;
+}
+
+// [[Rcpp::export]]
+RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
+  const int16 n_split = x.rows();
+  if (n_split != y.rows()) {
+    throw std::invalid_argument("Input splits contain same number of splits.");
+  }
+  if (!x.hasAttribute("nTip")) {
+    Rcpp::stop("`x` lacks nTip attribute");
+  }
+  if (!y.hasAttribute("nTip")) {
+    Rcpp::stop("`y` lacks nTip attribute");
+  }
+  const int16 n_tip = x.attr("nTip");
+  if (n_tip != int16(y.attr("nTip"))) {
+    Rcpp::stop("`x` and `y` differ in `nTip`");
+  }
+  
+  RawMatrix ret = clone(x);
+  for (int16 i = x.size(); i--; ) {
+    ret[i] |= y[i];
+  }
+  return ret;
+}
+
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {

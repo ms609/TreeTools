@@ -217,6 +217,18 @@ test_that("xor, |, &.Splits()", {
                          nTip = 9L, class = "Splits"))
   expect_equal(xor(splits, mask),
                (splits | mask) & !(splits & mask))
+  
+  s1 <- as.Splits(PectinateTree(145))
+  s2 <- as.Splits(BalancedTree(145))
+  
+  expect_equal((s1 & s2)[], s1[] & s2[], ignore_attr = TRUE)
+  expect_equal((s1 | s2)[], s1[] | s2[], ignore_attr = TRUE)
+  expect_equal(xor(s1,  s2)[], xor(s1[], s2[]), ignore_attr = TRUE)
+  expect_equal(xor(s1,  s2)[], xor2(s1, s2)[])
+
+  expect_equal(attributes(s1 | s2), attributes(s1))
+  expect_equal(attributes(s1 & s2), attributes(s1))
+  expect_equal(attributes(xor(s1, s2)), attributes(s1))
 })
 
 test_that('empty as.X.Splits()', {

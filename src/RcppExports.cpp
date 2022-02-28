@@ -168,6 +168,42 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// xor_splits
+RawMatrix xor_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_xor_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(xor_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// and_splits
+RawMatrix and_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_and_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(and_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// or_splits
+RawMatrix or_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_or_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(or_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
 // thin_splits
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop);
 RcppExport SEXP _TreeTools_thin_splits(SEXP splitsSEXP, SEXP dropSEXP) {
