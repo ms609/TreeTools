@@ -96,18 +96,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// keep_tip
-IntegerMatrix keep_tip(const IntegerMatrix edge, const LogicalVector keep);
-RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< const LogicalVector >::type keep(keepSEXP);
-    rcpp_result_gen = Rcpp::wrap(keep_tip(edge, keep));
-    return rcpp_result_gen;
-END_RCPP
-}
 // kept_vertices
 IntegerVector kept_vertices(const IntegerMatrix edge, const LogicalVector kept);
 RcppExport SEXP _TreeTools_kept_vertices(SEXP edgeSEXP, SEXP keptSEXP) {

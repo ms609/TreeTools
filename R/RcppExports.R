@@ -29,10 +29,6 @@ mixed_base_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
 }
 
-keep_tip <- function(edge, keep) {
-    .Call(`_TreeTools_keep_tip`, edge, keep)
-}
-
 kept_vertices <- function(edge, kept) {
     .Call(`_TreeTools_kept_vertices`, edge, kept)
 }

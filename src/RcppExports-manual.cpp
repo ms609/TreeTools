@@ -1,8 +1,21 @@
 #include "../inst/include/TreeTools.h"
+#include "../inst/include/TreeTools/root_tree.h"
+#include "../inst/include/TreeTools/keep_tip.h"
 #include <Rcpp/Lightest>
 
 using namespace Rcpp;
 
+// keep_tip
+RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::RNGScope rcpp_rngScope_gen;
+  Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
+  Rcpp::traits::input_parameter< const LogicalVector >::type keep(keepSEXP);
+  rcpp_result_gen = Rcpp::wrap(TreeTools::keep_tip(edge, keep));
+  return rcpp_result_gen;
+  END_RCPP
+}
 // preorder_weighted
 RcppExport SEXP _TreeTools_preorder_weighted(SEXP parentSEXP,
                                              SEXP childSEXP,
