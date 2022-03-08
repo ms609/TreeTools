@@ -3,6 +3,8 @@
 \name{DropTip}
 \alias{DropTip}
 \alias{DropTip.phylo}
+\alias{KeepTipPreorder}
+\alias{KeepTipPostorder}
 \alias{DropTip.Splits}
 \alias{DropTipPhylo}
 \alias{DropTip.multiPhylo}
@@ -12,6 +14,10 @@
 DropTip(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{phylo}(tree, tip, preorder = TRUE, check = TRUE)
+
+KeepTipPreorder(tree, tip)
+
+KeepTipPostorder(tree, tip)
 
 \method{DropTip}{Splits}(tree, tip, preorder, check = TRUE)
 
@@ -55,6 +61,16 @@ and which can crash when trees' internal numbering follows unexpected schema.
 }
 \section{Functions}{
 \itemize{
+\item \code{KeepTipPreorder}: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in preorder.
+May crash if improper input is specified.
+
+\item \code{KeepTipPostorder}: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in postorder.
+May crash if improper input is specified.
+
 \item \code{DropTipPhylo}: Direct call to \code{DropTip.phylo()}, to avoid overhead of
 querying object's class.
 }}
