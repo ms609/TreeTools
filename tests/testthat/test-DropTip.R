@@ -160,6 +160,11 @@ test_that("KeepTip() works", {
     KeepTip(Postorder(UnrootTree(BalancedTree(letters[1:12]))), 6:12),
     read.tree(text = "(f, (i, (g, h)), (l, (j, k)));")
   ))
+  
+  expect_identical(
+    KeepTip(BalancedTree(12), !tabulate(1:5, 12)),
+    DropTip(BalancedTree(12), !tabulate(6:12, 12))
+    )
 })
 
 test_that("KeepTip() retains edge lengths", {

@@ -251,14 +251,18 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 #' in preorder.
 #' @export
 KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
-  labels <- if (is.character(tip)) {
-    TipLabels(tree)
+  if (is.logical(tip)) {
+    keep <- !tip
   } else {
-    seq_len(NTip(tree))
+    labels <- if (is.character(tip)) {
+      TipLabels(tree)
+    } else {
+      seq_len(NTip(tree))
+    }
+    if (!all(tip %in% labels)) {
+      warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
+    }
+    keep <- setdiff(labels, tip)
   }
-  if (!all(tip %in% labels)) {
-    warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
-  }
-  keep <- setdiff(labels, tip)
   DropTip(tree, keep, preorder, check)
 }
