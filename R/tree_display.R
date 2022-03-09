@@ -70,7 +70,7 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   
   switch(method,
     { # Clade Size
-      nDescendants <- vapply(descendants, length, integer(1))
+      nDescendants <- lengths(descendants)
       MinKid <- function(tips) min(tipLabels[tips])
       for (node in nTip + seq_len(tree[["Nnode"]])) {
         childEdges <- parent == node

@@ -277,7 +277,7 @@ ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
   tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
   if (continuous) {
     tokens <- strsplit(tokens, "\\s+")
-    lengths <- vapply(tokens, length, 0L)
+    lengths <- lengths(tokens)
     if (length(unique(lengths)) != 1) {
       stop("Different numbers of tokens in different taxa: ",                   # nocov
            paste(lengths, collapse = ', '))                                     # nocov
@@ -594,7 +594,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   } else {
     types <- matrixLines[ctypeLines]
     blocks <- lapply(paste0("\\b", type, "\\b"), grep, types, ignore.case = TRUE)
-    nBlocks <- vapply(blocks, length, 0)
+    nBlocks <- lengths(blocks)
     if (any(nBlocks == 0)) {
       message("Tags ", paste0(type[nBlocks == 0], collapse = ', '),
       " not found. Ignored: ", types[!seq_along(types) %fin% unlist(blocks)])
@@ -856,7 +856,7 @@ MatrixToPhyDat <- function(tokens) {
   allTokens <- unique(as.character(tokens))
   if (any(nchar(allTokens) == 0)) {
     problems <- apply(tokens, 1, function(x) which(nchar(x) == 0))
-    problemTaxa <- vapply(problems, length, 1) > 0
+    problemTaxa <- lengths(problems) > 0
     problemTaxa <- names(problemTaxa[problemTaxa])
     warning("Blank tokens ('') found in taxa: ",
             paste0(problemTaxa, collapse = ', '))
