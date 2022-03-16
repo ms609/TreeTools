@@ -24,7 +24,7 @@ incident branches."><meta name="robots" content="noindex"><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9011</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9014</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ incident branches."><meta name="robots" content="noindex"><!-- mathjax --><scrip
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -87,6 +87,13 @@ incident branches.</p>
 <span class="co"># S3 method for phylo</span>
 <span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
+<span class="fu">KeepTipPreorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span>
+
+<span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span>
+
+<span class="co"># S3 method for Splits</span>
+<span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, <span class="va">preorder</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
 <span class="fu">DropTipPhylo</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># S3 method for multiPhylo</span>
@@ -129,7 +136,15 @@ and which can crash when trees' internal numbering follows unexpected schema.</p
     <div id="functions">
     <h2>Functions</h2>
     
-<ul><li><p><code>DropTipPhylo</code>: Direct call to <code>DropTip.phylo()</code>, to avoid overhead of
+<ul><li><p><code>KeepTipPreorder</code>: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in preorder.
+May crash if improper input is specified.</p></li>
+<li><p><code>KeepTipPostorder</code>: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in postorder.
+May crash if improper input is specified.</p></li>
+<li><p><code>DropTipPhylo</code>: Direct call to <code>DropTip.phylo()</code>, to avoid overhead of
 querying object's class.</p></li>
 </ul></div>
     <div id="see-also">
@@ -150,7 +165,10 @@ querying object's class.</p></li>
 <code><a href="RootTree.html">RootTree</a>()</code>,
 <code><a href="SingleTaxonTree.html">SingleTaxonTree</a>()</code>,
 <code><a href="SortTree.html">SortTree</a>()</code>,
-<code><a href="Subtree.html">Subtree</a>()</code></p></div>
+<code><a href="Subtree.html">Subtree</a>()</code></p>
+<p>Other split manipulation functions: 
+<code><a href="Subsplit.html">Subsplit</a>()</code>,
+<code><a href="TrivialSplits.html">TrivialSplits</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -171,6 +189,16 @@ querying object's class.</p></li>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">DropTip</span><span class="op">(</span><span class="va">unrooted</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="DropTip-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">DropTip</span><span class="op">(</span><span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 bipartition splits dividing 7 tips, t1 .. t9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1234567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  12  ***....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  13  **.....</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16  ...**..</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  17  .....**</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 1: t1	 Tip 2: t2	 Tip 3: t3	 Tip 4: t6	 Tip 5: t7	</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 6: t8	 Tip 7: t9	</span>
 </code></pre></div>
     </div>
   </div>

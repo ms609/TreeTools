@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9011</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.6.0.9014</span>
       </span>
     </div>
 
@@ -32,7 +32,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -75,27 +75,39 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.6.0.9011" id="treetools-1609011">TreeTools 1.6.0.9011<a class="anchor" aria-label="anchor" href="#treetools-1609011"></a></h2>
-<ul><li><p><code><a href="../reference/TreeNumber.html">as.MixedBase()</a></code> uniquely represents binary trees as a mixed-base vector.</p></li>
-<li><p><code><a href="../reference/sort.multiPhylo.html">sort.multiPhylo()</a></code> sorts lists of trees according to their mixed base representation (<a href="https://github.com/ms609/TreeTools/issues/84" class="external-link">#84</a>).</p></li>
+<h2 class="page-header" data-toc-text="1.6.0.9014" id="treetools-1609014">TreeTools 1.6.0.9014<a class="anchor" aria-label="anchor" href="#treetools-1609014"></a></h2>
+<div class="section level3">
+<h3 id="new-methods-and-functions-1-6-0-9014">New methods and functions<a class="anchor" aria-label="anchor" href="#new-methods-and-functions-1-6-0-9014"></a></h3>
+<ul><li><p><code>rev.Splits()</code> reverses order in which splits are listed.</p></li>
+<li><p><code>KeepTip.Splits()</code> is a faster alternative to <code>SubSplit()</code>.</p></li>
 <li><p><code>%in%.Splits()</code> retains names when comparing small splits (<a href="https://github.com/ms609/TreeTools/issues/40" class="external-link">#40</a>).</p></li>
+<li><p><code><a href="../reference/sort.multiPhylo.html">sort.multiPhylo()</a></code> sorts lists of trees according to their mixed base representation (<a href="https://github.com/ms609/TreeTools/issues/84" class="external-link">#84</a>).</p></li>
+<li><p>Bitwise manipulation of splits with <code>|</code>, <code>&amp;</code>, <code>xor</code>.</p></li>
+<li><p><code><a href="../reference/TreeNumber.html">as.MixedBase()</a></code> uniquely represents binary trees as a mixed-base vector.</p></li>
 <li><p><code><a href="../reference/PathLengths.html">PathLengths()</a></code> describes all paths within a tree.</p></li>
 <li><p><code><a href="../reference/KeptVerts.html">KeptVerts()</a></code> and <code><a href="../reference/KeptPaths.html">KeptPaths()</a></code> identify elements in reduced trees.</p></li>
-<li><p>Improve handling of zero-split trees.</p></li>
+<li><p><code><a href="../reference/Reorder.html">PostorderOrder()</a></code> describes a sequence of edges corresponding to a postorder traversal of a tree.</p></li>
+<li><p><code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> adds gradients to plot legends.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-6-0-9014">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-6-0-9014"></a></h3>
+<ul><li><p>Improve handling of zero-split trees.</p></li>
 <li><p><code><a href="../reference/DropTip.html">DropTip()</a></code> no longer adds a root to unrooted trees, and retains edge lengths.</p></li>
 <li><p>Improve speed of <code><a href="../reference/DropTip.html">DropTip()</a></code>, by an order of magnitude in some cases.</p></li>
 <li><p>Support edge lengths in <code><a href="../reference/Reorder.html">Preorder()</a></code>, <code><a href="../reference/RootTree.html">RootTree()</a></code>, <code><a href="../reference/RootTree.html">UnrootTree()</a></code> and <code><a href="../reference/Reorder.html">Postorder()</a></code> (<a href="https://github.com/ms609/TreeTools/issues/49" class="external-link">#49</a>, <a href="https://github.com/ms609/TreeTools/issues/89" class="external-link">#89</a>).</p></li>
-<li><p><code><a href="../reference/Reorder.html">PostorderOrder()</a></code> describes a postorder traversal of a tree.</p></li>
 <li><p>Fix bug when tree is rooted on a discontinuous outgroup.</p></li>
 <li><p><code><a href="../reference/SortTree.html">SortTree()</a></code> handles weighted and non-binary trees (<a href="https://github.com/ms609/TreeTools/issues/25" class="external-link">#25</a>, <a href="https://github.com/ms609/TreeTools/issues/49" class="external-link">#25</a>), and gains option to sort by tip labels.</p></li>
 <li><p><code>TipsInSplits(smallest = TRUE)</code> counts tips in smaller bipartition.</p></li>
+<li><p>Fix a bug with <code>phyDat</code> objects in <code><a href="../reference/ArtificialExtinction.html">ArtificialExtinction()</a></code>.</p></li>
+<li><p><code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> allows <code>tipOrder</code> to contain elements not present in <code>tree</code>.</p></li>
 <li><p>Use lighter Rcpp headers.</p></li>
 <li><p>Small improvements to computational efficiency.</p></li>
-<li><p><code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> adds gradients to plot legends.</p></li>
-<li><p>Remove deprecated function <code>PostorderEdges()</code> (<a href="https://github.com/ms609/TreeTools/issues/35" class="external-link">#35</a>).</p></li>
-<li><p>Fix bug handling <code>phyDat</code> objects in <code><a href="../reference/ArtificialExtinction.html">ArtificialExtinction()</a></code>.</p></li>
-<li><p><code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> allows <code>tipOrder</code> to contain elements not present in <code>tree</code>.</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="deprecations-1-6-0-9014">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-1-6-0-9014"></a></h3>
+<ul><li>Remove deprecated function <code>PostorderEdges()</code> (<a href="https://github.com/ms609/TreeTools/issues/35" class="external-link">#35</a>).</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.6.0" id="treetools-160">TreeTools 1.6.0<small>2022-01-12</small><a class="anchor" aria-label="anchor" href="#treetools-160"></a></h2>
 <div class="section level3">
@@ -261,7 +273,7 @@
 <li>
 <code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code>: Uniform equivalent of <code><a href="https://rdrr.io/pkg/ape/man/multi2di.html" class="external-link">ape::multi2di()</a></code>.</li>
 <li>
-<code><a href="../reference/match.html">match.list()</a></code> method for lists of splits.</li>
+<code>match.list()</code> method for lists of splits.</li>
 <li>
 <code><a href="../reference/SplitsInBinaryTree.html">SplitsInBinaryTree()</a></code>: How many splits occur in an <em>n</em>-leaf binary tree?</li>
 <li>
@@ -308,9 +320,9 @@
 <li>
 <code><a href="../reference/NonDuplicateRoot.html">NonDuplicateRoot()</a></code>: unused internal function.</li>
 <li>
-<code><a href="../reference/match.html">match.Splits()</a></code>: use <code><a href="../reference/match.html">match()</a></code> instead.</li>
+<code><a href="../reference/match.Splits.html">match.Splits()</a></code>: use <code><a href="../reference/match.Splits.html">match()</a></code> instead.</li>
 <li>
-<code><a href="../reference/match.html">in.Splits()</a></code>: use <code>%in%.Splits()</code> instead.</li>
+<code><a href="../reference/match.Splits.html">in.Splits()</a></code>: use <code>%in%.Splits()</code> instead.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="enhancements-1-0-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-1-0-0"></a></h3>
