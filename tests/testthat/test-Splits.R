@@ -196,9 +196,10 @@ test_that('as.Splits.logical()', {
   expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
-test_that("!.Splits()", {
+test_that("!.Splits() errors", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
   x <- as.Splits(as.phylo(8, 7))
-  expect_error(mask_splits(structure(!x, nTip = NULL)),
+  expect_error(!(structure(x, nTip = NULL)),
                "lacks nTip attrib")
 })
 
@@ -209,12 +210,6 @@ test_that("xor, |, &.Splits()", {
   expect_equal(splits | splits, splits)
   expect_equal(xor(splits, splits),
                structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
-  expect_error(xor(splits, splits[[1]]),
-               "same number of splits")
-  expect_error(xor(structure(splits, nTip = NULL), splits),
-               "`x` lacks nTip attrib")
-  expect_error(xor(splits, structure(splits, nTip = 15)),
-               "`y` differ in `nTip`")
   
   mask <- structure(as.raw(c(0x0f, 0x00)), .Dim = c(1L, 2L), nTip = 9L,
                     class = "Splits")
@@ -427,6 +422,8 @@ test_that("PolarizeSplits()", {
 test_that(".MaskSplits()", {
   x <- as.Splits(as.phylo(5, 5))
   expect_equal(.MaskSplits(x), mask_splits(x))
+  
+  skip_if(Sys.getenv("USING_ASAN") != "")
   expect_error(mask_splits(structure(x, nTip = NULL)),
                "lacks nTip attrib")
 })
