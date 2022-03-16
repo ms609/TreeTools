@@ -17,10 +17,10 @@ test_that("Bad data results in error", {
   expect_error(duplicated_splits(structure(s9, nTip = 999L), TRUE),
                "tip number")
   
-  expect_error(xor(splits, splits[[1]]),
+  expect_error(xor(s9, s9[[1]]),
                "same number of splits")
-  expect_error(xor(structure(splits, nTip = NULL), splits),
+  expect_error(xor(structure(s9, nTip = NULL), s9),
                "`x` lacks nTip attrib")
-  expect_error(xor(splits, structure(splits, nTip = 15)),
+  expect_error(xor(s9, structure(s9, nTip = 15)),
                "`y` differ in `nTip`")
 })
