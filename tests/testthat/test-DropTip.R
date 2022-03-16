@@ -53,10 +53,18 @@ test_that("keep_tip() works", {
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_equal(NTip(DropTip(bal8, 1:8, check = FALSE)), 0)
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))))
-  expect_error(DropTip(bal8, list('Invalid format')))
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))),
+                 "`tip` must be > 0")
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))),
+                 "Tree only has 15 nodes")
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))),
+                 "not present in tree")
+  expect_warning(expect_identical(
+    DropTip(bal8, c('t8', 'NotThere'), check = TRUE),
+    DropTip(bal8, c('t8', 'NotThere'), check = FALSE)), "not present in tree")
+  expect_error(DropTip(bal8, TRUE),
+               "`tip` must list `TRUE` or `FALSE` for each leaf")
+  expect_error(DropTip(bal8, list('Invalid format')), "`tip` must be of type")
   
   expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
   expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
@@ -176,4 +184,27 @@ test_that("KeepTip() retains edge lengths", {
                  70 + 90,
                  100, 110 + 130,
                  140 + 160))
+})
+
+test_that("KeepTipPreorder()/Postorder()", {
+  pre <- Preorder(BalancedTree(1:9))
+  post <- Postorder(pre)
+  keep <- !tabulate(7, 9)
+  expect_true(all.equal(KeepTipPreorder(pre, keep),
+                        KeepTip(pre, keep)))
+  expect_true(all.equal(KeepTipPostorder(post, keep),
+                        KeepTip(post, keep)))
+  
+  emptyTree <- structure(list(edge = matrix(0, 0, 2),
+                              tip.label = character(0),
+                              Nnode = 0), class = 'phylo')
+  expect_equal(KeepTipPreorder(pre, logical(9)),
+               emptyTree)
+  expect_equal(KeepTipPostorder(post, logical(9)),
+               emptyTree)
+
+  expect_equal(KeepTipPreorder(pre, !logical(9)),
+               pre)
+  expect_equal(KeepTipPostorder(post, !logical(9)),
+               post)
 })
