@@ -1,4 +1,8 @@
-test_that('MST edges calculated correctly', {
+test_that("MSTEdges handles bad input", {
+  expect_error(MSTEdges(matrix(1:12, 6, 2)), "distance")
+})
+
+test_that("MST edges calculated correctly", {
   set.seed(0)
   points <- matrix(c(0.1, 0, 1.9, 2, 1.1, 1,
                      0.1, 2,   0, 2, 1, 1.1,
@@ -15,9 +19,9 @@ test_that('MST edges calculated correctly', {
     expect_equal(MSTEdges(distances, FALSE),
                  MSTEdges(distances, TRUE, points[, 1], points[, 2]))
   }
-  skip_if_not_installed('vdiffr', minimum_version = "1.0.0")
+  skip_if_not_installed("vdiffr", minimum_version = "1.0.0")
   skip_if(packageVersion("graphics") < "4.1.0")
-  vdiffr::expect_doppelganger('MST plotting', MSTPlot)
+  vdiffr::expect_doppelganger("MST plotting", MSTPlot)
 })
 test_that("MST handles large distance matrices", {
   x <- dist(0:300)
