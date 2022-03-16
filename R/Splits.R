@@ -1,3 +1,6 @@
+#' @importFrom methods new setClass
+setClass("Splits", representation("raw"))
+
 #' Convert object to `Splits`
 #'
 #' `as.Splits()` converts a phylogenetic tree to a `Splits` object representing
@@ -417,12 +420,18 @@ c.Splits <- function(...) {
   or_splits(e1, e2)
 }
 
+
+#' Exclusive OR operation
+#' @rdname xor
+#' @param x,y Objects to be compared.
+setGeneric("xor")
+
 #' @family Splits operations
-#' @method xor Splits
+#' @rdname xor
+#' @importFrom methods setMethod
 #' @export
-xor.Splits <- function(e1, e2) {
-  xor_splits(e1, e2)
-}
+setMethod("xor", signature = representation(x = "Splits", y = "Splits"),
+          function(x, y) xor_splits(x, y))
 
 #' @export
 t.Splits <- function(x) t(x[])
@@ -498,8 +507,9 @@ rev.Splits <- function(x) {
 #' It will be deprecated in a future release.
 #'
 #' @param x,table Object of class `Splits`.
-#' @param \dots Specify `nomatch =` to provide an integer value that will be
-#' used in place of `NA` in the case where no match is found.
+#' @param nomatch Integer value that will be used in place of `NA` in the case
+#' where no match is found.
+#' @param incomparables Ignored. (Included for consistency with generic.)
 # @param incomparables A vector of values that cannot be matched. Any value in
 # `x` matching a value in this vector is assigned the `nomatch` value.
 # For historical reasons, `FALSE` is equivalent to `NULL`.
@@ -519,84 +529,50 @@ rev.Splits <- function(x) {
 #' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
-#' @export
-#' @keywords methods
-# Following https://github.com/cran/bit64/blob/master/R/patch64.R
-"match" <- if (!exists("match.default")) {
-  function(x, table, ...) UseMethod("match")
-} else {
-  match
-}
-
-#' @method match default
-#' @export
-"match.default" <- if (!exists("match.default")) {
-  function(x, table, ...) base::"match"(x, table, ...)
-} else {
-  match.default
-}
-
-#' @rdname match
+#' @aliases match,Splits,Splits-method
 #' @family Splits operations
-#' @method match Splits
-#' @export
-match.Splits <- function(x, table, ...) {
-  nomatch <- as.integer(c(...)['nomatch'])
-  if (length(nomatch) != 1L) {
-    nomatch <- NA_integer_
-  }
-
-  vapply(seq_along(x), function(i) {
-    ret <- which(table %in% x[[i]])
-    if (length(ret) == 0) ret <- nomatch
-    ret
-  }, integer(1))
-}
-
-#' @rdname match
-#' @export
-match.list <- function(x, table, ...) {
-  if (inherits(x, 'Splits')) {
-    match.Splits(x, table, ...)
-  } else {
-    NextMethod()
-  }
-}
-
-#' @rdname match
-#' @export
 #' @keywords methods
-`%in%` <- if (!exists("%in%.default")) {
-  function(x, table) UseMethod("%in%")
-} else {
-  `%in%`
-}
-
-#' @method %in% default
+#' 
+#' @name match.Splits
 #' @export
-"%in%.default" <- if (!exists("%in%.default")) {
-  function(x, table) base::"%in%"(x, table)
-} else {
-  `%in%.default`
-}
+setMethod("match",
+          signature(x = "Splits", table = "Splits"),
+          function(x, table, nomatch, incomparables) {
+            if(missing("nomatch")) {
+              nomatch <- NA_integer_
+            }
+            nomatch <- as.integer(nomatch)
+            if (length(nomatch) != 1L) {
+              nomatch <- NA_integer_
+            }
+            vapply(seq_along(x), function(i) {
+              ret <- which(table %in% x[[i]])
+              if (length(ret) == 0) ret <- nomatch
+              ret
+            }, integer(1))
+})
 
-#' @rdname match
-#'
-#' @return `%in%` returns a logical vector specifying which of the splits in
-#' `x` are present in `table`.
-#'
-#' @examples
-#' splits1 %in% splits2
-#'
-#' @method %in% Splits
+# Replaces a previous approach (TreeTools <= 1.6.0) that followed
+# https://github.com/cran/bit64/blob/master/R/patch64.R
+
+
+#' @rdname match.Splits
 #' @export
-`%in%.Splits` <- function(x, table) {
+in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
 
-#' @rdname match
+#' @rdname match.Splits
+setGeneric("match")
+
+
+#' @rdname match.Splits
 #' @export
-in.Splits <- `%in%.Splits`
+#' @keywords methods
+setMethod("%in%",
+          signature(x = "Splits", table = "Splits"),
+          in.Splits)
+
 
 #' Polarize splits on a single taxon
 #'

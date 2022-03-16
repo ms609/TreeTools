@@ -66,6 +66,7 @@ Other Splits operations:
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \concept{Splits operations}
