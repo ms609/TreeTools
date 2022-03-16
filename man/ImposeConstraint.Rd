@@ -14,7 +14,7 @@ AddUnconstrained(constraint, toAdd, asPhyDat = TRUE)
 
 \item{constraint}{An object of class \code{phyDat}; returned trees will be
 perfectly compatible with each character in \code{constraint}.
-See \href{https://ms609.github.io/TreeSearch/articles/inapplicable.html}{vignette}
+See \href{https://ms609.github.io/TreeSearch/articles/tree-search.html}{vignette}
 for further examples.}
 
 \item{toAdd}{Character vector specifying taxa to add to constraint.}

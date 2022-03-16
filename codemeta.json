@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -96,6 +96,7 @@
       "@type": "SoftwareApplication",
       "identifier": "Rcpp",
       "name": "Rcpp",
+      "version": ">= 1.0.8",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -226,6 +227,11 @@
     },
     "7": {
       "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
       "identifier": "R.cache",
       "name": "R.cache",
       "provider": {
@@ -236,11 +242,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R.cache"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
-      "version": ">= 0.7",
+      "version": "> 2.1.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -251,7 +257,7 @@
     },
     "SystemRequirements": "C++14"
   },
-  "fileSize": "1409.635KB",
+  "fileSize": "1574.529KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -265,7 +271,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.5281/zenodo.3522725",
-      "description": "R package version 1.6.0",
+      "description": "R package version 1.7.0",
       "@id": "https://doi.org/10.5281/zenodo.3522725",
       "sameAs": "https://doi.org/10.5281/zenodo.3522725"
     }
