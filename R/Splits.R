@@ -75,7 +75,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
 #' Wrapper for internal C++ function for maximum efficiency.
 #' Improper input may crash R.  Behaviour not guaranteed.
 #' It is advisable to contact the package maintainers before
-#' relying on this function
+#' relying on this function.
 #' 
 #' @template edgeParam
 #' @param edgeOrder Integer vector such that `edge[edgeOrder, ]` returns a
@@ -87,6 +87,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
 #' @seealso [`as.Splits()`][Splits] offers a safe access point to this
 #' function that should be suitable for most users.
 #' 
+#' @family C++ wrappers
 #' @export
 edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
                            nTip = NTip(edge), ...) {

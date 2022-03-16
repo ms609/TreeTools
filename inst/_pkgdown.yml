@@ -102,6 +102,11 @@ reference:
       - SpectrumLegend
       - sort.multiPhylo
       - UnshiftTree
+      
+  - title: "Developer functions"
+    desc: "Efficient functions without input checks, for developers"
+    contents: 
+      - has_concept("C++ wrappers")
 
 template:
   params:
