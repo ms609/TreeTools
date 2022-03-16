@@ -26,7 +26,7 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 
-\method{as.logical}{Splits}(x, tipLabels = NULL, ...)
+\method{as.logical}{Splits}(x, tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class

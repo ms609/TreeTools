@@ -66,12 +66,30 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
 
   # Return:
-  .as.Splits.edge(edge, edgeOrder, tipLabels = x[["tip.label"]],
-                  asSplits = asSplits, nTip = NTip(x), ...)
+  edge_to_splits(edge, edgeOrder, tipLabels = x[["tip.label"]],
+                 asSplits = asSplits, nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
-                             nTip = NTip(edge), ...) {
+#' Efficiently convert edge matrix to splits
+#' 
+#' Wrapper for internal C++ function for maximum efficiency.
+#' Improper input may crash R.  Behaviour not guaranteed.
+#' It is advisable to contact the package maintainers before
+#' relying on this function
+#' 
+#' @template edgeParam
+#' @param edgeOrder Integer vector such that `edge[edgeOrder, ]` returns a
+#' postorder ordering of edges.
+#' @param nTip Integer specifying number of leaves in tree.
+#' @inheritParams Splits
+#' @return `edge_to_splits()` uses the same return format as `as.Splits()`.
+#' 
+#' @seealso [`as.Splits()`][Splits] offers a safe access point to this
+#' function that should be suitable for most users.
+#' 
+#' @export
+edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
+                           nTip = NTip(edge), ...) {
   splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
   nSplits <- dim(splits)[1]
 
@@ -175,8 +193,8 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
   } else if (is.numeric(x) && dim(x)[2] == 2) {
-    .as.Splits.edge(x, postorder_order(x),
-                    tipLabels = NULL, asSplits = TRUE, ...)
+    edge_to_splits(x, postorder_order(x),
+                   tipLabels = NULL, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }
@@ -226,7 +244,7 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
 
 #' @rdname Splits
 #' @export
-as.logical.Splits <- function(x, tipLabels = NULL, ...) {
+as.logical.Splits <- function(x, tipLabels = attr(x, 'tip.label'), ...) {
   nTip <- attr(x, 'nTip')
   if (dim(x)[1] == 0) {
     ret <- matrix(logical(0), 0, nTip)
@@ -234,7 +252,7 @@ as.logical.Splits <- function(x, tipLabels = NULL, ...) {
     ret <- matrix(as.logical(rawToBits(t(x))),
                   nrow = nrow(x), byrow = TRUE)[, seq_len(nTip), drop = FALSE]
   }
-  dimnames(ret) <- list(rownames(x), attr(x, 'tip.label'))
+  dimnames(ret) <- list(rownames(x), tipLabels)
   ret
 }
 
@@ -384,9 +402,6 @@ c.Splits <- function(...) {
   not_splits(x)
 }
 
-
-
-
 #' @family Splits operations
 #' @method & Splits
 #' @export
@@ -402,6 +417,7 @@ c.Splits <- function(...) {
 }
 
 #' @family Splits operations
+#' @method xor Splits
 #' @export
 xor.Splits <- function(e1, e2) {
   xor_splits(e1, e2)

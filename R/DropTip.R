@@ -156,7 +156,7 @@ KeepTipPostorder <- function(tree, tip) {
   } else {
     edge <- tree[["edge"]]
     tree[["edge"]] <- keep_tip(edge[dim(edge)[1]:1, ], tip)
-    tree[["tip.label"]] <- as.character(which(tip))
+    tree[["tip.label"]] <- tree[["tip.label"]][tip]
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(tip) 
     tree
   }
