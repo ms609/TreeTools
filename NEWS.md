@@ -6,23 +6,25 @@
 
 - `KeepTip.Splits()` is a faster alternative to `SubSplit()`.
 
-- `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
+- `%in%.Splits()` retains names when comparing small splits
+  ([#40](https://github.com/ms609/TreeTools/issues/40)).
 
 - `sort.multiPhylo()` sorts lists of trees according to their mixed base
   representation ([#84](https://github.com/ms609/TreeTools/issues/84)).
-
-- `%in%.Splits()` retains names when comparing small splits
-  ([#40](https://github.com/ms609/TreeTools/issues/40)).
   
+- Bitwise manipulation of splits with `|`, `&`, `xor`.
+
+- `as.MixedBase()` uniquely represents binary trees as a mixed-base vector.
+
 - `PathLengths()` describes all paths within a tree.
 
 - `KeptVerts()` and `KeptPaths()` identify elements in reduced trees.
 
-- `PostorderOrder()` describes a postorder traversal of a tree.
+- `PostorderOrder()` describes a sequence of edges corresponding to a
+  postorder traversal of a tree.
 
 - `SpectrumLegend()` adds gradients to plot legends.
 
-- Bitwise manipulation of splits with `|`, `&`, `xor`.
 
 ## Improvements
 
@@ -45,20 +47,21 @@
 
 - `TipsInSplits(smallest = TRUE)` counts tips in smaller bipartition.
 
+- Fix a bug with `phyDat` objects in `ArtificialExtinction()`.
+
+- `RenumberTips()` allows `tipOrder` to contain elements not present in `tree`.
+
 - Use lighter Rcpp headers.
 
 - Small improvements to computational efficiency.
-
-- Fix bug handling `phyDat` objects in `ArtificialExtinction()`.
-
-- `RenumberTips()` allows `tipOrder` to contain elements not present in `tree`.
 
 ## Deprecations
 
 - Remove deprecated function `PostorderEdges()`
   ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
-# TreeTools 1.6.0
+
+# TreeTools 1.6.0 #
 
 ## New functions
 
