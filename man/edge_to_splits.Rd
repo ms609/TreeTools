@@ -40,9 +40,10 @@ paramount).}
 Wrapper for internal C++ function for maximum efficiency.
 Improper input may crash R.  Behaviour not guaranteed.
 It is advisable to contact the package maintainers before
-relying on this function
+relying on this function.
 }
 \seealso{
 \code{\link[=Splits]{as.Splits()}} offers a safe access point to this
 function that should be suitable for most users.
 }
+\concept{C++ wrappers}
