@@ -27,10 +27,9 @@ test_that('Subsplits', {
                            't65' = TRUE)),
                unname(sub), ignore_attr = TRUE)
 
-
 })
 
-test_that('Bitwise logic works', {
+test_that("Bitwise logic works", {
   splits <- as.Splits(BalancedTree(8))
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
@@ -64,7 +63,7 @@ test_that('Bitwise logic works', {
   expect_false(.CompatibleSplit(as.raw(3), as.raw(6), nTip = 5))
 })
 
-test_that("SplitMatchProbability returns expected probabilities", {
+test_that("SplitMatchProbability() returns expected probabilities", {
   splitAB   <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 7)))
   splitABC  <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 6)))
   splitABI  <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 6), TRUE))
@@ -167,7 +166,7 @@ test_that("SplitMatchProbability returns expected probabilities", {
 })
 
 
-test_that('Tip labels are found', {
+test_that("Tip labels are found", {
   pt4 <- PectinateTree(4L)
   bt4 <- BalancedTree(4L)
   t1..4 <- c('t1', 't2', 't3', 't4')

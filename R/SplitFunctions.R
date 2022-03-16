@@ -80,7 +80,7 @@ TrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
 #' @examples
 #' summary(WithoutTrivialSplits(efgh))
 #' @export
-WithoutTrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
+WithoutTrivialSplits <- function(splits, nTip = attr(splits, "nTip")) {
   splits[[!TrivialSplits(splits, nTip)]]
 }
 

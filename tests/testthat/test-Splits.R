@@ -369,6 +369,13 @@ test_that("Split subtraction", {
   expect_equal(splits[[c(1, 2, 4, 5)]], splits - splits[[3]])
 })
 
+test_that("unique.Splits()", {
+  noSplits <- WithoutTrivialSplits(as.Splits(matrix(FALSE, 2, 2)))
+  
+  expect_equal(duplicated(noSplits), logical(0))
+  expect_equal(unique(noSplits), noSplits)
+})
+
 test_that("Split combination", {
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
