@@ -57,7 +57,8 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \concept{Splits operations}
 \concept{tree properties}

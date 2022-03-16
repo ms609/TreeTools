@@ -1,6 +1,7 @@
 #include <Rcpp/Lightest>
 using namespace Rcpp;
 
+#include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
 using namespace TreeTools;
 
@@ -82,11 +83,11 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
             if (N == R - L + 1) { // L..R is contiguous, and must be tested
               if (tables[i].CLUSTONL(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
-                assert(L > 0);
+                ASSERT(L > 0);
                 ++split_count[L - 1];
               } else if (tables[i].CLUSTONR(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
-                assert(R > 0);
+                ASSERT(R > 0);
                 ++split_count[R - 1];
               }
             }

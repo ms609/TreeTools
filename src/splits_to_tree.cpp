@@ -1,6 +1,7 @@
 #include <Rcpp/Lightest>
 using namespace Rcpp;
 
+#include "../inst/include/TreeTools/assert.h"
 #include "../inst/include/TreeTools/SplitList.h"
 #include "../inst/include/TreeTools/renumber_tree.h"
 using namespace TreeTools;
@@ -8,8 +9,8 @@ using namespace TreeTools;
 TREETOOLS_SPLITLIST_INIT
 
 inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
-                                       const int16* sort_by) {
-  assert(arr_len > 0);
+                                      const int16* sort_by) {
+  ASSERT(arr_len > 0);
   switch (arr_len) {
   // case 0: return;
   case 1: return;

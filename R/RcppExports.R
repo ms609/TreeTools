@@ -29,10 +29,6 @@ mixed_base_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
 }
 
-keep_tip <- function(edge, keep) {
-    .Call(`_TreeTools_keep_tip`, edge, keep)
-}
-
 kept_vertices <- function(edge, kept) {
     .Call(`_TreeTools_kept_vertices`, edge, kept)
 }
@@ -47,6 +43,34 @@ path_lengths <- function(edge, weight) {
 
 cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
+}
+
+duplicated_splits <- function(splits, fromLast) {
+    .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
+}
+
+mask_splits <- function(x) {
+    .Call(`_TreeTools_mask_splits`, x)
+}
+
+not_splits <- function(x) {
+    .Call(`_TreeTools_not_splits`, x)
+}
+
+xor_splits <- function(x, y) {
+    .Call(`_TreeTools_xor_splits`, x, y)
+}
+
+and_splits <- function(x, y) {
+    .Call(`_TreeTools_and_splits`, x, y)
+}
+
+or_splits <- function(x, y) {
+    .Call(`_TreeTools_or_splits`, x, y)
+}
+
+thin_splits <- function(splits, drop) {
+    .Call(`_TreeTools_thin_splits`, splits, drop)
 }
 
 splits_to_edge <- function(splits, nTip) {

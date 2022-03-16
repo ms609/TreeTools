@@ -1,10 +1,10 @@
 #ifndef TreeTools_renumber_tree_
 #define TreeTools_renumber_tree_
 
-#include <cassert>
 #include <cstdio>
 #include <cstdlib> /* for calloc */
 #include <Rcpp/Lightest>
+#include "assert.h" /* for ASSERT */
 #include "types.h"
 
 #define MIN(a, b) ((a) < (b)) ? (a) : (b);
@@ -36,7 +36,7 @@ namespace TreeTools {
 
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                          int32* sort_by) {
-    assert(arr_len > 0);
+    ASSERT(arr_len > 0);
     switch (arr_len) {
     // case 0: return;
     case 1: return;
@@ -63,7 +63,7 @@ namespace TreeTools {
 
   inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                              int32* sort_by) {
-    assert(arr_len > 0);
+    ASSERT(arr_len > 0);
     for (int32 i = 1; i != arr_len; ++i) {
       const int32
         tmp = arr[i],

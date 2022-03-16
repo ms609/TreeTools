@@ -96,18 +96,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// keep_tip
-IntegerMatrix keep_tip(const IntegerMatrix edge, const LogicalVector keep);
-RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< const LogicalVector >::type keep(keepSEXP);
-    rcpp_result_gen = Rcpp::wrap(keep_tip(edge, keep));
-    return rcpp_result_gen;
-END_RCPP
-}
 // kept_vertices
 IntegerVector kept_vertices(const IntegerMatrix edge, const LogicalVector kept);
 RcppExport SEXP _TreeTools_kept_vertices(SEXP edgeSEXP, SEXP keptSEXP) {
@@ -153,6 +141,88 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits(edge, order, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
+// duplicated_splits
+LogicalVector duplicated_splits(const RawMatrix splits, const LogicalVector fromLast);
+RcppExport SEXP _TreeTools_duplicated_splits(SEXP splitsSEXP, SEXP fromLastSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type fromLast(fromLastSEXP);
+    rcpp_result_gen = Rcpp::wrap(duplicated_splits(splits, fromLast));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mask_splits
+RawMatrix mask_splits(RawMatrix x);
+RcppExport SEXP _TreeTools_mask_splits(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< RawMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(mask_splits(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// not_splits
+RawMatrix not_splits(const RawMatrix x);
+RcppExport SEXP _TreeTools_not_splits(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(not_splits(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// xor_splits
+RawMatrix xor_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_xor_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(xor_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// and_splits
+RawMatrix and_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_and_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(and_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// or_splits
+RawMatrix or_splits(const RawMatrix x, const RawMatrix y);
+RcppExport SEXP _TreeTools_or_splits(SEXP xSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const RawMatrix >::type y(ySEXP);
+    rcpp_result_gen = Rcpp::wrap(or_splits(x, y));
+    return rcpp_result_gen;
+END_RCPP
+}
+// thin_splits
+RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop);
+RcppExport SEXP _TreeTools_thin_splits(SEXP splitsSEXP, SEXP dropSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type drop(dropSEXP);
+    rcpp_result_gen = Rcpp::wrap(thin_splits(splits, drop));
     return rcpp_result_gen;
 END_RCPP
 }

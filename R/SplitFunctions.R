@@ -21,6 +21,8 @@
 #'
 #' summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 #' @template MRS
+#' 
+#' @seealso [`KeepTip()`] is a less flexible but faster equivalent.
 #'
 #' @family split manipulation functions
 #' @export
@@ -29,11 +31,11 @@ Subsplit <- function(splits, tips, keepAll = FALSE, unique = TRUE) {
     lapply(splits, Subsplit, tips = tips, keepAll = keepAll, unique = unique)
   } else if (length(splits) == 0) {
     ret <- splits
-    attr(ret, 'nTip') <- length(tips)
-    attr(ret, 'tip.label') <- if (is.character(tips)) {
+    attr(ret, "nTip") <- length(tips)
+    attr(ret, "tip.label") <- if (is.character(tips)) {
       tips
     } else {
-      attr(splits, 'tip.label')[tips]
+      attr(splits, "tip.label")[tips]
     }
     ret
   } else {
@@ -78,7 +80,7 @@ TrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
 #' @examples
 #' summary(WithoutTrivialSplits(efgh))
 #' @export
-WithoutTrivialSplits <- function(splits, nTip = attr(splits, 'nTip')) {
+WithoutTrivialSplits <- function(splits, nTip = attr(splits, "nTip")) {
   splits[[!TrivialSplits(splits, nTip)]]
 }
 

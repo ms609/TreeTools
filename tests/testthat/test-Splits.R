@@ -196,13 +196,53 @@ test_that('as.Splits.logical()', {
   expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
-test_that("&.Splits()", {
+test_that("!.Splits() errors", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  x <- as.Splits(as.phylo(8, 7))
+  expect_error(!(structure(x, nTip = NULL)),
+               "lacks nTip attrib")
+})
+
+test_that("xor, |, &.Splits()", {
   splits <- structure(as.raw(c(0x07, 0x03, 0x18, 0xe0, 0x60, 0x80)),
                       .Dim = c(3L, 2L), nTip = 9L, class = "Splits")
-  mask <- as.raw(c(0x0f, 0x00))
-  expect_equal(structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
-                         .Dim = c(2L, 3L)),
-               t(splits) & mask)
+  expect_equal(splits & splits, splits)
+  expect_equal(splits | splits, splits)
+  expect_equal(xor(splits, splits),
+               structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
+  
+  mask <- structure(as.raw(c(0x0f, 0x00)), .Dim = c(1L, 2L), nTip = 9L,
+                    class = "Splits")
+  mask <- c(mask, mask, mask)
+  expect_equal(t(splits[] & mask[]),
+               structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
+                         .Dim = c(2L, 3L)))
+  expect_equal(splits & mask,
+               structure(as.raw(c(0x07, 0x03, 0x08, 0x00, 0x00, 0x00)),
+                         .Dim = c(3L, 2L), nTip = 9L, class = "Splits"))
+  expect_equal(splits | mask, 
+               structure(unclass(splits) | unclass(mask),
+                         nTip = 9L, class = "Splits"))
+  expect_equal(xor(splits, mask),
+               (splits | mask) & !(splits & mask))
+  
+  Test <- function (s1, s2) {
+    s1 <- as.Splits(s1)
+    s2 <- as.Splits(s2)
+    expect_equal((s1 & s2)[], s2[] & s1[], ignore_attr = TRUE)
+    expect_equal((s1 | s2)[], s2[] | s1[], ignore_attr = TRUE)
+    expect_equal(xor(s1,  s2)[], xor(s2[], s1[]), ignore_attr = TRUE)
+    expect_equal((!s1)[], mask_splits(!(s1[])))
+    
+    expect_equal(attributes(!s1), attributes(s1))
+    expect_equal(attributes(s1 | s2), attributes(s1))
+    expect_equal(attributes(s1 & s2), attributes(s1))
+    expect_equal(attributes(xor(s1, s2)), attributes(s1))
+  }
+  Test(PectinateTree(145), BalancedTree(145))
+  Test(PectinateTree(64 * 3), BalancedTree(64 * 3))
+  Test(PectinateTree(64 * 3 + 1), BalancedTree(64 * 3 + 1))
+  Test(PectinateTree(64 * 3 - 1), BalancedTree(64 * 3 - 1))
 })
 
 test_that('empty as.X.Splits()', {
@@ -245,6 +285,26 @@ test_that('match.Splits()', {
   expect_equal(c(4, 3, 999, 2, 1),
                match(as.Splits(tree1, tree2), col2, nomatch = 999))
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
+})
+
+test_that("duplicated.Splits(internal)", {
+  for (nTip in c(7:8, 23:26)) { # n %% BIN_SIZE ==0, ==1, >1
+    x <- c(as.Splits(PectinateTree(nTip)), !as.Splits(BalancedTree(nTip)))
+    
+    expect_equal(duplicated(x, withNames = FALSE),
+                 duplicated(x, FALSE, withNames = FALSE))
+    
+    expect_equal(as.logical(duplicated(x, fromLast = TRUE)),
+                 as.logical(duplicated(x, FALSE, fromLast = TRUE)))
+    
+    expect_equal(names(duplicated(x, fromLast = TRUE)),
+                 names(duplicated(x, FALSE, fromLast = TRUE)))
+    
+    expect_equal(duplicated(PolarizeSplits(x, nTip / 2)), duplicated(x))
+    
+    expect_equal(duplicated(x, fromLast = TRUE),
+                 rev(duplicated(rev(x), fromLast = FALSE)))
+  }
 })
 
 test_that("%in%.Splits()", {
@@ -309,6 +369,13 @@ test_that("Split subtraction", {
   expect_equal(splits[[c(1, 2, 4, 5)]], splits - splits[[3]])
 })
 
+test_that("unique.Splits()", {
+  noSplits <- WithoutTrivialSplits(as.Splits(matrix(FALSE, 2, 2)))
+  
+  expect_equal(duplicated(noSplits), logical(0))
+  expect_equal(unique(noSplits), noSplits)
+})
+
 test_that("Split combination", {
   tree1 <- BalancedTree(letters[1:5])
   splits1 <- as.Splits(tree1)
@@ -357,4 +424,13 @@ test_that("PolarizeSplits()", {
   expect_error(PolarizeSplits(bal6, 'ERROR'))
   expect_error(PolarizeSplits(bal6, 0))
   expect_error(PolarizeSplits(bal6, 7))
+})
+
+test_that(".MaskSplits()", {
+  x <- as.Splits(as.phylo(5, 5))
+  expect_equal(.MaskSplits(x), mask_splits(x))
+  
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(mask_splits(structure(x, nTip = NULL)),
+               "lacks nTip attrib")
 })

@@ -3,6 +3,7 @@
 
 #include <Rcpp/Lightest>
 #include <memory> /* for std::unique_ptr */
+#include "assert.h" /* for ASSERT */
 #include "renumber_tree.h"
 #include "types.h"
 
@@ -189,7 +190,7 @@ namespace TreeTools {
         for (int i = n_edge; i--; ) {
           new_wt[i] = weight[i];
         }
-        assert(new_wt(n_edge) == 0);
+        ASSERT(new_wt(n_edge) == 0);
       }
       for (int i = n_edge; i--; ) {
         new_edge(i, 0) = edge(i, 0);

@@ -1,8 +1,11 @@
 test_that('Subsplits', {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
-  expect_equal(setNames(c(4, 4, 4, 3, 2, 1), 12:17),
-               TipsInSplits(efgh))
+  expect_equal(TipsInSplits(efgh),
+               setNames(c(4, 4, 4, 3, 2, 1), 12:17))
+  expect_equal(DropTip(splits, letters[c(1:4, 9)]), 
+               KeepTip(splits, letters[5:8]))
+  expect_equal(KeepTip(splits, letters[5:8]), Subsplit(splits, letters[5:8]))
   expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
                  '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
 
@@ -24,10 +27,9 @@ test_that('Subsplits', {
                            't65' = TRUE)),
                unname(sub), ignore_attr = TRUE)
 
-
 })
 
-test_that('Bitwise logic works', {
+test_that("Bitwise logic works", {
   splits <- as.Splits(BalancedTree(8))
   splits2 <- as.Splits(PectinateTree(8))
   A <- TRUE
@@ -61,7 +63,7 @@ test_that('Bitwise logic works', {
   expect_false(.CompatibleSplit(as.raw(3), as.raw(6), nTip = 5))
 })
 
-test_that("SplitMatchProbability returns expected probabilities", {
+test_that("SplitMatchProbability() returns expected probabilities", {
   splitAB   <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 7)))
   splitABC  <- as.Splits(c(rep(TRUE, 3), rep(FALSE, 6)))
   splitABI  <- as.Splits(c(rep(TRUE, 2), rep(FALSE, 6), TRUE))
@@ -164,7 +166,7 @@ test_that("SplitMatchProbability returns expected probabilities", {
 })
 
 
-test_that('Tip labels are found', {
+test_that("Tip labels are found", {
   pt4 <- PectinateTree(4L)
   bt4 <- BalancedTree(4L)
   t1..4 <- c('t1', 't2', 't3', 't4')

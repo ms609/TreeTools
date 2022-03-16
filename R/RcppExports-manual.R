@@ -1,3 +1,7 @@
+keep_tip <- function(edge, keep) {
+  .Call(`_TreeTools_keep_tip`, edge, keep)
+}
+
 preorder_edges_and_nodes <- function(parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }

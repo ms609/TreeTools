@@ -53,10 +53,18 @@ test_that("keep_tip() works", {
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_equal(NTip(DropTip(bal8, 1:8, check = FALSE)), 0)
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))))
-  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))))
-  expect_error(DropTip(bal8, list('Invalid format')))
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))),
+                 "`tip` must be > 0")
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))),
+                 "Tree only has 15 nodes")
+  expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 'MissingTip'))),
+                 "not present in tree")
+  expect_warning(expect_identical(
+    DropTip(bal8, c('t8', 'NotThere'), check = TRUE),
+    DropTip(bal8, c('t8', 'NotThere'), check = FALSE)), "not present in tree")
+  expect_error(DropTip(bal8, TRUE),
+               "`tip` must list `TRUE` or `FALSE` for each leaf")
+  expect_error(DropTip(bal8, list('Invalid format')), "`tip` must be of type")
   
   expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
   expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
@@ -111,6 +119,40 @@ test_that("DropTip.multiPhylo() with attributes", {
   expect_equal(DropTip(multi[1], 't1')[[1]], DropTip(multi[[1]], 't1'))
 })
 
+test_that("DropTip.Splits()", {
+  bal9 <- BalancedTree(9)
+  s9 <- as.Splits(bal9)
+  s19 <- as.Splits(PectinateTree(19))
+  
+  expect_error(DropTip(s9, c(T, F)), "each leaf\\b")
+  expect_warning(
+    expect_warning(
+      expect_equal(DropTip(s9, c(0, 9:10)), DropTip(s9, !tabulate(1:8, 9))),
+      "only has 9 leaves"),
+    "`tip` must be > 0"
+  )
+  expect_error(DropTip(s9, raw(1)), "`tip` must be of type")
+  
+  expect_equal(s9, DropTip(s9, NULL))
+  expect_warning(
+    expect_equal(DropTip(s9, c("t7", "missing")),
+                 DropTip(s9, "t7", check = FALSE)),
+    "not present in tree")
+  
+  expect_equal(unname(DropTip(s9, 4:5)), unname(as.Splits(DropTip(bal9, 4:5))))
+  expect_equal(unname(KeepTip(s9, c(1:4, 7:9))),
+               unname(as.Splits(DropTip(bal9, 6:5))))
+  
+  expect_equal(DropTip(s9[[1:5]], 8:9),
+               DropTip(s9, 8:9))
+  
+  expect_equal(thin_splits(s9, !logical(9)),
+                           structure(raw(0), .Dim = c(0L, 0L)))
+  expect_equal(thin_splits(s19, 1:19 %in% 2:19),
+               structure(raw(0), .Dim = c(0L, 1L)))
+  expect_equal(thin_splits(s9, logical(9)), s9, ignore_attr = TRUE)
+})
+
 test_that("KeepTip() works", {
   expect_warning(expect_true(all.equal(
     BalancedTree(paste0('t', 5:8)),
@@ -126,6 +168,11 @@ test_that("KeepTip() works", {
     KeepTip(Postorder(UnrootTree(BalancedTree(letters[1:12]))), 6:12),
     read.tree(text = "(f, (i, (g, h)), (l, (j, k)));")
   ))
+  
+  expect_identical(
+    KeepTip(BalancedTree(12), !tabulate(1:5, 12)),
+    DropTip(BalancedTree(12), !tabulate(6:12, 12))
+    )
 })
 
 test_that("KeepTip() retains edge lengths", {
@@ -137,4 +184,27 @@ test_that("KeepTip() retains edge lengths", {
                  70 + 90,
                  100, 110 + 130,
                  140 + 160))
+})
+
+test_that("KeepTipPreorder()/Postorder()", {
+  pre <- Preorder(BalancedTree(1:9))
+  post <- Postorder(pre)
+  keep <- !tabulate(7, 9)
+  expect_true(all.equal(KeepTipPreorder(pre, keep),
+                        KeepTip(pre, keep)))
+  expect_true(all.equal(KeepTipPostorder(post, keep),
+                        KeepTip(post, keep)))
+  
+  emptyTree <- structure(list(edge = matrix(0, 0, 2),
+                              tip.label = character(0),
+                              Nnode = 0), class = 'phylo')
+  expect_equal(KeepTipPreorder(pre, logical(9)),
+               emptyTree)
+  expect_equal(KeepTipPostorder(post, logical(9)),
+               emptyTree)
+
+  expect_equal(KeepTipPreorder(pre, !logical(9)),
+               pre)
+  expect_equal(KeepTipPostorder(post, !logical(9)),
+               post)
 })

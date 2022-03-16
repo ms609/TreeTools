@@ -16,6 +16,9 @@
 #' @name GenerateTree
 NULL
 
+# Until require R >= 3.5.0
+.isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+
 #' @rdname GenerateTree
 #'
 #' @param root Character or integer specifying tip to use as root, if desired;
@@ -84,9 +87,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
                          br = NULL),
                     class = 'phylo')
 
-  # Until require R >= 3.5.0
-  isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
-  if (isFALSE(root)) {
+  if (.isFALSE(root)) {
     tree <- UnrootTree(tree)
   }
 
