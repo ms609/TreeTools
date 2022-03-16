@@ -30,7 +30,7 @@
 \item{e1, e2}{Objects to be compared.}
 }
 \description{
-Trees are sorted by their \href{TreeNumber}{mixed base representation},
+Trees are sorted by their \link[=TreeNumber]{mixed base representation},
 treating their leaves in the order of their labels (i.e. alphabetically,
 if leaves are labelled with text).
 }

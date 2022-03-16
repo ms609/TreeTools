@@ -1,6 +1,6 @@
 #' Sort a list of phylogenetic trees
 #'
-#' Trees are sorted by their [mixed base representation](TreeNumber),
+#' Trees are sorted by their \link[=TreeNumber]{mixed base representation},
 #' treating their leaves in the order of their labels (i.e. alphabetically,
 #' if leaves are labelled with text).
 #'
