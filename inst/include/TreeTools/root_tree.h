@@ -2,7 +2,8 @@
 #define TreeTools_root_tree_
 
 #include <Rcpp/Lightest>
-#include <memory> /* for std::unique_ptr */
+#include <memory> /* for std::unique_ptr, make_unique */
+#include <stdexcept> /* for errors */
 #include "assert.h" /* for ASSERT */
 #include "renumber_tree.h"
 #include "types.h"

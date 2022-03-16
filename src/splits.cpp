@@ -1,5 +1,6 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
+#include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools/assert.h"
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;

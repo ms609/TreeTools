@@ -5,6 +5,7 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
 using namespace TreeTools;
 
+#include <algorithm> /* for fill */
 #include <array> /* for array */
 #include <vector> /* for vector */
 
