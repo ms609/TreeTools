@@ -94,7 +94,7 @@ namespace TreeTools {
     Rcpp::IntegerMatrix edge = phy["edge"];
     Rcpp::NumericVector weight;
 
-    const intx 
+    const intx
       n_edge = edge.nrow(),
       n_node = phy["Nnode"],
       max_node = n_edge + 1,
