@@ -42,7 +42,7 @@ Imports:
     fastmatch (>= 1.1.3),
     methods,
     R.cache,
-    Rdpack (> 2.1.3),
+    Rdpack (>= 2.2),
 Suggests:
     spelling,
     knitr,
