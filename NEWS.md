@@ -1,4 +1,4 @@
-# TreeTools 1.6.0.9014 #
+# TreeTools 1.7.0 #
 
 ## New methods and functions
 

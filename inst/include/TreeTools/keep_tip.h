@@ -2,7 +2,8 @@
 #define TreeTools_keep_tip_
 
 #include <Rcpp/Lightest>
-#include <stdexcept>
+#include <stdexcept> /* for errors */
+#include <memory> /* for make_unique */
 #include "assert.h" /* for ASSERT */
 // #define TTDEBUG
 

@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <cstdlib> /* for calloc */
+#include <stdexcept> /* for errors */
 #include <Rcpp/Lightest>
 #include "assert.h" /* for ASSERT */
 #include "types.h"

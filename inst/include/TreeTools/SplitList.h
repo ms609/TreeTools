@@ -2,6 +2,7 @@
 #define _TREETOOLS_SPLITLIST_H
 
 #include <Rcpp/Lightest>
+#include <stdexcept> /* for errors */
 
 #include "types.h" /* for int16 */
 

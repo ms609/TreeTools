@@ -2,7 +2,8 @@
 #define TreeTools_root_tree_
 
 #include <Rcpp/Lightest>
-#include <memory> /* for std::unique_ptr */
+#include <memory> /* for std::unique_ptr, make_unique */
+#include <stdexcept> /* for errors */
 #include "assert.h" /* for ASSERT */
 #include "renumber_tree.h"
 #include "types.h"
@@ -93,7 +94,7 @@ namespace TreeTools {
     Rcpp::IntegerMatrix edge = phy["edge"];
     Rcpp::NumericVector weight;
 
-    const intx 
+    const intx
       n_edge = edge.nrow(),
       n_node = phy["Nnode"],
       max_node = n_edge + 1,

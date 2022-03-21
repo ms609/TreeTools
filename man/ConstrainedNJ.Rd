@@ -12,7 +12,7 @@ whose names correspond to the labels of any accompanying tree.}
 
 \item{constraint}{An object of class \code{phyDat}; returned trees will be
 perfectly compatible with each character in \code{constraint}.
-See \href{https://ms609.github.io/TreeSearch/articles/inapplicable.html}{vignette}
+See \href{https://ms609.github.io/TreeSearch/articles/tree-search.html}{vignette}
 for further examples.}
 
 \item{weight}{Numeric specifying degree to up-weight characters in

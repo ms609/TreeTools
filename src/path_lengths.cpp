@@ -1,4 +1,5 @@
 #include <Rcpp/Lightest>
+#include <memory> /* for make_unique */
 #include "../inst/include/TreeTools/types.h"
 using namespace Rcpp;
 
