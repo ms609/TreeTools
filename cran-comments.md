@@ -15,18 +15,7 @@
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-There was one NOTE:
-
-> Found the following URLs which should use \doi (with the DOI name only):
-  File 'ArtificialExtinction.Rd':
-    https://doi.org/10.1093/sysbio/syab072
-  [...]
-
-The DOI links are generated automatically using "Rdpack" macros, so cannot
-be manually replaced in the .Rd files.  This should be addressed in a future
-release of the Rdpack package.
-
+There were no ERRORs or WARNINGs or NOTEs.
 
 ## Downstream dependencies
 
