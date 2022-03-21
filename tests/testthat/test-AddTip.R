@@ -46,6 +46,8 @@ test_that("AddTip() with edge lengths", {
   # case = 2 -> y is bound on a tip of x
   expect_equal(c(rep(1, 2), 0.3, 0.7, 2, rep(1, 11)),
                AddTip(pec8, 2, edgeLength = 2, lengthBelow = 0.7)$edge.length)
+  expect_equal(c(rep(1, 2), 0.5, 0.5, 2, rep(1, 11)),
+               AddTip(pec8, 2, edgeLength = 2, lengthBelow = NULL)$edge.length)
   # case = 3 -> y is bound on a node of x
   expect_equal(c(rep(1, 11), 0.3, 2, 0.7, 1, 1),
                AddTip(pec8, 15, edgeLength = 2, lengthBelow = 0.7)$edge.length)
