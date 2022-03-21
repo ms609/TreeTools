@@ -100,6 +100,12 @@
     <loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/KeptPaths.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/KeptVerts.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc>
   </url>
   <url>
@@ -166,6 +172,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/PairwiseDistances.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/PathLengths.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
   </url>
   <url>
@@ -206,6 +215,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/SortTree.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/SpectrumLegend.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/SplitFrequency.html</loc>
@@ -292,13 +304,16 @@
     <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/edge_to_splits.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/index.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/match.html</loc>
+    <loc>https://ms609.github.io/TreeTools/reference/match.Splits.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/nRootedShapes.html</loc>
@@ -308,5 +323,11 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/sort.multiPhylo.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/xor.html</loc>
   </url>
 </urlset>

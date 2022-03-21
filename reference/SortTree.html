@@ -24,7 +24,7 @@ does not obscure similarities between similar trees."><!-- mathjax --><script sr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.0</span>
       </span>
     </div>
 
@@ -33,7 +33,7 @@ does not obscure similarities between similar trees."><!-- mathjax --><script sr
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,16 +82,16 @@ does not obscure similarities between similar trees.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for phylo</span>
-<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
+<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for list</span>
-<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
+<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># S3 method for multiPhylo</span>
-<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></code></pre></div>
+<span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -99,25 +99,36 @@ does not obscure similarities between similar trees.</p>
     <dl><dt>tree</dt>
 <dd><p>One or more trees of class <code>phylo</code>, optionally as a list
 or a <code>multiPhylo</code> object.</p></dd>
+<dt>how</dt>
+<dd><p>Character vector specifying sort method:
+<code>"Cladesize"</code> rotates each node such that the larger clade is first,
+thus appearing lower when plotted;
+<code>"TipLabels"</code> rotates nodes such that labels listed sooner in <code>order</code>
+are listed first, and thus plot lower.</p></dd>
+<dt>order</dt>
+<dd><p>Character vector listing tip labels in sequence they should
+appear on tree. Clades containing a taxon earlier in this list will be listed
+sooner and thus plot lower on a tree.  Taxa not listed in <code>order</code> will be
+treated as if they were last in the list.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <p><code>SortTree()</code> returns tree in the format of <code>tree</code>, with each node
-in each tree sorted such that the larger clade is first.</p>
+in each tree sorted</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>At each node, clades will be listed in <code>tree$edge</code> in decreasing size order.</p>
+    <p>At each node, clades will be listed in <code>tree[["edge"]]</code> in decreasing size
+order.</p>
 <p>Clades that contain the same number of leaves are sorted in decreasing order
 of minimum leaf number, so (2, 3) will occur before (1, 4).</p>
 <p>As trees are plotted from 'bottom up', the largest clades will 'sink' to the
 bottom of a plotted tree.</p>
-<p><code>tree</code> must (presently) be binary (<a href="https://github.com/ms609/TreeTools/issues/25" class="external-link">#25</a>).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="Reorder.html">Preorder()</a></code> also rearranges trees into a consistent shape, but
-based on the index of leaves rather than the size of subtrees.</p>
+    <div class="dont-index"><p><code><a href="Reorder.html">Preorder()</a></code> also rearranges trees into a consistent shape,
+based on the index of leaves.</p>
 <p>Other tree manipulation: 
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
@@ -125,6 +136,8 @@ based on the index of leaves rather than the size of subtrees.</p>
 <code><a href="DropTip.html">DropTip</a>()</code>,
 <code><a href="EnforceOutgroup.html">EnforceOutgroup</a>()</code>,
 <code><a href="ImposeConstraint.html">ImposeConstraint</a>()</code>,
+<code><a href="KeptPaths.html">KeptPaths</a>()</code>,
+<code><a href="KeptVerts.html">KeptVerts</a>()</code>,
 <code><a href="LeafLabelInterchange.html">LeafLabelInterchange</a>()</code>,
 <code><a href="MakeTreeBinary.html">MakeTreeBinary</a>()</code>,
 <code><a href="RenumberTips.html">RenumberTips</a>()</code>,
@@ -149,8 +162,11 @@ based on the index of leaves rather than the size of subtrees.</p>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sorted</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">edgelabels</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">tiplabels</a></span><span class="op">(</span>adj <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="SortTree-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">SortTree</span><span class="op">(</span><span class="va">messyTree</span>, how <span class="op">=</span> <span class="st">"tip"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="SortTree-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </div>
