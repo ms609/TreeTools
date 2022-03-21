@@ -156,7 +156,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
        nodeContainsAllGroup & nodeContainsNonGroup
     })
 
-    # active[i, ] != within[i, ], or we"d be on an edge
+    # active[i, ] != within[i, ], or we'd be on an edge
     atNode <- table(apply(cbind(floors), 2,
                           function(x) 1 + length(x) - which.max(rev(x))))
     nAtNode[as.integer(names(atNode))] <- atNode

@@ -39,7 +39,7 @@ test_that("AddTip() with edge lengths", {
   
   add1 <- AddTip(pec8, 0, "Root")
   expect_equal(dim(add1$edge)[1], length(add1[["edge.length"]]))
-    
+  
   # case = 1 -> y is bound on the root of x
   expect_equal(c(0.6, rep(1, 14), 2),
                AddTip(pec8, 0, edgeLength = 2, lengthBelow = 0.6)$edge.length)
