@@ -10,6 +10,8 @@ const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
 const uintx BIN_SIZE = 8;
 const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
+#define NOT_TRIVIAL TreeTools::UINTX_MAX
+
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)
 
@@ -22,7 +24,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   if (edge.cols() != 2) {
     throw std::invalid_argument("Edge matrix must contain two columns");
   }
-  if (1UL + edge.rows() > UINTX_MAX - 1U) { /* UINT_MAX denotes NOT_TRIVAL */
+  if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
     throw std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
                             "Contact maintainer for advice");                   // # nocov
   }
@@ -82,8 +84,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
 
   // Only return non-trivial splits
   uintx n_trivial = 0;
-  const uintx NOT_TRIVIAL = UINTX_MAX,
-              trivial_origin = root_node - 1,
+  const uintx trivial_origin = root_node - 1,
               trivial_two = (root_children == 2 ? root_child - 1 : NOT_TRIVIAL),
               n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
   RawMatrix ret(n_return, n_bin);

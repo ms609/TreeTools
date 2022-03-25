@@ -1,3 +1,8 @@
+# TreeTools 1.7.1 #
+
+- `AddTip()`: Fix bug when adding tip to root of weighted tree.
+
+
 # TreeTools 1.7.0 #
 
 ## New methods and functions

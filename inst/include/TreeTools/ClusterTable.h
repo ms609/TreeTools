@@ -8,7 +8,7 @@
 #include "root_tree.h" /* for root_on_node */
 
 #define UNINIT -999
-#define INF INTX_MAX
+#define INF TreeTools::INTX_MAX
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \

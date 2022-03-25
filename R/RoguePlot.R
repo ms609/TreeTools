@@ -33,16 +33,16 @@
 #' of the consensus tree.
 #' @references \insertAllCited{}
 #' @examples
-#' trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-#'               read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-#'               read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-#'               read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-#'               read.tree(text = '(rogue, (a, (b, (c, (d, (e, f))))));'),
-#'               read.tree(text = '((rogue, a), (b, (c, (d, (e, f)))));'),
-#'               read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
-#'               read.tree(text = '(a, (b, ((c, (rogue, d)), (e, f))));'),
-#'               read.tree(text = '(a, (b, (c, (d, (rogue, (e, f))))));'))
-#' RoguePlot(trees, 'rogue')
+#' trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+#'               read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+#'               read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+#'               read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+#'               read.tree(text = "(rogue, (a, (b, (c, (d, (e, f))))));"),
+#'               read.tree(text = "((rogue, a), (b, (c, (d, (e, f)))));"),
+#'               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
+#'               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
+#'               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
+#' RoguePlot(trees, "rogue")
 #' @template MRS
 #' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
@@ -50,14 +50,14 @@
 #' @family consensus tree functions
 #' @export
 RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
-                       Palette = colorRampPalette(c(par('fg'), '#009E73'),
-                                                  space = 'Lab'),
-                       nullCol = rgb(colorRamp(unlist(par(c('fg', 'bg'))),
-                                               space = 'Lab')(0.8) / 255),
-                       edgeLength = NULL,
-                       thin = par('lwd'), fat = thin + 1L,
-                       outgroupTips,
-                       ...) {
+                      Palette = colorRampPalette(c(par("fg"), "#009E73"),
+                                                 space = "Lab"),
+                      nullCol = rgb(colorRamp(unlist(par(c("fg", "bg"))),
+                                              space = "Lab")(0.8) / 255),
+                      edgeLength = NULL,
+                      thin = par("lwd"), fat = thin + 1L,
+                      outgroupTips,
+                      ...) {
   tipLabels <- TipLabels(trees[[1]])
   nTip <- length(tipLabels)
 
@@ -69,12 +69,12 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   attributes(trees) <- at
 
   noRogue <- trees
-  attr(noRogue, 'TipLabel') <- NULL
+  attr(noRogue, "TipLabel") <- NULL
   noRogue[] <- lapply(noRogue, DropTip, tip)
-  dummyRoot <- 'xxTREETOOLSxxDUMMYxxROOTxx'
+  dummyRoot <- "xxTREETOOLSxxDUMMYxxROOTxx"
   # TODO replace with noRogue[] <- again
   noRogue[] <- lapply(noRogue, AddTip, 0, dummyRoot)
-  class(noRogue) <- 'multiPhylo'
+  class(noRogue) <- "multiPhylo"
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
   consTip <- NTip(cons)
