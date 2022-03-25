@@ -50,14 +50,14 @@
 #' @family consensus tree functions
 #' @export
 RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
-                       Palette = colorRampPalette(c(par("fg"), "#009E73"),
-                                                  space = "Lab"),
-                       nullCol = rgb(colorRamp(unlist(par(c("fg", "bg"))),
-                                               space = "Lab")(0.8) / 255),
-                       edgeLength = NULL,
-                       thin = par("lwd"), fat = thin + 1L,
-                       outgroupTips,
-                       ...) {
+                      Palette = colorRampPalette(c(par("fg"), "#009E73"),
+                                                 space = "Lab"),
+                      nullCol = rgb(colorRamp(unlist(par(c("fg", "bg"))),
+                                              space = "Lab")(0.8) / 255),
+                      edgeLength = NULL,
+                      thin = par("lwd"), fat = thin + 1L,
+                      outgroupTips,
+                      ...) {
   tipLabels <- TipLabels(trees[[1]])
   nTip <- length(tipLabels)
 
