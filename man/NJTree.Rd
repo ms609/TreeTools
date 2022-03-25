@@ -7,7 +7,7 @@
 NJTree(dataset, edgeLengths = FALSE, ratio = TRUE, ambig = "mean")
 }
 \arguments{
-\item{dataset}{A phylogenetic data matrix of class \code{phyDat},
+\item{dataset}{A phylogenetic data matrix of \pkg{phangorn} class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
 \item{edgeLengths}{Logical specifying whether to include edge lengths.}
