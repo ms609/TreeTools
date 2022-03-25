@@ -246,7 +246,7 @@
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
-      "version": ">= 2.2",
+      "version": ">= 2.3",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
