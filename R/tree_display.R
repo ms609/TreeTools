@@ -43,10 +43,11 @@
 #' plot(SortTree(messyTree, how = "tip"))
 #' @template MRS
 #' @family tree manipulation
-#'
+#' @seealso [`sort.multiPhylo()`] sorts a list of trees stored as a `multiPhylo`
+#' object.
 #' @export
 SortTree <- function(tree, how = "cladesize", order = TipLabels(tree)) {
-  UseMethod('SortTree')
+  UseMethod("SortTree")
 }
 
 #' @export
@@ -104,7 +105,7 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
  
   tree[["edge"]][, 2] <- child
   tree[["edge.length"]] <- weight
-  attr(tree, 'order') <- NULL
+  attr(tree, "order") <- NULL
   Renumber(tree)
 }
 
@@ -113,7 +114,7 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   parent <- edge[, 1]
   child <- edge[, 2]
   # Every node occurs once in `child` except the root
-  descendants <- vector('list', length(child) + 1L)
+  descendants <- vector("list", length(child) + 1L)
   descendants[seq_len(NTip(tree))] <- seq_len(NTip(tree))
   for (i in postorder_order(edge)) {
     descendants[[parent[i]]] <- c(descendants[[parent[i]]], 
