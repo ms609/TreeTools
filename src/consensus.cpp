@@ -3,7 +3,6 @@ using namespace Rcpp;
 
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
-using namespace TreeTools;
 
 #include <algorithm> /* for fill */
 #include <array> /* for array */
@@ -24,10 +23,10 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     thresh = frac_thresh > n_trees ? n_trees : frac_thresh
   ;
 
-  std::vector<ClusterTable> tables;
+  std::vector<TreeTools::ClusterTable> tables;
   tables.reserve(n_trees);
   for (int16 i = n_trees; i--; ) {
-    tables.emplace_back(ClusterTable(List(trees(i))));
+    tables.emplace_back(TreeTools::ClusterTable(Rcpp::List(trees(i))));
   }
 
   const int16

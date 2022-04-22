@@ -6,6 +6,9 @@
 #include "ape_reorder.h"
 
 extern SEXP _TreeTools_as_newick(SEXP);
+extern SEXP _TreeTools_ClusterTable_decode(SEXP);
+extern SEXP _TreeTools_ClusterTable_matrix(SEXP);
+extern SEXP _TreeTools_ClusterTable_new(SEXP);
 extern SEXP _TreeTools_consensus_tree(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_duplicated_splits(SEXP, SEXP);
@@ -43,6 +46,9 @@ static const R_CMethodDef cMethods[] = {
 
 static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
+  {"_TreeTools_ClusterTable_decode", (DL_FUNC) &_TreeTools_ClusterTable_decode, 1},
+  {"_TreeTools_ClusterTable_matrix", (DL_FUNC) &_TreeTools_ClusterTable_matrix, 1},
+  {"_TreeTools_ClusterTable_new", (DL_FUNC) &_TreeTools_ClusterTable_new, 1},
   {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
   {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},

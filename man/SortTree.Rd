@@ -64,6 +64,9 @@ plot(SortTree(messyTree, how = "tip"))
 \code{Preorder()} also rearranges trees into a consistent shape,
 based on the index of leaves.
 
+\code{\link[=sort.multiPhylo]{sort.multiPhylo()}} sorts a list of trees stored as a \code{multiPhylo}
+object.
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},
