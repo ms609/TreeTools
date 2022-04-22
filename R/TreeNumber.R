@@ -131,13 +131,12 @@ as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
 .TT_MAX_TIP <- 19L
 # Calculate with:
 # base <- cumprod(as.integer64(seq(1, by = 2, length.out = 16)))
-.TT_BASE <- structure(c(
-  4.94065645841247e-324, 1.48219693752374e-323, 7.4109846876187e-323, 
-  5.18768928133309e-322, 4.66892035319978e-321, 5.13581238851976e-320, 
-  6.67655610507569e-319, 1.00148341576135e-317, 1.7025218067943e-316, 
-  3.23479143290917e-315, 6.79306200910926e-314, 1.56240426209513e-312, 
-  3.90601065523782e-311, 1.05462287691421e-309, 3.05840634305121e-308, 
-  7.87815130491404e-296), class = "integer64")
+.TT_BASE <- as.integer64(c(
+  "191898783962510625", "6190283353629375", "213458046676875", "7905853580625",
+  "316234143225", "13749310575", "654729075", "34459425", "2027025", "135135",
+  "10395", "945", "105", "15", "3", "1"))
+
+.TTBases <- function (n) .TT_BASE[length(.TT_BASE) - n + seq_len(n)]
 
 #' @rdname TreeNumber
 #' @export
@@ -150,7 +149,7 @@ as.TreeNumber.phylo <- function(x, ...) {
             "by 64-bit TreeNumbers")
   }
 
-  edge <- Postorder(edge, sizeSort = TRUE)
+  edge <- Postorder(edge)
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
             tip.label = TipLabels(x),
@@ -184,7 +183,7 @@ as.TreeNumber.MixedBase <- function(x, ...) {
   }
   
   # Return:
-  structure(sum(as.integer(x) * .TT_BASE[rev(seq_along(x))]),
+  structure(sum(as.integer(x) * .TTBases(length(x))),
             nTip = NTip(x),
             tip.label = TipLabels(x),
             class = c("TreeNumber", "integer64"))
@@ -197,7 +196,7 @@ as.MixedBase.TreeNumber <- function(x, ...) {
   outLength <- nTip - 3L
   baseLength <- min(outLength, length(.TT_BASE))
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   n <- as.integer64(x)
   for (i in seq_len(baseLength)) {
@@ -219,7 +218,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
   baseLength <- if (x > max(.TT_BASE)) {
     length(.TT_BASE)
   } else {
-    which.max(.TT_BASE > x) - 1L
+    which.max(rev(.TT_BASE) > x)
   }
   tipLabels <- TipLabels(tipLabels)
   if (is.null(tipLabels)) {
@@ -231,7 +230,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
     stop("Number of tips too low; is tipLabels truncated?")
   }
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   
   for (i in seq_len(baseLength)) {
@@ -272,7 +271,9 @@ as.phylo.numeric <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0('t', seq_len(nTip))
+  }
   if (nTip == 1) {
     SingleTaxonTree(tipLabels)
   } else {
@@ -302,7 +303,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0('t', seq_len(nTip))
+  }
   if (nTip == 1) {
     SingleTaxonTree(tipLabels)
   } else {
@@ -328,6 +331,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
   INT_MAX <- as.integer64(2147483647L)
   i64 <- as.integer64(i64)
   if (i64 > INT_MAX) {
+    if (i64 > INT_MAX * INT_MAX) {
+      stop("Number too large for 64-bit representation")
+    }
     as.integer(c(i64 %/% INT_MAX, i64 %% INT_MAX))
   } else {
     as.integer(i64[1])
@@ -391,10 +397,10 @@ as.MixedBase.MixedBase <- function(x, ...) x
 #' @export
 as.MixedBase.phylo <- function(x, ...) {
   x <- RootTree(x, 1)
-  edge <- x[["edge"]]
   nTip <- NTip(x)
+  edge <- x[["edge"]]
   
-  edge <- Postorder(edge, sizeSort = TRUE)
+  edge <- Postorder(edge)
   structure(edge_to_mixed_base(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.label = TipLabels(x),

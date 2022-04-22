@@ -1,3 +1,6 @@
+#' @importFrom methods new setClass
+setClass("Splits", representation("raw"))
+
 #' Convert object to `Splits`
 #'
 #' `as.Splits()` converts a phylogenetic tree to a `Splits` object representing
@@ -53,15 +56,45 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
+  edge <- x[["edge"]]
+  nEdge <- dim(edge)[1]
+  order <- attr(x, "order")[1]
+  edgeOrder <- if (is.null(order)) {
+    postorder_order(edge)
+  } else {
+    switch(order,
+           "preorder" = nEdge:1,
+           "postorder" = seq_len(nEdge),
+           postorder_order(edge))
+  }
 
   # Return:
-  .as.Splits.edge(x[["edge"]], tipLabels = x[["tip.label"]],
-                  asSplits = asSplits, nTip = NTip(x), ...)
+  edge_to_splits(edge, edgeOrder, tipLabels = x[["tip.label"]],
+                 asSplits = asSplits, nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function(edge, tipLabels = NULL, asSplits = TRUE,
-                             nTip = NTip(edge), ...) {
-  splits <- cpp_edge_to_splits(Postorder(edge, FALSE), nTip)
+#' Efficiently convert edge matrix to splits
+#' 
+#' Wrapper for internal C++ function for maximum efficiency.
+#' Improper input may crash R.  Behaviour not guaranteed.
+#' It is advisable to contact the package maintainers before
+#' relying on this function.
+#' 
+#' @template edgeParam
+#' @param edgeOrder Integer vector such that `edge[edgeOrder, ]` returns a
+#' postorder ordering of edges.
+#' @param nTip Integer specifying number of leaves in tree.
+#' @inheritParams Splits
+#' @return `edge_to_splits()` uses the same return format as `as.Splits()`.
+#' 
+#' @seealso [`as.Splits()`][Splits] offers a safe access point to this
+#' function that should be suitable for most users.
+#' 
+#' @family C++ wrappers
+#' @export
+edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
+                           nTip = NTip(edge), ...) {
+  splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
   nSplits <- dim(splits)[1]
 
   # Return:
@@ -163,8 +196,9 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
     } else {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
-  } else if (dim(x)[2] == 2) {
-    .as.Splits.edge(x, tipLabels = NULL, asSplits = TRUE, ...)
+  } else if (is.numeric(x) && dim(x)[2] == 2) {
+    edge_to_splits(x, postorder_order(x),
+                   tipLabels = NULL, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }
@@ -214,7 +248,7 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
 
 #' @rdname Splits
 #' @export
-as.logical.Splits <- function(x, tipLabels = NULL, ...) {
+as.logical.Splits <- function(x, tipLabels = attr(x, 'tip.label'), ...) {
   nTip <- attr(x, 'nTip')
   if (dim(x)[1] == 0) {
     ret <- matrix(logical(0), 0, nTip)
@@ -222,7 +256,7 @@ as.logical.Splits <- function(x, tipLabels = NULL, ...) {
     ret <- matrix(as.logical(rawToBits(t(x))),
                   nrow = nrow(x), byrow = TRUE)[, seq_len(nTip), drop = FALSE]
   }
-  dimnames(ret) <- list(rownames(x), attr(x, 'tip.label'))
+  dimnames(ret) <- list(rownames(x), tipLabels)
   ret
 }
 
@@ -361,20 +395,46 @@ c.Splits <- function(...) {
   }
 }
 
-#' @family Splits operations
-#' @export
-`!.Splits` <- function(x) {
-  nTip <- attr(x, 'nTip')
-  x[] <- !x[]
-  remainder <- (8L - nTip) %% 8L
-  if (remainder) {
-    lastSplit <- dim(x)[2]
-    endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
-    x[, lastSplit] <- x[, lastSplit] & endMask
-  }
-  x
+.MaskSplits <- function(x) {
+  mask_splits(x)
 }
 
+#' @family Splits operations
+#' @method ! Splits
+#' @export
+`!.Splits` <- function(x) {
+  not_splits(x)
+}
+
+#' @family Splits operations
+#' @method & Splits
+#' @export
+`&.Splits` <- function(e1, e2) {
+  and_splits(e1, e2)
+}
+
+#' @family Splits operations
+#' @method | Splits
+#' @export
+`|.Splits` <- function(e1, e2) {
+  or_splits(e1, e2)
+}
+
+
+#' Exclusive OR operation
+#' @rdname xor
+#' @param x,y Objects to be compared.
+setGeneric("xor")
+
+#' @family Splits operations
+#' @rdname xor
+#' @importFrom methods setMethod
+#' @export
+setMethod("xor", signature = representation(x = "Splits", y = "Splits"),
+          function(x, y) xor_splits(x, y))
+
+#' @export
+t.Splits <- function(x) t(x[])
 
 #' @family Splits operations
 #' @export
@@ -383,28 +443,55 @@ length.Splits <- function(x) nrow(x)
 #' @family Splits operations
 #' @importFrom stats setNames
 #' @export
-duplicated.Splits <- function(x, incomparables = FALSE, ...) {
-  dupX <- !x
-  useOrig <- x[, 1] < dupX[, 1]
-  dupX[useOrig, ] <- x[useOrig, ]
-  
-  if (dim(dupX)[2] == 1) {
-    setNames(duplicated.default(dupX, incomparables = incomparables, ...),
-             names(dupX))
+duplicated.Splits <- function(x, incomparables, fromLast = FALSE,
+                              withNames = TRUE, ...) {
+  if (missing(incomparables)) {
+    ret <- duplicated_splits(x, isTRUE(fromLast))
+    if (withNames) names(ret) <- names(x)
+    ret
   } else {
-    duplicated.array(dupX, MARGIN = 1, incomparables = incomparables, ...)
+    dupX <- !x
+    useOrig <- x[, 1] < dupX[, 1]
+    dupX[useOrig, ] <- x[useOrig, ]
+    
+    if (dim(dupX)[2] == 1) {
+      ret <- duplicated.default(dupX, incomparables = incomparables, 
+                         fromLast = fromLast, ...)
+      if (withNames) {
+        setNames(ret, names(dupX))
+      } else {
+        ret
+      }
+    } else {
+      ret <- duplicated.array(dupX, MARGIN = 1, incomparables = incomparables,
+                              fromLast = fromLast, ...)
+      if (withNames) {
+        ret
+      } else {
+        as.logical(ret)
+      }
+    }
   }
 }
 
 #' @family Splits operations
 #' @export
-unique.Splits <- function(x, incomparables = FALSE, ...) {
+unique.Splits <- function(x, incomparables, ...) {
   at <- attributes(x)
   dups <- duplicated(x, incomparables, ...)
   x <- x[!dups, , drop = FALSE]
   at[["dim"]] <- dim(x)
   at[["dimnames"]] <- dimnames(x)
   attributes(x) <- at
+  x
+}
+
+#' @family Splits operations
+#' @export
+rev.Splits <- function(x) {
+  newOrder <- seq.int(dim(x)[1], 1)
+  x[] <- x[newOrder, ]
+  rownames(x) <- rownames(x)[newOrder]
   x
 }
 
@@ -420,8 +507,9 @@ unique.Splits <- function(x, incomparables = FALSE, ...) {
 #' It will be deprecated in a future release.
 #'
 #' @param x,table Object of class `Splits`.
-#' @param \dots Specify `nomatch =` to provide an integer value that will be
-#' used in place of `NA` in the case where no match is found.
+#' @param nomatch Integer value that will be used in place of `NA` in the case
+#' where no match is found.
+#' @param incomparables Ignored. (Included for consistency with generic.)
 # @param incomparables A vector of values that cannot be matched. Any value in
 # `x` matching a value in this vector is assigned the `nomatch` value.
 # For historical reasons, `FALSE` is equivalent to `NULL`.
@@ -441,84 +529,50 @@ unique.Splits <- function(x, incomparables = FALSE, ...) {
 #' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
-#' @export
-#' @keywords methods
-# Following https://github.com/cran/bit64/blob/master/R/patch64.R
-"match" <- if (!exists("match.default")) {
-  function(x, table, ...) UseMethod("match")
-} else {
-  match
-}
-
-#' @method match default
-#' @export
-"match.default" <- if (!exists("match.default")) {
-  function(x, table, ...) base::"match"(x, table, ...)
-} else {
-  match.default
-}
-
-#' @rdname match
+#' @aliases match,Splits,Splits-method
 #' @family Splits operations
-#' @method match Splits
-#' @export
-match.Splits <- function(x, table, ...) {
-  nomatch <- as.integer(c(...)['nomatch'])
-  if (length(nomatch) != 1L) {
-    nomatch <- NA_integer_
-  }
-
-  vapply(seq_along(x), function(i) {
-    ret <- which(table %in% x[[i]])
-    if (length(ret) == 0) ret <- nomatch
-    ret
-  }, integer(1))
-}
-
-#' @rdname match
-#' @export
-match.list <- function(x, table, ...) {
-  if (inherits(x, 'Splits')) {
-    match.Splits(x, table, ...)
-  } else {
-    NextMethod()
-  }
-}
-
-#' @rdname match
-#' @export
 #' @keywords methods
-`%in%` <- if (!exists("%in%.default")) {
-  function(x, table) UseMethod("%in%")
-} else {
-  `%in%`
-}
-
-#' @method %in% default
+#' 
+#' @name match.Splits
 #' @export
-"%in%.default" <- if (!exists("%in%.default")) {
-  function(x, table) base::"%in%"(x, table)
-} else {
-  `%in%.default`
-}
+setMethod("match",
+          signature(x = "Splits", table = "Splits"),
+          function(x, table, nomatch, incomparables) {
+            if(missing("nomatch")) {
+              nomatch <- NA_integer_
+            }
+            nomatch <- as.integer(nomatch)
+            if (length(nomatch) != 1L) {
+              nomatch <- NA_integer_
+            }
+            vapply(seq_along(x), function(i) {
+              ret <- which(table %in% x[[i]])
+              if (length(ret) == 0) ret <- nomatch
+              ret
+            }, integer(1))
+})
 
-#' @rdname match
-#'
-#' @return `%in%` returns a logical vector specifying which of the splits in
-#' `x` are present in `table`.
-#'
-#' @examples
-#' splits1 %in% splits2
-#'
-#' @method %in% Splits
+# Replaces a previous approach (TreeTools <= 1.6.0) that followed
+# https://github.com/cran/bit64/blob/master/R/patch64.R
+
+
+#' @rdname match.Splits
 #' @export
-`%in%.Splits` <- function(x, table) {
+in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
 
-#' @rdname match
+#' @rdname match.Splits
+setGeneric("match")
+
+
+#' @rdname match.Splits
 #' @export
-in.Splits <- `%in%.Splits`
+#' @keywords methods
+setMethod("%in%",
+          signature(x = "Splits", table = "Splits"),
+          in.Splits)
+
 
 #' Polarize splits on a single taxon
 #'

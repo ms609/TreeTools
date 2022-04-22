@@ -1,4 +1,4 @@
-test_that('Pectinate trees are generated', {
+test_that("Pectinate trees are generated", {
   expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
                PectinateTree(4L))
   expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
@@ -13,18 +13,23 @@ test_that('Pectinate trees are generated', {
 
 test_that('Balanced trees are generated correctly', {
   # nTip even
-  expect_equal(ape::read.tree(text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));'),
-               BalancedTree(8L))
+  expect_equal(BalancedTree(8L),
+               Preorder(ape::read.tree(
+                 text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));')
+               ))
   # nTip odd
-  expect_equal(ape::read.tree(text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));'),
-               BalancedTree(9L))
+  expect_equal(BalancedTree(9L),
+               Preorder(ape::read.tree(
+                 text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));')
+               ))
+  expect_equal(BalancedTree(9L)$edge, Preorder(BalancedTree(9L)$edge))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
   escapees <- c("Apostrophe's", 'and quote"s')
   expect_equal(ignore_attr = TRUE,
                PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
-  expect_equal('Test', .BalancedBit('Test'))
-  expect_true(is.integer(BalancedTree(8)$edge))
+  expect_equal("Test", .BalancedBit('Test'))
+  expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
 test_that("StarTree() works", {
@@ -87,7 +92,7 @@ test_that("Hamming() handles inapplicables", {
                 NaN, 1/2,
                 1)
   expect_equal(as.double(Hamming(dataset, ambig = "NaN")), expected)
-  
+
 })
 
 test_that("NJTree() works", {
@@ -98,8 +103,10 @@ test_that("NJTree() works", {
     RootTree(NJTree(bal6), a..f[1:3]),
     BalancedTree(letters[c(1:3, 6:4)])
   ))
+  expect_equal(NJTree(bal6, edgeLengths = TRUE),
+               Preorder(NJTree(bal6, edgeLengths = TRUE)))
   expect_equal(c(0, 1, 2, 1, rep(0, 6)),
-               Preorder(NJTree(bal6, TRUE))$edge.length * 4L)
+               RootTree(NJTree(bal6, edgeLengths = TRUE), 6)$edge.length * 4L)
 })
 
 test_that("Constrained NJ trees work", {

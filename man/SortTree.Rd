@@ -7,22 +7,32 @@
 \alias{SortTree.multiPhylo}
 \title{Sort tree}
 \usage{
-SortTree(tree)
+SortTree(tree, how = "cladesize", order = TipLabels(tree))
 
-\method{SortTree}{phylo}(tree)
+\method{SortTree}{phylo}(tree, how = "cladesize", order = TipLabels(tree))
 
-\method{SortTree}{list}(tree)
+\method{SortTree}{list}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
 
-\method{SortTree}{multiPhylo}(tree)
+\method{SortTree}{multiPhylo}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
 }
 \arguments{
 \item{tree}{One or more trees of class \code{phylo}, optionally as a list
 or a \code{multiPhylo} object.}
+
+\item{how}{Character vector specifying sort method:
+\code{"Cladesize"} rotates each node such that the larger clade is first,
+thus appearing lower when plotted;
+\code{"TipLabels"} rotates nodes such that labels listed sooner in \code{order}
+are listed first, and thus plot lower.}
+
+\item{order}{Character vector listing tip labels in sequence they should
+appear on tree. Clades containing a taxon earlier in this list will be listed
+sooner and thus plot lower on a tree.  Taxa not listed in \code{order} will be
+treated as if they were last in the list.}
 }
 \value{
 \code{SortTree()} returns tree in the format of \code{tree}, with each node
-in each tree sorted such that the larger clade is first, thus appearing
-lower when plotted.
+in each tree sorted
 }
 \description{
 \code{SortTree()} sorts each node into a consistent order, so that node rotation
@@ -47,10 +57,12 @@ plot(sorted)
 ape::nodelabels()
 ape::edgelabels()
 ape::tiplabels(adj = c(2, 1/3))
+
+plot(SortTree(messyTree, how = "tip"))
 }
 \seealso{
-\code{Preorder()} also rearranges trees into a consistent shape, but
-based on the index of leaves rather than the size of subtrees.
+\code{Preorder()} also rearranges trees into a consistent shape,
+based on the index of leaves.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},
@@ -59,6 +71,8 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},

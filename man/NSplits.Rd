@@ -55,6 +55,7 @@ NSplits(as.Splits(BalancedTree(8)))
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
@@ -68,7 +69,8 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

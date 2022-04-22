@@ -9,10 +9,6 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
-drop_tip <- function(edge, drop) {
-    .Call(`_TreeTools_drop_tip`, edge, drop)
-}
-
 num_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_num_to_parent`, n, nTip)
 }
@@ -33,16 +29,48 @@ mixed_base_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
 }
 
-keep_tip <- function(edge, keep) {
-    .Call(`_TreeTools_keep_tip`, edge, keep)
+kept_vertices <- function(edge, kept) {
+    .Call(`_TreeTools_kept_vertices`, edge, kept)
 }
 
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
 
-cpp_edge_to_splits <- function(edge, nTip) {
-    .Call(`_TreeTools_cpp_edge_to_splits`, edge, nTip)
+path_lengths <- function(edge, weight) {
+    .Call(`_TreeTools_path_lengths`, edge, weight)
+}
+
+cpp_edge_to_splits <- function(edge, order, nTip) {
+    .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
+}
+
+duplicated_splits <- function(splits, fromLast) {
+    .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
+}
+
+mask_splits <- function(x) {
+    .Call(`_TreeTools_mask_splits`, x)
+}
+
+not_splits <- function(x) {
+    .Call(`_TreeTools_not_splits`, x)
+}
+
+xor_splits <- function(x, y) {
+    .Call(`_TreeTools_xor_splits`, x, y)
+}
+
+and_splits <- function(x, y) {
+    .Call(`_TreeTools_and_splits`, x, y)
+}
+
+or_splits <- function(x, y) {
+    .Call(`_TreeTools_or_splits`, x, y)
+}
+
+thin_splits <- function(splits, drop) {
+    .Call(`_TreeTools_thin_splits`, splits, drop)
 }
 
 splits_to_edge <- function(splits, nTip) {

@@ -1,5 +1,6 @@
 mfrow
 edgelabels
+etc
 nodelabels
 png
 ABCD
@@ -36,6 +37,7 @@ Preorder
 Pruningwise
 R's
 RStudio
+Rcpp
 RdMacros
 Rdpack
 Rohlf

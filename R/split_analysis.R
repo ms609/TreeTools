@@ -6,6 +6,8 @@
 #' @param splits Object of class `Splits` or `phylo`.
 #' @param keep.names Logical specifying whether to include the names of `splits`
 #' in the output.
+#' @param smallest Logical; if `TRUE`, return the number of leaves in the
+#' smaller bipartition.
 #' @param \dots Additional parameters to pass to `as.Splits()`.
 #'
 #' @return `TipsInSplits()` returns a named vector of integers, specifying the
@@ -23,20 +25,33 @@
 #'
 #' @family Splits operations
 #' @export
-TipsInSplits <- function(splits, keep.names = TRUE, ...) UseMethod('TipsInSplits')
+TipsInSplits <- function(splits, keep.names = TRUE, smallest = FALSE, ...) {
+  UseMethod('TipsInSplits')
+}
 
 #' @rdname TipsInSplits
 #' @export
-TipsInSplits.Splits <- function(splits, keep.names = TRUE, ...) {
+TipsInSplits.Splits <- function(splits, keep.names = TRUE, smallest = FALSE,
+                                ...) {
   ret <- tips_in_splits(splits)
-  if (keep.names) names(ret) <- names(splits)
+  if (smallest) {
+    nTip <- NTip(splits)
+    big <- ret > nTip / 2
+    ret[big] <- nTip - ret[big]
+  }
+  if (keep.names) {
+    names(ret) <- names(splits)
+  }
   ret
 }
 
 #' @rdname TipsInSplits
 #' @export
-TipsInSplits.phylo <- function(splits, keep.names = TRUE, ...) {
-  TipsInSplits(as.Splits(splits, ...), keep.names = keep.names)
+TipsInSplits.phylo <- function(splits, keep.names = TRUE, smallest = FALSE,
+                               ...) {
+  TipsInSplits(as.Splits(splits, ...),
+               keep.names = keep.names,
+               smallest = smallest)
 }
 
 #' @rdname TipsInSplits

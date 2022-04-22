@@ -32,12 +32,10 @@ reference:
       Functions describing properties of trees.
     contents:
       - has_concept("tree characterization functions")
+      - has_concept("tree properties")
       - has_concept("consensus tree functions")
-      - NTip
       - NPartitions
       - PairwiseDistances
-      - TipLabels
-      - TreeIsRooted
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
@@ -101,8 +99,14 @@ reference:
       - RightmostCharacter
       - SampleOne
       - sapply64
+      - SpectrumLegend
       - sort.multiPhylo
       - UnshiftTree
+      
+  - title: "Developer functions"
+    desc: "Efficient functions without input checks, for developers"
+    contents: 
+      - has_concept("C++ wrappers")
 
 template:
   params:
@@ -110,4 +114,4 @@ template:
     docsearch:
       api_key: 6078115fdeb422f23fe2f8c478c70150
       index_name: treetools
-    ganalytics: UA-156666971-2
+    ganalytics: 312389031

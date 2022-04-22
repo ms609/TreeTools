@@ -89,10 +89,10 @@ jobs:
         if: runner.os != 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
-            phangorn=?ignore-before-r=4.1.0
           needs: |
             check
+          extra-packages: |
+            phangorn=?ignore-before-r=4.1.0
 
       - name: Set up pandoc
         uses: r-lib/actions/setup-pandoc@v2

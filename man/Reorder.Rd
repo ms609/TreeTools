@@ -21,6 +21,9 @@
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
+\alias{PostorderOrder}
+\alias{PostorderOrder.phylo}
+\alias{PostorderOrder.numeric}
 \alias{Pruningwise}
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
@@ -34,7 +37,7 @@
 \alias{Preorder.NULL}
 \title{Reorder tree edges and nodes}
 \usage{
-RenumberTree(parent, child)
+RenumberTree(parent, child, weight)
 
 RenumberEdges(parent, child, ...)
 
@@ -60,17 +63,23 @@ ApePostorder(tree, nTip, edge)
 
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
-Postorder(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+Postorder(tree, force = FALSE)
 
-\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{phylo}(tree, force = FALSE)
 
-\method{Postorder}{`NULL`}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{`NULL`}(tree, force = FALSE)
 
-\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{list}(tree, force = FALSE)
 
-\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{multiPhylo}(tree, force = FALSE)
 
-\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE, sizeSort = TRUE)
+\method{Postorder}{numeric}(tree, force = FALSE)
+
+PostorderOrder(tree)
+
+\method{PostorderOrder}{phylo}(tree)
+
+\method{PostorderOrder}{numeric}(tree)
 
 Pruningwise(tree, nTip, edge)
 
@@ -101,6 +110,9 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
+\item{weight}{Optional vector specifying the weight of each edge,
+corresponding to the \code{edge.length} property of a \code{phylo} object.}
+
 \item{\dots}{Deprecated; included for compatibility with previous versions.}
 
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
@@ -130,6 +142,9 @@ specified numbering scheme.
 \code{Postorder.numeric} accepts a numeric matrix corresponding to the
 \code{edge} entry of a tree of class \code{phylo}, and returns a two-column array
 corresponding to \code{tree}, with edges listed in postorder
+
+\code{PostorderOrder()} returns an integer vector. Visiting edges in this
+order will traverse the tree in postorder.
 }
 \description{
 Functions for systematically ordering the internal edges of trees.
@@ -152,7 +167,8 @@ Its output is guaranteed to be identical for any tree of an equivalent
 topology, allowing unique trees to be detected by comparing sorted edge
 matrices alone.
 
-A tree in preorder is numbered starting from the root node.
+Nodes and edges in a preorder tree are numbered starting from the deepest
+node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.
 
@@ -170,12 +186,10 @@ sorted into preorder, until each edge has been visited.
 \code{preorder_edges_and_nodes()}; they do not perform the same checks on input
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
-\code{Postorder()} is an optimized implementation that if \code{sizeSort = TRUE}
-return a specific order:
-edges are listed from the node that subtends the smallest
-subtree to the one that subtends the largest (i.e. the root node), with
-all of a node's descendant edges listed adjacently.  If a tree is already
-in postorder, it will not be rearranged unless \code{force = TRUE}.
+\code{Postorder()} numbers nodes as in \code{Preorder()}, and lists edges in
+descending order of parent node number, breaking ties by listing child
+nodes in increasing order.  If a tree is already in postorder, it will not
+be rearranged unless \code{force = TRUE}.
 
 Methods applied to numeric inputs do not check input for sanity, so should
 be used with caution: malformed input may cause undefined results, including
@@ -193,8 +207,6 @@ advice.
 \item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
 function, which is robust to unconventional node numbering.
 
-\item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
-
 \item \code{Pruningwise}: Reorder tree Pruningwise.
 
 \item \code{Preorder}: Reorder tree in Preorder (special case of cladewise).
@@ -210,6 +222,8 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},

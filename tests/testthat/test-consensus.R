@@ -1,4 +1,6 @@
 test_that("Consensus() errors", {
+  expect_error(Consensus(trees), regexp = " a list")
+  
   bal8 <- BalancedTree(8)
   oneLeaf <- Consensus(list(DropTip(bal8, 1:7))[c(1, 1, 1)])
   expect_equal(class(oneLeaf), 'phylo')
@@ -8,7 +10,7 @@ test_that("Consensus() errors", {
   expect_warning(expect_true(all.equal(
     Consensus(list(PectinateTree(6), PectinateTree(8))),
     PectinateTree(6)
-  )))
+  )), regexp = "Tree sizes")
 
   halfTree <- CollapseNode(bal8, 10:12)
   expect_equal(Consensus(halfTree), halfTree)
@@ -31,8 +33,8 @@ test_that("Consensus()", {
 
   trees <- list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)]
   trees <- RenumberTips(trees, trees[[1]])
-  expect_error(Consensus(trees, 2)) # p too hign
-  expect_error(Consensus(trees, 0.2)) # p too low
+  expect_error(Consensus(trees, 2), regexp = "`p`") # p too hign
+  expect_error(Consensus(trees, 0.2), regexp = "`p`") # p too low
 
   ApeTest(trees)
   ApeTest(trees, 0.5)

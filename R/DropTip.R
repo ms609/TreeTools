@@ -27,14 +27,16 @@
 #' plot(tree)
 #' plot(DropTip(tree, c('t5', 't6')))
 #' 
-#' unrooted <- unroot(tree)
+#' unrooted <- UnrootTree(tree)
 #' plot(unrooted)
 #' plot(DropTip(unrooted, 4:5))
 #'
 #' @family tree manipulation
 #' @template MRS
 #' @export
-DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) UseMethod("DropTip")
+DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  UseMethod("DropTip")
+}
 
 #' @rdname DropTip
 #' @export
@@ -45,15 +47,16 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   labels <- tree[["tip.label"]]
   nTip <- length(labels)
   if (is.null(tip) || !length(tip) || any(is.na(tip))) {
-    drop <- logical(0)
+    drop <- logical(nTip)
   } else if (is.character(tip)) {
-    drop <- match(tip, labels)
     if (check) {
-      missing <- is.na(drop)
-      if (any(missing)) {
-        warning(paste(tip[missing], collapse = ', '), " not present in tree")
-        drop <- drop[!missing]
+      drop <- labels %in% tip
+      if (sum(drop) != length(tip)) {
+        warning(paste(tip[!tip %in% labels], collapse = ', '),
+                " not present in tree")
       }
+    } else {
+      drop <- labels %in% tip
     }
   } else if (is.numeric(tip)) {
     if (check) {
@@ -71,34 +74,144 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
         edge <- tree[["edge"]]
         parent <- edge[, 1]
         child <- edge[, 2]
-        drop <- c(tip[tip <= nTip],
-                  .DescendantTips(parent, child, nTip, tip[tip > nTip]))
+        drop <- tabulate(c(tip[tip <= nTip],
+                           .DescendantTips(parent, child, nTip,
+                                           tip[tip > nTip])),
+                         nbins = nTip)
       } else {
-        drop <- tip
+        drop <- as.logical(tabulate(tip, nbins = nTip))
       }
     } else {
-      drop <- tip
+      drop <- as.logical(tabulate(tip, nbins = nTip))
     }
+  } else if (is.logical(tip)) {
+    if (check) {
+      if (length(tip) != nTip) {
+        stop("`tip` must list `TRUE` or `FALSE` for each leaf.")
+      }
+    }
+    drop <- tip
   } else {
     stop("`tip` must be of type character or numeric")
   }
   
-  nDrop <- length(drop)
-  if (nDrop) {
-    if (nDrop == nTip) {
-      return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                            Nnode = 0), class = 'phylo'))
+  if (all(drop)) {
+    return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
+                          Nnode = 0), class = 'phylo'))
+  }
+  
+  if (any(drop)) {
+    weights <- tree[["edge.length"]]
+    keep <- !drop
+    if (!is.null(weights)) {
+      original <- PathLengths(tree)
+      rownames(original) <- apply(original[, 1:2], 1, paste, collapse = " ")
+      verts <- KeptVerts(tree, keep)
     }
-    
-    keep <- !tabulate(drop, nbins = nTip)
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
-    attr(tree, 'order') <- 'cladewise' # some nodes may be rotated from preorder
-    tree[["tip.label"]] <- labels[-drop]
-    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - (nTip - nDrop)
+    tree[["tip.label"]] <- labels[keep]
+    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(keep)
+    
+    if (!is.null(weights)) {
+      tree[["edge.length"]] <- original[
+        apply(matrix(which(verts)[tree[["edge"]]], ncol = 2L),
+              1, paste, collapse = " "), "length"]
+    }
   }
   
   # Return:
   tree
+}
+
+#' @describeIn DropTip Faster version with no checks.
+#' Does not retain tip labels or edge weights.
+#' edges must be listed in preorder.
+#' May crash if improper input is specified.
+#' @export
+KeepTipPreorder <- function(tree, tip) {
+  if (!any(tip)) {
+    structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
+                          Nnode = 0), class = 'phylo')
+  } else if (all(tip)) {
+    tree
+  } else {
+    tree[["edge"]] <- keep_tip(tree[["edge"]], tip)
+    tree[["tip.label"]] <- as.character(which(tip))
+    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(tip) 
+    tree
+  }
+}
+  
+#' @describeIn DropTip Faster version with no checks.
+#' Does not retain tip labels or edge weights.
+#' edges must be listed in postorder.
+#' May crash if improper input is specified.
+#' @export
+KeepTipPostorder <- function(tree, tip) {
+  if (!any(tip)) {
+    structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
+                          Nnode = 0), class = 'phylo')
+  } else if (all(tip)) {
+    tree
+  } else {
+    edge <- tree[["edge"]]
+    tree[["edge"]] <- keep_tip(edge[dim(edge)[1]:1, ], tip)
+    tree[["tip.label"]] <- tree[["tip.label"]][tip]
+    tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(tip) 
+    tree
+  }
+}
+
+#' @rdname DropTip
+#' @examples summary(DropTip(as.Splits(tree), 4:5))
+#' @family split manipulation functions
+#' @export
+DropTip.Splits <- function(tree, tip, preorder, check = TRUE) {
+  labels <- TipLabels(tree)
+  if (is.null(tip) || !length(tip) || any(is.na(tip))) {
+    return(tree)
+  } else if (is.character(tip)) {
+    if (check) {
+      drop <- match(tip, labels)
+      missing <- is.na(drop)
+      if (any(missing)) {
+        warning(paste(tip[missing], collapse = ', '), " not present in tree")
+        drop <- drop[!missing]
+      }
+      drop <- as.logical(tabulate(drop, NTip(tree)))
+    } else {
+      drop <- labels %in% tip
+    }
+  } else if (is.numeric(tip)) {
+    nTip <- NTip(tree)
+    if (check) {
+      if (any(tip > nTip)) {
+        warning("Tree only has ", nTip, " leaves")
+        tip <- tip[tip <= nTip]
+      }
+      if (any(tip < 1L)) {
+        warning("`tip` must be > 0")
+        tip <- tip[tip > 0L]
+      }
+    }
+    drop <- as.logical(tabulate(tip, nTip))
+  } else if (is.logical(tip)) {
+    if (check && length(tip) != NTip(tree)) {
+      stop("`tip` must contain an entry for each leaf of `tree`.")
+    }
+    drop <- tip
+  } else {
+    stop("`tip` must be of type character, numeric or logical")
+  }
+  
+  keep <- !drop
+  thinner <- structure(thin_splits(tree, drop),
+                       nTip = sum(keep),
+                       tip.label = labels[keep],
+                       class = "Splits")
+  
+  # Return:
+  unique(thinner, fromLast = TRUE)
 }
 
 # nodes must all be internal
@@ -138,14 +251,18 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 #' in preorder.
 #' @export
 KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
-  labels <- if (is.character(tip)) {
-    TipLabels(tree)
+  if (is.logical(tip)) {
+    keep <- !tip
   } else {
-    seq_len(NTip(tree))
+    labels <- if (is.character(tip)) {
+      TipLabels(tree)
+    } else {
+      seq_len(NTip(tree))
+    }
+    if (!all(tip %in% labels)) {
+      warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
+    }
+    keep <- setdiff(labels, tip)
   }
-  if (!all(tip %in% labels)) {
-    warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
-  }
-  keep <- setdiff(labels, tip)
   DropTip(tree, keep, preorder, check)
 }

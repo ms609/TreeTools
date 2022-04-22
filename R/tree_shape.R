@@ -78,7 +78,7 @@ utils::globalVariables(c('nRootedShapes',
 RootedTreeShape <- function(tree) {
   edge <- tree[["edge"]]
   nTip <- NTip(tree)
-  edge <- Postorder(edge, renumber = FALSE, sizeSort = TRUE)
+  edge <- Postorder(edge)
   .Int64(edge_to_rooted_shape(edge[, 1], edge[, 2], nTip))
 }
 
@@ -133,11 +133,11 @@ RootedTreeWithShape.integer64 <- function(shape, nTip,
 #' @export
 UnrootedTreeWithShape <- function(shape, nTip, tipLabels = character(nTip)) {
   if (nTip > 30) {
-    stop("Only trees with < 31 tips are presently handled")
+    stop("Only trees with < 31 leaves are presently handled")
   }
   nShapes <- nUnrootedShapes[nTip]
   if (shape >= as.integer(nShapes)) {
-    stop("Shape must be between 0 and ", nShapes)
+    stop("Shape must be between 0 and ", nShapes - 1L)
   }
 
   key <- UnrootedKeys(nTip)[shape + 1L]
@@ -172,8 +172,7 @@ UnrootedTreeShape <- function(tree) {
 #' @importFrom bit64 integer64
 #' @export
 UnrootedTreeKey <- function(tree, asInteger = FALSE) {
-  tree <- Preorder(tree) # Guarantee unique representation of tree
-  edge <- Postorder(tree[["edge"]], renumber = FALSE, sizeSort = TRUE)
+  edge <- Postorder(tree[["edge"]])
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]

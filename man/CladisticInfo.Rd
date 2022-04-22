@@ -41,9 +41,9 @@ split in turn.
 content of a phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
-The \acronym{CIC} is the logarithm of the number of binary trees that include the
-specified topology.  A base two logarithm gives an information content in
-bits.
+The \acronym{CIC} is the logarithm of the number of binary trees that
+include the specified topology.
+A base two logarithm gives an information content in bits.
 
 The \acronym{CIC} was originally proposed by
 \insertCite{Rohlf1982;textual}{TreeTools}, and formalised,

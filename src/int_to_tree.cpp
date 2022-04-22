@@ -1,14 +1,15 @@
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
 #include <random>
+#include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
 
 // [[Rcpp::export]]
-IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
+IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
   if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
+    Rcpp::stop("nTip must be > 1");
   }
   const intx
     n_tip = nTip[0],
@@ -49,11 +50,10 @@ IntegerVector num_to_parent(const NumericVector n, const IntegerVector nTip) {
   return edge;
 }
 
+// Checking that nTip > 2 is caller's responsibility.
 // [[Rcpp::export]]
 IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) {
-  if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
-  }
+
   const intx
     n_tip = nTip[0],
     root_node = n_tip + n_tip - 1,
@@ -67,14 +67,20 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
   IntegerVector edge(n_tip + n_tip - 2);
   edge(0) = root_node;
   edge(1) = root_node;
+  
+  const intx i2 = 2;
+  const intx where2 = 1;
+  edge(i2 + prime) = edge(where2);
+  edge(i2) = i2 + prime + c_to_r;
+  edge(where2) = i2 + prime + c_to_r;
 
-  for (intx i = 2; i != n_tip; i++) {
+  for (intx i = 3; i != n_tip; i++) {
     base = (i + i - 3);
     const intx
       i_prime = i + prime,
       i_prime_r = i_prime + c_to_r
     ;
-
+    
     std::uniform_int_distribution<std::mt19937::result_type> place(1, base);
     intx where = place(rng);
     if (where >= i) {
@@ -102,7 +108,7 @@ intx maximum (const intx x, const intx y) {
 IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
                    IntegerVector nTip) {
   if (parent.size() != child.size()) {
-    throw std::length_error("Parent and child must be the same length");
+    Rcpp::stop("Parent and child must be the same length");
   }
   const intx
     n_tip = nTip[0],
@@ -115,7 +121,7 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
     return IntegerVector(1); // A length one, zero initialized vector
   }
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2");
+    Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
   intx smallest_below[MAX_NODE],
        parent_of[MAX_NODE],
@@ -173,7 +179,7 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
 IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
                                  IntegerVector nTip) {
   if (parent.size() != child.size()) {
-    throw std::length_error("Parent and child must be the same length");
+    Rcpp::stop("Parent and child must be the same length");
   }
   const intx
     n_tip = nTip[0],
@@ -186,7 +192,7 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
     return IntegerVector(0);
   }
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2");
+    Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
   intx
     smallest_below[MAX_NODE],
@@ -239,7 +245,7 @@ IntegerVector mixed_base_to_parent(
     const IntegerVector nTip
   ) {
   if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
+    Rcpp::stop("nTip must be > 1");
   }
   const intx
     n_tip = nTip[0],

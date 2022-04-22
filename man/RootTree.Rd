@@ -44,10 +44,6 @@ tips;
 encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 preorder.
 }
-\details{
-Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
-a GitHub issue if you would find this useful.
-}
 \examples{
 tree <- PectinateTree(8)
 plot(tree)
@@ -71,6 +67,8 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},

@@ -16,6 +16,9 @@
 #' @name GenerateTree
 NULL
 
+# Until require R >= 3.5.0
+.isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+
 #' @rdname GenerateTree
 #'
 #' @param root Character or integer specifying tip to use as root, if desired;
@@ -57,14 +60,21 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (nodes < 1L) {
     stop("A tree must contain one or more `nodes`")
   }
+
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
-  if (!is.logical(root) 
+  if (!is.logical(root)
       && !(length(root) == 1L && root == 1L)) {
-    if (is.character(root)) root <- which(tips == root)
-    if (length(root) == 0L) stop("No match found for `root`")
-    if (!is.integer(root)) root <- as.integer(root)
+    if (is.character(root)) {
+      root <- which(tips == root)
+    }
+    if (length(root) == 0L) {
+      stop("No match found for `root`")
+    }
+    if (!is.integer(root)) {
+      root <- as.integer(root)
+    }
     if (length(root) > 1L) {
       root <- root[1]
       warning("More than one entry in `root`; using ", root)
@@ -77,9 +87,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
                          br = NULL),
                     class = 'phylo')
 
-  # Until require R >= 3.5.0
-  isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
-  if (isFALSE(root)) {
+  if (.isFALSE(root)) {
     tree <- UnrootTree(tree)
   }
 
@@ -106,7 +114,10 @@ RandomTree <- function(tips, root = FALSE, nodes) {
 #' @importFrom stats runif
 #' @export
 .RandomParent <- function(n, seed = sample.int(2147483647L, 1L)) {
-  random_parent(n, seed)
+  if (!is.numeric(n) || is.na(n) || n[1] < 3) {
+    stop("nTip must be > 2");
+  }
+  random_parent(as.integer(n), as.integer(seed))
 }
 
 #' @rdname GenerateTree
@@ -139,7 +150,7 @@ PectinateTree <- function(tips) {
 
 #' @rdname GenerateTree
 #'
-#' @return `BalancedTree()` returns a balanced (symmetrical) tree.
+#' @return `BalancedTree()` returns a balanced (symmetrical) tree, in preorder.
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
@@ -154,7 +165,7 @@ BalancedTree <- function(tips) {
   # Return:
   structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
                        tip.label = as.character(tips)),
-            order = 'cladewise', class = 'phylo') # Actually in preorder
+            order = 'preorder', class = 'phylo')
 }
 
 #' @keywords internal
@@ -196,7 +207,7 @@ StarTree <- function(tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = 1L,
     tip.label = tips
-  ), order = 'cladewise', class = 'phylo')
+  ), order = 'cladewise', class = "phylo")
 }
 
 #' Generate a neighbour joining tree
@@ -216,13 +227,13 @@ StarTree <- function(tips) {
 #' NJTree(Lobo.phy)
 #'
 #' @template MRS
-#' @importFrom ape nj root
+#' @importFrom ape nj
 #' @family tree generation functions
 #' @export
 NJTree <- function(dataset, edgeLengths = FALSE,
                     ratio = TRUE, ambig = "mean") {
   tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
-  tree <- root(tree, names(dataset)[1], resolve.root = TRUE)
+  tree <- RootTree(tree, names(dataset)[1])
   if (!edgeLengths) {
     tree[["edge.length"]] <- NULL
   }
@@ -230,16 +241,16 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 }
 
 #' Hamming distance between taxa in a phylogenetic dataset
-#' 
+#'
 #' The Hamming distance between a pair of taxa is the number of characters
 #' with a different coding, i.e. the smallest number of evolutionary steps
 #' that must have occurred since their common ancestor.
-#' 
+#'
 #' Tokens that contain the inapplicable state are treated as requiring no steps
 #' to transform into any applicable token.
-#' 
+#'
 #' @param dataset Object of class `phyDat`.
-#' @param ratio Logical specifying whether to weight distance against 
+#' @param ratio Logical specifying whether to weight distance against
 #' maximum possible, given that a token that is ambiguous in either of two taxa
 #' cannot contribute to the total distance between the pair.
 #' @param ambig Character specifying value to return when a pair of taxa
@@ -249,17 +260,17 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 #' "mean", the mean;
 #' "zero" sets to zero; "one" to one;
 #' "NA" to `NA_integer_`; and "NaN" to `NaN`.
-#' 
+#'
 #' @return `Hamming()` returns an object of class `dist` listing the Hamming
 #' distance between each pair of taxa.
-#' 
-#' @seealso 
+#'
+#' @seealso
 #' Used to construct neighbour joining trees in [`NJTree()`].
-#' 
+#'
 #' `dist.hamming()` in the \pkg{phangorn} package provides an alternative
 #' implementation.
-#' 
-#' @examples 
+#'
+#' @examples
 #' tokens <- matrix(c(0, 0, '0', 0, '?',
 #'                    0, 0, '1', 0, 1,
 #'                    0, 0, '1', 0, 1,
@@ -270,7 +281,7 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 #'                    dimnames = list(
 #'                      paste0("Taxon_", LETTERS[1:6]),
 #'                      paste0("Char_", 1:5)))
-#' 
+#'
 #' dataset <- MatrixToPhyDat(tokens)
 #' Hamming(dataset)
 #' @template MRS
@@ -293,10 +304,10 @@ Hamming <- function(dataset, ratio = TRUE,
   tokens <- vapply(dataset, function(codings) contrast[codings, ],
                    matrix(NA, at[['nr']], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function(ij) {
-    sum(weight[!apply(tokens[, , ij[1], drop = FALSE] & 
+    sum(weight[!apply(tokens[, , ij[1], drop = FALSE] &
                       tokens[, , ij[2], drop = FALSE], 1, any)])
   })
-  
+
   if (ratio) {
     informative <- apply(!contrast, 1, any)
     nonAmbig <- .vapply(dataset, function(codings) informative[codings],
@@ -322,7 +333,7 @@ Hamming <- function(dataset, ratio = TRUE,
       1L,
       NA_integer_,
       NaN)
-      
+
   }
   attributes(hamming) <- list(
     Size = length(dataset),
@@ -331,7 +342,7 @@ Hamming <- function(dataset, ratio = TRUE,
     Upper = FALSE,
     method = 'hamming',
     class = 'dist')
-  
+
   # Return:
   hamming
 }
@@ -346,7 +357,7 @@ Hamming <- function(dataset, ratio = TRUE,
 #' @template constraintParam
 #' @param weight Numeric specifying degree to up-weight characters in
 #' `constraint`.
-#' 
+#'
 #' @inheritParams NJTree
 #' @return `ConstrainedNJ()` returns a tree of class `phylo`.
 #' @examples
@@ -368,7 +379,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
     constraint <- AddUnconstrained(constraint, missing)
   }
   constraint <- .SubsetPhyDat(constraint, names(dataset))
-  tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig) 
+  tree <- multi2di(nj((Hamming(constraint, ratio = ratio, ambig = ambig)
                        * weight) +
                         Hamming(dataset, ratio = ratio, ambig = ambig)))
   tree[["edge.length"]] <- NULL
@@ -383,7 +394,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' Generate a tree with a specified outgroup
 #'
 #' Deprecated. Use `RootNode()` instead.
-#' 
+#'
 #' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
 #' and outgroup taxa such that the two are sister taxa across the root, without
 #' changing the relationships within the ingroup or within the outgroup.
@@ -395,7 +406,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' the outgroup.
 #'
 #' @return `EnforceOutgroup()` returns a tree of class `phylo` where all
-#' outgroup taxa are sister to all remaining taxa, without modifying the 
+#' outgroup taxa are sister to all remaining taxa, without modifying the
 #' ingroup topology.
 #'
 # @examples
@@ -411,10 +422,12 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' @export
 EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
 
-#' @importFrom ape root bind.tree
+#' @importFrom ape bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
   .Deprecated("RootTree")
-  if (length(outgroup) == 1L) return(root(tree, outgroup, resolve.root = TRUE))
+  if (length(outgroup) == 1L) {
+    return(RootTree(tree, outgroup))
+  }
 
   ingroup <- taxa[!(taxa %fin% outgroup)]
   if (!all(outgroup %fin% taxa) ||
@@ -425,8 +438,8 @@ EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
   ingroup.branch <- DropTip(tree, outgroup)
   outgroup.branch <- DropTip(tree, ingroup)
 
-  result <- root(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
-                 outgroup, resolve.root = TRUE)
+  result <- RootTree(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
+                     outgroup)
   RenumberTips(Renumber(result), taxa)
 }
 
@@ -437,7 +450,6 @@ EnforceOutgroup.phylo <- function(tree, outgroup) {
 }
 
 #' @rdname EnforceOutgroup
-#' @importFrom ape root
 #' @export
 EnforceOutgroup.character <- function(tree, outgroup) {
   taxa <- tree

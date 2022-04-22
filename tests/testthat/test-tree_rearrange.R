@@ -227,6 +227,19 @@ test_that("RootTree() works", {
   expect_equal(RootTree(tree, 1:4), RootTree(tree, 5:6))
 })
 
+test_that("RootTree() & UnrootTree() retain edge lengths", {
+  bal7 <- BalancedTree(7)
+  bal7$edge.length <- 1:12 * 10
+  attr(bal7, 'order') <- NULL
+  expect_equal(RootTree(bal7, 1:4),
+               structure(bal7, order = "preorder"))
+  expect_equal(RootTree(RootTree(bal7, 1), 1:4),
+               structure(bal7, order = "preorder"))
+  exp <- structure(bal7, order = "preorder")
+  exp$edge.length = 10 * c(1 + 8, 2:7, 0, 9:12)
+  expect_equal(RootTree(UnrootTree(bal7), 1:4), exp)
+})
+
 test_that("UnrootTree() works", {
   expect_null(UnrootTree(NULL))
   expect_equal(matrix(c(7, 8, 8, 7, 7, 9, 10, 10, 9,
@@ -304,9 +317,13 @@ test_that("Binarification is uniform", {
 
 })
 
+test_that("LeafLabelInterchange() fails", {
+  skip_if(Sys.getenv("USING_ASAN") != "")
+  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
+})
+
 test_that("LeafLabelInterchange() works", {
   expect_equal(PectinateTree(40), LeafLabelInterchange(PectinateTree(40), 1))
-  expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
   expect_true(all.equal(BalancedTree(2),
                         LeafLabelInterchange(BalancedTree(2), 2)))
   expect_equal(rev(BalancedTree(2)$tip),

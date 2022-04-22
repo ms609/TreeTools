@@ -8,7 +8,9 @@ typedef int_fast16_t int16;
 typedef uint_fast16_t uintx;
 typedef int_fast32_t int32;
 
-const intx INTX_MAX = intx(INT_FAST16_MAX);
-const uintx UINTX_MAX = uintx(UINT_FAST16_MAX);
+namespace TreeTools {
+  const intx INTX_MAX = intx(INT_FAST16_MAX);
+  const uintx UINTX_MAX = uintx(UINT_FAST16_MAX);
+}
 
 #endif

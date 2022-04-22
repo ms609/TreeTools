@@ -3,11 +3,12 @@
 
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
+#include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
 #define UNINIT -999
-#define INF INTX_MAX
+#define INF TreeTools::INTX_MAX
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
@@ -163,14 +164,14 @@ namespace TreeTools {
     }
 
     inline int16 X(int16 row, int16 col) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       return Xarr(col, row - 1);
     }
 
     inline void setX(int16 row, int16 col, int16 value) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       Xarr(col, row - 1) = value;
     }
 
@@ -273,9 +274,9 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > CT_MAX_LEAVES) {
-      throw std::length_error("Tree has too many leaves. "
-                                "Contact the 'TreeTools' maintainer.");
+    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
+      Rcpp::stop("Tree has too many leaves. "
+                 "Contact the 'TreeTools' maintainer.");
     }
     n_leaves = leaf_labels.length(); // = N
     n_edge = edge.nrow();

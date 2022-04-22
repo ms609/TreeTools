@@ -67,6 +67,8 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
@@ -80,6 +82,7 @@ Other tree manipulation:
 Other tree properties: 
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}

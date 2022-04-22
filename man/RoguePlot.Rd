@@ -72,16 +72,16 @@ Rogue taxa can be identified using the package \pkg{Rogue}
 \insertCite{SmithCons}{TreeTools}.
 }
 \examples{
-trees <- list(read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-              read.tree(text = '(a, (b, (c, (rogue, (d, (e, f))))));'),
-              read.tree(text = '(rogue, (a, (b, (c, (d, (e, f))))));'),
-              read.tree(text = '((rogue, a), (b, (c, (d, (e, f)))));'),
-              read.tree(text = '(a, (b, ((c, d), (rogue, (e, f)))));'),
-              read.tree(text = '(a, (b, ((c, (rogue, d)), (e, f))));'),
-              read.tree(text = '(a, (b, (c, (d, (rogue, (e, f))))));'))
-RoguePlot(trees, 'rogue')
+trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+              read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+              read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+              read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+              read.tree(text = "(rogue, (a, (b, (c, (d, (e, f))))));"),
+              read.tree(text = "((rogue, a), (b, (c, (d, (e, f)))));"),
+              read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
+              read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
+              read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
+RoguePlot(trees, "rogue")
 }
 \references{
 \insertAllCited{}

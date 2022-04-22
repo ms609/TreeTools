@@ -15,8 +15,8 @@ replaced with \verb{?}.}
 }
 \value{
 \code{CharacterInformation()} returns a numeric specifying the
-phylogenetic information content of the character (\emph{sensu} Steel & Penny
-2006), in bits.
+phylogenetic information content of the character (\emph{sensu}
+\insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 }
 \description{
 \code{CharacterInformation()} calculates the cladistic information content

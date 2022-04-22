@@ -175,7 +175,9 @@ You might want to:
 - [Load a phylogenetic tree](load-trees.html) into R.
 
 - Conduct parsimony search using Brazeau, Guillerme & Smith's [-@Brazeau2018]
-  [approach to inapplicable data](https://ms609.github.io/TreeSearch/articles/inapplicable.html),   or using [Profile parsimony](https://ms609.github.io/TreeSearch/articles/profile.html)
-  [@Faith2001].
+  [approach to inapplicable data](
+   https://ms609.github.io/TreeSearch/articles/tree-search.html),
+  or using [Profile parsimony](
+   https://ms609.github.io/TreeSearch/articles/profile.html) [@Faith2001].
 
 # References

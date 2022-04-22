@@ -15,14 +15,7 @@
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs.
-There was one NOTE:
-
->  Possibly mis-spelled words in DESCRIPTION:
->    Klopfstein
->    Spasojevic 
-
-These spellings have been verified.
+There were no ERRORs or WARNINGs or NOTEs.
 
 ## Downstream dependencies
 

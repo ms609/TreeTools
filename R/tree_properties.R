@@ -646,7 +646,10 @@ NSplits.NULL <- function(x) NULL
 
 #' @rdname NSplits
 #' @export
-NSplits.ClusterTable <- function(x) nrow(as.matrix(x)) - 3L # Root + Ingroup + All-leaves
+NSplits.ClusterTable <- function(x) {
+  # Root + Ingroup + All-leaves
+  nrow(as.matrix(x)) - 3L
+}
 
 #' @rdname NSplits
 #' @importFrom ape read.tree
