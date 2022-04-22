@@ -4,7 +4,9 @@
 // Modelled on https://CRAN.R-project.org/package=Rcpp/vignettes/Rcpp-modules.pdf
 // [[Rcpp::export]]
 SEXP ClusterTable_new(Rcpp::List phylo) {
-  Rcpp::XPtr<TreeTools::ClusterTable> ptr(new TreeTools::ClusterTable(phylo), true);
+  Rcpp::XPtr<TreeTools::ClusterTable> 
+    ptr(new TreeTools::ClusterTable(phylo), true);
+  
   return ptr;
 }
 
