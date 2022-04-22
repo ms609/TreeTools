@@ -1,5 +1,7 @@
 # TreeTools 1.7.1.9000 #
 
+- Native implementation of `ClusterTable` class.
+
 - Replace `throw` with `stop` in C++ scripts.
 
 # TreeTools 1.7.1 #
