@@ -111,7 +111,7 @@ test_that("NTip() works", {
 
 test_that("NSplits() works", {
   expect_equal(NSplits(5L), NSplits(LETTERS[1:5]))
-  expect_equal(3L, NSplits(structure(matrix(0, 6, 2), class = 'ClusterTable')))
+  expect_equal(3L, NSplits(structure(matrix(0, 6, 2), class = "ClusterTable")))
 })
 
 test_that("MRCA() works", {
