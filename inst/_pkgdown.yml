@@ -94,6 +94,8 @@ reference:
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
       - as.multiPhylo
+      - ClusterTable
+      - ClusterTable-methods
       - Hamming
       - MSTEdges
       - RightmostCharacter
