@@ -274,7 +274,7 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > CT_MAX_LEAVES) {
+    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
