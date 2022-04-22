@@ -320,7 +320,7 @@ test_that("Binarification is uniform", {
 })
 
 test_that("LeafLabelInterchange() fails", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(LeafLabelInterchange(BalancedTree(4), 5)) # n too many
 })
 

@@ -197,7 +197,7 @@ test_that('as.Splits.logical()', {
 })
 
 test_that("!.Splits() errors", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   x <- as.Splits(as.phylo(8, 7))
   expect_error(!(structure(x, nTip = NULL)),
                "lacks nTip attrib")
@@ -430,7 +430,7 @@ test_that(".MaskSplits()", {
   x <- as.Splits(as.phylo(5, 5))
   expect_equal(.MaskSplits(x), mask_splits(x))
   
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(mask_splits(structure(x, nTip = NULL)),
                "lacks nTip attrib")
 })

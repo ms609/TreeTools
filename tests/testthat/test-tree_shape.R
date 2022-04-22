@@ -1,5 +1,5 @@
 test_that("Errors are handled", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(RootedTreeWithShape(as.integer64(-1)), "negative")
   expect_error(RootedTreeWithShape(as.integer64(2)^31), " large ")
   expect_error(UnrootedTreeWithShape(31, 31), " < 31 leaves")
@@ -32,7 +32,7 @@ test_that("Nasty node order not fatal", {
   expect_equal(RootedTreeShape(Preorder(nastyBinary)),
                RootedTreeShape(nastyBinary))
 
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(edge_to_rooted_shape(1:10, 1:11, 6), "must be the same length")
   expect_error(edge_to_rooted_shape(1:10, 1:10, 5), "is tree binary\\?")
 })
@@ -50,7 +50,7 @@ test_that("Rooted tree shapes counted", {
 })
 
 test_that("Rooted tree shapes fail gracefully", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(RootedTreeShape(BalancedTree(56)), "> 55 leaves")
 })
 
@@ -131,7 +131,7 @@ test_that("Rooted tree shapes built", {
 })
 
 test_that("Unrooted tree shapes fail gracefully", {
-  skip_if(Sys.getenv("USING_ASAN") != "")
+  skip_if(Sys.getenv("USING_ASAN_PLACEHOLDER") != "")
   expect_error(UnrootedTreeWithShape(4, 8), "must be between 0 and 3")
 })
 
