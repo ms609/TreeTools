@@ -9,6 +9,7 @@ test_that("ClusterTable class behaves", {
   ct <- as.ClusterTable(tree)
   expect_equal(matrix(c(0, 2, rep(1, 4), 0, 3, 3:6), 6),
                as.matrix.ClusterTable(ct))
+  expect_equal(ClusterTable_decode(ct), 6:1)
 })
 
 test_that("Attributes are correct", {
