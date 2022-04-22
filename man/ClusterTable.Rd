@@ -51,7 +51,7 @@ as.matrix(ct1)
 ct2 <- as.ClusterTable(tree2, tipLabels = LETTERS[1:5])
 }
 \references{
-\insertRef{Day1985}{TreeDist}
+\insertRef{Day1985}{TreeTools}
 }
 \seealso{
 \link[=ClusterTable-methods]{S3 methods} for \code{ClusterTable} objects.
