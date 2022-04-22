@@ -267,7 +267,7 @@ namespace TreeTools {
 
   };
 
-  ClusterTable::ClusterTable(Rcpp::List phylo) {
+  inline ClusterTable::ClusterTable(Rcpp::List phylo) {
 
     const Rcpp::List rooted = TreeTools::root_on_node(phylo, 1);
     const Rcpp::IntegerMatrix edge = rooted["edge"];

@@ -11,6 +11,39 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// ClusterTable_new
+SEXP ClusterTable_new(Rcpp::List phylo);
+RcppExport SEXP _TreeTools_ClusterTable_new(SEXP phyloSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type phylo(phyloSEXP);
+    rcpp_result_gen = Rcpp::wrap(ClusterTable_new(phylo));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ClusterTable_matrix
+Rcpp::IntegerMatrix ClusterTable_matrix(SEXP xp);
+RcppExport SEXP _TreeTools_ClusterTable_matrix(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(ClusterTable_matrix(xp));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ClusterTable_decode
+Rcpp::IntegerVector ClusterTable_decode(SEXP xp);
+RcppExport SEXP _TreeTools_ClusterTable_decode(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(ClusterTable_decode(xp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // as_newick
 CharacterVector as_newick(IntegerMatrix edge);
 RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {

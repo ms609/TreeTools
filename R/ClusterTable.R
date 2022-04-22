@@ -40,7 +40,6 @@ as.ClusterTable <- function(x, tipLabels = NULL, ...) {
 }
 
 #' @rdname ClusterTable
-#' @importFrom TreeTools NTip RenumberTips
 #' @export
 as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
   x <- Preorder(x)
