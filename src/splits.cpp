@@ -22,19 +22,19 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
                              const IntegerVector nTip) {
   // Check input is valid
   if (edge.cols() != 2) {
-    throw std::invalid_argument("Edge matrix must contain two columns");
+    Rcpp::stop("Edge matrix must contain two columns");
   }
   if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
-    throw std::length_error("Too many edges in tree for edge_to_splits: "       // # nocov
+    Rcpp::stop("Too many edges in tree for edge_to_splits: "       // # nocov
                             "Contact maintainer for advice");                   // # nocov
   }
   if (nTip[0] < 1) {
-    throw(std::length_error("Tree must contain tips."));
+    Rcpp::stop("Tree must contain tips.");
   }
   
   const uintx n_edge = edge.rows();
   if (n_edge != uintx(order.length())) {
-    throw(std::length_error("Length of `order` must equal number of edges"));
+    Rcpp::stop("Length of `order` must equal number of edges");
   }
   
   // Initialize
@@ -49,7 +49,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   }
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
-    throw(std::length_error("Not enough edges in tree for edge_to_splits."));
+    Rcpp::stop("Not enough edges in tree for edge_to_splits.");
   }
 
   uintx** splits = new uintx*[n_node];
@@ -264,7 +264,7 @@ RawMatrix not_splits(const RawMatrix x) {
 RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
   const int16 n_split = x.rows();
   if (n_split != y.rows()) {
-    throw std::invalid_argument("Input splits contain same number of splits.");
+    Rcpp::stop("Input splits contain same number of splits.");
   }
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
@@ -303,7 +303,7 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
 RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
   const int16 n_split = x.rows();
   if (n_split != y.rows()) {
-    throw std::invalid_argument("Input splits contain same number of splits.");
+    Rcpp::stop("Input splits contain same number of splits.");
   }
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
@@ -327,7 +327,7 @@ RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
 RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
   const int16 n_split = x.rows();
   if (n_split != y.rows()) {
-    throw std::invalid_argument("Input splits contain same number of splits.");
+    Rcpp::stop("Input splits contain same number of splits.");
   }
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");

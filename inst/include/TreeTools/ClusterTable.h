@@ -275,8 +275,8 @@ namespace TreeTools {
     n_internal = rooted["Nnode"]; // = M
     CharacterVector leaf_labels = rooted["tip.label"];
     if (leaf_labels.length() > CT_MAX_LEAVES) {
-      throw std::length_error("Tree has too many leaves. "
-                                "Contact the 'TreeTools' maintainer.");
+      Rcpp::stop("Tree has too many leaves. "
+                 "Contact the 'TreeTools' maintainer.");
     }
     n_leaves = leaf_labels.length(); // = N
     n_edge = edge.nrow();

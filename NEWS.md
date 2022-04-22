@@ -1,3 +1,7 @@
+# TreeTools 1.7.1.9000 #
+
+- Replace `throw` with `stop` in C++ scripts.
+
 # TreeTools 1.7.1 #
 
 - `AddTip()`: Fix bug when adding tip to root of weighted tree.

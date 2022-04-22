@@ -71,8 +71,8 @@ const uint64_t n_shapes_cache[MAX_SHAPE_TIP + 1] = {
 
 uint64_t n_shapes(intx n_tips) {
   if (n_tips > 55) {
-    throw std::length_error("64 bit integers cannot represent number of shapes"
-                            "for > 55 tips");
+    Rcpp::stop("64 bit integers cannot represent number of shapes"
+               "for > 55 tips");
   }
   return n_shapes_cache[n_tips];
 }
@@ -95,7 +95,7 @@ uint64_t triangle_row (const uint64_t x) {
 IntegerVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
                             IntegerVector nTip) {
   if (parent.length() != child.length()) {
-    throw std::length_error("Parent and child must be the same length");
+    Rcpp::stop("Parent and child must be the same length");
   }
   const intx
     n_tip = nTip[0],
@@ -104,10 +104,10 @@ IntegerVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
   ;
   if (n_tip > 55) {
     // Limit of 64-bit integers
-    throw std::range_error("Cannot calculate shape with > 55 leaves");
+    Rcpp::stop("Cannot calculate shape with > 55 leaves");
   }
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2: is tree binary?");
+    Rcpp::stop("nEdge must == nTip + nTip - 2: is tree binary?");
   }
   uint64_t tree_at[MAX_SHAPE_NODE] = {};
   intx tips_below[MAX_SHAPE_NODE] = {};
@@ -262,7 +262,9 @@ IntegerMatrix rooted_shape_to_edge(NumericVector shape, IntegerVector nTip) {
     next_edge = 0,
     next_tip = 1,
     next_node = n_tip + 1;
-  if (shape[0] < 0) throw std::range_error("Shape may not be negative.");
+  if (shape[0] < 0) {
+    Rcpp::stop("Shape may not be negative.");
+  }
   uint64_t n = shape[0];
   fill_edges(parent, child, n, n_tip, &next_edge, &next_tip, &next_node);
 

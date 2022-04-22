@@ -30,7 +30,7 @@ namespace TreeTools {
       const Rcpp::LogicalVector keep) {
     
     if (edge.ncol() != 2) {
-      throw std::invalid_argument("edge must have two columns");
+      Rcpp::stop("edge must have two columns");
     }
     
     const int

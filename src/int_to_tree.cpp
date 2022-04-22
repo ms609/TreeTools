@@ -9,7 +9,7 @@ const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
   if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
+    Rcpp::stop("nTip must be > 1");
   }
   const intx
     n_tip = nTip[0],
@@ -108,7 +108,7 @@ intx maximum (const intx x, const intx y) {
 IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
                    IntegerVector nTip) {
   if (parent.size() != child.size()) {
-    throw std::length_error("Parent and child must be the same length");
+    Rcpp::stop("Parent and child must be the same length");
   }
   const intx
     n_tip = nTip[0],
@@ -121,7 +121,7 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
     return IntegerVector(1); // A length one, zero initialized vector
   }
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2");
+    Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
   intx smallest_below[MAX_NODE],
        parent_of[MAX_NODE],
@@ -179,7 +179,7 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
 IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
                                  IntegerVector nTip) {
   if (parent.size() != child.size()) {
-    throw std::length_error("Parent and child must be the same length");
+    Rcpp::stop("Parent and child must be the same length");
   }
   const intx
     n_tip = nTip[0],
@@ -192,7 +192,7 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
     return IntegerVector(0);
   }
   if (n_edge != n_tip + n_tip - 2) {
-    throw std::length_error("nEdge must == nTip + nTip - 2");
+    Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
   intx
     smallest_below[MAX_NODE],
@@ -245,7 +245,7 @@ IntegerVector mixed_base_to_parent(
     const IntegerVector nTip
   ) {
   if (nTip[0] < 2) {
-    throw std::range_error("nTip must be > 1");
+    Rcpp::stop("nTip must be > 1");
   }
   const intx
     n_tip = nTip[0],

@@ -228,7 +228,7 @@ namespace TreeTools {
       const Rcpp::IntegerVector child)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
-      throw std::length_error("Too many edges in tree: "                        // #nocov
+      Rcpp::stop("Too many edges in tree: "                        // #nocov
                               "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
 
@@ -238,7 +238,7 @@ namespace TreeTools {
     ;
 
     if (child.length() != n_edge) {
-      throw std::invalid_argument("Length of parent and child must match");
+      Rcpp::stop("Length of parent and child must match");
     }
 
     int32
@@ -313,7 +313,7 @@ namespace TreeTools {
       const Rcpp::DoubleVector weight)
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
-      throw std::length_error("Too many edges in tree: "                        // #nocov
+      Rcpp::stop("Too many edges in tree: "                        // #nocov
                               "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
     
@@ -323,10 +323,10 @@ namespace TreeTools {
     ;
     
     if (child.length() != n_edge) {
-      throw std::invalid_argument("Length of parent and child must match");
+      Rcpp::stop("Length of parent and child must match");
     }
     if (weight.length() != n_edge) {
-      throw std::invalid_argument("weights must match number of edges");
+      Rcpp::stop("weights must match number of edges");
     }
     
     int32
@@ -420,7 +420,7 @@ namespace TreeTools {
     
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
-      throw std::length_error("Tree too large for postorder_order. "            // # nocov
+      Rcpp::stop("Tree too large for postorder_order. "            // # nocov
                               "Try running 64-bit R?");                         // # nocov
     }
     

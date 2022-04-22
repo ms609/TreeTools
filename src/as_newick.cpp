@@ -21,7 +21,7 @@ void close_node (const unsigned int top_node,
 // [[Rcpp::export]]
 CharacterVector as_newick(IntegerMatrix edge) {
   if ((unsigned int) edge.nrow() > MAX_NEWICK_NODES * 2 - 1) {
-    throw std::length_error("Too many nodes for as_newick");
+    Rcpp::stop("Too many nodes for as_newick");
   }
 
   const unsigned int n_tip = edge(0, 0);

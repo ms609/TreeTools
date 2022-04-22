@@ -36,10 +36,10 @@ namespace TreeTools {
       max_node = n_node + n_tip;
 
     if (outgroup < 1) {
-      throw std::range_error("`outgroup` must be a positive integer");
+      Rcpp::stop("`outgroup` must be a positive integer");
     }
     if (outgroup > max_node) {
-      throw std::range_error("`outgroup` exceeds number of nodes");
+      Rcpp::stop("`outgroup` exceeds number of nodes");
     }
     if (outgroup == root_node) {
       return edge;
@@ -115,10 +115,10 @@ namespace TreeTools {
       edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
     }
     if (outgroup < 1) {
-      throw std::range_error("`outgroup` must be a positive integer");
+      Rcpp::stop("`outgroup` must be a positive integer");
     }
     if (outgroup > max_node) {
-      throw std::range_error("`outgroup` exceeds number of nodes");
+      Rcpp::stop("`outgroup` exceeds number of nodes");
     }
     Rcpp::List ret = Rcpp::clone(phy);
     ret.attr("order") = "preorder";
