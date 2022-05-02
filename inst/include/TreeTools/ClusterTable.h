@@ -52,13 +52,13 @@ namespace TreeTools {
       Tlen_short,
       Tpos = 0,
       X_ROWS
-      ;
+    ;
     std::vector<int16>
       internal_label,
       leftmost_leaf,
       T,
       visited_nth
-      ;
+    ;
     std::bitset<CT_MAX_LEAVES + 1> Xswitch;
     Rcpp::IntegerMatrix Xarr;
 
@@ -219,7 +219,8 @@ namespace TreeTools {
     }
 
     inline void SETSW(int16* L, int16* R) {
-      // If <L,R> is a cluster in X, this procedure sets the cluster switch for <L,R>.
+      // If <L,R> is a cluster in X, 
+      // this procedure sets the cluster switch for <L,R>.
       if (CLUSTONL(L, R)) {
         ++n_shared;
         SETSWX(L);
