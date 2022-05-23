@@ -194,7 +194,7 @@ corresponding to the <code>edge.length</code> property of a <code>phylo</code> o
 tree, corresponding to <code>tree[["edge"]]</code>. Optional in <code>Cladewise()</code>.</p></dd>
 <dt>force</dt>
 <dd><p>Logical specifying whether to rearrange trees already in
-postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.</p></dd>
+postorder, in order to ensure edges are ordered in the "TreeTools" fashion.</p></dd>
 <dt>renumber</dt>
 <dd><p>Logical specifying whether to renumber nodes such that they
 increase in number away from the root.</p></dd>
@@ -220,15 +220,16 @@ Calling this C function directly is approximately twice as fast as using
 <code>ape::<a href="https://rdrr.io/pkg/ape/man/reorder.phylo.html" class="external-link">cladewise</a></code> or
 <code>ape::<a href="https://rdrr.io/pkg/ape/man/reorder.phylo.html" class="external-link">postorder</a></code></p>
 <p><code>Cladewise()</code>, <code>ApePostorder()</code> and <code>Pruningwise()</code> are convenience
-functions to the corresponding functions in 'ape'. Single nodes may
-need to be collapsed using <a href="https://rdrr.io/pkg/ape/man/collapse.singles.html" class="external-link">ape::collapse.singles</a> first.  'ape' functions
-can cause crashes if nodes are numbered unconventionally -- sometimes
-encountered after using tree rearrangement functions, e.g. <code>phangorn::SPR()</code>.</p>
+functions to the corresponding functions in "ape".
+Single nodes may need to be collapsed using <a href="https://rdrr.io/pkg/ape/man/collapse.singles.html" class="external-link">ape::collapse.singles</a> first.
+"ape" functions can cause crashes if nodes are numbered unconventionally --
+sometimes arising after using tree rearrangement functions,
+e.g. <code>phangorn::SPR()</code>.</p>
 <p><code>Preorder()</code> is more robust: it supports polytomies, nodes may be numbered
 in any sequence, and edges may be listed in any order in the input tree.
 Its output is guaranteed to be identical for any tree of an equivalent
-topology, allowing unique trees to be detected by comparing sorted edge
-matrices alone.</p>
+leaf labelling (see <code><a href="RenumberTips.html">RenumberTips()</a></code>) and topology,
+allowing unique trees to be detected by comparing sorted edge matrices alone.</p>
 <p>Nodes and edges in a preorder tree are numbered starting from the deepest
 node.
 Each node is numbered in the sequence in which it is encountered, and
@@ -309,7 +310,7 @@ Smith from <code>.reorder_ape()</code> in <span class="pkg">ape</span> (Emmanuel
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

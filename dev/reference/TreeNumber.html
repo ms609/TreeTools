@@ -163,36 +163,21 @@ integer <em>x</em> &lt; <code>NUnrooted(n)</code>.</p>
 number, with bases 1, 3, 5, 7, … (2 <em>n</em> - 5).</p>
 <p>Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.</p>
-<p>We start with a two-leaf tree, and treat 0 as the origin of the tree.</p><div class="sourceCode"><pre><code><span class="fl">0</span> <span class="op">-</span><span class="op">-</span><span class="op">-</span><span class="op">-</span> <span class="fl">1</span></code></pre></div>
-
+<p>We start with a two-leaf tree, and treat 0 as the origin of the tree.</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>We add leaf 2 by breaking an edge and inserting a node (numbered
 <code>2 + nTip - 1</code>).
 In this example, we'll work up to a six-leaf tree; this node will be numbered
 2 + 6 - 1 = 7.
 There is only one edge on which leaf 2 can be added.  Let's add node 7 and
-leaf 2:</p><div class="sourceCode"><pre><code>
-0 ---- 7 ---- 1
-       |
-       |
-       2
-
-</code></pre></div>
-
+leaf 2:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p>There are now three edges on which leaf 3 can be added.  Our options are:</p>
 <p>Option 0: the edge leading to 1;</p>
 <p>Option 1: the edge leading to 2;</p>
 <p>Option 2: the edge leading to 7.</p>
-<p>If we select option 1, we produce:</p><div class="sourceCode"><pre><code>
-0 ---- 7 ---- 1
-       |
-       |
-       8 ---- 2
-       |
-       |
-       3
-
-</code></pre></div>
-
+<p>If we select option 1, we produce:</p>
+<p></p><div class="sourceCode"><pre><code></code></pre><p></p></div>
 <p><code>1</code> is now the final digit of our mixed-base number.</p>
 <p>There are five places to add leaf 4:</p>
 <p>Option 0: the edge leading to 1;</p>
@@ -219,7 +204,7 @@ only trees with at most 19 leaves can be accommodated.</p>
 “Some notes on the nearest neighbour interchange distance.”
 In Goos G, Hartmanis J, Leeuwen J, Cai J, Wong CK (eds.), <em>Computing and Combinatorics</em>, volume 1090, 343--351.
 Springer, Berlin, Heidelberg.
-ISBN 978-3-540-61332-9, doi: <a href="https://doi.org/10.1007/3-540-61332-3_168" class="external-link">10.1007/3-540-61332-3_168</a>
+ISBN 978-3-540-61332-9, <a href="https://doi.org/10.1007/3-540-61332-3_168" class="external-link">doi:10.1007/3-540-61332-3_168</a>
 .</p>
     </div>
     <div id="see-also">
@@ -271,7 +256,7 @@ ISBN 978-3-540-61332-9, doi: <a href="https://doi.org/10.1007/3-540-61332-3_168"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
