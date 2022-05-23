@@ -123,7 +123,7 @@ corresponding to the \code{edge.length} property of a \code{phylo} object.}
 tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}
+postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
 
 \item{renumber}{Logical specifying whether to renumber nodes such that they
 increase in number away from the root.}
@@ -156,16 +156,17 @@ Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{postorder}}
 
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
-functions to the corresponding functions in 'ape'. Single nodes may
-need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
-can cause crashes if nodes are numbered unconventionally -- sometimes
-encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR()}.
+functions to the corresponding functions in "ape".
+Single nodes may need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.
+"ape" functions can cause crashes if nodes are numbered unconventionally --
+sometimes arising after using tree rearrangement functions,
+e.g. \code{phangorn::SPR()}.
 
 \code{Preorder()} is more robust: it supports polytomies, nodes may be numbered
 in any sequence, and edges may be listed in any order in the input tree.
 Its output is guaranteed to be identical for any tree of an equivalent
-topology, allowing unique trees to be detected by comparing sorted edge
-matrices alone.
+leaf labelling (see \code{RenumberTips()}) and topology,
+allowing unique trees to be detected by comparing sorted edge matrices alone.
 
 Nodes and edges in a preorder tree are numbered starting from the deepest
 node.
