@@ -545,6 +545,13 @@ RenumberTips.phylo <- function(tree, tipOrder) {
   }
   tree[["edge"]][tips, 2] <- matchOrder[tree[["edge"]][tips, 2]]
   tree[["tip.label"]] <- newOrder
+  if (attr(tree, "order") == "preorder") {
+    # No longer "strict" preorder; degenerate to "cladewise".
+    # TODO in a future release, we may wish to distinguish "strict" preorder
+    # with a relaxed version that is still "preorder" but doesn't guarantee
+    # tree identity.
+    attr(tree, "order") <- "cladewise"
+  }
   tree
 }
 

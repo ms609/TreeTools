@@ -112,8 +112,8 @@ test_that("RenumberTips() works correctly", {
   
   expect_null(RenumberTips(NULL))
 
-  expect_equal(RenumberTips(l7, c("extra tip", letters[1:5])),
-               RenumberTips(l7, letters[1:4]))
+  expect_equal(Preorder(RenumberTips(l7, c("extra tip", letters[1:5]))),
+               Preorder(RenumberTips(l7, letters[1:4])))
   expect_error(RenumberTips(l7, letters[2:5]))
   
   
@@ -196,6 +196,24 @@ test_that("Reorder methods work correctly", {
   Test(Pruningwise, testEdges = FALSE)
   expect_error(Pruningwise(bad))
 
+})
+
+test_that("Preorder() gives identical output", {
+  tree1 <- BalancedTree(1:9)
+  numbers <- c("One", "Two", "Three", "Four", "Five", "Six",
+               "Seven", "Eight", "Nine")
+  tree2 <- BalancedTree(numbers[1:9])
+  # Force pre-order with NEW tip labels
+  tree2 <- Preorder(Postorder(RenumberTips(tree2, sort(numbers))))
+  tree2$tip.label <- as.character(match(sort(numbers), numbers))
+  expect_true(all.equal(tree1, tree2))
+  expect_false(identical(tree1, tree2))
+  
+  # Now preorder after renumbering.
+  # Renumbering should drop the previous preorder attribute.
+  pre2 <- Preorder(RenumberTips(tree2, as.character(1:9)))
+  expect_equal(tree1, pre2)
+  expect_identical(tree1, pre2)
 })
 
 test_that("Reorder methods retain edge weights", {
