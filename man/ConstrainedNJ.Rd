@@ -18,10 +18,7 @@ for further examples.}
 \item{weight}{Numeric specifying degree to up-weight characters in
 \code{constraint}.}
 
-\item{ratio}{Settings of \code{ambig} and \code{ratio} to be used when
-computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
-
-\item{ambig}{Settings of \code{ambig} and \code{ratio} to be used when
+\item{ambig, ratio}{Settings of \code{ambig} and \code{ratio} to be used when
 computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 }
 \value{

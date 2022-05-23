@@ -88,23 +88,27 @@ number, with bases 1, 3, 5, 7, … (2 \emph{n} - 5).
 Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.
 
-We start with a two-leaf tree, and treat 0 as the origin of the tree.\preformatted{
+We start with a two-leaf tree, and treat 0 as the origin of the tree.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 1
 
-}
+}\if{html}{\out{</div>}}
 
 We add leaf 2 by breaking an edge and inserting a node (numbered
 \code{2 + nTip - 1}).
 In this example, we'll work up to a six-leaf tree; this node will be numbered
 2 + 6 - 1 = 7.
 There is only one edge on which leaf 2 can be added.  Let's add node 7 and
-leaf 2:\preformatted{
+leaf 2:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
        2
 
-}
+}\if{html}{\out{</div>}}
 
 There are now three edges on which leaf 3 can be added.  Our options are:
 
@@ -114,7 +118,9 @@ Option 1: the edge leading to 2;
 
 Option 2: the edge leading to 7.
 
-If we select option 1, we produce:\preformatted{
+If we select option 1, we produce:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
@@ -123,7 +129,7 @@ If we select option 1, we produce:\preformatted{
        |
        3
 
-}
+}\if{html}{\out{</div>}}
 
 \code{1} is now the final digit of our mixed-base number.
 
