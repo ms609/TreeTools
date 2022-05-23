@@ -11,7 +11,7 @@ name: codemeta
       
 jobs:
   codemeta:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_COMPILE_AND_INSTALL_PACKAGES: 'never'
@@ -60,5 +60,7 @@ jobs:
           git config --local user.name "GitHub Actions"
           git add codemeta.json
           git commit -m "Update codemeta.json"
+          git fetch
+          git pull
           git push
 
