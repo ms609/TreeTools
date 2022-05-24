@@ -601,6 +601,8 @@ LeafLabelInterchange <- function(tree, n = 2L) {
   }))
 
   tree[["tip.label"]][from] <- tipLabel[from[to]]
+  
+  # Return:
   tree
 }
 
