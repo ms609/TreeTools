@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.7.1.9001
+Version: 1.7.2
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -55,7 +55,7 @@ Suggests:
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools
-Config/Needs/metadata: codemetar
+Config/Needs/metadata: codemeta
 Config/Needs/revdeps: revdepcheck
 Config/Needs/website: pkgdown
 Config/testthat/parallel: false

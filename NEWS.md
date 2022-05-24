@@ -1,11 +1,12 @@
-# TreeTools 1.7.1.9001 #
+# TreeTools 1.7.2 #
 
-- `RenumberTips()` drops "preorder" attribute, as new tip order may break
-  edge ordering guarantee.
+- `RenumberTips()` drops "preorder" attribute, as reordering tip labels may
+  break edge ordering guarantee.
 
 - Native implementation of `ClusterTable` class.
 
 - Replace `throw` with `stop` in C++ scripts.
+
 
 # TreeTools 1.7.1 #
 
