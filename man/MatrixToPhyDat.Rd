@@ -31,12 +31,12 @@ uncompressed character states within a \code{phyDat} object.
 \code{PhyDatToMatrix()} converts a \code{phyDat} object to a matrix of tokens.
 }
 \examples{
-tokens <- matrix(c(0, 0, '0', 0, 0,
-                   0, 0, '1', 0, 1,
-                   0, 0, '1', 0, 1,
-                   0, 0, '2', 0, 1,
-                   1, 1, '-', 1, 0,
-                   1, 1, '2', 1, '{01}'),
+tokens <- matrix(c(0, 0, "0", 0, 0,
+                   0, 0, "1", 0, 1,
+                   0, 0, "1", 0, 1,
+                   0, 0, "2", 0, 1,
+                   1, 1, "-", 1, 0,
+                   1, 1, "2", 1, "{01}"),
                    nrow = 6, ncol = 5, byrow = TRUE,
                    dimnames = list(
                      paste0("Taxon_", LETTERS[1:6]),

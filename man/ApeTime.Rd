@@ -2,14 +2,14 @@
 % Please edit documentation in R/parse_files.R
 \name{ApeTime}
 \alias{ApeTime}
-\title{Read modification time from 'ape' Nexus file}
+\title{Read modification time from "ape" Nexus file}
 \usage{
 ApeTime(filepath, format = "double")
 }
 \arguments{
 \item{filepath}{Character string specifying path to the file.}
 
-\item{format}{Format in which to return the time: 'double' as a sortable numeric;
+\item{format}{Format in which to return the time: "double" as a sortable numeric;
 any other value to return a string in the format
 \verb{YYYY-MM-DD hh:mm:ss}.}
 }
@@ -18,7 +18,7 @@ any other value to return a string in the format
 ape, in the format specified by \code{format}.
 }
 \description{
-\code{ApeTime()} reads the time that a tree written with 'ape' was modified,
+\code{ApeTime()} reads the time that a tree written with "ape" was modified,
 based on the comment in the Nexus file.
 }
 \author{

@@ -43,11 +43,11 @@ an error message if input is invalid.
 Extract leaf labels and character states from a Nexus-formatted matrix.
 }
 \examples{
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/input/dataset.nex')
+fileName <- paste0(system.file(package = "TreeTools"),
+                   "/extdata/input/dataset.nex")
 matrixLines <- readLines(fileName)[6:11]
 ExtractTaxa(matrixLines)
 
-NexusTokens('01[01]-?')
+NexusTokens("01[01]-?")
 }
 \keyword{internal}

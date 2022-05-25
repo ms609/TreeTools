@@ -792,9 +792,11 @@ EndSentence <- function(string) {
 #' @export
 Unquote <- function(string) {
   noSingle <- vapply(string, gsub, character(1),
-                     pattern = "^\\s*'\\s*(.*?)\\s*'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
+                     pattern = "^\\s*'\\s*(.*?)\\s*'\\s*$",
+                     replacement = "\\1", USE.NAMES = FALSE)
   vapply(noSingle, gsub, character(1),
-         pattern = "^\\s*\"\\s*(.*?)\\s*\"\\s*$", replacement = "\\1", USE.NAMES = FALSE)
+         pattern = "^\\s*\"\\s*(.*?)\\s*\"\\s*$", replacement = "\\1",
+         USE.NAMES = FALSE)
 }
 
 #' Decode MorphoBank text
