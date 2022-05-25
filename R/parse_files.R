@@ -1,10 +1,10 @@
-#' Read modification time from 'ape' Nexus file
+#' Read modification time from "ape" Nexus file
 #'
-#' `ApeTime()` reads the time that a tree written with 'ape' was modified,
+#' `ApeTime()` reads the time that a tree written with "ape" was modified,
 #' based on the comment in the Nexus file.
 #'
 #' @param filepath Character string specifying path to the file.
-#' @param format Format in which to return the time: 'double' as a sortable numeric;
+#' @param format Format in which to return the time: "double" as a sortable numeric;
 #'               any other value to return a string in the format
 #'               `YYYY-MM-DD hh:mm:ss`.
 #'
@@ -13,14 +13,14 @@
 #' @export
 #' @template MRS
 #'
-ApeTime <- function(filepath, format = 'double') {
+ApeTime <- function(filepath, format = "double") {
   if (length(filepath) > 1L) {
     stop("`filepath` must be a character string of length 1")
   }
   comment <- readLines(filepath, n = 2)[2]
   Month <- function(month) {
-    months <- c('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
     whichMonth <- months == month
     if (any(whichMonth)) {
       formatC(which(whichMonth), width = 2, flag = "0")
@@ -34,7 +34,7 @@ ApeTime <- function(filepath, format = 'double') {
                  gsub(DATEEXP, "-\\2 \\3", comment))
 
   # Return:
-  ifelse(format == 'double', as.numeric(as.POSIXct(time, tz = "GMT")), time)
+  ifelse(format == "double", as.numeric(as.POSIXct(time, tz = "GMT")), time)
 }
 
 #' Parse TNT Tree
@@ -96,17 +96,17 @@ ApeTime <- function(filepath, format = 'double') {
 #'
 #' # On the original machine (but not elsewhere), it would be possible to read
 #' # this hard-coded reference from results.tnt:
-#' # ReadTntTree('output/results1.tnt')
+#' # ReadTntTree("output/results1.tnt")
 #'
-#' # These datasets are provided with the 'TreeTools' package, which will
+#' # These datasets are provided with the "TreeTools" package, which will
 #' # probably not be located at c:/TreeTools on your machine:
 #'
 #' oldWD <- getwd() # Remember the current working directory
-#' setwd(system.file(package = 'TreeTools'))
+#' setwd(system.file(package = "TreeTools"))
 #'
 #' # If taxon names were saved within the file (using `taxname=` in TNT),
 #' # then our job is easy:
-#' ReadTntTree('extdata/output/named.tre')
+#' ReadTntTree("extdata/output/named.tre")
 #'
 #' # But if taxa were compressed to numbers (using `taxname-`), we need to
 #' # look up the original matrix in order to dereference the tip names.
@@ -118,14 +118,14 @@ ApeTime <- function(filepath, format = 'double') {
 #' # c:/TreeTools/input/dataset.nex
 #' #                2      1
 #' #
-#' # '.' means "relative to the current directory"
-#' ReadTntTree('extdata/output/numbered.tre', './extdata', 2)
+#' # "." means "relative to the current directory"
+#' ReadTntTree("extdata/output/numbered.tre", "./extdata", 2)
 #'
 #' # If working in a lower subdirectory
-#' setwd('./extdata/otherfolder')
+#' setwd("./extdata/otherfolder")
 #'
-#' # then it will be necessary to navigate up the directory path with '..':
-#' ReadTntTree('../output/numbered.tre', '..', 2)
+#' # then it will be necessary to navigate up the directory path with "..":
+#' ReadTntTree("../output/numbered.tre", "..", 2)
 #'
 #'
 #' setwd(oldWD) # Restore original working directory
@@ -138,7 +138,7 @@ ApeTime <- function(filepath, format = 'double') {
 ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   fileText <- readLines(filepath)
-  treeStart <- grep('^tread\\b', fileText, perl = TRUE) + 1
+  treeStart <- grep("^tread\\b", fileText, perl = TRUE) + 1
   if (length(treeStart) < 1) return(NULL)
   if (length(treeStart) > 1) {
     warning("Multiple tree blocks not yet supported; ",
@@ -147,7 +147,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     treeStart <- treeStart[1]
   }
 
-  semicolons <- grep(';', fileText, fixed = TRUE)
+  semicolons <- grep(";", fileText, fixed = TRUE)
   lastTree <- semicolons[semicolons >= treeStart]
   if (length(lastTree)) {
     lastTree <- lastTree[1]
@@ -158,16 +158,16 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
 
   trees <- lapply(fileText[treeStart:lastTree], TntText2Tree)
 
-  if (!any(grepl('[A-z]', trees[[1]]$tip.label))) {
+  if (!any(grepl("[A-z]", trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
       tipLabels <- rownames(ReadTntCharacters(filepath))
       if (is.null(tipLabels)) {
         taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
                           fileText[1], fixed = TRUE)
-        taxonFile <- gsub("'", '', gsub('\\', '/', taxonFile, fixed = TRUE),
+        taxonFile <- gsub("'", "", gsub("\\", "/", taxonFile, fixed = TRUE),
                           fixed = TRUE)
         if (!is.null(relativePath)) {
-          taxonFileParts <- strsplit(taxonFile, '/')[[1]]
+          taxonFileParts <- strsplit(taxonFile, "/")[[1]]
           nParts <- length(taxonFileParts)
           if (nParts < keepEnd) {
             stop("Taxon file path (", taxonFile,                                # nocov
@@ -175,7 +175,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
           }
           taxonFile <- paste0(c(relativePath,
                                 taxonFileParts[(nParts + 1L - keepEnd):nParts]),
-                              collapse = '/')
+                              collapse = "/")
         }
 
         if (!file.exists(taxonFile)) {
@@ -208,7 +208,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   } else if (length(trees) == 0) {
     NULL                                                                        # nocov
   } else {
-    class(trees) <- 'multiPhylo'
+    class(trees) <- "multiPhylo"
     trees
   }
 
@@ -250,8 +250,8 @@ TNTText2Tree <- TntText2Tree
 #' each corresponding to the respective character specified in `character_num`.
 #'
 #' @examples
-#' fileName <- paste0(system.file(package='TreeTools'),
-#'                    '/extdata/input/dataset.nex')
+#' fileName <- paste0(system.file(package = "TreeTools"),
+#'                    "/extdata/input/dataset.nex")
 #' matrixLines <- readLines(fileName)[6:11]
 #' ExtractTaxa(matrixLines)
 #'
@@ -280,14 +280,14 @@ ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
     lengths <- lengths(tokens)
     if (length(unique(lengths)) != 1) {
       stop("Different numbers of tokens in different taxa: ",                   # nocov
-           paste(lengths, collapse = ', '))                                     # nocov
+           paste(lengths, collapse = ", "))                                     # nocov
     }
     tokens <- t(vapply(tokens, I, tokens[[1]]))
   } else {
     tokens <- gsub("\t", "", gsub(" ", "", tokens, fixed = TRUE), fixed = TRUE)
     tokens <- vapply(uniqueTaxa,
                      function(taxon) paste0(tokens[taxa == taxon],
-                                             collapse = ''),
+                                             collapse = ""),
                      character(1))
     tokens <- NexusTokens(tokens, character_num = character_num,
                           session = session)
@@ -306,7 +306,7 @@ ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
 #' corresponds to the states of a phylogenetic character, or a list containing
 #' an error message if input is invalid.
 #' @examples
-#' NexusTokens('01[01]-?')
+#' NexusTokens("01[01]-?")
 #' @export
 NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
   tokens.pattern <- "\\([^\\)]+\\)|\\[[^\\]]+\\]|\\{[^\\}]+\\}|\\S"
@@ -314,8 +314,8 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 
   nChar <- length(matches[[1]])
 
-  if (!is.null(session) && requireNamespace('shiny', quietly = TRUE)) {
-    shiny::updateNumericInput(session, 'character_num', max = nChar)            # nocov
+  if (!is.null(session) && requireNamespace("shiny", quietly = TRUE)) {
+    shiny::updateNumericInput(session, "character_num", max = nChar)            # nocov
   }
 
   if (!exists("character_num") || is.null(character_num)) {
@@ -352,7 +352,7 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #'
 #' Matrices must contain only continuous or only discrete characters;
 #' maximum one matrix per file.  Continuous characters will be read as strings
-#' (i.e. base type 'character').
+#' (i.e. base type "character").
 #'
 #' The encoding of an input file will be automatically determined by R.
 #' Errors pertaining to an `invalid multibyte string` or
@@ -367,7 +367,7 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #' @param filepath character string specifying location of file, or a
 #' [connection][base::connections] to the file.
 #' @param type Character vector specifying categories of data to extract from
-#' file. Setting `type = c('num', 'dna')` will return only characters
+#' file. Setting `type = c("num", "dna")` will return only characters
 #' following a `&[num]` or `&[dna]` tag in a TNT input file, listing `num`
 #' character blocks before `dna` characters.
 #' Leave as `NULL` (the default) to return all characters in their original
@@ -388,14 +388,14 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #' @references \insertAllCited{}
 #'
 #' @examples
-#' fileName <- paste0(system.file(package = 'TreeTools'),
-#'                    '/extdata/input/dataset.nex')
+#' fileName <- paste0(system.file(package = "TreeTools"),
+#'                    "/extdata/input/dataset.nex")
 #' ReadCharacters(fileName)
 #'
-#' fileName <- paste0(system.file(package = 'TreeTools'),
-#'                    '/extdata/tests/continuous.nex')
+#' fileName <- paste0(system.file(package = "TreeTools"),
+#'                    "/extdata/tests/continuous.nex")
 #'
-#' continuous <- ReadCharacters(fileName, encoding = 'UTF8')
+#' continuous <- ReadCharacters(fileName, encoding = "UTF8")
 #'
 #' # To convert from strings to numbers:
 #' at <- attributes(continuous)
@@ -409,7 +409,7 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #'
 #' - Write characters to TNT-format file: [`WriteTntCharacters()`]
 #' @export
-ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
+ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8",
                             session = NULL) {
 
   lines <- .UTFLines(filepath, encoding)
@@ -418,11 +418,11 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
   lines <- trimws(lines)
   lines <- lines[lines != ""]
 
-  semicolons <- which(RightmostCharacter(lines) == ';')
+  semicolons <- which(RightmostCharacter(lines) == ";")
   upperLines <- toupper(lines)
 
-  continuous <- length(grep('DATATYPE[\\S\\=]+CONTINUOUS', upperLines)) > 0
-  matrixStart <- which(upperLines == 'MATRIX')
+  continuous <- length(grep("DATATYPE[\\S\\=]+CONTINUOUS", upperLines)) > 0
+  matrixStart <- which(upperLines == "MATRIX")
   if (length(matrixStart) == 0) {
     return(list("MATRIX block not found in Nexus file."))
   } else if (length (matrixStart) > 1) {
@@ -430,7 +430,7 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
   } else {
 
     matrixEnd <- semicolons[semicolons > matrixStart][1]
-    if (lines[matrixEnd] == ';') matrixEnd <- matrixEnd - 1
+    if (lines[matrixEnd] == ";") matrixEnd <- matrixEnd - 1
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
     tokens <- ExtractTaxa(matrixLines, character_num = character_num,
@@ -453,8 +453,8 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
                        ignore.case = TRUE, perl = TRUE)
     if (length(labelStart) == 1) {
       labelEnd <- semicolons[semicolons > labelStart][1]
-      if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
-      #attr(dat, 'char.labels')
+      if (lines[labelEnd] == ";") labelEnd <- labelEnd - 1
+      #attr(dat, "char.labels")
       colnames(tokens) <- Unquote(lines[labelStart + character_num])
     } else {
       if (length(labelStart) > 1)
@@ -478,13 +478,13 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
           stateNos <- as.integer(stateLines[stateStarts])
           if (all(!is.na(stateNos))) {
             warning("Missing character state definition for: ",
-                    paste0(setdiff(character_num, stateNos), collapse = ', '))
+                    paste0(setdiff(character_num, stateNos), collapse = ", "))
           } else {
             warning("More characters than character state definitions.")
           }
         }
 
-        attr(tokens, 'state.labels') <-
+        attr(tokens, "state.labels") <-
           lapply(character_num[seq_along(stateStarts)], function(i)
             Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
           )
@@ -516,7 +516,7 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
 
       cslEscaped <- strsplit(paste(gsub(quote.pattern,
                                         "__TREETOOLS_ESCAPE_SEQUENCE__", csl,
-                                        perl = TRUE), collapse = '  '),
+                                        perl = TRUE), collapse = "  "),
                              ",\\s+\\d+", perl = TRUE)[[1]]
       nCsl <- length(cslEscaped)
       if (nCsl != nChar) {
@@ -524,18 +524,18 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
                            ") does not match NCHAR (", nChar, ")")))
       }
       cslEscaped[1] <- sub("^\\s*1\\b", "", cslEscaped[1], perl = TRUE)
-      cslEscaped[nCsl] <- sub('\\s*;\\s*$', '', cslEscaped[nCsl], perl = TRUE)
-      cslEscaped <- trimws(sub("\\s*/\\s*", '__TREETOOLS_ESCAPE_SPLITTER__', cslEscaped, perl = TRUE))
-      cslEscaped <- gsub("\\s+", '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', cslEscaped, perl = TRUE)
-      cslEscaped <- paste(cslEscaped, collapse = '__TREETOOLS_ESCAPE_CHAR_SPLITTER__')
+      cslEscaped[nCsl] <- sub("\\s*;\\s*$", "", cslEscaped[nCsl], perl = TRUE)
+      cslEscaped <- trimws(sub("\\s*/\\s*", "__TREETOOLS_ESCAPE_SPLITTER__", cslEscaped, perl = TRUE))
+      cslEscaped <- gsub("\\s+", "__TREETOOLS_ESCAPE_LABEL_SPLITTER__", cslEscaped, perl = TRUE)
+      cslEscaped <- paste(cslEscaped, collapse = "__TREETOOLS_ESCAPE_CHAR_SPLITTER__")
       for (escape in cslEscapes) {
-        cslEscaped <- sub('__TREETOOLS_ESCAPE_SEQUENCE__', escape, cslEscaped, fixed = TRUE)
+        cslEscaped <- sub("__TREETOOLS_ESCAPE_SEQUENCE__", escape, cslEscaped, fixed = TRUE)
       }
-      cslEscaped <- strsplit(cslEscaped, '__TREETOOLS_ESCAPE_CHAR_SPLITTER__', fixed = TRUE)[[1]]
-      cslEscaped <- do.call(rbind, strsplit(cslEscaped, '__TREETOOLS_ESCAPE_SPLITTER__', fixed = TRUE))
-      colnames(tokens) <- gsub('_', ' ', cslEscaped[, 1])[character_num]
-      attr(tokens, 'state.labels') <- lapply(
-        strsplit(cslEscaped[character_num, 2], '__TREETOOLS_ESCAPE_LABEL_SPLITTER__', fixed = TRUE),
+      cslEscaped <- strsplit(cslEscaped, "__TREETOOLS_ESCAPE_CHAR_SPLITTER__", fixed = TRUE)[[1]]
+      cslEscaped <- do.call(rbind, strsplit(cslEscaped, "__TREETOOLS_ESCAPE_SPLITTER__", fixed = TRUE))
+      colnames(tokens) <- gsub("_", " ", cslEscaped[, 1])[character_num]
+      attr(tokens, "state.labels") <- lapply(
+        strsplit(cslEscaped[character_num, 2], "__TREETOOLS_ESCAPE_LABEL_SPLITTER__", fixed = TRUE),
         gsub, pattern = "_", replacement = " ", fixed = TRUE)
     }
   }
@@ -548,7 +548,7 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = 'UTF8',
 #' @rdname ReadCharacters
 #' @export
 ReadTntCharacters <- function(filepath, character_num = NULL,
-                               type = NULL, session = NULL, encoding = 'UTF8') {
+                               type = NULL, session = NULL, encoding = "UTF8") {
 
   lines <- .UTFLines(filepath, encoding)
   tntComment.pattern <- "'[^']*'"
@@ -563,10 +563,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   lines <- trimws(lines)
   lines <- lines[lines != ""]
 
-  semicolons <- grep(';', lines, fixed = TRUE)
+  semicolons <- grep(";", lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep('^XREAD\\b', lines, ignore.case = TRUE, perl = TRUE)
+  xread <- grep("^XREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
   if (length(xread) < 1) return(NULL)
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
@@ -576,7 +576,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   }
 
   xreadEnd <- semicolons[semicolons > xread][1]
-  if (lines[xreadEnd] == ';') {
+  if (lines[xreadEnd] == ";") {
     xreadEnd <- xreadEnd - 1L
   }
   xreadLines <- lines[xread:xreadEnd]
@@ -584,8 +584,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   xDimLine <- which(vapply(xDimPos, `[`, 1, 1) > -1)[1]
   dimText <- xreadLines[xDimLine]
   dimHit <- xDimPos[[xDimLine]]
-  nChar <- as.integer(substr(dimText, dimHit[2], dimHit[2] + attr(dimHit, 'match.length')[2] - 1L))
-  nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] + attr(dimHit, 'match.length')[3] - 1L))
+  nChar <- as.integer(substr(dimText, dimHit[2], dimHit[2] +
+                               attr(dimHit, "match.length")[2] - 1L))
+  nTip <- as.integer(substr(dimText, dimHit[3], dimHit[3] +
+                              attr(dimHit, "match.length")[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
 
   ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
@@ -596,7 +598,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
     blocks <- lapply(paste0("\\b", type, "\\b"), grep, types, ignore.case = TRUE)
     nBlocks <- lengths(blocks)
     if (any(nBlocks == 0)) {
-      message("Tags ", paste0(type[nBlocks == 0], collapse = ', '),
+      message("Tags ", paste0(type[nBlocks == 0], collapse = ", "),
       " not found. Ignored: ", types[!seq_along(types) %fin% unlist(blocks)])
     }
     if (all(nBlocks == 0L)) return(NULL)
@@ -611,11 +613,11 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
     warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
             ": please check output and report bugs.")                           # nocov
   }
-  labelStart <- which(upperLines == 'CHARLABELS')
+  labelStart <- which(upperLines == "CHARLABELS")
   if (length(labelStart) == 1) {
     labelEnd <- semicolons[semicolons > labelStart][1]
-    if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
-    #attr(dat, 'char.labels')
+    if (lines[labelEnd] == ";") labelEnd <- labelEnd - 1
+    #attr(dat, "char.labels")
     colnames(tokens) <- lines[labelStart + character_num]
   } else {
     if (length(labelStart) > 1)
@@ -623,10 +625,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   }
 
 
-  labelStart <- which(upperLines == 'CNAMES')
+  labelStart <- which(upperLines == "CNAMES")
   if (length(labelStart) == 1) {
     labelEnd <- semicolons[semicolons > labelStart][1]
-    if (lines[labelEnd] == ';') labelEnd <- labelEnd - 1
+    if (lines[labelEnd] == ";") labelEnd <- labelEnd - 1
     charLines <- lines[labelStart + character_num]
     charLine.pattern <- "^\\S+\\s\\d+\\s(\\w+)(.*)\\s*;\\s*$"
 
@@ -636,7 +638,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 
     # State labels
     stateNames <- gsub(charLine.pattern, "\\2", charLines, perl = TRUE)
-    attr(tokens, 'state.labels') <- lapply(stateNames, function(line) {
+    attr(tokens, "state.labels") <- lapply(stateNames, function(line) {
       states <- strsplit(trimws(line), "\\s+", perl = TRUE)[[1]]
       trimws(gsub("_", " ", states, fixed = TRUE))
     })
@@ -661,7 +663,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   matches <- regmatches(string, res)
   res[res < 0] <- NA
   res[!is.na(res)] <-
-    gsub(pattern, paste0(paste0("\\", seq_len(nMatch)), collapse = ''),
+    gsub(pattern, paste0(paste0("\\", seq_len(nMatch)), collapse = ""),
        matches, ignore.case = i, perl = TRUE)
   res
 }
@@ -676,7 +678,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 #'
 #' @importFrom stats setNames
 #' @export
-ReadNotes <- function(filepath, encoding = 'UTF8') {
+ReadNotes <- function(filepath, encoding = "UTF8") {
   taxon.pattern <- "^\\s+[\"']?([^;]*?)[\"']?\\s*$"
   nTax.pattern <- "DIMENSIONS\\s+.*NTAX\\s*=\\s*(\\d+)"
 
@@ -715,10 +717,10 @@ ReadNotes <- function(filepath, encoding = 'UTF8') {
       taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
       if (sum(taxon.matches) == nTax) {
         taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-        taxa <- gsub(' ', '_', taxa, fixed = TRUE)
+        taxa <- gsub(" ", "_", taxa, fixed = TRUE)
       } else {
         taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
-        taxa <- unlist(strsplit(taxa, ' '))
+        taxa <- unlist(strsplit(taxa, " "))
         if (length(taxa) != nTax) {
           return(list(paste0("Mismatch: NTAX=", nTax, ", but ", length(taxa),
                              " TAXLABELS found in Nexus file.")))
@@ -728,9 +730,9 @@ ReadNotes <- function(filepath, encoding = 'UTF8') {
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
-    notes <- strsplit(paste0(notesLines, collapse = '\r\n'),
+    notes <- strsplit(paste0(notesLines, collapse = "\r\n"),
                       # (?i) makes perl regexp case insensitive
-                      '(?i)\\r\\n\\s*TEXT\\s+', perl = TRUE)[[1]]
+                      "(?i)\\r\\n\\s*TEXT\\s+", perl = TRUE)[[1]]
 
     noteTaxon <- as.integer(.RegExpMatches("\\bTAXON\\s*=\\s*(\\d+)", notes))
     noteChar <- as.integer(.RegExpMatches("\\bCHARACTER\\s*=\\s*(\\d+)", notes))
@@ -766,10 +768,10 @@ ReadNotes <- function(filepath, encoding = 'UTF8') {
 #' @export
 EndSentence <- function(string) {
   if (length(string)) {
-    ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, '.'), perl = TRUE)
+    ret <- gsub("\\s*\\.?\\s*\\.$", ".", paste0(string, "."), perl = TRUE)
     ret <- gsub("(\\.[\"'])\\.$", "\\1", ret, perl = TRUE)
     ret <- gsub("([!\\?])\\.$", "\\1", ret, perl = TRUE)
-    ret[ret == '.'] <- ''
+    ret[ret == "."] <- ""
     ret
   } else {
     string
@@ -792,7 +794,7 @@ Unquote <- function(string) {
   noSingle <- vapply(string, gsub, character(1),
                      pattern = "^\\s*'\\s*(.*?)\\s*'\\s*$", replacement = "\\1", USE.NAMES = FALSE)
   vapply(noSingle, gsub, character(1),
-         pattern = '^\\s*"\\s*(.*?)\\s*"\\s*$', replacement = "\\1", USE.NAMES = FALSE)
+         pattern = "^\\s*\"\\s*(.*?)\\s*\"\\s*$", replacement = "\\1", USE.NAMES = FALSE)
 }
 
 #' Decode MorphoBank text
@@ -833,12 +835,12 @@ MorphoBankDecode <- function(string) {
 #'
 #' @family phylogenetic matrix conversion functions
 #' @examples 
-#' tokens <- matrix(c(0, 0, '0', 0, 0,
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '2', 0, 1,
-#'                    1, 1, '-', 1, 0,
-#'                    1, 1, '2', 1, '{01}'),
+#' tokens <- matrix(c(0, 0, "0", 0, 0,
+#'                    0, 0, "1", 0, 1,
+#'                    0, 0, "1", 0, 1,
+#'                    0, 0, "2", 0, 1,
+#'                    1, 1, "-", 1, 0,
+#'                    1, 1, "2", 1, "{01}"),
 #'                    nrow = 6, ncol = 5, byrow = TRUE,
 #'                    dimnames = list(
 #'                      paste0("Taxon_", LETTERS[1:6]),
@@ -848,7 +850,7 @@ MorphoBankDecode <- function(string) {
 #' @template MRS
 #' @export
 MatrixToPhyDat <- function(tokens) {
-  if (inherits(tokens, 'phyDat')) {
+  if (inherits(tokens, "phyDat")) {
     # TODO warn.
     # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
     return(tokens)
@@ -859,14 +861,14 @@ MatrixToPhyDat <- function(tokens) {
     problemTaxa <- lengths(problems) > 0
     problemTaxa <- names(problemTaxa[problemTaxa])
     warning("Blank tokens ('') found in taxa: ",
-            paste0(problemTaxa, collapse = ', '))
+            paste0(problemTaxa, collapse = ", "))
   }
   tokenNumbers <- seq_along(allTokens)
   names(tokenNumbers) <- allTokens
   matches <- gregexpr("[\\d\\-\\w]", allTokens, perl = TRUE)
   whichTokens <- regmatches(allTokens, matches)
   levels <- sort(unique(unlist(whichTokens)))
-  whichTokens[allTokens == '?'] <- list(levels)
+  whichTokens[allTokens == "?"] <- list(levels)
   contrast <- vapply(whichTokens, function(x) levels %fin% x,
                      logical(length(levels)))
   contrast <- 1 * if (is.null(dim(contrast))) {
@@ -927,7 +929,7 @@ MatrixToPhyDat <- function(tokens) {
     index = unname(index),
     levels = levels,
     allLevels = allLevels,
-    type = 'USER',
+    type = "USER",
     contrast = contrast,
     class = "phyDat")
 }
@@ -938,18 +940,18 @@ MatrixToPhyDat <- function(tokens) {
 #' @param ambigNA,inappNA Logical specifying whether to denote ambiguous /
 #' inapplicable characters as `NA` values.
 ## @param parentheses Character vector specifying style of parentheses
-## with which to enclose ambiguous characters, e.g, `c('[', ']')` will render
+## with which to enclose ambiguous characters, e.g, `c("[", "]")` will render
 ## `[01]`.
 ## @param sep Character with which to separate ambiguous tokens, e.g. `','`
 ## will render `[0,1]`.
 #' @return `PhyDatToMatrix()` returns a matrix corresponding to the
 #' uncompressed character states within a `phyDat` object.
 #' @export
-PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c('[', ']'), sep = '') {
+PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c("[", "]"), sep = "") {
   at <- attributes(dataset)
   allLevels <- as.character(at$allLevels)
   if (inappNA) {
-    allLevels[allLevels == '-'] <- NA_character_
+    allLevels[allLevels == "-"] <- NA_character_
   }
   if (ambigNA) {
     allLevels[rowSums(at$contrast) != 1L] <- NA_character_
@@ -1010,7 +1012,7 @@ PhyDat <- function(dataset) {
 #' @return `StringToPhyDat()` returns an object of class `phyDat`.
 #'
 #' @examples
-#' StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
+#' StringToPhyDat("-?01231230?-", c("Lion", "Gazelle"), byTaxon = TRUE)
 #' # encodes the following matrix:
 #' # Lion     -?0123
 #' # Gazelle  1230?-
@@ -1052,8 +1054,8 @@ StringToPhydat <- StringToPhyDat
 #' each entry.
 #'
 #' @examples
-#' fileName <- paste0(system.file(package='TreeTools'),
-#'                    '/extdata/input/dataset.nex')
+#' fileName <- paste0(system.file(package = "TreeTools"),
+#'                    "/extdata/input/dataset.nex")
 #' phyDat <- ReadAsPhyDat(fileName)
 #' PhyToString(phyDat, concatenate = FALSE)
 #'
@@ -1063,11 +1065,11 @@ StringToPhydat <- StringToPhyDat
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
 #' @export
-PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
+PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
   at <- attributes(phy)
   phyLevels <- at$allLevels
-  if (sum(phyLevels == '-') > 1) {
+  if (sum(phyLevels == "-") > 1) {
     stop("More than one inapplicable level identified.  Is phy$levels malformed?")
   }
   phyChars <- at[["nr"]]
@@ -1082,39 +1084,39 @@ PhyToString <- function(phy, parentheses = '{', collapse = '', ps = '',
   levelLengths <- vapply(outLevels, nchar, integer(1))
   longLevels <- levelLengths > 1
   if (any(longLevels)) {
-    if ('10' %fin% outLevels && !(0 %fin% outLevels)) {
-      outLevels[outLevels == '10'] <- '0'
-      longLevels['10'] <- FALSE
+    if ("10" %fin% outLevels && !(0 %fin% outLevels)) {
+      outLevels[outLevels == "10"] <- "0"
+      longLevels["10"] <- FALSE
     }
     outLevels[longLevels] <- LETTERS[seq_len(sum(longLevels))]
   }
 
   switch(parentheses,
-         '(' = {openBracket <- '('; closeBracket = ')'},
-         ')' = {openBracket <- '('; closeBracket = ')'},
-         '<' = {openBracket <- '<'; closeBracket = '>'},
-         '>' = {openBracket <- '<'; closeBracket = '>'},
-         '[' = {openBracket <- '['; closeBracket = ']'},
-         ']' = {openBracket <- '['; closeBracket = ']'},
-         {openBracket <- '{'; closeBracket = '}'})
+         "(" = {openBracket <- "("; closeBracket = ")"},
+         ")" = {openBracket <- "("; closeBracket = ")"},
+         "<" = {openBracket <- "<"; closeBracket = ">"},
+         ">" = {openBracket <- "<"; closeBracket = ">"},
+         "[" = {openBracket <- "["; closeBracket = "]"},
+         "]" = {openBracket <- "["; closeBracket = "]"},
+         {openBracket <- "{"; closeBracket = "}"})
 
   levelTranslation <- apply(phyContrast, 1, function(x)
     ifelse(sum(x) == 1, as.character(outLevels[x]),
            paste0(c(openBracket, paste0(outLevels[x], collapse = collapse),
-                    closeBracket), collapse = ''))
+                    closeBracket), collapse = ""))
   )
   if (any(ambigToken <- apply(phyContrast, 1, all))) {
-    levelTranslation[ambigToken] <- '?'
+    levelTranslation[ambigToken] <- "?"
   }
   ret <- vapply(phy,
                 function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
   ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
     if (!byTaxon) ret <- t(ret)
-    paste0(c(ret, ps), collapse = '')
+    paste0(c(ret, ps), collapse = "")
   } else {
     if (byTaxon) ret <- t(ret)
-    paste0(apply(ret, 1, paste0, collapse = ''), ps)
+    paste0(apply(ret, 1, paste0, collapse = ""), ps)
   }
   # Return:
   ret
@@ -1163,4 +1165,4 @@ RightmostCharacter <- function(string, len = nchar(string)) {
 #' @seealso Use tip numbers, rather than leaf labels: [`as.Newick`]
 #' @importFrom ape write.tree
 #' @export
-NewickTree <- function(tree) gsub('_', ' ', write.tree(tree), fixed = TRUE)
+NewickTree <- function(tree) gsub("_", " ", write.tree(tree), fixed = TRUE)
