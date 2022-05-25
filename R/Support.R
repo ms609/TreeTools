@@ -170,6 +170,7 @@ TreeSplits <- function(tree) {
 #' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
 #' possibly calculated using [`SplitFrequency()`].
 #'
+# TODO replace with grDevices palette when require R>3.6.0
 #' @importFrom colorspace diverge_hcl
 #' @export
 SupportColour <- function(support,
