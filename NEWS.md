@@ -1,3 +1,8 @@
+# TreeTools 1.7.2.9000 #
+
+- Deprecate `session` parameter.
+
+
 # TreeTools 1.7.2 #
 
 - `RenumberTips()` drops "preorder" attribute, as reordering tip labels may

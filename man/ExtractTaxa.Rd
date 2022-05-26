@@ -21,8 +21,8 @@ a phylogenetic matrix. See \code{\link[=ReadCharacters]{ReadCharacters()}} for e
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(Optional) A Shiny session with a \code{numericInput} named
-\code{character_num} whose maximum should be updated.}
+\item{session}{Deprecated.  Previously, a Shiny session with a
+\code{numericInput} named \code{character_num} whose maximum should be updated.}
 
 \item{continuous}{Logical specifying whether characters are continuous.
 Treated as discrete if \code{FALSE}.}

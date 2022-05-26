@@ -315,6 +315,7 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
   nChar <- length(matches[[1]])
 
   if (!is.null(session) && requireNamespace("shiny", quietly = TRUE)) {
+    .Deprecated(msg = "character_num updating should be handled by shiny app")
     shiny::updateNumericInput(session, "character_num", max = nChar)            # nocov
   }
 

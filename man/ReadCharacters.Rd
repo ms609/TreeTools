@@ -41,8 +41,8 @@ PhyDat(dataset)
 
 \item{encoding}{Character encoding of input file.}
 
-\item{session}{(Optional) A Shiny session with a \code{numericInput} named
-\code{character_num} whose maximum should be updated.}
+\item{session}{Deprecated.  Previously, a Shiny session with a
+\code{numericInput} named \code{character_num} whose maximum should be updated.}
 
 \item{type}{Character vector specifying categories of data to extract from
 file. Setting \code{type = c("num", "dna")} will return only characters
