@@ -57,10 +57,22 @@ test_that("ReadTntCharacter()", {
     ReadTntAsPhyDat(testFile))
 })
 
+test_that("TntTextToTree()", {
+  expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
+               ape::read.tree(text = "(A, (B, (C, (D, E))));"))
+})
+
+test_that("ReadTntTree() NULL return", {
+  expect_null(ReadTntTree(TestFile("ape-tree.nex")))
+})
+
 test_that("TNT trees parsed correctly", {
-  trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile())
-  expect_equal(2, length(trees))
-  expect_equal(32, ConsensusWithout(trees, "Paterimitra")$Nnode)
+  expect_warning(
+    trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile()),
+    "Multiple tree blocks")
+  expect_equal(length(trees), 3)
+  expect_equal(trees[[2]], trees[[3]])
+  expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)
 
   tipLabels <- c("Dailyatia", "Novocrania", "Craniops", "Ussunia", "Gasconsia",
                  "Heliomedusa_orienta", "Micrina", "Mickwitzia_muralensis",
@@ -82,8 +94,9 @@ test_that("TNT trees parsed correctly", {
   expect_equal(74L, length(namedLabels))
 
   tam <- ReadTntTree(TestFile("tnt-trees-and-matrix.tnt"))
-  expect_equal(3, length(tam))
+  expect_equal(length(tam), 4L)
   expect_equal(ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));"), tam[[1]])
+  expect_equal(ape::read.tree(text = "(a, (b, (c, (e, d, f))));"), tam[[4]])
 
 
   oldWD <- getwd()
@@ -267,6 +280,6 @@ test_that("NewickTree() works", {
                                              "What's this?", "Number 12.3"))))
 })
 
-test_that("as_newick fails gracefully", {
+test_that("as_newick() fails gracefully", {
   expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
 })
