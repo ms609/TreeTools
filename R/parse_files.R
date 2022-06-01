@@ -37,6 +37,13 @@ ApeTime <- function(filepath, format = "double") {
   ifelse(format == "double", as.numeric(as.POSIXct(time, tz = "GMT")), time)
 }
 
+.TntCommands <- function(filepath) {
+  fileText <- readLines(filepath)
+  commands <- strsplit(
+    paste(fileText, collapse = "\UA"), #\UA = \n
+    "\\s*;\\s*")[[1]]
+}
+
 #' Parse TNT Tree
 #'
 #' Read a tree from TNT's parenthetical output.
@@ -137,34 +144,29 @@ ApeTime <- function(filepath, format = "double") {
 #' @export
 ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
-  fileText <- readLines(filepath)
-  treeStart <- grep("^tread\\b", fileText, perl = TRUE) + 1
-  if (length(treeStart) < 1) return(NULL)
-  if (length(treeStart) > 1) {
-    warning("Multiple tree blocks not yet supported; ",
-            "contact 'TreeTools' maintainer to request. ",
-            "Returning first block only.")
-    treeStart <- treeStart[1]
-  }
-
-  semicolons <- grep(";", fileText, fixed = TRUE)
-  lastTree <- semicolons[semicolons >= treeStart]
-  if (length(lastTree)) {
-    lastTree <- lastTree[1]
-  } else {
-    warning("No closing semicolon on trees block.")
-    lastTree <- length(fileText)
-  }
-
-  trees <- lapply(fileText[treeStart:lastTree], TntText2Tree)
+  commands <- .TntCommands(filepath)
+  tread <- grep("^tread\\b", commands, perl = TRUE)
+  if (length(tread) < 1) return(NULL)
+  
+  trees <- c(TntText2Tree(
+    paste(
+      gsub("tread\\s+('[^']*')*\\s*", "", commands[tread]),
+      collapse = "*")))
 
   if (!any(grepl("[A-z]", trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
       tipLabels <- rownames(ReadTntCharacters(filepath))
       if (is.null(tipLabels)) {
-        taxonFile <- gsub("tread 'tree(s) from TNT, for data in ", '',
-                          fileText[1], fixed = TRUE)
-        taxonFile <- gsub("'", "", gsub("\\", "/", taxonFile, fixed = TRUE),
+        if (length(tread) > 1) {
+          warning("Multiple tree blocks not fully supported; ",
+                  "please check tip labels and contact \"TreeTools\" ",
+                  "maintainer if necessary")
+        }
+        treadComment <- strsplit(commands[tread[1]], "'", fixed = TRUE)[[1]]
+        filePrefix <- "tree(s) from TNT, for data in "
+        taxonFile <- grep(filePrefix, treadComment, fixed = TRUE)
+        taxonFile <- gsub(filePrefix, "", 
+                          gsub("\\", "/", treadComment[taxonFile], fixed = TRUE),
                           fixed = TRUE)
         if (!is.null(relativePath)) {
           taxonFileParts <- strsplit(taxonFile, "/")[[1]]
@@ -215,16 +217,27 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
 }
 
 #' @rdname ReadTntTree
-#' @param treeText Character string describing a tree, in the parenthetical
-#'                 format output by TNT.
+#' @param treeText Character string describing one or more trees,
+#' in the parenthetical format output by TNT.
+#' @examples
+#'  treeText <- trTxt
+#'  stop("DELETE")
 #' @export
 TntText2Tree <- function(treeText) {
-  treeText <- gsub("([\\w'\\.\\-]+)", "\\1,", treeText, perl = TRUE)
-  treeText <- gsub(")(", "),(", treeText, fixed = TRUE)
-  treeText <- gsub("*", ";", treeText, fixed = TRUE)
-
-  tr <- read.tree(text = gsub(", )", ")", treeText, fixed = TRUE))
-  tr$tip.label[] <- Unquote(tr$tip.label)
+  treeText <- paste(strsplit(treeText, "\\s*\\*\\s*", perl = TRUE)[[1]], ";")
+  treeText <- gsub("\\s*([\\w'\\.\\-]+)\\s*", "\\1,", treeText, perl = TRUE)
+  treeText <- gsub("\\)\\s*\\(", "),(", treeText, perl = TRUE)
+  treeText <- gsub(",)", ")", treeText, fixed = TRUE)
+  
+  tr <- read.tree(text = treeText)
+  if (inherits(tr, "multiPhylo")) {
+    tr[] <- lapply(tr, function (tree) {
+      tree$tip.label[] <- Unquote(tree$tip.label)
+      tree
+    })
+  } else if (inherits(tr, "phylo")) {
+    tr$tip.label[] <- Unquote(tr$tip.label)
+  }
 
   # Return:
   tr

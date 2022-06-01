@@ -267,6 +267,6 @@ test_that("NewickTree() works", {
                                              "What's this?", "Number 12.3"))))
 })
 
-test_that("as_newick fails gracefully", {
+test_that("as_newick() fails gracefully", {
   expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
 })
