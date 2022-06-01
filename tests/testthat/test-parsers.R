@@ -62,10 +62,16 @@ test_that("TntTextToTree()", {
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
 })
 
+test_that("ReadTntTree() NULL return", {
+  expect_null(ReadTntTree(TestFile("ape-tree.nex")))
+})
+
 test_that("TNT trees parsed correctly", {
-  trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile())
-  expect_equal(2, length(trees))
-  expect_equal(32, ConsensusWithout(trees, "Paterimitra")$Nnode)
+  expect_warning(
+    trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile()),
+    "Multiple tree blocks")
+  expect_equal(length(trees), 3)
+  expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)
 
   tipLabels <- c("Dailyatia", "Novocrania", "Craniops", "Ussunia", "Gasconsia",
                  "Heliomedusa_orienta", "Micrina", "Mickwitzia_muralensis",
