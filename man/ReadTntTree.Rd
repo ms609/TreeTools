@@ -29,8 +29,8 @@ taxa, in the sequence that they appear in the TNT file.  If not specified,
 taxon names will be loaded from the data file linked in the first line of the
 \code{.tre} file specified in \code{filepath}.}
 
-\item{treeText}{Character string describing a tree, in the parenthetical
-format output by TNT.}
+\item{treeText}{Character string describing one or more trees,
+in the parenthetical format output by TNT.}
 }
 \value{
 \code{ReadTntTree()} returns a tree of class \code{phylo}, corresponding

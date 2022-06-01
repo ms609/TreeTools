@@ -57,6 +57,11 @@ test_that("ReadTntCharacter()", {
     ReadTntAsPhyDat(testFile))
 })
 
+test_that("TntTextToTree()", {
+  expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
+               ape::read.tree(text = "(A, (B, (C, (D, E))));"))
+})
+
 test_that("TNT trees parsed correctly", {
   trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile())
   expect_equal(2, length(trees))

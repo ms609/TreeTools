@@ -219,12 +219,10 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
 #' @rdname ReadTntTree
 #' @param treeText Character string describing one or more trees,
 #' in the parenthetical format output by TNT.
-#' @examples
-#'  treeText <- trTxt
-#'  stop("DELETE")
 #' @export
 TntText2Tree <- function(treeText) {
   treeText <- paste(strsplit(treeText, "\\s*\\*\\s*", perl = TRUE)[[1]], ";")
+  treeText <- gsub(";(\\s*;)+", ";", treeText)
   treeText <- gsub("\\s*([\\w'\\.\\-]+)\\s*", "\\1,", treeText, perl = TRUE)
   treeText <- gsub("\\)\\s*\\(", "),(", treeText, perl = TRUE)
   treeText <- gsub(",)", ")", treeText, fixed = TRUE)
