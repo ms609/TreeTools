@@ -71,6 +71,7 @@ test_that("TNT trees parsed correctly", {
     trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile()),
     "Multiple tree blocks")
   expect_equal(length(trees), 3)
+  expect_equal(trees[[2]], trees[[3]])
   expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)
 
   tipLabels <- c("Dailyatia", "Novocrania", "Craniops", "Ussunia", "Gasconsia",
