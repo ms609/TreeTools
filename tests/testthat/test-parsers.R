@@ -82,8 +82,9 @@ test_that("TNT trees parsed correctly", {
   expect_equal(74L, length(namedLabels))
 
   tam <- ReadTntTree(TestFile("tnt-trees-and-matrix.tnt"))
-  expect_equal(3, length(tam))
+  expect_equal(length(tam), 4L)
   expect_equal(ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));"), tam[[1]])
+  expect_equal(ape::read.tree(text = "(a, (b, (c, (e, d, f))));"), tam[[4]])
 
 
   oldWD <- getwd()
