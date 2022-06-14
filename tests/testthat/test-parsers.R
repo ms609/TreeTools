@@ -109,6 +109,14 @@ test_that("TNT trees parsed correctly", {
   setwd(oldWD)
 })
 
+test_that("ReadTntTree() reads bare tree", {
+  bareTree <- TestFile("tnt-bare-tree.tnt")
+  expect_warning(
+    expect_equal(ReadTntTree(bareTree),
+                 ReadTntTree(bareTree, tipLabels = as.character(0:5))),
+                 "does not link to taxon names")
+})
+
 test_that("NexusTokens() fails gracefully", {
   expect_error(NexusTokens("0123012301230123", integer(0)))
   expect_equal("Character number must be between 1 and 16.",

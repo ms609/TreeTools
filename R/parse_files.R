@@ -179,21 +179,26 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
                                 taxonFileParts[(nParts + 1L - keepEnd):nParts]),
                               collapse = "/")
         }
-
-        if (!file.exists(taxonFile)) {
-          warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
+        
+        if (length(taxonFile)) {
+          if (!file.exists(taxonFile)) {
+            warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
+          } else {
+            tipLabels <- rownames(ReadTntCharacters(taxonFile, character_num = 1L))
+            if (is.null(tipLabels)) {
+              # TNT character read failed.  Perhaps taxonFile is in NEXUS format?
+              tipLabels <- rownames(ReadCharacters(taxonFile, character_num = 1L))
+            }
+            if (is.null(tipLabels)) {
+              warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
+                      taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
+                      " If failing inexplicably, please report:",                   # nocov
+                      "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
+            }
+          }
         } else {
-          tipLabels <- rownames(ReadTntCharacters(taxonFile, character_num = 1L))
-          if (is.null(tipLabels)) {
-            # TNT character read failed.  Perhaps taxonFile is in NEXUS format?
-            tipLabels <- rownames(ReadCharacters(taxonFile, character_num = 1L))
-          }
-          if (is.null(tipLabels)) {
-            warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
-                    taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
-                    " If failing inexplicably, please report:",                   # nocov
-                    "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
-          }
+          warning("`filepath` does not link to taxon names; try specifying `tipLabels`")
+          tipLabels <- as.character(seq_len(trees[[1]]$edge[1] - 1) - 1)
         }
       }
     }
