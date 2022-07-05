@@ -82,17 +82,20 @@ phylo standards."><meta name="robots" content="noindex"><!-- mathjax --><script 
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Renumber</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Renumber</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tree</dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>Renumber()</code> returns a tree of class <code>phylo</code>, numbered in a
+    
+
+<p><code>Renumber()</code> returns a tree of class <code>phylo</code>, numbered in a
 <a href="Reorder.html">Cladewise</a> fashion consistent with the expectations of 'ape' functions.</p>
     </div>
     <div id="details">
@@ -132,8 +135,8 @@ rotates nodes.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">RandomTree</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">Renumber</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">RandomTree</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Renumber</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 10 tips and 8 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -141,7 +144,7 @@ rotates nodes.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   d, f, g, c, b, e, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; no branch lengths.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -156,7 +159,7 @@ rotates nodes.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

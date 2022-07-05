@@ -103,15 +103,22 @@ match(x, table, nomatch = NA_integer_, incomparables = NULL)
     <h2>Arguments</h2>
     <dl><dt>x, table</dt>
 <dd><p>Object of class <code>Splits</code>.</p></dd>
+
+
 <dt>nomatch</dt>
 <dd><p>Integer value that will be used in place of <code>NA</code> in the case
 where no match is found.</p></dd>
+
+
 <dt>incomparables</dt>
 <dd><p>Ignored. (Included for consistency with generic.)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>match()</code> returns an integer vector specifying the position in
+    
+
+<p><code>match()</code> returns an integer vector specifying the position in
 <code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
     </div>
     <div id="details">
@@ -138,10 +145,10 @@ It will be deprecated in a future release.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">splits1</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">splits2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">match</span><span class="op">(</span><span class="va">splits1</span>, <span class="va">splits2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">splits1</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">splits2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">match</span><span class="op">(</span><span class="va">splits1</span>, <span class="va">splits2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  1 NA NA</span>
 </code></pre></div>
     </div>
@@ -157,7 +164,7 @@ It will be deprecated in a future release.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

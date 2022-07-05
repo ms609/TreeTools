@@ -86,29 +86,38 @@ each entry in <code>constraint</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ImposeConstraint</span><span class="op">(</span><span class="va">tree</span>, <span class="va">constraint</span><span class="op">)</span>
-
-<span class="fu">AddUnconstrained</span><span class="op">(</span><span class="va">constraint</span>, <span class="va">toAdd</span>, asPhyDat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ImposeConstraint</span><span class="op">(</span><span class="va">tree</span>, <span class="va">constraint</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AddUnconstrained</span><span class="op">(</span><span class="va">constraint</span>, <span class="va">toAdd</span>, asPhyDat <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tree</dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
+
+
 <dt>constraint</dt>
 <dd><p>An object of class <code>phyDat</code>; returned trees will be
 perfectly compatible with each character in <code>constraint</code>.
 See <a href="https://ms609.github.io/TreeSearch/articles/tree-search.html" class="external-link">vignette</a>
 for further examples.</p></dd>
+
+
 <dt>toAdd</dt>
 <dd><p>Character vector specifying taxa to add to constraint.</p></dd>
+
+
 <dt>asPhyDat</dt>
 <dd><p>Logical: if <code>TRUE</code>, return a <code>phyDat</code> object; if <code>FALSE</code>, return
 a matrix.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ImposeConstraint()</code> returns a tree of class <code>phylo</code>, consistent
+    
+
+<p><code>ImposeConstraint()</code> returns a tree of class <code>phylo</code>, consistent
 with <code>constraint</code>.</p>
     </div>
     <div id="functions">
@@ -144,13 +153,13 @@ taxa.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tips</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span>, <span class="va">tips</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tips</span> <span class="op">&lt;-</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span>, <span class="va">tips</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ImposeConstraint-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">constraint</span> <span class="op">&lt;-</span> <span class="fu"><a href="PhyToString.html">StringToPhyDat</a></span><span class="op">(</span><span class="st">'0000?1111 000111111 0000??110'</span>, <span class="va">tips</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">ImposeConstraint</span><span class="op">(</span><span class="va">tree</span>, <span class="va">constraint</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">constraint</span> <span class="op">&lt;-</span> <span class="fu"><a href="PhyToString.html">StringToPhyDat</a></span><span class="op">(</span><span class="st">'0000?1111 000111111 0000??110'</span>, <span class="va">tips</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">ImposeConstraint</span><span class="op">(</span><span class="va">tree</span>, <span class="va">constraint</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ImposeConstraint-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -166,7 +175,7 @@ taxa.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

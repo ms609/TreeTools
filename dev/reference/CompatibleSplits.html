@@ -80,33 +80,48 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CompatibleSplits</span><span class="op">(</span><span class="va">splits</span>, <span class="va">splits2</span><span class="op">)</span>
-
-<span class="fu">.CompatibleSplit</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">nTip</span><span class="op">)</span>
-
-<span class="fu">.CompatibleRaws</span><span class="op">(</span><span class="va">rawA</span>, <span class="va">rawB</span>, <span class="va">bitmask</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">CompatibleSplits</span><span class="op">(</span><span class="va">splits</span>, <span class="va">splits2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">.CompatibleSplit</span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">nTip</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">.CompatibleRaws</span><span class="op">(</span><span class="va">rawA</span>, <span class="va">rawB</span>, <span class="va">bitmask</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>splits</dt>
 <dd><p>An object of class <code><a href="Splits.html">Splits</a></code>.</p></dd>
+
+
 <dt>splits2</dt>
 <dd><p>A second <code>Splits</code> object.</p></dd>
+
+
 <dt>a, b</dt>
 <dd><p><a href="https://rdrr.io/r/base/raw.html" class="external-link">Raw</a> representations of splits, from a row of a <code>Splits</code> object.</p></dd>
+
+
 <dt>rawA, rawB</dt>
 <dd><p>Raw representations of splits.</p></dd>
+
+
 <dt>bitmask</dt>
 <dd><p>Raw masking bits that do not correspond to tips.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>CompatibleSplits</code> returns a logical matrix specifying whether each
-split in <code>splits</code> is compatible with each split in <code>splits2</code>.
-<code>.CompatibleSplit</code> returns a logical vector stating whether splits
-are compatible.
-<code>.CompatibleRaws</code> returns a logical vector specifying whether input
+    
+
+<p><code>CompatibleSplits</code> returns a logical matrix specifying whether each
+split in <code>splits</code> is compatible with each split in <code>splits2</code>.</p>
+
+
+<p><code>.CompatibleSplit</code> returns a logical vector stating whether splits
+are compatible.</p>
+
+
+<p><code>.CompatibleRaws</code> returns a logical vector specifying whether input
 raws are compatible.</p>
     </div>
     <div id="author">
@@ -116,10 +131,10 @@ raws are compatible.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">splits</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">splits2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">splits</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">splits2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">splits</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 bipartition splits dividing 8 tips, t1 .. t8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      12345678</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  10  ****....</span>
@@ -130,7 +145,7 @@ raws are compatible.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 1: t1	 Tip 2: t2	 Tip 3: t3	 Tip 4: t4	 Tip 5: t5	</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 6: t6	 Tip 7: t7	 Tip 8: t8	</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">splits2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">splits2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 bipartition splits dividing 8 tips, t1 .. t8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      12345678</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  11  ..******</span>
@@ -141,15 +156,15 @@ raws are compatible.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 1: t1	 Tip 2: t2	 Tip 3: t3	 Tip 4: t4	 Tip 5: t5	</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Tip 6: t6	 Tip 7: t7	 Tip 8: t8	</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">CompatibleSplits</span><span class="op">(</span><span class="va">splits</span>, <span class="va">splits2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">CompatibleSplits</span><span class="op">(</span><span class="va">splits</span>, <span class="va">splits2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      11    12   13    14   15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 TRUE  TRUE TRUE  TRUE TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11 TRUE  TRUE TRUE  TRUE TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 TRUE FALSE TRUE  TRUE TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 14 TRUE  TRUE TRUE FALSE TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15 TRUE  TRUE TRUE  TRUE TRUE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -164,7 +179,7 @@ raws are compatible.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

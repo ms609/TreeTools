@@ -80,11 +80,11 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ReadTntTree</span><span class="op">(</span><span class="va">filepath</span>, relativePath <span class="op">=</span> <span class="cn">NULL</span>, keepEnd <span class="op">=</span> <span class="fl">1L</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">TntText2Tree</span><span class="op">(</span><span class="va">treeText</span><span class="op">)</span>
-
-<span class="fu">TNTText2Tree</span><span class="op">(</span><span class="va">treeText</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ReadTntTree</span><span class="op">(</span><span class="va">filepath</span>, relativePath <span class="op">=</span> <span class="cn">NULL</span>, keepEnd <span class="op">=</span> <span class="fl">1L</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TntText2Tree</span><span class="op">(</span><span class="va">treeText</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TNTText2Tree</span><span class="op">(</span><span class="va">treeText</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,26 +92,37 @@
     <dl><dt>filepath</dt>
 <dd><p>character string specifying path to TNT <code>.tre</code> file,
 relative to the R working directory (visible with <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code>).</p></dd>
+
+
 <dt>relativePath</dt>
 <dd><p>(discouraged) character string specifying location of the
 matrix file used to generate the TNT results, relative to the current working
 directory.  Taxon names will be read from this file if they are not specified
 by <code>tipLabels</code>.</p></dd>
+
+
 <dt>keepEnd</dt>
 <dd><p>(optional, default 1) integer specifying how many elements of
 the file path to conserve when creating relative path (see examples).</p></dd>
+
+
 <dt>tipLabels</dt>
 <dd><p>(optional) character vector specifying the names of the
 taxa, in the sequence that they appear in the TNT file.  If not specified,
 taxon names will be loaded from the data file linked in the first line of the
 <code>.tre</code> file specified in <code>filepath</code>.</p></dd>
+
+
 <dt>treeText</dt>
 <dd><p>Character string describing one or more trees,
 in the parenthetical format output by TNT.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ReadTntTree()</code> returns a tree of class <code>phylo</code>, corresponding
+    
+
+<p><code>ReadTntTree()</code> returns a tree of class <code>phylo</code>, corresponding
 to the tree in <code>filepath</code>, or NULL if no trees are found.</p>
     </div>
     <div id="details">
@@ -147,27 +158,27 @@ object of class <code>phylo</code>.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># In the examples below, TNT has read a matrix from</span></span>
-<span class="r-in"><span class="co"># "c:/TreeTools/input/dataset.nex"</span></span>
-<span class="r-in"><span class="co"># The results of an analysis were written to</span></span>
-<span class="r-in"><span class="co"># "c:/TreeTools/output/results1.tnt"</span></span>
-<span class="r-in"><span class="co">#</span></span>
-<span class="r-in"><span class="co"># results1.tnt will contain a hard-coded reference to</span></span>
-<span class="r-in"><span class="co"># "c:/TreeTools/input/dataset.nex".</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># On the original machine (but not elsewhere), it would be possible to read</span></span>
-<span class="r-in"><span class="co"># this hard-coded reference from results.tnt:</span></span>
-<span class="r-in"><span class="co"># ReadTntTree("output/results1.tnt")</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># These datasets are provided with the "TreeTools" package, which will</span></span>
-<span class="r-in"><span class="co"># probably not be located at c:/TreeTools on your machine:</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">oldWD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Remember the current working directory</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If taxon names were saved within the file (using `taxname=` in TNT),</span></span>
-<span class="r-in"><span class="co"># then our job is easy:</span></span>
-<span class="r-in"><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"extdata/output/named.tre"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># In the examples below, TNT has read a matrix from</span></span></span>
+<span class="r-in"><span><span class="co"># "c:/TreeTools/input/dataset.nex"</span></span></span>
+<span class="r-in"><span><span class="co"># The results of an analysis were written to</span></span></span>
+<span class="r-in"><span><span class="co"># "c:/TreeTools/output/results1.tnt"</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co"># results1.tnt will contain a hard-coded reference to</span></span></span>
+<span class="r-in"><span><span class="co"># "c:/TreeTools/input/dataset.nex".</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># On the original machine (but not elsewhere), it would be possible to read</span></span></span>
+<span class="r-in"><span><span class="co"># this hard-coded reference from results.tnt:</span></span></span>
+<span class="r-in"><span><span class="co"># ReadTntTree("output/results1.tnt")</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># These datasets are provided with the "TreeTools" package, which will</span></span></span>
+<span class="r-in"><span><span class="co"># probably not be located at c:/TreeTools on your machine:</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">oldWD</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Remember the current working directory</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If taxon names were saved within the file (using `taxname=` in TNT),</span></span></span>
+<span class="r-in"><span><span class="co"># then our job is easy:</span></span></span>
+<span class="r-in"><span><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"extdata/output/named.tre"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 5 tips and 4 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -175,32 +186,32 @@ object of class <code>phylo</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   taxon_a, taxon_b, taxon_c, taxon_d, taxon_e</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rooted; no branch lengths.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># But if taxa were compressed to numbers (using `taxname-`), we need to</span></span>
-<span class="r-in"><span class="co"># look up the original matrix in order to dereference the tip names.</span></span>
-<span class="r-in"><span class="co">#</span></span>
-<span class="r-in"><span class="co"># We need to extract the relevant file path from the end of the</span></span>
-<span class="r-in"><span class="co"># hard-coded path in the original file.</span></span>
-<span class="r-in"><span class="co">#</span></span>
-<span class="r-in"><span class="co"># We are interested in the last two elements of</span></span>
-<span class="r-in"><span class="co"># c:/TreeTools/input/dataset.nex</span></span>
-<span class="r-in"><span class="co">#                2      1</span></span>
-<span class="r-in"><span class="co">#</span></span>
-<span class="r-in"><span class="co"># "." means "relative to the current directory"</span></span>
-<span class="r-in"><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"extdata/output/numbered.tre"</span>, <span class="st">"./extdata"</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># But if taxa were compressed to numbers (using `taxname-`), we need to</span></span></span>
+<span class="r-in"><span><span class="co"># look up the original matrix in order to dereference the tip names.</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co"># We need to extract the relevant file path from the end of the</span></span></span>
+<span class="r-in"><span><span class="co"># hard-coded path in the original file.</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co"># We are interested in the last two elements of</span></span></span>
+<span class="r-in"><span><span class="co"># c:/TreeTools/input/dataset.nex</span></span></span>
+<span class="r-in"><span><span class="co">#                2      1</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co"># "." means "relative to the current directory"</span></span></span>
+<span class="r-in"><span><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"extdata/output/numbered.tre"</span>, <span class="st">"./extdata"</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 phylogenetic trees</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If working in a lower subdirectory</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="st">"./extdata/otherfolder"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># then it will be necessary to navigate up the directory path with "..":</span></span>
-<span class="r-in"><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"../output/numbered.tre"</span>, <span class="st">".."</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If working in a lower subdirectory</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="st">"./extdata/otherfolder"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># then it will be necessary to navigate up the directory path with "..":</span></span></span>
+<span class="r-in"><span><span class="fu">ReadTntTree</span><span class="op">(</span><span class="st">"../output/numbered.tre"</span>, <span class="st">".."</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 phylogenetic trees</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">oldWD</span><span class="op">)</span> <span class="co"># Restore original working directory</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">TNTText2Tree</span><span class="op">(</span><span class="st">"(A (B (C (D E ))));"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="va">oldWD</span><span class="op">)</span> <span class="co"># Restore original working directory</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">TNTText2Tree</span><span class="op">(</span><span class="st">"(A (B (C (D E ))));"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 5 tips and 4 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -208,7 +219,7 @@ object of class <code>phylo</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   A, B, C, D, E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rooted; no branch lengths.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -223,7 +234,7 @@ object of class <code>phylo</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

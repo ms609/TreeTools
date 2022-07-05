@@ -82,7 +82,7 @@ dataset.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">NJTree</span><span class="op">(</span><span class="va">dataset</span>, edgeLengths <span class="op">=</span> <span class="cn">FALSE</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">NJTree</span><span class="op">(</span><span class="va">dataset</span>, edgeLengths <span class="op">=</span> <span class="cn">FALSE</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -90,15 +90,22 @@ dataset.</p>
     <dl><dt>dataset</dt>
 <dd><p>A phylogenetic data matrix of <span class="pkg">phangorn</span> class <code>phyDat</code>,
 whose names correspond to the labels of any accompanying tree.</p></dd>
+
+
 <dt>edgeLengths</dt>
 <dd><p>Logical specifying whether to include edge lengths.</p></dd>
+
+
 <dt>ambig, ratio</dt>
 <dd><p>Settings of <code>ambig</code> and <code>ratio</code> to be used when
 computing <code><a href="Hamming.html">Hamming()</a></code> distances between sequences.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>NJTree</code> returns an object of class <code>phylo</code>.</p>
+    
+
+<p><code>NJTree</code> returns an object of class <code>phylo</code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -115,8 +122,8 @@ computing <code><a href="Hamming.html">Hamming()</a></code> distances between se
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">'Lobo'</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">NJTree</span><span class="op">(</span><span class="va">Lobo.phy</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">'Lobo'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">NJTree</span><span class="op">(</span><span class="va">Lobo.phy</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 48 tips and 47 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -124,7 +131,7 @@ computing <code><a href="Hamming.html">Hamming()</a></code> distances between se
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rooted; no branch lengths.</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -139,7 +146,7 @@ computing <code><a href="Hamming.html">Hamming()</a></code> distances between se
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

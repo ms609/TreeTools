@@ -88,28 +88,28 @@ names.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ReadCharacters</span><span class="op">(</span>
-  <span class="va">filepath</span>,
-  character_num <span class="op">=</span> <span class="cn">NULL</span>,
-  encoding <span class="op">=</span> <span class="st">"UTF8"</span>,
-  session <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="fu">ReadTntCharacters</span><span class="op">(</span>
-  <span class="va">filepath</span>,
-  character_num <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="cn">NULL</span>,
-  session <span class="op">=</span> <span class="cn">NULL</span>,
-  encoding <span class="op">=</span> <span class="st">"UTF8"</span>
-<span class="op">)</span>
-
-<span class="fu">ReadNotes</span><span class="op">(</span><span class="va">filepath</span>, encoding <span class="op">=</span> <span class="st">"UTF8"</span><span class="op">)</span>
-
-<span class="fu">ReadAsPhyDat</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">ReadTntAsPhyDat</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="fu">PhyDat</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ReadCharacters</span><span class="op">(</span></span>
+<span>  <span class="va">filepath</span>,</span>
+<span>  character_num <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  encoding <span class="op">=</span> <span class="st">"UTF8"</span>,</span>
+<span>  session <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ReadTntCharacters</span><span class="op">(</span></span>
+<span>  <span class="va">filepath</span>,</span>
+<span>  character_num <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  session <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  encoding <span class="op">=</span> <span class="st">"UTF8"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ReadNotes</span><span class="op">(</span><span class="va">filepath</span>, encoding <span class="op">=</span> <span class="st">"UTF8"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ReadAsPhyDat</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ReadTntAsPhyDat</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">PhyDat</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,14 +117,22 @@ names.</p>
     <dl><dt>filepath</dt>
 <dd><p>character string specifying location of file, or a
 <a href="https://rdrr.io/r/base/connections.html" class="external-link">connection</a> to the file.</p></dd>
+
+
 <dt>character_num</dt>
 <dd><p>Index of character(s) to return.
 <code>NULL</code>, the default, returns all characters.</p></dd>
+
+
 <dt>encoding</dt>
 <dd><p>Character encoding of input file.</p></dd>
+
+
 <dt>session</dt>
 <dd><p>(Optional) A Shiny session with a <code>numericInput</code> named
 <code>character_num</code> whose maximum should be updated.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Character vector specifying categories of data to extract from
 file. Setting <code>type = c("num", "dna")</code> will return only characters
@@ -132,23 +140,34 @@ following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT inpu
 character blocks before <code>dna</code> characters.
 Leave as <code>NULL</code> (the default) to return all characters in their original
 sequence.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Parameters to pass to <code>Read[Tnt]Characters()</code>.</p></dd>
+
+
 <dt>dataset</dt>
 <dd><p>list of taxa and characters, in the format produced by <a href="https://rdrr.io/pkg/ape/man/read.nexus.data.html" class="external-link">read.nexus.data</a>:
 a list of sequences each made of a single character vector,
 and named with the taxon name.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ReadCharacters()</code> and <code>ReadTNTCharacters()</code> return a matrix whose
+    
+
+<p><code>ReadCharacters()</code> and <code>ReadTNTCharacters()</code> return a matrix whose
 row names correspond to tip labels, and
 column names correspond to character labels, with the
 attribute <code>state.labels</code> listing the state labels for each character; or
 a list of length one containing a character string explaining why the
-function call was unsuccessful.
-<code>ReadAsPhyDat()</code> and <code>ReadTntAsPhyDat()</code> return a <code>phyDat</code> object.
-<code>ReadNotes()</code> returns a list in which each entry corresponds to a
+function call was unsuccessful.</p>
+
+
+<p><code>ReadAsPhyDat()</code> and <code>ReadTntAsPhyDat()</code> return a <code>phyDat</code> object.</p>
+
+
+<p><code>ReadNotes()</code> returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:</p><ol><li><p>A single character object listing any notes associated with the character</p></li>
 <li><p>A named character vector listing the notes associated with each taxon
 for that character, named with the names of each note-bearing taxon.</p></li>
@@ -209,9 +228,9 @@ instead.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">fileName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span>,</span>
-<span class="r-in">                   <span class="st">"/extdata/input/dataset.nex"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ReadCharacters</span><span class="op">(</span><span class="va">fileName</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fileName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"/extdata/input/dataset.nex"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ReadCharacters</span><span class="op">(</span><span class="va">fileName</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Character one Character two lots-of-punctuation, and "so on"!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> taxon_a "0"           "0"           "0"                              </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> taxon_b "0"           "0"           "0"                              </span>
@@ -247,17 +266,17 @@ instead.</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"state.labels")[[7]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "absent"  "present"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">fileName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span>,</span>
-<span class="r-in">                   <span class="st">"/extdata/tests/continuous.nex"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="fu">ReadCharacters</span><span class="op">(</span><span class="va">fileName</span>, encoding <span class="op">=</span> <span class="st">"UTF8"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># To convert from strings to numbers:</span></span>
-<span class="r-in"><span class="va">at</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">at</span></span>
-<span class="r-in"><span class="va">continuous</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">fileName</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   <span class="st">"/extdata/tests/continuous.nex"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="fu">ReadCharacters</span><span class="op">(</span><span class="va">fileName</span>, encoding <span class="op">=</span> <span class="st">"UTF8"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># To convert from strings to numbers:</span></span></span>
+<span class="r-in"><span><span class="va">at</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">continuous</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">continuous</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">at</span></span></span>
+<span class="r-in"><span><span class="va">continuous</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]  [,2]  [,3]  [,4]  [,5]  [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A_taxon   1.111 1.000 1.330 1.444 1.555 1.666</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B_alienus 2.111 2.222 2.333    NA 2.550 2.666</span>
@@ -276,7 +295,7 @@ instead.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

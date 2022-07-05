@@ -80,7 +80,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">MRCA</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">ancestors</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MRCA</span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span>, <span class="va">ancestors</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -88,13 +88,18 @@
     <dl><dt>x1, x2</dt>
 <dd><p>Integer specifying index of leaves or nodes whose most
 recent common ancestor should be found.</p></dd>
+
+
 <dt>ancestors</dt>
 <dd><p>List of ancestors for each node in a tree. Perhaps
 produced by <code><a href="ListAncestors.html">ListAncestors()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>MRCA()</code> returns an integer specifying the node number of the last
+    
+
+<p><code>MRCA()</code> returns an integer specifying the node number of the last
 common ancestor of <code>x1</code> and <code>x2</code>.</p>
     </div>
     <div id="details">
@@ -125,26 +130,26 @@ No warnings will be given if trees do not fulfil this requirement.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Verify that node numbering increases away from root</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Verify that node numbering increases away from root</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MRCA-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># ListAncestors expects a tree in Preorder</span></span>
-<span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="Reorder.html">Preorder</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">$</span><span class="va">edge</span></span>
-<span class="r-in"><span class="va">ancestors</span> <span class="op">&lt;-</span> <span class="fu"><a href="ListAncestors.html">ListAncestors</a></span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">MRCA</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="va">ancestors</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># ListAncestors expects a tree in Preorder</span></span></span>
+<span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="Reorder.html">Preorder</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">$</span><span class="va">edge</span></span></span>
+<span class="r-in"><span><span class="va">ancestors</span> <span class="op">&lt;-</span> <span class="fu"><a href="ListAncestors.html">ListAncestors</a></span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">MRCA</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="va">ancestors</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If a tree must be in postorder, use:</span></span>
-<span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="Reorder.html">Postorder</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">$</span><span class="va">edge</span></span>
-<span class="r-in"><span class="va">ancestors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span><span class="op">)</span>, <span class="va">ListAncestors</span>,</span>
-<span class="r-in">                    parent <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, child <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If a tree must be in postorder, use:</span></span></span>
+<span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="Reorder.html">Postorder</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">$</span><span class="va">edge</span></span></span>
+<span class="r-in"><span><span class="va">ancestors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span><span class="op">)</span>, <span class="va">ListAncestors</span>,</span></span>
+<span class="r-in"><span>                    parent <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, child <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -159,7 +164,7 @@ No warnings will be given if trees do not fulfil this requirement.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -80,9 +80,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">DescendantEdges</span><span class="op">(</span>edge <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">AllDescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DescendantEdges</span><span class="op">(</span>edge <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AllDescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -90,22 +90,36 @@
     <dl><dt>edge</dt>
 <dd><p>Integer specifying the number of the edge whose child edges are
 required (see <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">edgelabels</a>()</code>).</p></dd>
+
+
 <dt>parent</dt>
 <dd><p>Integer vector corresponding to the first column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 1]</code></p></dd>
+
+
 <dt>child</dt>
 <dd><p>Integer vector corresponding to the second column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 2]</code>.</p></dd>
+
+
 <dt>nEdge</dt>
 <dd><p>number of edges (calculated from <code>length(parent)</code> if not
 supplied).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>DescendantEdges()</code> returns a logical vector stating whether each
-edge in turn is a descendant of the specified edge (or the edge itself).
-<code>AllDescendantEdges()</code> returns a matrix of class logical, with row
-<em>N</em> specifying whether each edge is a descendant of edge <em>N</em>(or the edge itself).</p>
+    
+
+<p><code>DescendantEdges()</code> returns a logical vector stating whether each
+edge in turn is a descendant of the specified edge (or the edge itself).</p>
+
+
+<p><code>AllDescendantEdges()</code> returns a matrix of class logical, with row
+<em>N</em> specifying whether each edge is a descendant of edge <em>N</em></p>
+
+
+<p>(or the edge itself).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -144,7 +158,7 @@ to future-proof your code.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

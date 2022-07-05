@@ -82,24 +82,31 @@ Includes the root edge in rooted trees.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">x</span>, includeAncestor <span class="op">=</span> <span class="cn">TRUE</span>, internalOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">x</span>, includeAncestor <span class="op">=</span> <span class="cn">TRUE</span>, internalOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A tree of class <code>phylo</code>, its <code>$edge</code> property, or a list thereof.</p></dd>
+
+
 <dt>includeAncestor</dt>
 <dd><p>Logical specifying whether to count edge leading to
 ancestral node in calculation of order.</p></dd>
+
+
 <dt>internalOnly</dt>
 <dd><p>Logical specifying whether to restrict to results
 to internal nodes, i.e. to omit leaves. Irrelevant if
 <code>includeAncestor = FALSE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>NodeOrder()</code> returns an integer listing the order of each node;
+    
+
+<p><code>NodeOrder()</code> returns an integer listing the order of each node;
 entries are named with the number of each node.</p>
     </div>
     <div id="see-also">
@@ -124,13 +131,13 @@ entries are named with the number of each node.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="CollapseNode.html">CollapseNode</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="CollapseNode.html">CollapseNode</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 1 1 1 1 1 1 1 1 5 4 3</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">tree</span>, internalOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="fu">NodeOrder</span><span class="op">(</span><span class="va">tree</span>, internalOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="NodeOrder-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -145,7 +152,7 @@ entries are named with the number of each node.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

@@ -84,21 +84,25 @@ that must have occurred since their common ancestor.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Hamming</span><span class="op">(</span>
-  <span class="va">dataset</span>,
-  ratio <span class="op">=</span> <span class="cn">TRUE</span>,
-  ambig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"zero"</span>, <span class="st">"one"</span>, <span class="st">"na"</span>, <span class="st">"nan"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Hamming</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  ratio <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ambig <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"median"</span>, <span class="st">"mean"</span>, <span class="st">"zero"</span>, <span class="st">"one"</span>, <span class="st">"na"</span>, <span class="st">"nan"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dataset</dt>
 <dd><p>Object of class <code>phyDat</code>.</p></dd>
+
+
 <dt>ratio</dt>
 <dd><p>Logical specifying whether to weight distance against
 maximum possible, given that a token that is ambiguous in either of two taxa
 cannot contribute to the total distance between the pair.</p></dd>
+
+
 <dt>ambig</dt>
 <dd><p>Character specifying value to return when a pair of taxa
 have a zero maximum distance (perhaps due to a preponderance of ambiguous
@@ -107,10 +111,13 @@ tokens).
 "mean", the mean;
 "zero" sets to zero; "one" to one;
 "NA" to <code>NA_integer_</code>; and "NaN" to <code>NaN</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>Hamming()</code> returns an object of class <code>dist</code> listing the Hamming
+    
+
+<p><code>Hamming()</code> returns an object of class <code>dist</code> listing the Hamming
 distance between each pair of taxa.</p>
     </div>
     <div id="details">
@@ -131,19 +138,19 @@ implementation.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tokens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'0'</span>, <span class="fl">0</span>, <span class="st">'?'</span>,</span>
-<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'2'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span class="r-in">                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'-'</span>, <span class="st">'?'</span>, <span class="fl">0</span>,</span>
-<span class="r-in">                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'2'</span>, <span class="fl">1</span>, <span class="st">'{01}'</span><span class="op">)</span>,</span>
-<span class="r-in">                   nrow <span class="op">=</span> <span class="fl">6</span>, ncol <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">                   dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Taxon_"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span>,</span>
-<span class="r-in">                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Char_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">Hamming</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tokens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'0'</span>, <span class="fl">0</span>, <span class="st">'?'</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'1'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="st">'2'</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'-'</span>, <span class="st">'?'</span>, <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">1</span>, <span class="fl">1</span>, <span class="st">'2'</span>, <span class="fl">1</span>, <span class="st">'{01}'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   nrow <span class="op">=</span> <span class="fl">6</span>, ncol <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                   dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Taxon_"</span>, <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                     <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Char_"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Hamming</span><span class="op">(</span><span class="va">dataset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         Taxon_A Taxon_B Taxon_C Taxon_D Taxon_E</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Taxon_B    0.25                                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Taxon_C    0.25    0.00                        </span>
@@ -164,7 +171,7 @@ implementation.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

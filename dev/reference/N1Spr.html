@@ -92,21 +92,26 @@ distance: i.e. the entropy corresponding to the proportion of all possible
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">N1Spr</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">IC1Spr</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">N1Spr</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">IC1Spr</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>n</dt>
 <dd><p>Integer vector specifying the number of tips in a tree.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>N1Spr()</code> returns an integer vector denoting the number of trees one
-SPR rearrangement away from the input tree..
-<code>IC1Spr()</code> returns an numeric vector giving the phylogenetic
+    
+
+<p><code>N1Spr()</code> returns an integer vector denoting the number of trees one
+SPR rearrangement away from the input tree..</p>
+
+
+<p><code>IC1Spr()</code> returns an numeric vector giving the phylogenetic
 information content of trees 0 or 1 SPR rearrangement from an <em>n</em>-leaf tree,
 in bits.</p>
     </div>
@@ -121,11 +126,11 @@ in bits.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">N1Spr</span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">N1Spr</span><span class="op">(</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  2 12 30</span>
-<span class="r-in"><span class="fu">IC1Spr</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">IC1Spr</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2064509</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -140,7 +145,7 @@ in bits.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

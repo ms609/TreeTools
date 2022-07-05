@@ -86,14 +86,14 @@ relying on this function.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">edge_to_splits</span><span class="op">(</span>
-  <span class="va">edge</span>,
-  <span class="va">edgeOrder</span>,
-  tipLabels <span class="op">=</span> <span class="cn">NULL</span>,
-  asSplits <span class="op">=</span> <span class="cn">TRUE</span>,
-  nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">edge_to_splits</span><span class="op">(</span></span>
+<span>  <span class="va">edge</span>,</span>
+<span>  <span class="va">edgeOrder</span>,</span>
+<span>  tipLabels <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  asSplits <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,25 +102,38 @@ relying on this function.</p>
 <dd><p>A matrix with two columns, with each row listing the parent and
 child node of an edge in a phylogenetic tree.  Property <code>edge</code> of objects
 of class <code>phylo</code>.</p></dd>
+
+
 <dt>edgeOrder</dt>
 <dd><p>Integer vector such that <code>edge[edgeOrder, ]</code> returns a
 postorder ordering of edges.</p></dd>
+
+
 <dt>tipLabels</dt>
 <dd><p>Character vector specifying sequence in which to order
 tip labels.  Label order must (currently) match to combine or compare separate
 <code>Splits</code> objects.</p></dd>
+
+
 <dt>asSplits</dt>
 <dd><p>Logical specifying whether to return a <code>Splits</code> object,
 or an unannotated two-dimensional array (useful where performance is
 paramount).</p></dd>
+
+
 <dt>nTip</dt>
 <dd><p>Integer specifying number of leaves in tree.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Presently unused.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>edge_to_splits()</code> uses the same return format as <code><a href="Splits.html">as.Splits()</a></code>.</p>
+    
+
+<p><code>edge_to_splits()</code> uses the same return format as <code><a href="Splits.html">as.Splits()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -140,7 +153,7 @@ function that should be suitable for most users.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
