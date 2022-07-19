@@ -1,6 +1,6 @@
 # TreeTools 1.7.2.9000 #
 
-- `ReadTntTree()` Supports multi-line trees.
+- `ReadTntTree()` supports multi-line trees.
 
 
 # TreeTools 1.7.2 #
