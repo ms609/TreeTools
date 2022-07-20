@@ -5,14 +5,9 @@
 \alias{NexusTokens}
 \title{Extract taxa from a matrix block}
 \usage{
-ExtractTaxa(
-  matrixLines,
-  character_num = NULL,
-  session = NULL,
-  continuous = FALSE
-)
+ExtractTaxa(matrixLines, character_num = NULL, continuous = FALSE)
 
-NexusTokens(tokens, character_num = NULL, session = NULL)
+NexusTokens(tokens, character_num = NULL)
 }
 \arguments{
 \item{matrixLines}{Character vector containing lines of a file that include
@@ -20,9 +15,6 @@ a phylogenetic matrix. See \code{\link[=ReadCharacters]{ReadCharacters()}} for e
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
-
-\item{session}{(Optional) A Shiny session with a \code{numericInput} named
-\code{character_num} whose maximum should be updated.}
 
 \item{continuous}{Logical specifying whether characters are continuous.
 Treated as discrete if \code{FALSE}.}

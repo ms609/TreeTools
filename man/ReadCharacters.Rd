@@ -9,18 +9,12 @@
 \alias{PhyDat}
 \title{Read phylogenetic characters from file}
 \usage{
-ReadCharacters(
-  filepath,
-  character_num = NULL,
-  encoding = "UTF8",
-  session = NULL
-)
+ReadCharacters(filepath, character_num = NULL, encoding = "UTF8")
 
 ReadTntCharacters(
   filepath,
   character_num = NULL,
   type = NULL,
-  session = NULL,
   encoding = "UTF8"
 )
 
@@ -40,9 +34,6 @@ PhyDat(dataset)
 \code{NULL}, the default, returns all characters.}
 
 \item{encoding}{Character encoding of input file.}
-
-\item{session}{(Optional) A Shiny session with a \code{numericInput} named
-\code{character_num} whose maximum should be updated.}
 
 \item{type}{Character vector specifying categories of data to extract from
 file. Setting \code{type = c("num", "dna")} will return only characters
