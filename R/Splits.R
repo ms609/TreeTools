@@ -504,7 +504,7 @@ rev.Splits <- function(x) {
 #' split in its left operand.
 #'
 #' `in.Splits()` is an alias for `%in%`, included for backwards compatibility.
-#' It will be deprecated in a future release.
+#' It is deprecated and will be removed in a future release.
 #'
 #' @param x,table Object of class `Splits`.
 #' @param nomatch Integer value that will be used in place of `NA` in the case
@@ -559,6 +559,11 @@ setMethod("match",
 #' @rdname match.Splits
 #' @export
 in.Splits <- function(x, table) {
+  .Deprecated("%in%")
+  .in.Splits(x, table)
+}
+
+.in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
 
@@ -571,7 +576,7 @@ setGeneric("match")
 #' @keywords methods
 setMethod("%in%",
           signature(x = "Splits", table = "Splits"),
-          in.Splits)
+          .in.Splits)
 
 
 #' Polarize splits on a single taxon

@@ -37,7 +37,7 @@ split in its left operand.
 }
 \details{
 \code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatibility.
-It will be deprecated in a future release.
+It is deprecated and will be removed in a future release.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(7))

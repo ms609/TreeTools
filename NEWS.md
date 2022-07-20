@@ -4,6 +4,8 @@
 
 - `as.MixedBase()` supports larger trees (44-32767 tips).
 
+- Add deprecation warning to `in.Splits()`.
+
 
 # TreeTools 1.7.2 #
 
