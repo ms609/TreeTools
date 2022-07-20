@@ -1,4 +1,4 @@
-test_that('Subsplits', {
+test_that("Subsplits", {
   splits <- as.Splits(PectinateTree(letters[1:9]))
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
   expect_equal(TipsInSplits(efgh),
@@ -6,11 +6,11 @@ test_that('Subsplits', {
   expect_equal(DropTip(splits, letters[c(1:4, 9)]), 
                KeepTip(splits, letters[5:8]))
   expect_equal(KeepTip(splits, letters[5:8]), Subsplit(splits, letters[5:8]))
-  expect_equal(c('12' = TRUE, '13' = TRUE, '14' = TRUE, '15' = TRUE,
-                 '16' = FALSE, '17' = TRUE), TrivialSplits(efgh))
+  expect_equal(c("12" = TRUE, "13" = TRUE, "14" = TRUE, "15" = TRUE,
+                 "16" = FALSE, "17" = TRUE), TrivialSplits(efgh))
 
   efghF <- Subsplit(splits, tips = letters[5:8], keepAll = FALSE)
-  expect_equal(c('16' = 2), TipsInSplits(efghF))
+  expect_equal(c("16" = 2), TipsInSplits(efghF))
   expect_equal(efghF, Subsplit(list(splits, splits), tips = letters[5:8],
                                keepAll = FALSE)[[1]])
 
@@ -21,10 +21,10 @@ test_that('Subsplits', {
 
 
   splits <- as.Splits(PectinateTree(32 + 32 + 10))
-  fourTips <- c('t32', 't33', 't64', 't65')
+  fourTips <- c("t32", "t33", "t64", "t65")
   sub <- Subsplit(splits, tips = fourTips)
-  expect_equal(as.Splits(c('t32' = FALSE, 't33' = FALSE, 't64' = TRUE,
-                           't65' = TRUE)),
+  expect_equal(as.Splits(c("t32" = FALSE, "t33" = FALSE, "t64" = TRUE,
+                           "t65" = TRUE)),
                unname(sub), ignore_attr = TRUE)
 
 })
@@ -169,18 +169,18 @@ test_that("SplitMatchProbability() returns expected probabilities", {
 test_that("Tip labels are found", {
   pt4 <- PectinateTree(4L)
   bt4 <- BalancedTree(4L)
-  t1..4 <- c('t1', 't2', 't3', 't4')
+  t1..4 <- c("t1", "t2", "t3", "t4")
   expect_equal(t1..4, TipLabels(t1..4))
   expect_equal(t1..4, TipLabels(pt4))
   expect_equal(t1..4, TipLabels(as.Splits(pt4)))
   expect_equal(t1..4, TipLabels(list(pt4, bt4)))
   expect_equal(t1..4, TipLabels(structure(list(pt4, bt4),
-                                          class='multiPhylo')))
+                                          class="multiPhylo")))
   expect_equal(t1..4, TipLabels(structure(list(pt4, BalancedTree(letters[1:4])),
-                                          class='multiPhylo'), single = TRUE))
+                                          class="multiPhylo"), single = TRUE))
   expect_equal(t1..4, TipLabels(structure(list(pt4, bt4,
                                                tip.label = t1..4),
-                                          class='multiPhylo')))
+                                          class="multiPhylo")))
   expect_equal(t1..4, TipLabels(as.TreeNumber(pt4)))
 
   expect_equal(t1..4, TipLabels(structure(list(), tip.label = t1..4)))
@@ -190,7 +190,7 @@ test_that("Tip labels are found", {
   expect_equal(TipLabels(pt4, single = TRUE),
                TipLabels(list(as.Splits(pt4)), single = TRUE))
   expect_equal(TipLabels(pt4), TipLabels(list(as.Splits(pt4), as.Splits(bt4))))
-  expect_equal(list(t1..4, c(t1..4, 't5')),
+  expect_equal(list(t1..4, c(t1..4, "t5")),
                     TipLabels(list(as.Splits(pt4),
                                    as.Splits(BalancedTree(5)))))
 
