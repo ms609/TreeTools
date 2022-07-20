@@ -34,10 +34,10 @@ each entry in \code{constraint}.
 }
 \section{Functions}{
 \itemize{
-\item \code{AddUnconstrained}: Expand a constraint to include unconstrained
+\item \code{AddUnconstrained()}: Expand a constraint to include unconstrained
 taxa.
-}}
 
+}}
 \examples{
 tips <- letters[1:9]
 tree <- as.phylo(1, 9, tips)

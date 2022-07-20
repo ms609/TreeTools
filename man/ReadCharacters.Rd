@@ -102,14 +102,14 @@ the highlighted option in the "Encoding" menu) following the example below.
 }
 \section{Functions}{
 \itemize{
-\item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
+\item \code{PhyDat()}: A convenient wrapper for \pkg{phangorn}'s
 \code{phyDat()}, which converts a \strong{list} of morphological characters into a
 \code{phyDat} object.
 If your morphological characters are in the form of a \strong{matrix}, perhaps
 because they have been read using \code{\link[=read.table]{read.table()}}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
 instead.
-}}
 
+}}
 \examples{
 fileName <- paste0(system.file(package = "TreeTools"),
                    "/extdata/input/dataset.nex")

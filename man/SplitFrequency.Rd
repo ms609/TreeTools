@@ -53,14 +53,14 @@ constituent functions (see examples)
 }
 \section{Functions}{
 \itemize{
-\item \code{SplitNumber}: Assign a unique integer to each split
+\item \code{SplitNumber()}: Assign a unique integer to each split
 
-\item \code{ForestSplits}: Frequency of splits in a given forest of trees
+\item \code{ForestSplits()}: Frequency of splits in a given forest of trees
 
-\item \code{TreeSplits}: Deprecated. Listed the splits in a given tree.
+\item \code{TreeSplits()}: Deprecated. Listed the splits in a given tree.
 Use as.Splits instead.
-}}
 
+}}
 \examples{
 # An example forest of 100 trees, some identical
 forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)

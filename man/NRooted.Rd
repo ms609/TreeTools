@@ -77,29 +77,29 @@ Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
 }
 \section{Functions}{
 \itemize{
-\item \code{NUnrooted}: Number of unrooted trees
+\item \code{NUnrooted()}: Number of unrooted trees
 
-\item \code{NRooted64}: Exact number of rooted trees as 64-bit integer
+\item \code{NRooted64()}: Exact number of rooted trees as 64-bit integer
 (13 < \code{nTip} < 19)
 
-\item \code{NUnrooted64}: Exact number of unrooted trees as 64-bit integer
+\item \code{NUnrooted64()}: Exact number of unrooted trees as 64-bit integer
 (14 < \code{nTip} < 20)
 
-\item \code{LnUnrooted}: Log Number of unrooted trees
+\item \code{LnUnrooted()}: Log Number of unrooted trees
 
-\item \code{LnUnrooted.int}: Log Number of unrooted trees (as integer)
+\item \code{LnUnrooted.int()}: Log Number of unrooted trees (as integer)
 
-\item \code{LnRooted}: Log Number of rooted trees
+\item \code{LnRooted()}: Log Number of rooted trees
 
-\item \code{LnRooted.int}: Log Number of rooted trees (as integer)
+\item \code{LnRooted.int()}: Log Number of rooted trees (as integer)
 
-\item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
+\item \code{NUnrootedSplits()}: Number of unrooted trees consistent with a bipartition
 split.
 
-\item \code{NUnrootedMult}: Number of unrooted trees consistent with a multi-partition
+\item \code{NUnrootedMult()}: Number of unrooted trees consistent with a multi-partition
 split.
+
 }}
-
 \examples{
 NRooted(10)
 NUnrooted(10)

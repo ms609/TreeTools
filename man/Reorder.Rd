@@ -203,16 +203,16 @@ advice.
 }
 \section{Functions}{
 \itemize{
-\item \code{Cladewise}: Reorder tree cladewise.
+\item \code{Cladewise()}: Reorder tree cladewise.
 
-\item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
+\item \code{ApePostorder()}: Reorder tree in Postorder using ape's \code{postorder}
 function, which is robust to unconventional node numbering.
 
-\item \code{Pruningwise}: Reorder tree Pruningwise.
+\item \code{Pruningwise()}: Reorder tree Pruningwise.
 
-\item \code{Preorder}: Reorder tree in Preorder (special case of cladewise).
+\item \code{Preorder()}: Reorder tree in Preorder (special case of cladewise).
+
 }}
-
 \seealso{
 Rotate each node into a consistent orientation with \code{\link[=SortTree]{SortTree()}}.
 

@@ -41,9 +41,9 @@ This will be true of trees listed in \link{Preorder}.
 }
 \section{Functions}{
 \itemize{
-\item \code{AllAncestors}: Alias for \code{ListAncestors(node = NULL)}.
-}}
+\item \code{AllAncestors()}: Alias for \code{ListAncestors(node = NULL)}.
 
+}}
 \examples{
 tree <- PectinateTree(5)
 edge <- tree[["edge"]]

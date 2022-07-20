@@ -36,17 +36,17 @@ Calculate the double factorial of a number, or its logarithm.
 }
 \section{Functions}{
 \itemize{
-\item \code{DoubleFactorial64}: Returns the exact double factorial as a 64-bit
+\item \code{DoubleFactorial64()}: Returns the exact double factorial as a 64-bit
 \code{integer64}, for \code{n} < 34.
 
-\item \code{LnDoubleFactorial}: Returns the logarithm of the double factorial.
+\item \code{LnDoubleFactorial()}: Returns the logarithm of the double factorial.
 
-\item \code{Log2DoubleFactorial}: Returns the logarithm of the double factorial.
+\item \code{Log2DoubleFactorial()}: Returns the logarithm of the double factorial.
 
-\item \code{LnDoubleFactorial.int}: Slightly faster, when x is known to be length one
+\item \code{LnDoubleFactorial.int()}: Slightly faster, when x is known to be length one
 and below 50001
-}}
 
+}}
 \examples{
 DoubleFactorial (-4:0) # Return 1 if n < 2
 DoubleFactorial (2) # 2

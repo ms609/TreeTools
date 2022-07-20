@@ -61,20 +61,20 @@ and which can crash when trees' internal numbering follows unexpected schema.
 }
 \section{Functions}{
 \itemize{
-\item \code{KeepTipPreorder}: Faster version with no checks.
+\item \code{KeepTipPreorder()}: Faster version with no checks.
 Does not retain tip labels or edge weights.
 edges must be listed in preorder.
 May crash if improper input is specified.
 
-\item \code{KeepTipPostorder}: Faster version with no checks.
+\item \code{KeepTipPostorder()}: Faster version with no checks.
 Does not retain tip labels or edge weights.
 edges must be listed in postorder.
 May crash if improper input is specified.
 
-\item \code{DropTipPhylo}: Direct call to \code{DropTip.phylo()}, to avoid overhead of
+\item \code{DropTipPhylo()}: Direct call to \code{DropTip.phylo()}, to avoid overhead of
 querying object's class.
-}}
 
+}}
 \examples{
 tree <- BalancedTree(9)
 plot(tree)
