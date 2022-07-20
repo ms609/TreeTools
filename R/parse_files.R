@@ -257,7 +257,6 @@ TNTText2Tree <- TntText2Tree
 #' @param matrixLines Character vector containing lines of a file that include
 #' a phylogenetic matrix. See [`ReadCharacters()`] for expected format.
 #' @template characterNumParam
-#' @template sessionParam
 #' @param continuous Logical specifying whether characters are continuous.
 #' Treated as discrete if `FALSE`.
 #'
@@ -273,7 +272,7 @@ TNTText2Tree <- TntText2Tree
 #'
 #' @keywords internal
 #' @export
-ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
+ExtractTaxa <- function(matrixLines, character_num = NULL,
                          continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
 
@@ -305,8 +304,7 @@ ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
                      function(taxon) paste0(tokens[taxa == taxon],
                                              collapse = ""),
                      character(1))
-    tokens <- NexusTokens(tokens, character_num = character_num,
-                          session = session)
+    tokens <- NexusTokens(tokens, character_num = character_num)
   }
 
   rownames(tokens) <- uniqueTaxa
@@ -324,15 +322,11 @@ ExtractTaxa <- function(matrixLines, character_num = NULL, session = NULL,
 #' @examples
 #' NexusTokens("01[01]-?")
 #' @export
-NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
+NexusTokens <- function(tokens, character_num = NULL) {
   tokens.pattern <- "\\([^\\)]+\\)|\\[[^\\]]+\\]|\\{[^\\}]+\\}|\\S"
-  matches <- gregexpr(tokens.pattern, tokens, perl=TRUE)
+  matches <- gregexpr(tokens.pattern, tokens, perl = TRUE)
 
   nChar <- length(matches[[1]])
-
-  if (!is.null(session) && requireNamespace("shiny", quietly = TRUE)) {
-    shiny::updateNumericInput(session, "character_num", max = nChar)            # nocov
-  }
 
   if (!exists("character_num") || is.null(character_num)) {
     character_num <- seq_len(nChar)
@@ -390,7 +384,6 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #' sequence.
 #' @template characterNumParam
 #' @param encoding Character encoding of input file.
-#' @template sessionParam
 #'
 #' @return `ReadCharacters()` and `ReadTNTCharacters()` return a matrix whose
 #' row names correspond to tip labels, and
@@ -425,8 +418,7 @@ NexusTokens <- function(tokens, character_num = NULL, session = NULL) {
 #'
 #' - Write characters to TNT-format file: [`WriteTntCharacters()`]
 #' @export
-ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8",
-                            session = NULL) {
+ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
 
   lines <- .UTFLines(filepath, encoding)
   nexusComment.pattern <- "\\[[^\\]*?\\]"
@@ -450,7 +442,7 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8",
 
     matrixLines <- lines[(matrixStart + 1):matrixEnd]
     tokens <- ExtractTaxa(matrixLines, character_num = character_num,
-                          session = session, continuous = continuous)
+                          continuous = continuous)
 
     nChar.pattern <- "DIMENSIONS\\s+.*NCHAR\\s*=\\s*(\\d+)"
     nCharLines <- grepl(nChar.pattern, upperLines, perl = TRUE)
@@ -564,7 +556,7 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8",
 #' @rdname ReadCharacters
 #' @export
 ReadTntCharacters <- function(filepath, character_num = NULL,
-                               type = NULL, session = NULL, encoding = "UTF8") {
+                               type = NULL, encoding = "UTF8") {
 
   lines <- .UTFLines(filepath, encoding)
   tntComment.pattern <- "'[^']*'"
@@ -624,7 +616,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
             function(x) seq.int(from = x[1], to = x[2])))]
   }
 
-  tokens <- ExtractTaxa(matrixLines, character_num, session)
+  tokens <- ExtractTaxa(matrixLines, character_num)
   if (nrow(tokens) != nTip) {
     warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
             ": please check output and report bugs.")                           # nocov

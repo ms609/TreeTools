@@ -49,7 +49,6 @@ Suggests:
     phangorn (>= 2.2.1),
     Rcpp (>= 1.0.8),
     rmarkdown,
-    shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
 Config/Needs/check: rcmdcheck
