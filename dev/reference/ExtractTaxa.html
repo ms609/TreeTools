@@ -80,14 +80,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ExtractTaxa</span><span class="op">(</span></span>
-<span>  <span class="va">matrixLines</span>,</span>
-<span>  character_num <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  session <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  continuous <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ExtractTaxa</span><span class="op">(</span><span class="va">matrixLines</span>, character_num <span class="op">=</span> <span class="cn">NULL</span>, continuous <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">NexusTokens</span><span class="op">(</span><span class="va">tokens</span>, character_num <span class="op">=</span> <span class="cn">NULL</span>, session <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">NexusTokens</span><span class="op">(</span><span class="va">tokens</span>, character_num <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -100,11 +95,6 @@ a phylogenetic matrix. See <code><a href="ReadCharacters.html">ReadCharacters()<
 <dt>character_num</dt>
 <dd><p>Index of character(s) to return.
 <code>NULL</code>, the default, returns all characters.</p></dd>
-
-
-<dt>session</dt>
-<dd><p>(Optional) A Shiny session with a <code>numericInput</code> named
-<code>character_num</code> whose maximum should be updated.</p></dd>
 
 
 <dt>continuous</dt>
