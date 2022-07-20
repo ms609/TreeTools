@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -80,9 +80,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="fu">AllAncestors</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, node <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AllAncestors</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -90,22 +90,31 @@
     <dl><dt>parent</dt>
 <dd><p>Integer vector corresponding to the first column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 1]</code></p></dd>
+
+
 <dt>child</dt>
 <dd><p>Integer vector corresponding to the second column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 2]</code>.</p></dd>
+
+
 <dt>node</dt>
 <dd><p>Integer giving the index of the node or tip whose ancestors are
 required, or <code>NULL</code> to return ancestors of all nodes.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>node = NULL</code>, <code>ListAncestors()</code> returns a list. Each entry <em>i</em> contains
+    
+
+<p>If <code>node = NULL</code>, <code>ListAncestors()</code> returns a list. Each entry <em>i</em> contains
 a vector containing, in order, the nodes encountered when traversing the tree
 from node <em>i</em> to the root node.
 The last entry of each member of the list is therefore the root node,
 with the exception of the entry for the root node itself, which is a
-zero-length integer.
-If <code>node</code> is an integer, <code>ListAncestors()</code> returns a vector of the numbers of
+zero-length integer.</p>
+
+
+<p>If <code>node</code> is an integer, <code>ListAncestors()</code> returns a vector of the numbers of
 the nodes ancestral to the given <code>node</code>, including the root node.</p>
     </div>
     <div id="details">
@@ -118,7 +127,7 @@ This will be true of trees listed in <a href="Reorder.html">Preorder</a>.</p>
     <div id="functions">
     <h2>Functions</h2>
     
-<ul><li><p><code>AllAncestors</code>: Alias for <code>ListAncestors(node = NULL)</code>.</p></li>
+<ul><li><p><code>AllAncestors()</code>: Alias for <code>ListAncestors(node = NULL)</code>.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -156,24 +165,24 @@ code is based.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">[[</span><span class="st">"edge"</span><span class="op">]</span><span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Identify desired node with:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">tiplabels</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">edge</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">[[</span><span class="st">"edge"</span><span class="op">]</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Identify desired node with:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">tiplabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ListAncestors-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Ancestors of specific nodes:</span></span>
-<span class="r-in"><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">4L</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Ancestors of specific nodes:</span></span></span>
+<span class="r-in"><span><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">4L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9 8 7 6</span>
-<span class="r-in"><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">8L</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">8L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7 6</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Ancestors of each node, if tree numbering system is uncertain:</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span><span class="op">)</span>, <span class="va">ListAncestors</span>,</span>
-<span class="r-in">       parent <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, child <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Ancestors of each node, if tree numbering system is uncertain:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">edge</span><span class="op">)</span><span class="op">)</span>, <span class="va">ListAncestors</span>,</span></span>
+<span class="r-in"><span>       parent <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, child <span class="op">=</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -201,9 +210,9 @@ code is based.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8 7 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Ancestors of each node, if tree is in preorder:</span></span>
-<span class="r-in"><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Ancestors of each node, if tree is in preorder:</span></span></span>
+<span class="r-in"><span><span class="fu">ListAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -231,9 +240,9 @@ code is based.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8 7 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alias:</span></span>
-<span class="r-in"><span class="fu">AllAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alias:</span></span></span>
+<span class="r-in"><span><span class="fu">AllAncestors</span><span class="op">(</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -261,7 +270,7 @@ code is based.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[9]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8 7 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -276,7 +285,7 @@ code is based.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

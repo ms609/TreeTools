@@ -31,7 +31,7 @@ evaluate the degree of homoplasy within a dataset."><!-- mathjax --><script src=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ evaluate the degree of homoplasy within a dataset.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CharacterInformation</span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">CharacterInformation</span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -106,11 +106,17 @@ evaluate the degree of homoplasy within a dataset.</p>
 a character.  Example: <code>c(0, 0, 0, 1, 1, 1, '?', '-')</code>.</p>
 <p>Note that ambiguous tokens such as <code>(01)</code> are not supported, and should be
 replaced with <code>?</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>CharacterInformation()</code> returns a numeric specifying the
-phylogenetic information content of the character (<em>sensu</em>Steel and Penny 2006
+    
+
+<p><code>CharacterInformation()</code> returns a numeric specifying the
+phylogenetic information content of the character (<em>sensu</em></p>
+
+
+<p>Steel and Penny 2006
 ), in bits.</p>
     </div>
     <div id="references">
@@ -152,7 +158,7 @@ Oxford University Press, Oxford.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

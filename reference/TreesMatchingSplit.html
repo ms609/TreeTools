@@ -24,7 +24,7 @@ a bipartition split that divides taxa into groups of size A and B."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -82,23 +82,28 @@ a bipartition split that divides taxa into groups of size <code>A</code> and <co
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">TreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-
-<span class="fu">LnTreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-
-<span class="fu">Log2TreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LnTreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Log2TreesMatchingSplit</span><span class="op">(</span><span class="va">A</span>, B <span class="op">=</span> <span class="va">A</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>A, B</dt>
 <dd><p>Integer specifying the number of taxa in each partition.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>TreesMatchingSplit()</code> returns a numeric specifying the number of trees
-that are compatible with the given split.
-<code>LnTreesMatchingSplit()</code> and <code>Log2TreesMatchingSplit()</code> give the natural
+    
+
+<p><code>TreesMatchingSplit()</code> returns a numeric specifying the number of trees
+that are compatible with the given split.</p>
+
+
+<p><code>LnTreesMatchingSplit()</code> and <code>Log2TreesMatchingSplit()</code> give the natural
 and base-2 logarithms of this number.</p>
     </div>
     <div id="see-also">
@@ -116,13 +121,13 @@ and base-2 logarithms of this number.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">TreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">TreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 99225</span>
-<span class="r-in"><span class="fu">LnTreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">LnTreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11.50515</span>
-<span class="r-in"><span class="fu">Log2TreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">Log2TreesMatchingSplit</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 16.59842</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -137,7 +142,7 @@ and base-2 logarithms of this number.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

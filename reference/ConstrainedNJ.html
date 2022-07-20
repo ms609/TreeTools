@@ -25,7 +25,7 @@ at random."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ at random.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span>, weight <span class="op">=</span> <span class="fl">1L</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span>, weight <span class="op">=</span> <span class="fl">1L</span>, ratio <span class="op">=</span> <span class="cn">TRUE</span>, ambig <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -92,21 +92,30 @@ at random.</p>
     <dl><dt>dataset</dt>
 <dd><p>A phylogenetic data matrix of <span class="pkg">phangorn</span> class <code>phyDat</code>,
 whose names correspond to the labels of any accompanying tree.</p></dd>
+
+
 <dt>constraint</dt>
 <dd><p>An object of class <code>phyDat</code>; returned trees will be
 perfectly compatible with each character in <code>constraint</code>.
 See <a href="https://ms609.github.io/TreeSearch/articles/tree-search.html" class="external-link">vignette</a>
 for further examples.</p></dd>
+
+
 <dt>weight</dt>
 <dd><p>Numeric specifying degree to up-weight characters in
 <code>constraint</code>.</p></dd>
+
+
 <dt>ambig, ratio</dt>
 <dd><p>Settings of <code>ambig</code> and <code>ratio</code> to be used when
 computing <code><a href="Hamming.html">Hamming()</a></code> distances between sequences.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ConstrainedNJ()</code> returns a tree of class <code>phylo</code>.</p>
+    
+
+<p><code>ConstrainedNJ()</code> returns a tree of class <code>phylo</code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -123,13 +132,13 @@ computing <code><a href="Hamming.html">Hamming()</a></code> distances between se
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span>
-<span class="r-in">    <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span>
-<span class="r-in">  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">constraint</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0</span>, b <span class="op">=</span> <span class="fl">0</span>, c <span class="op">=</span> <span class="fl">0</span>, d <span class="op">=</span> <span class="fl">0</span>, e <span class="op">=</span> <span class="fl">1</span>, f <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>  dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">constraint</span> <span class="op">&lt;-</span> <span class="fu"><a href="MatrixToPhyDat.html">MatrixToPhyDat</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">0</span>, b <span class="op">=</span> <span class="fl">0</span>, c <span class="op">=</span> <span class="fl">0</span>, d <span class="op">=</span> <span class="fl">0</span>, e <span class="op">=</span> <span class="fl">1</span>, f <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">ConstrainedNJ</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">constraint</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ConstrainedNJ-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -145,7 +154,7 @@ computing <code><a href="Hamming.html">Hamming()</a></code> distances between se
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

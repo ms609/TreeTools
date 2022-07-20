@@ -25,7 +25,7 @@ of a distance matrix."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -84,9 +84,9 @@ of a distance matrix.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">MSTLength</span><span class="op">(</span><span class="va">distances</span>, mst <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span>, plot <span class="op">=</span> <span class="cn">FALSE</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">MSTLength</span><span class="op">(</span><span class="va">distances</span>, mst <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,25 +94,38 @@ of a distance matrix.</p>
     <dl><dt>distances</dt>
 <dd><p>Either a matrix that can be interpreted as a distance
 matrix, or an object of class <code>dist</code>.</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>Logical specifying whether to add the minimum spanning tree
 to an existing plot.</p></dd>
+
+
 <dt>x, y</dt>
 <dd><p>Numeric vectors specifying the X and Y coordinates of each
 element in <code>distances</code>.  Necessary only if <code>plot = TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters to send to <code>[lines()]</code>.</p></dd>
+
+
 <dt>mst</dt>
 <dd><p>Optional parameter specifying the minimum spanning tree in the
 format returned by <code>MSTEdges()</code>; if <code>NULL</code>, calculated from <code>distances</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>MSTEdges()</code> returns a matrix in which each row corresponds to an
+    
+
+<p><code>MSTEdges()</code> returns a matrix in which each row corresponds to an
 edge of the minimum spanning tree, listed in non-decreasing order of length.
 The two columns contain the indices of the entries in <code>distances</code> that
-each edge connects, with the lower value listed first.
-<code>MSTLength()</code> returns the length of the minimum spanning tree.</p>
+each edge connects, with the lower value listed first.</p>
+
+
+<p><code>MSTLength()</code> returns the length of the minimum spanning tree.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -134,16 +147,16 @@ tree: <code><a href="https://rdrr.io/pkg/ape/man/mst.html" class="external-link"
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Corners of an almost-regular octahedron</span></span>
-<span class="r-in"><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1.1</span>, <span class="fl">1</span>,</span>
-<span class="r-in">                   <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1.1</span>,</span>
-<span class="r-in">                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">distances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mst</span> <span class="op">&lt;-</span> <span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">MSTLength</span><span class="op">(</span><span class="va">distances</span>, <span class="va">mst</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Corners of an almost-regular octahedron</span></span></span>
+<span class="r-in"><span><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">1.1</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1.1</span>,</span></span>
+<span class="r-in"><span>                   <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">distances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">points</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mst</span> <span class="op">&lt;-</span> <span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">MSTLength</span><span class="op">(</span><span class="va">distances</span>, <span class="va">mst</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 8.496869</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, ann <span class="op">=</span> <span class="cn">FALSE</span>, asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span>, <span class="cn">TRUE</span>, x <span class="op">=</span> <span class="va">points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">points</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, ann <span class="op">=</span> <span class="cn">FALSE</span>, asp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">MSTEdges</span><span class="op">(</span><span class="va">distances</span>, <span class="cn">TRUE</span>, x <span class="op">=</span> <span class="va">points</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">points</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MSTEdges-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -159,7 +172,7 @@ tree: <code><a href="https://rdrr.io/pkg/ape/man/mst.html" class="external-link"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

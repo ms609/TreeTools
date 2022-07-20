@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -80,37 +80,46 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">SupportColour</span><span class="op">(</span>
-  <span class="va">support</span>,
-  show1 <span class="op">=</span> <span class="cn">TRUE</span>,
-  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">diverge_hcl</span><span class="op">(</span><span class="fl">101</span>, h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">260</span>, <span class="fl">0</span><span class="op">)</span>, c <span class="op">=</span> <span class="fl">100</span>, l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">90</span><span class="op">)</span>, power <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-  outOfRange <span class="op">=</span> <span class="st">"red"</span>
-<span class="op">)</span>
-
-<span class="fu">SupportColor</span><span class="op">(</span>
-  <span class="va">support</span>,
-  show1 <span class="op">=</span> <span class="cn">TRUE</span>,
-  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">diverge_hcl</span><span class="op">(</span><span class="fl">101</span>, h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">260</span>, <span class="fl">0</span><span class="op">)</span>, c <span class="op">=</span> <span class="fl">100</span>, l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">90</span><span class="op">)</span>, power <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
-  outOfRange <span class="op">=</span> <span class="st">"red"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SupportColour</span><span class="op">(</span></span>
+<span>  <span class="va">support</span>,</span>
+<span>  show1 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">diverge_hcl</span><span class="op">(</span><span class="fl">101</span>, h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">260</span>, <span class="fl">0</span><span class="op">)</span>, c <span class="op">=</span> <span class="fl">100</span>, l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">90</span><span class="op">)</span>, power <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  outOfRange <span class="op">=</span> <span class="st">"red"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">SupportColor</span><span class="op">(</span></span>
+<span>  <span class="va">support</span>,</span>
+<span>  show1 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">diverge_hcl</span><span class="op">(</span><span class="fl">101</span>, h <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">260</span>, <span class="fl">0</span><span class="op">)</span>, c <span class="op">=</span> <span class="fl">100</span>, l <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">90</span><span class="op">)</span>, power <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  outOfRange <span class="op">=</span> <span class="st">"red"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>support</dt>
 <dd><p>A numeric vector of values in the range 0--1.</p></dd>
+
+
 <dt>show1</dt>
 <dd><p>Logical specifying whether to display values of 1.
 A transparent white will be returned if <code>FALSE</code>.</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>101-element vector listing colours in sequence. Defaults to
 a diverging <acronym>HCL</acronym> scale.</p></dd>
+
+
 <dt>outOfRange</dt>
 <dd><p>Colour to use if results are outside the range 0--1.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>SupportColour()</code> returns the appropriate value from <code>scale</code>,
+    
+
+<p><code>SupportColour()</code> returns the appropriate value from <code>scale</code>,
 or <code>outOfRange</code> if a value is outwith the valid range.</p>
     </div>
     <div id="see-also">
@@ -121,22 +130,22 @@ possibly calculated using <code><a href="SplitFrequency.html">SplitFrequency()</
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">SupportColour</span><span class="op">(</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fl">4</span> <span class="op">/</span> <span class="fl">4</span>, show1 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">SupportColour</span><span class="op">(</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fl">4</span> <span class="op">/</span> <span class="fl">4</span>, show1 <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "red"       "#D33F6A"   "#E495A5"   "#E2E2E2"   "#9DA8E2"   "#ffffff00"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># An example forest of 100 trees, some identical</span></span>
-<span class="r-in"><span class="va">forest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">79</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">15</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, nTip <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate an 80% consensus tree</span></span>
-<span class="r-in"><span class="va">cons</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">consensus</a></span><span class="op">(</span><span class="va">forest</span>, p <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cons</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">splitFreqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="SplitFrequency.html">SplitFrequency</a></span><span class="op">(</span><span class="va">cons</span>, <span class="va">forest</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="LabelSplits.html">LabelSplits</a></span><span class="op">(</span><span class="va">cons</span>, <span class="va">splitFreqs</span>, unit <span class="op">=</span> <span class="st">'%'</span>,</span>
-<span class="r-in">            col <span class="op">=</span> <span class="fu">SupportColor</span><span class="op">(</span><span class="va">splitFreqs</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">            frame <span class="op">=</span> <span class="st">'none'</span>, pos <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># An example forest of 100 trees, some identical</span></span></span>
+<span class="r-in"><span><span class="va">forest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">79</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">15</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, nTip <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate an 80% consensus tree</span></span></span>
+<span class="r-in"><span><span class="va">cons</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">consensus</a></span><span class="op">(</span><span class="va">forest</span>, p <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">cons</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">splitFreqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="SplitFrequency.html">SplitFrequency</a></span><span class="op">(</span><span class="va">cons</span>, <span class="va">forest</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="LabelSplits.html">LabelSplits</a></span><span class="op">(</span><span class="va">cons</span>, <span class="va">splitFreqs</span>, unit <span class="op">=</span> <span class="st">'%'</span>,</span></span>
+<span class="r-in"><span>            col <span class="op">=</span> <span class="fu">SupportColor</span><span class="op">(</span><span class="va">splitFreqs</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            frame <span class="op">=</span> <span class="st">'none'</span>, pos <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="SupportColour-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -151,7 +160,7 @@ possibly calculated using <code><a href="SplitFrequency.html">SplitFrequency()</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

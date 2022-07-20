@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -80,53 +80,70 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">AddTip</span><span class="op">(</span>
-  <span class="va">tree</span>,
-  where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2L</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,
-  label <span class="op">=</span> <span class="st">"New tip"</span>,
-  edgeLength <span class="op">=</span> <span class="fl">0</span>,
-  lengthBelow <span class="op">=</span> <span class="cn">NULL</span>,
-  nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>,
-  nNode <span class="op">=</span> <span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span>,
-  rootNode <span class="op">=</span> <span class="fu"><a href="RootNode.html">RootNode</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">tree</span>, label <span class="op">=</span> <span class="st">"New tip"</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">AddTip</span><span class="op">(</span></span>
+<span>  <span class="va">tree</span>,</span>
+<span>  where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2L</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"New tip"</span>,</span>
+<span>  edgeLength <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  lengthBelow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>,</span>
+<span>  nNode <span class="op">=</span> <span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  rootNode <span class="op">=</span> <span class="fu"><a href="RootNode.html">RootNode</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">tree</span>, label <span class="op">=</span> <span class="st">"New tip"</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>tree</dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
+
+
 <dt>where</dt>
 <dd><p>The node or tip that should form the sister taxon to the new
 node.  To add a new tip at the root, use <code>where = 0</code>.  By default, the
 new tip is added to a random edge.</p></dd>
+
+
 <dt>label</dt>
 <dd><p>Character string providing the label to apply to the new tip.</p></dd>
+
+
 <dt>edgeLength</dt>
 <dd><p>Numeric specifying length of new edge</p></dd>
+
+
 <dt>lengthBelow</dt>
 <dd><p>Numeric specifying length below neighbour at which to
 graft new edge. Values greater than the length of the edge will result
 in negative edge lengths. If <code>NULL</code>, the default, the new tip will be added
 at the midpoint of the broken edge. If inserting at the root (<code>where = 0</code>),
 a new edge of length <code>lengthBelow</code> will be inserted.</p></dd>
+
+
 <dt>nTip, nNode, rootNode</dt>
 <dd><p>Optional integer vectors specifying number of tips and
 nodes in <code>tree</code>, and index of root node.
 Not checked for correctness: specifying values here trades code safety for a
 nominal speed increase.</p></dd>
+
+
 <dt>includeRoot</dt>
 <dd><p>Logical; if <code>TRUE</code>, each position adjacent
 to the root edge is considered to represent distinct edges; if <code>FALSE</code>,
 they are treated as a single edge.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>AddTip()</code> returns a tree of class <code>phylo</code> with an additional tip
-at the desired location.
-<code>AddTipEverywhere()</code> returns a list of class <code>multiPhylo</code> containing
+    
+
+<p><code>AddTip()</code> returns a tree of class <code>phylo</code> with an additional tip
+at the desired location.</p>
+
+
+<p><code>AddTipEverywhere()</code> returns a list of class <code>multiPhylo</code> containing
 the trees produced by adding <code>label</code> to each edge of <code>tree</code> in turn.</p>
     </div>
     <div id="details">
@@ -163,30 +180,30 @@ single-taxon trees.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, bg<span class="op">=</span><span class="st">'green'</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, bg<span class="op">=</span><span class="st">'green'</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">15</span>, <span class="st">'NEW_TIP'</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">15</span>, <span class="st">'NEW_TIP'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">oldPar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">4</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">backbone</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Treating the position of the root as instructive:</span></span>
-<span class="r-in"><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">oldPar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">4</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">backbone</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Treating the position of the root as instructive:</span></span></span>
+<span class="r-in"><span><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># Don't treat root edges as distinct:</span></span>
-<span class="r-in"><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldPar</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Don't treat root edges as distinct:</span></span></span>
+<span class="r-in"><span><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldPar</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -201,7 +218,7 @@ single-taxon trees.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

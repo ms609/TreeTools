@@ -28,7 +28,7 @@ preorder."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -90,11 +90,11 @@ preorder.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroupTips</span><span class="op">)</span>
-
-<span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="va">node</span>, resolveRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu">UnrootTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroupTips</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="va">node</span>, resolveRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">UnrootTree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,24 +102,37 @@ preorder.</p>
     <dl><dt>tree</dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, or a list of trees
 of class <code>list</code> or <code>multiPhylo</code>.</p></dd>
+
+
 <dt>outgroupTips</dt>
 <dd><p>Vector of type character, integer or logical, specifying
 the names or indices of the tips to include in the outgroup.  If
 <code>outgroupTips</code> is a of type character, and a tree contains multiple tips
 with a matching label, the first will be used.</p></dd>
+
+
 <dt>node</dt>
 <dd><p>integer specifying node (internal or tip) to set as the root.</p></dd>
+
+
 <dt>resolveRoot</dt>
 <dd><p>logical specifying whether to resolve the root node.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>RootTree()</code> returns a tree of class <code>phylo</code>, rooted on the smallest
+    
+
+<p><code>RootTree()</code> returns a tree of class <code>phylo</code>, rooted on the smallest
 clade that contains the specified tips, with edges and nodes numbered in
-preorder.
-<code>RootOnNode()</code> returns a tree of class <code>phylo</code>, rooted on the
-requested <code>node</code> and ordered in <code><a href="Reorder.html">Preorder</a></code>.
-<code>UnrootTree()</code> returns <code>tree</code>, in preorder,
+preorder.</p>
+
+
+<p><code>RootOnNode()</code> returns a tree of class <code>phylo</code>, rooted on the
+requested <code>node</code> and ordered in <code><a href="Reorder.html">Preorder</a></code>.</p>
+
+
+<p><code>UnrootTree()</code> returns <code>tree</code>, in preorder,
 having collapsed the first child of the root node in each tree.</p>
     </div>
     <div id="see-also">
@@ -152,19 +165,19 @@ having collapsed the first child of the root node in each tree.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="RootTree-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'t6'</span>, <span class="st">'t7'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'t6'</span>, <span class="st">'t7'</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="RootTree-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="RootTree-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="RootTree-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -179,7 +192,7 @@ having collapsed the first child of the root node in each tree.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -80,39 +80,42 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">DoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">DoubleFactorial64</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">LnDoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">Log2DoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">LogDoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">LnDoubleFactorial.int</span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
-
-<span class="fu">LogDoubleFactorial.int</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DoubleFactorial64</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LnDoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">Log2DoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LogDoubleFactorial</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LnDoubleFactorial.int</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LogDoubleFactorial.int</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>n</dt>
 <dd><p>Vector of integers.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Returns the double factorial, <em>n</em> * (<em>n</em> - 2) * (<em>n</em> - 4) *
+    
+
+<p>Returns the double factorial, <em>n</em> * (<em>n</em> - 2) * (<em>n</em> - 4) *
 (<em>n</em> - 6) * ...</p>
     </div>
     <div id="functions">
     <h2>Functions</h2>
     
-<ul><li><p><code>DoubleFactorial64</code>: Returns the exact double factorial as a 64-bit
+<ul><li><p><code>DoubleFactorial64()</code>: Returns the exact double factorial as a 64-bit
 <code>integer64</code>, for <code>n</code> &lt; 34.</p></li>
-<li><p><code>LnDoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
-<li><p><code>Log2DoubleFactorial</code>: Returns the logarithm of the double factorial.</p></li>
-<li><p><code>LnDoubleFactorial.int</code>: Slightly faster, when x is known to be length one
+<li><p><code>LnDoubleFactorial()</code>: Returns the logarithm of the double factorial.</p></li>
+<li><p><code>Log2DoubleFactorial()</code>: Returns the logarithm of the double factorial.</p></li>
+<li><p><code>LnDoubleFactorial.int()</code>: Slightly faster, when x is known to be length one
 and below 50001</p></li>
 </ul></div>
     <div id="see-also">
@@ -128,15 +131,15 @@ and below 50001</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="op">-</span><span class="fl">4</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span> <span class="co"># Return 1 if n &lt; 2</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="op">-</span><span class="fl">4</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span> <span class="co"># Return 1 if n &lt; 2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 1 1 1 1</span>
-<span class="r-in"><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># 2</span></span>
+<span class="r-in"><span><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="fl">2</span><span class="op">)</span> <span class="co"># 2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
-<span class="r-in"><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="co"># 1 * 3 * 5</span></span>
+<span class="r-in"><span><span class="fu">DoubleFactorial</span> <span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="co"># 1 * 3 * 5</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu">LnDoubleFactorial.int</span> <span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="co"># log(2 * 4 * 6 * 8)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu">LnDoubleFactorial.int</span> <span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="co"># log(2 * 4 * 6 * 8)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 384</span>
-<span class="r-in"><span class="fu">DoubleFactorial64</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">DoubleFactorial64</span><span class="op">(</span><span class="fl">31</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> integer64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 191898783962510625</span>
 </code></pre></div>
@@ -153,7 +156,7 @@ and below 50001</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

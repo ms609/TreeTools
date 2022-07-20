@@ -27,7 +27,7 @@ resulting in a vector of numerics that require conversion back to
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -88,11 +88,11 @@ resulting in a vector of numerics that require conversion back to
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">sapply64</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu">vapply64</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, FUN.LEN <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="fu">replicate64</span><span class="op">(</span><span class="va">n</span>, <span class="va">expr</span>, simplify <span class="op">=</span> <span class="st">"array"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">sapply64</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, <span class="va">...</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, USE.NAMES <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">vapply64</span><span class="op">(</span><span class="va">X</span>, <span class="va">FUN</span>, FUN.LEN <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">replicate64</span><span class="op">(</span><span class="va">n</span>, <span class="va">expr</span>, simplify <span class="op">=</span> <span class="st">"array"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -101,12 +101,18 @@ resulting in a vector of numerics that require conversion back to
 <dd><p>a vector (atomic or list) or an <code><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></code>
     object.  Other objects (including classed objects) will be coerced
     by <code>base::<a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></code>.</p></dd>
+
+
 <dt>FUN</dt>
 <dd><p>the function to be applied to each element of <code>X</code>:
     see ‘Details’.  In the case of functions like
     <code>+</code>, <code>%*%</code>, the function name must be backquoted or quoted.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>optional arguments to <code>FUN</code>.</p></dd>
+
+
 <dt>simplify</dt>
 <dd><p>logical or character string; should the result be
     simplified to a vector, matrix or higher dimensional array if
@@ -116,18 +122,27 @@ resulting in a vector of numerics that require conversion back to
     <code><a href="https://rdrr.io/r/base/array.html" class="external-link">array</a></code> of “rank”
     (\(=\)<code>length(dim(.))</code>) one higher than the result
     of <code>FUN(X[[i]])</code>.</p></dd>
+
+
 <dt>USE.NAMES</dt>
 <dd><p>logical; if <code>TRUE</code> and if <code>X</code> is character,
     use <code>X</code> as <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></code> for the result unless it had names
     already.  Since this argument follows <code>...</code> its name cannot
     be abbreviated.</p></dd>
+
+
 <dt>FUN.LEN</dt>
 <dd><p>Integer specifying the length of the output of <code>FUN</code>.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>integer: the number of replications.</p></dd>
+
+
 <dt>expr</dt>
 <dd><p>the expression (a <a href="https://rdrr.io/r/base/is.language.html" class="external-link">language object</a>, usually a call)
     to evaluate repeatedly.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -144,14 +159,14 @@ resulting in a vector of numerics that require conversion back to
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">sapply64</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>, <span class="va">as.TreeNumber</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">sapply64</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>, <span class="va">as.TreeNumber</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> integer64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3 4 5 6</span>
-<span class="r-in"><span class="fu">vapply64</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>, <span class="va">as.TreeNumber</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">vapply64</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/as.phylo.html" class="external-link">as.phylo</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>, <span class="va">as.TreeNumber</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> integer64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2 3 4 5 6</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">replicate64</span><span class="op">(</span><span class="fl">6</span>, <span class="fu"><a href="TreeNumber.html">as.TreeNumber</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">RandomTree</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">replicate64</span><span class="op">(</span><span class="fl">6</span>, <span class="fu"><a href="TreeNumber.html">as.TreeNumber</a></span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">RandomTree</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> integer64</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 90 10 77 30 90 68</span>
 </code></pre></div>
@@ -168,7 +183,7 @@ resulting in a vector of numerics that require conversion back to
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

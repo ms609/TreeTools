@@ -25,7 +25,7 @@ a phylogenetic dataset."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -84,57 +84,63 @@ a phylogenetic dataset.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ArtificialExtinction</span><span class="op">(</span>
-  <span class="va">dataset</span>,
-  <span class="va">subject</span>,
-  <span class="va">template</span>,
-  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,
-  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,
-  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,
-  sampleFrom <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for matrix</span>
-<span class="fu">ArtificialExtinction</span><span class="op">(</span>
-  <span class="va">dataset</span>,
-  <span class="va">subject</span>,
-  <span class="va">template</span>,
-  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,
-  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,
-  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,
-  sampleFrom <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="co"># S3 method for phyDat</span>
-<span class="fu">ArtificialExtinction</span><span class="op">(</span>
-  <span class="va">dataset</span>,
-  <span class="va">subject</span>,
-  <span class="va">template</span>,
-  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,
-  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,
-  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,
-  sampleFrom <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span>
-
-<span class="fu">ArtEx</span><span class="op">(</span>
-  <span class="va">dataset</span>,
-  <span class="va">subject</span>,
-  <span class="va">template</span>,
-  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,
-  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,
-  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,
-  sampleFrom <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ArtificialExtinction</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  <span class="va">subject</span>,</span>
+<span>  <span class="va">template</span>,</span>
+<span>  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,</span>
+<span>  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,</span>
+<span>  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sampleFrom <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for matrix</span></span>
+<span><span class="fu">ArtificialExtinction</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  <span class="va">subject</span>,</span>
+<span>  <span class="va">template</span>,</span>
+<span>  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,</span>
+<span>  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,</span>
+<span>  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sampleFrom <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for phyDat</span></span>
+<span><span class="fu">ArtificialExtinction</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  <span class="va">subject</span>,</span>
+<span>  <span class="va">template</span>,</span>
+<span>  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,</span>
+<span>  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,</span>
+<span>  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sampleFrom <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ArtEx</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  <span class="va">subject</span>,</span>
+<span>  <span class="va">template</span>,</span>
+<span>  replaceAmbiguous <span class="op">=</span> <span class="st">"ambig"</span>,</span>
+<span>  replaceCoded <span class="op">=</span> <span class="st">"original"</span>,</span>
+<span>  replaceAll <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sampleFrom <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>dataset</dt>
 <dd><p>Phylogenetic dataset of class <code>phyDat</code> or <code>matrix</code>.</p></dd>
+
+
 <dt>subject</dt>
 <dd><p>Vector identifying subject taxa, by name or index.</p></dd>
+
+
 <dt>template</dt>
 <dd><p>Character or integer identifying taxon to use as a template.</p></dd>
+
+
 <dt>replaceAmbiguous, replaceCoded</dt>
 <dd><p>Character specifying whether tokens
 that are ambiguous (<code>?</code>) or coded (not <code>?</code>) in the fossil template should
@@ -146,18 +152,25 @@ probability;</p></li>
 <li><p><code>sample</code>: One of the tokens present in <code>sampleFrom</code>, sampled according
 to their frequency.</p></li>
 </ul></dd>
+
+
 <dt>replaceAll</dt>
 <dd><p>Logical: if <code>TRUE</code>, replace all tokens in a subject; if
 <code>FALSE</code>, leave any ambiguous tokens (<code>?</code>) ambiguous.</p></dd>
+
+
 <dt>sampleFrom</dt>
 <dd><p>Vector identifying a subset of characters from which to
 sample replacement tokens.
 If <code>NULL</code>, replacement tokens will be sampled from the initial states of
 all taxa not used as a template (including the subjects).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A dataset with the same class as <code>dataset</code> in which entries that
+    
+
+<p>A dataset with the same class as <code>dataset</code> in which entries that
 are ambiguous in <code>template</code> are made ambiguous in <code>subject</code>.</p>
     </div>
     <div id="details">
@@ -172,7 +185,7 @@ dependent characters.</p>
     <h2>References</h2>
     <p>Asher R, Smith MR (2022).
 “Phylogenetic signal and bias in paleontology.”
-<em>Systematic Biology</em>, <b>Online ahead of print</b>, syab072.
+<em>Systematic Biology</em>, <b>71</b>(4), 986--1008.
 <a href="https://doi.org/10.1093/sysbio/syab072" class="external-link">doi:10.1093/sysbio/syab072</a>
 .</p>
     </div>
@@ -183,12 +196,12 @@ dependent characters.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">4</span> <span class="op">*</span> <span class="fl">8</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span class="r-in">                    <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">'?'</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>,</span>
-<span class="r-in">                    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="st">'FOSSIL'</span><span class="op">)</span>,</span>
-<span class="r-in">                                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'char'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">artex</span> <span class="op">&lt;-</span> <span class="fu">ArtificialExtinction</span><span class="op">(</span><span class="va">dataset</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'A'</span>, <span class="st">'C'</span><span class="op">)</span>, <span class="st">'FOSSIL'</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">2</span>, <span class="fl">4</span> <span class="op">*</span> <span class="fl">8</span>, <span class="cn">TRUE</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    <span class="st">'0'</span>, <span class="st">'0'</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">'?'</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>                    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, <span class="st">'FOSSIL'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">'char'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">artex</span> <span class="op">&lt;-</span> <span class="fu">ArtificialExtinction</span><span class="op">(</span><span class="va">dataset</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'A'</span>, <span class="st">'C'</span><span class="op">)</span>, <span class="st">'FOSSIL'</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -203,7 +216,7 @@ dependent characters.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

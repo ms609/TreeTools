@@ -26,7 +26,7 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -86,23 +86,28 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-
-<span class="co"># S3 method for numeric</span>
-<span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for numeric</span></span>
+<span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>A tree of class <code>phylo</code>, its <code>$edge</code> property, or a list thereof.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>TotalCopheneticIndex()</code> returns an integer denoting the total cophenetic index.
-<code>TCIContext()</code> returns a data frame detailing the maximum and minimum value
+    
+
+<p><code>TotalCopheneticIndex()</code> returns an integer denoting the total cophenetic index.</p>
+
+
+<p><code>TCIContext()</code> returns a data frame detailing the maximum and minimum value
 obtainable for the Total Cophenetic Index for rooted binary trees with the
 number of leaves of the given tree, and the expected value under the Yule
 and Uniform models.
@@ -150,33 +155,33 @@ provides an alternative implementation of this index and its predecessors.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Balanced trees have the minimum index for a binary tree;</span></span>
-<span class="r-in"><span class="co"># Pectinate trees the maximum:</span></span>
-<span class="r-in"><span class="fu">TCIContext</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Balanced trees have the minimum index for a binary tree;</span></span></span>
+<span class="r-in"><span><span class="co"># Pectinate trees the maximum:</span></span></span>
+<span class="r-in"><span><span class="fu">TCIContext</span><span class="op">(</span><span class="fl">8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   maximum minimum uniform.expected yule.expected yule.variance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      56      16          38.8345      28.51429      90.52281</span>
-<span class="r-in"><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">PectinateTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 56</span>
-<span class="r-in"><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 16</span>
-<span class="r-in"><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">StarTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">StarTree</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Examples from Mir et al. (2013):</span></span>
-<span class="r-in"><span class="va">tree12</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'(1, (2, (3, (4, 5))));'</span><span class="op">)</span>  <span class="co">#Fig. 4, tree 12</span></span>
-<span class="r-in"><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree12</span><span class="op">)</span> <span class="co"># 10</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Examples from Mir et al. (2013):</span></span></span>
+<span class="r-in"><span><span class="va">tree12</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'(1, (2, (3, (4, 5))));'</span><span class="op">)</span>  <span class="co">#Fig. 4, tree 12</span></span></span>
+<span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree12</span><span class="op">)</span> <span class="co"># 10</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"><span class="va">tree8</span>  <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'((1, 2, 3, 4), 5);'</span><span class="op">)</span>      <span class="co">#Fig. 4, tree 8</span></span>
-<span class="r-in"><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span>  <span class="co"># 6</span></span>
+<span class="r-in"><span><span class="va">tree8</span>  <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'((1, 2, 3, 4), 5);'</span><span class="op">)</span>      <span class="co">#Fig. 4, tree 8</span></span></span>
+<span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span>  <span class="co"># 6</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
-<span class="r-in"><span class="fu">TCIContext</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   maximum minimum uniform.expected yule.expected yule.variance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      10       5         8.285714      7.166667      5.138889</span>
-<span class="r-in"><span class="fu">TCIContext</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span> <span class="co"># Context for a tree with 5 leaves.</span></span>
+<span class="r-in"><span><span class="fu">TCIContext</span><span class="op">(</span><span class="fl">5L</span><span class="op">)</span> <span class="co"># Context for a tree with 5 leaves.</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   maximum minimum uniform.expected yule.expected yule.variance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      10       5         8.285714      7.166667      5.138889</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -191,7 +196,7 @@ provides an alternative implementation of this index and its predecessors.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

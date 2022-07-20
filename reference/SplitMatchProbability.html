@@ -25,7 +25,7 @@ specified."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
       </span>
     </div>
 
@@ -84,9 +84,9 @@ specified.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">SplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span>
-
-<span class="fu">LnSplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">LnSplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,13 +95,18 @@ specified.</p>
 <dd><p>Logical vectors listing terminals in same order, such that
 each terminal is identified as a member of the ingroup (<code>TRUE</code>) or outgroup
 (<code>FALSE</code>) of the respective bipartition split.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>SplitMatchProbability()</code> returns a numeric giving the proportion
+    
+
+<p><code>SplitMatchProbability()</code> returns a numeric giving the proportion
 of permissible non-trivial splits that divide the terminals into bipartitions
-of the sizes given, that match as well as <code>split1</code> and <code>split2</code> do.
-<code>LnSplitMatchProbability()</code> returns the natural logarithm of the
+of the sizes given, that match as well as <code>split1</code> and <code>split2</code> do.</p>
+
+
+<p><code>LnSplitMatchProbability()</code> returns the natural logarithm of the
 probability.</p>
     </div>
     <div id="see-also">
@@ -119,11 +124,11 @@ probability.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">split1</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">split2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">SplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">split1</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">split2</span> <span class="op">&lt;-</span> <span class="fu"><a href="Splits.html">as.Splits</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">SplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1428571</span>
-<span class="r-in"><span class="fu">LnSplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">LnSplitMatchProbability</span><span class="op">(</span><span class="va">split1</span>, <span class="va">split2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.94591</span>
 </code></pre></div>
     </div>
@@ -139,7 +144,7 @@ probability.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
