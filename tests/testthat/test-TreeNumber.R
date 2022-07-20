@@ -60,7 +60,7 @@ test_that("as.TreeNumber()", {
 })
 
 test_that("as.MixedBase()", {
-  expect_error(as.MixedBase(RandomTree(10000)),
+  expect_error(as.MixedBase(RandomTree(100000)),
                "Too many \\w+ for mixed base")
   expect_equal(as.integer(as.TreeNumber(as.phylo(16, 16))), 16)
   nTip <- 9
@@ -99,5 +99,10 @@ test_that("as.MixedBase()", {
   expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
   bigNo <- as.integer64(2) ^ 62 + 1337
   expect_equal(sum(as.integer(as.MixedBase(bigNo)) * .TT_BASE), bigNo)
-  
+})
+
+test_that("as.MixedBase() supports larger trees", {
+  expect_equal(tail(as.MixedBase(BalancedTree(100))),
+               c(6, 10, 8, 3, 4, 1) # From observation, not calculation
+  )
 })

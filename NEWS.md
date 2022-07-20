@@ -2,6 +2,8 @@
 
 - `ReadTntTree()` supports multi-line trees.
 
+- `as.MixedBase()` supports larger trees (44-32767 tips).
+
 
 # TreeTools 1.7.2 #
 

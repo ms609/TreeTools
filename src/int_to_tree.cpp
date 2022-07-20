@@ -5,6 +5,7 @@
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
+const intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
@@ -201,17 +202,17 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
-  if (all_node > MAX_NODE) {
+  if (all_node > MB_MAX_NODE) {
     Rcpp::stop("Too many nodes for mixed base representation");
   }
-  if (n_tip >= MAX_TIP) {
+  if (n_tip >= MB_MAX_TIP) {
     Rcpp::stop("Too many leaves for mixed base representation");
   }
   intx
-    smallest_below[MAX_NODE],
-    parent_of[MAX_NODE],
-    prime_id[MAX_NODE],
-    index[MAX_TIP]
+    smallest_below[MB_MAX_NODE],
+    parent_of[MB_MAX_NODE],
+    prime_id[MB_MAX_NODE],
+    index[MB_MAX_TIP]
   ;
   
   for (intx i = 0; i != all_node; i++) {
