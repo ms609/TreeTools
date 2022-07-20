@@ -123,6 +123,12 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
+  if (all_node > MAX_NODE) {
+    Rcpp::stop("Too many nodes for mixed base representation");
+  }
+  if (n_tip >= MAX_TIP) {
+    Rcpp::stop("Too many leaves for mixed base representation");
+  }
   intx smallest_below[MAX_NODE],
        parent_of[MAX_NODE],
        prime_id[MAX_NODE],
@@ -188,11 +194,18 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
     all_node = n_internal + n_tip,
     r_to_c = 1
   ;
+  
   if (n_tip < 4) {
     return IntegerVector(0);
   }
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
+  }
+  if (all_node > MAX_NODE) {
+    Rcpp::stop("Too many nodes for mixed base representation");
+  }
+  if (n_tip >= MAX_TIP) {
+    Rcpp::stop("Too many leaves for mixed base representation");
   }
   intx
     smallest_below[MAX_NODE],
@@ -200,6 +213,7 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
     prime_id[MAX_NODE],
     index[MAX_TIP]
   ;
+  
   for (intx i = 0; i != all_node; i++) {
     smallest_below[i] = i;
     prime_id[i] = i;

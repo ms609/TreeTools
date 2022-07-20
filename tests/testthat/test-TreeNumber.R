@@ -60,6 +60,8 @@ test_that("as.TreeNumber()", {
 })
 
 test_that("as.MixedBase()", {
+  expect_error(as.MixedBase(RandomTree(10000)),
+               "Too many \\w+ for mixed base")
   expect_equal(as.integer(as.TreeNumber(as.phylo(16, 16))), 16)
   nTip <- 9
   expect_equal(as.integer(as.MixedBase(as.TreeNumber(as.phylo(16, nTip)))),
