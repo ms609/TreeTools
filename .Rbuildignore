@@ -19,6 +19,7 @@ vignettes/.RData
 ^\.covrignore$
 ^\.?R+prof.*$
 ^\.zenodo\.json$
+/^benchmark/
 /^src\-/
 ^CODE_OF_CONDUCT\.md$
 ^codemeta\.json$

@@ -1,3 +1,8 @@
+# TreeTools 1.7.3.9000 (development) #
+
+- Improve `DropTip()` speed when branch lengths are present.
+
+
 # TreeTools 1.7.3 #
 
 - `ReadTntTree()` supports multi-line trees.
