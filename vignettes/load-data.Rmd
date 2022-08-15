@@ -34,7 +34,7 @@ and columns contain your data:
 
 ```r
 library("xlsx")
-raw_data <- as.matrix(read.xlsx(filename, 
+raw_data <- as.matrix(read.xlsx(filename,
                       sheetIndex = 1, # Loads sheet number 1 from the excel file
                       rowIndex = 2:21, # Extracts rows 2 to 21
                       colIndex = 2:26, # Extracts columns B to Z
@@ -42,8 +42,8 @@ raw_data <- as.matrix(read.xlsx(filename,
                       ))
 
 # In this example, the names of taxa are in column 1
-taxon_names <- read.xlsx(filename, sheetIndex = 1, rowIndex = 2:21, 
-                         colIndex = 1, as.data.frame=FALSE)
+taxon_names <- read.xlsx(filename, sheetIndex = 1, rowIndex = 2:21,
+                         colIndex = 1, as.data.frame = FALSE)
                          
 rownames(raw_data) <- taxon_names
 ```
