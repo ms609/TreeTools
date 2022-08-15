@@ -24,7 +24,7 @@ Then you are ready to load raw data:
 If your data is in an Excel spreadsheet, one way to load it into R is using the
 `xlsx` package.  First you'll have to install it:
 ```r
-install.packages('xlsx') # You only need to do this once
+install.packages("xlsx") # You only need to do this once
 ```
 Then you should prepare your Excel spreadsheet such that each row corresponds to
 a taxon, and each column to a character.
