@@ -33,7 +33,7 @@ Then you can read the data from the Excel file by telling R which sheet, rows
 and columns contain your data:
 
 ```r
-library('xlsx')
+library("xlsx")
 raw_data <- as.matrix(read.xlsx(filename, 
                       sheetIndex = 1, # Loads sheet number 1 from the excel file
                       rowIndex = 2:21, # Extracts rows 2 to 21
@@ -121,10 +121,10 @@ Failing that, you can enlist the help of the 'phangorn' package:
 ```r
 install.packages('phangorn')
 library('phangorn')
-my_data <- phyDat(raw_data, type='USER', levels=c(0:9, '-'))
+my_data <- phyDat(raw_data, type = "USER", levels = c(0:9, "-"))
 ```
 
-`type='USER'` tells the parser to expect morphological data.
+`type="USER"` tells the parser to expect morphological data.
 
 The `levels` parameter simply lists all the states that any character might 
 take.  `0:9` includes all the integer digits from 0 to 9.  If you have
@@ -164,7 +164,7 @@ contrast.matrix
 
 If you need to use a contrast matrix, convert the data using 
 ```r
-my.phyDat <- phyDat(my.data, type='USER', contrast=contrast.matrix)
+my.phyDat <- phyDat(my.data, type = "USER", contrast = contrast.matrix)
 ```
 
 
