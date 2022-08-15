@@ -22,9 +22,10 @@ Then you are ready to load raw data:
 ## From an Excel spreadsheet
 
 If your data is in an Excel spreadsheet, one way to load it into R is using the
-`xlsx` package.  First you'll have to install it:
+'[readxl](https://readxl.tidyverse.org/)' package.
+First you'll have to install it:
 ```r
-install.packages("xlsx") # You only need to do this once
+install.packages("readxl") # You only need to do this once
 ```
 Then you should prepare your Excel spreadsheet such that each row corresponds to
 a taxon, and each column to a character.
@@ -33,24 +34,24 @@ Then you can read the data from the Excel file by telling R which sheet, rows
 and columns contain your data:
 
 ```r
-library("xlsx")
-raw_data <- as.matrix(read.xlsx(filename,
-                      sheetIndex = 1, # Loads sheet number 1 from the excel file
-                      rowIndex = 2:21, # Extracts rows 2 to 21
-                      colIndex = 2:26, # Extracts columns B to Z
-                      header = FALSE
-                      ))
+library("readxl")
+raw_data <- as.matrix(read_excel(
+  filename,
+  sheet = 1, # Loads sheet number 1 from the excel file
+  range = "B1:AA21" # Extracts columns B to AA, rows 1 to 21
+  # Note that the first row is interpreted as column (character) names
+))
 
-# In this example, the names of taxa are in column 1
-taxon_names <- read.xlsx(filename, sheetIndex = 1, rowIndex = 2:21,
-                         colIndex = 1, as.data.frame = FALSE)
-                         
+# Read row (taxon) names from column A
+# Again, the first cell will be interpreted as a column name
+taxon_names <- unlist(read_excel(filename, sheet = 1, range = "A1:A21"))
+
 rownames(raw_data) <- taxon_names
 ```
 
 ## From a Nexus file
 
-`TreeTools` contains an inbuilt Nexus parser:
+TreeTools contains an inbuilt Nexus parser:
 
 ```r
 raw_data <- ReadCharacters(filename)
