@@ -37,9 +37,10 @@ and columns contain your data:
 library("readxl")
 raw_data <- as.matrix(read_excel(
   filename,
-  sheet = 1, # Loads sheet number 1 from the excel file
-  range = "B1:AA21" # Extracts columns B to AA, rows 1 to 21
+  sheet = 1,           # Loads sheet number 1 from the excel file
+  range = "B1:AA21",   # Extracts columns B to AA, rows 1 to 21
   # Note that the first row is interpreted as column (character) names
+  col_types = "text"   # Read all columns as character strings
 ))
 
 # Read row (taxon) names from column A
