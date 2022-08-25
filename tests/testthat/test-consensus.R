@@ -1,5 +1,5 @@
 test_that("Consensus() errors", {
-  expect_error(Consensus(trees), regexp = " a list")
+  expect_error(Consensus(trees), " a list")
   
   bal8 <- BalancedTree(8)
   oneLeaf <- Consensus(list(DropTip(bal8, 1:7))[c(1, 1, 1)])
@@ -16,6 +16,11 @@ test_that("Consensus() errors", {
   expect_equal(Consensus(halfTree), halfTree)
   expect_equal(Consensus(c(halfTree)), halfTree)
   expect_equal(Consensus(list(halfTree)), halfTree)
+  
+  expect_error(
+    Consensus(c(BalancedTree(33333), PectinateTree(33333))),
+    "too many leaves"
+  )
 })
 
 test_that("Consensus()", {
@@ -31,7 +36,7 @@ test_that("Consensus()", {
 
   trees <- list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)]
   trees <- RenumberTips(trees, trees[[1]])
-  expect_error(Consensus(trees, 2), regexp = "`p`") # p too hign
+  expect_error(Consensus(trees, 2), regexp = "`p`") # p too high
   expect_error(Consensus(trees, 0.2), regexp = "`p`") # p too low
 
   ApeTest(trees)
@@ -64,7 +69,7 @@ test_that("Consensus() handles large sets of trees", {
   expect_true(all.equal(
     Consensus(manyTrees),
     read.tree(text = "((((((t2,t13),t12),t11),t10),t3,t4,t5,t6,t7,t8,t9),t1);")
-    # write.tree(ape::consensus(manyTrees))
+    # i.e. write.tree(ape::consensus(manyTrees))
   ))
 })
 
