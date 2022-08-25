@@ -68,15 +68,9 @@ jobs:
 
       - name: Install brew (which is crashing R under pak)
         run: |
+          install.packages("pak")
           install.packages("brew")
         shell: Rscript {0}
-
-      - name: Set up R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          needs: |
-            check
-            memcheck
 
       - name: Install apt packages
         run: |
@@ -85,6 +79,13 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: |
+            check
+            memcheck
 
       - name: Set up pandoc
         uses: r-lib/actions/setup-pandoc@v2
