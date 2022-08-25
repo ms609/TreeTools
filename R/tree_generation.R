@@ -451,3 +451,18 @@ EnforceOutgroup.character <- function(tree, outgroup) {
   taxa <- tree
   .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
 }
+
+.PreorderTree <- function(edge,
+                          tip.label,
+                          Nnode =  dim(edge)[1] + 1 - length(tip.label)) {
+  structure(
+    list(
+      # Order is consistent with ape::read.tree (but not ape::rtree...)
+      edge = edge,
+      Nnode = Nnode,
+      tip.label = tip.label
+    ),
+    order = "preorder",
+    class = "phylo"
+  )
+}

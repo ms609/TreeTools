@@ -331,18 +331,10 @@ as.character.Splits <- function(x, ...) {
 #' @family Splits operations
 #' @export
 as.phylo.Splits <- function(x, ...) {
-  ret <- structure(
-    list(
-      # Order is consistent with ape::read.tree (but not ape::rtree...)
-      edge = splits_to_edge(x, NTip(x)),
-      Nnode = NA,
-      tip.label = TipLabels(x)
-     ),
-    order = "preorder",
-    class = "phylo"
+  ret <- .PreorderTree(
+    edge = splits_to_edge(x, NTip(x)),
+    tip.label = TipLabels(x)
   )
-  ret[["Nnode"]] <- dim(ret[["edge"]])[1] + 1 - NTip(ret)
-  ret
 }
 
 #' @family Splits operations
