@@ -331,12 +331,16 @@ as.character.Splits <- function(x, ...) {
 #' @family Splits operations
 #' @export
 as.phylo.Splits <- function(x, ...) {
-  ret <- structure(list(edge = splits_to_edge(x, NTip(x)),
-                        tip.label = TipLabels(x),
-                        Nnode = NA
-                        ),
-                   order = "preorder",
-                   class = "phylo")
+  ret <- structure(
+    list(
+      # Order is consistent with ape::read.tree (but not ape::rtree...)
+      edge = splits_to_edge(x, NTip(x)),
+      Nnode = NA,
+      tip.label = TipLabels(x)
+     ),
+    order = "preorder",
+    class = "phylo"
+  )
   ret[["Nnode"]] <- dim(ret[["edge"]])[1] + 1 - NTip(ret)
   ret
 }
@@ -619,4 +623,3 @@ PolarizeSplits <- function(x, pole = 1L) {
   }
   x
 }
-
