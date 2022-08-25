@@ -16,7 +16,7 @@
 #' childNode <- cons$edge[, 2]
 #' edgeSupport[match(names(splitFreqs), childNode)] <- splitFreqs / 100
 #' 
-#' plot(cons, edge.col = SupportColour(edgeSupport))
+#' plot(cons, edge.col = SupportColour(edgeSupport), edge.width = 3)
 #' 
 #' # Annotate nodes by frequency 
 #' LabelSplits(cons, splitFreqs, unit = "%",
