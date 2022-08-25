@@ -1,3 +1,8 @@
+# branch clustertable-heap #
+
+- Remove memory limits from `ClusterTable` objects ([#127](https://github.com/ms609/TreeTools/issues/127))
+
+
 # TreeTools 1.7.3.9000 (development) #
 
 - Improve `DropTip()` speed when branch lengths are present.
