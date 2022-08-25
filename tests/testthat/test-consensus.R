@@ -49,6 +49,15 @@ test_that("Consensus()", {
   expect_equal(Consensus(trees), Preorder(StarTree(letters[1:4])))
 })
 
+test_that("Consensus() handles large sets of trees", {
+  oneTree <- as.phylo(0, 13)
+  expect_equal(
+    Consensus(lapply(1:33000, function(x) oneTree)),
+    oneTree
+  )
+  
+})
+
 test_that("ConsensusWithout() is robust", {
   tr <- as.phylo(0:6, 16)
   expect_identical(ConsensusWithout(tr, paste0("t", 1:16)),
