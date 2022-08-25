@@ -21,8 +21,6 @@ test_that("Consensus() errors", {
 test_that("Consensus()", {
 
   ApeTest <- function(tr, p = 1) {
-    # plot(Consensus(tr))
-    # plot(consensus(tr))
     skip_if_not_installed("ape", "5.5.1") # Bug in ape::consensus?
     if (!expect_true(all.equal(RootTree(Consensus(tr, p = p), 1),
                                RootTree(ape::consensus(tr, p = p), 1)))) {
@@ -56,6 +54,18 @@ test_that("Consensus() handles large sets of trees", {
     oneTree
   )
   
+  manyTrees <- lapply(1:33000, as.phylo, 13) # More than int16_max
+  expect_equal(
+    Consensus(c(manyTrees[1:16500], lapply(1:16500, function(x) oneTree)),
+              p = 0.5),
+    oneTree
+  )
+  
+  expect_true(all.equal(
+    Consensus(manyTrees),
+    read.tree(text = "((((((t2,t13),t12),t11),t10),t3,t4,t5,t6,t7,t8,t9),t1);")
+    # write.tree(ape::consensus(manyTrees))
+  ))
 })
 
 test_that("ConsensusWithout() is robust", {
