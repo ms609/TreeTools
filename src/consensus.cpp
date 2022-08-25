@@ -29,13 +29,13 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     tables.emplace_back(TreeTools::ClusterTable(Rcpp::List(trees(i))));
   }
 
-  const int16
+  const int32
     n_tip = tables[0].N(),
     ntip_3 = n_tip - 3
   ;
 
-  std::array<int16, CT_STACK_SIZE * CT_MAX_LEAVES> S;
-  std::array<int16, CT_MAX_LEAVES> split_count;
+  std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
+  std::array<int32, CT_MAX_LEAVES> split_count;
 
   LogicalMatrix ret(ntip_3, n_tip);
 
@@ -57,7 +57,8 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       tables[j].TRESET();
       tables[j].READT(&v, &w);
 
-      int16 j_pos = 0, Spos = 0; // Empty the stack S
+      int16 j_pos = 0;
+      int32 Spos = 0; // Empty the stack S. Used in CT_PUSH /CT_POP macros.
 
       do {
         if (CT_IS_LEAF(v)) {
@@ -97,7 +98,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       } while (v);
     }
 
-    for (int16 k = n_tip; k--; ) {
+    for (int32 k = n_tip; k--; ) {
       if (split_count[k] >= thresh) {
         // Rcout << splits_found << ": Found tree " << i << "'s split " << k
         //       << " in " << split_count[k] << " trees.\n";
