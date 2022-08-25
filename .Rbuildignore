@@ -1,6 +1,7 @@
 CONTRIBUTING.md
 README.md
 cran-comments.md
+benchmark
 data-raw
 DELETE
 man-roxygen

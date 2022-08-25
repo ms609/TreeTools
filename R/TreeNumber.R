@@ -283,11 +283,11 @@ as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
     } else {
       edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                             seq_len(nTip + nTip - 2L))
-      structure(list(edge = do.call(cbind, edge),
-                     tip.label = tipLabels,
-                     Nnode = nTip - 1L),
-                order = "preorder",
-                class = "phylo")
+      .PreorderTree(
+        edge = do.call(cbind, edge),
+        Nnode = nTip - 1L,
+        tip.label = tipLabels
+      )
     }
   }
 }
@@ -318,11 +318,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, "nTip"),
     } else {
       edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                             seq_len(nTip + nTip - 2L))
-      structure(list(edge = do.call(cbind, edge),
-                     tip.label = tipLabels,
-                     Nnode = nTip - 1L),
-                order = "preorder",
-                class = "phylo")
+      .PreorderTree(edge = do.call(cbind, edge),
+                    tip.label = tipLabels,
+                    Nnode = nTip - 1L)
     }
   }
 }
@@ -347,11 +345,11 @@ as.phylo.TreeNumber <- function(x, nTip = attr(x, "nTip"),
   if (is.null(tipLabels)) tipLabels <- paste0("t", seq_len(nTip))
   edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                         seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = "preorder",
-            class = "phylo")
+  .PreorderTree(
+    edge = do.call(cbind, edge),
+    tip.label = tipLabels,
+    Nnode = nTip - 1L
+  )
 }
 
 #' @export
@@ -423,9 +421,11 @@ as.phylo.MixedBase <- function(x, nTip = attr(x, "nTip"),
   }
   edge <- RenumberEdges(mixed_base_to_parent(x, nTip),
                         seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = "preorder",
-            class = "phylo")
+  
+  # Return:
+  .PreorderTree(
+    edge = do.call(cbind, edge),
+    tip.label = tipLabels,
+    Nnode = nTip - 1L
+  )
 }

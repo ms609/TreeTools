@@ -55,8 +55,8 @@ plot(trees[[2]])
 plot(ape::consensus(trees))
 
 # But omitting tip two (right panel) reveals shared structure in common:
-plot(ConsensusWithout(trees, 't2'))
-MarkMissing('t2')
+plot(ConsensusWithout(trees, "t2"))
+MarkMissing("t2")
 
 par(oldPar)
 }

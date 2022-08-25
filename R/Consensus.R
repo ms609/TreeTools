@@ -27,7 +27,7 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
-  if (inherits(trees, 'phylo')) {
+  if (inherits(trees, "phylo")) {
     return(trees)
   }
   if (!is.list(trees) || is.data.frame(trees)) {
@@ -89,8 +89,8 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
 #' plot(ape::consensus(trees))
 #'
 #' # But omitting tip two (right panel) reveals shared structure in common:
-#' plot(ConsensusWithout(trees, 't2'))
-#' MarkMissing('t2')
+#' plot(ConsensusWithout(trees, "t2"))
+#' MarkMissing("t2")
 #'
 #' par(oldPar)
 #' @family tree manipulation
@@ -100,7 +100,7 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
 #' @template MRS
 #' @export
 ConsensusWithout <- function(trees, tip = character(0), ...) {
-  UseMethod('ConsensusWithout')
+  UseMethod("ConsensusWithout")
 }
 
 #' @rdname ConsensusWithout
@@ -128,9 +128,9 @@ ConsensusWithout.list <- ConsensusWithout.multiPhylo
 #' `tip`s as a legend.
 #' @importFrom graphics legend
 #' @export
-MarkMissing <- function(tip, position = 'bottomleft', ...) {                   # nocov start
+MarkMissing <- function(tip, position = "bottomleft", ...) {                   # nocov start
   if (length(tip) > 0) {
-    legend(position, legend = gsub('_', ' ', tip, fixed = TRUE),
-           lwd = 1, lty = 2, bty = 'n', ...)
+    legend(position, legend = gsub("_", " ", tip, fixed = TRUE),
+           lwd = 1, lty = 2, bty = "n", ...)
   }
 }                                                                               # nocov end

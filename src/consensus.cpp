@@ -17,29 +17,29 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     L, R, N, W,
     L_j, R_j, N_j, W_j
   ;
-  const int16
+  const int32
     n_trees = trees.length(),
-    frac_thresh = int16(n_trees * p[0]) + 1,
+    frac_thresh = int32(n_trees * p[0]) + 1,
     thresh = frac_thresh > n_trees ? n_trees : frac_thresh
   ;
 
   std::vector<TreeTools::ClusterTable> tables;
   tables.reserve(n_trees);
-  for (int16 i = n_trees; i--; ) {
+  for (int32 i = n_trees; i--; ) {
     tables.emplace_back(TreeTools::ClusterTable(Rcpp::List(trees(i))));
   }
 
-  const int16
+  const int32
     n_tip = tables[0].N(),
     ntip_3 = n_tip - 3
   ;
 
-  std::array<int16, CT_STACK_SIZE * CT_MAX_LEAVES> S;
-  std::array<int16, CT_MAX_LEAVES> split_count;
+  std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
+  std::array<int32, CT_MAX_LEAVES> split_count;
 
   LogicalMatrix ret(ntip_3, n_tip);
 
-  int16
+  int32
     i = 0,
     splits_found = 0
   ;
@@ -50,14 +50,15 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
 
     std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
 
-    for (int16 j = i + 1; j != n_trees; j++) {
+    for (int32 j = i + 1; j != n_trees; j++) {
 
       tables[i].CLEAR();
 
       tables[j].TRESET();
       tables[j].READT(&v, &w);
 
-      int16 j_pos = 0, Spos = 0; // Empty the stack S
+      int16 j_pos = 0;
+      int32 Spos = 0; // Empty the stack S. Used in CT_PUSH /CT_POP macros.
 
       do {
         if (CT_IS_LEAF(v)) {
@@ -97,11 +98,11 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       } while (v);
     }
 
-    for (int16 k = n_tip; k--; ) {
+    for (int32 k = n_tip; k--; ) {
       if (split_count[k] >= thresh) {
         // Rcout << splits_found << ": Found tree " << i << "'s split " << k
         //       << " in " << split_count[k] << " trees.\n";
-        for (int16 j = tables[i].X(k + 1, 0);
+        for (int32 j = tables[i].X(k + 1, 0);
              j != tables[i].X(k + 1, 1) + 1;
              ++j) {
           // Rcout << ", " << tables[i].DECODE(j);

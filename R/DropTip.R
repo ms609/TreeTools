@@ -104,7 +104,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     weights <- tree[["edge.length"]]
     keep <- !drop
     if (!is.null(weights)) {
-      original <- PathLengths(tree, full = TRUE)
+      original <- PathLengths(tree, fullMatrix = TRUE)
       verts <- KeptVerts(tree, keep)
     }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)

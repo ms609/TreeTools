@@ -6,7 +6,7 @@ on:
       - master
       - '**asan**'
     paths:
-      - '.github/workflows/gcc-ASAN.yml'
+      - '.github/workflows/ASan.yml'
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
@@ -14,7 +14,7 @@ on:
       - 'vignettes/**.Rmd'
   pull_request:
     paths:
-      - '.github/workflows/gcc-ASAN.yml'
+      - '.github/workflows/ASan.yml'
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
