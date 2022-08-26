@@ -14,7 +14,7 @@ test_that("UnshiftTree() works", {
 test_that("SpectrumLegend()", {
   skip_if(packageVersion("graphics") < "4.1")
   skip_if(packageVersion("vdiffr") < "1.0")
-  vdiffr::expect_doppelganger('SpectrumLegend', function() {
+  vdiffr::expect_doppelganger("SpectrumLegend", function() {
     
     # Set up blank plot
     plot(0:1, 10:11, asp = 1, type = "n", frame.plot = FALSE,

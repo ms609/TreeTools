@@ -115,6 +115,7 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' controlling line style.
 #' @param cex Character expansion factor relative to current `par("cex")`.
 #' @param text.col Colour used for the legend text.
+#' @param font,text.font Font used for the legend text; see [`text()`].
 #' @param title Text to display 
 #' @param title.adj Horizontal adjustment for title: see the help for
 #' `par("adj")`.
@@ -139,6 +140,7 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            legend = character(0), palette,
                            lwd = 4, lty = 1, lend = "square", cex = 1,
                            text.col = par("col"),
+                           font = NULL, text.font = font,
                            title = NULL, title.col = text.col[1], 
                            title.cex = cex[1], title.adj = 0.5, title.font = 2,
                            pos = 4,
@@ -168,11 +170,12 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
   text(seq(x0, x1, length.out = length(legend)),
        seq(y0, y1, length.out = length(legend)),
        col = text.col,
+       font = text.font,
        legend, pos = pos, ...)
   if (!is.null(title)) {
     text(min(x0, x1) + max(strwidth(legend)) / 2,
-         y1 + (2.5 * par("lheight") * strheight("")),
-         paste0(title, "\n\n"),
+         max(y0, y1) + (3 * par("lheight") * strheight(title)),
+         title,
          pos = 1,
          cex = title.cex, adj = title.adj, font = title.font, col = title.col,
          ...)
