@@ -28,6 +28,6 @@ test_that("SpectrumLegend()", {
                    legend = seq(0, 10, by = 2), palette = 0:10,
                    lty = "dotted", pos = 2,
                    lmitre = 2, lend = "round", ljoin = "round",
-                   title = "Default title", xpd = NA)
+                   title = "Multi-\nline\ntitle", xpd = NA)
   })
 })

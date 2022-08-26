@@ -173,10 +173,13 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
        font = text.font,
        legend, pos = pos, ...)
   if (!is.null(title)) {
-    text(min(x0, x1) + max(strwidth(legend)) / 2,
-         max(y0, y1) + (3 * par("lheight") * strheight(title)),
+    text(mean(x0, x1) + (max(strwidth(legend)) / ifelse(pos == 2, -2, 2)),
+         max(y0, y1) + prod(
+           par("lheight"),
+           strheight("")
+         ),
          title,
-         pos = 1,
+         pos = 3,
          cex = title.cex, adj = title.adj, font = title.font, col = title.col,
          ...)
   }
