@@ -15,6 +15,13 @@ SpectrumLegend(
   lwd = 4,
   lty = 1,
   lend = "square",
+  cex = 1,
+  text.col = par("col"),
+  title = NULL,
+  title.col = text.col[1],
+  title.cex = cex[1],
+  title.adj = 0.5,
+  title.font = 2,
   pos = 4,
   ...
 )
@@ -33,6 +40,21 @@ bottom-left of the plot area and (1, 1) the top right.}
 
 \item{lwd, lty, lend}{Additional parameters to \code{\link[=segments]{segments()}},
 controlling line style.}
+
+\item{cex}{Character expansion factor relative to current \code{par("cex")}.}
+
+\item{text.col}{Colour used for the legend text.}
+
+\item{title}{Text to display}
+
+\item{title.col}{Colour for title; defaults to \code{text.col[1]}.}
+
+\item{title.cex}{Expansion factor(s) for the title, defaults to \code{cex[1]}.}
+
+\item{title.adj}{Horizontal adjustment for title: see the help for
+\code{par("adj")}.}
+
+\item{title.font}{Font used for the legend title.}
 
 \item{pos, \dots}{Additional parameters to \code{\link[=text]{text()}}.}
 }

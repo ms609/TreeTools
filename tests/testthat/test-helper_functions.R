@@ -21,10 +21,13 @@ test_that("SpectrumLegend()", {
          xlab = "x", ylab = "y")
     SpectrumLegend(legend = c("Bottom", "Middle", "Top"),
                    lwd = 5,
-                   palette = rev(hcl.colors(256L, "RdYlBu")))
+                   palette = rev(hcl.colors(256L, "RdYlBu")),
+                   text.col = c("blue", "brown", "red"),
+                   title = "Blue title", title.font = 3, title.cex = 0.5)
     SpectrumLegend(0.4, 10.6, 0.2, 11, abs = TRUE,
                    legend = seq(0, 10, by = 2), palette = 0:10,
-                   lty = 'dotted', pos = 2,
-                   lmitre = 2, lend = "round", ljoin = "round")
+                   lty = "dotted", pos = 2,
+                   lmitre = 2, lend = "round", ljoin = "round",
+                   title = "Default title", xpd = NA)
   })
 })

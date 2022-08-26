@@ -113,6 +113,14 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' @param palette Colour palette to depict.
 #' @param lwd,lty,lend Additional parameters to [`segments()`],
 #' controlling line style.
+#' @param cex Character expansion factor relative to current `par("cex")`.
+#' @param text.col Colour used for the legend text.
+#' @param title Text to display 
+#' @param title.adj Horizontal adjustment for title: see the help for
+#' `par("adj")`.
+#' @param title.col Colour for title; defaults to `text.col[1]`.
+#' @param title.cex Expansion factor(s) for the title, defaults to `cex[1]`.
+#' @param title.font Font used for the legend title.
 #' @param pos,\dots Additional parameters to [`text()`].
 #' 
 #' @examples 
@@ -129,8 +137,12 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            x1 = x0, y1 = y0 + 0.2,
                            absolute = FALSE,
                            legend = character(0), palette,
-                           lwd = 4, lty = 1, lend = "square",
-                           pos = 4, ...) {
+                           lwd = 4, lty = 1, lend = "square", cex = 1,
+                           text.col = par("col"),
+                           title = NULL, title.col = text.col[1], 
+                           title.cex = cex[1], title.adj = 0.5, title.font = 2,
+                           pos = 4,
+                           ...) {
   nCol <- length(palette)
   
   if (!absolute) {
@@ -155,6 +167,14 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
            lwd = lwd, lty = lty, lend = lend)
   text(seq(x0, x1, length.out = length(legend)),
        seq(y0, y1, length.out = length(legend)),
+       col = text.col,
        legend, pos = pos, ...)
+  if (!is.null(title)) {
+    text(min(x0, x1) + max(strwidth(legend)) / 2,
+         y1 + (2.5 * par("lheight") * strheight("")),
+         paste0(title, "\n\n"),
+         pos = 1,
+         cex = title.cex, adj = title.adj, font = title.font, col = title.col,
+         ...)
+  }
 }
-

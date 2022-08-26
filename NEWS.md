@@ -1,9 +1,11 @@
-# TreeTools 1.7.3.9001 (development) #
+# TreeTools 1.7.3.9002 (development) #
 
 - Improve `DropTip()` speed when branch lengths are present.
 
 - Support > 32767 trees in `Consensus()` 
   ([#127](https://github.com/ms609/TreeTools/issues/127))
+
+- `SpectrumLegend()` gains `title` parameter and more styling options.
 
 
 # TreeTools 1.7.3 #
