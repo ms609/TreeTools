@@ -17,6 +17,8 @@ SpectrumLegend(
   lend = "square",
   cex = 1,
   text.col = par("col"),
+  font = NULL,
+  text.font = font,
   title = NULL,
   title.col = text.col[1],
   title.cex = cex[1],
@@ -44,6 +46,8 @@ controlling line style.}
 \item{cex}{Character expansion factor relative to current \code{par("cex")}.}
 
 \item{text.col}{Colour used for the legend text.}
+
+\item{font, text.font}{Font used for the legend text; see \code{\link[=text]{text()}}.}
 
 \item{title}{Text to display}
 

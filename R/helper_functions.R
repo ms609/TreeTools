@@ -117,10 +117,10 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' @param text.col Colour used for the legend text.
 #' @param font,text.font Font used for the legend text; see [`text()`].
 #' @param title Text to display 
-#' @param title.adj Horizontal adjustment for title: see the help for
-#' `par("adj")`.
 #' @param title.col Colour for title; defaults to `text.col[1]`.
 #' @param title.cex Expansion factor(s) for the title, defaults to `cex[1]`.
+#' @param title.adj Horizontal adjustment for title: see the help for
+#' `par("adj")`.
 #' @param title.font Font used for the legend title.
 #' @param pos,\dots Additional parameters to [`text()`].
 #' 
