@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.7.3.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.7.3.9002</span>
       </span>
     </div>
 
@@ -91,6 +91,13 @@
 <span>  lwd <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  lty <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lend <span class="op">=</span> <span class="st">"square"</span>,</span>
+<span>  cex <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  text.col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="st">"col"</span><span class="op">)</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title.col <span class="op">=</span> <span class="va">text.col</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  title.cex <span class="op">=</span> <span class="va">cex</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  title.adj <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  title.font <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  pos <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -120,6 +127,35 @@ bottom-left of the plot area and (1, 1) the top right.</p></dd>
 <dt>lwd, lty, lend</dt>
 <dd><p>Additional parameters to <code><a href="https://rdrr.io/r/graphics/segments.html" class="external-link">segments()</a></code>,
 controlling line style.</p></dd>
+
+
+<dt>cex</dt>
+<dd><p>Character expansion factor relative to current <code>par("cex")</code>.</p></dd>
+
+
+<dt>text.col</dt>
+<dd><p>Colour used for the legend text.</p></dd>
+
+
+<dt>title</dt>
+<dd><p>Text to display</p></dd>
+
+
+<dt>title.col</dt>
+<dd><p>Colour for title; defaults to <code>text.col[1]</code>.</p></dd>
+
+
+<dt>title.cex</dt>
+<dd><p>Expansion factor(s) for the title, defaults to <code>cex[1]</code>.</p></dd>
+
+
+<dt>title.adj</dt>
+<dd><p>Horizontal adjustment for title: see the help for
+<code>par("adj")</code>.</p></dd>
+
+
+<dt>title.font</dt>
+<dd><p>Font used for the legend title.</p></dd>
 
 
 <dt>pos, ...</dt>
