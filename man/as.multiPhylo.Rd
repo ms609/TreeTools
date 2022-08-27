@@ -28,12 +28,12 @@ as.multiPhylo(x)
 to the partitions implied by each non-ambiguous character in \code{x}.
 }
 \description{
-Converts representations of phylogenetic trees to an object of the 'ape'
+Converts representations of phylogenetic trees to an object of the "ape"
 class \code{multiPhylo}.
 }
 \examples{
 as.multiPhylo(BalancedTree(8))
 as.multiPhylo(list(BalancedTree(8), PectinateTree(8)))
-data('Lobo')
+data("Lobo")
 as.multiPhylo(Lobo.phy)
 }

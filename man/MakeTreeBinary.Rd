@@ -25,7 +25,7 @@ UnrootTree(MakeTreeBinary(StarTree(5)))
 }
 \seealso{
 Since ape v5.5, this functionality is available through
-\code{\link[ape:multi2di]{ape::multi2di()}}; previous versions of 'ape' did not return topologies
+\code{\link[ape:multi2di]{ape::multi2di()}}; previous versions of "ape" did not return topologies
 in equal frequencies.
 
 Other tree manipulation: 

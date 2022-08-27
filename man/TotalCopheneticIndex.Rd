@@ -34,7 +34,7 @@ be obtained by calculation for the Uniform model.
 \details{
 The Total Cophenetic Index is a measure of tree balance -- i.e. whether
 a (phylogenetic) tree comprises symmetric pairs of nodes, or has a pectinate
-'caterpillar' shape.
+"caterpillar" shape.
 The index has a greater resolution power than Sackin's and Colless' indices,
 and can be applied to trees that are not perfectly resolved.
 
@@ -57,9 +57,9 @@ TotalCopheneticIndex(StarTree(8))
 
 
 # Examples from Mir et al. (2013):
-tree12 <- ape::read.tree(text='(1, (2, (3, (4, 5))));')  #Fig. 4, tree 12
+tree12 <- ape::read.tree(text="(1, (2, (3, (4, 5))));")  #Fig. 4, tree 12
 TotalCopheneticIndex(tree12) # 10
-tree8  <- ape::read.tree(text='((1, 2, 3, 4), 5);')      #Fig. 4, tree 8
+tree8  <- ape::read.tree(text="((1, 2, 3, 4), 5);")      #Fig. 4, tree 8
 TotalCopheneticIndex(tree8)  # 6
 TCIContext(tree8)
 TCIContext(5L) # Context for a tree with 5 leaves.
@@ -70,7 +70,7 @@ TCIContext(5L) # Context for a tree with 5 leaves.
 }
 \seealso{
 \code{cophen.index()} in the package
-'\href{https://github.com/LuciaRotger/CollessLike}{CollessLike}'
+\href{https://github.com/LuciaRotger/CollessLike}{\pkg{CollessLike}}
 provides an alternative implementation of this index and its predecessors.
 
 Other tree characterization functions: 

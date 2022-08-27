@@ -21,14 +21,14 @@ longest such route will be returned.}
 each external and internal node in \code{x}.
 }
 \description{
-\code{NodeDepth()} evaluates how 'deep' each node is within a tree.
+\code{NodeDepth()} evaluates how "deep" each node is within a tree.
 }
 \details{
 For a rooted tree, the depth of a node is the minimum (if \code{shortest = TRUE})
 or maximum  (\code{shortest = FALSE}) number of edges that must be traversed,
 moving away from the root, to reach a leaf.
 
-Unrooted trees are treated as if a root node occurs in the 'middle' of the
+Unrooted trees are treated as if a root node occurs in the "middle" of the
 tree, meaning the position that will minimise the maximum node depth.
 }
 \examples{

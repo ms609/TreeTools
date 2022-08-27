@@ -146,7 +146,7 @@ sapply(allShapes, UnrootedTreeKey, asInteger = TRUE) # Key >= number
 
 # If numbers larger than 2>31 are required, sapply needs a little help
 # with 64-bit integers:
-structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
+structure(sapply(allShapes, UnrootedTreeKey), class = "integer64")
 
 
 }

@@ -49,7 +49,7 @@ tree <- PectinateTree(8)
 plot(tree)
 ape::nodelabels()
 
-plot(RootTree(tree, c('t6', 't7')))
+plot(RootTree(tree, c("t6", "t7")))
 
 plot(RootOnNode(tree, 12))
 plot(RootOnNode(tree, 2))

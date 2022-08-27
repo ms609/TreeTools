@@ -4,8 +4,8 @@ test_that("Write is successful", {
   Test(UnrootTree(BalancedTree(0:7)))
   Test(PectinateTree(0:7))
   Test(UnrootTree(PectinateTree(0:7)))
-  Test(ape::read.tree(text='(0,1,2,3,4);'))
-  Test(ape::read.tree(text='((0,1,2,3,4), ((5, 6), (7, 8, 9)), 10, 11);'))
+  Test(ape::read.tree(text="(0,1,2,3,4);"))
+  Test(ape::read.tree(text="((0,1,2,3,4), ((5, 6), (7, 8, 9)), 10, 11);"))
   Test(as.phylo(1:4, 5, 0:4))
 
   nasty <- structure(list(edge = structure(
@@ -14,7 +14,7 @@ test_that("Write is successful", {
     .Dim = c(12, 2)),
     Nnode = 5L,
     tip.label = 0:7),
-    class = 'phylo') # Danger: Do not plot!
+    class = "phylo") # Danger: Do not plot!
   Test(nasty)
 })
 
@@ -22,14 +22,14 @@ test_that("WriteTntCharacters()", {
   nTax <- 4L
   dataset <- matrix(seq_len(nTax), nrow = nTax, ncol = 6,
                     dimnames = list(LETTERS[1:nTax], 1:6))
-  dataset[4, 4:6] <- '-'
-  dataset[3, 3] <- '(23)'
-  dataset[3:2, 4:6] <- '?'
+  dataset[4, 4:6] <- "-"
+  dataset[3, 3] <- "(23)"
+  dataset[3:2, 4:6] <- "?"
 
   expect_equal("PRE\nFIX\nxread 'COM MENT'\n6 4\nA 111111\nB 222???\nC 33[23]???\nD 444---\n;\nPOST\nSCRIPT",
-               WriteTntCharacters(dataset, comment = c('COM', 'MENT'),
-                                  pre = c('PRE', 'FIX'),
-                                  post  = c('POST', 'SCRIPT')))
+               WriteTntCharacters(dataset, comment = c("COM", "MENT"),
+                                  pre = c("PRE", "FIX"),
+                                  post  = c("POST", "SCRIPT")))
   expect_equal(WriteTntCharacters(dataset),
                WriteTntCharacters(MatrixToPhyDat(dataset)))
 
@@ -41,5 +41,5 @@ test_that("WriteTntCharacters()", {
   on.exit(file.remove(written))
   colnames(dataset) <- NULL
   expect_equal(ReadTntCharacters(written),
-               gsub('(23)', '[23]', fixed = TRUE, dataset))
+               gsub("(23)", "[23]", fixed = TRUE, dataset))
 })

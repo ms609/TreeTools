@@ -50,7 +50,7 @@ The \acronym{CIC} was originally proposed by
 with an information-theoretic justification, by
 \insertCite{Thorley1998;textual}{TreeTools}.
 \insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
-'phylogenetic information content' in the context of individual characters.
+"phylogenetic information content" in the context of individual characters.
 
 The number of binary trees consistent with a cladogram provides a more
 satisfactory measure of the resolution of a tree than simply

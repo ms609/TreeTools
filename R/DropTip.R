@@ -25,7 +25,7 @@
 #' @examples
 #' tree <- BalancedTree(9)
 #' plot(tree)
-#' plot(DropTip(tree, c('t5', 't6')))
+#' plot(DropTip(tree, c("t5", "t6")))
 #' 
 #' unrooted <- UnrootTree(tree)
 #' plot(unrooted)
@@ -52,7 +52,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     if (check) {
       drop <- labels %in% tip
       if (sum(drop) != length(tip)) {
-        warning(paste(tip[!tip %in% labels], collapse = ', '),
+        warning(paste(tip[!tip %in% labels], collapse = ", "),
                 " not present in tree")
       }
     } else {
@@ -97,7 +97,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   
   if (all(drop)) {
     return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                          Nnode = 0), class = 'phylo'))
+                          Nnode = 0), class = "phylo"))
   }
   
   if (any(drop)) {
@@ -129,7 +129,7 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 KeepTipPreorder <- function(tree, tip) {
   if (!any(tip)) {
     structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                          Nnode = 0), class = 'phylo')
+                          Nnode = 0), class = "phylo")
   } else if (all(tip)) {
     tree
   } else {
@@ -148,7 +148,7 @@ KeepTipPreorder <- function(tree, tip) {
 KeepTipPostorder <- function(tree, tip) {
   if (!any(tip)) {
     structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
-                          Nnode = 0), class = 'phylo')
+                          Nnode = 0), class = "phylo")
   } else if (all(tip)) {
     tree
   } else {
@@ -173,7 +173,7 @@ DropTip.Splits <- function(tree, tip, preorder, check = TRUE) {
       drop <- match(tip, labels)
       missing <- is.na(drop)
       if (any(missing)) {
-        warning(paste(tip[missing], collapse = ', '), " not present in tree")
+        warning(paste(tip[missing], collapse = ", "), " not present in tree")
         drop <- drop[!missing]
       }
       drop <- as.logical(tabulate(drop, NTip(tree)))
@@ -239,7 +239,7 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   tree <- lapply(tree, DropTip, tip, preorder)
   attributes(tree) <- at
   if (!is.null(at[["TipLabel"]])) {
-    attr(tree, 'TipLabel') <- setdiff(at[["TipLabel"]], tip)
+    attr(tree, "TipLabel") <- setdiff(at[["TipLabel"]], tip)
   }
   tree
 }
@@ -258,7 +258,7 @@ KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
       seq_len(NTip(tree))
     }
     if (!all(tip %in% labels)) {
-      warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ', '))
+      warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ", "))
     }
     keep <- setdiff(labels, tip)
   }

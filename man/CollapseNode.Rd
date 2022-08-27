@@ -40,14 +40,14 @@ plot(tree)
 nodelabels()
 edgelabels()
 edgelabels(round(tree$edge.length, 2),
-           cex = 0.6, frame = 'n', adj = c(1, -1))
+           cex = 0.6, frame = "n", adj = c(1, -1))
 
 # Collapse by node number
 newTree <- CollapseNode(tree, c(12, 13))
 plot(newTree)
 nodelabels()
 edgelabels(round(newTree$edge.length, 2),
-           cex = 0.6, frame = 'n', adj = c(1, -1))
+           cex = 0.6, frame = "n", adj = c(1, -1))
 
 # Collapse by edge number
 newTree <- CollapseEdge(tree, c(2, 4))

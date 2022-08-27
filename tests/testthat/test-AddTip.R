@@ -4,9 +4,9 @@ nasty <- structure(list(edge = structure(
   .Dim = c(12, 2)),
   Nnode = 5L,
   tip.label = letters[1:8]),
-  class = 'phylo') # Danger: Do not plot!
+  class = "phylo") # Danger: Do not plot!
 
-test_that('AddTipEverywhere() correct', {
+test_that("AddTipEverywhere() correct", {
   backbone <- PectinateTree(5)
   
   expect_equal(7L, length(AddTipEverywhere(backbone, includeRoot = FALSE)))
@@ -19,7 +19,7 @@ test_that('AddTipEverywhere() correct', {
 
 test_that("AddTip() at root", {
   expect_true(all.equal(
-    AddTip(DropTip(PectinateTree(8), 1), where = 0, label = 't1'),
+    AddTip(DropTip(PectinateTree(8), 1), where = 0, label = "t1"),
     PectinateTree(8)))
   AddTip(nasty, 1L)
   AddTip(nasty, 12L)
@@ -28,9 +28,9 @@ test_that("AddTip() at root", {
 
 test_that("AddTip() with tip name", {
   bal8 <- BalancedTree(8)
-  expect_error(AddTip(bal8, 'invalid tip'))
-  expect_equal(AddTip(bal8, 1L), AddTip(bal8, 't1'))
-  expect_equal(AddTip(nasty, 1L), AddTip(nasty, 'a'))
+  expect_error(AddTip(bal8, "invalid tip"))
+  expect_equal(AddTip(bal8, 1L), AddTip(bal8, "t1"))
+  expect_equal(AddTip(nasty, 1L), AddTip(nasty, "a"))
 })
 
 test_that("AddTip() with edge lengths", {
@@ -59,22 +59,22 @@ test_that("AddTip() with edge lengths", {
                AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1.6)$edge.length)
 })
 
-test_that('AddTipEverywhere() handles nasty tree', {
+test_that("AddTipEverywhere() handles nasty tree", {
   added <- AddTipEverywhere(nasty)
   lapply(added, function(tr) expect_true(all(tr$edge > 0)))
   expect_true(all.equal(lapply(added, Preorder),
                         AddTipEverywhere(Preorder(nasty))))
 })
 
-test_that('AddTipEverywhere() with tiny trees', {
+test_that("AddTipEverywhere() with tiny trees", {
   added <- AddTipEverywhere(StarTree(2))
   lapply(added, function(tr) expect_true(all(tr$edge > 0)))
   expect_equal(2, length(added))
   expect_equal(3, length(AddTipEverywhere(StarTree(2), include = TRUE)))
   
-  expect_equal(list(PectinateTree(c('t1', 'New tip'))),
+  expect_equal(list(PectinateTree(c("t1", "New tip"))),
                AddTipEverywhere(StarTree(1)))
-  expect_equal(list(SingleTaxonTree('New tip')),
+  expect_equal(list(SingleTaxonTree("New tip")),
                AddTipEverywhere(structure(list(tip.label = character(0)),
-                                          class = 'phylo')))
+                                          class = "phylo")))
 })

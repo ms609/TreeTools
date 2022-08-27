@@ -29,7 +29,7 @@
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
-  refLabels <- attr(referenceSplits, 'tip.label')
+  refLabels <- attr(referenceSplits, "tip.label")
   forest <- lapply(forest, keep.tip, refLabels)
   forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
@@ -72,8 +72,8 @@ SplitFrequency <- function(reference, forest) {
 #' tree <- BalancedTree(LETTERS[1:5])
 #' splits <- as.Splits(tree)
 #' plot(tree)
-#' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
-#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+#' LabelSplits(tree, as.character(splits), frame = "none", pos = 3L)
+#' LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
 #'             pos = 1L)
 #'
 #' @template exampleNodeSupport
@@ -85,7 +85,7 @@ SplitFrequency <- function(reference, forest) {
 #' @importFrom stats setNames
 #' @family Splits operations
 #' @export
-LabelSplits <- function(tree, labels = NULL, unit = '', ...) {
+LabelSplits <- function(tree, labels = NULL, unit = "", ...) {
   splits <- as.Splits(tree)
   if (is.null(labels)) {
     splitNames <- names(splits)
@@ -126,7 +126,7 @@ SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
 #' @export
 ForestSplits <- function(forest, powersOf2) {
   .Deprecated("SplitFrequency")
-  if (inherits(forest, 'phylo')) forest <- c(forest)
+  if (inherits(forest, "phylo")) forest <- c(forest)
   tipIndex <- sort(forest[[1]][["tip.label"]])
   nTip <- length(tipIndex)
 
@@ -178,13 +178,13 @@ SupportColour <- function(support,
                            scale = rev(diverge_hcl(101, h = c(260, 0), c = 100,
                                                    l = c(50, 90),
                                                    power = 1.0)),
-                           outOfRange = 'red') {
+                           outOfRange = "red") {
   # continuousScale <- rev(colorspace::heat_hcl(101, h=c(300, 75), c.=c(35, 95),
   #  l=c(15, 90), power=c(0.8, 1.2))) # Viridis prefered
 
   sanitized <- support
   sanitized[!is.numeric(support) | support < 0 | support > 1] <- NA
-  ifelse(is.na(support) | support < 0 | support > 1 | support == '',
+  ifelse(is.na(support) | support < 0 | support > 1 | support == "",
          outOfRange,
          ifelse(support == 1 & !show1,
                 "#ffffff00",

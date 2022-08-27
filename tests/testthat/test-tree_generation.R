@@ -1,26 +1,26 @@
 test_that("Pectinate trees are generated", {
-  expect_equal(ape::read.tree(text = '(t1, (t2, (t3, t4)));'),
+  expect_equal(ape::read.tree(text = "(t1, (t2, (t3, t4)));"),
                PectinateTree(4L))
-  expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
+  expect_equal(ape::read.tree(text = "(a, (b, (c, (d, e))));"),
                PectinateTree(letters[1:5]))
-  expect_equal(ape::read.tree(text = '(a, (b, (c, (d, e))));'),
-               PectinateTree(ape::read.tree(text = '(a, ((b, c), (d, e)));')))
-  data("Lobo", package = 'TreeTools')
-  expect_equal(ape::read.tree(text = '(Cricocosmia, (Aysheaia, Siberion));'),
+  expect_equal(ape::read.tree(text = "(a, (b, (c, (d, e))));"),
+               PectinateTree(ape::read.tree(text = "(a, ((b, c), (d, e)));")))
+  data("Lobo", package = "TreeTools")
+  expect_equal(ape::read.tree(text = "(Cricocosmia, (Aysheaia, Siberion));"),
                PectinateTree(.SubsetPhyDat(Lobo.phy, 2:4)))
   expect_true(is.integer(PectinateTree(8)$edge))
 })
 
-test_that('Balanced trees are generated correctly', {
+test_that("Balanced trees are generated correctly", {
   # nTip even
   expect_equal(BalancedTree(8L),
                Preorder(ape::read.tree(
-                 text = '(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));')
+                 text = "(((t1, t2), (t3, t4)), ((t5, t6), (t7, t8)));")
                ))
   # nTip odd
   expect_equal(BalancedTree(9L),
                Preorder(ape::read.tree(
-                 text = '((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));')
+                 text = "((((t1, t2), t3), (t4, t5)), ((t6, t7), (t8, t9)));")
                ))
   expect_equal(BalancedTree(9L)$edge, Preorder(BalancedTree(9L)$edge))
   expect_equal(BalancedTree(as.character(1:9)), BalancedTree(1:9))
@@ -28,24 +28,24 @@ test_that('Balanced trees are generated correctly', {
   expect_equal(ignore_attr = TRUE,
                PectinateTree(escapees), BalancedTree(escapees))
   expect_equal(integer(0), .BalancedBit(seq_len(0)))
-  expect_equal("Test", .BalancedBit('Test'))
+  expect_equal("Test", .BalancedBit("Test"))
   expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
 test_that("StarTree() works", {
-  expect_equal(ape::read.tree(text = '(t1, t2, t3, t4, t5, t6, t7, t8);'),
+  expect_equal(ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"),
                StarTree(8L))
   expect_true(is.integer(StarTree(8)$edge))
 })
 
 test_that("Random trees are generated correctly", {
   expect_equal(c(4, 4, 5, 5, 1, 5, 2, 3), RandomTree(3, root = TRUE)$edge[1:8])
-  expect_true(all.equal(RandomTree(3, root = 't2'),
-    PectinateTree(c('t2', 't3', 't1'))))
+  expect_true(all.equal(RandomTree(3, root = "t2"),
+    PectinateTree(c("t2", "t3", "t1"))))
   expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
-  expect_warning(expect_equal(RandomTree(3, root = 't2'),
+  expect_warning(expect_equal(RandomTree(3, root = "t2"),
                               RandomTree(3, root = 2:3)))
-  expect_error(RandomTree(4, root = 'not_there'))
+  expect_error(RandomTree(4, root = "not_there"))
   expect_error(RandomTree(4, root = 999))
   expect_error(RandomTree(4, root = -1))
   expect_error(expect_warning(RandomTree(4, root = NA_integer_)))
@@ -63,7 +63,7 @@ test_that("Random trees are generated correctly", {
 })
 
 test_that("Hamming() works", {
-  dataset <- StringToPhyDat('111100 ???000 ???000 111??? 10??10',
+  dataset <- StringToPhyDat("111100 ???000 ???000 111??? 10??10",
                             letters[1:5], byTaxon = TRUE)
   expected <- c(1/3, 1/3, 0, 1/2,
                 0, NaN, 1/2,
@@ -85,7 +85,7 @@ test_that("Hamming() works", {
 })
 
 test_that("Hamming() handles inapplicables", {
-  dataset <- StringToPhyDat('221100 ---000 ---000 211{-0}?? 10-?10',
+  dataset <- StringToPhyDat("221100 ---000 ---000 211{-0}?? 10-?10",
                             letters[1:5], byTaxon = TRUE)
   expected <- c(1/3, 1/3, 1/3, 3/4,
                 0, NaN, 1/2,
@@ -97,7 +97,7 @@ test_that("Hamming() handles inapplicables", {
 
 test_that("NJTree() works", {
   a..f <- letters[1:6]
-  bal6 <- StringToPhyDat('111100 111000 111000 110000', letters[1:6],
+  bal6 <- StringToPhyDat("111100 111000 111000 110000", letters[1:6],
                          byTaxon = FALSE)
   expect_true(all.equal(
     RootTree(NJTree(bal6), a..f[1:3]),
@@ -118,8 +118,8 @@ test_that("Constrained NJ trees work", {
   expect_true(all.equal(read.tree(text = "(a, (d, ((c, b), (e, f))));"),
                         ConstrainedNJ(dataset, constraint)))
   # b == c == f, so these three could be resolved in one of three ways. Drop B.
-  expect_true(all.equal(DropTip(NJTree(dataset), 'b'),
-                        DropTip(ConstrainedNJ(dataset, dataset), 'b')))
+  expect_true(all.equal(DropTip(NJTree(dataset), "b"),
+                        DropTip(ConstrainedNJ(dataset, dataset), "b")))
 
   expect_true(all.equal(
     KeepTip(ConstrainedNJ(dataset, constraint[3:6]), letters[3:6]),
@@ -132,12 +132,12 @@ test_that("Hamming() fails nicely", {
 })
 
 test_that("EnforceOutgroup() fails nicely", {
-  expect_error(EnforceOutgroup(BalancedTree(6), 'Non-taxon'))
-  expect_error(EnforceOutgroup(BalancedTree(6), c('t1', 'Non-taxon')))
+  expect_error(EnforceOutgroup(BalancedTree(6), "Non-taxon"))
+  expect_error(EnforceOutgroup(BalancedTree(6), c("t1", "Non-taxon")))
   expect_true(all.equal(
     BalancedTree(letters[5:6]),
     Subtree(Preorder(EnforceOutgroup(letters[1:8], letters[5:6])), 15)
     ))
-  expect_equal(EnforceOutgroup(BalancedTree(8), 't1'),
-               Preorder(ape::root(BalancedTree(8), 't1', resolve.root = TRUE)))
+  expect_equal(EnforceOutgroup(BalancedTree(8), "t1"),
+               Preorder(ape::root(BalancedTree(8), "t1", resolve.root = TRUE)))
 })

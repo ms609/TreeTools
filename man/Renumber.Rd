@@ -11,19 +11,19 @@ Renumber(tree)
 }
 \value{
 \code{Renumber()} returns a tree of class \code{phylo}, numbered in a
-\link{Cladewise} fashion consistent with the expectations of 'ape' functions.
+\link{Cladewise} fashion consistent with the expectations of \pkg{ape} functions.
 }
 \description{
 \code{Renumber()} numbers the nodes and tips in a tree to conform with the
 \code{phylo} standards.
 }
 \details{
-The 'ape' class \code{phylo} is not formally defined, but expects trees' internal
+The \pkg{ape} class \code{phylo} is not formally defined, but expects trees' internal
 representation to conform to certain principles: for example, nodes should
 be numbered sequentially, with values increasing away from the root.
 
 \code{Renumber()} attempts to reformat any tree into a representation that will
-not cause 'ape' functions to produce unwanted results or to crash R.
+not cause \pkg{ape} functions to produce unwanted results or to crash R.
 }
 \examples{
 tree <- RandomTree(letters[1:10])

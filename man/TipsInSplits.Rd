@@ -37,7 +37,7 @@ smaller bipartition.}
 number of tips contained within each split in \code{splits}.
 
 \code{SplitImbalance()} returns a named vector of integers, specifying the
-number of leaves within a split that are not 'balanced' by a leaf outside it;
+number of leaves within a split that are not "balanced" by a leaf outside it;
 i.e. a split that divides leaves evenly has an imbalance of zero; one that
 splits two tips from ten has an imbalance of 10 - 2 = 8.
 }
@@ -51,8 +51,8 @@ splits <- as.Splits(tree)
 TipsInSplits(splits)
 
 plot(tree)
-LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L, cex = 0.7)
-LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+LabelSplits(tree, as.character(splits), frame = "none", pos = 3L, cex = 0.7)
+LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
             pos = 1L)
 
 }

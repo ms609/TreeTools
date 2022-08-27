@@ -23,7 +23,7 @@ test_that("UnrootedTreesMatchingSplit() correct", {
 
 test_that("MultiSplitInformation() works", {
   expect_equal(12.8323, MultiSplitInformation(3:5), tolerance = 6)
-  expect_equal(CharacterInformation(rep(c('-', '?', 0:2), 1:5)),
+  expect_equal(CharacterInformation(rep(c("-", "?", 0:2), 1:5)),
                MultiSplitInformation(3:5))
 })
 

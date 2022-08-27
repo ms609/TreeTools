@@ -31,9 +31,9 @@
 #' @examples
 #' plot(tree <- BalancedTree(10))
 #' ape::nodelabels()
-#' ape::nodelabels(15, 15, bg='green')
+#' ape::nodelabels(15, 15, bg="green")
 #'
-#' plot(AddTip(tree, 15, 'NEW_TIP'))
+#' plot(AddTip(tree, 15, "NEW_TIP"))
 #'
 #' @keywords tree
 #' @family tree manipulation
@@ -58,7 +58,7 @@ AddTip <- function(tree,
     if (is.na(tmp)) stop("No tip labelled '", where, "'")
     where <- tmp
   }
-  ## find the row of 'where' before renumbering
+  ## find the row of "where" before renumbering
   if (where < 1L || where == rootNode) {
     case <- 1L
   } else {

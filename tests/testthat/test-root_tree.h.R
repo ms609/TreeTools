@@ -21,7 +21,7 @@ test_that("Big trees don't fail", {
                PectinateTree(2^14 + 1))
 })
 
-test_that('Binary trees are rootable', {
+test_that("Binary trees are rootable", {
   Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root]))$edge,
                  root_binary(tree$edge, root))
@@ -32,7 +32,7 @@ test_that('Binary trees are rootable', {
   Test(PectinateTree(9), 7)
 })
 
-test_that('Polytomous trees are rootable', {
+test_that("Polytomous trees are rootable", {
   Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root])),
                  root_on_node(tree, root))

@@ -37,8 +37,8 @@ If the position of the root is significant, add a tip at the root using
 tree <- BalancedTree(LETTERS[1:5])
 splits <- as.Splits(tree)
 plot(tree)
-LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
-LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+LabelSplits(tree, as.character(splits), frame = "none", pos = 3L)
+LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
             pos = 1L)
 
 # An example forest of 100 trees, some identical

@@ -23,14 +23,14 @@ clade extracted from the original tree.
 \details{
 Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
 sometimes behaves erratically.
-Unlike extract.clade, this function supports the extraction of 'clades'
+Unlike extract.clade, this function supports the extraction of "clades"
 that constitute a single tip.
 }
 \examples{
 tree <- Preorder(BalancedTree(8))
 plot(tree)
 ape::nodelabels()
-ape::nodelabels(13, 13, bg='yellow')
+ape::nodelabels(13, 13, bg="yellow")
 
 plot(Subtree(tree, 13))
 

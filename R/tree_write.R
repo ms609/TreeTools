@@ -26,7 +26,7 @@
 #'
 #' @template MRS
 #' @export
-as.Newick <- function(x) UseMethod('as.Newick')
+as.Newick <- function(x) UseMethod("as.Newick")
 
 #' @rdname as.Newick
 #' @export
@@ -56,30 +56,30 @@ as.Newick.multiPhylo <- as.Newick.list
 #'
 #' @seealso [`ReadTntCharacters()`]
 #' @examples
-#' data('Lobo', package = 'TreeTools')
+#' data("Lobo", package = "TreeTools")
 #'
 #' WriteTntCharacters(Lobo.phy)
 #'
 #' # Read with extended implied weighting
-#' WriteTntCharacters(Lobo.phy, pre = 'piwe=10;', post = 'xpiwe=;')
+#' WriteTntCharacters(Lobo.phy, pre = "piwe=10;", post = "xpiwe=;")
 #'
 #' # Write to a file with:
-#' # WriteTntCharacters(Lobo.phy, 'example_file.tnt')
+#' # WriteTntCharacters(Lobo.phy, "example_file.tnt")
 #' @template MRS
 #' @export
 WriteTntCharacters <- function(dataset, filepath = NULL,
-                                comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
                                 types = NULL,
-                                pre = '', post = '') {
-  UseMethod('WriteTntCharacters')
+                                pre = "", post = "") {
+  UseMethod("WriteTntCharacters")
 }
 
 #' @rdname WriteTntCharacters
 #' @export
 WriteTntCharacters.phyDat <- function(dataset, filepath = NULL,
-                                       comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
                                        types = NULL,
-                                       pre = '', post = '') {
+                                       pre = "", post = "") {
   WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types,
                      pre, post)
 }
@@ -87,32 +87,32 @@ WriteTntCharacters.phyDat <- function(dataset, filepath = NULL,
 #' @rdname WriteTntCharacters
 #' @export
 WriteTntCharacters.matrix <- function(dataset, filepath = NULL,
-                                       comment = 'Dataset written by `TreeTools::WriteTntCharacters()`',
+                                       comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
                                        types = NULL,
-                                       pre = '', post = '') {
-  EOL <- '\n'
-  dataset <- gsub('(', '[', fixed = TRUE, dataset)
-  dataset <- gsub(')', ']', fixed = TRUE, dataset)
+                                       pre = "", post = "") {
+  EOL <- "\n"
+  dataset <- gsub("(", "[", fixed = TRUE, dataset)
+  dataset <- gsub(")", "]", fixed = TRUE, dataset)
 
   ret <- paste(
-    paste(pre, collapse = '\n'),
-    paste0("xread '", paste(comment, collapse = ' '), "'"),
-    paste(rev(dim(dataset)), collapse = ' '),
+    paste(pre, collapse = "\n"),
+    paste0("xread '", paste(comment, collapse = " "), "'"),
+    paste(rev(dim(dataset)), collapse = " "),
     if (is.null(types)) {
       paste(rownames(dataset),
-            apply(dataset, 1, paste0, collapse = ''),
+            apply(dataset, 1, paste0, collapse = ""),
             collapse = EOL)
     } else {
       typeEnds <- c(unname(types[-1]) - 1L, ncol(dataset))
-      paste(paste0('&[', names(types), ']\n'),
+      paste(paste0("&[", names(types), "]\n"),
             vapply(seq_along(types), function(i)
               paste(rownames(dataset),
-                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ''),
+                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ""),
                     collapse = EOL),
               character(1)), collapse = EOL)
     },
-    ';',
-    paste(post, collapse = '\n'),
+    ";",
+    paste(post, collapse = "\n"),
     sep = EOL)
   if (is.null(filepath)) {
     ret

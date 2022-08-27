@@ -1,7 +1,9 @@
 test_that("ClusterTable fails gracefully", {
   bigTree <- PectinateTree(2^14 + 1)
-  expect_error(as.ClusterTable(bigTree),
-               "Tree has too many leaves. Contact the 'TreeTools' maintainer.")
+  expect_error(
+    as.ClusterTable(bigTree),
+    "Tree has too many leaves. Contact the .TreeTools. maintainer."
+  )
 })
 
 test_that("ClusterTable class behaves", {

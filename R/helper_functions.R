@@ -51,10 +51,10 @@ SampleOne <- function(x, len = length(x)) {
 #'
 #' @export
 UnshiftTree <- function(add, treeList) {
-  if (inherits(treeList, 'multiPhylo')) {
-    structure(c(list(add), lapply(treeList, I)), class = 'multiPhylo')
-  } else if (inherits(treeList, 'phylo')) {
-    structure(list(add, treeList), class = 'multiPhylo')
+  if (inherits(treeList, "multiPhylo")) {
+    structure(c(list(add), lapply(treeList, I)), class = "multiPhylo")
+  } else if (inherits(treeList, "phylo")) {
+    structure(list(add, treeList), class = "multiPhylo")
   } else { # including: if (is.list(trees)) {
     c(list(add), treeList)
   }
@@ -80,14 +80,14 @@ UnshiftTree <- function(add, treeList) {
 #' @seealso [`bit64::integer64()`][bit64-package]
 #' @export
 sapply64 <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
-  structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = 'integer64')
+  structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = "integer64")
 }
 
 #' @rdname sapply64
 #' @export
 vapply64 <- function(X, FUN, FUN.LEN = 1, ...) {
   structure(vapply(X, FUN, FUN.VALUE = numeric(FUN.LEN), ...),
-            class = 'integer64')
+            class = "integer64")
 }
 
 #' @rdname sapply64

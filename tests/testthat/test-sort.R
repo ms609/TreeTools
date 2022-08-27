@@ -1,5 +1,5 @@
 test_that("Trees are sorted", {
-  trees <- setNames(as.phylo(0:8, 8), paste0('as.phy', 0:8))
+  trees <- setNames(as.phylo(0:8, 8), paste0("as.phy", 0:8))
   expect_true(trees[[1]] == trees[[1]])
   expect_false(trees[[1]] == trees[[2]])
   

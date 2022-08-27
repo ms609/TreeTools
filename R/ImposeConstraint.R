@@ -16,7 +16,7 @@
 #' tree <- as.phylo(1, 9, tips)
 #' plot(tree)
 #'
-#' constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
+#' constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
 #' plot(ImposeConstraint(tree, constraint))
 #' @template MRS
 #' @family tree manipulation
@@ -30,9 +30,9 @@ ImposeConstraint <- function(tree, constraint) {
                             asPhyDat = FALSE)
 
   info <- apply(const, 2,
-                function(x) SplitInformation(sum(x == '0'), sum(x == '1')))
-  smallest <- ifelse(apply(const, 2, function(x) sum(x == '0') < sum(x == '1')),
-                     '0', '1')
+                function(x) SplitInformation(sum(x == "0"), sum(x == "1")))
+  smallest <- ifelse(apply(const, 2, function(x) sum(x == "0") < sum(x == "1")),
+                     "0", "1")
 
   tips <- tree[["tip.label"]]
   nTip <- length(tips)
@@ -46,17 +46,17 @@ ImposeConstraint <- function(tree, constraint) {
       next
     }
     collapsing <- apply(const[collapsers, , drop = FALSE], 2,
-                        function(x) setdiff(x, '?')[1])
+                        function(x) setdiff(x, "?")[1])
 
     const <- const[setdiff(rownames(const), collapseNames[-1]), , drop = FALSE]
     const[collapseNames[1], ] <- collapsing
     rownames(const)[match(collapseNames[1], rownames(const))] <- paste0(
-      '(', paste0(collapseNames, collapse = ','), ')')
+      "(", paste0(collapseNames, collapse = ","), ")")
 
   }
 
   backbone <- Preorder(RenumberTips(
-    .TextToTree('(', paste0(rownames(const), collapse = ','), ');'),
+    .TextToTree("(", paste0(rownames(const), collapse = ","), ");"),
     tips))
 
   .ChildAtEnd <- function(x) {
@@ -91,8 +91,8 @@ ImposeConstraint <- function(tree, constraint) {
 
 #' @importFrom ape read.tree
 .TextToTree <- function(...) {
-  space <- 'XXTREETOOLSSPACEXX'
-  text <- gsub(' ', space, paste0(...), fixed = TRUE)
+  space <- "XXTREETOOLSSPACEXX"
+  text <- gsub(" ", space, paste0(...), fixed = TRUE)
   tree <- read.tree(text = text)
   tree[["tip.label"]] <- gsub(space, " ", tree[["tip.label"]], fixed = TRUE)
 
@@ -107,12 +107,12 @@ ImposeConstraint <- function(tree, constraint) {
 #' a matrix.
 #' @export
 AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
-  ret <- if (inherits(constraint, 'phyDat')) {
+  ret <- if (inherits(constraint, "phyDat")) {
     PhyDatToMatrix(constraint)
   } else {
     constraint
   }
-  ret <- rbind(ret, matrix('?', length(toAdd), dim(ret)[2],
+  ret <- rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
                            dimnames = list(toAdd, NULL)))
 
   # Return:

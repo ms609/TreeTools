@@ -23,7 +23,7 @@ computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 dataset.
 }
 \examples{
-data('Lobo')
+data("Lobo")
 NJTree(Lobo.phy)
 
 }

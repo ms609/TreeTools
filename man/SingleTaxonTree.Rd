@@ -14,12 +14,12 @@ SingleTaxonTree(label)
 tip with the specified label.
 }
 \description{
-\code{SingleTaxonTree()} creates a phylogenetic 'tree' that contains a single
+\code{SingleTaxonTree()} creates a phylogenetic "tree" that contains a single
 taxon.
 }
 \examples{
-SingleTaxonTree('Homo_sapiens')
-plot(SingleTaxonTree('root') + BalancedTree(4))
+SingleTaxonTree("Homo_sapiens")
+plot(SingleTaxonTree("root") + BalancedTree(4))
 
 }
 \seealso{

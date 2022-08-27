@@ -63,9 +63,9 @@ single-taxon trees.
 \examples{
 plot(tree <- BalancedTree(10))
 ape::nodelabels()
-ape::nodelabels(15, 15, bg='green')
+ape::nodelabels(15, 15, bg="green")
 
-plot(AddTip(tree, 15, 'NEW_TIP'))
+plot(AddTip(tree, 15, "NEW_TIP"))
 
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 

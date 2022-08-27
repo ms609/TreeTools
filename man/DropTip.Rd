@@ -78,7 +78,7 @@ querying object's class.
 \examples{
 tree <- BalancedTree(9)
 plot(tree)
-plot(DropTip(tree, c('t5', 't6')))
+plot(DropTip(tree, c("t5", "t6")))
 
 unrooted <- UnrootTree(tree)
 plot(unrooted)

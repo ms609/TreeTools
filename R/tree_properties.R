@@ -1,6 +1,6 @@
 #' Identify descendant edges
 #'
-#' Quickly identify edges that are 'descended' from edges in a tree.
+#' Quickly identify edges that are "descended" from edges in a tree.
 #'
 #' The order of parameters in `DescendantEdges()` will change in the future,
 #' to allow `AllDescendantEdges()` to be merged into this function
@@ -26,7 +26,7 @@ DescendantEdges <- function(edge = NULL, parent, child,
   edgeSister <- match(parent[edge], parent[-edge])
   if (edgeSister >= edge) {
     # edgeSister is really 1 higher than you think, because we knocked out
-    # edge 'edge' in the match
+    # edge "edge" in the match
     ret[edge:edgeSister] <- TRUE
 
     # Return:
@@ -91,13 +91,13 @@ NDescendants <- function(tree) {
 
 #' Distance of each node from tree exterior
 #'
-#' `NodeDepth()` evaluates how 'deep' each node is within a tree.
+#' `NodeDepth()` evaluates how "deep" each node is within a tree.
 #'
 #' For a rooted tree, the depth of a node is the minimum (if `shortest = TRUE`)
 #' or maximum  (`shortest = FALSE`) number of edges that must be traversed,
 #' moving away from the root, to reach a leaf.
 #'
-#' Unrooted trees are treated as if a root node occurs in the 'middle' of the
+#' Unrooted trees are treated as if a root node occurs in the "middle" of the
 #' tree, meaning the position that will minimise the maximum node depth.
 #'
 #'
@@ -124,7 +124,7 @@ NDescendants <- function(tree) {
 #'
 #' @export
 NodeDepth <- function(x, shortest = FALSE, includeTips = TRUE) {
-  UseMethod('NodeDepth')
+  UseMethod("NodeDepth")
 }
 
 #' @export
@@ -276,7 +276,7 @@ NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
 #' @family tree navigation
 #' @export
 NodeOrder <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
-  UseMethod('NodeOrder')
+  UseMethod("NodeOrder")
 }
 
 
@@ -329,7 +329,7 @@ AncestorEdge <- function(edge, parent, child) child == parent[edge]
 
 #' Ancestors of an edge
 #'
-#' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
+#' Quickly identify edges that are "ancestral" to a particular edge in a tree.
 #'
 #' @param edge Integer specifying the number of the edge whose child edges
 #' should be returned.
@@ -427,7 +427,7 @@ MRCA <- function(x1, x2, ancestors) {
 #' of edges that must be traversed to travel from each numbered edge to each
 #' other.
 #' The two edges straddling the root of a rooted tree
-#' are treated as a single edge.  Add a 'root' tip using [`AddTip()`] if the
+#' are treated as a single edge.  Add a "root" tip using [`AddTip()`] if the
 #' position of the root is significant.
 #'
 #' @examples
@@ -541,11 +541,11 @@ NonDuplicateRoot <- function(parent, child, nEdge = length(parent)) {
 #'
 #' @family tree properties
 #' @export
-NTip <- function(phy) UseMethod('NTip')
+NTip <- function(phy) UseMethod("NTip")
 
 #' @rdname NTip
 #' @export
-NTip.default <- function(phy) attr(phy, 'nTip')
+NTip.default <- function(phy) attr(phy, "nTip")
 
 #' @rdname NTip
 #' @family Splits operations
@@ -612,7 +612,7 @@ NTip.matrix <- function(phy) {
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
-NSplits <- function(x) UseMethod('NSplits')
+NSplits <- function(x) UseMethod("NSplits")
 
 #' @rdname NSplits
 #' @export
@@ -685,7 +685,7 @@ NSplits.character <- function(x) {
 #' @family tree properties
 #' @family Splits operations
 #' @export
-SplitsInBinaryTree <- function(tree) UseMethod('SplitsInBinaryTree')
+SplitsInBinaryTree <- function(tree) UseMethod("SplitsInBinaryTree")
 
 #' @rdname SplitsInBinaryTree
 #' @export
@@ -763,7 +763,7 @@ TreeIsRooted <- function(tree) {
 #' `phangorn::getRoot()`
 #'
 #' @export
-RootNode <- function(x) UseMethod('RootNode')
+RootNode <- function(x) UseMethod("RootNode")
 
 #' @export
 RootNode.phylo <- function(x) {
@@ -772,7 +772,7 @@ RootNode.phylo <- function(x) {
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
       return(as.integer(edge[nrow(edge), 1L]))
-    } else if (edgeOrder == 'preorder') {
+    } else if (edgeOrder == "preorder") {
       return(as.integer(edge[1L]))
     }
   }
@@ -793,7 +793,7 @@ RootNode.numeric <- function(x) {
   child <- x[, 2]
   ret <- unique(parent[!parent %fin% child])
   if (length(ret) != 1) {
-    warning("Root not unique: found ", paste(ret, collapse = ', '))
+    warning("Root not unique: found ", paste(ret, collapse = ", "))
   }
 
   # Return:

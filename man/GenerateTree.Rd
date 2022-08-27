@@ -53,7 +53,7 @@ generate trees with the specified shapes and leaf labels.
 \examples{
 RandomTree(LETTERS[1:10])
 
-data('Lobo')
+data("Lobo")
 RandomTree(Lobo.phy)
 
 plot(PectinateTree(LETTERS[1:10]))

@@ -22,7 +22,7 @@
 #' plot(tree)
 #' ape::nodelabels()
 #'
-#' plot(RootTree(tree, c('t6', 't7')))
+#' plot(RootTree(tree, c("t6", "t7")))
 #'
 #' plot(RootOnNode(tree, 12))
 #' plot(RootOnNode(tree, 2))
@@ -41,7 +41,7 @@ RootTree <- function(tree, outgroupTips) {
       length(outgroupTips) == 0) {
     return(tree)
   }
-  UseMethod('RootTree')
+  UseMethod("RootTree")
 }
 
 #' @export
@@ -56,7 +56,7 @@ RootTree.phylo <- function(tree, outgroupTips) {
     chosenTips <- match(outgroupTips, tipLabels)
     if (any(is.na(chosenTips))) {
       stop("Outgroup tips [",
-           paste(outgroupTips[is.na(chosenTips)], collapse = ', '),
+           paste(outgroupTips[is.na(chosenTips)], collapse = ", "),
            "] not found in tree's tip labels.")
     }
     outgroupTips <- chosenTips
@@ -190,7 +190,7 @@ RootTree.NULL <- function(tree, outgroupTips) NULL
 #'
 #' @export
 RootOnNode <- function(tree, node, resolveRoot = FALSE) {
-  UseMethod('RootOnNode', tree)
+  UseMethod("RootOnNode", tree)
 }
 
 #' @importFrom fastmatch %fin%
@@ -267,7 +267,7 @@ RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
     }
     tree[["edge"]] <- RenumberTree(ifelse(inverters, child, parent),
                                    ifelse(inverters, parent, child))
-    attr(tree, 'order') <- 'preorder'
+    attr(tree, "order") <- "preorder"
     tree
   } else {
     # Root position is already correct
@@ -299,7 +299,7 @@ RootOnNode.NULL <- function(tree, node, resolveRoot = FALSE) NULL
 #' @return `UnrootTree()` returns `tree`, in preorder,
 #' having collapsed the first child of the root node in each tree.
 #' @export
-UnrootTree <- function(tree) UseMethod('UnrootTree')
+UnrootTree <- function(tree) UseMethod("UnrootTree")
 
 #' @export
 UnrootTree.phylo <- function(tree) {
@@ -375,14 +375,14 @@ UnrootTree.NULL <- function(tree) NULL
 #' nodelabels()
 #' edgelabels()
 #' edgelabels(round(tree$edge.length, 2),
-#'            cex = 0.6, frame = 'n', adj = c(1, -1))
+#'            cex = 0.6, frame = "n", adj = c(1, -1))
 #'
 #' # Collapse by node number
 #' newTree <- CollapseNode(tree, c(12, 13))
 #' plot(newTree)
 #' nodelabels()
 #' edgelabels(round(newTree$edge.length, 2),
-#'            cex = 0.6, frame = 'n', adj = c(1, -1))
+#'            cex = 0.6, frame = "n", adj = c(1, -1))
 #'
 #' # Collapse by edge number
 #' newTree <- CollapseEdge(tree, c(2, 4))
@@ -393,7 +393,7 @@ UnrootTree.NULL <- function(tree) NULL
 #' @family tree manipulation
 #' @author  Martin R. Smith
 #' @export
-CollapseNode <- function(tree, nodes) UseMethod('CollapseNode')
+CollapseNode <- function(tree, nodes) UseMethod("CollapseNode")
 
 #' @rdname CollapseNode
 #' @importFrom fastmatch %fin%
@@ -409,7 +409,7 @@ CollapseNode.phylo <- function(tree, nodes) {
   root <- RootNode(edge)
   nTip <- NTip(tree)
   maxNode <- max(parent)
-  edgeBelow <- order(child, method = 'radix') # a little faster than 'auto'
+  edgeBelow <- order(child, method = "radix") # a little faster than "auto"
   tips <- seq_len(nTip)
   preRoot <- seq_len(root - 1L)
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
@@ -451,7 +451,7 @@ CollapseEdge <- function(tree, edges) {
   nodesToCollapse <- tree[["edge"]][edges, 2]
   if (any(nodesToCollapse < NTip(tree))) {
     stop("Cannot collapse external edges: ",
-         paste(edges[nodesToCollapse <= NTip(tree)], collapse = ', '))
+         paste(edges[nodesToCollapse <= NTip(tree)], collapse = ", "))
   }
   CollapseNode(tree, nodesToCollapse)
 }
@@ -463,7 +463,7 @@ CollapseEdge <- function(tree, edges) {
 #' with equal probability.
 #'
 #' @seealso Since ape v5.5, this functionality is available through
-#' [`ape::multi2di()`]; previous versions of 'ape' did not return topologies
+#' [`ape::multi2di()`]; previous versions of "ape" did not return topologies
 #' in equal frequencies.
 #'
 #' @return `MakeTreeBinary()` returns a rooted binary tree of class `phylo`,
@@ -478,7 +478,7 @@ CollapseEdge <- function(tree, edges) {
 #' @family tree manipulation
 #' @export
 MakeTreeBinary <- function(tree) {
-  UseMethod('MakeTreeBinary')
+  UseMethod("MakeTreeBinary")
 }
 
 #' @export
@@ -496,7 +496,7 @@ MakeTreeBinary.phylo <- function(tree) {
   for (i in seq_len(sum(polytomies))) {
     n <- polytomyN[i]
     nKids <- degree[i] - 1L
-    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the 'root'
+    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the "root"
     newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids))
 
     nNewNodes <- nKids - 2L
@@ -532,7 +532,7 @@ MakeTreeBinary.list <- function(tree) lapply(tree, MakeTreeBinary)
 
 #' @export
 MakeTreeBinary.multiPhylo <- function(tree) {
-  structure(MakeTreeBinary.list(tree), class = 'multiPhylo')
+  structure(MakeTreeBinary.list(tree), class = "multiPhylo")
 }
 
 

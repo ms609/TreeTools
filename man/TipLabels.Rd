@@ -84,7 +84,7 @@ where entries of a list of trees may pertain to different taxa.
 TipLabels(BalancedTree(letters[5:1]))
 TipLabels(5)
 
-data('Lobo')
+data("Lobo")
 head(TipLabels(Lobo.phy))
 
 AllTipLabels(c(BalancedTree(4), PectinateTree(8)))

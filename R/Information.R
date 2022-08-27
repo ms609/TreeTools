@@ -52,7 +52,7 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #' evaluate the degree of homoplasy within a dataset.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
-#' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
+#' a character.  Example: `c(0, 0, 0, 1, 1, 1, "?", "-")`.
 #'
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.
@@ -71,7 +71,7 @@ CharacterInformation <- function(tokens) {
   tokenCounts <- table(tokens)
   # Our character splits our taxa into groups with the same token
   # ?s and -s are best ignored
-  splits <- tokenCounts[!(names(tokenCounts) %fin% c('?', '-'))]
+  splits <- tokenCounts[!(names(tokenCounts) %fin% c("?", "-"))]
 
   # Return:
   MultiSplitInformation(splits)

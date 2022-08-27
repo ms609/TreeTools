@@ -4,7 +4,7 @@ nasty <- structure(list(edge = structure(
   .Dim = c(12, 2)),
   Nnode = 5L,
   tip.label = letters[1:8]),
-  class = 'phylo') # Danger: Do not plot!
+  class = "phylo") # Danger: Do not plot!
 
 test_that(".DescendantTips() recurses", {
   nTip <- 19L
@@ -69,12 +69,12 @@ test_that("RootOnNode() works", {
   expb6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3),
                                                1:2, 4:6, 10, 3, 8:9),
                                              .Dim = c(9L, 2L)),
-                            tip.label = paste0('t', 1:6), Nnode = 4L),
+                            tip.label = paste0("t", 1:6), Nnode = 4L),
                        class = "phylo", order = "preorder")
   expp6_8 <- structure(list(edge = structure(c(7, rep(7:10, each = 2), 1:2, 8,
                                                3, 9, 4, 10, 5:6),
                                              .Dim = c(9L, 2L)),
-                            tip.label = paste0('t', 1:6), Nnode = 4L),
+                            tip.label = paste0("t", 1:6), Nnode = 4L),
                        class = "phylo", order = "preorder")
 
   expect_true(all.equal(expb6_8, Preorder(RootOnNode(BalancedTree(6L), 8L))))
@@ -145,7 +145,7 @@ test_that("root_on_node() works", {
   for (i in 24:29) NodeTest(i)
   expect_error(root_on_node(edge, 30))
 
-  tree <- Preorder(root(BalancedTree(15), 't1', resolve.root = TRUE))
+  tree <- Preorder(root(BalancedTree(15), "t1", resolve.root = TRUE))
   edge <- tree$edge
   expect_error(root_on_node(edge, 0))
   for (i in 1:15) TipTest(i)
@@ -159,8 +159,8 @@ test_that("RootOnNode() supports lists of trees", {
   rootOn <- 8L
   expect_equal(structure(list(RootOnNode(as.phylo(1, 5), rootOn),
                               RootOnNode(as.phylo(2, 5), rootOn)),
-                         class = 'multiPhylo',
-                         tip.label = paste0('t', 1:5)),
+                         class = "multiPhylo",
+                         tip.label = paste0("t", 1:5)),
                RootOnNode(as.phylo(1:2, 5), rootOn))
 })
 
@@ -191,25 +191,25 @@ test_that("RootTree() works", {
   bal8 <- BalancedTree(8)
   bal15 <- BalancedTree(15)
   expect_error(RootTree(bal8, 1:8 %in% 0))
-  expect_error(RootTree(bal8, 'tip_not_there'))
+  expect_error(RootTree(bal8, "tip_not_there"))
   expect_equal(RootTree(bal8, 5:6), RootTree(bal8, 1:8 %in% 5:6))
   expect_equal(RootTree(bal8$edge, 5:6), RootTree(bal8, 5:6)$edge)
   expect_equal(RootTree(bal15$edge, 9:11), RootTree(bal15, 9:11)$edge)
-  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c('t5', 't6')))
+  expect_equal(RootTree(bal8, 5:6), RootTree(bal8, c("t5", "t6")))
   expect_true(all.equal(
-               as.phylo(5518, 8, paste0('t', rev(c(7,8,3,4,1,2,6,5)))),
-               RootTree(bal8, 't5')))
-  expect_equal(RootTree(bal8, 5), RootTree(bal8, 't5'))
+               as.phylo(5518, 8, paste0("t", rev(c(7,8,3,4,1,2,6,5)))),
+               RootTree(bal8, "t5")))
+  expect_equal(RootTree(bal8, 5), RootTree(bal8, "t5"))
   expect_equal(RootTree(bal8, 5)$edge, RootTree(bal8$edge, 5))
-  expect_true(all.equal(EnforceOutgroup(bal8, c('t5', 't6')),
-                        RootTree(bal8, c('t5', 't6'))))
-  expect_equal(RootTree(bal8, c('t1', 't2')), RootTree(bal8, c('t4', 't5')))
+  expect_true(all.equal(EnforceOutgroup(bal8, c("t5", "t6")),
+                        RootTree(bal8, c("t5", "t6"))))
+  expect_equal(RootTree(bal8, c("t1", "t2")), RootTree(bal8, c("t4", "t5")))
 
-  expect_equal(structure(list(RootTree(as.phylo(1, 5), 't5'),
-                              RootTree(as.phylo(2, 5), 't5')),
-                         class = 'multiPhylo',
-                         tip.label = paste0('t', 1:5)),
-               RootTree(as.phylo(1:2, 5), 't5'))
+  expect_equal(structure(list(RootTree(as.phylo(1, 5), "t5"),
+                              RootTree(as.phylo(2, 5), "t5")),
+                         class = "multiPhylo",
+                         tip.label = paste0("t", 1:5)),
+               RootTree(as.phylo(1:2, 5), "t5"))
 
   expect_true(all.equal(read.tree(text = "((b, c), (a, (d, e)));"),
                RootTree(read.tree(text = "(a, ((b, c), (d, e)));"), c(1, 4))))
@@ -232,7 +232,7 @@ test_that("RootTree() works", {
 test_that("RootTree() & UnrootTree() retain edge lengths", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
-  attr(bal7, 'order') <- NULL
+  attr(bal7, "order") <- NULL
   expect_equal(RootTree(bal7, 1:4),
                structure(bal7, order = "preorder"))
   expect_equal(RootTree(RootTree(bal7, 1), 1:4),
@@ -261,8 +261,8 @@ test_that("UnrootTree() works", {
 
   expList <- list(UnrootTree(as.phylo(1, 5)), UnrootTree(as.phylo(2, 5)))
   expect_equal(expList, UnrootTree(list(as.phylo(1, 5), as.phylo(2, 5))))
-  exp <- structure(expList, class = 'multiPhylo')
-  attr(exp, 'tip.label') <- paste0('t', 1:5)
+  exp <- structure(expList, class = "multiPhylo")
+  attr(exp, "tip.label") <- paste0("t", 1:5)
   expect_equal(exp, UnrootTree(as.phylo(1:2, 5)))
 })
 
@@ -314,8 +314,8 @@ test_that("Binarification is uniform", {
   expect_true(all.equal(bal7, MakeTreeBinary(bal7)))
   expect_true(all.equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7))))
   expect_true(all.equal(
-    structure(list(bal7, bal7), class = 'multiPhylo'),
-    MakeTreeBinary(structure(list(bal7, bal7), class = 'multiPhylo'))))
+    structure(list(bal7, bal7), class = "multiPhylo"),
+    MakeTreeBinary(structure(list(bal7, bal7), class = "multiPhylo"))))
 
 })
 
@@ -338,7 +338,7 @@ test_that("LeafLabelInterchange() works", {
     expect_false(any(abcd == LeafLabelInterchange(BalancedTree(abcd), 4)$tip))
 
     # Check lots of sizes
-    expect_equal(i, sum(paste0('t', 1:128) !=
+    expect_equal(i, sum(paste0("t", 1:128) !=
                         LeafLabelInterchange(BalancedTree(128), i)$tip))
   })
 })

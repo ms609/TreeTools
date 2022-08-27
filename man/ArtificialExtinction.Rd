@@ -80,7 +80,7 @@ A dataset with the same class as \code{dataset} in which entries that
 are ambiguous in \code{template} are made ambiguous in \code{subject}.
 }
 \description{
-Remove tokens that do not occur in a fossil 'template' taxon from a living
+Remove tokens that do not occur in a fossil "template" taxon from a living
 taxon, to simulate the process of fossilization in removing data from
 a phylogenetic dataset.
 }
@@ -94,10 +94,10 @@ dependent characters.
 \examples{
 set.seed(1)
 dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
-                    '0', '0', rep('?', 6)), nrow = 5,
-                    dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
-                                    paste('char', 1:8)), byrow = TRUE)
-artex <- ArtificialExtinction(dataset, c('A', 'C'), 'FOSSIL')
+                    "0", "0", rep("?", 6)), nrow = 5,
+                    dimnames = list(c(LETTERS[1:4], "FOSSIL"),
+                                    paste("char", 1:8)), byrow = TRUE)
+artex <- ArtificialExtinction(dataset, c("A", "C"), "FOSSIL")
 }
 \references{
 \insertAllCited{}
