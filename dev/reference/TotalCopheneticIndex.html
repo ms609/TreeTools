@@ -26,7 +26,7 @@ TCIContext() lists its possible values."><meta name="robots" content="noindex"><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.7.3.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.7.3.9003</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@ be obtained by calculation for the Uniform model.</p>
     <h2>Details</h2>
     <p>The Total Cophenetic Index is a measure of tree balance -- i.e. whether
 a (phylogenetic) tree comprises symmetric pairs of nodes, or has a pectinate
-'caterpillar' shape.
+"caterpillar" shape.
 The index has a greater resolution power than Sackin's and Colless' indices,
 and can be applied to trees that are not perfectly resolved.</p>
 <p>For a tree with <em>n</em> leaves, the Total Cophenetic Index can take values of
@@ -141,7 +141,7 @@ of evolution are given in Theorems 17 and 23.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code>cophen.index()</code> in the package
-'<a href="https://github.com/LuciaRotger/CollessLike" class="external-link">CollessLike</a>'
+<a href="https://github.com/LuciaRotger/CollessLike" class="external-link"><span class="pkg">CollessLike</span></a>
 provides an alternative implementation of this index and its predecessors.</p>
 <p>Other tree characterization functions: 
 <code><a href="CladisticInfo.html">CladisticInfo</a>()</code>,
@@ -169,10 +169,10 @@ provides an alternative implementation of this index and its predecessors.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Examples from Mir et al. (2013):</span></span></span>
-<span class="r-in"><span><span class="va">tree12</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'(1, (2, (3, (4, 5))));'</span><span class="op">)</span>  <span class="co">#Fig. 4, tree 12</span></span></span>
+<span class="r-in"><span><span class="va">tree12</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">"(1, (2, (3, (4, 5))));"</span><span class="op">)</span>  <span class="co">#Fig. 4, tree 12</span></span></span>
 <span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree12</span><span class="op">)</span> <span class="co"># 10</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
-<span class="r-in"><span><span class="va">tree8</span>  <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">'((1, 2, 3, 4), 5);'</span><span class="op">)</span>      <span class="co">#Fig. 4, tree 8</span></span></span>
+<span class="r-in"><span><span class="va">tree8</span>  <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text<span class="op">=</span><span class="st">"((1, 2, 3, 4), 5);"</span><span class="op">)</span>      <span class="co">#Fig. 4, tree 8</span></span></span>
 <span class="r-in"><span><span class="fu">TotalCopheneticIndex</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span>  <span class="co"># 6</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6</span>
 <span class="r-in"><span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">tree8</span><span class="op">)</span></span></span>
