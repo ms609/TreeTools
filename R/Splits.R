@@ -41,6 +41,8 @@ setClass("Splits", representation("raw"))
 #' print(moreSplits, details = TRUE)
 #' match(splits, moreSplits)
 #' moreSplits %in% splits
+#' 
+#' as.Splits("....**", letters[1:6])
 #'
 #' @family Splits operations
 #' @name Splits
@@ -244,6 +246,18 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
       class = "Splits"
     )
   }
+}
+
+#' @rdname Splits
+#' @export
+as.Splits.character <- function(x, tipLabels = NULL, ...) {
+  nTip <- nchar(x[1])
+  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip), nTip) > 0
+  structure(t(.apply(sp, 2, as.Splits.logical)),
+    nTip = nTip,
+    tip.label = tipLabels,
+    class = "Splits"
+  )
 }
 
 #' @rdname Splits

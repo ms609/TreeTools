@@ -196,6 +196,33 @@ test_that("as.Splits.logical()", {
   expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
 
+test_that("as.Splits.character()", {
+  a..f <- letters[1:6]
+  a..i <- letters[1:9]
+  . <- FALSE
+  X <- TRUE
+  
+  expect_splits_equal(
+    as.Splits("...***", a..f),
+    as.Splits(c(., ., ., X, X, X), a..f)
+  )
+  expect_splits_equal(
+    as.Splits(c("...***", "*.*.*."), a..f),
+    as.Splits(rbind(c(., ., ., X, X, X), c(X, ., X, ., X, .)), a..f)
+  )
+  expect_splits_equal(
+    as.Splits("****.....", a..i),
+    as.Splits(c(X, X, X, X, ., ., ., ., .), a..i)
+  )
+  expect_splits_equal(
+    as.Splits(c("****.....", ".*.*.*.*."), a..i),
+    as.Splits(rbind(c(X, X, X, X, ., ., ., ., .),
+                    c(., X, ., X, ., X, ., X, .)),
+              a..i)
+  )
+  
+})
+
 test_that("!.Splits() errors", {
   skip_if(Sys.getenv("USING_ASAN") != "")
   x <- as.Splits(as.phylo(8, 7))

@@ -9,6 +9,7 @@
 \alias{as.Splits.list}
 \alias{as.Splits.matrix}
 \alias{as.Splits.logical}
+\alias{as.Splits.character}
 \alias{as.logical.Splits}
 \title{Convert object to \code{Splits}}
 \usage{
@@ -25,6 +26,8 @@ as.Splits(x, tipLabels = NULL, ...)
 \method{as.Splits}{matrix}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
+
+\method{as.Splits}{character}(x, tipLabels = NULL, ...)
 
 \method{as.logical}{Splits}(x, tipLabels = attr(x, "tip.label"), ...)
 }
@@ -73,6 +76,8 @@ moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 print(moreSplits, details = TRUE)
 match(splits, moreSplits)
 moreSplits \%in\% splits
+
+as.Splits("....**", letters[1:6])
 
 }
 \seealso{
