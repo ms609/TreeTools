@@ -7,6 +7,8 @@
 
 - `as.Splits()` support character vectors in the form "...***".
 
+- Set names of splits object with `names(splits) <- ...`.
+
 - `SpectrumLegend()` gains `title` parameter and more styling options.
 
 

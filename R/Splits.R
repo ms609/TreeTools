@@ -252,6 +252,16 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
 #' @export
 as.Splits.character <- function(x, tipLabels = NULL, ...) {
   nTip <- nchar(x[1])
+  
+  if (is.null(tipLabels)) {
+    tipLabels <- TipLabels(x)
+    if (is.null(tipLabels)) {
+      tipLabels <- paste0("t", seq_len(nTip))
+    }
+  } else {
+    tipLabels <- TipLabels(tipLabels)
+  }
+  
   sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip), nTip) > 0
   structure(t(.apply(sp, 2, as.Splits.logical)),
     nTip = nTip,
@@ -331,6 +341,11 @@ names.Splits <- rownames
 
 #' @family Splits operations
 #' @export
+`names<-.Splits` <- `rownames<-`
+
+
+#' @family Splits operations
+#' @export
 as.character.Splits <- function(x, ...) {
   tipLabels <- attr(x, "tip.label")
   nTip <- attr(x, "nTip")
@@ -350,10 +365,6 @@ as.phylo.Splits <- function(x, ...) {
     tip.label = TipLabels(x)
   )
 }
-
-#' @family Splits operations
-#' @export
-names.Splits <- function(x) rownames(x)
 
 #' @family Splits operations
 #' @export
