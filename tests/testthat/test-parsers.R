@@ -117,6 +117,21 @@ test_that("ReadTntTree() reads bare tree", {
                  "does not link to taxon names")
 })
 
+test_that("ReadTntTree() follows TNT node numbering conventions", {
+  a..e <- paste("taxon", letters[1:5], sep = "_")
+  expect_equal(
+    ReadTntTree("extdata/output/named.tre"),
+    ReadTntTree("extdata/output/named.tre", tipLabels = a..e)
+  )
+  expect_equal(ReadTntTree("extdata/output/named.tre")$edge,
+               Postorder(ReadTntTree("extdata/output/named.tre"))$edge)
+               
+  expect_equal(
+    Postorder(ReadTntTree("extdata/output/named.tre", tipLabels = rev(a..e)))$edge,
+    cbind(rep(c(7, 8, 9, 6), each = 2), c(2, 1, 7, 3, 8, 4, 9, 5))
+  )
+})
+
 test_that("NexusTokens() fails gracefully", {
   expect_error(NexusTokens("0123012301230123", integer(0)))
   expect_equal("Character number must be between 1 and 16.",

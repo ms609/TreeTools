@@ -35,6 +35,8 @@ in the parenthetical format output by TNT.}
 \value{
 \code{ReadTntTree()} returns a tree of class \code{phylo}, corresponding
 to the tree in \code{filepath}, or NULL if no trees are found.
+Internal nodes are numbered by \href{https://stackoverflow.com/a/54296100/3438001}{TNT's rules}, which numbers the root node as \code{nTip + 1}, then numbers
+the remaining nodes in postorder, starting with the first-numbered leaf.
 }
 \description{
 Read a tree from TNT's parenthetical output.

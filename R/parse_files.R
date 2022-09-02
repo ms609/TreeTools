@@ -72,7 +72,7 @@ ApeTime <- function(filepath, format = "double") {
 #' exists in the expected location -- if it does not,
 #' either use the `relativePath` argument to point to its new location, or
 #' specify `tipLabels` to manually specify the tip labels.
-#'
+#' 
 #' `TntText2Tree()` converts text representation of a tree in TNT to an
 #'  object of class `phylo`.
 #'
@@ -91,6 +91,8 @@ ApeTime <- function(filepath, format = "double") {
 #'
 #' @return `ReadTntTree()` returns a tree of class \code{phylo}, corresponding
 #' to the tree in `filepath`, or NULL if no trees are found.
+#' Internal nodes are numbered by [TNT's rules](https://stackoverflow.com/a/54296100/3438001), which numbers the root node as `nTip + 1`, then numbers
+#' the remaining nodes in postorder, starting with the first-numbered leaf.
 #'
 #' @examples
 #' # In the examples below, TNT has read a matrix from
@@ -208,6 +210,35 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
       tree
     })
   }
+  
+  if (is.null(tipLabels)) {
+    tipLabels <- trees[[1]][["tip.label"]]
+  }
+  trees <- Postorder(RenumberTips(trees, tipLabels))
+  # Use TNT node numbering
+  # TODO this'd be faster in C++
+  trees <- lapply(trees, function (tr) {
+    nTip <- NTip(tr)
+    root <- nTip + 1
+    edge <- tr$edge
+    parent <- edge[, 1]
+    child <- edge[, 2]
+    renum <- child > root
+    n <- root + 1
+    for (i in seq_len(nTip)) {
+      ptr <- i
+      while (any(child == ptr) && parent[child == ptr] > root) {
+        old <- parent[child == ptr]
+        parent[parent == old] <- -n
+        child[child == old] <- -n
+        n <- n + 1
+        ptr <- old
+      }
+    }
+    tr$edge[] <- abs(c(parent, child))
+    tr
+  })
+  
 
   # Return:
   if (length(trees) == 1) {

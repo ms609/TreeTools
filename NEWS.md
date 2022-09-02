@@ -1,4 +1,4 @@
-# TreeTools 1.7.3.9003 (development) #
+# TreeTools 1.7.3.9004 (development) #
 
 - Improve `DropTip()` speed when branch lengths are present.
 
@@ -10,6 +10,8 @@
 - Set names of splits object with `names(splits) <- ...`.
 
 - `SpectrumLegend()` gains `title` parameter and more styling options.
+
+- `ReadTntTree()` follows TNT node numbering conventions.
 
 
 # TreeTools 1.7.3 #
