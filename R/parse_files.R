@@ -89,10 +89,9 @@ ApeTime <- function(filepath, format = "double") {
 #' taxon names will be loaded from the data file linked in the first line of the
 #'  `.tre` file specified in `filepath`.
 #'
-#' @return `ReadTntTree()` returns a tree of class \code{phylo}, corresponding
-#' to the tree in `filepath`, or NULL if no trees are found.
-#' Internal nodes are numbered by [TNT's rules](https://stackoverflow.com/a/54296100/3438001), which numbers the root node as `nTip + 1`, then numbers
-#' the remaining nodes in postorder, starting with the first-numbered leaf.
+#' @return `ReadTntTree()` returns a tree of class \code{phylo} in 
+#' \link{TNTOrder}{\code{tnt} order},
+#' corresponding to the tree in `filepath`, or NULL if no trees are found.
 #'
 #' @examples
 #' # In the examples below, TNT has read a matrix from
@@ -209,36 +208,11 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
       tree$tip.label <- tipLabels[as.integer(tree$tip.label) + 1L]
       tree
     })
+  } else if (length(tipLabels)) {
+    trees <- RenumberTips(trees, tipLabels)
   }
   
-  if (is.null(tipLabels)) {
-    tipLabels <- trees[[1]][["tip.label"]]
-  }
-  trees <- Postorder(RenumberTips(trees, tipLabels))
-  # Use TNT node numbering
-  # TODO this'd be faster in C++
-  trees <- lapply(trees, function (tr) {
-    nTip <- NTip(tr)
-    root <- nTip + 1
-    edge <- tr$edge
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    renum <- child > root
-    n <- root + 1
-    for (i in seq_len(nTip)) {
-      ptr <- i
-      while (any(child == ptr) && parent[child == ptr] > root) {
-        old <- parent[child == ptr]
-        parent[parent == old] <- -n
-        child[child == old] <- -n
-        n <- n + 1
-        ptr <- old
-      }
-    }
-    tr$edge[] <- abs(c(parent, child))
-    tr
-  })
-  
+  trees <- TntOrder(trees)
 
   # Return:
   if (length(trees) == 1) {

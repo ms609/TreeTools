@@ -497,6 +497,80 @@ Preorder.list <- function(tree) {
 #' @export
 Preorder.NULL <- function(tree) NULL
 
+#' @describeIn Reorder Reorder tree in postorder, numbering internal nodes
+#' according to [TNT's rules](https://stackoverflow.com/a/54296100/3438001),
+#' which number the root node as `nTip + 1`, then the remaining nodes in
+#' the sequence encountered when traversing the tree in postorder, starting from
+#' each tip in sequence.
+#' @export
+TntOrder <- function(tree) UseMethod("TntOrder")
+
+#' @rdname Reorder
+#' @export
+TNTOrder <- TntOrder
+
+#' @rdname Reorder
+#' @export
+TntOrder.phylo <- function(tree) {
+  startOrder <- attr(tree, "order")
+  if (length(startOrder) && startOrder == "tnt") {
+    # length(x) is twice as fast as !is.null(x)
+    tree
+  } else {
+    # TODO this'd be faster in C++
+    tree <- Postorder(tree)
+    
+    nTip <- NTip(tree)
+    root <- nTip + 1
+    edge <- tree$edge
+    parent <- edge[, 1]
+    child <- edge[, 2]
+    renum <- child > root
+    n <- root + 1
+    for (i in seq_len(nTip)) {
+      ptr <- i
+      while (any(child == ptr) && parent[child == ptr] > root) {
+        old <- parent[child == ptr]
+        parent[parent == old] <- -n
+        child[child == old] <- -n
+        n <- n + 1
+        ptr <- old
+      }
+    }
+    tree$edge[] <- abs(c(parent, child))
+    attr(tree, "order") <- "tnt"
+    attr(tree, "suborder") <- NULL
+    
+    # Return:
+    tree
+  }
+}
+
+#' @rdname Reorder
+#' @export
+TntOrder.numeric <- function(tree) {
+  stop(RenumberTree(tree[, 1], tree[, 2]))
+}
+
+#' @rdname Reorder
+#' @export
+TntOrder.multiPhylo <- function(tree) {
+  tree[] <- lapply(Postorder(tree), TntOrder)
+  attr(tree, "order") <- "tnt"
+  tree
+}
+
+#' @rdname Reorder
+#' @export
+TntOrder.list <- function(tree) {
+  lapply(tree, TntOrder)
+}
+
+#' @rdname Reorder
+#' @export
+TntOrder.NULL <- function(tree) NULL
+
+
 
 #' Renumber a tree's tips
 #'

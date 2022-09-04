@@ -119,15 +119,18 @@ test_that("ReadTntTree() reads bare tree", {
 
 test_that("ReadTntTree() follows TNT node numbering conventions", {
   a..e <- paste("taxon", letters[1:5], sep = "_")
+  namedTree <- system.file("extdata/output/named.tre", package = "TreeTools")
   expect_equal(
-    ReadTntTree("extdata/output/named.tre"),
-    ReadTntTree("extdata/output/named.tre", tipLabels = a..e)
+    ReadTntTree(namedTree),
+    ReadTntTree(namedTree, tipLabels = a..e)
   )
-  expect_equal(ReadTntTree("extdata/output/named.tre")$edge,
-               Postorder(ReadTntTree("extdata/output/named.tre"))$edge)
+  expect_equal(ReadTntTree(namedTree)$edge,
+               Postorder(ReadTntTree(namedTree))$edge)
                
   expect_equal(
-    Postorder(ReadTntTree("extdata/output/named.tre", tipLabels = rev(a..e)))$edge,
+    # NB this is not a perfect test, as the order in which edges are listed
+    # is not stipulated by the ReadTntTree documentation.
+    ReadTntTree(namedTree, tipLabels = rev(a..e))$edge,
     cbind(rep(c(7, 8, 9, 6), each = 2), c(2, 1, 7, 3, 8, 4, 9, 5))
   )
 })

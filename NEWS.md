@@ -13,6 +13,8 @@
 
 - `ReadTntTree()` follows TNT node numbering conventions.
 
+- `TntOrder()` renumbers a tree's nodes to match TNT's convention.
+
 
 # TreeTools 1.7.3 #
 
