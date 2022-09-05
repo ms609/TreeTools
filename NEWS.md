@@ -1,19 +1,19 @@
 # TreeTools 1.7.3.9004 (development) #
 
-- Improve `DropTip()` speed when branch lengths are present.
+- `TntOrder()` renumbers a tree's nodes to match TNT's convention.
+
+- `ReadTntTree()` reads tree tags and follows TNT node numbering conventions.
 
 - Support > 32767 trees in `Consensus()` 
   ([#127](https://github.com/ms609/TreeTools/issues/127)).
 
-- `as.Splits()` support character vectors in the form "...***".
-
 - Set names of splits object with `names(splits) <- ...`.
+
+- `as.Splits()` support character vectors in the form "...***".
 
 - `SpectrumLegend()` gains `title` parameter and more styling options.
 
-- `ReadTntTree()` follows TNT node numbering conventions.
-
-- `TntOrder()` renumbers a tree's nodes to match TNT's convention.
+- `DropTip()` speed improved when branch lengths are present.
 
 
 # TreeTools 1.7.3 #
