@@ -68,7 +68,10 @@ test_that("ReadTntTree() NULL return", {
 
 test_that("TNT trees parsed correctly", {
   expect_warning(
-    trees <- ReadTntTree(TestFile("tnt-tree.tre"), relativePath = TestFile()),
+    trees <- ReadTntTree(
+      filepath = TestFile("tnt-tree.tre"),
+      relativePath = TestFile()
+    ),
     "Multiple tree blocks")
   expect_equal(length(trees), 3)
   expect_equal(trees[[2]], trees[[3]])
@@ -95,8 +98,10 @@ test_that("TNT trees parsed correctly", {
 
   tam <- ReadTntTree(TestFile("tnt-trees-and-matrix.tnt"))
   expect_equal(length(tam), 4L)
-  expect_equal(ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));"), tam[[1]])
-  expect_equal(ape::read.tree(text = "(a, (b, (c, (e, d, f))));"), tam[[4]])
+  expect_equal(tam[[1]],
+               TNTOrder(ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));")))
+  expect_equal(tam[[4]],
+               TntOrder(ape::read.tree(text = "(a, (b, (c, (e, d, f))));")))
 
 
   oldWD <- getwd()
