@@ -51,6 +51,14 @@ test_that("TNT trees parsed correctly", {
     "Expected `ttags \\*N`; applying tags to first tree"
   )
   expect_equal(length(trees), 3)
+  expect_equal(trees[[3]]$tip.label[2], "Novocrania")
+  expect_equal(trees[[3]][["node.label"]][37:41 - NTip(trees[[3]])],
+               c("Nov+1", "Nov+2", "Nov+3",
+                 "Nov +4", # Concatenated from Nov & +4
+                 "Nov+5"))
+  expect_equal(trees[[3]][["node.label"]][69 - NTip(trees[[3]])], "Nis+1")
+  trees[[2]][["node.label"]] <- NULL
+  trees[[3]][["node.label"]] <- NULL
   expect_equal(trees[[2]], trees[[3]])
   expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)
   
@@ -66,7 +74,9 @@ test_that("TNT trees parsed correctly", {
                  "Salanygolina", "Mummpikia_nuda", "Alisina", "Coolinia_pecten",
                  "Antigonambonites_planus", "Kutorgina_chengjiangensis",
                  "Nisusia_sulcata", "Glyptoria", "Orthis", "Terebratulina")
-  fromLabels <- ReadTntTree(TestFile("tnt-tree.tre"), tipLabels = tipLabels)
+  fromLabels <- expect_warning(
+    ReadTntTree(TestFile("tnt-tree.tre"), tipLabels = tipLabels),
+    "Expected `ttags .N`;")
   expect_identical(trees, fromLabels)
   
   namedLabels <- ReadTntTree(TestFile("tnt-namedtree.tre"))[[1]]$tip.label

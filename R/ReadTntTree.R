@@ -102,6 +102,12 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     paste(
       gsub("tread\\s+('[^']*')*\\s*", "", commands[tread]),
       collapse = "*")))
+  nRead <- unname(vapply(
+    commands[tread],
+    function(cmd) length(
+      c(TntText2Tree(gsub("tread\\s+('[^']*')*\\s*", "", cmd)))
+    ), double(1)
+  ))
   
   if (!any(grepl("[A-z]", trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
@@ -157,7 +163,9 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
       tree$tip.label <- tipLabels[as.integer(tree$tip.label) + 1L]
       tree
     })
-  } else if (length(tipLabels)) {
+  }
+  
+  if (length(tipLabels)) {
     trees <- RenumberTips(trees, tipLabels)
   }
   
@@ -189,7 +197,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     if (tagIsTarget[i]) {
       target <- gsub(tagTarget, "\\1", tagLine, perl = TRUE)
       targetTree <- if (target == "!") {
-        which.max(c(tread, Inf) > i) - 1L
+        cumsum(nRead)[which.max(c(tread, Inf) > i) - 1L]
       } else {
         as.numeric(target)
       }
@@ -202,10 +210,16 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
         trees[[targetTree]][["node.label"]] <-
           character(trees[[targetTree]][["Nnode"]])
       }
-      tagWhere <- as.numeric(gsub(tagWrite, "\\1", tagLine, perl = TRUE))
+      node <- as.numeric(gsub(tagWrite, "\\1", tagLine, perl = TRUE)) - 
+        NTip(trees[[targetTree]])
       tagText <- gsub(tagWrite, "\\2", tagLine, perl = TRUE)
-      trees[[targetTree]][["node.label"]][
-        tagWhere - NTip(trees[[targetTree]])] <- tagText
+      
+      trees[[targetTree]][["node.label"]][node] <- 
+        if (trees[[targetTree]][["node.label"]][node] == "") {
+          tagText
+        } else {
+          paste(trees[[targetTree]][["node.label"]][node], tagText)
+        }
     } else if (tagIsClear[i]) {
       trees[[targetTree]][["node.label"]] <- NULL
     } else {
