@@ -49,22 +49,18 @@ ApeTime <- function(filepath, format = "double") {
 #' Read a tree from TNT's parenthetical output.
 #'
 #' [TNT](http://www.lillo.org.ar/phylogeny/tnt/) is software for parsimony
-#' analysis.  Whilst its implementation of tree search is extremely rapid,
-#' analysis of results in TNT is made difficult by its esoteric and scantly
-#' documented scripting language.
-#'
-#' `ReadTntTree()` aims to aid the user by facilitating the import of trees
-#' generated in TNT into R for further analysis.
-#'
-#' The function depends on tree files being saved by TNT in parenthetical
-#' notation, using the TNT command `tsav*`.
+#' analysis.
+#' `ReadTntTree()` imports trees generated in TNT into R, including node labels
+#' written with the `ttags` command.
+#' Tree files must have been saved by TNT in parenthetical notation, using the
+#' TNT command `tsave *`.
 #' Trees are easiest to load into R if taxa have been saved using their names
-#' (TNT command `taxname=`).  In this case, the TNT `.tre` file
+#' (TNT command `taxname =`).  In this case, the TNT `.tre` file
 #' contains tip labels and can be parsed directly.  The downside is that the
 #' uncompressed `.tre` files will have a larger file size.
 #'
 #' `ReadTntTree()` can also read `.tre` files in which taxa have been saved
-#' using their numbers (`taxname-`).  Such files contain a hard-coded link to
+#' using their numbers (`taxname -`).  Such files contain a hard-coded link to
 #' the matrix file that was used to generate the trees, in the first line of the
 #' `.tre` file.  This poses problems for portability: if the matrix file is
 #' moved, or the `.tre` file is accessed on another computer, the taxon names
@@ -89,7 +85,7 @@ ApeTime <- function(filepath, format = "double") {
 #' taxon names will be loaded from the data file linked in the first line of the
 #'  `.tre` file specified in `filepath`.
 #'
-#' @return `ReadTntTree()` returns a tree of class \code{phylo} in 
+#' @return `ReadTntTree()` returns a tree of class `phylo` in 
 #' \link{TNTOrder}{\code{tnt} order},
 #' corresponding to the tree in `filepath`, or NULL if no trees are found.
 #'
