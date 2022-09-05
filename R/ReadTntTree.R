@@ -210,15 +210,15 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
         trees[[targetTree]][["node.label"]] <-
           character(trees[[targetTree]][["Nnode"]])
       }
-      targetTip <- NTip(trees[[targetTree]])
+      targetTips <- NTip(trees[[targetTree]])
       node <- sum(
         as.numeric(gsub(tagWrite, "\\1", tagLine, perl = TRUE)),
-        - targetTip, # Tip labels stored separately
+        - targetTips, # Tip labels stored separately
         + 1 # TNT counts from zero
       )
       tagText <- gsub(tagWrite, "\\2", tagLine, perl = TRUE)
       if (node < 1) {
-        message("Ignoring tag on leaf ", node + targetTip,
+        message("Ignoring tag on leaf ", node + targetTips,
                 ": \"", tagText, "\"")
       } else {
         trees[[targetTree]][["node.label"]][node] <- 
