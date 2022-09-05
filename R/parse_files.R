@@ -146,7 +146,7 @@ ApeTime <- function(filepath, format = "double") {
 ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
                          tipLabels = NULL) {
   commands <- .TntCommands(filepath)
-  tread <- grep("^tread\\b", commands, perl = TRUE)
+  tread <- grep("^trea?d?\\b", commands, perl = TRUE)
   if (length(tread) < 1) return(NULL)
   
   trees <- c(TntText2Tree(
