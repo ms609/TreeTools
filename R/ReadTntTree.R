@@ -165,6 +165,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   
   # Assign Tree Tags
   ttags <- grep("^tta?g?s?\\b", commands, perl = TRUE)
+  tagLines <- commands[ttags]
   nTags <- length(ttags)
   
   tagTarget <- "^tta?g?s?\\s*\\*\\s*([\\d!])+$"
@@ -174,7 +175,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   
   tagWrite <- "^tta?g?s?\\s*\\+\\s*(\\d+)\\s+(.+)$"
   writeTags <- grep(tagWrite, tagLines, perl = TRUE)
-  tagIsWrite <- as.logical(tabulate(writeTags, nNags))
+  tagIsWrite <- as.logical(tabulate(writeTags, nTags))
   
   tagClear <- "^tta?g?s?\\s*\\-$"
   clearTags <- grep(tagClear, tagLines, perl = TRUE)
