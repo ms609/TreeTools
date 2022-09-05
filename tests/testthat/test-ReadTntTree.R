@@ -42,13 +42,14 @@ test_that("ReadTntTree() NULL return", {
 })
 
 test_that("TNT trees parsed correctly", {
-  expect_warning(expect_warning(
+  expect_message(expect_warning(expect_warning(
     trees <- ReadTntTree(
       filepath = TestFile("tnt-tree.tre"),
       relativePath = TestFile()
     ),
     "Multiple tree blocks"),
-    "Expected `ttags \\*N`; applying tags to first tree"
+    "Expected `ttags \\*N`; applying tags to first tree"),
+    "Ignoring tag on leaf 1: .Origin."
   )
   expect_equal(length(trees), 3)
   expect_equal(trees[[3]]$tip.label[2], "Novocrania")
@@ -71,7 +72,8 @@ test_that("TNT trees parsed correctly", {
                  "Antigonambonites_planus", "Kutorgina_chengjiangensis",
                  "Nisusia_sulcata", "Glyptoria", "Orthis", "Terebratulina")
   expect_warning(
-    fromLabels <- ReadTntTree(TestFile("tnt-tree.tre"), tipLabels = tipLabels),
+    fromLabels <- suppressMessages(
+      ReadTntTree(TestFile("tnt-tree.tre"), tipLabels = tipLabels)),
     "Expected `ttags .N`;"
   )
   expect_identical(trees, fromLabels)
