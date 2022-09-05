@@ -82,7 +82,6 @@ test_that("TNT trees parsed correctly", {
   expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)
   
   
-  
   namedLabels <- ReadTntTree(TestFile("tnt-namedtree.tre"))[[1]]$tip.label
   expect_equal("Flustra_sp.", namedLabels[1])
   expect_equal(74L, length(namedLabels))
@@ -90,9 +89,14 @@ test_that("TNT trees parsed correctly", {
   tam <- ReadTntTree(TestFile("tnt-trees-and-matrix.tnt"))
   expect_equal(length(tam), 4L)
   expect_equal(tam[[1]],
-               TNTOrder(ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));")))
+               TNTOrder(
+                 RenumberTips(
+                   ape::read.tree(text = "(a, (b, (c, (f, (d, e )))));"),
+                   letters[1:6])
+                 )
+               )
   expect_equal(tam[[4]],
-               TntOrder(ape::read.tree(text = "(a, (b, (c, (e, d, f))));")))
+               TntOrder(ape::read.tree(text = "(a, (b, (c, (d, e, f))));")))
   
   
   oldWD <- getwd()
