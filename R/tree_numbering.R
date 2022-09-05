@@ -521,23 +521,26 @@ TntOrder.phylo <- function(tree) {
     tree <- Postorder(tree)
     
     nTip <- NTip(tree)
+    nNode <- tree[["Nnode"]]
     root <- nTip + 1
-    edge <- tree$edge
+    edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
+    parentOf <- numeric(nTip + nNode)
+    parentOf[child] <- parent
+    newNo <- c(seq_len(nTip), numeric(nNode))
     renum <- child > root
     n <- root + 1
     for (i in seq_len(nTip)) {
       ptr <- i
-      while (any(child == ptr) && parent[child == ptr] > root) {
-        old <- parent[child == ptr]
-        parent[parent == old] <- -n
-        child[child == old] <- -n
+      while (parentOf[ptr] > root && !newNo[parentOf[ptr]]) {
+        newNo[parentOf[ptr]] <- n
         n <- n + 1
-        ptr <- old
+        ptr <- parentOf[ptr]
       }
     }
-    tree$edge[] <- abs(c(parent, child))
+    stopifnot(all(newNo > 0)) # TODO remove once fully tested
+    tree$edge[] <- newNo[edge]
     attr(tree, "order") <- "tnt"
     attr(tree, "suborder") <- NULL
     
