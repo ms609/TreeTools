@@ -148,12 +148,11 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   commands <- .TntCommands(filepath)
   tread <- grep("^trea?d?\\b", commands, perl = TRUE)
   if (length(tread) < 1) return(NULL)
-  
   trees <- c(TntText2Tree(
     paste(
       gsub("tread\\s+('[^']*')*\\s*", "", commands[tread]),
       collapse = "*")))
-
+  
   if (!any(grepl("[A-z]", trees[[1]]$tip.label))) {
     if (is.null(tipLabels)) {
       tipLabels <- rownames(ReadTntCharacters(filepath))
@@ -213,7 +212,57 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   }
   
   trees <- TntOrder(trees)
-
+  
+  # Assign Tree Tags
+  ttags <- grep("^tta?g?s?\\b", commands, perl = TRUE)
+  nTags <- length(ttags)
+  
+  tagTarget <- "^tta?g?s?\\s*\\*\\s*([\\d!])+$"
+  targetTags <- grep(tagTarget, tagLines, perl = TRUE)
+  tagIsTarget <- as.logical(tabulate(targetTags, nTags))
+  targetTree <- NA
+  
+  tagWrite <- "^tta?g?s?\\s*\\+\\s*(\\d+)\\s+(.+)$"
+  writeTags <- grep(tagWrite, tagLines, perl = TRUE)
+  tagIsWrite <- as.logical(tabulate(writeTags, nNags))
+  
+  tagClear <- "^tta?g?s?\\s*\\-$"
+  clearTags <- grep(tagClear, tagLines, perl = TRUE)
+  tagIsClear <- as.logical(tabulate(clearTags, nTags))
+  
+  for (tag in ttags) {
+    # A loop is inefficient, but matches TNT's command-driven storage structure
+    # and thus may be more robust to input format -- and 
+    # will make code maintenance and improvement easier in future.
+    tagLine <- commands[tag]
+    if (tagIsTarget[tag]) {
+      target <- gsub(tagWhat, "\\1", tagLine)
+      targetTree <- if (target == "!") {
+        which.max(c(tread, Inf) > tag) - 1L
+      } else {
+        as.numeric(target)
+      }
+    } else if (tagIsWrite[tag]) {
+      if (is.na(targetTree)) {
+        warning("Expected `ttags *N`; applying tags to first tree");
+        targetTree <- 1L
+      }
+      if (!length(trees[[targetTree]][["node.label"]])) {
+        trees[[targetTree]][["node.label"]] <-
+          character(trees[[targetTree]][["Nnode"]])
+      }
+      tagWhere <- as.numeric(gsub(tagWrite, "\\1", tagLine, perl = TRUE))
+      tagText <- gsub(tagText, "\\2", tagLine, perl = TRUE)
+      trees[[targetTree]][["node.label"]][
+        tagWhere - NTip(trees[[targetTree]])] <- tagText
+    } else if (tagIsClear[tag]) {
+      trees[[targetTree]][["node.label"]] <- NULL
+    } else {
+      warning("ttags command not yet supported: ", tagLine,
+              ". Contact TreeTools maintainer.")
+    }
+  }
+  
   # Return:
   if (length(trees) == 1) {
     trees[[1]]
