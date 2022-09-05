@@ -528,7 +528,7 @@ TntOrder.phylo <- function(tree) {
     child <- edge[, 2]
     parentOf <- numeric(nTip + nNode)
     parentOf[child] <- parent
-    newNo <- c(seq_len(nTip), numeric(nNode))
+    newNo <- c(seq_len(root), numeric(nNode - 1L))
     renum <- child > root
     n <- root + 1
     for (i in seq_len(nTip)) {
