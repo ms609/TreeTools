@@ -42,12 +42,14 @@ test_that("ReadTntTree() NULL return", {
 })
 
 test_that("TNT trees parsed correctly", {
-  expect_warning(
+  expect_warning(expect_warning(
     trees <- ReadTntTree(
       filepath = TestFile("tnt-tree.tre"),
       relativePath = TestFile()
     ),
-    "Multiple tree blocks")
+    "Multiple tree blocks"),
+    "Expected `ttags \\*N`; applying tags to first tree"
+  )
   expect_equal(length(trees), 3)
   expect_equal(trees[[2]], trees[[3]])
   expect_equal(ConsensusWithout(trees, "Paterimitra")$Nnode, 32)

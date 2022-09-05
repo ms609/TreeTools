@@ -168,7 +168,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   tagLines <- commands[ttags]
   nTags <- length(ttags)
   
-  tagTarget <- "^tta?g?s?\\s*\\*\\s*([\\d!])+$"
+  tagTarget <- "^tta?g?s?\\s*\\*\\s*([\\d!]+)$"
   targetTags <- grep(tagTarget, tagLines, perl = TRUE)
   tagIsTarget <- as.logical(tabulate(targetTags, nTags))
   targetTree <- NA
@@ -181,19 +181,19 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
   clearTags <- grep(tagClear, tagLines, perl = TRUE)
   tagIsClear <- as.logical(tabulate(clearTags, nTags))
   
-  for (tag in ttags) {
+  for (i in seq_along(ttags)) {
     # A loop is inefficient, but matches TNT's command-driven storage structure
     # and thus may be more robust to input format -- and 
     # will make code maintenance and improvement easier in future.
-    tagLine <- commands[tag]
-    if (tagIsTarget[tag]) {
-      target <- gsub(tagWhat, "\\1", tagLine)
+    tagLine <- tagLines[i]
+    if (tagIsTarget[i]) {
+      target <- gsub(tagTarget, "\\1", tagLine, perl = TRUE)
       targetTree <- if (target == "!") {
-        which.max(c(tread, Inf) > tag) - 1L
+        which.max(c(tread, Inf) > i) - 1L
       } else {
         as.numeric(target)
       }
-    } else if (tagIsWrite[tag]) {
+    } else if (tagIsWrite[i]) {
       if (is.na(targetTree)) {
         warning("Expected `ttags *N`; applying tags to first tree");
         targetTree <- 1L
@@ -203,10 +203,10 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
           character(trees[[targetTree]][["Nnode"]])
       }
       tagWhere <- as.numeric(gsub(tagWrite, "\\1", tagLine, perl = TRUE))
-      tagText <- gsub(tagText, "\\2", tagLine, perl = TRUE)
+      tagText <- gsub(tagWrite, "\\2", tagLine, perl = TRUE)
       trees[[targetTree]][["node.label"]][
         tagWhere - NTip(trees[[targetTree]])] <- tagText
-    } else if (tagIsClear[tag]) {
+    } else if (tagIsClear[i]) {
       trees[[targetTree]][["node.label"]] <- NULL
     } else {
       warning("ttags command not yet supported: ", tagLine,
