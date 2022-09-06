@@ -197,7 +197,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     if (tagIsTarget[i]) {
       target <- gsub(tagTarget, "\\1", tagLine, perl = TRUE)
       targetTree <- if (target == "!") {
-        cumsum(nRead)[which.max(c(tread, Inf) > i) - 1L]
+        cumsum(nRead)[which.max(c(tread, Inf) > ttags[i]) - 1L]
       } else {
         as.numeric(target)
       }
