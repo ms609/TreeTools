@@ -1,4 +1,4 @@
-# TreeTools 1.7.3.9004 (development) #
+# TreeTools 1.7.3.9005 (development) #
 
 - `TntOrder()` renumbers a tree's nodes to match TNT's convention.
 
@@ -10,6 +10,8 @@
 - Set names of splits object with `names(splits) <- ...`.
 
 - `as.Splits()` support character vectors in the form "...***".
+
+- `head()` and `tail()` methods for Splits objects.
 
 - `SpectrumLegend()` gains `title` parameter and more styling options.
 

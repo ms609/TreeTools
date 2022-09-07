@@ -320,6 +320,31 @@ print.Splits <- function(x, details = FALSE, ...) {
   }
 }
 
+#' @family Splits operations
+#' @export
+head.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[seq_len(n)]]
+  } else {
+    x
+  }
+}
+
+#' @family Splits operations
+#' @export
+tail.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[length(x) + 1L - rev(seq_len(n))]]
+  } else {
+    x
+  }
+}
 
 #' @family Splits operations
 #' @export

@@ -357,6 +357,28 @@ test_that("print.Splits()", {
                   paste0(" ", num, "  ..**")))
 })
 
+test_that("head,tail.Splits()", {
+  sp12 <- as.Splits(BalancedTree(12)) # 9 splits
+  expect_equal(head(sp12), sp12[[1:6]])
+  expect_equal(head(sp12, 2), sp12[[1:2]])
+  expect_equal(head(sp12, 24), sp12)
+  expect_equal(head(sp12, -7), sp12[[1:2]])
+  
+  expect_equal(tail(sp12), sp12[[4:9]])
+  expect_equal(tail(sp12, 2), sp12[[8:9]])
+  expect_equal(tail(sp12, 24), sp12)
+  expect_equal(tail(sp12, -7), sp12[[8:9]])
+  
+  sp0 <- sp12 - sp12
+  expect_equal(head(sp0), sp0)
+  expect_equal(head(sp0, 1), sp0)
+  expect_equal(tail(sp0), sp0)
+  expect_equal(tail(sp0, 1), sp0)
+  
+  expect_equal(head(sp12, -24), sp0)
+  expect_equal(tail(sp12, -24), sp0)
+})
+
 test_that("Split operations", {
   split1 <- as.Splits(c(rep(TRUE, 30), rep(FALSE, 70), rep(TRUE, 20)))
   notSplit1 <- as.Splits(c(rep(FALSE, 30), rep(TRUE, 70), rep(FALSE, 20)))
