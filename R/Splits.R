@@ -321,6 +321,7 @@ print.Splits <- function(x, details = FALSE, ...) {
 }
 
 #' @family Splits operations
+#' @importFrom utils head
 #' @export
 head.Splits <- function(x, n = 6L, ...) {
   if (n < 0) {
@@ -334,6 +335,7 @@ head.Splits <- function(x, n = 6L, ...) {
 }
 
 #' @family Splits operations
+#' @importFrom utils tail
 #' @export
 tail.Splits <- function(x, n = 6L, ...) {
   if (n < 0) {
