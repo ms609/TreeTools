@@ -195,9 +195,27 @@ test_that("Tip labels are found", {
                                    as.Splits(BalancedTree(5)))))
 
   expect_equal(t1..4, TipLabels(c(t1 = 1, t2 = 3, t3 = 3, t4 = 4)))
+  
+  # Actual cases tested by test cases eludes me
+  expect_equal(TipLabels(list(tip.label = list(tip.label = t1..4))),
+               t1..4)
+  expect_equal(TipLabels(structure(list(tip.label = list(tip.label = t1..4)),
+                                   class = "multiPhylo")),
+               t1..4)
 })
 
 test_that("AllTipLabels()", {
-  expect_equal(1:10, sort(as.integer(AllTipLabels(c(BalancedTree(1:5), PectinateTree(6:10))))))
-  expect_equal(1:10, sort(as.integer(AllTipLabels(list(BalancedTree(1:6), PectinateTree(4:10))))))
+  expect_equal(sort(as.integer(
+    AllTipLabels(c(BalancedTree(1:5), PectinateTree(6:10))))),
+               1:10)
+  expect_equal(sort(as.integer(
+    AllTipLabels(list(BalancedTree(1:6), PectinateTree(4:10))))),
+               1:10)
+  bal8 <- BalancedTree(8)
+  expect_equal(AllTipLabels(bal8), TipLabels(bal8))
+  expect_equal(AllTipLabels(matrix(4, 4, 4, 
+                                   dimnames = list(NULL, paste0("t", 1:4)))),
+               paste0("t", 1:4))
+  expect_equal(AllTipLabels(as.Splits(bal8)), TipLabels(bal8))
+  expect_equal(AllTipLabels(as.TreeNumber(bal8)), TipLabels(bal8))
 })
