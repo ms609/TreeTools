@@ -14,7 +14,7 @@ int16 island_housing(int16 x, vector<int16> &island) {
 }
 
 // @param order Index of largest, second largest, ... smallest distance,
-// i.e. of distances in non-increasing order.
+// i.e. of distances in distance matrix in non-increasing order.
 // [[Rcpp::export]]
 IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
   const int32 n_distances = order.length();
@@ -43,7 +43,16 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
   int16 ret_pos = 0;
 
   for (int32 i = n_distances; i--; ) {
-    const int32 d = order[i];
+    const int d = order[i];
+    if (Rcpp::IntegerVector::is_na(d)) {
+      Rcpp::stop("`order` contains NA values");
+    }
+    if (d > n_distances) {
+      Rcpp::stop("`order` contains entries > `length(order)`");
+    }
+    if (d < 1) {
+      Rcpp::stop("`order` contains entries < 1");
+    }
     const int16
       left_island = island_housing(left[d], island),
       top_island = island_housing(top[d], island)
