@@ -106,7 +106,7 @@ RootedTreeWithShape <- function(shape, nTip, tipLabels)
 
 #' @export
 RootedTreeWithShape.numeric <- function(shape, nTip,
-                                         tipLabels = character(nTip)) {
+                                        tipLabels = character(nTip)) {
   structure(list(edge = rooted_shape_to_edge(shape, nTip),
                  Nnode = nTip - 1L,
                  tip.label = tipLabels),
@@ -115,7 +115,7 @@ RootedTreeWithShape.numeric <- function(shape, nTip,
 
 #' @export
 RootedTreeWithShape.integer64 <- function(shape, nTip,
-                                           tipLabels = character(nTip)) {
+                                          tipLabels = character(nTip)) {
   if (shape < 0) {
     stop("Shape may not be negative.")
   } else if (shape > 2L^31L - 1L) {
