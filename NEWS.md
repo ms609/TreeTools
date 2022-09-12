@@ -1,19 +1,23 @@
-# TreeTools 1.7.3.9005 (development) #
+# TreeTools 1.8.0 #
+
+## New methods and functions
 
 - `TntOrder()` renumbers a tree's nodes to match TNT's convention.
 
-- `ReadTntTree()` reads tree tags and follows TNT node numbering conventions.
-
-- Support > 32767 trees in `Consensus()` 
-  ([#127](https://github.com/ms609/TreeTools/issues/127)).
+- `head()` and `tail()` methods for Splits objects.
 
 - Set names of splits object with `names(splits) <- ...`.
 
 - `as.Splits()` support character vectors in the form "...***".
 
-- `head()` and `tail()` methods for Splits objects.
+## Improvements
+
+- `ReadTntTree()` reads tree tags and follows TNT node numbering conventions.
 
 - `SpectrumLegend()` gains `title` parameter and more styling options.
+
+- Support > 32767 trees in `Consensus()` 
+  ([#127](https://github.com/ms609/TreeTools/issues/127)).
 
 - `DropTip()` speed improved when branch lengths are present.
 
