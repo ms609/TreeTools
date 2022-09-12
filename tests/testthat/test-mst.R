@@ -1,5 +1,9 @@
-test_that("MSTEdges handles bad input", {
+test_that("MSTEdges() handles bad input", {
   expect_error(MSTEdges(matrix(1:12, 6, 2)), "distance")
+})
+
+test_that("minimum_spanning_tree.cpp handles bad input", {
+  expect_equal(minimum_spanning_tree(numeric(0)), matrix(0, 0, 0))
 })
 
 test_that("MST edges calculated correctly", {

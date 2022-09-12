@@ -14,10 +14,13 @@ int16 island_housing(int16 x, vector<int16> &island) {
 }
 
 // @param order Index of largest, second largest, ... smallest distance,
-// i.e. distances in non-increasing order.
+// i.e. of distances in non-increasing order.
 // [[Rcpp::export]]
 IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
   const int32 n_distances = order.length();
+  if (!n_distances) {
+    return IntegerMatrix(0);
+  }
   const int16 n_objects = ceil(sqrt(n_distances + n_distances));
   vector<int16> left (n_distances);
   vector<int16> top (n_distances);
