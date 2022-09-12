@@ -221,6 +221,13 @@ test_that("as.Splits.character()", {
               a..i)
   )
   
+  
+  expect_equal(TipLabels(as.Splits("...***")), paste0("t", 1:6))
+  
+  expect_equal(
+    TipLabels(as.Splits(structure("...***", tip.label = letters[1:6]))),
+    letters[1:6]
+  )
 })
 
 test_that("!.Splits() errors", {

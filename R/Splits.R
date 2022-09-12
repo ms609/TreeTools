@@ -255,7 +255,7 @@ as.Splits.character <- function(x, tipLabels = NULL, ...) {
   
   if (is.null(tipLabels)) {
     tipLabels <- TipLabels(x)
-    if (is.null(tipLabels)) {
+    if (length(tipLabels) == 1 && tipLabels == x) {
       tipLabels <- paste0("t", seq_len(nTip))
     }
   } else {
