@@ -73,9 +73,10 @@ issue if you would value additional functionality.
 plot(0:1, 0:1, type = "n", frame.plot = FALSE,
      xlab = "x", ylab = "y")
 SpectrumLegend(legend = c("Dark", "Middle", "Bright"),
-               palette = hcl.colors(32L), lwd = 5)
+               palette = hcl.colors(32L), lwd = 5,
+               title = "Brightness")
 SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
-               legend = seq(1, 9, by = 2), palette = 1:9, pos = 1)
+               legend = seq(1, 9, by = 2), palette = 1:8, pos = 1)
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
