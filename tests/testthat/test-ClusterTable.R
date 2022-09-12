@@ -12,6 +12,38 @@ test_that("ClusterTable class behaves", {
   expect_equal(matrix(c(0, 2, rep(1, 4), 0, 3, 3:6), 6),
                as.matrix.ClusterTable(ct))
   expect_equal(ClusterTable_decode(ct), 6:1)
+  
+  expect_equal(capture.output(ct),
+               "ClusterTable on 6 leaves: t1 .. t6")
+  
+  expect_equal(
+    capture.output(summary(ct)),
+    c("ClusterTable on 6 leaves:",
+          " 123456",
+          " .**...",
+          " ***...",
+          " ****..",
+          " *****.",
+          " ******",
+          " 1: t6  2: t5  3: t4  4: t3  5: t2  6: t1 ")
+  )
+  
+  ClusterSummary <- function(...) capture.output(summary(as.ClusterTable(...)))
+  t1..8 <- paste0("t", 1:8)
+  t8..1 <- rev(t1..8)
+  expect_equal(
+    ClusterSummary(BalancedTree(t8..1),
+                   tipLabels = t1..8),
+    ClusterSummary(BalancedTree(t1..8))
+  )
+  
+  byList <- as.ClusterTable(list(BalancedTree(t8..1), PectinateTree(t8..1)),
+                            tipLabels = t1..8)
+  listBy <- list(as.ClusterTable(BalancedTree(t1..8)),
+                 as.ClusterTable(PectinateTree(t1..8)))
+  expect_equal(capture.output(summary(byList[[2]])),
+               capture.output(summary(listBy[[2]])))
+  
 })
 
 test_that("Attributes are correct", {
