@@ -187,6 +187,7 @@ test_that("RootTree() handles null outgroups", {
   expect_equal(RootTree(bal8$edge, NULL), bal8$edge)
   expect_equal(RootTree(bal8, character(0)), bal8)
   expect_null(RootTree(NULL))
+  expect_null(RootTree(NULL, "tip"))
 })
 
 test_that("RootTree() works", {
