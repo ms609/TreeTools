@@ -3,7 +3,7 @@ test_that("Errors are handled", {
   expect_error(RootedTreeWithShape(as.integer64(-1)),
                "Shape may not be negative")
   expect_error(RootedTreeWithShape(as.integer64(0), -1),
-               "Tree must have at least zero tips")
+               "Tree must have at least zero leaves")
   expect_error(RootedTreeWithShape(as.integer64(2)^31),
                "Shapes this large are not.* implemented")
   expect_error(UnrootedTreeWithShape(31, 31), " < 31 leaves")
