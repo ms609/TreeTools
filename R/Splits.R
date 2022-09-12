@@ -363,7 +363,7 @@ summary.Splits <- function(object, ...) {
 
 #' @family Splits operations
 #' @export
-names.Splits <- rownames
+names.Splits <- function(x) rownames(x)
 
 
 #' @family Splits operations
