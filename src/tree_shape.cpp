@@ -75,7 +75,7 @@ uint64_t n_shapes(intx n_tips) {
   }
   if (n_tips > 55) {
     Rcpp::stop("64 bit integers cannot represent number of shapes "
-               "for > 55 tips");
+               "for > 55 leaves");
   }
   return n_shapes_cache[n_tips];
 }
