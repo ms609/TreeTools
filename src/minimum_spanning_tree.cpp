@@ -47,11 +47,11 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
     if (Rcpp::IntegerVector::is_na(d)) {
       Rcpp::stop("`order` contains NA values");
     }
-    if (d > n_distances) {
+    if (d >= n_distances) {
       Rcpp::stop("`order` contains entries > `length(order)`");
     }
-    if (d < 1) {
-      Rcpp::stop("`order` contains entries < 1");
+    if (d < 0) {
+      Rcpp::stop("`order` contains entries < 0");
     }
     const int16
       left_island = island_housing(left[d], island),

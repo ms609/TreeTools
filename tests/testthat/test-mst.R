@@ -4,8 +4,8 @@ test_that("MSTEdges() handles bad input", {
 
 test_that("minimum_spanning_tree.cpp handles bad input", {
   expect_equal(minimum_spanning_tree(numeric(0)), matrix(0, 0, 0))
-  expect_error(minimum_spanning_tree(c(2:0)),
-               "`order` contains entries < 1")
+  expect_error(minimum_spanning_tree(c(1:-1)),
+               "`order` contains entries < 0")
   expect_error(minimum_spanning_tree(c(3, 100, 1)),
                "`order` contains entries > `length.order.`")
   expect_error(minimum_spanning_tree(c(3, 1, NA_real_)),
