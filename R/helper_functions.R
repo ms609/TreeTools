@@ -132,7 +132,7 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
 #'                legend = seq(1, 9, by = 2), palette = 1:9, pos = 1)
 #' @template MRS
-#' @importFrom graphics segments text
+#' @importFrom graphics segments strheight strwidth text
 #' @export
 SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            x1 = x0, y1 = y0 + 0.2,
