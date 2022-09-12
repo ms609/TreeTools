@@ -17,7 +17,7 @@ rooting of trees and extraction of subtrees;
 calculation and depiction of node support;
 calculation of ancestor-descendant relationships;
 import and export of trees from Newick, Nexus and 
-[TNT](http://www.lillo.org.ar/phylogeny/tnt/) formats;
+[TNT](https://www.lillo.org.ar/phylogeny/tnt/) formats;
 and analysis of partitions and cladistic information.
 
 It complements packages such as 

@@ -80,7 +80,7 @@ single descendant (which will often denote a misspecified tree).
 
 ### Trees from TNT
 
-Trees saved using [TNT](http://www.lillo.org.ar/phylogeny/tnt/) can be opened in
+Trees saved using [TNT](https://www.lillo.org.ar/phylogeny/tnt/) can be opened in
 R using `ReadTntTree()`.
 
 Trees should be saved  in parenthetical format (TNT command `tsav*`),
