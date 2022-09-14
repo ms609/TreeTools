@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -91,6 +91,15 @@
 <span>  lwd <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  lty <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lend <span class="op">=</span> <span class="st">"square"</span>,</span>
+<span>  cex <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  text.col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="st">"col"</span><span class="op">)</span>,</span>
+<span>  font <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  text.font <span class="op">=</span> <span class="va">font</span>,</span>
+<span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  title.col <span class="op">=</span> <span class="va">text.col</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  title.cex <span class="op">=</span> <span class="va">cex</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>  title.adj <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  title.font <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  pos <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -122,6 +131,39 @@ bottom-left of the plot area and (1, 1) the top right.</p></dd>
 controlling line style.</p></dd>
 
 
+<dt>cex</dt>
+<dd><p>Character expansion factor relative to current <code>par("cex")</code>.</p></dd>
+
+
+<dt>text.col</dt>
+<dd><p>Colour used for the legend text.</p></dd>
+
+
+<dt>font, text.font</dt>
+<dd><p>Font used for the legend text; see <code><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text()</a></code>.</p></dd>
+
+
+<dt>title</dt>
+<dd><p>Text to display</p></dd>
+
+
+<dt>title.col</dt>
+<dd><p>Colour for title; defaults to <code>text.col[1]</code>.</p></dd>
+
+
+<dt>title.cex</dt>
+<dd><p>Expansion factor(s) for the title, defaults to <code>cex[1]</code>.</p></dd>
+
+
+<dt>title.adj</dt>
+<dd><p>Horizontal adjustment for title: see the help for
+<code>par("adj")</code>.</p></dd>
+
+
+<dt>title.font</dt>
+<dd><p>Font used for the legend title.</p></dd>
+
+
 <dt>pos, ...</dt>
 <dd><p>Additional parameters to <code><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text()</a></code>.</p></dd>
 
@@ -141,9 +183,10 @@ issue if you would value additional functionality.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">:</span><span class="fl">1</span>, type <span class="op">=</span> <span class="st">"n"</span>, frame.plot <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>     xlab <span class="op">=</span> <span class="st">"x"</span>, ylab <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">SpectrumLegend</span><span class="op">(</span>legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dark"</span>, <span class="st">"Middle"</span>, <span class="st">"Bright"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>               palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">32L</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span>               palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">hcl.colors</a></span><span class="op">(</span><span class="fl">32L</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>               title <span class="op">=</span> <span class="st">"Brightness"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">SpectrumLegend</span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.95</span>, <span class="fl">0.9</span>, <span class="fl">0.95</span>, abs <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>               legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, palette <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, pos <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>               legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, palette <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, pos <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="SpectrumLegend-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

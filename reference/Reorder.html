@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -169,7 +169,26 @@
 <span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for `NULL`</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">TNTOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for numeric</span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for list</span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for `NULL`</span></span>
+<span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -295,6 +314,11 @@ advice.</p>
 function, which is robust to unconventional node numbering.</p></li>
 <li><p><code>Pruningwise()</code>: Reorder tree Pruningwise.</p></li>
 <li><p><code>Preorder()</code>: Reorder tree in Preorder (special case of cladewise).</p></li>
+<li><p><code>TntOrder()</code>: Reorder tree in postorder, numbering internal nodes
+according to <a href="https://stackoverflow.com/a/54296100/3438001" class="external-link">TNT's rules</a>,
+which number the root node as <code>nTip + 1</code>, then the remaining nodes in
+the sequence encountered when traversing the tree in postorder, starting from
+each tip in sequence.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>

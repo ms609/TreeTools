@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -74,6 +74,23 @@
       <small>Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.8.0" id="treetools-180">TreeTools 1.8.0<a class="anchor" aria-label="anchor" href="#treetools-180"></a></h2>
+<div class="section level3">
+<h3 id="new-methods-and-functions-1-8-0">New methods and functions<a class="anchor" aria-label="anchor" href="#new-methods-and-functions-1-8-0"></a></h3>
+<ul><li><p><code><a href="../reference/Reorder.html">TntOrder()</a></code> renumbers a tree’s nodes to match TNT’s convention.</p></li>
+<li><p><code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> and <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail()</a></code> methods for Splits objects.</p></li>
+<li><p>Set names of splits object with <code>names(splits) &lt;- ...</code>.</p></li>
+<li><p><code><a href="../reference/Splits.html">as.Splits()</a></code> support character vectors in the form “…***“.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-1-8-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-8-0"></a></h3>
+<ul><li><p><code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code> reads tree tags and follows TNT node numbering conventions.</p></li>
+<li><p><code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> gains <code>title</code> parameter and more styling options.</p></li>
+<li><p>Support &gt; 32767 trees in <code><a href="../reference/Consensus.html">Consensus()</a></code> (<a href="https://github.com/ms609/TreeTools/issues/127" class="external-link">#127</a>).</p></li>
+<li><p><code><a href="../reference/DropTip.html">DropTip()</a></code> speed improved when branch lengths are present.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.7.3" id="treetools-173">TreeTools 1.7.3<small>2022-07-20</small><a class="anchor" aria-label="anchor" href="#treetools-173"></a></h2>
 <ul><li><p><code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code> supports multi-line trees.</p></li>

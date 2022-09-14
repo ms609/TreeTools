@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.8.0</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
                         <h4 data-toc-skip class="author">Martin R. Smith <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2022-08-13</h4>
+            <h4 data-toc-skip class="date">2022-09-14</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/vignettes/load-trees.Rmd" class="external-link"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="hidden name"><code>load-trees.Rmd</code></div>
@@ -160,7 +160,7 @@
 <div class="section level3">
 <h3 id="trees-from-tnt">Trees from TNT<a class="anchor" aria-label="anchor" href="#trees-from-tnt"></a>
 </h3>
-<p>Trees saved using <a href="http://www.lillo.org.ar/phylogeny/tnt/" class="external-link">TNT</a> can be opened in R using <code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code>.</p>
+<p>Trees saved using <a href="https://www.lillo.org.ar/phylogeny/tnt/" class="external-link">TNT</a> can be opened in R using <code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code>.</p>
 <p>Trees should be saved in parenthetical format (TNT command <code>tsav*</code>), rather than TNT’s compressed format (TNT command <code>tsav</code>).</p>
 <p>The TNT command <code>taxname=</code> will write taxon names to file, which results in larger but easier to read files. Trees in such a file will be read using the terminal names saved within the file. The TNT command <code>taxname-</code> saves just the numbers of the terminals. In order for the trees to be reunited with the names of their tips, terminal labels will be read from the linked matrix file listed in the first line of the .tre file. Ensure that this file exists in the expected location. If it does not, use <code>ReadTntTree(treeFile, relativePath = '../path/to/tipNameFile')</code>, or <code>tipLabels</code> to manually specify the names of the tips (e.g. <code>ReadTntTree(treeFile, tipLabels = c('outgroup', letters[1:8])</code>).</p>
 </div>
