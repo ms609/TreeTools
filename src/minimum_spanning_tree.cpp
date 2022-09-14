@@ -1,4 +1,4 @@
-#include <Rcpp/Lightest>
+#include <Rcpp/Lighter>
 #include <vector> /* for vector */
 #include <cmath> /* for ceil, sqrt() */
 #include "../inst/include/TreeTools/types.h"
@@ -16,6 +16,10 @@ int16 island_housing(int16 x, std::vector<int16> &island) {
 // i.e. of distances in distance matrix in non-increasing order.
 // [[Rcpp::export]]
 IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
+  if (Rcpp::is_true(Rcpp::any(Rcpp::is_na(order)))) {
+    Rcpp::stop("`order` contains NA values");
+  }
+  
   const int32 n_distances = order.length();
   if (!n_distances) {
     return IntegerMatrix(0);
@@ -43,9 +47,6 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
 
   for (int32 i = n_distances; i--; ) {
     const int d = order[i];
-    if (Rcpp::IntegerVector::is_na(d)) {
-      Rcpp::stop("`order` contains NA values");
-    }
     if (d >= n_distances) {
       Rcpp::stop("`order` contains entries > `length(order)`");
     }
