@@ -1,4 +1,4 @@
-#include <Rcpp/Lighter>
+#include <Rcpp/Lighter> /* for is_na */
 #include <vector> /* for vector */
 #include <cmath> /* for ceil, sqrt() */
 #include "../inst/include/TreeTools/types.h"
