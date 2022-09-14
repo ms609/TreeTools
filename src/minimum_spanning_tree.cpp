@@ -3,9 +3,8 @@
 #include <cmath> /* for ceil, sqrt() */
 #include "../inst/include/TreeTools/types.h"
 using namespace Rcpp;
-using namespace std;
 
-int16 island_housing(int16 x, vector<int16> &island) {
+int16 island_housing(int16 x, std::vector<int16> &island) {
   if (x == island[x]) return x;
   int16 parent_house = island_housing(island[x], island);
   if (parent_house == island[x]) return island[x];
@@ -22,8 +21,8 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
     return IntegerMatrix(0);
   }
   const int16 n_objects = ceil(sqrt(n_distances + n_distances));
-  vector<int16> left (n_distances);
-  vector<int16> top (n_distances);
+  std::vector<int16> left (n_distances);
+  std::vector<int16> top (n_distances);
 
   int32 k = n_distances;
   for (int16 col = n_objects - 1; col--; ) {
@@ -34,7 +33,7 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
     }
   }
 
-  vector<int16> island (n_objects);
+  std::vector<int16> island (n_objects);
   for (int16 i = n_objects; i--; ) {
     island[i] = i;
   }
