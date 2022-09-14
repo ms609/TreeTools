@@ -366,7 +366,13 @@ TipLabels.multiPhylo <- function(x, single = FALSE) {
 
 #' @rdname TipLabels
 #' @export
-TipLabels.character <- function(x, single = TRUE) x
+TipLabels.character <- function(x, single = TRUE) {
+  if (is.null(attr(x, "tip.label"))) {
+    x
+  } else {
+    attr(x, "tip.label")
+  }
+}
 
 #' @rdname TipLabels
 #' @export

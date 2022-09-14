@@ -1,5 +1,15 @@
-test_that("MSTEdges handles bad input", {
+test_that("MSTEdges() handles bad input", {
   expect_error(MSTEdges(matrix(1:12, 6, 2)), "distance")
+})
+
+test_that("minimum_spanning_tree.cpp handles bad input", {
+  expect_equal(minimum_spanning_tree(numeric(0)), matrix(0, 0, 0))
+  expect_error(minimum_spanning_tree(c(1:-1)),
+               "`order` contains entries < 0")
+  expect_error(minimum_spanning_tree(c(3, 100, 1)),
+               "`order` contains entries > `length.order.`")
+  expect_error(minimum_spanning_tree(c(3, 1, NA_real_)),
+               "`order` contains NA")
 })
 
 test_that("MST edges calculated correctly", {
@@ -23,6 +33,7 @@ test_that("MST edges calculated correctly", {
   skip_if(packageVersion("graphics") < "4.1.0")
   vdiffr::expect_doppelganger("MST plotting", MSTPlot)
 })
+
 test_that("MST handles large distance matrices", {
   x <- dist(0:300)
   expect_equal(c(300, 2), dim(MSTEdges(x)))

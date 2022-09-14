@@ -35,6 +35,13 @@
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
 \alias{Preorder.NULL}
+\alias{TntOrder}
+\alias{TNTOrder}
+\alias{TntOrder.phylo}
+\alias{TntOrder.numeric}
+\alias{TntOrder.multiPhylo}
+\alias{TntOrder.list}
+\alias{TntOrder.NULL}
 \title{Reorder tree edges and nodes}
 \usage{
 RenumberTree(parent, child, weight)
@@ -102,6 +109,20 @@ Preorder(tree)
 \method{Preorder}{list}(tree)
 
 \method{Preorder}{`NULL`}(tree)
+
+TntOrder(tree)
+
+TNTOrder(tree)
+
+\method{TntOrder}{phylo}(tree)
+
+\method{TntOrder}{numeric}(tree)
+
+\method{TntOrder}{multiPhylo}(tree)
+
+\method{TntOrder}{list}(tree)
+
+\method{TntOrder}{`NULL`}(tree)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
@@ -211,6 +232,12 @@ function, which is robust to unconventional node numbering.
 \item \code{Pruningwise()}: Reorder tree Pruningwise.
 
 \item \code{Preorder()}: Reorder tree in Preorder (special case of cladewise).
+
+\item \code{TntOrder()}: Reorder tree in postorder, numbering internal nodes
+according to \href{https://stackoverflow.com/a/54296100/3438001}{TNT's rules},
+which number the root node as \code{nTip + 1}, then the remaining nodes in
+the sequence encountered when traversing the tree in postorder, starting from
+each tip in sequence.
 
 }}
 \seealso{

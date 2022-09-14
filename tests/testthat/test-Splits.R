@@ -221,6 +221,13 @@ test_that("as.Splits.character()", {
               a..i)
   )
   
+  
+  expect_equal(TipLabels(as.Splits("...***")), paste0("t", 1:6))
+  
+  expect_equal(
+    TipLabels(as.Splits(structure("...***", tip.label = letters[1:6]))),
+    letters[1:6]
+  )
 })
 
 test_that("!.Splits() errors", {
@@ -355,6 +362,28 @@ test_that("print.Splits()", {
   expect_equal(capture.output(print(PolarizeSplits(sp4, 4), details = TRUE)),
                c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
                   paste0(" ", num, "  ..**")))
+})
+
+test_that("head,tail.Splits()", {
+  sp12 <- as.Splits(BalancedTree(12)) # 9 splits
+  expect_equal(head(sp12), sp12[[1:6]])
+  expect_equal(head(sp12, 2), sp12[[1:2]])
+  expect_equal(head(sp12, 24), sp12)
+  expect_equal(head(sp12, -7), sp12[[1:2]])
+  
+  expect_equal(tail(sp12), sp12[[4:9]])
+  expect_equal(tail(sp12, 2), sp12[[8:9]])
+  expect_equal(tail(sp12, 24), sp12)
+  expect_equal(tail(sp12, -7), sp12[[8:9]])
+  
+  sp0 <- sp12 - sp12
+  expect_equal(head(sp0), sp0)
+  expect_equal(head(sp0, 1), sp0)
+  expect_equal(tail(sp0), sp0)
+  expect_equal(tail(sp0, 1), sp0)
+  
+  expect_equal(head(sp12, -24), sp0)
+  expect_equal(tail(sp12, -24), sp0)
 })
 
 test_that("Split operations", {

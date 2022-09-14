@@ -6,7 +6,6 @@
 \alias{in.Splits}
 \alias{match}
 \alias{\%in\%,Splits,Splits-method}
-\alias{\%in\%,Splits,ANY-method}
 \title{Split matching}
 \usage{
 \S4method{match}{Splits,Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
@@ -16,8 +15,6 @@ in.Splits(x, table)
 match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
 \S4method{\%in\%}{Splits,Splits}(x, table)
-
-\S4method{\%in\%}{Splits,ANY}(x, table)
 }
 \arguments{
 \item{x, table}{Object of class \code{Splits}.}

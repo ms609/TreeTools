@@ -89,6 +89,11 @@ test_that("Replacement reorder functions work correctly", {
                RenumberEdges(edge[, 1], edge[, 2]))
 })
 
+test_that("RenumberTips() handles misspecification", {
+  expect_error(RenumberTips(BalancedTree(8), paste0("t", 0:5)),
+               "Missing in `tree`: t0.*Missing in `tipOrder`: t6, t7, t8")
+})
+
 test_that("RenumberTips() works correctly", {
   abcd <- letters[1:4]
   dcba <- letters[4:1]
@@ -192,6 +197,8 @@ test_that("Reorder methods work correctly", {
   expect_error(Cladewise(bad))
 
   Test(Preorder)
+  
+  Test(TntOrder, testEdges = FALSE)
 
   Test(Pruningwise, testEdges = FALSE)
   expect_error(Pruningwise(bad))
@@ -215,6 +222,7 @@ test_that("Preorder() gives identical output", {
   expect_equal(tree1, pre2)
   expect_identical(tree1, pre2)
 })
+
 
 test_that("Reorder methods retain edge weights", {
   bal7 <- BalancedTree(7)

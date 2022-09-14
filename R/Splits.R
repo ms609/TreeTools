@@ -255,7 +255,7 @@ as.Splits.character <- function(x, tipLabels = NULL, ...) {
   
   if (is.null(tipLabels)) {
     tipLabels <- TipLabels(x)
-    if (is.null(tipLabels)) {
+    if (length(tipLabels) == 1 && tipLabels == x) {
       tipLabels <- paste0("t", seq_len(nTip))
     }
   } else {
@@ -320,6 +320,33 @@ print.Splits <- function(x, details = FALSE, ...) {
   }
 }
 
+#' @family Splits operations
+#' @importFrom utils head
+#' @export
+head.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[seq_len(n)]]
+  } else {
+    x
+  }
+}
+
+#' @family Splits operations
+#' @importFrom utils tail
+#' @export
+tail.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[length(x) + 1L - rev(seq_len(n))]]
+  } else {
+    x
+  }
+}
 
 #' @family Splits operations
 #' @export
@@ -336,7 +363,7 @@ summary.Splits <- function(object, ...) {
 
 #' @family Splits operations
 #' @export
-names.Splits <- rownames
+names.Splits <- function(x) rownames(x)
 
 
 #' @family Splits operations

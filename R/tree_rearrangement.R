@@ -36,11 +36,6 @@
 #' @template MRS
 #' @export
 RootTree <- function(tree, outgroupTips) {
-  if (missing(outgroupTips)) return(tree)
-  if (is.null(outgroupTips) ||
-      length(outgroupTips) == 0) {
-    return(tree)
-  }
   UseMethod("RootTree")
 }
 
@@ -169,6 +164,11 @@ RootTree.matrix <- function(tree, outgroupTips) {
 
 #' @export
 RootTree.list <- function(tree, outgroupTips) {
+  if (missing(outgroupTips)
+      || is.null(outgroupTips)
+      || length(outgroupTips) == 0) {
+    return(tree)
+  }
   lapply(tree, RootTree, outgroupTips)
 }
 
