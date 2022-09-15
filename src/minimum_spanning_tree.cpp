@@ -21,6 +21,9 @@ IntegerMatrix minimum_spanning_tree(const IntegerVector order) {
     return IntegerMatrix(0);
   }
   const int16 n_objects = ceil(sqrt(n_distances + n_distances));
+  if (n_distances != n_objects * (n_objects - 1) / 2) {
+    stop("`length(order)` is not a triangular number");
+  }
   std::vector<int16> left (n_distances);
   std::vector<int16> top (n_distances);
 
