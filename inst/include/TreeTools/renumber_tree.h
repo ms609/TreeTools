@@ -229,7 +229,7 @@ namespace TreeTools {
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
       Rcpp::stop("Too many edges in tree: "                        // #nocov
-                              "Contact 'TreeTools' maintainer for support.");   // #nocov
+                 "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
 
     const int32
@@ -314,7 +314,7 @@ namespace TreeTools {
   {
     if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
       Rcpp::stop("Too many edges in tree: "                        // #nocov
-                              "Contact 'TreeTools' maintainer for support.");   // #nocov
+                 "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
     
     const int32

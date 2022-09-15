@@ -31,7 +31,7 @@ as.Newick <- function(x) UseMethod("as.Newick")
 #' @rdname as.Newick
 #' @export
 as.Newick.phylo <- function(x) {
-  as_newick(Preorder(x)[["edge"]] - 1L)
+  as_newick(x[["edge"]] - 1L)
 }
 
 #' @rdname as.Newick

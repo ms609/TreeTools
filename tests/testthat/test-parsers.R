@@ -199,5 +199,18 @@ test_that("NewickTree() works", {
 })
 
 test_that("as_newick() fails gracefully", {
-  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
+  expect_equal(as_newick(matrix(0L, 0L, 2L)), ";")
+  expect_equal(as_newick(matrix(1:0, 1L, 2L)), "(0);")
+  expect_equal(as_newick(Postorder(BalancedTree(4)$edge) - 1L),
+               as_newick(BalancedTree(4)$edge - 1L))
+  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)),
+               "Too many nodes")
+  expect_error(as_newick(matrix(0L, 3, 3)),
+               "`edge` must have two columns")
+  expect_error(as_newick(matrix(c(4, 4, 4, 1:3), 3, 2)),
+               "`min.edge.` must be zero")
+  expect_error(as_newick(matrix(c(3, NA, 3, 0:2), 3, 2)),
+               "`edge`.* NA")
+  expect_error(as_newick(matrix(c(4, 4, 3, 0:2), 3, 2)),
+               "`edge` is malformed")
 })

@@ -45,12 +45,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // as_newick
-CharacterVector as_newick(IntegerMatrix edge);
+CharacterVector as_newick(const IntegerMatrix edge);
 RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
     rcpp_result_gen = Rcpp::wrap(as_newick(edge));
     return rcpp_result_gen;
 END_RCPP
