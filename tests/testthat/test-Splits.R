@@ -177,9 +177,31 @@ test_that("as.Splits.matrix()", {
 })
 
 test_that("as.Splits.edge()", {
+    
+  # From https://stackoverflow.com/questions/71082379
+  expect_one_of <- function(object, options) {
+    
+    # 1. Capture object and label
+    act <- quasi_label(rlang::enquo(object), arg = "object")
+    
+    # 2. Call expect()
+    compResults <- purrr::map_lgl(options, ~identical(act$val, .x))
+    expect(
+      any(compResults),
+      sprintf(
+        "Input (%s) is not one of the accepted options: %s",
+        toString(act$val),
+        paste(purrr::map_chr(options, toString), collapse = ", ")
+      )
+    )
+    
+    # 3. Invisibly return the value
+    invisible(act$val)
+    
+  }
+  
   test <- unname(as.Splits(BalancedTree(4), asSplits = FALSE))
-  expect_true(identical(test, matrix(as.raw(0x0c))) ||
-              identical(test, matrix(as.raw(0x03))))
+  expect_one_of(test, list(matrix(as.raw(0x0c)), matrix(as.raw(0x03))))
 })
 
 test_that("Logical splits don't get caught by as.matrix", {
