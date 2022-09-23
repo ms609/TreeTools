@@ -199,6 +199,9 @@ test_that("as.Splits.edge()", {
     invisible(act$val)
     
   }
+  # Test expect_one_of
+  expect_success(expect_one_of(1, list(1, 2)))
+  expect_failure(expect_one_of(0, list(1, 2)), "not one of")
   
   test <- unname(as.Splits(BalancedTree(4), asSplits = FALSE))
   expect_one_of(test, list(matrix(as.raw(0x0c)), matrix(as.raw(0x03))))
