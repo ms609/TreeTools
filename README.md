@@ -30,9 +30,9 @@ applied to unweighted trees (i.e. those without edge lengths).
 # Installation
 
 Install and load the library from CRAN as follows:
-```
-install.packages('TreeTools')
-library('TreeTools')
+```r
+install.packages("TreeTools")
+library("TreeTools")
 ```
 
 Install the very latest version, which may be under development, with:
