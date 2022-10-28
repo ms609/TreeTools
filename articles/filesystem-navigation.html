@@ -99,10 +99,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>File system navigation in R</h1>
-                        <h4 data-toc-skip class="author">Martin R. Smith <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
+                        <h4 data-toc-skip class="author">Martin R. Smith
+<a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2022-09-14</h4>
+            <h4 data-toc-skip class="date">2022-10-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/vignettes/filesystem-navigation.Rmd" class="external-link"><code>vignettes/filesystem-navigation.Rmd</code></a></small>
       <div class="hidden name"><code>filesystem-navigation.Rmd</code></div>
@@ -111,14 +112,22 @@
 
     
     
-<p>Before you can open a file, you need to tell R where to find it. You can do this by providing the full path to the file on your system. Be careful to use forward slashes (<code>/</code>, not <code>\</code>, which you’ll get if you copy file paths in Windows).</p>
+<p>Before you can open a file, you need to tell R where to find it. You
+can do this by providing the full path to the file on your system. Be
+careful to use forward slashes (<code>/</code>, not <code>\</code>,
+which you’ll get if you copy file paths in Windows).</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="st">"C:/nexus/matrix.nex"</span></span></code></pre></div>
-<p>You can save typing by giving R a working directory. You can think of R as having a file explorer window open invisibly in the background.</p>
-<p>You can see the folder that’s open at the moment by typing <code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code> at the console.</p>
+<p>You can save typing by giving R a working directory. You can think of
+R as having a file explorer window open invisibly in the background.</p>
+<p>You can see the folder that’s open at the moment by typing
+<code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code> at the console.</p>
 <p><code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd()</a></code> tells R to open a different folder instead.</p>
-<p><code>setwd('../')</code> tells R to go up to a parent directory. (You can <a href="https://dss.princeton.edu/training/RStudio101.pdf" class="external-link">do this using the Graphical User Interface</a> in RStudio).</p>
-<p>By setting the directory that your files are in as the working directory, you only need to specify the filename:</p>
+<p><code>setwd('../')</code> tells R to go up to a parent directory.
+(You can <a href="https://dss.princeton.edu/training/RStudio101.pdf" class="external-link">do
+this using the Graphical User Interface</a> in RStudio).</p>
+<p>By setting the directory that your files are in as the working
+directory, you only need to specify the filename:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">setwd</a></span><span class="op">(</span><span class="st">"C:/nexus/"</span><span class="op">)</span> <span class="co"># You only need to do this once</span></span>
 <span><span class="va">filename</span> <span class="op">&lt;-</span> <span class="st">"matrix.nex"</span></span>
