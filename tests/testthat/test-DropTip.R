@@ -113,7 +113,7 @@ test_that("DropTip.multiPhylo() with attributes", {
   multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
   attr(multi, "TipLabel") <- paste0("t", 1:8)
   
-  expect_equal(DropTip(unclass(multi), "t6"), DropTip(multi, "t6"))
+  expect_equal(DropTip(unclass(multi), "t6"), unclass(DropTip(multi, "t6")))
   
   expect_equal(attr(DropTip(multi, "t8"), "TipLabel"),
                paste0("t", 1:7))
