@@ -22,8 +22,9 @@ test_that("Failures are graceful", {
     "nEdge must == nTip . nTip - 2"),
     "`nTip` should be a single integer"
     )
+  expect_equal(as.phylo(0, 0), ZeroTaxonTree())
   
-  expect_error(as.phylo(0, 0), "`nTip` must be > 1")
+  expect_error(as.phylo(0, -1), "`nTip` may not be negative")
 })
 
 test_that("Edge cases handled", {

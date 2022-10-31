@@ -263,7 +263,7 @@ as.MixedBase.numeric <- function(x, tipLabels = NULL, ...) {
 #' @importFrom ape as.phylo
 #' @export
 as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
-                              tipLabels = attr(x, "tip.label"), ...) {
+                             tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(nTip)) {
     if (is.null(tipLabels)) {
       stop("Either nTip or tipLabels must be specified.")
@@ -271,14 +271,18 @@ as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) {
-    tipLabels <- TipLabels(nTip)
-  }
-  if (nTip == 0) {
-    ZeroTaxonTree()
-  } else if (nTip == 1) {
-    SingleTaxonTree(tipLabels)
+  if (nTip < 2) {
+    if (nTip == 0) {
+      ZeroTaxonTree()
+    } else if (nTip == 1) {
+      SingleTaxonTree(if (is.null(tipLabels)) TipLabels(nTip) else tipLabels)
+    } else {
+      stop("`nTip` may not be negative")
+    }
   } else {
+    if (is.null(tipLabels)) {
+      tipLabels <- TipLabels(nTip)
+    }
     if (length(x) > 1) {
       structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
                 tip.label = tipLabels, class = "multiPhylo")
