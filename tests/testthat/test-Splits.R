@@ -6,9 +6,8 @@ expect_splits_equal <- function(s1, s2, ...) {
 test_that("as.Splits()", {
   A <- FALSE
   B <- TRUE
-  expect_equal(as.Splits(BalancedTree(0)),
-               NULL
-               )
+  expect_equal(as.Splits(BalancedTree(0)), as.Splits(logical(0)))
+  expect_equal(TipsInSplits(as.Splits(logical(0))), integer(0))
   expect_equal(strsplit(capture_output(summary(as.Splits(c(A, A, B, B)))),
                         "\n")[[1]],
                c("1 bipartition split dividing 4 tips, t1 .. t4",

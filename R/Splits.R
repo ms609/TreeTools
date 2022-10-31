@@ -213,27 +213,37 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-
-    if (is.null(tipLabels)) {
-      tipLabels <- TipLabels(x)
-      if (is.null(tipLabels)) {
-        tipLabels <- paste0("t", seq_len(nTip))
-      }
+    if (nTip == 0) {
+      structure(
+        matrix(0, 0, 0),
+        nTip = 0,
+        tip.label = TipLabels(0),
+        class = "Splits"
+      )
     } else {
-      tipLabels <- TipLabels(tipLabels)
+      if (is.null(tipLabels)) {
+        tipLabels <- TipLabels(x)
+        if (is.null(tipLabels)) {
+          tipLabels <- TipLabels(nTip)
+        }
+      } else {
+        tipLabels <- TipLabels(tipLabels)
+      }
+  
+      structure(
+        matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
+        nTip = nTip,
+        tip.label = tipLabels,
+        class = "Splits"
+      )
     }
-
-    structure(matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
-              nTip = nTip,
-              tip.label = tipLabels,
-              class = "Splits")
   } else {
     if (is.null(tipLabels)) {
       tipLabels <- TipLabels(x)
     }
     nTip <- dimX[2]
     if (is.null(tipLabels)) {
-      tipLabels <- paste0("t", seq_len(nTip))
+      tipLabels <- TipLabels(nTip)
     }
 
     nBin <- (nTip %% 8 != 0) + (nTip / 8)
