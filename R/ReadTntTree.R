@@ -138,7 +138,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
         
         if (length(taxonFile)) {
           if (!file.exists(taxonFile)) {
-            warning("Cannot find linked data file:\n  ", taxonFile)                 # nocov
+            warning("Cannot find linked data file:\n  ", taxonFile)             # nocov
           } else {
             tipLabels <- rownames(ReadTntCharacters(taxonFile, character_num = 1L))
             if (is.null(tipLabels)) {
@@ -146,10 +146,10 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
               tipLabels <- rownames(ReadCharacters(taxonFile, character_num = 1L))
             }
             if (is.null(tipLabels)) {
-              warning("Could not read taxon names from linked TNT file:\n  ",       # nocov
-                      taxonFile, "\nIs the file in TNT or Nexus format?",           # nocov
-                      " If failing inexplicably, please report:",                   # nocov
-                      "\n  https://github.com/ms609/TreeTools/issues/new")          # nocov
+              warning("Could not read taxon names from linked TNT file:\n  ",   # nocov
+                      taxonFile, "\nIs the file in TNT or Nexus format?",       # nocov
+                      " If failing inexplicably, please report:",               # nocov
+                      "\n  https://github.com/ms609/TreeTools/issues/new")      # nocov
             }
           }
         } else {
