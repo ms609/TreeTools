@@ -71,9 +71,9 @@ Other tree manipulation:
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TrivialTree}}
 }
 \author{
 Martin R. Smith

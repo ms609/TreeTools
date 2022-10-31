@@ -66,8 +66,8 @@ plot(StarTree(LETTERS[1:10]))
 Other tree generation functions: 
 \code{\link{ConstrainedNJ}()},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

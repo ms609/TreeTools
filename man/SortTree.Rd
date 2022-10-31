@@ -82,8 +82,8 @@ Other tree manipulation:
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TrivialTree}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

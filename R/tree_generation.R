@@ -159,13 +159,19 @@ BalancedTree <- function(tips) {
   tips <- TipLabels(tips)
   nTip <- length(tips)
   if (nTip < 2L) {
-    return(if (nTip == 1L) SingleTaxonTree(tips) else NULL)
+    if (nTip == 1L) {
+      SingleTaxonTree(tips)
+    } else if (nTip == 0L) {
+      ZeroTaxonTree()
+    } else {
+      NULL
+    }
+  } else {
+    # Return:
+    structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
+                         tip.label = as.character(tips)),
+              order = "preorder", class = "phylo")
   }
-
-  # Return:
-  structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
-                       tip.label = as.character(tips)),
-            order = "preorder", class = "phylo")
 }
 
 #' @keywords internal

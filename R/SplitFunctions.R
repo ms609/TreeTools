@@ -378,8 +378,8 @@ TipLabels.character <- function(x, single = TRUE) {
 #' @export
 TipLabels.numeric <- function(x, single = TRUE) {
   if (length(x) == 1L) {
-    paste0("t", seq_len(x))}
-  else {
+    paste0(rep_len("t", x), seq_len(x))
+  } else {
     NextMethod("TipLabels", as.character(x))
   }
 }

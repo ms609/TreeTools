@@ -190,7 +190,7 @@ Other tree generation functions:
 \code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()}
+\code{\link{TrivialTree}}
 }
 \author{
 Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})

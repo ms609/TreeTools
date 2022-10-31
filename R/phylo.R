@@ -54,12 +54,12 @@ Renumber <- function(tree) {
   Cladewise(tree)
 }
 
-#' Generate a single taxon tree
+#' Generate trivial trees
 #'
 #' `SingleTaxonTree()` creates a phylogenetic "tree" that contains a single
-#' taxon.
+#' taxon. 
+#' `ZeroTaxonTree()` creates an empty `phylo` object with zero leaves or edges.
 #'
-#' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
 #' @return `SingleTaxonTree()` returns a \code{phylo} object containing a single
 #' tip with the specified label.
@@ -68,13 +68,27 @@ Renumber <- function(tree) {
 #' SingleTaxonTree("Homo_sapiens")
 #' plot(SingleTaxonTree("root") + BalancedTree(4))
 #'
-#' @keywords  tree
+#' @keywords tree
 #' @family tree manipulation
 #' @family tree generation functions
+#' @name TrivialTree
+NULL
+
+#' @rdname TrivialTree
 #' @export
 SingleTaxonTree <- function(label = "t1") {
-  structure(list(edge = matrix(c(2L,1L), 1, 2), tip.label = label, Nnode = 1L),
+  structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label, Nnode = 1L),
             class = "phylo")
+}
+
+#' @rdname TrivialTree
+#' @return `ZeroTaxonTree()` returns an empty \code{phylo} object.
+#' @examples
+#' ZeroTaxonTree()
+#' @export
+ZeroTaxonTree <- function() {
+  structure(list(edge = structure(numeric(0), dim = c(0L, 2L)), 
+                 tip.label = character(0), Nnode = 0), class = "phylo")
 }
 
 #' Extract a subtree
