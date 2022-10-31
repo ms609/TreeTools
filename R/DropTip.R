@@ -245,6 +245,16 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 #' @rdname DropTip
+#' @export
+DropTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  if (all(vapply(tree, inherits, logical(1), "phylo"))) {
+    DropTip.multiPhylo(tree, tip, preorder, check)
+  } else {
+    NextMethod()
+  }
+}
+
+#' @rdname DropTip
 #' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
 #' in preorder.
 #' @export

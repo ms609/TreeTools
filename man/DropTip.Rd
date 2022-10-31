@@ -8,6 +8,7 @@
 \alias{DropTip.Splits}
 \alias{DropTipPhylo}
 \alias{DropTip.multiPhylo}
+\alias{DropTip.list}
 \alias{KeepTip}
 \title{Drop leaves from tree}
 \usage{
@@ -24,6 +25,8 @@ KeepTipPostorder(tree, tip)
 DropTipPhylo(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE, check = TRUE)
+
+\method{DropTip}{list}(tree, tip, preorder = TRUE, check = TRUE)
 
 KeepTip(tree, tip, preorder = TRUE, check = TRUE)
 }
