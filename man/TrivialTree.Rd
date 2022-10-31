@@ -28,6 +28,7 @@ taxon.
 SingleTaxonTree("Homo_sapiens")
 plot(SingleTaxonTree("root") + BalancedTree(4))
 
+ZeroTaxonTree()
 }
 \seealso{
 Other tree manipulation: 
