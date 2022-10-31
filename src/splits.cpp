@@ -29,7 +29,11 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
                             "Contact maintainer for advice");                   // # nocov
   }
   if (nTip[0] < 1) {
-    Rcpp::stop("Tree must contain tips.");
+    if (nTip[0] == 0) {
+      return RawMatrix(0, 0);
+    } else {
+      Rcpp::stop("Tree must contain non-negative number of tips.");
+    }
   }
   
   const uintx n_edge = edge.rows();

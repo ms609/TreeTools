@@ -215,7 +215,7 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
     nTip <- length(x)
     if (nTip == 0) {
       structure(
-        matrix(0, 0, 0),
+        matrix(raw(0), 0, 0),
         nTip = 0,
         tip.label = TipLabels(0),
         class = "Splits"
@@ -303,8 +303,19 @@ print.Splits <- function(x, details = FALSE, ...) {
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
       if(any(trivial)) paste0("(", sum(trivial), " trivial)"),
       "dividing", nTip,
-      ifelse(is.null(tipLabels), "unlabelled tips.",
-             paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
+      if(is.null(tipLabels)) {
+        "unlabelled tips."
+      } else {
+        if (nTip) {
+          if (nTip == 1) {
+            paste("tip,", tipLabels[1])
+          } else {
+            paste("tips,", tipLabels[1], "..", tipLabels[nTip])
+          }
+        } else {
+          "tips"
+        }
+      }
       )
   if (details) {
     splitNames <- rownames(x)
