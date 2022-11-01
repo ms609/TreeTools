@@ -153,6 +153,8 @@ test_that("DropTip.Splits()", {
   expect_equal(thin_splits(s19, 1:19 %in% 2:19),
                structure(raw(0), .Dim = c(0L, 1L)))
   expect_equal(thin_splits(s9, logical(9)), s9, ignore_attr = TRUE)
+  
+  expect_equal(DropTip(s9, TipLabels(s9)), as.Splits(ZeroTaxonTree()))
 })
 
 test_that("KeepTip() works", {
@@ -175,6 +177,9 @@ test_that("KeepTip() works", {
     KeepTip(BalancedTree(12), !tabulate(1:5, 12)),
     DropTip(BalancedTree(12), !tabulate(6:12, 12))
     )
+  
+  s9 <- as.Splits(BalancedTree(9))
+  expect_equal(KeepTip(s9, character(0)), DropTip(s9, TipLabels(s9)))
 })
 
 test_that("KeepTip() retains edge lengths", {

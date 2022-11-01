@@ -126,11 +126,12 @@ LogicalVector duplicated_splits(const RawMatrix splits,
     n_spare = n_tip % BIN_SIZE,
     check_bins = n_bin - (n_spare == 1)
   ;
-  if (n_bin != splits.cols()) {
-    Rcpp::stop("`splits` tip number is mis-specified.");
-  }
   if (n_split == 0) {
     return Rcpp::LogicalVector(0);
+  }
+  // assert(n_split > 0);
+  if (n_bin != splits.cols()) {
+    Rcpp::stop("`splits` tip number is mis-specified.");
   }
   
   RawMatrix compare(n_split, check_bins);
