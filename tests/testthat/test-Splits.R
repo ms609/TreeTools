@@ -64,6 +64,11 @@ test_that("as.Splits()", {
   expect_equal(c("7" = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
                  "8" = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
                as.Splits(notPreorder)[, 1])
+  
+  expect_equal(as.Splits(list(BalancedTree(3:9), BalancedTree(7:1))),
+               list(as.Splits(BalancedTree(3:9)),
+                    as.Splits(BalancedTree(7:1),
+                              tipLabels = as.character(c(3:7, 2:1)))))
 })
 
 test_that("as.Splits.phylo()", {

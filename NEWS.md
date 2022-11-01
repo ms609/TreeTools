@@ -1,10 +1,12 @@
-# TreeTools 1.8.0.9002 (development) #
+# TreeTools 1.8.0.9003 (development) #
 
 - New function `ZeroTaxonTree()`.
 
 - Handle `TipLabels(0)` and `BalancedTree(0)`.
 
 - Support zero-leaf trees in `as.Splits()` and `duplicated.Splits()`.
+
+- Support non-identical tip labels in `as.Splits()`.
 
 - New method `DropTip.list()`.
 

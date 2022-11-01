@@ -161,9 +161,13 @@ as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
 as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], "phylo")) {
     if (is.null(tipLabels)) {
-      tipLabels <- x[[1]][["tip.label"]]
+      tipLabels <- unique(unlist(TipLabels(x)))
     }
-    lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
+    lapply(x, function(sp) as.Splits(
+      sp,
+      tipLabels = intersect(tipLabels, TipLabels(sp)),
+      asSplits = asSplits
+      ))
   } else if (inherits(x[[1]], "Splits")) {
     if (is.null(tipLabels)) {
       tipLabels <- attr(x, "tip.label")
