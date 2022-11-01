@@ -24,7 +24,7 @@ incident branches."><meta name="robots" content="noindex"><!-- mathjax --><scrip
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.8.0.9002</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.8.0.9003</span>
       </span>
     </div>
 
@@ -87,10 +87,6 @@ incident branches.</p>
 <span><span class="co"># S3 method for phylo</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">KeepTipPreorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># S3 method for Splits</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, <span class="va">preorder</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
@@ -101,6 +97,10 @@ incident branches.</p>
 <span></span>
 <span><span class="co"># S3 method for list</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">KeepTipPreorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -150,7 +150,9 @@ and which can crash when trees' internal numbering follows unexpected schema.</p
     <div id="functions">
     <h2>Functions</h2>
     
-<ul><li><p><code>KeepTipPreorder()</code>: Faster version with no checks.
+<ul><li><p><code>DropTipPhylo()</code>: Direct call to <code>DropTip.phylo()</code>, to avoid overhead of
+querying object's class.</p></li>
+<li><p><code>KeepTipPreorder()</code>: Faster version with no checks.
 Does not retain tip labels or edge weights.
 edges must be listed in preorder.
 May crash if improper input is specified.</p></li>
@@ -158,8 +160,6 @@ May crash if improper input is specified.</p></li>
 Does not retain tip labels or edge weights.
 edges must be listed in postorder.
 May crash if improper input is specified.</p></li>
-<li><p><code>DropTipPhylo()</code>: Direct call to <code>DropTip.phylo()</code>, to avoid overhead of
-querying object's class.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
