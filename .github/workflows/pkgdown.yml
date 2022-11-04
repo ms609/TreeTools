@@ -12,6 +12,9 @@ on:
       - 'man/**.R'
       - 'man-roxygen/**.R'
       - 'vignettes/**.Rmd'
+  release:
+    types: [published]
+  workflow_dispatch:
 
 name: pkgdown
 
