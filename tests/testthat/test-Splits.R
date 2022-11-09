@@ -69,6 +69,11 @@ test_that("as.Splits()", {
                list(as.Splits(BalancedTree(3:9)),
                     as.Splits(BalancedTree(7:1),
                               tipLabels = as.character(c(3:7, 2:1)))))
+  
+  expect_equal(as.Splits(c(BalancedTree(3:9), BalancedTree(7:1))),
+               list(as.Splits(BalancedTree(3:9)),
+                    as.Splits(BalancedTree(7:1),
+                              tipLabels = as.character(c(3:7, 2:1)))))
 })
 
 test_that("as.Splits.phylo()", {

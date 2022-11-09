@@ -113,7 +113,7 @@ edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
 
 #' @rdname Splits
 #' @export
-as.Splits.multiPhylo <- function(x, tipLabels = x[[1]][["tip.label"]],
+as.Splits.multiPhylo <- function(x, tipLabels = unique(unlist(TipLabels(x))),
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
