@@ -27,7 +27,7 @@ Beware common gotchas when entering text:
 - Ensure that the tree string ends in a semi-colon.
 
 - Make sure that brackets are matched.  Some text editors, such as 
-  [RStudio](https://www.rstudio.com/) or 
+  [RStudio](https://posit.co/) or 
   [Notepad++](https://notepad-plus-plus.org/), contain built-in syntax 
   highlighting that will highlight the counterpart to each parenthesis as you 
   type.

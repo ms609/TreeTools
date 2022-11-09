@@ -155,7 +155,7 @@ NexusTokens <- function(tokens, character_num = NULL) {
 #' Errors pertaining to an `invalid multibyte string` or
 #' `string invalid at that locale` indicate that R has failed to detect
 #' the appropriate encoding.  Either
-#' [re-save the file](https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding)
+#' [re-save the file](https://support.posit.co/hc/en-us/articles/200532197)
 #' in a supported encoding (`UTF-8` is a good choice) or
 #' specify the file encoding (which you can find by, for example, opening in
 #' [Notepad++](https://notepad-plus-plus.org/downloads/) and identifying
