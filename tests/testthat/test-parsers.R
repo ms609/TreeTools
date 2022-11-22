@@ -160,6 +160,20 @@ test_that("ReadNotes() reads notes", {
   expect_equal(notes[[3]][[2]], setNames("Tax1-Char3.", "taxon_a"))
 })
 
+test_that("ReadNotes() handles absence of character-taxon notes", {
+  expect_equal(ReadNotes(system.file("extdata/tests/taxon-notes.nex",
+                                     package = "TreeTools")),
+               structure(list(), names = character(0)))
+})
+
+test_that("ReadNotes() handles misspecified encoding", {
+  expect_message(
+    expect_equal(ReadNotes(system.file("extdata/tests/encoding.nex",
+                                     package = "TreeTools"))[[1]][[2]],
+                 setNames("\u0080ncoding.", "Two")),
+    "trying latin1 .*encoding")
+})
+
 test_that("ReadCharacters() reads CHARSTATELABELS", {
   labels <- ReadCharacters(system.file("extdata/input/dataset.nex",
                                        package = "TreeTools"))

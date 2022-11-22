@@ -1,4 +1,4 @@
-# TreeTools 1.8.0.9004 (development) #
+# TreeTools 1.8.0.9005 (development) #
 
 - New function `ZeroTaxonTree()`.
 
@@ -9,6 +9,8 @@
 - Support non-identical tip labels in `as.Splits()`.
 
 - New method `DropTip.list()`.
+
+- Try Latin-1 encoding if `ReadCharacters()` family fail under UTF-8.
 
 
 # TreeTools 1.8.0 #

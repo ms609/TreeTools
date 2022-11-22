@@ -449,8 +449,27 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 .UTFLines <- function(filepath, encoding) {
   con <- file(filepath, encoding = encoding)
   on.exit(close(con))
-  # Missing EOL might occur in user-generated file, so warning not helpful
-  enc2utf8(readLines(con, warn = FALSE))
+  
+  tryCatch(
+    # Missing EOL might occur in user-generated file, so warning not helpful
+    try1 <- enc2utf8(readLines(con, warn = FALSE)),
+    warning = function(e) {
+      if (substr(e$message, 0, 39) == 
+          "invalid input found on input connection") {
+        newEnc <- if (toupper(encoding) %in% c("UTF-8", "UTF8")) {
+          "latin1"
+        } else {
+          "UTF8"
+        }
+        message("Problem reading; trying ", newEnc, " file encoding")
+        close(con)
+        con <- file(filepath, encoding = newEnc)
+        enc2utf8(readLines(con, warn = FALSE))
+      } else {
+        try1
+      }
+    }
+  )
 }
 
 .RegExpMatches <- function(pattern, string, i = TRUE, nMatch = 1) {
@@ -483,7 +502,7 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
 
   notesStart <- which(trimUpperLines == "BEGIN NOTES;")
   endBlocks <- which(trimUpperLines %fin% c("END;", "ENDBLOCK;"))
-  taxlabels <- which(trimUpperLines == "TAXLABELS")
+  taxLabels <- which(trimUpperLines == "TAXLABELS")
   semicolons <- which(trimUpperLines == ";")
   nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
 
@@ -492,12 +511,12 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
     return(list("NOTES block not found in Nexus file."))
   } else if (length(notesStart) > 1) {
     return(list("Multiple NOTES blocks found in Nexus file."))
-  } else if (length(taxlabels) > 1) {
+  } else if (length(taxLabels) > 1) {
     return(list("Multiple TAXLABELS found in Nexus file."))
   } else if (!any(nTaxLines)) {
     return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
-    if (length(taxlabels) == 0) {
+    if (length(taxLabels) == 0) {
       taxa <- names(ReadAsPhyDat(filepath))
     } else {
 
@@ -507,8 +526,8 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
       }
       nTax <- as.integer(nTax[1])
 
-      taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
-      taxaLines <- lines[(taxlabels + 1):taxaEnd]
+      taxaEnd <- semicolons[semicolons > taxLabels][1] - 1L
+      taxaLines <- lines[(taxLabels + 1):taxaEnd]
       taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
       if (sum(taxon.matches) == nTax) {
         taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
@@ -534,7 +553,11 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
     noteText <- EndSentence(MorphoBankDecode(
       .RegExpMatches("\\bTEXT\\s*=\\s*['\"]([\\s\\S]+)['\"];\\s*$", notes)))
 
-    seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
+    seqAlongNotes <- if (any(!is.na(noteChar))) {
+      seq_len(max(noteChar, na.rm = TRUE))
+    } else {
+      numeric(0)
+    }
 
     # Return:
     setNames(lapply(seqAlongNotes, function(i) {
