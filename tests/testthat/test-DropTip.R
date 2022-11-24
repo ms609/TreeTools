@@ -72,6 +72,10 @@ test_that("DropTip() works", {
   
   expect_equal(Preorder(DropTip(Preorder(nasty), c(1, 3))),
                Preorder(DropTip(nasty, c(1, 3))))
+  
+  expect_null(DropTip(NULL))
+  expect_warning(expect_null(KeepTip(NULL, "tip")),
+                 "Tips not in tree: tip")
 })
 
 test_that("DropTip() root relocation", {

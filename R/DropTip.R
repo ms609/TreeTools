@@ -215,6 +215,12 @@ DropTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
   }
 }
 
+#' @rdname DropTip
+#' @export
+DropTip.NULL <-  function(tree, tip, preorder = TRUE, check = TRUE) {
+  NULL
+}
+
 #' @describeIn DropTip Faster version with no checks.
 #' Does not retain tip labels or edge weights.
 #' edges must be listed in preorder.

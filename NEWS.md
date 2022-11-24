@@ -4,7 +4,7 @@
 
 - `ZeroTaxonTree()` creates a `phylo` object with no leaves.
 
-- `DropTip()` gains new method `DropTip.list()`.
+- `DropTip()` gains new methods `DropTip.list()` and `DropTip.NULL()`.
 
 ## Improvements
 

@@ -7,6 +7,7 @@
 \alias{DropTipPhylo}
 \alias{DropTip.multiPhylo}
 \alias{DropTip.list}
+\alias{DropTip.NULL}
 \alias{KeepTipPreorder}
 \alias{KeepTipPostorder}
 \alias{KeepTip}
@@ -23,6 +24,8 @@ DropTipPhylo(tree, tip, preorder = TRUE, check = TRUE)
 \method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{list}(tree, tip, preorder = TRUE, check = TRUE)
+
+\method{DropTip}{`NULL`}(tree, tip, preorder = TRUE, check = TRUE)
 
 KeepTipPreorder(tree, tip)
 
