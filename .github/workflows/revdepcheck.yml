@@ -44,7 +44,7 @@ name: revdep-check
 
 jobs:
   mem-check:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
 
     name: revdepcheck, macOS, R release
 
