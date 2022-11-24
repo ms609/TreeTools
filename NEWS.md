@@ -1,14 +1,18 @@
-# TreeTools 1.8.0.9005 (development) #
+# TreeTools 1.9.0 #
 
-- New function `ZeroTaxonTree()`.
+## New methods and functions
+
+- `ZeroTaxonTree()` creates a `phylo` object with no leaves.
+
+- `DropTip()` gains new method `DropTip.list()`.
+
+## Improvements
 
 - Handle `TipLabels(0)` and `BalancedTree(0)`.
 
 - Support zero-leaf trees in `as.Splits()` and `duplicated.Splits()`.
 
 - Support non-identical tip labels in `as.Splits()`.
-
-- New method `DropTip.list()`.
 
 - Try Latin-1 encoding if `ReadCharacters()` family fail under UTF-8.
 
