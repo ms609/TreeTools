@@ -27,7 +27,7 @@ ImposeConstraint <- function(tree, constraint) {
   tree <- Preorder(tree)
   const <- AddUnconstrained(
     constraint,
-    toAdd = setdiff(tree[["tip.label"]], names(constraint)),
+    toAdd = setdiff(tree[["tip.label"]], TipLabels(constraint)),
     asPhyDat = FALSE
   )
 
