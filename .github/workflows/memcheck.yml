@@ -75,11 +75,7 @@ jobs:
       - name: Install apt packages
         run: |
           sudo apt-get install valgrind texlive-latex-base
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-
+          
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
