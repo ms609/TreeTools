@@ -6,6 +6,12 @@
 
 - `DropTip()` gains new methods `DropTip.list()` and `DropTip.NULL()`.
 
+- `as.matrix.phylo()` converts a tree to a matrix representation, allowing
+  a tree to be passed as a constraint to `ImposeConstraint()`.
+  
+- `as.matrix.Splits()` and `as.matrix.phyDat()` methods added as synonyms to
+  `as.logical.Splits()` and `PhyDatToMatrix()`.
+
 ## Improvements
 
 - Handle `TipLabels(0)` and `BalancedTree(0)`.
