@@ -17,7 +17,8 @@ CompatibleSplits(splits, splits2)
 
 \item{splits2}{A second \code{Splits} object.}
 
-\item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits} object.}
+\item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits}
+object.}
 
 \item{rawA, rawB}{Raw representations of splits.}
 
