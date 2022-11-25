@@ -64,7 +64,7 @@ jobs:
 
       - name: Setup pandoc
         if: ${{ matrix.config.test }} == 'vignettes'
-        uses: r-lib/actions/setup-pandoc@master
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Query dependencies
         run: |
