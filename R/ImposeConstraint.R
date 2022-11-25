@@ -112,7 +112,7 @@ AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
   ret <- if (inherits(constraint, "phyDat")) {
     PhyDatToMatrix(constraint)
   } else if (inherits(constraint, "phylo")) {
-    as.matrix(constraint)
+    t(as.matrix(constraint))
   } else {
     constraint
   }
