@@ -111,7 +111,8 @@ CompatibleSplits <- function(splits, splits2) {
     apply(splits, 1, .CompatibleSplit, split, nTip))
 }
 
-#' @param a,b [Raw][raw] representations of splits, from a row of a `Splits` object.
+#' @param a,b [Raw][raw] representations of splits, from a row of a `Splits`
+#' object.
 #' @return `.CompatibleSplit` returns a logical vector stating whether splits
 #' are compatible.
 #' @rdname CompatibleSplits
@@ -119,7 +120,7 @@ CompatibleSplits <- function(splits, splits2) {
 #' @export
 .CompatibleSplit <- function(a, b, nTip) {
   rawMask <- if (nTip %% 8L) {
-    as.raw(c(2^(nTip %% 8L) - 1L, rep.int(255L, nTip %/% 8)))
+    as.raw(c(2 ^ (nTip %% 8L) - 1L, rep.int(255L, nTip %/% 8)))
   } else {
     rep.int(as.raw(255), nTip %/% 8L)
   }

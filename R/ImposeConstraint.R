@@ -25,9 +25,11 @@ ImposeConstraint <- function(tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.
   # But it just about does the job.
   tree <- Preorder(tree)
-  const <- AddUnconstrained(constraint,
-                            setdiff(tree[["tip.label"]], names(constraint)),
-                            asPhyDat = FALSE)
+  const <- AddUnconstrained(
+    constraint,
+    toAdd = setdiff(tree[["tip.label"]], TipLabels(constraint)),
+    asPhyDat = FALSE
+  )
 
   info <- apply(const, 2,
                 function(x) SplitInformation(sum(x == "0"), sum(x == "1")))
@@ -109,6 +111,8 @@ ImposeConstraint <- function(tree, constraint) {
 AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
   ret <- if (inherits(constraint, "phyDat")) {
     PhyDatToMatrix(constraint)
+  } else if (inherits(constraint, "phylo")) {
+    t(as.matrix(constraint))
   } else {
     constraint
   }

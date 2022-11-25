@@ -37,7 +37,7 @@ test_that("Matrix converts to phyDat", {
   mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,2,2,2,"?"),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
-  expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
+  expect_equal(mat, as.matrix(MatrixToPhyDat(mat)))
 })
 
 test_that(".PhyDatWithContrast() fails gracefully", {

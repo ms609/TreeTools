@@ -10,8 +10,10 @@ ConstrainedNJ(dataset, constraint, weight = 1L, ratio = TRUE, ambig = "mean")
 \item{dataset}{A phylogenetic data matrix of \pkg{phangorn} class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
-\item{constraint}{An object of class \code{phyDat}; returned trees will be
-perfectly compatible with each character in \code{constraint}.
+\item{constraint}{Either an object of class \code{phyDat}, in which case returned
+trees will be perfectly compatible with each character in \code{constraint};
+or a tree of class \code{phylo}, in which each node in \code{constraint} will occur in
+the returned tree.
 See \href{https://ms609.github.io/TreeSearch/articles/tree-search.html}{vignette}
 for further examples.}
 
