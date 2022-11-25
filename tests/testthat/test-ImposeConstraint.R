@@ -23,6 +23,11 @@ test_that("ImposeConstraint() works", {
     ImposeConstraint(tree, constraint),
     read.tree(text = "((a, (b, c)), (d, (e, (f, (i, (g, h))))));")))
 
+  constraint <- ape::read.tree(text = "(a, b, c, (d, (f, (g, h), i)));")
+  expect_true(all.equal(
+    ImposeConstraint(tree, constraint),
+    read.tree(text = "((a, (b, c)), (d, (e, (f, (i, (g, h))))));")))
+  
   constraint <- MatrixToPhyDat(matrix(
     c(0, 0, "?", "?", 1, 1,
       1, 1,   1, "?", 0, 0), ncol = 2,
