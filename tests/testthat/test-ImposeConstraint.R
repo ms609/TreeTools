@@ -1,10 +1,14 @@
 test_that("AddUnconstrained() works", {
   tips <- letters[1:9]
   constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
-  expect_equal(AddUnconstrained(constraint, letters[10:12], FALSE),
-               PhyDatToMatrix(AddUnconstrained(constraint, letters[10:12], TRUE)))
-  expect_equal(PhyDatToMatrix(AddUnconstrained(constraint, letters[10:12], TRUE)),
-               AddUnconstrained(constraint, letters[10:12], FALSE))
+  expect_equal(
+    AddUnconstrained(constraint, letters[10:12], FALSE),
+    PhyDatToMatrix(AddUnconstrained(constraint, letters[10:12], TRUE))
+  )
+  expect_equal(
+    PhyDatToMatrix(AddUnconstrained(constraint, letters[8:12], TRUE)),
+    AddUnconstrained(constraint, letters[10:12], FALSE)
+  )
 })
 
 test_that("ImposeConstraint() works", {

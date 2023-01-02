@@ -113,9 +113,13 @@ AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
     PhyDatToMatrix(constraint)
   } else if (inherits(constraint, "phylo")) {
     t(as.matrix(constraint))
+  } else if (is.null(dim(constraint))) {
+    rbind(constraint)
   } else {
     constraint
   }
+  
+  toAdd <- setdiff(toAdd, rownames(ret))
   ret <- rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
                            dimnames = list(toAdd, NULL)))
 

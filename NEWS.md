@@ -1,3 +1,10 @@
+# TreeTools 1.9.0.9000
+
+## Improvements
+
+- `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.
+
+
 # TreeTools 1.9.0 #
 
 ## New methods and functions
