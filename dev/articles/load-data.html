@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.8.0.9005</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.0.9000</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
 <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2022-11-22</h4>
+            <h4 data-toc-skip class="date">2023-01-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/vignettes/load-data.Rmd" class="external-link"><code>vignettes/load-data.Rmd</code></a></small>
       <div class="hidden name"><code>load-data.Rmd</code></div>
@@ -133,7 +133,7 @@ corresponds to a taxon, and each column to a character.</p>
 sheet, rows and columns contain your data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://readxl.tidyverse.org" class="external-link">"readxl"</a></span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span></span>
+<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu">read_excel</span><span class="op">(</span></span>
 <span>  <span class="va">filename</span>,</span>
 <span>  sheet <span class="op">=</span> <span class="fl">1</span>,           <span class="co"># Loads sheet number 1 from the excel file</span></span>
 <span>  range <span class="op">=</span> <span class="st">"B1:AA21"</span>,   <span class="co"># Extracts columns B to AA, rows 1 to 21</span></span>
@@ -143,7 +143,7 @@ sheet, rows and columns contain your data:</p>
 <span></span>
 <span><span class="co"># Read row (taxon) names from column A</span></span>
 <span><span class="co"># Again, the first cell will be interpreted as a column name</span></span>
-<span><span class="va">taxon_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filename</span>, sheet <span class="op">=</span> <span class="fl">1</span>, range <span class="op">=</span> <span class="st">"A1:A21"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">taxon_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu">read_excel</span><span class="op">(</span><span class="va">filename</span>, sheet <span class="op">=</span> <span class="fl">1</span>, range <span class="op">=</span> <span class="st">"A1:A21"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">taxon_names</span></span></code></pre></div>
 </div>
@@ -301,7 +301,7 @@ doi:<a href="https://doi.org/10.1080/10635150118627" class="external-link">10.10
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
