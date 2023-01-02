@@ -7,7 +7,13 @@
 \usage{
 MatrixToPhyDat(tokens)
 
-PhyDatToMatrix(dataset, ambigNA = FALSE, inappNA = ambigNA)
+PhyDatToMatrix(
+  dataset,
+  ambigNA = FALSE,
+  inappNA = ambigNA,
+  parentheses = c("{", "}"),
+  sep = ""
+)
 }
 \arguments{
 \item{tokens}{Matrix of tokens, possibly created with \code{\link[=ReadCharacters]{ReadCharacters()}}
@@ -19,6 +25,16 @@ correspond to character labels.}
 
 \item{ambigNA, inappNA}{Logical specifying whether to denote ambiguous /
 inapplicable characters as \code{NA} values.}
+
+\item{parentheses}{Character vector specifying style of parentheses
+with which to enclose ambiguous characters. \code{c("[", "]")} or \code{"[]"} will
+render \verb{[01]}.
+\code{NULL} will use the token specified in the \code{phyDat} object; but beware that
+this will be treated as a distinct (non-ambiguous) token if re-encoding with
+\code{PhyDatToMatrix()}.}
+
+\item{sep}{Character with which to separate ambiguous tokens, e.g. \code{','}
+will render \verb{[0,1]}.}
 }
 \value{
 \code{MatrixToPhyDat()} returns an object of class \code{phyDat}.
@@ -43,6 +59,8 @@ tokens <- matrix(c(0, 0, "0", 0, 0,
                      paste0("Char_", 1:5)))
                    
 MatrixToPhyDat(tokens)
+data("Lobo", package = "TreeTools")
+head(PhyDatToMatrix(Lobo.phy)[, 91:93])
 }
 \seealso{
 Other phylogenetic matrix conversion functions: 

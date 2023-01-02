@@ -76,12 +76,20 @@ WriteTntCharacters <- function(dataset, filepath = NULL,
 
 #' @rdname WriteTntCharacters
 #' @export
-WriteTntCharacters.phyDat <- function(dataset, filepath = NULL,
-                                       comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
-                                       types = NULL,
-                                       pre = "", post = "") {
-  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types,
-                     pre, post)
+WriteTntCharacters.phyDat <- function(
+    dataset,
+    filepath = NULL,
+    comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+    types = NULL,
+    pre = "",
+    post = "") {
+  WriteTntCharacters(
+    PhyDatToMatrix(dataset, parentheses = "[]"),
+    filepath,
+    comment,
+    types,
+    pre,
+    post)
 }
 
 #' @rdname WriteTntCharacters

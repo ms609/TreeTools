@@ -56,7 +56,22 @@ test_that("PhyDatToMatrix() with ambigs", {
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, FALSE)[3, 5:8],
                c(NA, NA, "-", NA))
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), FALSE, TRUE)[3, 5:8],
-               c("{12}", "(01)", NA_character_, "?"))
+               c("{12}", "{01}", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = NULL
+                   )[3, 5:8],
+    c("{12}", "(01)", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = c("<>"),
+                   sep = "/"
+    )[3, 5:8],
+    c("<1/2>", "<0/1>", NA_character_, "?"))
 })
 
 test_that("Modified phyDat objects can be converted", {

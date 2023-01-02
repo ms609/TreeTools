@@ -4,6 +4,9 @@
 
 - `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.
 
+- `PhyDatToMatrix()` can (and by default does) override levels to write
+  ambiguous tokens in custom formats such as `{01}`.
+
 
 # TreeTools 1.9.0 #
 

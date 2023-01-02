@@ -758,15 +758,31 @@ MatrixToPhyDat <- function(tokens) {
 #' @param dataset A dataset of class `phyDat`.
 #' @param ambigNA,inappNA Logical specifying whether to denote ambiguous /
 #' inapplicable characters as `NA` values.
-## @param parentheses Character vector specifying style of parentheses
-## with which to enclose ambiguous characters, e.g, `c("[", "]")` will render
-## `[01]`.
-## @param sep Character with which to separate ambiguous tokens, e.g. `','`
-## will render `[0,1]`.
+#' @param parentheses Character vector specifying style of parentheses
+#' with which to enclose ambiguous characters. `c("[", "]")` or `"[]"` will
+#' render `[01]`.
+#' `NULL` will use the token specified in the `phyDat` object; but beware that
+#' this will be treated as a distinct (non-ambiguous) token if re-encoding with
+#' `PhyDatToMatrix()`.
+#' @param sep Character with which to separate ambiguous tokens, e.g. `','`
+#' will render `[0,1]`.
 #' @return `PhyDatToMatrix()` returns a matrix corresponding to the
 #' uncompressed character states within a `phyDat` object.
+#' @examples 
+#' data("Lobo", package = "TreeTools")
+#' head(PhyDatToMatrix(Lobo.phy)[, 91:93])
 #' @export
-PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c("[", "]"), sep = "") {
+PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
+                           parentheses = c("{", "}"), sep = "") {
+  if (!is.null(parentheses) && length(parentheses) == 0) {
+    parentheses <- c("", "")
+  } else if (length(parentheses) == 1) {
+    parentheses <- c(
+      substr(parentheses, 1, 1),
+      substr(parentheses, nchar(parentheses), nchar(parentheses))
+    )
+  }
+  
   at <- attributes(dataset)
   allLevels <- as.character(at$allLevels)
   if (inappNA) {
@@ -774,6 +790,17 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, pare
   }
   if (ambigNA) {
     allLevels[rowSums(at$contrast) != 1L] <- NA_character_
+  } else if (!is.null(parentheses)) {
+    cont <- at$contrast
+    nTokens <- rowSums(cont)
+    levels <- colnames(cont)
+    partAmbig <- nTokens != 1L & nTokens < dim(cont)[2]
+    allLevels[partAmbig] <- paste0(
+      parentheses[1],
+      apply(cont[partAmbig, , drop = FALSE] > 0, 1, function(x) {
+        paste0(levels[x], collapse = sep)
+      }),
+      parentheses[2])
   }
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
          ncol = at$nr, byrow = TRUE, dimnames = list(at$names, NULL)
