@@ -21,6 +21,11 @@ test_that("ImposeConstraint() works", {
 
   expect_equal(ImposeConstraint(tree, constraint),
                ImposeConstraint(tree, PhyDatToMatrix(constraint)))
+  
+  expect_equal(
+    ImposeConstraint(tree, setNames(c(rep(0, 3), rep(1, 6)), tips)),
+    ImposeConstraint(tree, StringToPhyDat("000111111", tips, FALSE))
+  )
 
   constraint <- StringToPhyDat("00001111 00011111 0000?110", tips[-5], FALSE)
   expect_true(all.equal(
