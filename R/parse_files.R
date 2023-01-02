@@ -671,8 +671,7 @@ MorphoBankDecode <- function(string) {
 #' @export
 MatrixToPhyDat <- function(tokens) {
   if (inherits(tokens, "phyDat")) {
-    # TODO warn.
-    # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
+    warning("MatrixToPhyDat() expects a matrix, not a phyDat object")
     return(tokens)
   }
   allTokens <- unique(as.character(tokens))

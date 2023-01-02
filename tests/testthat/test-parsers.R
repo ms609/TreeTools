@@ -82,7 +82,8 @@ test_that("MatrixToPhyDat() warns when characters blank", {
 })
 
 test_that("MatrixToPhyDat() returns phyDat if passed", {
-  expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy))
+  expect_warning(expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy)),
+                 "phyDat")
 })
 
 test_that("StringToPhyDat()", {
