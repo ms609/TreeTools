@@ -51,3 +51,4 @@ jobs:
       - uses: ms609/actions/memcheck@main
       - with:
           test: ${{ matrix.config.test}}
+ 
