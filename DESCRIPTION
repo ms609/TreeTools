@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.9.0.9000
+Version: 1.9.0.9001
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -31,7 +31,7 @@ Description: Efficient implementations of functions for the creation,
   and analysis of splits and cladistic information.
 URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
 BugReports: https://github.com/ms609/TreeTools/issues/
-SystemRequirements: C++14
+SystemRequirements: C++17
 Depends:
     R (>= 3.4.0),
     ape (>= 5.6),
