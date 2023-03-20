@@ -24,7 +24,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><!-- mathjax -
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -84,7 +84,13 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><!-- mathjax -
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MatrixToPhyDat</span><span class="op">(</span><span class="va">tokens</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">PhyDatToMatrix</span><span class="op">(</span><span class="va">dataset</span>, ambigNA <span class="op">=</span> <span class="cn">FALSE</span>, inappNA <span class="op">=</span> <span class="va">ambigNA</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">PhyDatToMatrix</span><span class="op">(</span></span>
+<span>  <span class="va">dataset</span>,</span>
+<span>  ambigNA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  inappNA <span class="op">=</span> <span class="va">ambigNA</span>,</span>
+<span>  parentheses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"{"</span>, <span class="st">"}"</span><span class="op">)</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">""</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -103,6 +109,20 @@ correspond to character labels.</p></dd>
 <dt>ambigNA, inappNA</dt>
 <dd><p>Logical specifying whether to denote ambiguous /
 inapplicable characters as <code>NA</code> values.</p></dd>
+
+
+<dt>parentheses</dt>
+<dd><p>Character vector specifying style of parentheses
+with which to enclose ambiguous characters. <code>c("[", "]")</code> or <code>"[]"</code> will
+render <code>[01]</code>.
+<code>NULL</code> will use the token specified in the <code>phyDat</code> object; but beware that
+this will be treated as a distinct (non-ambiguous) token if re-encoding with
+<code>PhyDatToMatrix()</code>.</p></dd>
+
+
+<dt>sep</dt>
+<dd><p>Character with which to separate ambiguous tokens, e.g. <code>','</code>
+will render <code>[0,1]</code>.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -180,6 +200,15 @@ uncompressed character states within a <code>phyDat</code> object.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0 1 1 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "phyDat"</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Lobo"</span>, package <span class="op">=</span> <span class="st">"TreeTools"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">PhyDatToMatrix</span><span class="op">(</span><span class="va">Lobo.phy</span><span class="op">)</span><span class="op">[</span>, <span class="fl">91</span><span class="op">:</span><span class="fl">93</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        [,1] [,2] [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tubiluchus_Priapulida  "-"  "0"  "0" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Cricocosmia            "-"  "0"  "0" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aysheaia               "0"  "0"  "1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Siberion               "?"  "0"  "?" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Onychodictyon_ferox    "0"  "0"  "1" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Onychodictyon_gracilis "1"  "0"  "1" </span>
 </code></pre></div>
     </div>
   </div>
