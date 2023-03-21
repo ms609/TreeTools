@@ -1,7 +1,5 @@
 # TreeTools 1.9.1
 
-## Improvements
-
 - `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.
 
 - `PhyDatToMatrix()` can (and by default does) override levels to write
