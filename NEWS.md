@@ -1,3 +1,8 @@
+# TreeTools 1.9.1.9000
+
+- Improve support for comments in `ReadNotes()`.
+
+
 # TreeTools 1.9.1
 
 - `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.

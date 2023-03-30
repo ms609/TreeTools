@@ -544,7 +544,11 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
-    notes <- strsplit(paste0(notesLines, collapse = "\r\n"),
+    collapsedLines <- paste0(notesLines, collapse = "\r\n")
+    # Remove [comments]
+    collapsedLines <- gsub("(;\\s*)\\[[^\\]]*\\]", "\\1", collapsedLines,
+                           perl = TRUE)
+    notes <- strsplit(collapsedLines,
                       # (?i) makes perl regexp case insensitive
                       "(?i)\\r\\n\\s*TEXT\\s+", perl = TRUE)[[1]]
 
