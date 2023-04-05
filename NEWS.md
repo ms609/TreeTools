@@ -1,6 +1,7 @@
-# TreeTools 1.9.1.9000
+# TreeTools 1.9.1.9001
 
 - Improve support for comments in `ReadNotes()`.
+- Set font size correctly in `SpectrumLegend()`.
 
 
 # TreeTools 1.9.1

@@ -171,6 +171,7 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
   text(seq(x0, x1, length.out = length(legend)),
        seq(y0, y1, length.out = length(legend)),
        col = text.col,
+       cex = cex,
        font = text.font,
        legend, pos = pos, ...)
   if (!is.null(title)) {
