@@ -57,5 +57,6 @@ ct2 <- as.ClusterTable(tree2, tipLabels = LETTERS[1:5])
 \link[=ClusterTable-methods]{S3 methods} for \code{ClusterTable} objects.
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

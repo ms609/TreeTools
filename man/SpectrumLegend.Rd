@@ -2,82 +2,15 @@
 % Please edit documentation in R/helper_functions.R
 \name{SpectrumLegend}
 \alias{SpectrumLegend}
-\title{Produce a legend for continuous gradient scales}
+\title{Spectrum legend
+Deprecated wrapper for standalone function in package "PlotTools".}
 \usage{
-SpectrumLegend(
-  x0 = 0.05,
-  y0 = 0.05,
-  x1 = x0,
-  y1 = y0 + 0.2,
-  absolute = FALSE,
-  legend = character(0),
-  palette,
-  lwd = 4,
-  lty = 1,
-  lend = "square",
-  cex = 1,
-  text.col = par("col"),
-  font = NULL,
-  text.font = font,
-  title = NULL,
-  title.col = text.col[1],
-  title.cex = cex[1],
-  title.adj = 0.5,
-  title.font = 2,
-  pos = 4,
-  ...
-)
+SpectrumLegend(...)
 }
 \arguments{
-\item{x0, y0, x1, y1}{Coordinates of the bottom-left and top-right end of the
-bar.}
-
-\item{absolute}{Logical specifying whether \code{x} and \code{y} values denote
-coordinates (\code{TRUE}) or relative position, where (0, 0) denotes the
-bottom-left of the plot area and (1, 1) the top right.}
-
-\item{legend}{Character vector with which to label points on \code{palette}.}
-
-\item{palette}{Colour palette to depict.}
-
-\item{lwd, lty, lend}{Additional parameters to \code{\link[=segments]{segments()}},
-controlling line style.}
-
-\item{cex}{Character expansion factor relative to current \code{par("cex")}.}
-
-\item{text.col}{Colour used for the legend text.}
-
-\item{font, text.font}{Font used for the legend text; see \code{\link[=text]{text()}}.}
-
-\item{title}{Text to display}
-
-\item{title.col}{Colour for title; defaults to \code{text.col[1]}.}
-
-\item{title.cex}{Expansion factor(s) for the title, defaults to \code{cex[1]}.}
-
-\item{title.adj}{Horizontal adjustment for title: see the help for
-\code{par("adj")}.}
-
-\item{title.font}{Font used for the legend title.}
-
-\item{pos, \dots}{Additional parameters to \code{\link[=text]{text()}}.}
+\item{\dots}{Parameters to pass to \code{PlotTools::SpectrumLegend()}.}
 }
 \description{
-Prints an annotated vertical bar coloured according to a continuous palette.
-}
-\details{
-This convenience function is not yet very customizable; do file a GitHub
-issue if you would value additional functionality.
-}
-\examples{
-plot(0:1, 0:1, type = "n", frame.plot = FALSE,
-     xlab = "x", ylab = "y")
-SpectrumLegend(legend = c("Dark", "Middle", "Bright"),
-               palette = hcl.colors(32L), lwd = 5,
-               title = "Brightness")
-SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
-               legend = seq(1, 9, by = 2), palette = 1:8, pos = 1)
-}
-\author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+Spectrum legend
+Deprecated wrapper for standalone function in package "PlotTools".
 }
