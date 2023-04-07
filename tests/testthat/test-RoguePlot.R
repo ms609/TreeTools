@@ -27,6 +27,10 @@ test_that("Simple rogue plot", {
          onEdge = c(0, 0, 0, 0, 0, 3, 0, 1),
          atNode = double(4))
   )
+  expect_equal(
+    RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)$cons,
+    Preorder(SortTree(RoguePlot(trees, tip = "rogue", plot = FALSE)$cons))
+  )
 
   skip_if_not_installed("vdiffr", "1.0")
   skip_if_not_installed("ape", "5.5.2")

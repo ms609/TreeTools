@@ -23,6 +23,9 @@
 #' @inheritParams RootTree
 #' @param thin,fat Numeric specifying width to plot edges if the rogue tip
 #' never / sometimes does attach to them.
+#' @param sort Logical specifying whether to sort consensus tree using
+#' [`SortTree()`].
+#'
 #' @return `RoguePlot()` returns a list whose elements are:
 #' - `cons`: The reduced consensus tree, in preorder;
 #' - `onEdge`: a vector of integers specifying the number of
@@ -57,6 +60,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
                       edgeLength = NULL,
                       thin = par("lwd"), fat = thin + 1L,
                       outgroupTips,
+                      sort = FALSE,
                       ...) {
   tipLabels <- TipLabels(trees[[1]])
   nTip <- length(tipLabels)
@@ -77,6 +81,9 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   class(noRogue) <- "multiPhylo"
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
+  if (sort) {
+    cons <- SortTree(cons)
+  }
   consTip <- NTip(cons)
 
   if (is.character(tip)) {
