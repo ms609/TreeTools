@@ -146,6 +146,9 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            title.cex = cex[1], title.adj = 0.5, title.font = 2,
                            pos = 4,
                            ...) {
+  
+  .Deprecated("PlotTools::SpectrumLegend", package = "PlotTools")
+  
   nCol <- length(palette)
   
   if (!absolute) {
