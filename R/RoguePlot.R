@@ -199,13 +199,13 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     if (legend != "none") {
       labels <- if (maxVal < 8) {
         maxVal:1
-      } else if (maxVal %% 6 == 0) {
+      } else if ((maxVal - 1) %% 5 == 0) {
         seq(maxVal, 1, length.out = 6)
-      } else if (maxVal %% 5 == 0) {
+      } else if ((maxVal - 1) %% 4 == 0) {
         seq(maxVal, 1, length.out = 5)
-      } else if (maxVal %% 4 == 0) {
+      } else if ((maxVal - 1) %% 3 == 0) {
         seq(maxVal, 1, length.out = 4)
-      } else if (maxVal %% 7 == 0) {
+      } else if ((maxVal - 1) %% 6 == 0) {
         seq(maxVal, 1, length.out = 7)
       } else {
         ceiling(seq(maxVal, 1, length.out = 5))
