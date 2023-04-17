@@ -213,7 +213,6 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
       PlotTools::SpectrumLegend(
         legend,
         bty = "n",
-        cex = 0.8 * par("cex"),
         palette = pal,
         legend = c(paste(labels[-length(labels)], "trees"), "1 tree"),
         inset = legend.inset
