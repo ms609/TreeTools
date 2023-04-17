@@ -101,8 +101,8 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' 
 #' Prints an annotated vertical bar coloured according to a continuous palette.
 #' 
-#' This convenience function is not yet very customizable; do file a GitHub
-#' issue if you would value additional functionality.
+#' This function is now deprecated; it has been superseded by the more capable
+#' [`PlotTools::SpectrumLegend()`] and will be removed in a future release.
 #' 
 #' @param x0,y0,x1,y1 Coordinates of the bottom-left and top-right end of the
 #' bar.
@@ -124,14 +124,6 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' @param title.font Font used for the legend title.
 #' @param pos,\dots Additional parameters to [`text()`].
 #' 
-#' @examples 
-#' plot(0:1, 0:1, type = "n", frame.plot = FALSE,
-#'      xlab = "x", ylab = "y")
-#' SpectrumLegend(legend = c("Dark", "Middle", "Bright"),
-#'                palette = hcl.colors(32L), lwd = 5,
-#'                title = "Brightness")
-#' SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
-#'                legend = seq(1, 9, by = 2), palette = 1:8, pos = 1)
 #' @template MRS
 #' @importFrom graphics segments strheight strwidth text
 #' @export
