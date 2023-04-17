@@ -55,7 +55,7 @@ with a matching label, the first will be used.}
 \code{\link[=SortTree]{SortTree()}}.}
 
 \item{legend}{Character vector specifying position of legend (e.g.
-\code{"bottomleft"}), or \code{"none"} to supress legend.
+\code{"bottomleft"}), or \code{"none"} to suppress legend.
 For fine-grained control of legend, use \code{\link[PlotTools:SpectrumLegend]{PlotTools::SpectrumLegend()}}.}
 
 \item{legend.inset}{Numeric specifying fraction of plot width / height

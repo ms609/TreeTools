@@ -26,7 +26,7 @@
 #' @param sort Logical specifying whether to sort consensus tree using
 #' [`SortTree()`].
 #' @param legend Character vector specifying position of legend (e.g.
-#' `"bottomleft"`), or `"none"` to supress legend.
+#' `"bottomleft"`), or `"none"` to suppress legend.
 #' For fine-grained control of legend, use [`PlotTools::SpectrumLegend()`].
 #' @param legend.inset Numeric specifying fraction of plot width / height
 #' by which the legend's position should be inset.
