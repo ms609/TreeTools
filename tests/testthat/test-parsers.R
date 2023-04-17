@@ -158,13 +158,14 @@ test_that("EndSentence() works correctly", {
 })
 
 test_that("Unquote() unquotes", {
-  expect_equal("Unquoted", Unquote("'Unquoted'"))
-  expect_equal("Unquoted", Unquote("\"Unquoted\""))
-  expect_equal("Unquoted", Unquote("'Unquoted '"))
-  expect_equal("Unquoted", Unquote("\" Unquoted \""))
-  expect_equal("Unquoted's", Unquote("'Unquoted's '"))
-  expect_equal("", Unquote("\"\""))
-  expect_equal("", Unquote("''"))
+  expect_equal(Unquote("'Unquoted'"), "Unquoted")
+  expect_equal(Unquote("\"Unquoted\""), "Unquoted")
+  expect_equal(Unquote("'Unquoted '"), "Unquoted")
+  expect_equal(Unquote("\" Unquoted \""), "Unquoted")
+  expect_equal( Unquote("'Unquoted's '"), "Unquoted's")
+  expect_equal(Unquote(.UnescapeQuotes("'Unquoted''s '")), "Unquoted's")
+  expect_equal(Unquote("\"\""), "")
+  expect_equal(Unquote("''"), "")
 })
 
 test_that("ReadNotes() reads notes", {
