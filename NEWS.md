@@ -1,8 +1,11 @@
-# TreeTools 1.9.1.9002
+# TreeTools 1.9.1.9003
 
 - Improve support for comments in `ReadNotes()`.
 - Support Nexus-escaped ''s in `ReadCharacters()`.
-- Set font size correctly in `SpectrumLegend()`.
+- Add `legend` parameter to `RoguePlot()`.
+- `RoguePlot()` now returns invisibly.
+- Deprecate `SpectrumLegend()` -- spun off to separate 
+  ["PlotTools"](https://ms609.github.io/PlotTools) package.
 
 
 # TreeTools 1.9.1

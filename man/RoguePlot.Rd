@@ -16,6 +16,8 @@ RoguePlot(
   fat = thin + 1L,
   outgroupTips,
   sort = FALSE,
+  legend = "none",
+  legend.inset = 0,
   ...
 )
 }
@@ -52,6 +54,13 @@ with a matching label, the first will be used.}
 \item{sort}{Logical specifying whether to sort consensus tree using
 \code{\link[=SortTree]{SortTree()}}.}
 
+\item{legend}{Character vector specifying position of legend (e.g.
+\code{"bottomleft"}), or \code{"none"} to supress legend.
+For fine-grained control of legend, use \code{\link[PlotTools:SpectrumLegend]{PlotTools::SpectrumLegend()}}.}
+
+\item{legend.inset}{Numeric specifying fraction of plot width / height
+by which the legend's position should be inset.}
+
 \item{\dots}{Additional parameters to \code{plot.phylo()}.}
 }
 \value{
@@ -85,7 +94,7 @@ trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-RoguePlot(trees, "rogue")
+RoguePlot(trees, "rogue", legend = "topleft", inset = 0.01)
 }
 \references{
 \insertAllCited{}

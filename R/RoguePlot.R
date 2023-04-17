@@ -25,8 +25,13 @@
 #' never / sometimes does attach to them.
 #' @param sort Logical specifying whether to sort consensus tree using
 #' [`SortTree()`].
+#' @param legend Character vector specifying position of legend (e.g.
+#' `"bottomleft"`), or `"none"` to supress legend.
+#' For fine-grained control of legend, use [`PlotTools::SpectrumLegend()`].
+#' @param legend.inset Numeric specifying fraction of plot width / height
+#' by which the legend's position should be inset.
 #'
-#' @return `RoguePlot()` returns a list whose elements are:
+#' @return `RoguePlot()` invisibly returns a list whose elements are:
 #' - `cons`: The reduced consensus tree, in preorder;
 #' - `onEdge`: a vector of integers specifying the number of
 #' trees in `trees` in which the rogue leaf is attached to each edge in turn
@@ -45,11 +50,12 @@
 #'               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
 #'               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
 #'               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-#' RoguePlot(trees, "rogue")
+#' RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
 #' @template MRS
 #' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
 #' @importFrom grDevices colorRamp colorRampPalette rgb
+#' @importFrom PlotTools SpectrumLegend
 #' @family consensus tree functions
 #' @export
 RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
@@ -61,6 +67,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
                       thin = par("lwd"), fat = thin + 1L,
                       outgroupTips,
                       sort = FALSE,
+                      legend = "none",
+                      legend.inset = 0,
                       ...) {
   tipLabels <- TipLabels(trees[[1]])
   nTip <- length(tipLabels)
@@ -178,7 +186,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   if (plot) {
     #pal <- c(NA, Palette(length(trees)))
-    pal <- Palette(max(c(nOnEdge, nAtNode)) + 1L)
+    maxVal <- max(c(nOnEdge, nAtNode)) + 1L
+    pal <- Palette(maxVal)
     plot(cons,
          edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
          node.color = c(double(consTip - 1L),
@@ -187,10 +196,33 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
          node.width = ifelse(c(double(consTip - 1L), nAtNode) > 0,
                              fat, thin),
          ...)
+    if (legend != "none") {
+      labels <- if (maxVal < 8) {
+        maxVal:1
+      } else if (maxVal %% 6 == 0) {
+        seq(maxVal, 1, length.out = 6)
+      } else if (maxVal %% 5 == 0) {
+        seq(maxVal, 1, length.out = 5)
+      } else if (maxVal %% 4 == 0) {
+        seq(maxVal, 1, length.out = 4)
+      } else if (maxVal %% 7 == 0) {
+        seq(maxVal, 1, length.out = 7)
+      } else {
+        ceiling(seq(maxVal, 1, length.out = 5))
+      }
+      PlotTools::SpectrumLegend(
+        legend,
+        bty = "n",
+        cex = 0.8 * par("cex"),
+        palette = pal,
+        legend = c(paste(labels[-length(labels)], "trees"), "1 tree"),
+        inset = legend.inset
+      )
+    }
   }
 
   # Return:
-  list(cons = cons, onEdge = nOnEdge, atNode = nAtNode)
+  invisible(list(cons = cons, onEdge = nOnEdge, atNode = nAtNode))
 }
 
 # `tree` must be in preorder
