@@ -64,7 +64,7 @@ by which the legend's position should be inset.}
 \item{\dots}{Additional parameters to \code{plot.phylo()}.}
 }
 \value{
-\code{RoguePlot()} returns a list whose elements are:
+\code{RoguePlot()} invisibly returns a list whose elements are:
 \itemize{
 \item \code{cons}: The reduced consensus tree, in preorder;
 \item \code{onEdge}: a vector of integers specifying the number of
@@ -94,7 +94,7 @@ trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-RoguePlot(trees, "rogue", legend = "topleft", inset = 0.01)
+RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
 }
 \references{
 \insertAllCited{}
