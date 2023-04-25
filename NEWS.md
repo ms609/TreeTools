@@ -5,7 +5,7 @@
 - Add `legend` parameter to `RoguePlot()`.
 - `RoguePlot()` now returns invisibly.
 - Deprecate `SpectrumLegend()` -- spun off to separate 
-  ["PlotTools"](https://ms609.github.io/PlotTools) package.
+  ["PlotTools"](https://ms609.github.io/PlotTools/) package.
 
 
 # TreeTools 1.9.1 #
