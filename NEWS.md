@@ -1,4 +1,4 @@
-# TreeTools 1.9.2
+# TreeTools 1.9.2 (2023-04-25) #
 
 - Improve support for comments in `ReadNotes()`.
 - Support Nexus-escaped ''s in `ReadCharacters()`.
@@ -8,7 +8,7 @@
   ["PlotTools"](https://ms609.github.io/PlotTools) package.
 
 
-# TreeTools 1.9.1
+# TreeTools 1.9.1 #
 
 - `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.
 
@@ -177,7 +177,7 @@
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
 
 
-# TreeTools 1.5.1
+# TreeTools 1.5.1 #
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
@@ -186,7 +186,7 @@
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
 
-# TreeTools 1.5.0
+# TreeTools 1.5.0 #
 
 ## New functions
 
@@ -236,7 +236,7 @@
   and lift limit on tree size.
 
 
-# TreeTools 1.4.5
+# TreeTools 1.4.5 #
 
 - Correct calculation of minimum value in `TCIContext()`.
 - Extract tip labels from objects in `StringToPhyDat()`.
@@ -248,14 +248,14 @@
 - Additions and improvements to text parsing functions.
 
 
-# TreeTools 1.4.4
+# TreeTools 1.4.4 #
 
 - Add `NTip.phyDat()` method.
 - Update `MakeTreeBinary()` docs and tests to reflect updated behaviour of 
   `ape::multi2di()` in 'ape' v5.5.
 
 
-# TreeTools 1.4.3
+# TreeTools 1.4.3 #
 
  - `AddTip()` supports edge lengths.
  - `CladisticInfo()` supports `Splits` objects.
@@ -268,20 +268,20 @@
    ([#50](https://github.com/ms609/TreeTools/issues/50)).
 
 
-# TreeTools 1.4.2
+# TreeTools 1.4.2 #
 
  - Support star trees in `RootTree()`.
  - Improve memory handling in `root_on_node()`.
  - Documentation linkage.
 
 
-# TreeTools 1.4.1
+# TreeTools 1.4.1 #
 
  - `MSTEdges()` supports distance matrices with > 256 entries.
  - Package 'vdiffr' used conditionally.
 
 
-# TreeTools 1.4.0
+# TreeTools 1.4.0 #
 
 ## New functions
  - `MSTLength()` reports length of minimum spanning tree.
@@ -298,13 +298,13 @@
  - Improved parsing of TNT character files.
 
 
-# TreeTools 1.3.1
+# TreeTools 1.3.1 #
 
  - Improved parsing of TNT files.
  - Fix misspecified C++ linkage.
 
 
-# TreeTools 1.3.0
+# TreeTools 1.3.0 #
 
 ## New functions
  
@@ -325,7 +325,7 @@
  - Remove obsolete copy of C++ code from 'phangorn'.
 
 
-# TreeTools 1.2.0
+# TreeTools 1.2.0 #
 
  - `ArtificialExtinction()`: Remove characters that are absent in a fossil 
    template.
@@ -334,7 +334,7 @@
  - Documentation improvements.
 
 
-# TreeTools 1.1.0
+# TreeTools 1.1.0 #
 
 ## New functions
 
@@ -352,7 +352,7 @@
  lists of trees.
 
 
-# TreeTools 1.0.0
+# TreeTools 1.0.0 #
 
 ## New functions
 
@@ -389,7 +389,7 @@
 - Documentation improvements.
 
 
-# TreeTools 0.1.4
+# TreeTools 0.1.4 #
 
 - Catch hang-inducing bugs in `RootOnNode()`.
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error.
@@ -397,26 +397,26 @@
 - Documentation improvements.
 
 
-# TreeTools 0.1.3
+# TreeTools 0.1.3 #
 
 - `RootOnNode()`: Quickly root a tree on a specified node.
 - Improve portability of C++ code.
 
 
-# TreeTools 0.1.2
+# TreeTools 0.1.2 #
  
 - `as.Newick`: Fast conversion to Newick format.
 - `as.TreeNumber`: Tree shape enumeration.
 
 
-# TreeTools 0.1.1
+# TreeTools 0.1.1 #
  
 - Add functions to translate trees to mixed base integers.
 - `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
 - Documentation changes to attempt to satisfy CRAN submission requirements.
 
 
-# TreeTools 0.1.0
+# TreeTools 0.1.0 #
 
 - Pre-release version spun out of ['TreeSearch'](https://ms609.github.io/TreeSearch/)
   package.  Some functionality is subject to change.
