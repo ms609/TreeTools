@@ -1,4 +1,4 @@
-# TreeTools 1.9.1.9003
+# TreeTools 1.9.2
 
 - Improve support for comments in `ReadNotes()`.
 - Support Nexus-escaped ''s in `ReadCharacters()`.
