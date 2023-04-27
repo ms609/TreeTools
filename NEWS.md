@@ -1,7 +1,7 @@
 # TreeTools 1.9.2 (2023-04-25) #
 
 - Improve support for comments in `ReadNotes()`.
-- Support Nexus-escaped ''s in `ReadCharacters()`.
+- Support Nexus-escaped `''`s in `ReadCharacters()`.
 - Add `legend` parameter to `RoguePlot()`.
 - `RoguePlot()` now returns invisibly.
 - Deprecate `SpectrumLegend()` -- spun off to separate 
