@@ -124,7 +124,8 @@
 #' which comprises a numeric vector, whose elements represent successive
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
-#' `nTip` and `tip.label`.
+#' `nTip` and `tip.label`.  If `x` is a list of trees or a `multiPhylo` object,
+#' then `as.TreeNumber()` returns a corresponding list of `TreeNumber` objects.
 #' @export
 as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 
@@ -362,6 +363,18 @@ as.phylo.TreeNumber <- function(x, nTip = attr(x, "nTip"),
 as.integer64.TreeNumber <- function(x, ...) {
   structure(x[1], class = "integer64")
 }
+
+#' Is an object a `TreeNumber` object?
+#' 
+#' @param x R object.
+#' @return `is.TreeNumber()` returns a logical vector of length one specifying
+#' whether `x` inherits the class `"TreeNumber"`.
+#' @template MRS
+#' @examples
+#' is.TreeNumber(FALSE) # FALSE 
+#' is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
+#' @export
+is.TreeNumber <- function(x) inherits(x, "TreeNumber")
 
 #' Print `TreeNumber` object
 #'

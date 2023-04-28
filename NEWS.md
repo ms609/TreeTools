@@ -1,3 +1,7 @@
+# TreeTools 1.9.2.9000 (development) #
+
+- Add `is.TreeNumber()` method.
+
 # TreeTools 1.9.2 (2023-04-25) #
 
 - Improve support for comments in `ReadNotes()`.

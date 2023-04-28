@@ -68,7 +68,8 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The \code{TreeNumber} object has attributes
-\code{nTip} and \code{tip.label}.
+\code{nTip} and \code{tip.label}.  If \code{x} is a list of trees or a \code{multiPhylo} object,
+then \code{as.TreeNumber()} returns a corresponding list of \code{TreeNumber} objects.
 
 \code{as.phylo.numeric()} returns a tree of class \code{phylo}.
 }

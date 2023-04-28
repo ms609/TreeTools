@@ -73,3 +73,4 @@ This function is now deprecated; it has been superseded by the more capable
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\keyword{internal}
