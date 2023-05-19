@@ -15,8 +15,9 @@ on:
       - "**.git"
       - "**.json"
       - "**.md"
+      - "**.yaml"
       - "**.yml"
-      - "!**revdepcheck.yml"
+      - "!**revdep.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
   pull_request:
@@ -35,8 +36,9 @@ on:
       - "**.git"
       - "**.json"
       - "**.md"
+      - "**.yaml"
       - "**.yml"
-      - "!**revdepcheck.yml"
+      - "!**revdep.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
 
