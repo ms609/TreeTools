@@ -25,7 +25,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     Rcpp::stop("Edge matrix must contain two columns");
   }
   if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
-    Rcpp::stop("Too many edges in tree for edge_to_splits: "       // # nocov
+    Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
                             "Contact maintainer for advice");                   // # nocov
   }
   if (nTip[0] < 1) {
@@ -49,7 +49,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
 
   if (n_edge == n_tip  /* No internal nodes resolved */
         || n_tip < 4) { /* Need four tips to split non-trivially */
-    return RawMatrix (0, n_bin);
+    return RawMatrix(0, n_bin);
   }
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
