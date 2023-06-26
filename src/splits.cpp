@@ -37,6 +37,9 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
   }
   
   const uintx n_edge = edge.rows();
+  if (!n_edge) {
+    return RawMatrix(0, 0);
+  }
   if (n_edge != uintx(order.length())) {
     Rcpp::stop("Length of `order` must equal number of edges");
   }

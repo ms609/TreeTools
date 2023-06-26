@@ -1,6 +1,7 @@
-# TreeTools 1.9.2.9000 (development) #
+# TreeTools 1.9.2.9001 (development) #
 
 - Add `is.TreeNumber()` method.
+- Support zero-edge trees in `as.Splits()`.
 
 # TreeTools 1.9.2 (2023-04-25) #
 

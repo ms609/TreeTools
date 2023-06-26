@@ -9,6 +9,20 @@ test_that("AddUnconstrained() works", {
     PhyDatToMatrix(AddUnconstrained(constraint, letters[8:12], TRUE)),
     AddUnconstrained(constraint, letters[10:12], FALSE)
   )
+  
+  expect_equal(
+    AddUnconstrained(SingleTaxonTree("a"), letters[2:6], FALSE),
+    matrix(NA_character_, 6, 0, dimnames = list(letters[1:6], NULL))
+  )
+  
+  noNode <- structure(
+    list(edge = structure(integer(0), dim = c(0L, 2L)),
+         Nnode = 0L, tip.label = "a"), order = "preorder", class = "phylo")
+  expect_equal(
+    AddUnconstrained(noNode, letters[1:6], FALSE),
+    matrix(NA_character_, 6, 0, dimnames = list(letters[1:6], NULL))
+  )
+  
 })
 
 test_that("ImposeConstraint() works", {
