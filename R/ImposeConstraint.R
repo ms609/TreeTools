@@ -120,8 +120,12 @@ AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
   }
   
   toAdd <- setdiff(toAdd, rownames(ret))
-  ret <- rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
-                           dimnames = list(toAdd, NULL)))
+  ret <- if (is.null(ret)) {
+    matrix("?", length(toAdd), 0, dimnames = list(toAdd, NULL))
+  } else {
+    rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
+                      dimnames = list(toAdd, NULL)))
+  }
 
   # Return:
   if (asPhyDat) {

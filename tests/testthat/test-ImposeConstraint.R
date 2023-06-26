@@ -10,24 +10,30 @@ test_that("AddUnconstrained() works", {
     AddUnconstrained(constraint, letters[10:12], FALSE)
   )
   
+  noConstraint <- matrix(NA_character_, 6, 0,
+                         dimnames = list(letters[1:6], NULL))
   expect_equal(
     AddUnconstrained(SingleTaxonTree("a"), letters[2:6], FALSE),
-    matrix(NA_character_, 6, 0, dimnames = list(letters[1:6], NULL))
+    noConstraint
   )
+  
+  expect_equal(AddUnconstrained(c(), letters[1:6], FALSE), noConstraint)
+  expect_equal(AddUnconstrained(NULL, letters[1:6], FALSE), noConstraint)
   
   noNode <- structure(
     list(edge = structure(integer(0), dim = c(0L, 2L)),
          Nnode = 0L, tip.label = "a"), order = "preorder", class = "phylo")
-  expect_equal(
-    AddUnconstrained(noNode, letters[1:6], FALSE),
-    matrix(NA_character_, 6, 0, dimnames = list(letters[1:6], NULL))
-  )
+  expect_equal(AddUnconstrained(noNode, letters[1:6], FALSE), noConstraint)
   
 })
 
 test_that("ImposeConstraint() works", {
   tips <- letters[1:9]
   tree <- as.phylo(1, 9, tips)
+  
+  expect_equal(ImposeConstraint(tree, c()), tree)
+  expect_equal(ImposeConstraint(tree, KeepTip(tree, character(0))), tree)
+  
   constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
   expect_true(all.equal(
     ImposeConstraint(tree, constraint),
