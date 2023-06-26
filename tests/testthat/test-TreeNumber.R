@@ -110,4 +110,4 @@ test_that("as.MixedBase() supports larger trees", {
 test_that("is.TreeNumber()", {
   expect_equal(is.TreeNumber(as.integer64(5)), FALSE)
   expect_equal(is.TreeNumber(as.TreeNumber(BalancedTree(5))), TRUE)
-}
+})
