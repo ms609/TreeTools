@@ -21,8 +21,8 @@ for further examples.}
 
 \item{toAdd}{Character vector specifying taxa to add to constraint.}
 
-\item{asPhyDat}{Logical: if \code{TRUE}, return a \code{phyDat} object; if \code{FALSE}, return
-a matrix.}
+\item{asPhyDat}{Logical: if \code{TRUE}, return a \code{phyDat} object; if \code{FALSE},
+return a matrix.}
 }
 \value{
 \code{ImposeConstraint()} returns a tree of class \code{phylo}, consistent
