@@ -251,10 +251,11 @@ NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
 
 }
 
-#' Order of each node in a tree
+#' Number of edges incident to each node in a tree
 #'
-#' `NodeOrder()` calculates the number of edges incident to each node in a tree.
-#' Includes the root edge in rooted trees.
+#' `NodeOrder()` calculates the order of each node: the number of edges
+#' incident to it in a tree.
+#' This value includes the root edge in rooted trees.
 #'
 #' @template xPhylo
 #' @param includeAncestor Logical specifying whether to count edge leading to
