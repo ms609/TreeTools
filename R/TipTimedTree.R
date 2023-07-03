@@ -1,6 +1,6 @@
 #' Display time-calibrated tree using tip information only
 #' 
-#' `TipTimeTree()` plots a phylogenetic tree against time using an
+#' `TipTimedTree()` plots a phylogenetic tree against time using an
 #' _ad hoc_ approach based on dates associated with the leaves.
 #'  
 #' Nodes are dated to the youngest possible value, plus an additional "buffer"
@@ -26,7 +26,7 @@ TipTimedTree <- function(tree, tipAge, minEdge = 1) {
   edge <- po$edge
   nEdge <- dim(edge)[1]
   if (nEdge < 2) {
-    warning("`tree` must contain multiple edges")
+    warning("`tree` does not contain multiple edges")
     tree[["edge.length"]] <- rep_len(minEdge, nEdge)
     return(tree)
   }
