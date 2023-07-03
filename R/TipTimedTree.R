@@ -7,7 +7,7 @@
 #' (specified with `minEdge`) to ensure that branching order is readable.
 #'  
 #' @template treeParam
-#' @param tipAges Numeric vector specifying the age (in units-of-time ago)
+#' @param tipAge Numeric vector specifying the age (in units-of-time ago)
 #' associated with each tip in `tree$tip.label` in turn.
 #' Older ages signify earlier tips.
 #' @param minEdge Minimum length of edge to allow (in units-of-time)
@@ -22,8 +22,7 @@
 #' @family tree manipulation
 #' @export
 TipTimedTree <- function(tree, tipAge, minEdge = 1) {
-  po <- Preorder(tree)
-  edge <- po$edge
+  edge <- tree$edge
   nEdge <- dim(edge)[1]
   if (nEdge < 2) {
     warning("`tree` does not contain multiple edges")
@@ -38,7 +37,7 @@ TipTimedTree <- function(tree, tipAge, minEdge = 1) {
   
   age <- c(tipAge, rep_len(-Inf, max(edge) - nTip))
   
-  for (i in nEdge:1) {
+  for (i in PostorderOrder(tree)) {
     age[edge[i, 1]] <- max(age[edge[i, 2]] + minEdge, age[edge[i, 1]])
   }
   tree$edge.length <- apply(edge, 1, function(i) age[i[1]] - age[i[2]])
