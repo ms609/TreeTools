@@ -9,11 +9,11 @@ TipTimedTree(tree, tipAge, minEdge = 1)
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
-\item{minEdge}{Minimum length of edge to allow (in units-of-time)}
-
-\item{tipAges}{Numeric vector specifying the age (in units-of-time ago)
+\item{tipAge}{Numeric vector specifying the age (in units-of-time ago)
 associated with each tip in \code{tree$tip.label} in turn.
 Older ages signify earlier tips.}
+
+\item{minEdge}{Minimum length of edge to allow (in units-of-time)}
 }
 \value{
 \code{TipTimedTree()} returns a tree with edge lengths set based on the
@@ -22,9 +22,14 @@ ages of each tip.
 \description{
 \code{TipTimedTree()} plots a phylogenetic tree against time using an
 \emph{ad hoc} approach based on dates associated with the leaves.
-
 Nodes are dated to the youngest possible value, plus an additional "buffer"
 (specified with \code{minEdge}) to ensure that branching order is readable.
+}
+\details{
+This experimental function is liable to change its behaviour, or to
+be deprecated, in coming releases.
+Please contact the maintainer if you find it useful, so that a
+production-ready version can be prioritized.
 }
 \examples{
 tree <- BalancedTree(6)

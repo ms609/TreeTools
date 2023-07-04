@@ -2,9 +2,13 @@
 #' 
 #' `TipTimedTree()` plots a phylogenetic tree against time using an
 #' _ad hoc_ approach based on dates associated with the leaves.
-#'  
 #' Nodes are dated to the youngest possible value, plus an additional "buffer"
 #' (specified with `minEdge`) to ensure that branching order is readable.
+#' 
+#' This experimental function is liable to change its behaviour, or to
+#' be deprecated, in coming releases.
+#' Please contact the maintainer if you find it useful, so that a
+#' production-ready version can be prioritized.
 #'  
 #' @template treeParam
 #' @param tipAge Numeric vector specifying the age (in units-of-time ago)
