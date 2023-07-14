@@ -622,7 +622,11 @@ NPartitions <- NSplits
 #' @rdname NSplits
 #' @export
 NSplits.phylo <- function(x) {
-  collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+  if (length(x[["tip.label"]]) < 4L) {
+    0L
+  } else {
+    collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+  }
 }
 
 #' @rdname NSplits
