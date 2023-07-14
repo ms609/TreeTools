@@ -9,14 +9,15 @@ nasty <- structure(list(edge = structure(
 test_that("AllDescendantEdges() works", {
   pec5 <- UnrootTree(PectinateTree(5))
   V <- TRUE; x <- FALSE
-  expect_equal(matrix(c(V, x, x, x, x, x, x,
-                        x, V, x, x, x, x, x,
-                        x, x, V, V, V, V, V,
-                        x, x, x, V, x, x, x,
-                        x, x, x, x, V, V, V,
-                        x, x, x, x, x, V, x,
-                        x, x, x, x, x, x, V), 7, 7, byrow = T),
-               DescendantEdges(edge = NULL, pec5$edge[, 1], pec5$edge[, 2]))
+  expect_equal(
+    DescendantEdges(edge = NULL, pec5$edge[, 1], pec5$edge[, 2]),
+    matrix(c(V, x, x, x, x, x, x,
+             x, V, x, x, x, x, x,
+             x, x, V, V, V, V, V,
+             x, x, x, V, x, x, x,
+             x, x, x, x, V, V, V,
+             x, x, x, x, x, V, x,
+             x, x, x, x, x, x, V), 7, 7, byrow = T))
 })
 
 test_that("EdgeAncestry() works", {
@@ -24,10 +25,10 @@ test_that("EdgeAncestry() works", {
   edge <- tree$edge
   parent <- edge[, 1]
   child <- edge[, 2]
-  expect_equal(1:3, which(EdgeAncestry(4L, parent, child)))
-  expect_equal(1, which(EdgeAncestry(2, parent, child)))
-  expect_equal(integer(0), which(EdgeAncestry(1, parent, child)))
-  expect_equal(logical(18), EdgeAncestry(10, parent, child))
+  expect_equal(which(EdgeAncestry(4L, parent, child)), 1:3)
+  expect_equal(which(EdgeAncestry(2, parent, child)), 1)
+  expect_equal(which(EdgeAncestry(1, parent, child)), integer(0))
+  expect_equal(EdgeAncestry(10, parent, child), logical(18))
 })
 
 test_that("Root node can be found", {
@@ -36,16 +37,17 @@ test_that("Root node can be found", {
   unrooted <- UnrootTree(rooted)
   expect_true(TreeIsRooted(rooted))
   expect_false(TreeIsRooted(unrooted))
-  expect_equal(9L, RootNode(rooted$edge))
-  expect_equal(9L, RootNode(rooted))
-  expect_equal(9L, RootNode(as.phylo(1337L, 8L)))
-  expect_equal(rep(9L, 3L),
-               RootNode(c(unrooted, Preorder(postorder), postorder)))
-  expect_equal(rep(9L, 3L),
-               RootNode(list(Cladewise(postorder),
+  expect_equal(RootNode(rooted$edge), 9L)
+  expect_equal(RootNode(rooted), 9L)
+  expect_equal(RootNode(as.phylo(1337L, 8L)), 9L)
+  expect_equal(RootNode(c(unrooted, Preorder(postorder), postorder)),
+               rep(9L, 3L))
+  expect_equal(RootNode(list(Cladewise(postorder),
                              ApePostorder(rooted),
-                             Pruningwise(postorder))))
-  expect_warning(RootNode(matrix(1:4, 2)))
+                             Pruningwise(postorder))),
+               rep(9L, 3L))
+  expect_warning(RootNode(matrix(1:4, 2)),
+                 "Root not unique")
 })
 
 test_that("NodeOrder() works", {
@@ -73,20 +75,26 @@ test_that("Rooting and partition counting", {
   expect_true(TreeIsRooted(tree8))
   expect_false(TreeIsRooted(UnrootTree(tree8)))
 
-  expect_equal(5L, NPartitions(8))
-  expect_equal(5L, NPartitions(tree8))
-  expect_equal(5L, NPartitions(UnrootTree(tree8)))
+  expect_equal(NPartitions(8), 5L)
+  expect_equal(NPartitions(tree8), 5L)
+  expect_equal(NPartitions(UnrootTree(tree8)), 5L)
 
-  expect_equal(0L, NPartitions(ape::read.tree(text="(A, ((B, C)));")))
+  expect_equal(NPartitions(ape::read.tree(text="(A, ((B, C)));")), 0L)
 
-  expect_equal(c(5L, 5L), NPartitions(list(tree8, UnrootTree(tree8))))
-  expect_equal(c(5L, 5L), NPartitions(c(8, 8)))
-  expect_equal(2L, NSplits("((a, b), (c, (d, e)));"))
-  expect_equal(0L, NSplits("a"))
+  expect_equal(NPartitions(list(tree8, UnrootTree(tree8))), c(5L, 5L))
+  expect_equal(NPartitions(c(8, 8)), c(5L, 5L))
+  expect_equal(NSplits("((a, b), (c, (d, e)));"), 2L)
+  expect_equal(NSplits("a"), 0L)
+  emptyTree <- structure(
+    list(edge = structure(numeric(0), dim = c(0L, 2L)),
+         tip.label = character(0), Nnode = 0),
+    class = "phylo")
+  expect_equal(NSplits(emptyTree), 0L)
   expect_null(NSplits(NULL))
-  expect_equal(0L, NSplits(letters[1:2]))
-  expect_equal(3L, NSplits(letters[1:6]))
-  expect_error(NPartitions(raw(1)))
+  expect_equal(NSplits(letters[1:2]), 0L)
+  expect_equal(NSplits(letters[1:6]), 3L)
+  expect_error(NPartitions(raw(1)),
+               "no applicable method")
 })
 
 test_that("NTip() works", {
