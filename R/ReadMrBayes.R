@@ -37,8 +37,8 @@
 #' @template MRS
 #' @export
 ReadMrBayesTrees <- function(filepath, n = NULL, burninFrac = NULL) {
-  lines <- readLines(filepath, warn = FALSE)
   if (is.null(burninFrac)) {
+    lines <- readLines(filepath, warn = FALSE)
     burninPattern <- ".*\\bmcmcp?\\b.*burninfr?a?c?\\s*=\\s*([\\d\\.]+)\\b.*"
     burninFrac <- rev(as.numeric(
       gsub(burninPattern, "\\1", lines[grep(burninPattern, lines, TRUE, TRUE)],
