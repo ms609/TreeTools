@@ -6,11 +6,12 @@
 
 #' Read posterior tree sample produced by MrBayes
 #'
-#' Read post-burnin posterior trees from
-#' [MrBayes](https://nbisweden.github.io/MrBayes/) output files.
+#' Read posterior trees from ['MrBayes'](
+#' https://nbisweden.github.io/MrBayes/) output files, discarding burn-in
+#' generations.
 #'
 #' `ReadMrBayesTrees()` samples trees from the posterior distributions
-#' computed using the Bayesian Inferrence software [MrBayes](
+#' computed using the Bayesian inference software ['MrBayes'](
 #' https://nbisweden.github.io/MrBayes/) 
 #' 
 #' @param filepath character string specifying path to `.nex` input file used
@@ -75,8 +76,10 @@ ReadMrBayesTrees <- function(filepath, n = NULL, burninFrac = NULL) {
   }
 }
 
+#' @rdname ReadMrBayesTrees
 #' @export
 ReadMrBayes <- ReadMrBayesTrees
 
+#' @rdname ReadMrBayesTrees
 #' @export
 MrBayesTrees <- ReadMrBayesTrees

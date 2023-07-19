@@ -2,9 +2,15 @@
 % Please edit documentation in R/ReadMrBayes.R
 \name{ReadMrBayesTrees}
 \alias{ReadMrBayesTrees}
+\alias{ReadMrBayes}
+\alias{MrBayesTrees}
 \title{Read posterior tree sample produced by MrBayes}
 \usage{
 ReadMrBayesTrees(filepath, n = NULL, burninFrac = NULL)
+
+ReadMrBayes(filepath, n = NULL, burninFrac = NULL)
+
+MrBayesTrees(filepath, n = NULL, burninFrac = NULL)
 }
 \arguments{
 \item{filepath}{character string specifying path to \code{.nex} input file used
@@ -23,12 +29,12 @@ command in \code{filepath}.}
 or \code{NULL} if no trees are found.
 }
 \description{
-Read post-burnin posterior trees from
-\href{https://nbisweden.github.io/MrBayes/}{MrBayes} output files.
+Read posterior trees from \href{https://nbisweden.github.io/MrBayes/}{'MrBayes'} output files, discarding burn-in
+generations.
 }
 \details{
 \code{ReadMrBayesTrees()} samples trees from the posterior distributions
-computed using the Bayesian Inferrence software \href{https://nbisweden.github.io/MrBayes/}{MrBayes}
+computed using the Bayesian inference software \href{https://nbisweden.github.io/MrBayes/}{'MrBayes'}
 }
 \examples{
 \dontrun{ # Download will take a few seconds
