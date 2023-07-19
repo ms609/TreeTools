@@ -52,6 +52,7 @@ Other tree manipulation:
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
 \code{\link{SortTree}()},
+\code{\link{TipTimedTree}()},
 \code{\link{TrivialTree}}
 }
 \author{

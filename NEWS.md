@@ -1,5 +1,7 @@
-# TreeTools 1.9.2.9004 (development) #
+# TreeTools 1.9.2.9005 (development) #
 
+- Add `TipTimedTree()` function to display trees where leaves are associated
+  with absolute ages.
 - Add `is.TreeNumber()` method.
 - Support zero-edge trees in `as.Splits()` and `NSplits()`.
 - Support empty constraints in `AddUnconstrained()`.
