@@ -1,5 +1,6 @@
-# TreeTools 1.9.2.9004 (development) #
+# TreeTools 1.9.2.9006 (development) #
 
+- Add `ReadMrBayesTrees()` to sample trees from posterior of MrBayes output.
 - Add `is.TreeNumber()` method.
 - Support zero-edge trees in `as.Splits()` and `NSplits()`.
 - Support empty constraints in `AddUnconstrained()`.

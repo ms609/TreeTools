@@ -91,6 +91,7 @@
 #' TNTText2Tree("(A (B (C (D E ))));")
 #'
 #' @template MRS
+#' @family tree import functions
 #' @importFrom ape read.tree
 #' @export
 ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,

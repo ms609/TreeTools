@@ -113,7 +113,12 @@ setwd(oldWD) # Restore original working directory
 TNTText2Tree("(A (B (C (D E ))));")
 
 }
+\seealso{
+Other tree import functions: 
+\code{\link{ReadMrBayesTrees}()}
+}
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree import functions}
