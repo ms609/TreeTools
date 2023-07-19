@@ -1,5 +1,7 @@
 # TreeTools 1.9.2.9006 (development) #
 
+- Add `TipTimedTree()` function to display trees where leaves are associated
+  with absolute ages.
 - Add `ReadMrBayesTrees()` to sample trees from posterior of MrBayes output.
 - Add `is.TreeNumber()` method.
 - Support zero-edge trees in `as.Splits()` and `NSplits()`.
