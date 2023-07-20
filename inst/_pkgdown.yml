@@ -51,11 +51,11 @@ reference:
       - ExtractTaxa
       - NewickTree
       - ReadCharacters
-      - ReadTntTree
       - StringToPhyDat
       - TNTText2Tree
       - WriteTntCharacters
       - has_concept("string parsing functions")
+      - has_concept("tree import functions")
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
