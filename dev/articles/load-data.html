@@ -19,12 +19,12 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=312389031"></script><script>
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-93LNK4JKY4"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '312389031');
+  gtag('config', 'G-93LNK4JKY4');
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.1.9001</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.2.9006</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
 <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2023-04-05</h4>
+            <h4 data-toc-skip class="date">2023-07-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/vignettes/load-data.Rmd" class="external-link"><code>vignettes/load-data.Rmd</code></a></small>
       <div class="hidden name"><code>load-data.Rmd</code></div>
@@ -224,19 +224,19 @@ navigating to index &gt; package vignettes.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">contrast.matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span><span class="co"># 0 1 -  # Each column corresponds to a character-state</span></span>
-<span>  <span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>, <span class="co"># Each row corresponds to a token, here 0, denoting the </span></span>
-<span>         <span class="co"># character-state set {0} </span></span>
-<span>  <span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>, <span class="co"># 1 | {1}</span></span>
-<span>  <span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>, <span class="co"># - | {-}</span></span>
-<span>  <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>, <span class="co"># A | {01}</span></span>
-<span>  <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>, <span class="co"># + | {01}</span></span>
-<span>  <span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>  <span class="co"># ? | {01-}</span></span>
-<span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span>, <span class="co"># ncol should correspond to the number of columns in the matrix</span></span>
-<span>byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>; </span>
+<span>  <span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="co"># Each row corresponds to a token, here 0, denoting the </span></span>
+<span>           <span class="co"># character-state set {0} </span></span>
+<span>  <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="co"># 1 | {1}</span></span>
+<span>  <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="co"># - | {-}</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="co"># A | {01}</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="co"># + | {01}</span></span>
+<span>  <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>  <span class="co"># ? | {01-}</span></span>
+<span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span>, <span class="co"># ncol corresponds to the number of columns in the matrix</span></span>
+<span>byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">contrast.matrix</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="st">'-'</span>, <span class="st">'A'</span>, <span class="st">'+'</span>, <span class="st">'?'</span><span class="op">)</span>, <span class="co"># A list of the tokens corresponding to each row</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="st">"-"</span>, <span class="st">"A"</span>, <span class="st">"+"</span>, <span class="st">"?"</span><span class="op">)</span>, <span class="co"># A list of the tokens corresponding to each row</span></span>
 <span>                               <span class="co"># in the contrast matrix</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="st">'-'</span><span class="op">)</span> <span class="co"># A list of the character-states corresponding to the columns </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="st">"-"</span><span class="op">)</span> <span class="co"># A list of the character-states corresponding to the columns </span></span>
 <span>               <span class="co"># in the contrast matrix</span></span>
 <span><span class="op">)</span></span>
 <span></span>
