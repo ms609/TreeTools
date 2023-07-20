@@ -115,6 +115,7 @@
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
 #' @family tree generation functions
+#' @family TreeNumber utilities
 #' @name TreeNumber
 #
 
@@ -373,6 +374,7 @@ as.integer64.TreeNumber <- function(x, ...) {
 #' @examples
 #' is.TreeNumber(FALSE) # FALSE 
 #' is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
+#' @family TreeNumber utilities
 #' @export
 is.TreeNumber <- function(x) inherits(x, "TreeNumber")
 
@@ -383,6 +385,7 @@ is.TreeNumber <- function(x) inherits(x, "TreeNumber")
 #' @param x Object of class `TreeNumber`.
 #' @param \dots Additional arguments for consistency with S3 method (unused).
 #'
+#' @family TreeNumber utilities
 #' @export
 print.TreeNumber <- function(x, ...) {
   nTip <- attr(x, "nTip")

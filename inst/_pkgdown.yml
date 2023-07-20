@@ -12,20 +12,20 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - has_concept('tree manipulation')
+      - has_concept("tree manipulation")
 
   - title: "Tree navigation"
     desc: >
       Functions to navigate phylogenetic trees.
     contents:
-      - has_concept('tree navigation')
+      - has_concept("tree navigation")
 
   - title: "Tree creation"
     desc: >
       Functions to generate phylogenetic trees.
     contents:
-      - has_concept('tree generation functions')
-      - print.TreeNumber
+      - has_concept("tree generation functions")
+      - has_concept("TreeNumber utilities")
 
   - title: "Tree properties"
     desc: >

@@ -20,7 +20,13 @@ Is an object a \code{TreeNumber} object?
 is.TreeNumber(FALSE) # FALSE 
 is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
 }
+\seealso{
+Other TreeNumber utilities: 
+\code{\link{TreeNumber}},
+\code{\link{print.TreeNumber}()}
+}
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{TreeNumber utilities}
