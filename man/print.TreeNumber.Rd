@@ -15,7 +15,8 @@
 S3 method for objects of class \code{TreeNumber}.
 }
 \seealso{
-Other TreeNumber utilities: 
+Other 'TreeNumber' utilities: 
+\code{\link{TreeNumber}},
 \code{\link{is.TreeNumber}()}
 }
-\concept{TreeNumber utilities}
+\concept{'TreeNumber' utilities}
