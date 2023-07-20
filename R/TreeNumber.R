@@ -115,7 +115,7 @@
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
 #' @family tree generation functions
-#' @family TreeNumber utilities
+#' @family 'TreeNumber' utilities
 #' @name TreeNumber
 #
 

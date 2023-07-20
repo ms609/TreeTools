@@ -22,7 +22,6 @@ is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
 }
 \seealso{
 Other TreeNumber utilities: 
-\code{\link{TreeNumber}},
 \code{\link{print.TreeNumber}()}
 }
 \author{
