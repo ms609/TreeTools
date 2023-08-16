@@ -52,7 +52,6 @@ Other tree navigation:
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{

@@ -484,53 +484,6 @@ EdgeDistances <- function(tree) {
   ret[origOrder, origOrder]
 }
 
-# Used by TreeSearch::SPR
-# Deprecate once SPR replaced with a function in C.
-#' Non-duplicate root
-#'
-#' Identify, for each edge, whether it denotes a different partition from
-#' the root edge.
-#' The first edge of the input tree must be a root edge; this can be
-#' accomplished using `Preorder()`.
-#'
-#' This function is deprecated; if you use it, please
-#' [comment (#32)](https://github.com/ms609/TreeTools/issues/32)
-#' so that a suitable replacement can be guaranteed.
-#'
-#' @template treeParent
-#' @template treeChild
-#' @template treeNEdgeOptional
-#'
-#' @return `NonDuplicateRoot()` returns a logical vector of length `nEdge`,
-#' specifying `TRUE` unless an edge identifies the same partition as
-#' the root edge.
-#'
-#' @examples
-#' tree <- Preorder(BalancedTree(8))
-#' edge <- tree$edge
-#' parent <- edge[, 1]
-#' child <- edge[, 2]
-#'
-#' which(!NonDuplicateRoot(parent, child))
-#'
-#' @keywords internal
-#' @template MRS
-#' @family tree navigation
-#' @export
-NonDuplicateRoot <- function(parent, child, nEdge = length(parent)) {
-  notDuplicateRoot <- !logical(nEdge)
-  rightSide <- DescendantEdges(1, parent, child, nEdge)
-  nEdgeRight <- sum(rightSide)
-  if (nEdgeRight == 1) {
-    notDuplicateRoot[2] <- FALSE
-  } else if (nEdgeRight == 3) {
-    notDuplicateRoot[4] <- FALSE
-  } else {
-    notDuplicateRoot[1] <- FALSE
-  }
-  notDuplicateRoot
-}
-
 #' Number of leaves in a phylogenetic tree
 #'
 #' `NTip()` extends [`ape::Ntip()`][ape::summary.phylo] to handle

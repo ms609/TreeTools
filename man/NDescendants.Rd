@@ -35,7 +35,6 @@ Other tree navigation:
 \code{\link{MRCA}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
