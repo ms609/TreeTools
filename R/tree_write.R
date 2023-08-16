@@ -108,14 +108,15 @@ WriteTntCharacters.matrix <- function(dataset, filepath = NULL,
     paste(rev(dim(dataset)), collapse = " "),
     if (is.null(types)) {
       paste(rownames(dataset),
-            apply(dataset, 1, paste0, collapse = ""),
+            apply(dataset, 1, paste0, collapse = " "),
             collapse = EOL)
     } else {
       typeEnds <- c(unname(types[-1]) - 1L, ncol(dataset))
       paste(paste0("&[", names(types), "]\n"),
             vapply(seq_along(types), function(i)
               paste(rownames(dataset),
-                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ""),
+                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0,
+                          collapse = " "),
                     collapse = EOL),
               character(1)), collapse = EOL)
     },
