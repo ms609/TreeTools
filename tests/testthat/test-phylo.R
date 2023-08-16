@@ -4,7 +4,7 @@ nasty <- structure(list(edge = structure(
   .Dim = c(12, 2)),
   Nnode = 5L,
   tip.label = letters[1:8]),
-  class = 'phylo') # Danger: Do not plot!
+  class = "phylo") # Danger: Do not plot!
 
 test_that("Subtree() works", {
   expect_error(Subtree(read.tree(text = "((a,b),(c,d));", 7)),
@@ -12,11 +12,11 @@ test_that("Subtree() works", {
   t4 <- Subtree(Preorder(BalancedTree(8)), 10)
   expect_true(all.equal(BalancedTree(4), t4))
   expect_true(all.equal(BalancedTree(4), Subtree(t4, 5)))
-  expect_true(all.equal(SingleTaxonTree('t1'), Subtree(t4, 1)))
+  expect_true(all.equal(SingleTaxonTree("t1"), Subtree(t4, 1)))
 })
 
 
-test_that('ListAncestors() works', {
+test_that("ListAncestors() works", {
   edge <- nasty$edge
   expect_equal(c(10L, 12L), ListAncestors(edge[, 1], edge[, 2], 11))
   tr <- PectinateTree(4)

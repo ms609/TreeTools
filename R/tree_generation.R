@@ -38,7 +38,7 @@ NULL
 #' @examples
 #' RandomTree(LETTERS[1:10])
 #'
-#' data('Lobo')
+#' data("Lobo")
 #' RandomTree(Lobo.phy)
 #'
 #' @export
@@ -85,7 +85,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
                          Nnode = nTips - 1L,
                          tip.label = tips,
                          br = NULL),
-                    class = 'phylo')
+                    class = "phylo")
 
   if (.isFALSE(root)) {
     tree <- UnrootTree(tree)
@@ -106,8 +106,8 @@ RandomTree <- function(tips, root = FALSE, nodes) {
 #' @param seed (Optional) Integer with which to seed Mersenne Twister random
 #' number generator in C++.
 #'
-#' @return Integer vector corresponding to the 'parent' entry of
-#' `tree[["edge"]]`, where the 'child' entry, i.e. column 2, is numbered
+#' @return Integer vector corresponding to the "parent" entry of
+#' `tree[["edge"]]`, where the "child" entry, i.e. column 2, is numbered
 #' sequentially from `1:n`.
 #' @template MRS
 #' @keywords internal
@@ -144,7 +144,7 @@ PectinateTree <- function(tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = nTips - 1L,
     tip.label = tips
-  ), order = 'cladewise', class = 'phylo')
+  ), order = "cladewise", class = "phylo")
 }
 
 
@@ -159,13 +159,19 @@ BalancedTree <- function(tips) {
   tips <- TipLabels(tips)
   nTip <- length(tips)
   if (nTip < 2L) {
-    return(if (nTip == 1L) SingleTaxonTree(tips) else NULL)
+    if (nTip == 1L) {
+      SingleTaxonTree(tips)
+    } else if (nTip == 0L) {
+      ZeroTaxonTree()
+    } else {
+      NULL
+    }
+  } else {
+    # Return:
+    structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
+                         tip.label = as.character(tips)),
+              order = "preorder", class = "phylo")
   }
-
-  # Return:
-  structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
-                       tip.label = as.character(tips)),
-            order = 'preorder', class = 'phylo')
 }
 
 #' @keywords internal
@@ -207,7 +213,7 @@ StarTree <- function(tips) {
     edge = matrix(c(parent, child), ncol = 2L),
     Nnode = 1L,
     tip.label = tips
-  ), order = 'cladewise', class = "phylo")
+  ), order = "cladewise", class = "phylo")
 }
 
 #' Generate a neighbour joining tree
@@ -223,7 +229,7 @@ StarTree <- function(tips) {
 #' @return `NJTree` returns an object of class \code{phylo}.
 #'
 #' @examples
-#' data('Lobo')
+#' data("Lobo")
 #' NJTree(Lobo.phy)
 #'
 #' @template MRS
@@ -269,14 +275,14 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 #'
 #' `dist.hamming()` in the \pkg{phangorn} package provides an alternative
 #' implementation.
-#'
-#' @examples
-#' tokens <- matrix(c(0, 0, '0', 0, '?',
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '1', 0, 1,
-#'                    0, 0, '2', 0, 1,
-#'                    1, 1, '-', '?', 0,
-#'                    1, 1, '2', 1, '{01}'),
+#' 
+#' @examples 
+#' tokens <- matrix(c(0, 0, "0", 0, "?",
+#'                    0, 0, "1", 0, 1,
+#'                    0, 0, "1", 0, 1,
+#'                    0, 0, "2", 0, 1,
+#'                    1, 1, "-", "?", 0,
+#'                    1, 1, "2", 1, "{01}"),
 #'                    nrow = 6, ncol = 5, byrow = TRUE,
 #'                    dimnames = list(
 #'                      paste0("Taxon_", LETTERS[1:6]),
@@ -291,18 +297,18 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 Hamming <- function(dataset, ratio = TRUE,
                      ambig = c("median", "mean", "zero", "one", "na", "nan")) {
   at <- attributes(dataset)
-  if (!inherits(dataset, 'phyDat') || is.null(at[["contrast"]])) {
+  if (!inherits(dataset, "phyDat") || is.null(at[["contrast"]])) {
     stop("`dataset` must be a valid `phyDat` object")
   }
   contrast <- at[["contrast"]] > 0L
-  if ('-' %in% colnames(contrast)) {
+  if ("-" %in% colnames(contrast)) {
     # TODO This is debatable but perhaps acceptable behaviour.
     # Is the distance between {0, -} and {1} necessarily zero?
-    contrast[contrast[, '-'], ] <- TRUE
+    contrast[contrast[, "-"], ] <- TRUE
   }
   weight <- at[["weight"]]
   tokens <- vapply(dataset, function(codings) contrast[codings, ],
-                   matrix(NA, at[['nr']], dim(contrast)[2]))
+                   matrix(NA, at[["nr"]], dim(contrast)[2]))
   hamming <- apply(combn(length(dataset), 2L), 2L, function(ij) {
     sum(weight[!apply(tokens[, , ij[1], drop = FALSE] &
                       tokens[, , ij[2], drop = FALSE], 1, any)])
@@ -311,7 +317,7 @@ Hamming <- function(dataset, ratio = TRUE,
   if (ratio) {
     informative <- apply(!contrast, 1, any)
     nonAmbig <- .vapply(dataset, function(codings) informative[codings],
-                       logical(at[['nr']]))
+                       logical(at[["nr"]]))
     bothInformative <- apply(combn(length(dataset), 2L), 2L, function(ij) {
       sum(weight[nonAmbig[, ij[1]] & nonAmbig[, ij[2]]])
     })
@@ -340,9 +346,9 @@ Hamming <- function(dataset, ratio = TRUE,
     Labels = names(dataset),
     Diag = FALSE,
     Upper = FALSE,
-    method = 'hamming',
-    class = 'dist')
-
+    method = "hamming",
+    class = "dist")
+  
   # Return:
   hamming
 }
@@ -420,7 +426,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' @template MRS
 #' @family tree manipulation
 #' @export
-EnforceOutgroup <- function(tree, outgroup) UseMethod('EnforceOutgroup')
+EnforceOutgroup <- function(tree, outgroup) UseMethod("EnforceOutgroup")
 
 #' @importFrom ape bind.tree
 .EnforceOutgroup <- function(tree, outgroup, taxa) {
@@ -456,3 +462,18 @@ EnforceOutgroup.character <- function(tree, outgroup) {
   .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
 }
 #nocov end
+
+.PreorderTree <- function(edge,
+                          tip.label,
+                          Nnode =  dim(edge)[1] + 1 - length(tip.label)) {
+  structure(
+    list(
+      # Order is consistent with ape::read.tree (but not ape::rtree...)
+      edge = edge,
+      Nnode = Nnode,
+      tip.label = tip.label
+    ),
+    order = "preorder",
+    class = "phylo"
+  )
+}

@@ -16,7 +16,7 @@ test_that("as.phylo.numeric()", {
                as.phylo(as.integer64(123), nTip = 8))
   expect_equal(as.phylo(123:124, nTip = 10),
                as.phylo(as.integer64(123:124), nTip = 10))
-  expect_equal(as.phylo(as.integer64(10), tipLabels = paste0('t', 1:8)),
+  expect_equal(as.phylo(as.integer64(10), tipLabels = paste0("t", 1:8)),
                as.phylo(10, 8))
 })
 
@@ -27,7 +27,7 @@ test_that("as.TreeNumber() error handling", {
 })
 
 test_that("as.TreeNumber()", {
-  expect_equal(SingleTaxonTree('t1'), as.phylo(integer64(1), 1, NULL))
+  expect_equal(SingleTaxonTree("t1"), as.phylo(integer64(1), 1, NULL))
   expect_equal(c("Phylogenetic tree number 0 of 105 ",
                  " 6 tips: t1 t2 t3 t4 t5 t6"),
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
@@ -60,6 +60,8 @@ test_that("as.TreeNumber()", {
 })
 
 test_that("as.MixedBase()", {
+  expect_error(as.MixedBase(RandomTree(100000)),
+               "Too many \\w+ for mixed base")
   expect_equal(as.integer(as.TreeNumber(as.phylo(16, 16))), 16)
   nTip <- 9
   expect_equal(as.integer(as.MixedBase(as.TreeNumber(as.phylo(16, nTip)))),
@@ -68,14 +70,14 @@ test_that("as.MixedBase()", {
   expect_equal(as.MixedBase(as.phylo(0, 6)),
                structure(integer(3),
                          nTip = 6,
-                         tip.label = paste0('t', 1:6),
+                         tip.label = paste0("t", 1:6),
                          binary = TRUE,
                          class = "MixedBase"))
   
   expect_equal(as.MixedBase(as.phylo(105, 20)),
                structure(tabulate(17 - 3, 17),
                          nTip = 20,
-                         tip.label = paste0('t', 1:20),
+                         tip.label = paste0("t", 1:20),
                          binary = TRUE,
                          class = "MixedBase"))
   
@@ -97,5 +99,15 @@ test_that("as.MixedBase()", {
   expect_true(as.MixedBase(44, 10) < as.MixedBase(42, 11))
   bigNo <- as.integer64(2) ^ 62 + 1337
   expect_equal(sum(as.integer(as.MixedBase(bigNo)) * .TT_BASE), bigNo)
-  
+})
+
+test_that("as.MixedBase() supports larger trees", {
+  expect_equal(tail(as.MixedBase(BalancedTree(100))),
+               c(6, 10, 8, 3, 4, 1) # From observation, not calculation
+  )
+})
+
+test_that("is.TreeNumber()", {
+  expect_equal(is.TreeNumber(as.integer64(5)), FALSE)
+  expect_equal(is.TreeNumber(as.TreeNumber(BalancedTree(5))), TRUE)
 })

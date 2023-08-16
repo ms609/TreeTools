@@ -10,18 +10,17 @@ ConstrainedNJ(dataset, constraint, weight = 1L, ratio = TRUE, ambig = "mean")
 \item{dataset}{A phylogenetic data matrix of \pkg{phangorn} class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
-\item{constraint}{An object of class \code{phyDat}; returned trees will be
-perfectly compatible with each character in \code{constraint}.
+\item{constraint}{Either an object of class \code{phyDat}, in which case returned
+trees will be perfectly compatible with each character in \code{constraint};
+or a tree of class \code{phylo}, in which each node in \code{constraint} will occur in
+the returned tree.
 See \href{https://ms609.github.io/TreeSearch/articles/tree-search.html}{vignette}
 for further examples.}
 
 \item{weight}{Numeric specifying degree to up-weight characters in
 \code{constraint}.}
 
-\item{ratio}{Settings of \code{ambig} and \code{ratio} to be used when
-computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
-
-\item{ambig}{Settings of \code{ambig} and \code{ratio} to be used when
+\item{ambig, ratio}{Settings of \code{ambig} and \code{ratio} to be used when
 computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 }
 \value{
@@ -45,10 +44,11 @@ plot(ConstrainedNJ(dataset, constraint))
 Other tree generation functions: 
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}

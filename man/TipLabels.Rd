@@ -84,7 +84,7 @@ where entries of a list of trees may pertain to different taxa.
 TipLabels(BalancedTree(letters[5:1]))
 TipLabels(5)
 
-data('Lobo')
+data("Lobo")
 head(TipLabels(Lobo.phy))
 
 AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
@@ -112,7 +112,8 @@ Other Splits operations:
 \code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
 \concept{tree properties}

@@ -1,59 +1,61 @@
 #' Identify descendant edges
 #'
-#' Quickly identify edges that are 'descended' from edges in a tree.
+#' Quickly identify edges that are "descended" from edges in a tree.
 #'
-#' The order of parameters in `DescendantEdges()` will change in the future,
-#' to allow `AllDescendantEdges()` to be merged into this function
-#' ([#31](https://github.com/ms609/TreeTools/issues/31)).
-#' Please explicitly name the `edge` parameter in `DescendantEdges()`, and
-#' replace `AllDesdendantEdges()` with `DescendantEdges(edge = NULL)`,
-#' to future-proof your code.
-#'
-#' @param edge Integer specifying the number of the edge whose child edges are
-#' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @template treeParent
 #' @template treeChild
+#' @param edge Integer specifying the number of the edge whose child edges are
+#' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
 #' @return `DescendantEdges()` returns a logical vector stating whether each
 #' edge in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
-DescendantEdges <- function(edge = NULL, parent, child,
-                             nEdge = length(parent)) {
-  if (is.null(edge)) return(AllDescendantEdges(parent, child, nEdge))
-  ret <- logical(nEdge)
-  edgeSister <- match(parent[edge], parent[-edge])
-  if (edgeSister >= edge) {
-    # edgeSister is really 1 higher than you think, because we knocked out
-    # edge 'edge' in the match
-    ret[edge:edgeSister] <- TRUE
-
-    # Return:
-    ret
+DescendantEdges <- function(parent, child, edge = NULL,
+                            nEdge = length(parent)) {
+  if (is.null(edge)) {
+    .AllDescendantEdges(parent, child, nEdge)
   } else {
-    nextEdge <- edge
-    revParent <- rev(parent)
-    repeat {
-      if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
-        nextEdge <- 1 + nEdge - revDescendant
-      } else break;
+    ret <- logical(nEdge)
+    edgeSister <- match(parent[edge], parent[-edge])
+    if (edgeSister >= edge) {
+      # edgeSister is really 1 higher than you think, because we knocked out
+      # edge "edge" in the match
+      ret[edge:edgeSister] <- TRUE
+  
+      # Return:
+      ret
+    } else {
+      nextEdge <- edge
+      revParent <- rev(parent)
+      repeat {
+        if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
+          nextEdge <- 1 + nEdge - revDescendant
+        } else break;
+      }
+      ret[edge:nextEdge] <- TRUE
+  
+      # Return:
+      ret
     }
-    ret[edge:nextEdge] <- TRUE
-
-    # Return:
-    ret
   }
 }
 
 #' @rdname DescendantEdges
 #'
-#' @return `AllDescendantEdges()` returns a matrix of class logical, with row
-#' _N_ specifying whether each edge is a descendant of edge _N_
-#' (or the edge itself).
+#' @return `AllDescendantEdges()` is deprecated; use `DescendantEdges()`
+#' instead.
+#' It returns a matrix of class logical, with row _N_ specifying whether each
+#' edge is a descendant of edge _N_ (or the edge itself).
 #'
 #' @export
 AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
+  .Deprecated("DescendantEdges")
+  .AllDescendantEdges(parent, child, nEdge)
+}
+
+.AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
   blankLogical <- logical(nEdge)
   allEdges <- seq_len(nEdge)
@@ -91,13 +93,13 @@ NDescendants <- function(tree) {
 
 #' Distance of each node from tree exterior
 #'
-#' `NodeDepth()` evaluates how 'deep' each node is within a tree.
+#' `NodeDepth()` evaluates how "deep" each node is within a tree.
 #'
 #' For a rooted tree, the depth of a node is the minimum (if `shortest = TRUE`)
 #' or maximum  (`shortest = FALSE`) number of edges that must be traversed,
 #' moving away from the root, to reach a leaf.
 #'
-#' Unrooted trees are treated as if a root node occurs in the 'middle' of the
+#' Unrooted trees are treated as if a root node occurs in the "middle" of the
 #' tree, meaning the position that will minimise the maximum node depth.
 #'
 #'
@@ -124,7 +126,7 @@ NDescendants <- function(tree) {
 #'
 #' @export
 NodeDepth <- function(x, shortest = FALSE, includeTips = TRUE) {
-  UseMethod('NodeDepth')
+  UseMethod("NodeDepth")
 }
 
 #' @export
@@ -251,10 +253,11 @@ NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
 
 }
 
-#' Order of each node in a tree
+#' Number of edges incident to each node in a tree
 #'
-#' `NodeOrder()` calculates the number of edges incident to each node in a tree.
-#' Includes the root edge in rooted trees.
+#' `NodeOrder()` calculates the order of each node: the number of edges
+#' incident to it in a tree.
+#' This value includes the root edge in rooted trees.
 #'
 #' @template xPhylo
 #' @param includeAncestor Logical specifying whether to count edge leading to
@@ -276,7 +279,7 @@ NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
 #' @family tree navigation
 #' @export
 NodeOrder <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
-  UseMethod('NodeOrder')
+  UseMethod("NodeOrder")
 }
 
 
@@ -329,7 +332,7 @@ AncestorEdge <- function(edge, parent, child) child == parent[edge]
 
 #' Ancestors of an edge
 #'
-#' Quickly identify edges that are 'ancestral' to a particular edge in a tree.
+#' Quickly identify edges that are "ancestral" to a particular edge in a tree.
 #'
 #' @param edge Integer specifying the number of the edge whose child edges
 #' should be returned.
@@ -427,7 +430,7 @@ MRCA <- function(x1, x2, ancestors) {
 #' of edges that must be traversed to travel from each numbered edge to each
 #' other.
 #' The two edges straddling the root of a rooted tree
-#' are treated as a single edge.  Add a 'root' tip using [`AddTip()`] if the
+#' are treated as a single edge.  Add a "root" tip using [`AddTip()`] if the
 #' position of the root is significant.
 #'
 #' @examples
@@ -541,11 +544,11 @@ NonDuplicateRoot <- function(parent, child, nEdge = length(parent)) {
 #'
 #' @family tree properties
 #' @export
-NTip <- function(phy) UseMethod('NTip')
+NTip <- function(phy) UseMethod("NTip")
 
 #' @rdname NTip
 #' @export
-NTip.default <- function(phy) attr(phy, 'nTip')
+NTip.default <- function(phy) attr(phy, "nTip")
 
 #' @rdname NTip
 #' @family Splits operations
@@ -612,7 +615,7 @@ NTip.matrix <- function(phy) {
 #' @family Splits operations
 #' @importFrom ape collapse.singles
 #' @export
-NSplits <- function(x) UseMethod('NSplits')
+NSplits <- function(x) UseMethod("NSplits")
 
 #' @rdname NSplits
 #' @export
@@ -621,7 +624,11 @@ NPartitions <- NSplits
 #' @rdname NSplits
 #' @export
 NSplits.phylo <- function(x) {
-  collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+  if (length(x[["tip.label"]]) < 4L) {
+    0L
+  } else {
+    collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+  }
 }
 
 #' @rdname NSplits
@@ -685,7 +692,7 @@ NSplits.character <- function(x) {
 #' @family tree properties
 #' @family Splits operations
 #' @export
-SplitsInBinaryTree <- function(tree) UseMethod('SplitsInBinaryTree')
+SplitsInBinaryTree <- function(tree) UseMethod("SplitsInBinaryTree")
 
 #' @rdname SplitsInBinaryTree
 #' @export
@@ -763,7 +770,7 @@ TreeIsRooted <- function(tree) {
 #' `phangorn::getRoot()`
 #'
 #' @export
-RootNode <- function(x) UseMethod('RootNode')
+RootNode <- function(x) UseMethod("RootNode")
 
 #' @export
 RootNode.phylo <- function(x) {
@@ -772,7 +779,7 @@ RootNode.phylo <- function(x) {
   if (!is.null(edgeOrder)) {
     if (edgeOrder == "postorder") {
       return(as.integer(edge[nrow(edge), 1L]))
-    } else if (edgeOrder == 'preorder') {
+    } else if (edgeOrder == "preorder") {
       return(as.integer(edge[1L]))
     }
   }
@@ -793,7 +800,7 @@ RootNode.numeric <- function(x) {
   child <- x[, 2]
   ret <- unique(parent[!parent %fin% child])
   if (length(ret) != 1) {
-    warning("Root not unique: found ", paste(ret, collapse = ', '))
+    warning("Root not unique: found ", paste(ret, collapse = ", "))
   }
 
   # Return:

@@ -9,6 +9,7 @@
 \alias{as.Splits.list}
 \alias{as.Splits.matrix}
 \alias{as.Splits.logical}
+\alias{as.Splits.character}
 \alias{as.logical.Splits}
 \title{Convert object to \code{Splits}}
 \usage{
@@ -16,7 +17,7 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{phylo}(x, tipLabels = NULL, asSplits = TRUE, ...)
 
-\method{as.Splits}{multiPhylo}(x, tipLabels = x[[1]][["tip.label"]], asSplits = TRUE, ...)
+\method{as.Splits}{multiPhylo}(x, tipLabels = unique(unlist(TipLabels(x))), asSplits = TRUE, ...)
 
 \method{as.Splits}{Splits}(x, tipLabels = NULL, ...)
 
@@ -25,6 +26,8 @@ as.Splits(x, tipLabels = NULL, ...)
 \method{as.Splits}{matrix}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
+
+\method{as.Splits}{character}(x, tipLabels = NULL, ...)
 
 \method{as.logical}{Splits}(x, tipLabels = attr(x, "tip.label"), ...)
 }
@@ -74,6 +77,8 @@ print(moreSplits, details = TRUE)
 match(splits, moreSplits)
 moreSplits \%in\% splits
 
+as.Splits("....**", letters[1:6])
+
 }
 \seealso{
 Other Splits operations: 
@@ -89,6 +94,7 @@ Other Splits operations:
 \code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}

@@ -33,8 +33,8 @@ IntegerVector tips_in_splits(RawMatrix splits) {
     n_split = splits.nrow(),
     n_bin = (n_tip % 8 == 0 ? 0 : 1) + (n_tip / 8)
   ;
-  if (n_tip < 1) {
-    Rcpp::stop("nTip < 1");
+  if (n_tip < 0) {
+    Rcpp::stop("nTip < 0");
   }
   if (n_bin != splits.ncol()) {
     Rcpp::stop("nTip does not match split size");

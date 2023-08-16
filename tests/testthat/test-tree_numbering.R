@@ -2,7 +2,7 @@ nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
                          5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
                        .Dim = c(12, 2))
 nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
-                   class = 'phylo')
+                   class = "phylo")
 
 expect_postorder <- function(edge) {
   parent <- edge[, 1]
@@ -23,7 +23,7 @@ test_that("RenumberTree() fails safely", {
 })
 
 test_that("RenumberTree() handles polytomies", {
-  tr <- ape::read.tree(text = '(a, (b, d, c));')
+  tr <- ape::read.tree(text = "(a, (b, d, c));")
   edge <- tr$edge
   parent <- edge[, 1]
   child <- edge[, 2]
@@ -56,7 +56,7 @@ test_that("RenumberTree() handles polytomies", {
 })
 
 test_that("RenumberTree() handles singles", {
-  withSingles <- ape::read.tree(text = '(a, (b, (c), (((d), (e)))));')
+  withSingles <- ape::read.tree(text = "(a, (b, (c), (((d), (e)))));")
   expect_equal(as.integer(Preorder(withSingles)$edge),
                c(6, 6, 7, 7, 8, 7, 9, 10, 11, 10, 12,
                  1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5))
@@ -65,8 +65,8 @@ test_that("RenumberTree() handles singles", {
 test_that("Replacement reorder functions work correctly", {
   ## Tree
   tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
-  expect_equal(ape::reorder.phylo(tree, 'cladewise'), Cladewise(tree))
-  expect_equal(ape::reorder.phylo(tree, 'pruningwise'), Pruningwise(tree))
+  expect_equal(ape::reorder.phylo(tree, "cladewise"), Cladewise(tree))
+  expect_equal(ape::reorder.phylo(tree, "pruningwise"), Pruningwise(tree))
 
   post6 <- Postorder(BalancedTree(6))$edge
   expect_postorder(post6)
@@ -80,13 +80,18 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(c(3, 9), sort(child6[parent6 == 8]))
   expect_equal(c(8, 10), sort(child6[parent6 == 7]))
 
-  star <- ape::read.tree(text = '(a, b, d, c);')
+  star <- ape::read.tree(text = "(a, b, d, c);")
   edge <- RenumberTips(star, letters[1:4])$edge
   expect_equal(edge,
-               RenumberTips(star, ape::read.tree(text = '(a, b, c, d);'))$edge)
+               RenumberTips(star, ape::read.tree(text = "(a, b, c, d);"))$edge)
   expect_equal(star$edge, RenumberTree(edge[, 1], edge[, 2]))
   expect_equal(list(star$edge[, 1], star$edge[, 2]),
                RenumberEdges(edge[, 1], edge[, 2]))
+})
+
+test_that("RenumberTips() handles misspecification", {
+  expect_error(RenumberTips(BalancedTree(8), paste0("t", 0:5)),
+               "Missing in `tree`: t0.*Missing in `tipOrder`: t6, t7, t8")
 })
 
 test_that("RenumberTips() works correctly", {
@@ -97,30 +102,30 @@ test_that("RenumberTips() works correctly", {
   pec7f <- PectinateTree(abcd)
   pec7b <- PectinateTree(dcba)
 
-  l7 <- list('bal7b' = bal7b, 'bal7f' = bal7f, 'pec7f' = pec7f)
+  l7 <- list("bal7b" = bal7b, "bal7f" = bal7f, "pec7f" = pec7f)
   f7 <- list(bal7f, bal7f, pec7f)
   b7 <- list(bal7b, bal7b, pec7b)
-  mp7 <- structure(l7, class = 'multiPhylo')
+  mp7 <- structure(l7, class = "multiPhylo")
 
   expect_true(all.equal(f7, unname(RenumberTips(l7, abcd))))
   expect_true(all.equal(b7, unname(RenumberTips(l7, dcba))))
 
-  expect_true(all.equal(structure(f7, class = 'multiPhylo'),
+  expect_true(all.equal(structure(f7, class = "multiPhylo"),
                         unname(RenumberTips(mp7, abcd))))
-  expect_true(all.equal(structure(b7, class = 'multiPhylo'),
+  expect_true(all.equal(structure(b7, class = "multiPhylo"),
                         unname(RenumberTips(mp7, dcba))))
   
   expect_null(RenumberTips(NULL))
 
-  expect_equal(RenumberTips(l7, c("extra tip", letters[1:5])),
-               RenumberTips(l7, letters[1:4]))
+  expect_equal(Preorder(RenumberTips(l7, c("extra tip", letters[1:5]))),
+               Preorder(RenumberTips(l7, letters[1:4])))
   expect_error(RenumberTips(l7, letters[2:5]))
   
   
   expect_equal(
     attr(
-      RenumberTips(structure(b7, TipLabel = dcba, class = 'multiPhylo'), abcd),
-      'TipLabel'
+      RenumberTips(structure(b7, TipLabel = dcba, class = "multiPhylo"), abcd),
+      "TipLabel"
     ),
     abcd
   )
@@ -159,14 +164,14 @@ test_that("postorder_order() works", {
 test_that("Reorder methods work correctly", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
-  attr(bal7, 'order') <- NULL
+  attr(bal7, "order") <- NULL
   pec7 <- PectinateTree(7)
   list7 <- list(bal7, pec7)
   stt <- SingleTaxonTree(1)
   bad <- bal7
   bad$Nnode <- 100
-  attr(bad, 'order') <- NULL
-  mp7 <- structure(list7, class = 'multiPhylo')
+  attr(bad, "order") <- NULL
+  mp7 <- structure(list7, class = "multiPhylo")
   
   Test <- function(Method, ..., testEdges = TRUE) {
     expect_identical(Method(bal7, ...), Method(list7, ...)[[1]])
@@ -178,7 +183,7 @@ test_that("Reorder methods work correctly", {
     if (testEdges) expect_equal(Method(bal7)$edge, Method(bal7$edge))
     expect_error(Method(10))
     expect_error(Method(1:2))
-    expect_error(Method(matrix('one')))
+    expect_error(Method(matrix("one")))
     expect_null(Method(NULL))
   }
   
@@ -192,16 +197,37 @@ test_that("Reorder methods work correctly", {
   expect_error(Cladewise(bad))
 
   Test(Preorder)
+  
+  Test(TntOrder, testEdges = FALSE)
 
   Test(Pruningwise, testEdges = FALSE)
   expect_error(Pruningwise(bad))
 
 })
 
+test_that("Preorder() gives identical output", {
+  tree1 <- BalancedTree(1:9)
+  numbers <- c("One", "Two", "Three", "Four", "Five", "Six",
+               "Seven", "Eight", "Nine")
+  tree2 <- BalancedTree(numbers[1:9])
+  # Force pre-order with NEW tip labels
+  tree2 <- Preorder(Postorder(RenumberTips(tree2, sort(numbers))))
+  tree2$tip.label <- as.character(match(sort(numbers), numbers))
+  expect_true(all.equal(tree1, tree2))
+  expect_false(identical(tree1, tree2))
+  
+  # Now preorder after renumbering.
+  # Renumbering should drop the previous preorder attribute.
+  pre2 <- Preorder(RenumberTips(tree2, as.character(1:9)))
+  expect_equal(tree1, pre2)
+  expect_identical(tree1, pre2)
+})
+
+
 test_that("Reorder methods retain edge weights", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
-  attr(bal7, 'order') <- NULL
+  attr(bal7, "order") <- NULL
   expect_equal(Preorder(bal7)[["edge.length"]],
                bal7$edge.)
   expect_equal(Preorder(Cladewise(bal7))[["edge.length"]],
@@ -220,7 +246,7 @@ test_that("Malformed trees don't cause crashes", {
     .Dim = c(12, 2)),
     Nnode = 5L,
     tip.label = letters[1:8]),
-    class = 'phylo') # Danger: Do not plot!
+    class = "phylo") # Danger: Do not plot!
 
   reordered <- Preorder(treeDoubleNode)$edge
   expect_equal(11L, dim(reordered)[1])

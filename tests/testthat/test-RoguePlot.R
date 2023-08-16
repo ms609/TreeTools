@@ -27,6 +27,10 @@ test_that("Simple rogue plot", {
          onEdge = c(0, 0, 0, 0, 0, 3, 0, 1),
          atNode = double(4))
   )
+  expect_equal(
+    RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)$cons,
+    Preorder(SortTree(RoguePlot(trees, tip = "rogue", plot = FALSE)$cons))
+  )
 
   skip_if_not_installed("vdiffr", "1.0")
   skip_if_not_installed("ape", "5.5.2")
@@ -34,7 +38,9 @@ test_that("Simple rogue plot", {
     par(mar = rep(0, 4))
     RoguePlot(trees, "rogue",
               Palette = function(...) hcl.colors(..., palette = "inferno"),
-              thin = 2, fat = 4, edge.lty = 2)
+              thin = 2, fat = 4, edge.lty = 2,
+              legend = "topleft", legend.inset = 0.02
+              )
   }
   vdiffr::expect_doppelganger("RoguePlot(simple)", RoguePlotTest)
 })
@@ -53,7 +59,7 @@ test_that("polytomy id", {
   skip_if_not_installed("vdiffr", "1.0")
   RoguePlotTest <- function() {
     par(mar = rep(0, 4))
-    RoguePlot(trees, "rogue")
+    RoguePlot(trees, "rogue", legend = "bottomleft")
   }
   vdiffr::expect_doppelganger("RoguePlot(poly)", RoguePlotTest)
 })
@@ -112,7 +118,9 @@ test_that("Complex rogue plot", {
     par(mar = rep(0, 4))
     RoguePlot(trees1, "rogue",
               Palette = function(...) hcl.colors(..., palette = "inferno"),
-              edgeLen = 1, thin = 2, fat = 4)
+              edgeLen = 1, thin = 2, fat = 4,
+              legend = "bottomright"
+              )
   }
   vdiffr::expect_doppelganger("RoguePlot(trees1)", RoguePlotTest)
 

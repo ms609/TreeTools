@@ -35,6 +35,13 @@
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
 \alias{Preorder.NULL}
+\alias{TntOrder}
+\alias{TNTOrder}
+\alias{TntOrder.phylo}
+\alias{TntOrder.numeric}
+\alias{TntOrder.multiPhylo}
+\alias{TntOrder.list}
+\alias{TntOrder.NULL}
 \title{Reorder tree edges and nodes}
 \usage{
 RenumberTree(parent, child, weight)
@@ -102,6 +109,20 @@ Preorder(tree)
 \method{Preorder}{list}(tree)
 
 \method{Preorder}{`NULL`}(tree)
+
+TntOrder(tree)
+
+TNTOrder(tree)
+
+\method{TntOrder}{phylo}(tree)
+
+\method{TntOrder}{numeric}(tree)
+
+\method{TntOrder}{multiPhylo}(tree)
+
+\method{TntOrder}{list}(tree)
+
+\method{TntOrder}{`NULL`}(tree)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
@@ -123,7 +144,7 @@ corresponding to the \code{edge.length} property of a \code{phylo} object.}
 tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}
+postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
 
 \item{renumber}{Logical specifying whether to renumber nodes such that they
 increase in number away from the root.}
@@ -156,16 +177,17 @@ Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{postorder}}
 
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
-functions to the corresponding functions in 'ape'. Single nodes may
-need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
-can cause crashes if nodes are numbered unconventionally -- sometimes
-encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR()}.
+functions to the corresponding functions in "ape".
+Single nodes may need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.
+"ape" functions can cause crashes if nodes are numbered unconventionally --
+sometimes arising after using tree rearrangement functions,
+e.g. \code{phangorn::SPR()}.
 
 \code{Preorder()} is more robust: it supports polytomies, nodes may be numbered
 in any sequence, and edges may be listed in any order in the input tree.
 Its output is guaranteed to be identical for any tree of an equivalent
-topology, allowing unique trees to be detected by comparing sorted edge
-matrices alone.
+leaf labelling (see \code{RenumberTips()}) and topology,
+allowing unique trees to be detected by comparing sorted edge matrices alone.
 
 Nodes and edges in a preorder tree are numbered starting from the deepest
 node.
@@ -202,16 +224,22 @@ advice.
 }
 \section{Functions}{
 \itemize{
-\item \code{Cladewise}: Reorder tree cladewise.
+\item \code{Cladewise()}: Reorder tree cladewise.
 
-\item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
+\item \code{ApePostorder()}: Reorder tree in Postorder using ape's \code{postorder}
 function, which is robust to unconventional node numbering.
 
-\item \code{Pruningwise}: Reorder tree Pruningwise.
+\item \code{Pruningwise()}: Reorder tree Pruningwise.
 
-\item \code{Preorder}: Reorder tree in Preorder (special case of cladewise).
+\item \code{Preorder()}: Reorder tree in Preorder (special case of cladewise).
+
+\item \code{TntOrder()}: Reorder tree in postorder, numbering internal nodes
+according to \href{https://stackoverflow.com/a/54296100/3438001}{TNT's rules},
+which number the root node as \code{nTip + 1}, then the remaining nodes in
+the sequence encountered when traversing the tree in postorder, starting from
+each tip in sequence.
+
 }}
-
 \seealso{
 Rotate each node into a consistent orientation with \code{\link[=SortTree]{SortTree()}}.
 
@@ -229,9 +257,10 @@ Other tree manipulation:
 \code{\link{RenumberTips}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 
 Other C wrappers: 
 \code{\link{Neworder}}

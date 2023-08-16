@@ -1,4 +1,4 @@
-test_that('Pairwise distances calculated correctly', {
+test_that("Pairwise distances calculated correctly", {
   nTrees <- 6L
   nTip <- 16L
 
@@ -6,7 +6,7 @@ test_that('Pairwise distances calculated correctly', {
   trees <- lapply(rep(nTip, nTrees), RandomTree, root = TRUE)
   trees[[1]] <- BalancedTree(nTip)
   trees[[nTrees - 1L]] <- PectinateTree(nTip)
-  class(trees) <- 'multiPhylo'
+  class(trees) <- "multiPhylo"
 
   # From example
   TCIRange <- function(tree1, tree2) {
@@ -17,7 +17,7 @@ test_that('Pairwise distances calculated correctly', {
   expect_equal(as.matrix(tciPairs[[1]])[3, 6],
                TCIRange(trees[[3]], trees[[6]])[1])
   
-  skip_if_not_installed('phangorn')
+  skip_if_not_installed("phangorn")
   trees <- reorder(trees, "cladewise")
   dists <- PairwiseDistances(trees, phangorn::RF.dist)
   expect_equal(as.integer(phangorn::RF.dist(trees)), as.integer(dists))

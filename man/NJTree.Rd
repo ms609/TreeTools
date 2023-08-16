@@ -23,7 +23,7 @@ computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 dataset.
 }
 \examples{
-data('Lobo')
+data("Lobo")
 NJTree(Lobo.phy)
 
 }
@@ -31,10 +31,11 @@ NJTree(Lobo.phy)
 Other tree generation functions: 
 \code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}

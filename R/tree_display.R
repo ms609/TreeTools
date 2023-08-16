@@ -9,7 +9,7 @@
 #' Clades that contain the same number of leaves are sorted in decreasing order
 #' of minimum leaf number, so (2, 3) will occur before (1, 4).
 #'
-#' As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+#' As trees are plotted from "bottom up", the largest clades will "sink" to the
 #' bottom of a plotted tree.
 #'
 #' @param tree One or more trees of class `phylo`, optionally as a list

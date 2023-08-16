@@ -31,7 +31,7 @@ edge in turn is a descendant of the specified edge (or the edge itself).
 (or the edge itself).
 }
 \description{
-Quickly identify edges that are 'descended' from edges in a tree.
+Quickly identify edges that are "descended" from edges in a tree.
 }
 \details{
 The order of parameters in \code{DescendantEdges()} will change in the future,

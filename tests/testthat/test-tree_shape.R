@@ -1,7 +1,11 @@
 test_that("Errors are handled", {
   skip_if(Sys.getenv("USING_ASAN") != "")
-  expect_error(RootedTreeWithShape(as.integer64(-1)), "negative")
-  expect_error(RootedTreeWithShape(as.integer64(2)^31), " large ")
+  expect_error(RootedTreeWithShape(as.integer64(-1)),
+               "Shape may not be negative")
+  expect_error(RootedTreeWithShape(as.integer64(0), -1),
+               "Tree must have at least zero leaves")
+  expect_error(RootedTreeWithShape(as.integer64(2)^31),
+               "Shapes this large are not.* implemented")
   expect_error(UnrootedTreeWithShape(31, 31), " < 31 leaves")
   expect_error(.UnrootedKeys(29L), " 29 leaves")
 

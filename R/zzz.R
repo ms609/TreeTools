@@ -6,8 +6,7 @@
 release_questions <- function() {
   c(
     "Is the code free of #TODOs?",
-    "Have you checked the Vignettes for sanity?",
-    "Have you updated pagination of Asher2020 (Syst Biol)?"
+    "Have you checked the Vignettes for sanity?"
   )
 }
 
@@ -31,5 +30,5 @@ release_questions <- function() {
 #
 # codemetar::write_codemeta()
 #
-# tools::resaveRdaFiles('R', compress='auto') - is default bzip2 the optimal?
-# tools::checkRdaFiles('R') - set optimal compression in `data-raw`
+# tools::resaveRdaFiles("R", compress="auto") - is default bzip2 the optimal?
+# tools::checkRdaFiles("R") - set optimal compression in `data-raw`

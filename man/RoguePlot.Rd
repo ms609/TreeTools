@@ -15,6 +15,9 @@ RoguePlot(
   thin = par("lwd"),
   fat = thin + 1L,
   outgroupTips,
+  sort = FALSE,
+  legend = "none",
+  legend.inset = 0,
   ...
 )
 }
@@ -48,10 +51,20 @@ the names or indices of the tips to include in the outgroup.  If
 \code{outgroupTips} is a of type character, and a tree contains multiple tips
 with a matching label, the first will be used.}
 
+\item{sort}{Logical specifying whether to sort consensus tree using
+\code{\link[=SortTree]{SortTree()}}.}
+
+\item{legend}{Character vector specifying position of legend (e.g.
+\code{"bottomleft"}), or \code{"none"} to suppress legend.
+For fine-grained control of legend, use \code{\link[PlotTools:SpectrumLegend]{PlotTools::SpectrumLegend()}}.}
+
+\item{legend.inset}{Numeric specifying fraction of plot width / height
+by which the legend's position should be inset.}
+
 \item{\dots}{Additional parameters to \code{plot.phylo()}.}
 }
 \value{
-\code{RoguePlot()} returns a list whose elements are:
+\code{RoguePlot()} invisibly returns a list whose elements are:
 \itemize{
 \item \code{cons}: The reduced consensus tree, in preorder;
 \item \code{onEdge}: a vector of integers specifying the number of
@@ -81,7 +94,7 @@ trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-RoguePlot(trees, "rogue")
+RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
 }
 \references{
 \insertAllCited{}
@@ -92,6 +105,7 @@ Other consensus tree functions:
 \code{\link{Consensus}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{consensus tree functions}

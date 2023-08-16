@@ -9,7 +9,7 @@ suppressPackageStartupMessages(devtools::load_all())
       vapply(seq_len(as.integer(NRootedShapes(nTip))) - 1L,
              function(shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
              integer64(1L)),
-      class = 'integer64'))
+      class = "integer64"))
     uniqueShapes <- unique(shapes)
   } else {
     uniqueShapes <- 0
@@ -19,9 +19,9 @@ suppressPackageStartupMessages(devtools::load_all())
   sort(uniqueShapes)
 }
 
-data('unrootedKeys', package = 'TreeTools')
+data("unrootedKeys", package = "TreeTools")
 message("Calculating unrootedKeys for ", length(unrootedKeys) + 1L, " tips.")
 unrootedKeys <- c(unrootedKeys, list(.UnrootedKeys(length(unrootedKeys) + 1L)))
 message(length(unrootedKeys[[length(unrootedKeys)]]), " keys found.")
 
-usethis::use_data(unrootedKeys, overwrite = TRUE, compress = 'xz')
+usethis::use_data(unrootedKeys, overwrite = TRUE, compress = "xz")

@@ -27,14 +27,14 @@ test_that("SortTree() works", {
                         7, 8, order(sorted5[["tip.label"]], decreasing = TRUE)),
                       ncol = 2))
   expect_equal(sorted5[["edge.length"]], c(3, 5, 7, 6, 4, 2, 1))
-  expect_equal('cladewise', attr(SortTree(PectinateTree(5)), 'order'))
-  expect_equal(SortTree(sorted5, 'tip',
-                        paste0('t', c(1, 2, 4, 5, 3)))[["edge.length"]],
+  expect_equal("cladewise", attr(SortTree(PectinateTree(5)), "order"))
+  expect_equal(SortTree(sorted5, "tip",
+                        paste0("t", c(1, 2, 4, 5, 3)))[["edge.length"]],
                c(1:3, 5:7, 4))
 
   
   skip_if_not_installed("vdiffr", "1.0")
-  vdiffr::expect_doppelganger('sorted-tree', function() {
+  vdiffr::expect_doppelganger("sorted-tree", function() {
     par(mar = rep(0, 4))
     plot(SortTree(UnrootTree(CollapseNode(BalancedTree(17), c(28, 31, 32)))))
     edgelabels(adj = c(1, 1/2))
@@ -47,6 +47,6 @@ test_that("SortTree.multiPhylo()", {
   t2 <- as.phylo(921, 12)
 
   expect_identical(structure(list(SortTree(t1), SortTree(t2)),
-                             class = 'multiPhylo'),
+                             class = "multiPhylo"),
                    SortTree(c(t1, t2)))
 })

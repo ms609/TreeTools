@@ -45,7 +45,7 @@ order.
 Clades that contain the same number of leaves are sorted in decreasing order
 of minimum leaf number, so (2, 3) will occur before (1, 4).
 
-As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+As trees are plotted from "bottom up", the largest clades will "sink" to the
 bottom of a plotted tree.
 }
 \examples{
@@ -64,6 +64,9 @@ plot(SortTree(messyTree, how = "tip"))
 \code{Preorder()} also rearranges trees into a consistent shape,
 based on the index of leaves.
 
+\code{\link[=sort.multiPhylo]{sort.multiPhylo()}} sorts a list of trees stored as a \code{multiPhylo}
+object.
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},
@@ -79,10 +82,12 @@ Other tree manipulation:
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

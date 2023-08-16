@@ -4,6 +4,7 @@
 #include <Rcpp/Lightest>
 
 using namespace Rcpp;
+using namespace TreeTools;
 
 // keep_tip
 RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {

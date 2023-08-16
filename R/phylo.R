@@ -3,12 +3,12 @@
 #' `Renumber()` numbers the nodes and tips in a tree to conform with the
 #' `phylo` standards.
 #'
-#' The 'ape' class `phylo` is not formally defined, but expects trees' internal
+#' The \pkg{ape} class `phylo` is not formally defined, but expects trees' internal
 #' representation to conform to certain principles: for example, nodes should
 #' be numbered sequentially, with values increasing away from the root.
 #'
 #' `Renumber()` attempts to reformat any tree into a representation that will
-#' not cause 'ape' functions to produce unwanted results or to crash R.
+#' not cause \pkg{ape} functions to produce unwanted results or to crash R.
 #'
 #' @template treeParam
 #'
@@ -17,7 +17,7 @@
 #' Renumber(tree)
 #'
 #' @return `Renumber()` returns a tree of class `phylo`, numbered in a
-#' [Cladewise] fashion consistent with the expectations of 'ape' functions.
+#' [Cladewise] fashion consistent with the expectations of \pkg{ape} functions.
 #'
 #' @seealso `Preorder()` provides a faster and simpler alternative, but also
 #' rotates nodes.
@@ -54,27 +54,41 @@ Renumber <- function(tree) {
   Cladewise(tree)
 }
 
-#' Generate a single taxon tree
+#' Generate trivial trees
 #'
-#' `SingleTaxonTree()` creates a phylogenetic 'tree' that contains a single
-#' taxon.
+#' `SingleTaxonTree()` creates a phylogenetic "tree" that contains a single
+#' taxon. 
+#' `ZeroTaxonTree()` creates an empty `phylo` object with zero leaves or edges.
 #'
-#' @usage SingleTaxonTree(label)
 #' @param  label a character vector specifying the label of the tip.
 #' @return `SingleTaxonTree()` returns a \code{phylo} object containing a single
 #' tip with the specified label.
 #'
 #' @examples
-#' SingleTaxonTree('Homo_sapiens')
-#' plot(SingleTaxonTree('root') + BalancedTree(4))
+#' SingleTaxonTree("Homo_sapiens")
+#' plot(SingleTaxonTree("root") + BalancedTree(4))
 #'
-#' @keywords  tree
+#' @keywords tree
 #' @family tree manipulation
 #' @family tree generation functions
+#' @name TrivialTree
+NULL
+
+#' @rdname TrivialTree
 #' @export
-SingleTaxonTree <- function(label = 't1') {
-  structure(list(edge = matrix(c(2L,1L), 1, 2), tip.label = label, Nnode = 1L),
-            class = 'phylo')
+SingleTaxonTree <- function(label = "t1") {
+  structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label, Nnode = 1L),
+            class = "phylo")
+}
+
+#' @rdname TrivialTree
+#' @return `ZeroTaxonTree()` returns an empty \code{phylo} object.
+#' @examples
+#' ZeroTaxonTree()
+#' @export
+ZeroTaxonTree <- function() {
+  structure(list(edge = structure(numeric(0), dim = c(0L, 2L)), 
+                 tip.label = character(0), Nnode = 0), class = "phylo")
 }
 
 #' Extract a subtree
@@ -83,7 +97,7 @@ SingleTaxonTree <- function(label = 't1') {
 #'
 #' Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
 #' sometimes behaves erratically.
-#' Unlike extract.clade, this function supports the extraction of 'clades'
+#' Unlike extract.clade, this function supports the extraction of "clades"
 #' that constitute a single tip.
 #'
 #' @template preorderTreeParam
@@ -96,7 +110,7 @@ SingleTaxonTree <- function(label = 't1') {
 #' tree <- Preorder(BalancedTree(8))
 #' plot(tree)
 #' ape::nodelabels()
-#' ape::nodelabels(13, 13, bg='yellow')
+#' ape::nodelabels(13, 13, bg="yellow")
 #'
 #' plot(Subtree(tree, 13))
 #'
@@ -104,7 +118,7 @@ SingleTaxonTree <- function(label = 't1') {
 #' @family tree manipulation
 #' @export
 Subtree <- function(tree, node) {
-  if (is.null(treeOrder <- attr(tree, 'order')) || treeOrder != 'preorder') {
+  if (is.null(treeOrder <- attr(tree, "order")) || treeOrder != "preorder") {
     stop("Tree must be in preorder")
   }
   tipLabel <- tree[["tip.label"]]
@@ -116,7 +130,7 @@ Subtree <- function(tree, node) {
   parent <- edge[, 1]
   child <- edge[, 2]
   subtreeParentEdge <- match(node, child)
-  keepEdge <- DescendantEdges(subtreeParentEdge, parent, child)
+  keepEdge <- DescendantEdges(parent, child, subtreeParentEdge)
   keepEdge[subtreeParentEdge] <- FALSE
 
   edge <- edge[keepEdge, ]
@@ -127,8 +141,8 @@ Subtree <- function(tree, node) {
   tips  <- edge2[isTip]
   new.nTip <- length(tips)
   name <- character(new.nTip)
-  # method='radix' typically a few % faster than 'auto'
-  tipOrder <- order(tips, method = 'radix')
+  # method="radix" typically a few % faster than "auto"
+  tipOrder <- order(tips, method = "radix")
   name[tipOrder] <- tipLabel[tips]
   edge2[isTip] <- tipOrder
 
@@ -143,7 +157,7 @@ Subtree <- function(tree, node) {
     tip.label = name,
     Nnode = dim(edge)[1] - new.nTip + 1L,
     edge = edge
-  ), class = 'phylo', order = 'preorder')
+  ), class = "phylo", order = "preorder")
 }
 
 #' List ancestors

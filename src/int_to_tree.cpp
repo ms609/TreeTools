@@ -1,15 +1,25 @@
-#include <Rcpp/Lightest>
+#include <Rcpp/Lighter> /* for is_na */
 #include <random>
 #include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
+const intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
+  if (Rcpp::is_true(Rcpp::any(Rcpp::is_na(n)))) {
+    Rcpp::stop("`n` may not contain NA values");
+  }
+  if (Rcpp::is_true(Rcpp::any(n < 0))) {
+    Rcpp::stop("`n` may not be negative");
+  }
   if (nTip[0] < 2) {
-    Rcpp::stop("nTip must be > 1");
+    Rcpp::stop("`nTip` must be > 1");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],
@@ -123,6 +133,12 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
+  if (all_node > MAX_NODE) {
+    Rcpp::stop("Too many nodes for mixed base representation");
+  }
+  if (n_tip >= MAX_TIP) {
+    Rcpp::stop("Too many leaves for mixed base representation");
+  }
   intx smallest_below[MAX_NODE],
        parent_of[MAX_NODE],
        prime_id[MAX_NODE],
@@ -176,10 +192,15 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
 
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
-IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
-                                 IntegerVector nTip) {
+IntegerVector edge_to_mixed_base(
+    const IntegerVector parent,
+    const IntegerVector child,
+    const IntegerVector nTip) {
   if (parent.size() != child.size()) {
     Rcpp::stop("Parent and child must be the same length");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],
@@ -188,18 +209,26 @@ IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
     all_node = n_internal + n_tip,
     r_to_c = 1
   ;
+  
   if (n_tip < 4) {
     return IntegerVector(0);
   }
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
+  if (all_node > MB_MAX_NODE) {
+    Rcpp::stop("Too many nodes for mixed base representation");
+  }
+  if (n_tip >= MB_MAX_TIP) {
+    Rcpp::stop("Too many leaves for mixed base representation");
+  }
   intx
-    smallest_below[MAX_NODE],
-    parent_of[MAX_NODE],
-    prime_id[MAX_NODE],
-    index[MAX_TIP]
+    smallest_below[MB_MAX_NODE],
+    parent_of[MB_MAX_NODE],
+    prime_id[MB_MAX_NODE],
+    index[MB_MAX_TIP]
   ;
+  
   for (intx i = 0; i != all_node; i++) {
     smallest_below[i] = i;
     prime_id[i] = i;
@@ -244,8 +273,17 @@ IntegerVector mixed_base_to_parent(
     const IntegerVector n,
     const IntegerVector nTip
   ) {
+  if (Rcpp::is_true(Rcpp::any(Rcpp::is_na(n)))) {
+    Rcpp::stop("`n` may not contain NA values");
+  }
+  if (Rcpp::is_true(Rcpp::any(n < 0))) {
+    Rcpp::stop("`n` may not be negative");
+  }
   if (nTip[0] < 2) {
-    Rcpp::stop("nTip must be > 1");
+    Rcpp::stop("`nTip` must be > 1");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],

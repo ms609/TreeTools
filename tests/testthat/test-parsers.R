@@ -1,99 +1,30 @@
-TestFile <- function(filename = '') {
-  system.file('extdata', 'tests', filename, package = 'TreeTools')
+TestFile <- function(filename = "") {
+  system.file("extdata", "tests", filename, package = "TreeTools")
 }
 
 test_that("File time is read correctly", {
-  fileName <- TestFile('ape-tree.nex')
-  expect_equal('2018-07-18 13:47:46', ApeTime(fileName, 'string'))
+  fileName <- TestFile("ape-tree.nex")
+  expect_equal("2018-07-18 13:47:46", ApeTime(fileName, "string"))
   expect_error(ApeTime(rep(fileName, 2)))
 })
 
 test_that("Nexus file can be parsed", {
   # Errors as lists:
   expect_equal("MATRIX block not found in Nexus file.",
-               ReadCharacters(TestFile('ape-tree.nex'))[[1]])
+               ReadCharacters(TestFile("ape-tree.nex"))[[1]])
 
-  filename <- TestFile('parse-nexus.nexus')
+  filename <- TestFile("parse-nexus.nexus")
   read <- ReadCharacters(filename)
   expect_equal(192, ncol(read))
   expect_equal(80, nrow(read))
   expect_equal("Wiwaxia", rownames(read)[4])
   expect_equal("(01)", as.character(read[1, 27]))
 
-  filename <- TestFile('continuous.nex')
+  filename <- TestFile("continuous.nex")
   read <- ReadCharacters(filename)
   expect_equal(1L, unique(as.integer(read[1, ])))
-  expect_equal(setNames('?', 'B_alienus'), read['B_alienus', 4])
+  expect_equal(setNames("?", "B_alienus"), read["B_alienus", 4])
   expect_equal(3L, unique(as.integer(read[3, ])))
-})
-
-test_that("ReadTntCharacter()", {
-  testFile <- TestFile('tnt-trees-and-matrix.tnt')
-  expect_equal(
-    structure(c("0", "0", "1", "1", "1", "1", "-", "-", "0", "0",
-              "0", "0", "-", "-", "0", "0", "1", "1", "-", "-", "-", "-", "0",
-              "1", "-", "-", "1", "1", "1", "0", "-", "-", "0", "0", "1", "-",
-              "-", "-", "0", "1", "0", "-"), .Dim = 6:7,
-            .Dimnames = list(c("a", "b", "c", "d", "e", "f"), NULL)),
-    ReadTntCharacters(testFile)
-  )
-  
-  dnaTest <- TestFile('tnt-dna.tnt')
-  expect_equal(ReadTntCharacters(dnaTest),
-               cbind(ReadTntCharacters(dnaTest, type = 'num'),
-                     ReadTntCharacters(dnaTest, type = 'dna')))
-  expect_equal(ReadTntCharacters(dnaTest),
-               ReadTntCharacters(dnaTest, type = c('NUM', 'Dna')))
-  expect_message(expect_null(ReadTntCharacters(dnaTest, type = 'NONE')))
-  
-  skip_if_not_installed('phangorn')
-  expect_equal(
-    phangorn::as.phyDat(
-      ReadTntCharacters(testFile),
-      type = 'USER',
-      contrast = structure(c(0, 0, 1, 1, 0, 0, 0, 1, 0), .Dim = c(3L, 3L),
-                           .Dimnames = list(c("0", "1", "-"), c("-", "0", "1")))
-    ),
-    ReadTntAsPhyDat(testFile))
-})
-
-test_that("TNT trees parsed correctly", {
-  trees <- ReadTntTree(TestFile('tnt-tree.tre'), relativePath = TestFile())
-  expect_equal(2, length(trees))
-  expect_equal(32, ConsensusWithout(trees, 'Paterimitra')$Nnode)
-
-  tipLabels <- c('Dailyatia', 'Novocrania', 'Craniops', 'Ussunia', 'Gasconsia',
-                 'Heliomedusa_orienta', 'Micrina', 'Mickwitzia_muralensis',
-                 'Micromitra', 'Askepasma_toddense', 'Pelagodiscus_atlanticus',
-                 'Lingula', 'Eoobolus', 'Clupeafumosus_socialis', 'Phoronis',
-                 'Eccentrotheca', 'Yuganotheca_elegans',
-                 'Longtancunella_chengjiangensis', 'Paterimitra',
-                 'Lingulellotreta_malongensis', 'Acanthotretella',
-                 'Lingulosacculus', 'Pedunculotheca_diania',
-                 'Haplophrentis_carinatus', 'Tomteluva_perturbata',
-                 'Salanygolina', 'Mummpikia_nuda', 'Alisina', 'Coolinia_pecten',
-                 'Antigonambonites_planus', 'Kutorgina_chengjiangensis',
-                 'Nisusia_sulcata', 'Glyptoria', 'Orthis', 'Terebratulina')
-  fromLabels <- ReadTntTree(TestFile('tnt-tree.tre'), tipLabels = tipLabels)
-  expect_identical(trees, fromLabels)
-
-  namedLabels <- ReadTntTree(TestFile('tnt-namedtree.tre'))[[1]]$tip.label
-  expect_equal('Flustra_sp.', namedLabels[1])
-  expect_equal(74L, length(namedLabels))
-
-  tam <- ReadTntTree(TestFile('tnt-trees-and-matrix.tnt'))
-  expect_equal(3, length(tam))
-  expect_equal(ape::read.tree(text = '(a, (b, (c, (f, (d, e )))));'), tam[[1]])
-
-
-  oldWD <- getwd()
-  setwd(system.file(package = 'TreeTools'))
-  expect_equal(paste0('taxon_', letters[1:5]),
-    ReadTntTree('extdata/output/numbered.tre', './extdata', 2)[[1]]$tip.label)
-
-  expect_equal(paste0('taxon_', letters[1:5]),
-    ReadTntTree('extdata/output/named.tre')$tip.label)
-  setwd(oldWD)
 })
 
 test_that("NexusTokens() fails gracefully", {
@@ -103,10 +34,10 @@ test_that("NexusTokens() fails gracefully", {
 })
 
 test_that("Matrix converts to phyDat", {
-  mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,2,2,2,'?'),
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,2,2,2,"?"),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
-  expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
+  expect_equal(mat, as.matrix(MatrixToPhyDat(mat)))
 })
 
 test_that(".PhyDatWithContrast() fails gracefully", {
@@ -116,16 +47,31 @@ test_that(".PhyDatWithContrast() fails gracefully", {
 })
 
 test_that("PhyDatToMatrix() with ambigs", {
-  mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,'{12}','(01)','-','?'),
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,"{12}","(01)","-","?"),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
   expectation <- mat
   expectation[3, 5:8] <- NA_character_
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, TRUE), expectation)
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, FALSE)[3, 5:8],
-               c(NA, NA, '-', NA))
+               c(NA, NA, "-", NA))
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), FALSE, TRUE)[3, 5:8],
-               c('{12}', '(01)', NA_character_, '?'))
+               c("{12}", "{01}", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = NULL
+                   )[3, 5:8],
+    c("{12}", "(01)", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = c("<>"),
+                   sep = "/"
+    )[3, 5:8],
+    c("<1/2>", "<0/1>", NA_character_, "?"))
 })
 
 test_that("Modified phyDat objects can be converted", {
@@ -144,57 +90,58 @@ test_that("Modified phyDat objects can be converted", {
 
 test_that("MatrixToPhyDat() warns when characters blank", {
   # May occur when loading an excel file with empty cells
-  mat <- matrix(c(1,0,1,0,1,0,1,0,0,'','','',0,1,0,1,2,2,2,2,2,2,2,'?'),
+  mat <- matrix(c(1,0,1,0,1,0,1,0,0,"","","",0,1,0,1,2,2,2,2,2,2,2,"?"),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
   expect_warning(MatrixToPhyDat(mat))
 })
 
 test_that("MatrixToPhyDat() returns phyDat if passed", {
-  expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy))
+  expect_warning(expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy)),
+                 "phyDat")
 })
 
 test_that("StringToPhyDat()", {
-  expect_equal(as.integer(StringToPhyDat('1111????', letters[1:8])),
+  expect_equal(as.integer(StringToPhyDat("1111????", letters[1:8])),
                rep(1:2, each = 4))
-  expect_equal(as.integer(StringToPhyDat('----????', letters[1:8])),
+  expect_equal(as.integer(StringToPhyDat("----????", letters[1:8])),
                rep(1:2, each = 4))
-  expect_equal(as.integer(StringToPhyDat('----????')), rep(1:2, each = 4))
-  expect_equal(names(StringToPhyDat('----????')), paste0('t', 1:8))
+  expect_equal(as.integer(StringToPhyDat("----????")), rep(1:2, each = 4))
+  expect_equal(names(StringToPhyDat("----????")), paste0("t", 1:8))
 })
 
-test_that('PhyToString() supports long levels', {
-  skip_if_not_installed('phangorn')
-  longLevels <- phangorn::phyDat(rbind(x = c('-', '?', 0:12),
-                                       y = c(12:0, '-', '?')),
-                       type = 'USER', levels = c(0:6, '-', 7:12))
+test_that("PhyToString() supports long levels", {
+  skip_if_not_installed("phangorn")
+  longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 0:12),
+                                       y = c(12:0, "-", "?")),
+                       type = "USER", levels = c(0:6, "-", 7:12))
   expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
 
   # Two -s → error
-  attr(longLevels, 'allLevels')[1] <- '-'
+  attr(longLevels, "allLevels")[1] <- "-"
   expect_error(PhyToString(longLevels))
 
   # 10 → 1
-  longLevels <- phangorn::phyDat(rbind(x = c('-', '?', 1:10),
-                                       y = c(10:1, '-', '?')),
-                                 type = 'USER', levels = c(1:6, '-', 7:10))
+  longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 1:10),
+                                       y = c(10:1, "-", "?")),
+                                 type = "USER", levels = c(1:6, "-", 7:10))
   expect_equal("-?12345678900987654321-?", PhyToString(longLevels))
 })
   
-test_that('PhyToString() works', {
-  phy <- StringToPhyDat('012[01]', letters[1:4])
-  expect_equal('012{01}', PhyToString(phy))
-  expect_equal('012<01>', PhyToString(phy, parentheses = '<'))
-  expect_equal('012<01>', PhyToString(phy, parentheses = '>'))
-  expect_equal('012(01)', PhyToString(phy, parentheses = '('))
-  expect_equal('012(01)', PhyToString(phy, parentheses = ')'))
-  expect_equal('012[01]', PhyToString(phy, parentheses = ']'))
-  expect_equal('012[01]', PhyToString(phy, parentheses = '['))
-  expect_equal('012{01}', PhyToString(phy, parentheses = '}'))
-  expect_equal('012{01}', PhyToString(phy, parentheses = '{'))
-  expect_equal('012{01}', PhyToString(phy, parentheses = '!'))
+test_that("PhyToString() works", {
+  phy <- StringToPhyDat("012[01]", letters[1:4])
+  expect_equal("012{01}", PhyToString(phy))
+  expect_equal("012<01>", PhyToString(phy, parentheses = "<"))
+  expect_equal("012<01>", PhyToString(phy, parentheses = ">"))
+  expect_equal("012(01)", PhyToString(phy, parentheses = "("))
+  expect_equal("012(01)", PhyToString(phy, parentheses = ")"))
+  expect_equal("012[01]", PhyToString(phy, parentheses = "]"))
+  expect_equal("012[01]", PhyToString(phy, parentheses = "["))
+  expect_equal("012{01}", PhyToString(phy, parentheses = "}"))
+  expect_equal("012{01}", PhyToString(phy, parentheses = "{"))
+  expect_equal("012{01}", PhyToString(phy, parentheses = "!"))
 
-  str <- '012{01}0123'
+  str <- "012{01}0123"
   phy <- StringToPhyDat(str, letters[1:4])
   expect_equal(str, PhyToString(StringToPhyDat(str, letters[1:4])))
   expect_equal(str,
@@ -203,57 +150,72 @@ test_that('PhyToString() works', {
 })
 
 test_that("EndSentence() works correctly", {
-  expect_equal(EndSentence('Hi'), 'Hi.')
-  expect_equal(EndSentence('Hi.'), 'Hi.')
-  expect_equal(EndSentence('Hi?'), 'Hi?')
-  expect_equal(EndSentence('Hi!'), 'Hi!')
+  expect_equal(EndSentence("Hi"), "Hi.")
+  expect_equal(EndSentence("Hi."), "Hi.")
+  expect_equal(EndSentence("Hi?"), "Hi?")
+  expect_equal(EndSentence("Hi!"), "Hi!")
   expect_equal(EndSentence(character(0)), character(0))
 })
 
 test_that("Unquote() unquotes", {
-  expect_equal("Unquoted", Unquote("'Unquoted'"))
-  expect_equal("Unquoted", Unquote('"Unquoted"'))
-  expect_equal("Unquoted", Unquote("'Unquoted '"))
-  expect_equal("Unquoted", Unquote('" Unquoted "'))
-  expect_equal("Unquoted's", Unquote("'Unquoted's '"))
-  expect_equal("", Unquote('""'))
-  expect_equal("", Unquote("''"))
+  expect_equal(Unquote("'Unquoted'"), "Unquoted")
+  expect_equal(Unquote("\"Unquoted\""), "Unquoted")
+  expect_equal(Unquote("'Unquoted '"), "Unquoted")
+  expect_equal(Unquote("\" Unquoted \""), "Unquoted")
+  expect_equal( Unquote("'Unquoted's '"), "Unquoted's")
+  expect_equal(Unquote(.UnescapeQuotes("'Unquoted''s '")), "Unquoted's")
+  expect_equal(Unquote("\"\""), "")
+  expect_equal(Unquote("''"), "")
 })
 
 test_that("ReadNotes() reads notes", {
-  notes <- ReadNotes(system.file('extdata/input/notes.nex',
-                                 package = 'TreeTools'))
+  notes <- ReadNotes(system.file("extdata/input/notes.nex",
+                                 package = "TreeTools"))
   expect_equal(length(unlist(notes$`1`)), 0)
   expect_equal(notes[[2]][[2]], setNames("Taxon 2, char 2.", "taxon_b"))
   expect_equal(notes[[3]][[1]], "Three's a crowd.")
   expect_equal(notes[[3]][[2]], setNames("Tax1-Char3.", "taxon_a"))
 })
 
+test_that("ReadNotes() handles absence of character-taxon notes", {
+  expect_equal(ReadNotes(system.file("extdata/tests/taxon-notes.nex",
+                                     package = "TreeTools")),
+               structure(list(), names = character(0)))
+})
+
+test_that("ReadNotes() handles misspecified encoding", {
+  expect_message(
+    expect_equal(ReadNotes(system.file("extdata/tests/encoding.nex",
+                                     package = "TreeTools"))[[1]][[2]],
+                 setNames("\u0080ncoding.", "Two")),
+    "trying latin1 .*encoding")
+})
+
 test_that("ReadCharacters() reads CHARSTATELABELS", {
-  labels <- ReadCharacters(system.file('extdata/input/dataset.nex',
-                                       package = 'TreeTools'))
+  labels <- ReadCharacters(system.file("extdata/input/dataset.nex",
+                                       package = "TreeTools"))
 
 
-  expect_equal(colnames(labels), c('Character one',
-                                   'Character two',
-                                   'lots-of-punctuation, and "so on"!',
-                                   'Character n', 'Character 5',  'Character 6',
-                                   'final character'))
+  expect_equal(colnames(labels), c("Character one",
+                                   "Character two",
+                                   "lots-of-punctuation, and \"so on\"!",
+                                   "Character n", "Character 5",  "Character 6",
+                                   "final character"))
 
-  ap <- c('absent', 'present')
-  expect_equal(attr(labels, 'state.labels'),
+  ap <- c("absent", "present")
+  expect_equal(attr(labels, "state.labels"),
                list(ap, ap,
-                    c('here', 'there', 'everywhere'),
-                    c('a long description', 'present'),
-                    c('simple', 'more complex', 'with (parentheses)',
-                      'more complex, 6 still'),
-                    c('this one has', 'multiple lines'), ap));
+                    c("here", "there", "everywhere"),
+                    c("a long description", "present"),
+                    c("simple", "more complex", "with (parentheses)",
+                      "more complex, 6 still"),
+                    c("this one has", "multiple lines"), ap));
 
-  labels3 <- ReadCharacters(system.file('extdata/input/dataset.nex',
-                                        package = 'TreeTools'), 3)
+  labels3 <- ReadCharacters(system.file("extdata/input/dataset.nex",
+                                        package = "TreeTools"), 3)
   expect_equal(labels3, labels[, 3, drop = FALSE], ignore_attr = TRUE)
-  expect_equal(attr(labels3, 'state.labels'),
-               attr(labels, 'state.labels')[3])
+  expect_equal(attr(labels3, "state.labels"),
+               attr(labels, "state.labels")[3])
 
 })
 
@@ -261,12 +223,25 @@ test_that("MorphoBankDecode() decodes", {
   expect_equal("' -- x  \n 1--2", MorphoBankDecode("'' - x^n 1-2"))
 })
 
-test_that('NewickTree() works', {
+test_that("NewickTree() works", {
   expect_equal("((Test taxon,Another test),(What's this?,Number 12.3));",
-               NewickTree(BalancedTree(c('Test taxon', 'Another_test',
+               NewickTree(BalancedTree(c("Test taxon", "Another_test",
                                              "What's this?", "Number 12.3"))))
 })
 
-test_that('as_newick fails gracefully', {
-  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
+test_that("as_newick() fails gracefully", {
+  expect_equal(as_newick(matrix(0L, 0L, 2L)), ";")
+  expect_equal(as_newick(matrix(1:0, 1L, 2L)), "(0);")
+  expect_equal(as_newick(Postorder(BalancedTree(4)$edge) - 1L),
+               as_newick(BalancedTree(4)$edge - 1L))
+  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)),
+               "Too many nodes")
+  expect_error(as_newick(matrix(0L, 3, 3)),
+               "`edge` must have two columns")
+  expect_error(as_newick(matrix(c(4, 4, 4, 1:3), 3, 2)),
+               "`min.edge.` must be zero")
+  expect_error(as_newick(matrix(c(3, NA, 3, 0:2), 3, 2)),
+               "`edge`.* NA")
+  expect_error(as_newick(matrix(c(4, 4, 3, 0:2), 3, 2)),
+               "`edge` is malformed")
 })

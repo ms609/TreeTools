@@ -55,7 +55,7 @@ Log2TreesMatchingTree <- function(tree) {
 #' with an information-theoretic justification, by 
 #' \insertCite{Thorley1998;textual}{TreeTools}.
 #' \insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
-#' 'phylogenetic information content' in the context of individual characters.
+#' "phylogenetic information content" in the context of individual characters.
 #'
 #' The number of binary trees consistent with a cladogram provides a more
 #' satisfactory measure of the resolution of a tree than simply
@@ -76,13 +76,13 @@ Log2TreesMatchingTree <- function(tree) {
 #'
 #' @template MRS
 #' @export
-CladisticInfo <- function(x) UseMethod('CladisticInfo')
+CladisticInfo <- function(x) UseMethod("CladisticInfo")
 
 #' @rdname CladisticInfo
 #' @export
 PhylogeneticInfo <- function(x) {                                               # nocov start
-  .Deprecated('CladisticInfo()')
-  UseMethod('CladisticInfo')
+  .Deprecated("CladisticInfo()")
+  UseMethod("CladisticInfo")
 }                                                                               # nocov end
 
 #' @rdname CladisticInfo

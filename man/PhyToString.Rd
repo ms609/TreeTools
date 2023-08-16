@@ -82,13 +82,13 @@ representation of the phylogenetic character state for each taxon in turn.
 \code{StringToPhyDat()} converts a string of character data to a \code{phyDat} object.
 }
 \examples{
-StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
+StringToPhyDat("-?01231230?-", c("Lion", "Gazelle"), byTaxon = TRUE)
 # encodes the following matrix:
 # Lion     -?0123
 # Gazelle  1230?-
 
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/input/dataset.nex')
+fileName <- paste0(system.file(package = "TreeTools"),
+                   "/extdata/input/dataset.nex")
 phyDat <- ReadAsPhyDat(fileName)
 PhyToString(phyDat, concatenate = FALSE)
 
@@ -98,6 +98,7 @@ Other phylogenetic matrix conversion functions:
 \code{\link{MatrixToPhyDat}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{phylogenetic matrix conversion functions}

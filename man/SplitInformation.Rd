@@ -10,9 +10,7 @@ SplitInformation(A, B = A[1])
 MultiSplitInformation(partitionSizes)
 }
 \arguments{
-\item{A}{Integer specifying the number of taxa in each partition.}
-
-\item{B}{Integer specifying the number of taxa in each partition.}
+\item{A, B}{Integer specifying the number of taxa in each partition.}
 
 \item{partitionSizes}{Integer vector specifying the number of taxa in each
 partition of a multi-partition split.}
@@ -115,6 +113,7 @@ Other split information functions:
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

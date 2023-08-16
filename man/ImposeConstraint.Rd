@@ -12,15 +12,17 @@ AddUnconstrained(constraint, toAdd, asPhyDat = TRUE)
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
-\item{constraint}{An object of class \code{phyDat}; returned trees will be
-perfectly compatible with each character in \code{constraint}.
+\item{constraint}{Either an object of class \code{phyDat}, in which case returned
+trees will be perfectly compatible with each character in \code{constraint};
+or a tree of class \code{phylo}, in which each node in \code{constraint} will occur in
+the returned tree.
 See \href{https://ms609.github.io/TreeSearch/articles/tree-search.html}{vignette}
 for further examples.}
 
 \item{toAdd}{Character vector specifying taxa to add to constraint.}
 
-\item{asPhyDat}{Logical: if \code{TRUE}, return a \code{phyDat} object; if \code{FALSE}, return
-a matrix.}
+\item{asPhyDat}{Logical: if \code{TRUE}, return a \code{phyDat} object; if \code{FALSE},
+return a matrix.}
 }
 \value{
 \code{ImposeConstraint()} returns a tree of class \code{phylo}, consistent
@@ -34,16 +36,16 @@ each entry in \code{constraint}.
 }
 \section{Functions}{
 \itemize{
-\item \code{AddUnconstrained}: Expand a constraint to include unconstrained
+\item \code{AddUnconstrained()}: Expand a constraint to include unconstrained
 taxa.
-}}
 
+}}
 \examples{
 tips <- letters[1:9]
 tree <- as.phylo(1, 9, tips)
 plot(tree)
 
-constraint <- StringToPhyDat('0000?1111 000111111 0000??110', tips, FALSE)
+constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
 plot(ImposeConstraint(tree, constraint))
 }
 \seealso{
@@ -61,11 +63,13 @@ Other tree manipulation:
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

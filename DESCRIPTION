@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.7.1.9000
+Version: 1.9.2.9007
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -22,16 +22,16 @@ Description: Efficient implementations of functions for the creation,
   plotting the position of rogue taxa (Klopfstein & Spasojevic 2019)
   <doi:10.1371/journal.pone.0212942>;
   calculation of ancestor-descendant relationships,
-  of 'stemwardness' (Asher & Smith, 2021) <doi:10.1093/sysbio/syab072>,
+  of 'stemwardness' (Asher & Smith, 2022) <doi:10.1093/sysbio/syab072>,
   and of tree balance (Mir et al. 2013) <doi:10.1016/j.mbs.2012.10.005>;
   artificial extinction (Asher & Smith, 2022) <doi:10.1093/sysbio/syab072>;
   import and export of trees from Newick, Nexus (Maddison et al. 1997)
   <doi:10.1093/sysbio/46.4.590>,
-  and TNT <http://www.lillo.org.ar/phylogeny/tnt/> formats;
+  and TNT <https://www.lillo.org.ar/phylogeny/tnt/> formats;
   and analysis of splits and cladistic information.
 URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
 BugReports: https://github.com/ms609/TreeTools/issues/
-SystemRequirements: C++14
+SystemRequirements: C++17
 Depends:
     R (>= 3.4.0),
     ape (>= 5.6),
@@ -41,21 +41,24 @@ Imports:
     colorspace,
     fastmatch (>= 1.1.3),
     methods,
+    PlotTools,
+    RCurl,
     R.cache,
     Rdpack (>= 2.3),
 Suggests:
     spelling,
     knitr,
     phangorn (>= 2.2.1),
+    purrr,
     Rcpp (>= 1.0.8),
+    rlang,
     rmarkdown,
-    shiny,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools
-Config/Needs/metadata: codemetar
+Config/Needs/metadata: codemeta
 Config/Needs/revdeps: revdepcheck
 Config/Needs/website: pkgdown
 Config/testthat/parallel: false
@@ -67,5 +70,5 @@ ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

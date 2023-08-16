@@ -313,9 +313,10 @@
 <line x1='90.58' y1='392.72' x2='90.58' y2='392.37' style='stroke-width: 3.75; stroke: #A9151E; stroke-linecap: square;' />
 <line x1='90.58' y1='392.37' x2='90.58' y2='392.03' style='stroke-width: 3.75; stroke: #A71320; stroke-linecap: square;' />
 <line x1='90.58' y1='392.03' x2='90.58' y2='391.68' style='stroke-width: 3.75; stroke: #A51122; stroke-linecap: square;' />
-<text x='97.78' y='483.14' style='font-size: 12.00px; font-family: sans;' textLength='38.02px' lengthAdjust='spacingAndGlyphs'>Bottom</text>
-<text x='97.78' y='438.78' style='font-size: 12.00px; font-family: sans;' textLength='35.35px' lengthAdjust='spacingAndGlyphs'>Middle</text>
-<text x='97.78' y='394.43' style='font-size: 12.00px; font-family: sans;' textLength='20.68px' lengthAdjust='spacingAndGlyphs'>Top</text>
+<text x='97.78' y='483.14' style='font-size: 12.00px; fill: #0000FF; font-family: sans;' textLength='38.02px' lengthAdjust='spacingAndGlyphs'>Bottom</text>
+<text x='97.78' y='438.78' style='font-size: 12.00px; fill: #A52A2A; font-family: sans;' textLength='35.35px' lengthAdjust='spacingAndGlyphs'>Middle</text>
+<text x='97.78' y='394.43' style='font-size: 12.00px; fill: #FF0000; font-family: sans;' textLength='20.68px' lengthAdjust='spacingAndGlyphs'>Top</text>
+<text x='109.59' y='376.22' text-anchor='middle' style='font-size: 6.00px; font-style: italic; fill: #0000FF; font-family: sans;' textLength='23.01px' lengthAdjust='spacingAndGlyphs'>Blue title</text>
 <line x1='333.33' y1='239.73' x2='325.87' y2='224.80' style='stroke-width: 3.00; stroke: #FFFFFF; stroke-dasharray: 4.00,12.00;' />
 <line x1='325.87' y1='224.80' x2='318.40' y2='209.87' style='stroke-width: 3.00; stroke-dasharray: 4.00,12.00;' />
 <line x1='318.40' y1='209.87' x2='310.93' y2='194.93' style='stroke-width: 3.00; stroke: #DF536B; stroke-dasharray: 4.00,12.00;' />
@@ -327,11 +328,16 @@
 <line x1='273.60' y1='120.27' x2='266.13' y2='105.33' style='stroke-width: 3.00; stroke: #9E9E9E; stroke-dasharray: 4.00,12.00;' />
 <line x1='266.13' y1='105.33' x2='258.67' y2='90.40' style='stroke-width: 3.00; stroke-dasharray: 4.00,12.00;' />
 <line x1='258.67' y1='90.40' x2='251.20' y2='75.47' style='stroke-width: 3.00; stroke: #DF536B; stroke-dasharray: 4.00,12.00;' />
+</g>
+<g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='326.13' y='242.49' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>0</text>
 <text x='309.71' y='209.63' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>2</text>
 <text x='293.28' y='176.78' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>4</text>
 <text x='276.85' y='143.93' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>6</text>
 <text x='260.43' y='111.07' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>8</text>
 <text x='244.00' y='78.22' text-anchor='end' style='font-size: 12.00px; font-family: sans;' textLength='13.35px' lengthAdjust='spacingAndGlyphs'>10</text>
+<text x='326.66' y='31.21' text-anchor='middle' style='font-size: 12.00px; font-weight: bold; font-family: sans;' textLength='29.33px' lengthAdjust='spacingAndGlyphs'>Multi-</text>
+<text x='326.66' y='45.61' text-anchor='middle' style='font-size: 12.00px; font-weight: bold; font-family: sans;' textLength='18.68px' lengthAdjust='spacingAndGlyphs'>line</text>
+<text x='326.66' y='60.01' text-anchor='middle' style='font-size: 12.00px; font-weight: bold; font-family: sans;' textLength='18.67px' lengthAdjust='spacingAndGlyphs'>title</text>
 </g>
 </svg>

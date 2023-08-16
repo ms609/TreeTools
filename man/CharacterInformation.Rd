@@ -8,7 +8,7 @@ CharacterInformation(tokens)
 }
 \arguments{
 \item{tokens}{Character vector specifying the tokens assigned to each taxon for
-a character.  Example: \code{c(0, 0, 0, 1, 1, 1, '?', '-')}.
+a character.  Example: \code{c(0, 0, 0, 1, 1, 1, "?", "-")}.
 
 Note that ambiguous tokens such as \code{(01)} are not supported, and should be
 replaced with \verb{?}.}
@@ -39,6 +39,7 @@ Other split information functions:
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

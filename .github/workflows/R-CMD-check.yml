@@ -14,6 +14,7 @@ on:
       - "**.git"
       - "**.json"
       - "**.md"
+      - "**.yaml"
       - "**.yml"
       - "!**R-CMD-check.yml"
       - "**.R[dD]ata"
@@ -29,6 +30,7 @@ on:
       - "**.git"
       - "**.json"
       - "**.md"
+      - "**.yaml"
       - "**.yml"
       - "!**R-CMD-check.yml"
       - "**.R[dD]ata"
@@ -59,13 +61,14 @@ jobs:
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
       R_REMOTES_STANDALONE: true
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_REALLY_FORCE_SYMBOLS: true
       _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false # Set to true when can figure how to install aspell on Windows
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout git repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2

@@ -6,7 +6,7 @@ on:
       - master
       - '**asan**'
     paths:
-      - '.github/workflows/gcc-ASAN.yml'
+      - '.github/workflows/ASan.yml'
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
@@ -14,7 +14,7 @@ on:
       - 'vignettes/**.Rmd'
   pull_request:
     paths:
-      - '.github/workflows/gcc-ASAN.yml'
+      - '.github/workflows/ASan.yml'
       - 'src/**'
       - 'inst/include/**'
       - 'memcheck/**'
@@ -46,7 +46,7 @@ jobs:
       ASAN_OPTIONS: verify_asan_link_order=0
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Initialize ASan configuration
         run: |
@@ -64,7 +64,7 @@ jobs:
 
       - name: Setup pandoc
         if: ${{ matrix.config.test }} == 'vignettes'
-        uses: r-lib/actions/setup-pandoc@master
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Query dependencies
         run: |
@@ -74,7 +74,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Cache R packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}

@@ -26,7 +26,7 @@ which will be the root edges if nodes are numbered \link{Cladewise} or in
 in turn is a descendant of the specified edge.
 }
 \description{
-Quickly identify edges that are 'ancestral' to a particular edge in a tree.
+Quickly identify edges that are "ancestral" to a particular edge in a tree.
 }
 \examples{
 tree <- PectinateTree(6)
@@ -53,6 +53,7 @@ Other tree navigation:
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}
