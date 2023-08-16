@@ -26,7 +26,7 @@ outgroup taxa are sister to all remaining taxa, without modifying the
 ingroup topology.
 }
 \description{
-Deprecated. Use \code{RootNode()} instead.
+Deprecated. Use \code{RootTree()} instead.
 }
 \details{
 Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup

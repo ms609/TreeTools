@@ -399,7 +399,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #nocov begin
 #' Generate a tree with a specified outgroup
 #'
-#' Deprecated. Use `RootNode()` instead.
+#' Deprecated. Use `RootTree()` instead.
 #'
 #' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
 #' and outgroup taxa such that the two are sister taxa across the root, without

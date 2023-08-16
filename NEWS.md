@@ -10,6 +10,7 @@
   characters ([#139](https://github.com/ms609/TreeTools/issues/139)).
 - Change order of parameters in `DescendantEdges()`
 - Deprecate `AllDescendantEdges()`; use `DescendantEdges()` instead.
+- Deprecate `EnforceOutgroup()`; use `RootTree()` instead.
 
 # TreeTools 1.9.2 (2023-04-25) #
 
