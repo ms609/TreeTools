@@ -257,9 +257,10 @@ Other tree manipulation:
 \code{\link{RenumberTips}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 
 Other C wrappers: 
 \code{\link{Neworder}}

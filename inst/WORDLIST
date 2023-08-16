@@ -26,12 +26,14 @@ Maddison
 Mersenne
 MorphoBank
 Morphy
+MrBayes
 NCL
 Newick
 OEIS
 ORCID
 Pectinate
 PhyDat
+PlotTools
 Postorder
 Preorder
 Pruningwise
@@ -50,6 +52,7 @@ Stemwardness
 TNT's
 TreeDist
 TreeDistData
+TreeNumber
 TreeSearch
 Tromp
 Wedderburn
@@ -75,6 +78,7 @@ lillo
 mbs
 memoization
 memoized
+multiPhylo
 org
 outgroup
 papillate

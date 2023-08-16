@@ -72,6 +72,10 @@ test_that("DropTip() works", {
   
   expect_equal(Preorder(DropTip(Preorder(nasty), c(1, 3))),
                Preorder(DropTip(nasty, c(1, 3))))
+  
+  expect_null(DropTip(NULL))
+  expect_warning(expect_null(KeepTip(NULL, "tip")),
+                 "Tips not in tree: tip")
 })
 
 test_that("DropTip() root relocation", {
@@ -113,6 +117,8 @@ test_that("DropTip.multiPhylo() with attributes", {
   multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
   attr(multi, "TipLabel") <- paste0("t", 1:8)
   
+  expect_equal(DropTip(unclass(multi), "t6"), unclass(DropTip(multi, "t6")))
+  
   expect_equal(attr(DropTip(multi, "t8"), "TipLabel"),
                paste0("t", 1:7))
   expect_equal(names(DropTip(multi, "t8")), names(multi))
@@ -151,6 +157,8 @@ test_that("DropTip.Splits()", {
   expect_equal(thin_splits(s19, 1:19 %in% 2:19),
                structure(raw(0), .Dim = c(0L, 1L)))
   expect_equal(thin_splits(s9, logical(9)), s9, ignore_attr = TRUE)
+  
+  expect_equal(DropTip(s9, TipLabels(s9)), as.Splits(ZeroTaxonTree()))
 })
 
 test_that("KeepTip() works", {
@@ -173,6 +181,9 @@ test_that("KeepTip() works", {
     KeepTip(BalancedTree(12), !tabulate(1:5, 12)),
     DropTip(BalancedTree(12), !tabulate(6:12, 12))
     )
+  
+  s9 <- as.Splits(BalancedTree(9))
+  expect_equal(KeepTip(s9, character(0)), DropTip(s9, TipLabels(s9)))
 })
 
 test_that("KeepTip() retains edge lengths", {

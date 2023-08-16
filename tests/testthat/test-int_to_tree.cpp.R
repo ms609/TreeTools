@@ -1,13 +1,30 @@
 test_that("Failures are graceful", {
-  expect_error(num_to_parent(10, 1))
-  expect_error(num_to_parent(10, -1))
-  expect_error(mixed_base_to_parent(10, 1))
-  expect_error(mixed_base_to_parent(10, -1))
-  expect_error(edge_to_num(1:10, 1:11, 6))
-  expect_error(edge_to_num(1:10, 1:10, 5))
-  expect_error(edge_to_mixed_base(1:10, 1:11, 6))
-  expect_error(edge_to_mixed_base(1:10, 1:10, 5))
-  expect_error(as.phylo(0, 0))
+  expect_error(num_to_parent(10, 1), "`nTip` must be > 1")
+  expect_error(num_to_parent(10, -1), "`nTip` must be > 1")
+  expect_warning(num_to_parent(10, c(2, 3)),
+                 "`nTip` should be a single integer")
+  expect_error(num_to_parent(NA, 10), "`n` may not contain NA")
+  expect_error(num_to_parent(-1, 10), "`n` may not be negative")
+  
+  expect_error(mixed_base_to_parent(10, 1), "`nTip` must be > 1")
+  expect_error(mixed_base_to_parent(10, -1), "`nTip` must be > 1")
+  expect_warning(mixed_base_to_parent(10, c(2, 3)),
+                 "`nTip` should be a single integer")
+  expect_error(mixed_base_to_parent(NA, 10), "`n` may not contain NA")
+  expect_error(mixed_base_to_parent(-1, 10), "`n` may not be negative")
+  
+  expect_error(edge_to_num(1:10, 1:11, 6), "Parent and child .* same length")
+  expect_error(edge_to_num(1:10, 1:10, 5), "nEdge must == nTip . nTip - 2")
+  expect_error(edge_to_mixed_base(1:10, 1:11, 6),
+               "Parent and child .* same length")
+  expect_warning(expect_error(
+    edge_to_mixed_base(1:10, 1:10, c(5, 6)),
+    "nEdge must == nTip . nTip - 2"),
+    "`nTip` should be a single integer"
+    )
+  expect_equal(as.phylo(0, 0), ZeroTaxonTree())
+  
+  expect_error(as.phylo(0, -1), "`nTip` may not be negative")
 })
 
 test_that("Edge cases handled", {

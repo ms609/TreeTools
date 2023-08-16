@@ -101,8 +101,8 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' 
 #' Prints an annotated vertical bar coloured according to a continuous palette.
 #' 
-#' This convenience function is not yet very customizable; do file a GitHub
-#' issue if you would value additional functionality.
+#' This function is now deprecated; it has been superseded by the more capable
+#' [`PlotTools::SpectrumLegend()`] and will be removed in a future release.
 #' 
 #' @param x0,y0,x1,y1 Coordinates of the bottom-left and top-right end of the
 #' bar.
@@ -124,16 +124,9 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' @param title.font Font used for the legend title.
 #' @param pos,\dots Additional parameters to [`text()`].
 #' 
-#' @examples 
-#' plot(0:1, 0:1, type = "n", frame.plot = FALSE,
-#'      xlab = "x", ylab = "y")
-#' SpectrumLegend(legend = c("Dark", "Middle", "Bright"),
-#'                palette = hcl.colors(32L), lwd = 5,
-#'                title = "Brightness")
-#' SpectrumLegend(0.4, 0.95, 0.9, 0.95, abs = TRUE,
-#'                legend = seq(1, 9, by = 2), palette = 1:8, pos = 1)
 #' @template MRS
 #' @importFrom graphics segments strheight strwidth text
+#' @keywords internal
 #' @export
 SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            x1 = x0, y1 = y0 + 0.2,
@@ -146,6 +139,9 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
                            title.cex = cex[1], title.adj = 0.5, title.font = 2,
                            pos = 4,
                            ...) {
+  
+  .Deprecated("PlotTools::SpectrumLegend", package = "PlotTools")
+  
   nCol <- length(palette)
   
   if (!absolute) {
@@ -171,6 +167,7 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
   text(seq(x0, x1, length.out = length(legend)),
        seq(y0, y1, length.out = length(legend)),
        col = text.col,
+       cex = cex,
        font = text.font,
        legend, pos = pos, ...)
   if (!is.null(title)) {

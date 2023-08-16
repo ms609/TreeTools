@@ -25,14 +25,21 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     Rcpp::stop("Edge matrix must contain two columns");
   }
   if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
-    Rcpp::stop("Too many edges in tree for edge_to_splits: "       // # nocov
+    Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
                             "Contact maintainer for advice");                   // # nocov
   }
   if (nTip[0] < 1) {
-    Rcpp::stop("Tree must contain tips.");
+    if (nTip[0] == 0) {
+      return RawMatrix(0, 0);
+    } else {
+      Rcpp::stop("Tree must contain non-negative number of tips.");
+    }
   }
   
   const uintx n_edge = edge.rows();
+  if (!n_edge) {
+    return RawMatrix(0, 0);
+  }
   if (n_edge != uintx(order.length())) {
     Rcpp::stop("Length of `order` must equal number of edges");
   }
@@ -45,7 +52,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
 
   if (n_edge == n_tip  /* No internal nodes resolved */
         || n_tip < 4) { /* Need four tips to split non-trivially */
-    return RawMatrix (0, n_bin);
+    return RawMatrix(0, n_bin);
   }
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
@@ -122,11 +129,12 @@ LogicalVector duplicated_splits(const RawMatrix splits,
     n_spare = n_tip % BIN_SIZE,
     check_bins = n_bin - (n_spare == 1)
   ;
-  if (n_bin != splits.cols()) {
-    Rcpp::stop("`splits` tip number is mis-specified.");
-  }
   if (n_split == 0) {
     return Rcpp::LogicalVector(0);
+  }
+  // assert(n_split > 0);
+  if (n_bin != splits.cols()) {
+    Rcpp::stop("`splits` tip number is mis-specified.");
   }
   
   RawMatrix compare(n_split, check_bins);

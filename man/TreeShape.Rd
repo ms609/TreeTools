@@ -154,7 +154,8 @@ structure(sapply(allShapes, UnrootedTreeKey), class = "integer64")
 Unique number for a labelled tree: \code{\link[=TreeNumber]{TreeNumber()}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{datasets}
 \keyword{internal}

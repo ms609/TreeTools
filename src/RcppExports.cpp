@@ -45,12 +45,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // as_newick
-CharacterVector as_newick(IntegerMatrix edge);
+CharacterVector as_newick(const IntegerMatrix edge);
 RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerMatrix >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
     rcpp_result_gen = Rcpp::wrap(as_newick(edge));
     return rcpp_result_gen;
 END_RCPP
@@ -105,14 +105,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // edge_to_mixed_base
-IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child, IntegerVector nTip);
+IntegerVector edge_to_mixed_base(const IntegerVector parent, const IntegerVector child, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_edge_to_mixed_base(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(edge_to_mixed_base(parent, child, nTip));
     return rcpp_result_gen;
 END_RCPP

@@ -12,20 +12,20 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - has_concept('tree manipulation')
+      - has_concept("tree manipulation")
 
   - title: "Tree navigation"
     desc: >
       Functions to navigate phylogenetic trees.
     contents:
-      - has_concept('tree navigation')
+      - has_concept("tree navigation")
 
   - title: "Tree creation"
     desc: >
       Functions to generate phylogenetic trees.
     contents:
-      - has_concept('tree generation functions')
-      - print.TreeNumber
+      - has_concept("tree generation functions")
+      - has_concept("'TreeNumber' utilities")
 
   - title: "Tree properties"
     desc: >
@@ -51,11 +51,11 @@ reference:
       - ExtractTaxa
       - NewickTree
       - ReadCharacters
-      - ReadTntTree
       - StringToPhyDat
       - TNTText2Tree
       - WriteTntCharacters
       - has_concept("string parsing functions")
+      - has_concept("tree import functions")
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
@@ -101,7 +101,6 @@ reference:
       - RightmostCharacter
       - SampleOne
       - sapply64
-      - SpectrumLegend
       - sort.multiPhylo
       - UnshiftTree
       
@@ -116,4 +115,4 @@ template:
     docsearch:
       api_key: 6078115fdeb422f23fe2f8c478c70150
       index_name: treetools
-    ganalytics: 312389031
+    ganalytics: G-93LNK4JKY4

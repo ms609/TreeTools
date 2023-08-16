@@ -1,4 +1,4 @@
-#include <Rcpp/Lightest>
+#include <Rcpp/Lighter> /* for is_na */
 #include <random>
 #include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools.h"
@@ -9,8 +9,17 @@ const intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
+  if (Rcpp::is_true(Rcpp::any(Rcpp::is_na(n)))) {
+    Rcpp::stop("`n` may not contain NA values");
+  }
+  if (Rcpp::is_true(Rcpp::any(n < 0))) {
+    Rcpp::stop("`n` may not be negative");
+  }
   if (nTip[0] < 2) {
-    Rcpp::stop("nTip must be > 1");
+    Rcpp::stop("`nTip` must be > 1");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],
@@ -183,10 +192,15 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
 
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
-IntegerVector edge_to_mixed_base(IntegerVector parent, IntegerVector child,
-                                 IntegerVector nTip) {
+IntegerVector edge_to_mixed_base(
+    const IntegerVector parent,
+    const IntegerVector child,
+    const IntegerVector nTip) {
   if (parent.size() != child.size()) {
     Rcpp::stop("Parent and child must be the same length");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],
@@ -259,8 +273,17 @@ IntegerVector mixed_base_to_parent(
     const IntegerVector n,
     const IntegerVector nTip
   ) {
+  if (Rcpp::is_true(Rcpp::any(Rcpp::is_na(n)))) {
+    Rcpp::stop("`n` may not contain NA values");
+  }
+  if (Rcpp::is_true(Rcpp::any(n < 0))) {
+    Rcpp::stop("`n` may not be negative");
+  }
   if (nTip[0] < 2) {
-    Rcpp::stop("nTip must be > 1");
+    Rcpp::stop("`nTip` must be > 1");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
   }
   const intx
     n_tip = nTip[0],

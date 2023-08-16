@@ -25,9 +25,11 @@ ImposeConstraint <- function(tree, constraint) {
   # This function is as efficient as it is elegant: i.e. not.
   # But it just about does the job.
   tree <- Preorder(tree)
-  const <- AddUnconstrained(constraint,
-                            setdiff(tree[["tip.label"]], names(constraint)),
-                            asPhyDat = FALSE)
+  const <- AddUnconstrained(
+    constraint,
+    toAdd = setdiff(tree[["tip.label"]], TipLabels(constraint)),
+    asPhyDat = FALSE
+  )
 
   info <- apply(const, 2,
                 function(x) SplitInformation(sum(x == "0"), sum(x == "1")))
@@ -103,17 +105,27 @@ ImposeConstraint <- function(tree, constraint) {
 #' @describeIn ImposeConstraint Expand a constraint to include unconstrained
 #' taxa.
 #' @param toAdd Character vector specifying taxa to add to constraint.
-#' @param asPhyDat Logical: if `TRUE`, return a `phyDat` object; if `FALSE`, return
-#' a matrix.
+#' @param asPhyDat Logical: if `TRUE`, return a `phyDat` object; if `FALSE`,
+#' return a matrix.
 #' @export
 AddUnconstrained <- function(constraint, toAdd, asPhyDat = TRUE) {
   ret <- if (inherits(constraint, "phyDat")) {
     PhyDatToMatrix(constraint)
+  } else if (inherits(constraint, "phylo")) {
+    t(as.matrix(constraint))
+  } else if (is.null(dim(constraint))) {
+    cbind(constraint)
   } else {
     constraint
   }
-  ret <- rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
-                           dimnames = list(toAdd, NULL)))
+  
+  toAdd <- setdiff(toAdd, rownames(ret))
+  ret <- if (is.null(ret)) {
+    matrix("?", length(toAdd), 0, dimnames = list(toAdd, NULL))
+  } else {
+    rbind(ret, matrix("?", length(toAdd), dim(ret)[2],
+                      dimnames = list(toAdd, NULL)))
+  }
 
   # Return:
   if (asPhyDat) {

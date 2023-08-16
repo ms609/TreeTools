@@ -113,7 +113,7 @@ edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
 
 #' @rdname Splits
 #' @export
-as.Splits.multiPhylo <- function(x, tipLabels = x[[1]][["tip.label"]],
+as.Splits.multiPhylo <- function(x, tipLabels = unique(unlist(TipLabels(x))),
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
@@ -161,9 +161,13 @@ as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
 as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (inherits(x[[1]], "phylo")) {
     if (is.null(tipLabels)) {
-      tipLabels <- x[[1]][["tip.label"]]
+      tipLabels <- unique(unlist(TipLabels(x)))
     }
-    lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
+    lapply(x, function(sp) as.Splits(
+      sp,
+      tipLabels = intersect(tipLabels, TipLabels(sp)),
+      asSplits = asSplits
+      ))
   } else if (inherits(x[[1]], "Splits")) {
     if (is.null(tipLabels)) {
       tipLabels <- attr(x, "tip.label")
@@ -213,27 +217,37 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-
-    if (is.null(tipLabels)) {
-      tipLabels <- TipLabels(x)
-      if (is.null(tipLabels)) {
-        tipLabels <- paste0("t", seq_len(nTip))
-      }
+    if (nTip == 0) {
+      structure(
+        matrix(raw(0), 0, 0),
+        nTip = 0,
+        tip.label = TipLabels(0),
+        class = "Splits"
+      )
     } else {
-      tipLabels <- TipLabels(tipLabels)
+      if (is.null(tipLabels)) {
+        tipLabels <- TipLabels(x)
+        if (is.null(tipLabels)) {
+          tipLabels <- TipLabels(nTip)
+        }
+      } else {
+        tipLabels <- TipLabels(tipLabels)
+      }
+  
+      structure(
+        matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
+        nTip = nTip,
+        tip.label = tipLabels,
+        class = "Splits"
+      )
     }
-
-    structure(matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
-              nTip = nTip,
-              tip.label = tipLabels,
-              class = "Splits")
   } else {
     if (is.null(tipLabels)) {
       tipLabels <- TipLabels(x)
     }
     nTip <- dimX[2]
     if (is.null(tipLabels)) {
-      tipLabels <- paste0("t", seq_len(nTip))
+      tipLabels <- TipLabels(nTip)
     }
 
     nBin <- (nTip %% 8 != 0) + (nTip / 8)
@@ -293,8 +307,19 @@ print.Splits <- function(x, details = FALSE, ...) {
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
       if(any(trivial)) paste0("(", sum(trivial), " trivial)"),
       "dividing", nTip,
-      ifelse(is.null(tipLabels), "unlabelled tips.",
-             paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
+      if(is.null(tipLabels)) {
+        "unlabelled tips."
+      } else {
+        if (nTip) {
+          if (nTip == 1) {
+            paste("tip,", tipLabels[1])
+          } else {
+            paste("tips,", tipLabels[1], "..", tipLabels[nTip])
+          }
+        } else {
+          "tips"
+        }
+      }
       )
   if (details) {
     splitNames <- rownames(x)

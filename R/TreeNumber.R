@@ -115,6 +115,7 @@
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
 #' @family tree generation functions
+#' @family 'TreeNumber' utilities
 #' @name TreeNumber
 #
 
@@ -124,7 +125,8 @@
 #' which comprises a numeric vector, whose elements represent successive
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
-#' `nTip` and `tip.label`.
+#' `nTip` and `tip.label`.  If `x` is a list of trees or a `multiPhylo` object,
+#' then `as.TreeNumber()` returns a corresponding list of `TreeNumber` objects.
 #' @export
 as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 
@@ -263,7 +265,7 @@ as.MixedBase.numeric <- function(x, tipLabels = NULL, ...) {
 #' @importFrom ape as.phylo
 #' @export
 as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
-                              tipLabels = attr(x, "tip.label"), ...) {
+                             tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(nTip)) {
     if (is.null(tipLabels)) {
       stop("Either nTip or tipLabels must be specified.")
@@ -271,12 +273,18 @@ as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) {
-    tipLabels <- paste0("t", seq_len(nTip))
-  }
-  if (nTip == 1) {
-    SingleTaxonTree(tipLabels)
+  if (nTip < 2) {
+    if (nTip == 0) {
+      ZeroTaxonTree()
+    } else if (nTip == 1) {
+      SingleTaxonTree(if (is.null(tipLabels)) TipLabels(nTip) else tipLabels)
+    } else {
+      stop("`nTip` may not be negative")
+    }
   } else {
+    if (is.null(tipLabels)) {
+      tipLabels <- TipLabels(nTip)
+    }
     if (length(x) > 1) {
       structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
                 tip.label = tipLabels, class = "multiPhylo")
@@ -357,6 +365,19 @@ as.integer64.TreeNumber <- function(x, ...) {
   structure(x[1], class = "integer64")
 }
 
+#' Is an object a `TreeNumber` object?
+#' 
+#' @param x R object.
+#' @return `is.TreeNumber()` returns a logical vector of length one specifying
+#' whether `x` inherits the class `"TreeNumber"`.
+#' @template MRS
+#' @examples
+#' is.TreeNumber(FALSE) # FALSE 
+#' is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
+#' @family 'TreeNumber' utilities
+#' @export
+is.TreeNumber <- function(x) inherits(x, "TreeNumber")
+
 #' Print `TreeNumber` object
 #'
 #' S3 method for objects of class `TreeNumber`.
@@ -364,6 +385,7 @@ as.integer64.TreeNumber <- function(x, ...) {
 #' @param x Object of class `TreeNumber`.
 #' @param \dots Additional arguments for consistency with S3 method (unused).
 #'
+#' @family 'TreeNumber' utilities
 #' @export
 print.TreeNumber <- function(x, ...) {
   nTip <- attr(x, "nTip")

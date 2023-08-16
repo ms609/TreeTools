@@ -31,7 +31,7 @@ as.Newick <- function(x) UseMethod("as.Newick")
 #' @rdname as.Newick
 #' @export
 as.Newick.phylo <- function(x) {
-  as_newick(Preorder(x)[["edge"]] - 1L)
+  as_newick(x[["edge"]] - 1L)
 }
 
 #' @rdname as.Newick
@@ -76,12 +76,20 @@ WriteTntCharacters <- function(dataset, filepath = NULL,
 
 #' @rdname WriteTntCharacters
 #' @export
-WriteTntCharacters.phyDat <- function(dataset, filepath = NULL,
-                                       comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
-                                       types = NULL,
-                                       pre = "", post = "") {
-  WriteTntCharacters(PhyDatToMatrix(dataset), filepath, comment, types,
-                     pre, post)
+WriteTntCharacters.phyDat <- function(
+    dataset,
+    filepath = NULL,
+    comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+    types = NULL,
+    pre = "",
+    post = "") {
+  WriteTntCharacters(
+    PhyDatToMatrix(dataset, parentheses = "[]"),
+    filepath,
+    comment,
+    types,
+    pre,
+    post)
 }
 
 #' @rdname WriteTntCharacters
@@ -100,14 +108,15 @@ WriteTntCharacters.matrix <- function(dataset, filepath = NULL,
     paste(rev(dim(dataset)), collapse = " "),
     if (is.null(types)) {
       paste(rownames(dataset),
-            apply(dataset, 1, paste0, collapse = ""),
+            apply(dataset, 1, paste0, collapse = " "),
             collapse = EOL)
     } else {
       typeEnds <- c(unname(types[-1]) - 1L, ncol(dataset))
       paste(paste0("&[", names(types), "]\n"),
             vapply(seq_along(types), function(i)
               paste(rownames(dataset),
-                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0, collapse = ""),
+                    apply(dataset[, types[i]:typeEnds[i]], 1, paste0,
+                          collapse = " "),
                     collapse = EOL),
               character(1)), collapse = EOL)
     },

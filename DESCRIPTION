@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.8.0
+Version: 1.9.2.9007
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -31,7 +31,7 @@ Description: Efficient implementations of functions for the creation,
   and analysis of splits and cladistic information.
 URL: https://ms609.github.io/TreeTools/, https://github.com/ms609/TreeTools/
 BugReports: https://github.com/ms609/TreeTools/issues/
-SystemRequirements: C++14
+SystemRequirements: C++17
 Depends:
     R (>= 3.4.0),
     ape (>= 5.6),
@@ -41,13 +41,17 @@ Imports:
     colorspace,
     fastmatch (>= 1.1.3),
     methods,
+    PlotTools,
+    RCurl,
     R.cache,
     Rdpack (>= 2.3),
 Suggests:
     spelling,
     knitr,
     phangorn (>= 2.2.1),
+    purrr,
     Rcpp (>= 1.0.8),
+    rlang,
     rmarkdown,
     testthat (>= 3.0),
     vdiffr (>= 1.0.0),
@@ -66,5 +70,5 @@ ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
 VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

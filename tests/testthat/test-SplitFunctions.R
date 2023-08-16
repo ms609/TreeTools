@@ -170,6 +170,7 @@ test_that("Tip labels are found", {
   pt4 <- PectinateTree(4L)
   bt4 <- BalancedTree(4L)
   t1..4 <- c("t1", "t2", "t3", "t4")
+  expect_equal(TipLabels(0), character(0))
   expect_equal(t1..4, TipLabels(t1..4))
   expect_equal(t1..4, TipLabels(pt4))
   expect_equal(t1..4, TipLabels(as.Splits(pt4)))

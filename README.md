@@ -2,7 +2,7 @@
 
 [![codecov](https://codecov.io/gh/ms609/TreeTools/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTools)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/TreeTools)](https://cran.r-project.org/package=TreeTools)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTools)](https://cran.r-project.org/package=TreeTools)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/TreeTools)](https://ms609.github.io/usage/#treetools)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3522726.svg)](http://doi.org/10.5281/zenodo.3522725)<!--[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
 -->
 [![Project Status: Active – – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
@@ -30,15 +30,15 @@ applied to unweighted trees (i.e. those without edge lengths).
 # Installation
 
 Install and load the library from CRAN as follows:
-```
-install.packages('TreeTools')
-library('TreeTools')
+```r
+install.packages("TreeTools")
+library("TreeTools")
 ```
 
 Install the very latest version, which may be under development, with:
 ```r
 if(!require(devtools)) install.packages("devtools")
-devtools::install_github('ms609/TreeTools')
+devtools::install_github("ms609/TreeTools")
 ```
 
 Please note that the 'TreeTools' project is released with a

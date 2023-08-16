@@ -10,6 +10,8 @@ test_that("minimum_spanning_tree.cpp handles bad input", {
                "`order` contains entries > `length.order.`")
   expect_error(minimum_spanning_tree(c(3, 1, NA_real_)),
                "`order` contains NA")
+  expect_error(minimum_spanning_tree(0:13),
+               "`length.order.`.* not.* triangular")
 })
 
 test_that("MST edges calculated correctly", {

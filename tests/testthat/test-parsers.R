@@ -37,7 +37,7 @@ test_that("Matrix converts to phyDat", {
   mat <- matrix(c(1,0,1,0,1,0,1,0,0,1,0,1,0,1,0,1,2,2,2,2,2,2,2,"?"),
                 nrow = 3, byrow = TRUE)
   rownames(mat) <- LETTERS[1:3]
-  expect_equal(mat, PhyDatToMatrix(MatrixToPhyDat(mat)))
+  expect_equal(mat, as.matrix(MatrixToPhyDat(mat)))
 })
 
 test_that(".PhyDatWithContrast() fails gracefully", {
@@ -56,7 +56,22 @@ test_that("PhyDatToMatrix() with ambigs", {
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), TRUE, FALSE)[3, 5:8],
                c(NA, NA, "-", NA))
   expect_equal(PhyDatToMatrix(MatrixToPhyDat(mat), FALSE, TRUE)[3, 5:8],
-               c("{12}", "(01)", NA_character_, "?"))
+               c("{12}", "{01}", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = NULL
+                   )[3, 5:8],
+    c("{12}", "(01)", NA_character_, "?"))
+  expect_equal(
+    PhyDatToMatrix(MatrixToPhyDat(mat),
+                   ambigNA = FALSE,
+                   inappNA = TRUE,
+                   parentheses = c("<>"),
+                   sep = "/"
+    )[3, 5:8],
+    c("<1/2>", "<0/1>", NA_character_, "?"))
 })
 
 test_that("Modified phyDat objects can be converted", {
@@ -82,7 +97,8 @@ test_that("MatrixToPhyDat() warns when characters blank", {
 })
 
 test_that("MatrixToPhyDat() returns phyDat if passed", {
-  expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy))
+  expect_warning(expect_equal(Lobo.phy, MatrixToPhyDat(Lobo.phy)),
+                 "phyDat")
 })
 
 test_that("StringToPhyDat()", {
@@ -142,13 +158,14 @@ test_that("EndSentence() works correctly", {
 })
 
 test_that("Unquote() unquotes", {
-  expect_equal("Unquoted", Unquote("'Unquoted'"))
-  expect_equal("Unquoted", Unquote("\"Unquoted\""))
-  expect_equal("Unquoted", Unquote("'Unquoted '"))
-  expect_equal("Unquoted", Unquote("\" Unquoted \""))
-  expect_equal("Unquoted's", Unquote("'Unquoted's '"))
-  expect_equal("", Unquote("\"\""))
-  expect_equal("", Unquote("''"))
+  expect_equal(Unquote("'Unquoted'"), "Unquoted")
+  expect_equal(Unquote("\"Unquoted\""), "Unquoted")
+  expect_equal(Unquote("'Unquoted '"), "Unquoted")
+  expect_equal(Unquote("\" Unquoted \""), "Unquoted")
+  expect_equal( Unquote("'Unquoted's '"), "Unquoted's")
+  expect_equal(Unquote(.UnescapeQuotes("'Unquoted''s '")), "Unquoted's")
+  expect_equal(Unquote("\"\""), "")
+  expect_equal(Unquote("''"), "")
 })
 
 test_that("ReadNotes() reads notes", {
@@ -158,6 +175,20 @@ test_that("ReadNotes() reads notes", {
   expect_equal(notes[[2]][[2]], setNames("Taxon 2, char 2.", "taxon_b"))
   expect_equal(notes[[3]][[1]], "Three's a crowd.")
   expect_equal(notes[[3]][[2]], setNames("Tax1-Char3.", "taxon_a"))
+})
+
+test_that("ReadNotes() handles absence of character-taxon notes", {
+  expect_equal(ReadNotes(system.file("extdata/tests/taxon-notes.nex",
+                                     package = "TreeTools")),
+               structure(list(), names = character(0)))
+})
+
+test_that("ReadNotes() handles misspecified encoding", {
+  expect_message(
+    expect_equal(ReadNotes(system.file("extdata/tests/encoding.nex",
+                                     package = "TreeTools"))[[1]][[2]],
+                 setNames("\u0080ncoding.", "Two")),
+    "trying latin1 .*encoding")
 })
 
 test_that("ReadCharacters() reads CHARSTATELABELS", {
@@ -199,5 +230,18 @@ test_that("NewickTree() works", {
 })
 
 test_that("as_newick() fails gracefully", {
-  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)))
+  expect_equal(as_newick(matrix(0L, 0L, 2L)), ";")
+  expect_equal(as_newick(matrix(1:0, 1L, 2L)), "(0);")
+  expect_equal(as_newick(Postorder(BalancedTree(4)$edge) - 1L),
+               as_newick(BalancedTree(4)$edge - 1L))
+  expect_error(as_newick(matrix(0L, 8192 * 2L, 2L)),
+               "Too many nodes")
+  expect_error(as_newick(matrix(0L, 3, 3)),
+               "`edge` must have two columns")
+  expect_error(as_newick(matrix(c(4, 4, 4, 1:3), 3, 2)),
+               "`min.edge.` must be zero")
+  expect_error(as_newick(matrix(c(3, NA, 3, 0:2), 3, 2)),
+               "`edge`.* NA")
+  expect_error(as_newick(matrix(c(4, 4, 3, 0:2), 3, 2)),
+               "`edge` is malformed")
 })

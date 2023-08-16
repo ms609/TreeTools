@@ -155,7 +155,7 @@ NexusTokens <- function(tokens, character_num = NULL) {
 #' Errors pertaining to an `invalid multibyte string` or
 #' `string invalid at that locale` indicate that R has failed to detect
 #' the appropriate encoding.  Either
-#' [re-save the file](https://support.rstudio.com/hc/en-us/articles/200532197-Character-Encoding)
+#' [re-save the file](https://support.posit.co/hc/en-us/articles/200532197)
 #' in a supported encoding (`UTF-8` is a good choice) or
 #' specify the file encoding (which you can find by, for example, opening in
 #' [Notepad++](https://notepad-plus-plus.org/downloads/) and identifying
@@ -250,7 +250,9 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
       labelEnd <- semicolons[semicolons > labelStart][1]
       if (lines[labelEnd] == ";") labelEnd <- labelEnd - 1
       #attr(dat, "char.labels")
-      colnames(tokens) <- Unquote(lines[labelStart + character_num])
+      colnames(tokens) <- Unquote(
+        .UnescapeQuotes(lines[labelStart + character_num])
+      )
     } else {
       if (length(labelStart) > 1)
         return(list("Multiple CharLabels blocks in Nexus file."))
@@ -281,7 +283,11 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
 
         attr(tokens, "state.labels") <-
           lapply(character_num[seq_along(stateStarts)], function(i)
-            Unquote(stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)])
+            Unquote(
+              .UnescapeQuotes(
+                stateLines[(stateStarts[i] + 1):(stateEnds[i] - 1)]
+              )
+            )
           )
       }
     } else {
@@ -449,8 +455,27 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 .UTFLines <- function(filepath, encoding) {
   con <- file(filepath, encoding = encoding)
   on.exit(close(con))
-  # Missing EOL might occur in user-generated file, so warning not helpful
-  enc2utf8(readLines(con, warn = FALSE))
+  
+  tryCatch(
+    # Missing EOL might occur in user-generated file, so warning not helpful
+    try1 <- enc2utf8(readLines(con, warn = FALSE)),
+    warning = function(e) {
+      if (substr(e$message, 0, 39) == 
+          "invalid input found on input connection") {
+        newEnc <- if (toupper(encoding) %in% c("UTF-8", "UTF8")) {
+          "latin1"
+        } else {
+          "UTF8"
+        }
+        message("Problem reading; trying ", newEnc, " file encoding")
+        close(con)
+        con <- file(filepath, encoding = newEnc)
+        enc2utf8(readLines(con, warn = FALSE))
+      } else {
+        try1
+      }
+    }
+  )
 }
 
 .RegExpMatches <- function(pattern, string, i = TRUE, nMatch = 1) {
@@ -483,7 +508,7 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
 
   notesStart <- which(trimUpperLines == "BEGIN NOTES;")
   endBlocks <- which(trimUpperLines %fin% c("END;", "ENDBLOCK;"))
-  taxlabels <- which(trimUpperLines == "TAXLABELS")
+  taxLabels <- which(trimUpperLines == "TAXLABELS")
   semicolons <- which(trimUpperLines == ";")
   nTaxLines <- grepl(nTax.pattern, trimUpperLines, perl = TRUE)
 
@@ -492,12 +517,12 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
     return(list("NOTES block not found in Nexus file."))
   } else if (length(notesStart) > 1) {
     return(list("Multiple NOTES blocks found in Nexus file."))
-  } else if (length(taxlabels) > 1) {
+  } else if (length(taxLabels) > 1) {
     return(list("Multiple TAXLABELS found in Nexus file."))
   } else if (!any(nTaxLines)) {
     return(list("No DIMENSIONS NTAX= statment found in Nexus file."))
   } else {
-    if (length(taxlabels) == 0) {
+    if (length(taxLabels) == 0) {
       taxa <- names(ReadAsPhyDat(filepath))
     } else {
 
@@ -507,8 +532,8 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
       }
       nTax <- as.integer(nTax[1])
 
-      taxaEnd <- semicolons[semicolons > taxlabels][1] - 1L
-      taxaLines <- lines[(taxlabels + 1):taxaEnd]
+      taxaEnd <- semicolons[semicolons > taxLabels][1] - 1L
+      taxaLines <- lines[(taxLabels + 1):taxaEnd]
       taxon.matches <- grepl(taxon.pattern, taxaLines, perl = TRUE)
       if (sum(taxon.matches) == nTax) {
         taxa <- gsub(taxon.pattern, "\\1", taxaLines[taxon.matches], perl = TRUE)
@@ -525,7 +550,11 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
 
     notesEnd <- endBlocks[endBlocks > notesStart][1] - 1L
     notesLines <- lines[(notesStart + 1):notesEnd]
-    notes <- strsplit(paste0(notesLines, collapse = "\r\n"),
+    collapsedLines <- paste0(notesLines, collapse = "\r\n")
+    # Remove [comments]
+    collapsedLines <- gsub("(;\\s*)\\[[^\\]]*\\]", "\\1", collapsedLines,
+                           perl = TRUE)
+    notes <- strsplit(collapsedLines,
                       # (?i) makes perl regexp case insensitive
                       "(?i)\\r\\n\\s*TEXT\\s+", perl = TRUE)[[1]]
 
@@ -534,7 +563,11 @@ ReadNotes <- function(filepath, encoding = "UTF8") {
     noteText <- EndSentence(MorphoBankDecode(
       .RegExpMatches("\\bTEXT\\s*=\\s*['\"]([\\s\\S]+)['\"];\\s*$", notes)))
 
-    seqAlongNotes <- seq_len(max(noteChar, na.rm = TRUE))
+    seqAlongNotes <- if (any(!is.na(noteChar))) {
+      seq_len(max(noteChar, na.rm = TRUE))
+    } else {
+      numeric(0)
+    }
 
     # Return:
     setNames(lapply(seqAlongNotes, function(i) {
@@ -594,6 +627,11 @@ Unquote <- function(string) {
          USE.NAMES = FALSE)
 }
 
+# Unescape quotes in Nexus format
+.UnescapeQuotes <- function(string) {
+  gsub("(?=.)''(?=.)", "'", string, perl = TRUE)
+}
+
 #' Decode MorphoBank text
 #'
 #' Converts strings from MorphoBank notes into a Latex-compatible format.
@@ -648,8 +686,7 @@ MorphoBankDecode <- function(string) {
 #' @export
 MatrixToPhyDat <- function(tokens) {
   if (inherits(tokens, "phyDat")) {
-    # TODO warn.
-    # Not done in 1.6.0 to avoid problems in TreeSearch dependency.
+    warning("MatrixToPhyDat() expects a matrix, not a phyDat object")
     return(tokens)
   }
   allTokens <- unique(as.character(tokens))
@@ -736,15 +773,31 @@ MatrixToPhyDat <- function(tokens) {
 #' @param dataset A dataset of class `phyDat`.
 #' @param ambigNA,inappNA Logical specifying whether to denote ambiguous /
 #' inapplicable characters as `NA` values.
-## @param parentheses Character vector specifying style of parentheses
-## with which to enclose ambiguous characters, e.g, `c("[", "]")` will render
-## `[01]`.
-## @param sep Character with which to separate ambiguous tokens, e.g. `','`
-## will render `[0,1]`.
+#' @param parentheses Character vector specifying style of parentheses
+#' with which to enclose ambiguous characters. `c("[", "]")` or `"[]"` will
+#' render `[01]`.
+#' `NULL` will use the token specified in the `phyDat` object; but beware that
+#' this will be treated as a distinct (non-ambiguous) token if re-encoding with
+#' `PhyDatToMatrix()`.
+#' @param sep Character with which to separate ambiguous tokens, e.g. `','`
+#' will render `[0,1]`.
 #' @return `PhyDatToMatrix()` returns a matrix corresponding to the
 #' uncompressed character states within a `phyDat` object.
+#' @examples 
+#' data("Lobo", package = "TreeTools")
+#' head(PhyDatToMatrix(Lobo.phy)[, 91:93])
 #' @export
-PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, parentheses = c("[", "]"), sep = "") {
+PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
+                           parentheses = c("{", "}"), sep = "") {
+  if (!is.null(parentheses) && length(parentheses) == 0) {
+    parentheses <- c("", "")
+  } else if (length(parentheses) == 1) {
+    parentheses <- c(
+      substr(parentheses, 1, 1),
+      substr(parentheses, nchar(parentheses), nchar(parentheses))
+    )
+  }
+  
   at <- attributes(dataset)
   allLevels <- as.character(at$allLevels)
   if (inappNA) {
@@ -752,6 +805,17 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA) {#, pare
   }
   if (ambigNA) {
     allLevels[rowSums(at$contrast) != 1L] <- NA_character_
+  } else if (!is.null(parentheses)) {
+    cont <- at$contrast
+    nTokens <- rowSums(cont)
+    levels <- colnames(cont)
+    partAmbig <- nTokens != 1L & nTokens < dim(cont)[2]
+    allLevels[partAmbig] <- paste0(
+      parentheses[1],
+      apply(cont[partAmbig, , drop = FALSE] > 0, 1, function(x) {
+        paste0(levels[x], collapse = sep)
+      }),
+      parentheses[2])
   }
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
          ncol = at$nr, byrow = TRUE, dimnames = list(at$names, NULL)

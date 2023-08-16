@@ -12,6 +12,7 @@ test_that("Pectinate trees are generated", {
 })
 
 test_that("Balanced trees are generated correctly", {
+  expect_equal(BalancedTree(0), ZeroTaxonTree())
   # nTip even
   expect_equal(BalancedTree(8L),
                Preorder(ape::read.tree(

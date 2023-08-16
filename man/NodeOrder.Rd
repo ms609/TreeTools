@@ -2,7 +2,7 @@
 % Please edit documentation in R/tree_properties.R
 \name{NodeOrder}
 \alias{NodeOrder}
-\title{Order of each node in a tree}
+\title{Number of edges incident to each node in a tree}
 \usage{
 NodeOrder(x, includeAncestor = TRUE, internalOnly = FALSE)
 }
@@ -21,8 +21,9 @@ to internal nodes, i.e. to omit leaves. Irrelevant if
 entries are named with the number of each node.
 }
 \description{
-\code{NodeOrder()} calculates the number of edges incident to each node in a tree.
-Includes the root edge in rooted trees.
+\code{NodeOrder()} calculates the order of each node: the number of edges
+incident to it in a tree.
+This value includes the root edge in rooted trees.
 }
 \examples{
 tree <- CollapseNode(BalancedTree(8), 12:15)
@@ -46,6 +47,7 @@ Other tree navigation:
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}
