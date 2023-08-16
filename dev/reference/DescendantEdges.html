@@ -80,19 +80,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DescendantEdges</span><span class="op">(</span>edge <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, edge <span class="op">=</span> <span class="cn">NULL</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">AllDescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>edge</dt>
-<dd><p>Integer specifying the number of the edge whose child edges are
-required (see <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">edgelabels</a>()</code>).</p></dd>
-
-
-<dt>parent</dt>
+    <dl><dt>parent</dt>
 <dd><p>Integer vector corresponding to the first column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 1]</code></p></dd>
 
@@ -100,6 +95,11 @@ matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.h
 <dt>child</dt>
 <dd><p>Integer vector corresponding to the second column of the edge
 matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>, i.e. <code>tree[["edge"]][, 2]</code>.</p></dd>
+
+
+<dt>edge</dt>
+<dd><p>Integer specifying the number of the edge whose child edges are
+required (see <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">edgelabels</a>()</code>).</p></dd>
 
 
 <dt>nEdge</dt>
@@ -115,20 +115,12 @@ supplied).</p></dd>
 edge in turn is a descendant of the specified edge (or the edge itself).</p>
 
 
-<p><code>AllDescendantEdges()</code> returns a matrix of class logical, with row
-<em>N</em> specifying whether each edge is a descendant of edge <em>N</em></p>
+<p><code>AllDescendantEdges()</code> is deprecated; use <code>DescendantEdges()</code></p>
 
 
-<p>(or the edge itself).</p>
-    </div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>The order of parameters in <code>DescendantEdges()</code> will change in the future,
-to allow <code>AllDescendantEdges()</code> to be merged into this function
-(<a href="https://github.com/ms609/TreeTools/issues/31" class="external-link">#31</a>).
-Please explicitly name the <code>edge</code> parameter in <code>DescendantEdges()</code>, and
-replace <code>AllDesdendantEdges()</code> with <code>DescendantEdges(edge = NULL)</code>,
-to future-proof your code.</p>
+<p>instead.
+It returns a matrix of class logical, with row <em>N</em> specifying whether each
+edge is a descendant of edge <em>N</em> (or the edge itself).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -142,7 +134,6 @@ to future-proof your code.</p>
 <code><a href="NDescendants.html">NDescendants</a>()</code>,
 <code><a href="NodeDepth.html">NodeDepth</a>()</code>,
 <code><a href="NodeOrder.html">NodeOrder</a>()</code>,
-<code><a href="NonDuplicateRoot.html">NonDuplicateRoot</a>()</code>,
 <code><a href="RootNode.html">RootNode</a>()</code></p></div>
     </div>
 
