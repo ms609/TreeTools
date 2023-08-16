@@ -26,7 +26,7 @@ accomplished using Preorder()."><meta name="robots" content="noindex"><!-- mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.2.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.2.9007</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@ so that a suitable replacement can be guaranteed.</p>
 <span class="r-in"><span><span class="va">child</span> <span class="op">&lt;-</span> <span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu">NonDuplicateRoot</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (edgeSister &gt;= edge) {    ret[edge:edgeSister] &lt;- TRUE    ret} else {    nextEdge &lt;- edge    revParent &lt;- rev(parent)    repeat {        if (revDescendant &lt;- match(child[nextEdge], revParent,             nomatch = FALSE)) {            nextEdge &lt;- 1 + nEdge - revDescendant        }        else break    }    ret[edge:nextEdge] &lt;- TRUE    ret}:</span> the condition has length &gt; 1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

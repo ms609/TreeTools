@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.2.9006</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.9.2.9007</span>
       </span>
     </div>
 
@@ -75,12 +75,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.9.2.9006" id="treetools-1929006-development">TreeTools 1.9.2.9006 (development)<a class="anchor" aria-label="anchor" href="#treetools-1929006-development"></a></h2>
+<h2 class="page-header" data-toc-text="1.9.2.9007" id="treetools-1929007-development">TreeTools 1.9.2.9007 (development)<a class="anchor" aria-label="anchor" href="#treetools-1929007-development"></a></h2>
 <ul><li>Add <code><a href="../reference/TipTimedTree.html">TipTimedTree()</a></code> function to display trees where leaves are associated with absolute ages.</li>
 <li>Add <code><a href="../reference/ReadMrBayesTrees.html">ReadMrBayesTrees()</a></code> to sample trees from posterior of MrBayes output.</li>
 <li>Add <code><a href="../reference/is.TreeNumber.html">is.TreeNumber()</a></code> method.</li>
 <li>Support zero-edge trees in <code><a href="../reference/Splits.html">as.Splits()</a></code> and <code><a href="../reference/NSplits.html">NSplits()</a></code>.</li>
 <li>Support empty constraints in <code><a href="../reference/ImposeConstraint.html">AddUnconstrained()</a></code>.</li>
+<li>Add space between tokens in <code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters()</a></code> to support continuous characters (<a href="https://github.com/ms609/TreeTools/issues/139" class="external-link">#139</a>).</li>
+<li>Change order of parameters in <code><a href="../reference/DescendantEdges.html">DescendantEdges()</a></code>
+</li>
+<li>Deprecate <code><a href="../reference/DescendantEdges.html">AllDescendantEdges()</a></code>; use <code><a href="../reference/DescendantEdges.html">DescendantEdges()</a></code> instead.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.9.2" id="treetools-192-2023-04-25">TreeTools 1.9.2 (2023-04-25)<small>2023-04-27</small><a class="anchor" aria-label="anchor" href="#treetools-192-2023-04-25"></a></h2>
