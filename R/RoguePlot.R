@@ -113,8 +113,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     if (is.na(aboveRogue)) {
       splitKids <- child
     } else {
-      edgeInSplit <- DescendantEdges(edge = aboveRogue,
-                                     parent = parent, child = child)
+      edgeInSplit <- DescendantEdges(parent = parent, child = child,
+                                     edge = aboveRogue)
       splitKids <- child[edgeInSplit]
     }
     splitTips[splitKids[splitKids <= nTip + 1L]] <- TRUE

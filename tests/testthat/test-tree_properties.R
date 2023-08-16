@@ -18,6 +18,8 @@ test_that("AllDescendantEdges() works", {
              x, x, x, x, V, V, V,
              x, x, x, x, x, V, x,
              x, x, x, x, x, x, V), 7, 7, byrow = T))
+  expect_warning(AllDescendantEdges(pec5$edge[, 1], pec5$edge[, 2]),
+                 "deprecated")
 })
 
 test_that("EdgeAncestry() works", {

@@ -2,58 +2,60 @@
 #'
 #' Quickly identify edges that are "descended" from edges in a tree.
 #'
-#' The order of parameters in `DescendantEdges()` will change in the future,
-#' to allow `AllDescendantEdges()` to be merged into this function
-#' ([#31](https://github.com/ms609/TreeTools/issues/31)).
-#' Please explicitly name the `edge` parameter in `DescendantEdges()`, and
-#' replace `AllDesdendantEdges()` with `DescendantEdges(edge = NULL)`,
-#' to future-proof your code.
-#'
-#' @param edge Integer specifying the number of the edge whose child edges are
-#' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @template treeParent
 #' @template treeChild
+#' @param edge Integer specifying the number of the edge whose child edges are
+#' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
 #' @return `DescendantEdges()` returns a logical vector stating whether each
 #' edge in turn is a descendant of the specified edge (or the edge itself).
 #' @family tree navigation
 #' @export
-DescendantEdges <- function(edge = NULL, parent, child,
-                             nEdge = length(parent)) {
-  if (is.null(edge)) return(AllDescendantEdges(parent, child, nEdge))
-  ret <- logical(nEdge)
-  edgeSister <- match(parent[edge], parent[-edge])
-  if (edgeSister >= edge) {
-    # edgeSister is really 1 higher than you think, because we knocked out
-    # edge "edge" in the match
-    ret[edge:edgeSister] <- TRUE
-
-    # Return:
-    ret
+DescendantEdges <- function(parent, child, edge = NULL,
+                            nEdge = length(parent)) {
+  if (is.null(edge)) {
+    .AllDescendantEdges(parent, child, nEdge)
   } else {
-    nextEdge <- edge
-    revParent <- rev(parent)
-    repeat {
-      if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
-        nextEdge <- 1 + nEdge - revDescendant
-      } else break;
+    ret <- logical(nEdge)
+    edgeSister <- match(parent[edge], parent[-edge])
+    if (edgeSister >= edge) {
+      # edgeSister is really 1 higher than you think, because we knocked out
+      # edge "edge" in the match
+      ret[edge:edgeSister] <- TRUE
+  
+      # Return:
+      ret
+    } else {
+      nextEdge <- edge
+      revParent <- rev(parent)
+      repeat {
+        if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
+          nextEdge <- 1 + nEdge - revDescendant
+        } else break;
+      }
+      ret[edge:nextEdge] <- TRUE
+  
+      # Return:
+      ret
     }
-    ret[edge:nextEdge] <- TRUE
-
-    # Return:
-    ret
   }
 }
 
 #' @rdname DescendantEdges
 #'
-#' @return `AllDescendantEdges()` returns a matrix of class logical, with row
-#' _N_ specifying whether each edge is a descendant of edge _N_
-#' (or the edge itself).
+#' @return `AllDescendantEdges()` is deprecated; use `DescendantEdges()`
+#' instead.
+#' It returns a matrix of class logical, with row _N_ specifying whether each
+#' edge is a descendant of edge _N_ (or the edge itself).
 #'
 #' @export
 AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
+  .Deprecated("DescendantEdges")
+  .AllDescendantEdges(parent, child, nEdge)
+}
+
+.AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
   blankLogical <- logical(nEdge)
   allEdges <- seq_len(nEdge)

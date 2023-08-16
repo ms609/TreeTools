@@ -8,6 +8,8 @@
 - Support empty constraints in `AddUnconstrained()`.
 - Add space between tokens in `WriteTntCharacters()` to support continuous
   characters ([#139](https://github.com/ms609/TreeTools/issues/139)).
+- Change order of parameters in `DescendantEdges()`
+- Deprecate `AllDescendantEdges()`; use `DescendantEdges()` instead.
 
 # TreeTools 1.9.2 (2023-04-25) #
 
