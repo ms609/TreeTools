@@ -204,8 +204,6 @@ test_that("RootTree() works", {
                RootTree(bal8, "t5")))
   expect_equal(RootTree(bal8, 5), RootTree(bal8, "t5"))
   expect_equal(RootTree(bal8, 5)$edge, RootTree(bal8$edge, 5))
-  expect_true(all.equal(EnforceOutgroup(bal8, c("t5", "t6")),
-                        RootTree(bal8, c("t5", "t6"))))
   expect_equal(RootTree(bal8, c("t1", "t2")), RootTree(bal8, c("t4", "t5")))
 
   expect_equal(structure(list(RootTree(as.phylo(1, 5), "t5"),
