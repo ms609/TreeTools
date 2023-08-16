@@ -631,7 +631,6 @@ setMethod("match",
 
 
 #' @rdname match.Splits
-#' @export
 in.Splits <- function(x, table) {
   .Deprecated("%in%")
   .in.Splits(x, table)
