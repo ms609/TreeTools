@@ -5,19 +5,19 @@
 \alias{AllDescendantEdges}
 \title{Identify descendant edges}
 \usage{
-DescendantEdges(edge = NULL, parent, child, nEdge = length(parent))
+DescendantEdges(parent, child, edge = NULL, nEdge = length(parent))
 
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
-\item{edge}{Integer specifying the number of the edge whose child edges are
-required (see \code{\link[ape:nodelabels]{edgelabels}()}).}
-
 \item{parent}{Integer vector corresponding to the first column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
+
+\item{edge}{Integer specifying the number of the edge whose child edges are
+required (see \code{\link[ape:nodelabels]{edgelabels}()}).}
 
 \item{nEdge}{number of edges (calculated from \code{length(parent)} if not
 supplied).}
@@ -26,20 +26,13 @@ supplied).}
 \code{DescendantEdges()} returns a logical vector stating whether each
 edge in turn is a descendant of the specified edge (or the edge itself).
 
-\code{AllDescendantEdges()} returns a matrix of class logical, with row
-\emph{N} specifying whether each edge is a descendant of edge \emph{N}
-(or the edge itself).
+\code{AllDescendantEdges()} is deprecated; use \code{DescendantEdges()}
+instead.
+It returns a matrix of class logical, with row \emph{N} specifying whether each
+edge is a descendant of edge \emph{N} (or the edge itself).
 }
 \description{
 Quickly identify edges that are "descended" from edges in a tree.
-}
-\details{
-The order of parameters in \code{DescendantEdges()} will change in the future,
-to allow \code{AllDescendantEdges()} to be merged into this function
-(\href{https://github.com/ms609/TreeTools/issues/31}{#31}).
-Please explicitly name the \code{edge} parameter in \code{DescendantEdges()}, and
-replace \code{AllDesdendantEdges()} with \code{DescendantEdges(edge = NULL)},
-to future-proof your code.
 }
 \seealso{
 Other tree navigation: 
