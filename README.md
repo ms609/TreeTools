@@ -37,7 +37,7 @@ library("TreeTools")
 
 Install the very latest version, which may be under development, with:
 ```r
-if(!require(devtools)) install.packages("devtools")
+if (!require("devtools")) install.packages("devtools")
 devtools::install_github("ms609/TreeTools")
 ```
 
