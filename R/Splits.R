@@ -177,8 +177,8 @@ as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
     }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
-    stop("Unsupported list type; first item has class: ",
-         paste0(class(x[[1]]), collapse = ", "))
+    stop("Unsupported list type; first item has class '",
+         paste0(class(x[[1]]), collapse = ", "), "'")
   }
 }
 
