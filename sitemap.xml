@@ -172,9 +172,6 @@
     <loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc>
   </url>
   <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NonDuplicateRoot.html</loc>
-  </url>
-  <url>
     <loc>https://ms609.github.io/TreeTools/reference/PairwiseDistances.html</loc>
   </url>
   <url>
@@ -188,6 +185,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/ReadMrBayesTrees.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/ReadTntTree.html</loc>
@@ -253,6 +253,9 @@
     <loc>https://ms609.github.io/TreeTools/reference/TipLabels.html</loc>
   </url>
   <url>
+    <loc>https://ms609.github.io/TreeTools/reference/TipTimedTree.html</loc>
+  </url>
+  <url>
     <loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc>
   </url>
   <url>
@@ -314,6 +317,9 @@
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://ms609.github.io/TreeTools/reference/is.TreeNumber.html</loc>
   </url>
   <url>
     <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
