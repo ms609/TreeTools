@@ -11,7 +11,7 @@
 - Change order of parameters in `DescendantEdges()`
 - Deprecate `AllDescendantEdges()`; use `DescendantEdges()` instead.
 - Deprecate `EnforceOutgroup()`; use `RootTree()` instead.
-- Remove `NonDuplicateRoot()`.
+- Remove `NonDuplicateRoot()` and `in.Splits()`.
 
 # TreeTools 1.9.2 (2023-04-25) #
 

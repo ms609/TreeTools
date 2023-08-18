@@ -40,7 +40,7 @@ NeworderPruningwise <- function(nTip, nNode, parent, child, nEdge) {
 }
 
 #' @rdname Neworder
-#' @param `whichwise` Integer specifying whether to order edges (1)
+#' @param whichwise Integer specifying whether to order edges (1)
 #' cladewise; or (2) in postorder.
 #' @return `NeworderPhylo` returns an integer vector specifying the order
 #' of edges under the ordering sequence specified by `whichwise`.
@@ -146,8 +146,6 @@ RenumberEdges <- function(parent, child, ...) {
 #' @template nTipParam
 #' @param edge Two-column matrix listing the parent and child of each edge in a
 #' tree, corresponding to `tree[["edge"]]`. Optional in `Cladewise()`.
-#' @param renumber Logical specifying whether to renumber nodes such that they
-#' increase in number away from the root.
 #'
 #' @return `ApePostorder()`, `Cladewise()`, `Postorder()`, `Preorder()` and
 #' `Pruningwise()` each return a tree of class `phylo` with nodes following the

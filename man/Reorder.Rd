@@ -145,9 +145,6 @@ tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
 postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
-
-\item{renumber}{Logical specifying whether to renumber nodes such that they
-increase in number away from the root.}
 }
 \value{
 \code{RenumberTree()} returns an edge matrix for a tree of class \code{phylo}
