@@ -1,17 +1,26 @@
-# TreeTools 1.9.2.9007 (development) #
+# TreeTools 1.10.0 (2023-08-18) #
 
-- Add `TipTimedTree()` function to display trees where leaves are associated
-  with absolute ages.
-- Add `ReadMrBayesTrees()` to sample trees from posterior of MrBayes output.
-- Add `is.TreeNumber()` method.
+## New methods and functions
+
+- `TipTimedTree()` displays trees where leaves are associated with absolute
+  ages.
+- `ReadMrBayesTrees()` samples trees from posterior of MrBayes output.
+- `is.TreeNumber()` method.
+
+## Improvements
+
 - Support zero-edge trees in `as.Splits()` and `NSplits()`.
 - Support empty constraints in `AddUnconstrained()`.
 - Add space between tokens in `WriteTntCharacters()` to support continuous
   characters ([#139](https://github.com/ms609/TreeTools/issues/139)).
+
+## Deprecations and breaking changes
+
 - Change order of parameters in `DescendantEdges()`
 - Deprecate `AllDescendantEdges()`; use `DescendantEdges()` instead.
 - Deprecate `EnforceOutgroup()`; use `RootTree()` instead.
 - Remove `NonDuplicateRoot()` and `in.Splits()`.
+
 
 # TreeTools 1.9.2 (2023-04-25) #
 
@@ -23,7 +32,7 @@
   ["PlotTools"](https://ms609.github.io/PlotTools/) package.
 
 
-# TreeTools 1.9.1 #
+# TreeTools 1.9.1 (2023-03-21) #
 
 - `AddUnconstrained()` and `ImposeConstraint()` handle wider range of inputs.
 
@@ -33,7 +42,7 @@
 - Call C functions using symbols, not strings.
 
 
-# TreeTools 1.9.0 #
+# TreeTools 1.9.0 (2022-11-29) #
 
 ## New methods and functions
 
@@ -58,7 +67,7 @@
 - Try Latin-1 encoding if `ReadCharacters()` family fail under UTF-8.
 
 
-# TreeTools 1.8.0 #
+# TreeTools 1.8.0 (2022-09-15) #
 
 ## New methods and functions
 
@@ -82,7 +91,7 @@
 - `DropTip()` speed improved when branch lengths are present.
 
 
-# TreeTools 1.7.3 #
+# TreeTools 1.7.3 (2022-07-20) #
 
 - `ReadTntTree()` supports multi-line trees.
 
@@ -91,7 +100,7 @@
 - Add deprecation warning to `in.Splits()`.
 
 
-# TreeTools 1.7.2 #
+# TreeTools 1.7.2 (2022-05-24) #
 
 - `RenumberTips()` drops "preorder" attribute, as reordering tip labels may
   break edge ordering guarantee.
@@ -101,12 +110,12 @@
 - Replace `throw` with `stop` in C++ scripts.
 
 
-# TreeTools 1.7.1 #
+# TreeTools 1.7.1 (2022-03-25) #
 
 - `AddTip()`: Fix bug when adding tip to root of weighted tree.
 
 
-# TreeTools 1.7.0 #
+# TreeTools 1.7.0 (2022-03-21) #
 
 ## New methods and functions
 
@@ -169,7 +178,7 @@
   ([#35](https://github.com/ms609/TreeTools/issues/35)).
 
 
-# TreeTools 1.6.0 #
+# TreeTools 1.6.0 (2022-01-12) #
 
 ## New functions
 
@@ -192,7 +201,7 @@
 - Export `DropTipPhylo()` as wrapper to `DropTip.phylo()`.
 
 
-# TreeTools 1.5.1 #
+# TreeTools 1.5.1 (2021-10-06) #
 
 - `PhyDatToMatrix()` optionally encodes ambiguous / inapplicable tokens as `NA`.
 
@@ -201,7 +210,7 @@
 - Update test suite for compatibility with "testthat" > 3.0.4 (@hadley, #83).
 
 
-# TreeTools 1.5.0 #
+# TreeTools 1.5.0 (2021-09-13) #
 
 ## New functions
 
@@ -251,7 +260,7 @@
   and lift limit on tree size.
 
 
-# TreeTools 1.4.5 #
+# TreeTools 1.4.5 (2021-06-23) #
 
 - Correct calculation of minimum value in `TCIContext()`.
 - Extract tip labels from objects in `StringToPhyDat()`.
@@ -263,14 +272,14 @@
 - Additions and improvements to text parsing functions.
 
 
-# TreeTools 1.4.4 #
+# TreeTools 1.4.4 (2021-04-23) #
 
 - Add `NTip.phyDat()` method.
 - Update `MakeTreeBinary()` docs and tests to reflect updated behaviour of 
   `ape::multi2di()` in 'ape' v5.5.
 
 
-# TreeTools 1.4.3 #
+# TreeTools 1.4.3 (2021-04-12) #
 
  - `AddTip()` supports edge lengths.
  - `CladisticInfo()` supports `Splits` objects.
@@ -283,20 +292,20 @@
    ([#50](https://github.com/ms609/TreeTools/issues/50)).
 
 
-# TreeTools 1.4.2 #
+# TreeTools 1.4.2 (2021-01-26) #
 
  - Support star trees in `RootTree()`.
  - Improve memory handling in `root_on_node()`.
  - Documentation linkage.
 
 
-# TreeTools 1.4.1 #
+# TreeTools 1.4.1 (2020-12-09) #
 
  - `MSTEdges()` supports distance matrices with > 256 entries.
  - Package 'vdiffr' used conditionally.
 
 
-# TreeTools 1.4.0 #
+# TreeTools 1.4.0 (2020-10-20) #
 
 ## New functions
  - `MSTLength()` reports length of minimum spanning tree.
@@ -319,7 +328,7 @@
  - Fix misspecified C++ linkage.
 
 
-# TreeTools 1.3.0 #
+# TreeTools 1.3.0 (2020-09-22) #
 
 ## New functions
  
@@ -340,7 +349,7 @@
  - Remove obsolete copy of C++ code from 'phangorn'.
 
 
-# TreeTools 1.2.0 #
+# TreeTools 1.2.0 (2020-08-30) #
 
  - `ArtificialExtinction()`: Remove characters that are absent in a fossil 
    template.
@@ -349,7 +358,7 @@
  - Documentation improvements.
 
 
-# TreeTools 1.1.0 #
+# TreeTools 1.1.0 (2020-07-07) #
 
 ## New functions
 
@@ -367,7 +376,7 @@
  lists of trees.
 
 
-# TreeTools 1.0.0 #
+# TreeTools 1.0.0 (2020-06-08) #
 
 ## New functions
 
@@ -404,7 +413,7 @@
 - Documentation improvements.
 
 
-# TreeTools 0.1.4 #
+# TreeTools 0.1.4 (2020-03-04) #
 
 - Catch hang-inducing bugs in `RootOnNode()`.
 - Update `doubleFactorials` cache to fix `as.integer()` rounding error.
@@ -412,13 +421,13 @@
 - Documentation improvements.
 
 
-# TreeTools 0.1.3 #
+# TreeTools 0.1.3 (2020-01-07) #
 
 - `RootOnNode()`: Quickly root a tree on a specified node.
 - Improve portability of C++ code.
 
 
-# TreeTools 0.1.2 #
+# TreeTools 0.1.2 (2020-12-18) #
  
 - `as.Newick`: Fast conversion to Newick format.
 - `as.TreeNumber`: Tree shape enumeration.
@@ -428,10 +437,10 @@
  
 - Add functions to translate trees to mixed base integers.
 - `RenumberTips` can extract tip order from `phylo` and `Splits` objects.
-- Documentation changes to attempt to satisfy CRAN submission requirements.
+- Documentation changes to satisfy CRAN submission requirements.
 
 
-# TreeTools 0.1.0 #
+# TreeTools 0.1.0 (2019-10-30) #
 
 - Pre-release version spun out of ['TreeSearch'](https://ms609.github.io/TreeSearch/)
   package.  Some functionality is subject to change.
