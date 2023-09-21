@@ -1,6 +1,7 @@
 CONTRIBUTING.md
 README.md
 cran-comments.md
+benchmark
 data-raw
 DELETE
 man-roxygen
@@ -8,6 +9,7 @@ memcheck
 vignettes/.RData
 .github
 ^\.git/
+^\.lintr$
 ^_pkgdown\.yml$
 ^.*\.o$
 ^.*\.dll$
@@ -18,6 +20,7 @@ vignettes/.RData
 ^\.covrignore$
 ^\.?R+prof.*$
 ^\.zenodo\.json$
+/^benchmark/
 /^src\-/
 ^CODE_OF_CONDUCT\.md$
 ^codemeta\.json$

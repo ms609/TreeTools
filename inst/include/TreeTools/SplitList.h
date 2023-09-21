@@ -1,7 +1,8 @@
 #ifndef _TREETOOLS_SPLITLIST_H
 #define _TREETOOLS_SPLITLIST_H
 
-#include <Rcpp.h>
+#include <Rcpp/Lightest>
+#include <stdexcept> /* for errors */
 
 #include "types.h" /* for int16 */
 
@@ -12,7 +13,8 @@
 #define SL_MAX_SPLITS SL_MAX_TIPS /* -3, but quicker if a power of two? */
 
 #define INLASTBIN(n, size) ((size) - ((size) - ((n) % (size))) % (size))
-#define INSUBBIN(bin, offset) splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
+#define INSUBBIN(bin, offset)                                  \
+  splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
 
 #define right16bits splitbit(65535U)
@@ -78,14 +80,13 @@ namespace TreeTools {
 
       n_bins = (n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
 
-      if (n_bins < 1) throw std::invalid_argument("No leaves present.");
       if (n_splits < 0) {
-        throw std::invalid_argument("Negative number of splits!?");             // # nocov
+        Rcpp::stop("Negative number of splits!?");                 // # nocov
       }
       if (n_bins > SL_MAX_BINS) {
-        throw std::length_error("This many leaves cannot be supported. "        // # nocov
-                                "Please contact the TreeTools maintainer if "   // # nocov
-                                "you need to use more!");                       // # nocov
+        Rcpp::stop("This many leaves cannot be supported. "        // # nocov
+                   "Please contact the TreeTools maintainer if "   // # nocov
+                   "you need to use more!");                       // # nocov
       }
 
       for (int16 split = 0; split != n_splits; split++) {

@@ -1,16 +1,16 @@
 #' Convert object to `multiPhylo` class
 #'
-#' Converts representations of phylogenetic trees to an object of the 'ape'
+#' Converts representations of phylogenetic trees to an object of the "ape"
 #' class `multiPhylo`.
 #' @param x Object to be converted
 #' @return `as.multiPhylo` returns an object of class `multiPhylo`
 #' @examples
 #' as.multiPhylo(BalancedTree(8))
 #' as.multiPhylo(list(BalancedTree(8), PectinateTree(8)))
-#' data('Lobo')
+#' data("Lobo")
 #' as.multiPhylo(Lobo.phy)
 #' @export
-as.multiPhylo <- function(x) UseMethod('as.multiPhylo')
+as.multiPhylo <- function(x) UseMethod("as.multiPhylo")
 
 #' @rdname as.multiPhylo
 #' @export
@@ -19,7 +19,7 @@ as.multiPhylo.phylo <- function(x) c(x)
 
 #' @rdname as.multiPhylo
 #' @export
-as.multiPhylo.list <- function(x) structure(x, class = 'multiPhylo')
+as.multiPhylo.list <- function(x) structure(x, class = "multiPhylo")
 
 #' @rdname as.multiPhylo
 #' @return `as.multiPhylo.phyDat()` returns a list of trees, each corresponding
@@ -29,8 +29,8 @@ as.multiPhylo.list <- function(x) structure(x, class = 'multiPhylo')
 as.multiPhylo.phyDat <- function(x) {
   at <- attributes(x)
   cont <- at[["contrast"]]
-  if ('-' %fin% colnames(cont)) {
-    cont[cont[, '-'] > 0, ] <- 1
+  if ("-" %fin% colnames(cont)) {
+    cont[cont[, "-"] > 0, ] <- 1
   }
   ambiguous <- rowSums(cont) != 1
   labels <- names(x)
@@ -48,15 +48,15 @@ as.multiPhylo.phyDat <- function(x) {
     tokens <- unique(aSplit)
     aLabels <- labels[a]
     if (length(tokens) == 1L) {
-      read.tree(text = paste0('(', paste(aLabels, collapse = ', '), ');'))
+      read.tree(text = paste0("(", paste(aLabels, collapse = ", "), ");"))
     } else {
-      read.tree(text = paste0('((',
+      read.tree(text = paste0("((",
                               paste(vapply(unique(aSplit), function(token) {
-                                paste(aLabels[aSplit == token], collapse = ', ')
-                              }, character(1)), collapse = '), ('),
-                              '));'))
+                                paste(aLabels[aSplit == token], collapse = ", ")
+                              }, character(1)), collapse = "), ("),
+                              "));"))
     }
-  })[at[["index"]]], class = 'multiPhylo')
+  })[at[["index"]]], class = "multiPhylo")
 }
 
 #' @rdname as.multiPhylo
@@ -66,10 +66,10 @@ as.multiPhylo.Splits <- function(x) {
   labels <- TipLabels(x)
   structure(apply(as.logical(x), 1, function(a) {
     read.tree(text = paste0(
-      '((',
-      paste0(labels[a], collapse = ','),
-      '),(',
-      paste0(labels[!a], collapse = ','),
-      '));'))
-  }), class = 'multiPhylo')
+      "((",
+      paste0(labels[a], collapse = ","),
+      "),(",
+      paste0(labels[!a], collapse = ","),
+      "));"))
+  }), class = "multiPhylo")
 }

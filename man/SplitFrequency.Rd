@@ -53,14 +53,14 @@ constituent functions (see examples)
 }
 \section{Functions}{
 \itemize{
-\item \code{SplitNumber}: Assign a unique integer to each split
+\item \code{SplitNumber()}: Assign a unique integer to each split
 
-\item \code{ForestSplits}: Frequency of splits in a given forest of trees
+\item \code{ForestSplits()}: Frequency of splits in a given forest of trees
 
-\item \code{TreeSplits}: Deprecated. Listed the splits in a given tree.
+\item \code{TreeSplits()}: Deprecated. Listed the splits in a given tree.
 Use as.Splits instead.
-}}
 
+}}
 \examples{
 # An example forest of 100 trees, some identical
 forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
@@ -69,10 +69,22 @@ forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
 cons <- ape::consensus(forest, p = 0.8)
 plot(cons)
 
+# Calculate split frequencies
 splitFreqs <- SplitFrequency(cons, forest)
-LabelSplits(cons, splitFreqs, unit = '\%',
+
+# Optionally, colour edges by corresponding frequency.
+# Note that not all edges are associated with a unique split
+# (and two root edges may be associated with one split - not handled here)
+edgeSupport <- rep(1, nrow(cons$edge)) # Initialize trivial splits to 1
+childNode <- cons$edge[, 2]
+edgeSupport[match(names(splitFreqs), childNode)] <- splitFreqs / 100
+
+plot(cons, edge.col = SupportColour(edgeSupport), edge.width = 3)
+
+# Annotate nodes by frequency 
+LabelSplits(cons, splitFreqs, unit = "\%",
             col = SupportColor(splitFreqs / 100),
-            frame = 'none', pos = 3L)
+            frame = "none", pos = 3L)
 
 }
 \seealso{
@@ -85,9 +97,11 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}

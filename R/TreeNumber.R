@@ -115,6 +115,7 @@
 #' @seealso Describe the shape of a tree topology, independent of leaf labels:
 #' [`TreeShape()`]
 #' @family tree generation functions
+#' @family 'TreeNumber' utilities
 #' @name TreeNumber
 #
 
@@ -124,20 +125,20 @@
 #' which comprises a numeric vector, whose elements represent successive
 #' nine-digit chunks of the decimal integer corresponding to the tree topology
 #' (in big endian order).  The `TreeNumber` object has attributes
-#' `nTip` and `tip.label`.
+#' `nTip` and `tip.label`.  If `x` is a list of trees or a `multiPhylo` object,
+#' then `as.TreeNumber()` returns a corresponding list of `TreeNumber` objects.
 #' @export
-as.TreeNumber <- function(x, ...) UseMethod('as.TreeNumber')
+as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 
 .TT_MAX_TIP <- 19L
 # Calculate with:
 # base <- cumprod(as.integer64(seq(1, by = 2, length.out = 16)))
-.TT_BASE <- structure(c(
-  4.94065645841247e-324, 1.48219693752374e-323, 7.4109846876187e-323, 
-  5.18768928133309e-322, 4.66892035319978e-321, 5.13581238851976e-320, 
-  6.67655610507569e-319, 1.00148341576135e-317, 1.7025218067943e-316, 
-  3.23479143290917e-315, 6.79306200910926e-314, 1.56240426209513e-312, 
-  3.90601065523782e-311, 1.05462287691421e-309, 3.05840634305121e-308, 
-  7.87815130491404e-296), class = "integer64")
+.TT_BASE <- as.integer64(c(
+  "191898783962510625", "6190283353629375", "213458046676875", "7905853580625",
+  "316234143225", "13749310575", "654729075", "34459425", "2027025", "135135",
+  "10395", "945", "105", "15", "3", "1"))
+
+.TTBases <- function (n) .TT_BASE[length(.TT_BASE) - n + seq_len(n)]
 
 #' @rdname TreeNumber
 #' @export
@@ -150,11 +151,11 @@ as.TreeNumber.phylo <- function(x, ...) {
             "by 64-bit TreeNumbers")
   }
 
-  edge <- Postorder(edge, sizeSort = TRUE)
+  edge <- Postorder(edge)
   structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
             nTip = nTip,
             tip.label = TipLabels(x),
-            class = c('TreeNumber', 'integer64'))
+            class = c("TreeNumber", "integer64"))
 }
 
 #' @rdname TreeNumber
@@ -169,7 +170,7 @@ as.TreeNumber.character <- function(x, nTip, tipLabels = TipLabels(nTip), ...) {
   structure(as.integer64(x),
             nTip = nTip,
             tip.label = tipLabels,
-            class = c('TreeNumber', 'integer64'))
+            class = c("TreeNumber", "integer64"))
 }
 
 #' @rdname TreeNumber
@@ -184,7 +185,7 @@ as.TreeNumber.MixedBase <- function(x, ...) {
   }
   
   # Return:
-  structure(sum(as.integer(x) * .TT_BASE[rev(seq_along(x))]),
+  structure(sum(as.integer(x) * .TTBases(length(x))),
             nTip = NTip(x),
             tip.label = TipLabels(x),
             class = c("TreeNumber", "integer64"))
@@ -197,7 +198,7 @@ as.MixedBase.TreeNumber <- function(x, ...) {
   outLength <- nTip - 3L
   baseLength <- min(outLength, length(.TT_BASE))
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   n <- as.integer64(x)
   for (i in seq_len(baseLength)) {
@@ -219,7 +220,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
   baseLength <- if (x > max(.TT_BASE)) {
     length(.TT_BASE)
   } else {
-    which.max(.TT_BASE > x) - 1L
+    which.max(rev(.TT_BASE) > x)
   }
   tipLabels <- TipLabels(tipLabels)
   if (is.null(tipLabels)) {
@@ -231,7 +232,7 @@ as.MixedBase.integer64 <- function(x, tipLabels = NULL, ...) {
     stop("Number of tips too low; is tipLabels truncated?")
   }
   
-  base <- .TT_BASE[rev(seq_len(baseLength))]
+  base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   
   for (i in seq_len(baseLength)) {
@@ -263,8 +264,8 @@ as.MixedBase.numeric <- function(x, tipLabels = NULL, ...) {
 #'
 #' @importFrom ape as.phylo
 #' @export
-as.phylo.numeric <- function(x, nTip = attr(x, 'nTip'),
-                              tipLabels = attr(x, 'tip.label'), ...) {
+as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
+                             tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(nTip)) {
     if (is.null(tipLabels)) {
       stop("Either nTip or tipLabels must be specified.")
@@ -272,29 +273,37 @@ as.phylo.numeric <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
-  if (nTip == 1) {
-    SingleTaxonTree(tipLabels)
+  if (nTip < 2) {
+    if (nTip == 0) {
+      ZeroTaxonTree()
+    } else if (nTip == 1) {
+      SingleTaxonTree(if (is.null(tipLabels)) TipLabels(nTip) else tipLabels)
+    } else {
+      stop("`nTip` may not be negative")
+    }
   } else {
+    if (is.null(tipLabels)) {
+      tipLabels <- TipLabels(nTip)
+    }
     if (length(x) > 1) {
       structure(lapply(x, as.phylo.numeric, nTip = nTip, tipLabels = tipLabels),
-                tip.label = tipLabels, class = 'multiPhylo')
+                tip.label = tipLabels, class = "multiPhylo")
     } else {
       edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                             seq_len(nTip + nTip - 2L))
-      structure(list(edge = do.call(cbind, edge),
-                     tip.label = tipLabels,
-                     Nnode = nTip - 1L),
-                order = 'preorder',
-                class = 'phylo')
+      .PreorderTree(
+        edge = do.call(cbind, edge),
+        Nnode = nTip - 1L,
+        tip.label = tipLabels
+      )
     }
   }
 }
 
 # Copied from as.phylo.numeric except if length > 1
 #' @export
-as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
-                                tipLabels = attr(x, 'tip.label'), ...) {
+as.phylo.integer64 <- function(x, nTip = attr(x, "nTip"),
+                                tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(nTip)) {
     if (is.null(tipLabels)) {
       stop("Either nTip or tipLabels must be specified.")
@@ -302,24 +311,24 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
       nTip <- length(tipLabels)
     }
   }
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0("t", seq_len(nTip))
+  }
   if (nTip == 1) {
     SingleTaxonTree(tipLabels)
   } else {
     if (length(x) > 1) {
-      ret <- vector('list', length(x))
+      ret <- vector("list", length(x))
       for (i in seq_along(x)) {
         ret[[i]] <- as.phylo(x[i], nTip = nTip, tipLabels = tipLabels)
       }
-      ret <- structure(ret, tip.label = tipLabels, class = 'multiPhylo')
+      ret <- structure(ret, tip.label = tipLabels, class = "multiPhylo")
     } else {
       edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                             seq_len(nTip + nTip - 2L))
-      structure(list(edge = do.call(cbind, edge),
-                     tip.label = tipLabels,
-                     Nnode = nTip - 1L),
-                order = 'preorder',
-                class = 'phylo')
+      .PreorderTree(edge = do.call(cbind, edge),
+                    tip.label = tipLabels,
+                    Nnode = nTip - 1L)
     }
   }
 }
@@ -328,6 +337,9 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
   INT_MAX <- as.integer64(2147483647L)
   i64 <- as.integer64(i64)
   if (i64 > INT_MAX) {
+    if (i64 > INT_MAX * INT_MAX) {
+      stop("Number too large for 64-bit representation")
+    }
     as.integer(c(i64 %/% INT_MAX, i64 %% INT_MAX))
   } else {
     as.integer(i64[1])
@@ -336,22 +348,35 @@ as.phylo.integer64 <- function(x, nTip = attr(x, 'nTip'),
 
 #' @rdname TreeNumber
 #' @export
-as.phylo.TreeNumber <- function(x, nTip = attr(x, 'nTip'),
-                                 tipLabels = attr(x, 'tip.label'), ...) {
-  if (is.null(tipLabels)) tipLabels <- paste0('t', seq_len(nTip))
+as.phylo.TreeNumber <- function(x, nTip = attr(x, "nTip"),
+                                 tipLabels = attr(x, "tip.label"), ...) {
+  if (is.null(tipLabels)) tipLabels <- paste0("t", seq_len(nTip))
   edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
                         seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = 'preorder',
-            class = 'phylo')
+  .PreorderTree(
+    edge = do.call(cbind, edge),
+    tip.label = tipLabels,
+    Nnode = nTip - 1L
+  )
 }
 
 #' @export
 as.integer64.TreeNumber <- function(x, ...) {
-  structure(x[1], class = 'integer64')
+  structure(x[1], class = "integer64")
 }
+
+#' Is an object a `TreeNumber` object?
+#' 
+#' @param x R object.
+#' @return `is.TreeNumber()` returns a logical vector of length one specifying
+#' whether `x` inherits the class `"TreeNumber"`.
+#' @template MRS
+#' @examples
+#' is.TreeNumber(FALSE) # FALSE 
+#' is.TreeNumber(as.TreeNumber(BalancedTree(5))) # TRUE
+#' @family 'TreeNumber' utilities
+#' @export
+is.TreeNumber <- function(x) inherits(x, "TreeNumber")
 
 #' Print `TreeNumber` object
 #'
@@ -360,12 +385,13 @@ as.integer64.TreeNumber <- function(x, ...) {
 #' @param x Object of class `TreeNumber`.
 #' @param \dots Additional arguments for consistency with S3 method (unused).
 #'
+#' @family 'TreeNumber' utilities
 #' @export
 print.TreeNumber <- function(x, ...) {
-  nTip <- attr(x, 'nTip')
+  nTip <- attr(x, "nTip")
   cat("Phylogenetic tree number", .PrintedTreeNumber(x), "of",
       .PrintNUnrooted(nTip), "\n",
-      nTip, "tips:", paste0(attr(x, 'tip.label')))
+      nTip, "tips:", paste0(attr(x, "tip.label")))
 }
 
 #' @keywords internal
@@ -376,12 +402,12 @@ print.TreeNumber <- function(x, ...) {
 # x: Object of class `TreeNumber`
 #' @keywords internal
 .PrintedTreeNumber <- function(x) {
-  paste0(structure(x, class = 'integer64'))
+  paste0(structure(x, class = "integer64"))
 }
 
 #' @rdname TreeNumber
 #' @export
-as.MixedBase <- function(x, ...) UseMethod('as.MixedBase')
+as.MixedBase <- function(x, ...) UseMethod("as.MixedBase")
 
 #' @rdname TreeNumber
 #' @export
@@ -391,15 +417,15 @@ as.MixedBase.MixedBase <- function(x, ...) x
 #' @export
 as.MixedBase.phylo <- function(x, ...) {
   x <- RootTree(x, 1)
-  edge <- x[["edge"]]
   nTip <- NTip(x)
+  edge <- x[["edge"]]
   
-  edge <- Postorder(edge, sizeSort = TRUE)
+  edge <- Postorder(edge)
   structure(edge_to_mixed_base(edge[, 1], edge[, 2], nTip),
             nTip = nTip,
             tip.label = TipLabels(x),
             binary = TRUE,
-            class = 'MixedBase')
+            class = "MixedBase")
 }
 
 #' @rdname TreeNumber
@@ -410,16 +436,18 @@ as.MixedBase.multiPhylo <- function(x, ...) {
 
 #' @rdname TreeNumber
 #' @export
-as.phylo.MixedBase <- function(x, nTip = attr(x, 'nTip'),
-                               tipLabels = attr(x, 'tip.label'), ...) {
+as.phylo.MixedBase <- function(x, nTip = attr(x, "nTip"),
+                               tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(tipLabels)) {
-    tipLabels <- paste0('t', seq_len(nTip))
+    tipLabels <- paste0("t", seq_len(nTip))
   }
   edge <- RenumberEdges(mixed_base_to_parent(x, nTip),
                         seq_len(nTip + nTip - 2L))
-  structure(list(edge = do.call(cbind, edge),
-                 tip.label = tipLabels,
-                 Nnode = nTip - 1L),
-            order = 'preorder',
-            class = 'phylo')
+  
+  # Return:
+  .PreorderTree(
+    edge = do.call(cbind, edge),
+    tip.label = tipLabels,
+    Nnode = nTip - 1L
+  )
 }

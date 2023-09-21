@@ -51,19 +51,20 @@ using extended implied weighting (\verb{xpiwe=}).}
 Write morphological character matrix to TNT file
 }
 \examples{
-data('Lobo', package = 'TreeTools')
+data("Lobo", package = "TreeTools")
 
 WriteTntCharacters(Lobo.phy)
 
 # Read with extended implied weighting
-WriteTntCharacters(Lobo.phy, pre = 'piwe=10;', post = 'xpiwe=;')
+WriteTntCharacters(Lobo.phy, pre = "piwe=10;", post = "xpiwe=;")
 
 # Write to a file with:
-# WriteTntCharacters(Lobo.phy, 'example_file.tnt')
+# WriteTntCharacters(Lobo.phy, "example_file.tnt")
 }
 \seealso{
 \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

@@ -41,16 +41,16 @@ split in turn.
 content of a phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
-The \acronym{CIC} is the logarithm of the number of binary trees that include the
-specified topology.  A base two logarithm gives an information content in
-bits.
+The \acronym{CIC} is the logarithm of the number of binary trees that
+include the specified topology.
+A base two logarithm gives an information content in bits.
 
 The \acronym{CIC} was originally proposed by
 \insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
 with an information-theoretic justification, by
 \insertCite{Thorley1998;textual}{TreeTools}.
 \insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
-'phylogenetic information content' in the context of individual characters.
+"phylogenetic information content" in the context of individual characters.
 
 The number of binary trees consistent with a cladogram provides a more
 satisfactory measure of the resolution of a tree than simply
@@ -70,7 +70,8 @@ Other tree characterization functions:
 \code{\link{TotalCopheneticIndex}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree characterization functions}
 \concept{tree information functions}

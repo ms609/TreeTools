@@ -30,7 +30,7 @@
 \item{e1, e2}{Objects to be compared.}
 }
 \description{
-Trees are sorted by their \href{MixedBase}{mixed base representation},
+Trees are sorted by their \link[=TreeNumber]{mixed base representation},
 treating their leaves in the order of their labels (i.e. alphabetically,
 if leaves are labelled with text).
 }
@@ -38,5 +38,6 @@ if leaves are labelled with text).
 sort(as.phylo(5:0, 7))
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

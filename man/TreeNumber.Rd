@@ -68,7 +68,8 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The \code{TreeNumber} object has attributes
-\code{nTip} and \code{tip.label}.
+\code{nTip} and \code{tip.label}.  If \code{x} is a list of trees or a \code{multiPhylo} object,
+then \code{as.TreeNumber()} returns a corresponding list of \code{TreeNumber} objects.
 
 \code{as.phylo.numeric()} returns a tree of class \code{phylo}.
 }
@@ -88,23 +89,27 @@ number, with bases 1, 3, 5, 7, … (2 \emph{n} - 5).
 Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.
 
-We start with a two-leaf tree, and treat 0 as the origin of the tree.\preformatted{
+We start with a two-leaf tree, and treat 0 as the origin of the tree.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 1
 
-}
+}\if{html}{\out{</div>}}
 
 We add leaf 2 by breaking an edge and inserting a node (numbered
 \code{2 + nTip - 1}).
 In this example, we'll work up to a six-leaf tree; this node will be numbered
 2 + 6 - 1 = 7.
 There is only one edge on which leaf 2 can be added.  Let's add node 7 and
-leaf 2:\preformatted{
+leaf 2:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
        2
 
-}
+}\if{html}{\out{</div>}}
 
 There are now three edges on which leaf 3 can be added.  Our options are:
 
@@ -114,7 +119,9 @@ Option 1: the edge leading to 2;
 
 Option 2: the edge leading to 7.
 
-If we select option 1, we produce:\preformatted{
+If we select option 1, we produce:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
@@ -123,7 +130,7 @@ If we select option 1, we produce:\preformatted{
        |
        3
 
-}
+}\if{html}{\out{</div>}}
 
 \code{1} is now the final digit of our mixed-base number.
 
@@ -184,9 +191,15 @@ Other tree generation functions:
 \code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()}
+\code{\link{TrivialTree}}
+
+Other 'TreeNumber' utilities: 
+\code{\link{is.TreeNumber}()},
+\code{\link{print.TreeNumber}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{'TreeNumber' utilities}
 \concept{tree generation functions}

@@ -23,5 +23,5 @@ BEGIN NOTES;
   TEXT    TAXON = 1 CHARACTER = 3  TEXT = "Tax1-Char3";
   TEXT    TAXON=2 CHARACTER=2  TEXT="Taxon 2, char 2";
   text taxon=3 text = "Taxon Three";
-  text Character = 3 text = "Three's a crowd.";
+  text Character = 3 text = 'Three''s a crowd.';
 END;

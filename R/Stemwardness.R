@@ -1,7 +1,7 @@
-#' 'Stemwardness' of a leaf
+#' "Stemwardness" of a leaf
 #'
 #' Functions to describe the position of a leaf relative to the root.
-#' 'Stemmier' leaves ought to exhibit a smaller root-node distance and a
+#' "Stemmier" leaves ought to exhibit a smaller root-node distance and a
 #' larger sister size.
 #'
 #' `RootNodeDistance()` calculates the number of nodes between the chosen leaf
@@ -12,7 +12,7 @@
 #' As an example, leaf _X1_ in the tree `(.,(.,(.,(.,(X1,(a,b))))))`
 #' falls outside the clade _(a, b)_ and has a root-node distance of 4,
 #' whereas leaf _X2_ in the tree `(.,((.,(.,.)),(b,(X2,a))))`
-#' falls within the clade _(a, b)_, so should be considered more 'crownwards',
+#' falls within the clade _(a, b)_, so should be considered more "crownwards",
 #' yet has a smaller root-node distance (3).
 #'
 #' \insertFig{Stemwardness.png}{TreeTools}{
@@ -29,7 +29,7 @@
 #' `SisterSize()` measures the number of leaves in the clade that is sister to
 #' the chosen leaf, as proposed by \insertCite{Asher2020;textual}{TreeTools}.
 #' In the examples above, _X1_ has a sister size of 2 leaves, whereas _X2_,
-#' which is 'more crownwards', has a smaller sister size (1 leaf), as desired.
+#' which is "more crownwards", has a smaller sister size (1 leaf), as desired.
 #'
 #' @template treeParam
 #' @param tip Either a numeric specifying the index of a single tip, or a
@@ -46,17 +46,17 @@
 #' pec8 <- PectinateTree(8)
 #'
 #' SisterSize(bal8, 3)
-#' SisterSize(pec8, 't3')
-#' SisterSize(RootTree(pec8, 't3'), 't3')
+#' SisterSize(pec8, "t3")
+#' SisterSize(RootTree(pec8, "t3"), "t3")
 #'
 #' RootNodeDist(bal8, 3)
-#' RootNodeDist(pec8, 't3')
-#' RootNodeDist(RootTree(pec8, 't3'), 't3')
+#' RootNodeDist(pec8, "t3")
+#' RootNodeDist(RootTree(pec8, "t3"), "t3")
 #' @template MRS
 #' @name Stemwardness
 #' @family tree characterization functions
 #' @export
-SisterSize <- function(tree, tip) UseMethod('SisterSize', tip)
+SisterSize <- function(tree, tip) UseMethod("SisterSize", tip)
 
 #' @rdname Stemwardness
 #' @export
@@ -77,7 +77,7 @@ SisterSize.character <- function(tree, tip) {
 
 #' @rdname Stemwardness
 #' @export
-RootNodeDistance <- function(tree, tip) UseMethod('RootNodeDistance', tip)
+RootNodeDistance <- function(tree, tip) UseMethod("RootNodeDistance", tip)
 
 #' @rdname Stemwardness
 #' @export

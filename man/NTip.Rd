@@ -43,6 +43,7 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
@@ -56,7 +57,8 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \concept{Splits operations}
 \concept{tree properties}

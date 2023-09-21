@@ -3,8 +3,13 @@
 \name{DropTip}
 \alias{DropTip}
 \alias{DropTip.phylo}
+\alias{DropTip.Splits}
 \alias{DropTipPhylo}
 \alias{DropTip.multiPhylo}
+\alias{DropTip.list}
+\alias{DropTip.NULL}
+\alias{KeepTipPreorder}
+\alias{KeepTipPostorder}
 \alias{KeepTip}
 \title{Drop leaves from tree}
 \usage{
@@ -12,9 +17,19 @@ DropTip(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{phylo}(tree, tip, preorder = TRUE, check = TRUE)
 
+\method{DropTip}{Splits}(tree, tip, preorder, check = TRUE)
+
 DropTipPhylo(tree, tip, preorder = TRUE, check = TRUE)
 
 \method{DropTip}{multiPhylo}(tree, tip, preorder = TRUE, check = TRUE)
+
+\method{DropTip}{list}(tree, tip, preorder = TRUE, check = TRUE)
+
+\method{DropTip}{`NULL`}(tree, tip, preorder = TRUE, check = TRUE)
+
+KeepTipPreorder(tree, tip)
+
+KeepTipPostorder(tree, tip)
 
 KeepTip(tree, tip, preorder = TRUE, check = TRUE)
 }
@@ -52,19 +67,30 @@ and which can crash when trees' internal numbering follows unexpected schema.
 }
 \section{Functions}{
 \itemize{
-\item \code{DropTipPhylo}: Direct call to \code{DropTip.phylo()}, to avoid overhead of
+\item \code{DropTipPhylo()}: Direct call to \code{DropTip.phylo()}, to avoid overhead of
 querying object's class.
-}}
 
+\item \code{KeepTipPreorder()}: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in preorder.
+May crash if improper input is specified.
+
+\item \code{KeepTipPostorder()}: Faster version with no checks.
+Does not retain tip labels or edge weights.
+edges must be listed in postorder.
+May crash if improper input is specified.
+
+}}
 \examples{
 tree <- BalancedTree(9)
 plot(tree)
-plot(DropTip(tree, c('t5', 't6')))
+plot(DropTip(tree, c("t5", "t6")))
 
-unrooted <- unroot(tree)
+unrooted <- UnrootTree(tree)
 plot(unrooted)
 plot(DropTip(unrooted, 4:5))
 
+summary(DropTip(as.Splits(tree), 4:5))
 }
 \seealso{
 Other tree manipulation: 
@@ -73,17 +99,26 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
+
+Other split manipulation functions: 
+\code{\link{Subsplit}()},
+\code{\link{TrivialSplits}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{split manipulation functions}
 \concept{tree manipulation}

@@ -1,14 +1,17 @@
+mrs <- person(c("Martin", "R."), "Smith", email = "martin.smith@durham.ac.uk")
 vers <- paste("R package version", meta$Version)
 
-citEntry(entry = "Manual",
-        key = "Smith2019",
-        title = "TreeTools: create, modify and analyse phylogenetic trees",
-        author = personList(as.person("Martin R. Smith")),
-        note = vers,
-        year = 2019,
-        doi = "10.5281/zenodo.3522725",
-        organization = "Comprehensive R Archive Network",
-
-        textVersion =
-        paste0("Smith (2019). TreeTools: create, modify and analyse phylogenetic trees. Comprehensive R Archive Network. doi: 10.5281/zenodo.3522725"))
-
+bibentry(
+  bibtype = "Manual",
+  key = "Smith2019",
+  title = "TreeTools: create, modify and analyse phylogenetic trees",
+  author = mrs,
+  note = vers,
+  year = 2019,
+  doi = "10.5281/zenodo.3522725",
+  organization = "Comprehensive R Archive Network",
+  textVersion = paste0(
+    "Smith (2019). TreeTools: create, modify and analyse phylogenetic trees. ",
+    "Comprehensive R Archive Network. doi: 10.5281/zenodo.3522725"
+  )
+)

@@ -49,4 +49,4 @@ doubleFactorials <- c(1L, 2L, 3L, 8L, 15L, 48L, 105L, 384L, 945L,
 # Greater than 300 -> "Inf"
 
 usethis::use_data(logDoubleFactorials, log2DoubleFactorials, doubleFactorials,
-                  internal = TRUE, overwrite = TRUE, compress = 'xz')
+                  internal = TRUE, overwrite = TRUE, compress = "xz")

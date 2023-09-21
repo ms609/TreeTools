@@ -9,20 +9,26 @@
 #' Clades that contain the same number of leaves are sorted in decreasing order
 #' of minimum leaf number, so (2, 3) will occur before (1, 4).
 #'
-#' As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+#' As trees are plotted from "bottom up", the largest clades will "sink" to the
 #' bottom of a plotted tree.
-#'
-#TODO:
-#' `tree` must (presently) be binary ([#25](https://github.com/ms609/TreeTools/issues/25)).
 #'
 #' @param tree One or more trees of class `phylo`, optionally as a list
 #' or a `multiPhylo` object.
+#' @param how Character vector specifying sort method:
+#' `"Cladesize"` rotates each node such that the larger clade is first,
+#' thus appearing lower when plotted;
+#' `"TipLabels"` rotates nodes such that labels listed sooner in `order`
+#' are listed first, and thus plot lower.
+#' @param order Character vector listing tip labels in sequence they should
+#' appear on tree. Clades containing a taxon earlier in this list will be listed
+#' sooner and thus plot lower on a tree.  Taxa not listed in `order` will be
+#' treated as if they were last in the list.
 #'
 #' @return `SortTree()` returns tree in the format of `tree`, with each node
-#' in each tree sorted such that the larger clade is first.
+#' in each tree sorted 
 #'
-#' @seealso `Preorder()` also rearranges trees into a consistent shape, but
-#' based on the index of leaves rather than the size of subtrees.
+#' @seealso `Preorder()` also rearranges trees into a consistent shape,
+#' based on the index of leaves.
 #'
 #' @examples
 #' messyTree <- as.phylo(10, 6)
@@ -32,59 +38,85 @@
 #' plot(sorted)
 #' ape::nodelabels()
 #' ape::edgelabels()
-#'
-#' @family tree manipulation
-#'
+#' ape::tiplabels(adj = c(2, 1/3))
+#' 
+#' plot(SortTree(messyTree, how = "tip"))
 #' @template MRS
+#' @family tree manipulation
+#' @seealso [`sort.multiPhylo()`] sorts a list of trees stored as a `multiPhylo`
+#' object.
 #' @export
-SortTree <- function(tree) UseMethod('SortTree')
+SortTree <- function(tree, how = "cladesize", order = TipLabels(tree)) {
+  UseMethod("SortTree")
+}
 
 #' @export
 #' @rdname SortTree
-SortTree.phylo <- function(tree) {
+SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   edge <- tree[["edge"]]
+  weight <- tree[["edge.length"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   tipLabels <- tree[["tip.label"]]
-  tree.ntip <- length(tipLabels)
-  if (tree.ntip + tree.ntip - 2L != length(parent)) {
-    stop("`tree` must be binary.")
+  nTip <- length(tipLabels)
+  
+  descendants <- .ListDescendants(tree)
+  method <- pmatch(tolower(how), c("cladesize", "tiplabels"))
+  if (is.na(method)) {
+    warning("`how` must be an unambiguous contraction of ",
+              "\"cladesize\" or \"tiplabels\"")
+    method <- 1L
   }
-
-  descendants <- .ListDescendents(tree)
-  nDescendants <- vapply(descendants, length, integer(1))
-  MinKid <- function(tips) min(tipLabels[tips])
-  swaps <- vapply(tree.ntip + seq_len(tree[["Nnode"]]), function(node) {
-    kids <- child[parent == node]
-    descs <- nDescendants[kids]
-    if (all(descs == 1L)) {
-      order(tipLabels[kids], method = 'radix')[1] == 1
-    } else if (descs[1] == descs[2]) {
-      order(vapply(descendants[kids], MinKid, character(1)),
-            method = 'radix')[1] == 1
-    } else {
-      descs[1] < descs[2]
+    
+  
+  switch(method,
+    { # Clade Size
+      nDescendants <- lengths(descendants)
+      MinKid <- function(tips) min(tipLabels[tips])
+      for (node in nTip + seq_len(tree[["Nnode"]])) {
+        childEdges <- parent == node
+        kids <- child[childEdges]
+        newOrder <- order(nDescendants[kids],
+                          vapply(descendants[kids], MinKid, tipLabels[1]),
+                          method = "radix", decreasing = TRUE)
+        child[childEdges] <- kids[newOrder]
+        if (!is.null(weight)) {
+          weight[childEdges] <- weight[childEdges][newOrder]
+        }
+      }
+    }, { # Tip labels
+      #TODO would it be quicker to do this using RenumberTips() |> Preorder()?
+      # If not, perhaps we can accellerate preorder?
+      mass <- match(TipLabels(tree), order, nomatch = NTip(tree) + 1L)
+      MinKid <- function(tips) min(mass[tips])
+      for (node in nTip + seq_len(tree[["Nnode"]])) {
+        childEdges <- parent == node
+        kids <- child[childEdges]
+        newOrder <- order(vapply(descendants[kids], MinKid, integer(1)),
+                          method = "radix")
+        child[childEdges] <- kids[newOrder]
+        if (!is.null(weight)) {
+          weight[childEdges] <- weight[childEdges][newOrder]
+        }
+      }
     }
-  }, logical(1))
-  for (node in tree.ntip + rev(which(swaps))) {
-    childEdges <- parent == node
-    kids <- child[childEdges]
-    child[childEdges][2:1] <- kids
-  }
-  tree[["edge"]][, 1] <- parent
+  )
+  
+ 
   tree[["edge"]][, 2] <- child
-  attr(tree, 'order') <- NULL
+  tree[["edge.length"]] <- weight
+  attr(tree, "order") <- NULL
   Renumber(tree)
 }
 
-.ListDescendents <- function(tree) {
-  edge <- Postorder(tree[["edge"]])
+.ListDescendants <- function(tree) {
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   # Every node occurs once in `child` except the root
-  descendants <- vector('list', length(child) + 1L)
+  descendants <- vector("list", length(child) + 1L)
   descendants[seq_len(NTip(tree))] <- seq_len(NTip(tree))
-  for (i in seq_along(parent)) {
+  for (i in postorder_order(edge)) {
     descendants[[parent[i]]] <- c(descendants[[parent[i]]], 
                                   descendants[[child[i]]])
   }
@@ -95,11 +127,16 @@ SortTree.phylo <- function(tree) {
 
 #' @export
 #' @rdname SortTree
-SortTree.list <- function(tree) lapply(tree, SortTree)
+SortTree.list <- function(tree, how = "cladesize",
+                          order = TipLabels(tree[[1]])) {
+  lapply(tree, SortTree, how = how, order = order)
+}
 
 #' @export
 #' @rdname SortTree
-SortTree.multiPhylo <- function(tree) {
+SortTree.multiPhylo <- function(tree,
+                                how = "cladesize",
+                                order = TipLabels(tree[[1]])) {
   tree[] <- SortTree.list(tree)
   tree
 }

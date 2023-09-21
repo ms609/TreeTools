@@ -3,11 +3,13 @@
 
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
+#include <Rcpp/Lightest>
+#include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
 #define UNINIT -999
-#define INF INTX_MAX
+#define INF TreeTools::INTX_MAX
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
@@ -50,18 +52,18 @@ namespace TreeTools {
       Tlen_short,
       Tpos = 0,
       X_ROWS
-      ;
+    ;
     std::vector<int16>
       internal_label,
       leftmost_leaf,
       T,
       visited_nth
-      ;
+    ;
     std::bitset<CT_MAX_LEAVES + 1> Xswitch;
-    IntegerMatrix Xarr;
+    Rcpp::IntegerMatrix Xarr;
 
   public:
-    ClusterTable(List); // i.e. PREPARE(T)
+    ClusterTable(Rcpp::List); // i.e. PREPARE(T)
 
     inline bool is_leaf(const int16 *v) {
       return *v <= n_leaves;
@@ -154,8 +156,8 @@ namespace TreeTools {
       internal_label[*leaf] = *n_visited;
     }
 
-    IntegerVector X_decode() {
-      IntegerVector ret(N());
+    Rcpp::IntegerVector X_decode() {
+      Rcpp::IntegerVector ret(N());
       for (int16 i = n_leaves; i--; ) {
         ret(i) = DECODE(i + 1);
       }
@@ -163,19 +165,19 @@ namespace TreeTools {
     }
 
     inline int16 X(int16 row, int16 col) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       return Xarr(col, row - 1);
     }
 
     inline void setX(int16 row, int16 col, int16 value) {
-      assert(row > 0);
-      assert(row <= X_ROWS);
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
       Xarr(col, row - 1) = value;
     }
 
-    IntegerMatrix X_contents() {
-      IntegerMatrix ret(X_ROWS, 2);
+    Rcpp::IntegerMatrix X_contents() {
+      Rcpp::IntegerMatrix ret(X_ROWS, 2);
       for (int16 i = X_ROWS; i--; ) {
         ret(i, 0) = X(i + 1, L_COL);
         ret(i, 1) = X(i + 1, R_COL);
@@ -217,7 +219,8 @@ namespace TreeTools {
     }
 
     inline void SETSW(int16* L, int16* R) {
-      // If <L,R> is a cluster in X, this procedure sets the cluster switch for <L,R>.
+      // If <L,R> is a cluster in X, 
+      // this procedure sets the cluster switch for <L,R>.
       if (CLUSTONL(L, R)) {
         ++n_shared;
         SETSWX(L);
@@ -265,17 +268,17 @@ namespace TreeTools {
 
   };
 
-  ClusterTable::ClusterTable(List phylo) {
+  inline ClusterTable::ClusterTable(Rcpp::List phylo) {
 
-    const List rooted = TreeTools::root_on_node(phylo, 1);
-    const IntegerMatrix edge = rooted["edge"];
+    const Rcpp::List rooted = TreeTools::root_on_node(phylo, 1);
+    const Rcpp::IntegerMatrix edge = rooted["edge"];
 
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
-    CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > CT_MAX_LEAVES) {
-      throw std::length_error("Tree has too many leaves. "
-                                "Contact the 'TreeTools' maintainer.");
+    Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
+    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
+      Rcpp::stop("Tree has too many leaves. "
+                 "Contact the 'TreeTools' maintainer.");
     }
     n_leaves = leaf_labels.length(); // = N
     n_edge = edge.nrow();
@@ -319,7 +322,7 @@ namespace TreeTools {
 
     // BUILD Cluster table
     X_ROWS = n_leaves;
-    Xarr = IntegerMatrix(X_COLS, X_ROWS);
+    Xarr = Rcpp::IntegerMatrix(X_COLS, X_ROWS);
     // Xswitch = std::bitset<DAY_MAX_LEAVES>;
 
     // This procedure constructs in X descriptions of the clusters in a

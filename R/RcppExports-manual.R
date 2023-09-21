@@ -1,9 +1,17 @@
+keep_tip <- function(edge, keep) {
+  .Call(`_TreeTools_keep_tip`, edge, keep)
+}
+
 preorder_edges_and_nodes <- function(parent, child) {
   .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
 }
 
-postorder_edges <- function(edge, sizeSort) {
-  .Call(`_TreeTools_postorder_edges`, edge, sizeSort)
+preorder_weighted <- function(parent, child, edgeLen) {
+  .Call(`_TreeTools_preorder_weighted`, parent, child, edgeLen)
+}
+
+postorder_order <- function(edge) {
+  .Call(`_TreeTools_postorder_order`, edge)
 }
 
 root_binary <- function(edge, outgroup) {

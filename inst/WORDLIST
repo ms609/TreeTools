@@ -1,5 +1,6 @@
 mfrow
 edgelabels
+etc
 nodelabels
 png
 ABCD
@@ -25,17 +26,20 @@ Maddison
 Mersenne
 MorphoBank
 Morphy
+MrBayes
 NCL
 Newick
 OEIS
 ORCID
 Pectinate
 PhyDat
+PlotTools
 Postorder
 Preorder
 Pruningwise
 R's
 RStudio
+Rcpp
 RdMacros
 Rdpack
 Rohlf
@@ -48,6 +52,7 @@ Stemwardness
 TNT's
 TreeDist
 TreeDistData
+TreeNumber
 TreeSearch
 Tromp
 Wedderburn
@@ -73,6 +78,7 @@ lillo
 mbs
 memoization
 memoized
+multiPhylo
 org
 outgroup
 papillate
@@ -85,6 +91,7 @@ postorder
 preorder
 pruningwise
 raws
+readxl
 regraft
 sensu
 ss

@@ -26,14 +26,12 @@ outgroup taxa are sister to all remaining taxa, without modifying the
 ingroup topology.
 }
 \description{
+Deprecated. Use \code{RootTree()} instead.
+}
+\details{
 Given a tree or a list of taxa, \code{EnforceOutgroup()} rearranges the ingroup
 and outgroup taxa such that the two are sister taxa across the root, without
 changing the relationships within the ingroup or within the outgroup.
-}
-\examples{
-tree <- EnforceOutgroup(letters[1:9], letters[1:3])
-plot(tree)
-
 }
 \seealso{
 For a more robust implementation, see \code{\link[=RootTree]{RootTree()}}, which will
@@ -46,17 +44,21 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

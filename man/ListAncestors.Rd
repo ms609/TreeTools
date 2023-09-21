@@ -41,9 +41,9 @@ This will be true of trees listed in \link{Preorder}.
 }
 \section{Functions}{
 \itemize{
-\item \code{AllAncestors}: Alias for \code{ListAncestors(node = NULL)}.
-}}
+\item \code{AllAncestors()}: Alias for \code{ListAncestors(node = NULL)}.
 
+}}
 \examples{
 tree <- PectinateTree(5)
 edge <- tree[["edge"]]
@@ -82,7 +82,6 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 
 Other tree navigation: 
@@ -95,12 +94,10 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

@@ -17,7 +17,8 @@ CompatibleSplits(splits, splits2)
 
 \item{splits2}{A second \code{Splits} object.}
 
-\item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits} object.}
+\item{a, b}{\link[=raw]{Raw} representations of splits, from a row of a \code{Splits}
+object.}
 
 \item{rawA, rawB}{Raw representations of splits.}
 
@@ -47,6 +48,7 @@ CompatibleSplits(splits, splits2)
 
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{internal}

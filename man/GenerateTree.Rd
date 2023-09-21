@@ -42,7 +42,7 @@ basal position.  Otherwise, the tree will be rooted on \code{root}.
 
 \code{PectinateTree()} returns a pectinate (caterpillar) tree.
 
-\code{BalancedTree()} returns a balanced (symmetrical) tree.
+\code{BalancedTree()} returns a balanced (symmetrical) tree, in preorder.
 
 \code{StarTree()} returns a completely unresolved (star) tree.
 }
@@ -53,7 +53,7 @@ generate trees with the specified shapes and leaf labels.
 \examples{
 RandomTree(LETTERS[1:10])
 
-data('Lobo')
+data("Lobo")
 RandomTree(Lobo.phy)
 
 plot(PectinateTree(LETTERS[1:10]))
@@ -66,10 +66,11 @@ plot(StarTree(LETTERS[1:10]))
 Other tree generation functions: 
 \code{\link{ConstrainedNJ}()},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}

@@ -35,7 +35,7 @@ such that the indices in \code{tree[["edge"]][, 2]} correspond to the order of
 leaves given in \code{tipOrder}.
 }
 \examples{
-data('Lobo') # Loads the phyDat object Lobo.phy
+data("Lobo") # Loads the phyDat object Lobo.phy
 tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 
@@ -48,16 +48,20 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

@@ -44,16 +44,12 @@ tips;
 encountered when using \code{\link[ape:root]{ape::unroot}()} on trees in
 preorder.
 }
-\details{
-Note: Edge lengths are not (yet) supported.  Contact the maintainer or file
-a GitHub issue if you would find this useful.
-}
 \examples{
 tree <- PectinateTree(8)
 plot(tree)
 ape::nodelabels()
 
-plot(RootTree(tree, c('t6', 't7')))
+plot(RootTree(tree, c("t6", "t7")))
 
 plot(RootOnNode(tree, 12))
 plot(RootOnNode(tree, 2))
@@ -62,7 +58,6 @@ plot(RootOnNode(tree, 2))
 \seealso{
 \itemize{
 \item \code{\link[ape:root]{ape::root()}}
-\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
 
 Other tree manipulation: 
@@ -72,16 +67,20 @@ Other tree manipulation:
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

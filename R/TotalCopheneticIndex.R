@@ -6,7 +6,7 @@
 #'
 #' The Total Cophenetic Index is a measure of tree balance -- i.e. whether
 #' a (phylogenetic) tree comprises symmetric pairs of nodes, or has a pectinate
-#' 'caterpillar' shape.
+#' "caterpillar" shape.
 #' The index has a greater resolution power than Sackin's and Colless' indices,
 #' and can be applied to trees that are not perfectly resolved.
 #'
@@ -33,7 +33,7 @@
 #'
 #' @seealso
 #' `cophen.index()` in the package
-#' '[CollessLike](https://github.com/LuciaRotger/CollessLike)'
+#' [\pkg{CollessLike}](https://github.com/LuciaRotger/CollessLike)
 #' provides an alternative implementation of this index and its predecessors.
 #'
 #' @references \insertAllCited{}
@@ -48,9 +48,9 @@
 #'
 #'
 #' # Examples from Mir et al. (2013):
-#' tree12 <- ape::read.tree(text='(1, (2, (3, (4, 5))));')  #Fig. 4, tree 12
+#' tree12 <- ape::read.tree(text="(1, (2, (3, (4, 5))));")  #Fig. 4, tree 12
 #' TotalCopheneticIndex(tree12) # 10
-#' tree8  <- ape::read.tree(text='((1, 2, 3, 4), 5);')      #Fig. 4, tree 8
+#' tree8  <- ape::read.tree(text="((1, 2, 3, 4), 5);")      #Fig. 4, tree 8
 #' TotalCopheneticIndex(tree8)  # 6
 #' TCIContext(tree8)
 #' TCIContext(5L) # Context for a tree with 5 leaves.
@@ -60,17 +60,16 @@
 #' @encoding UTF-8
 #' @template MRS
 #' @export
-TotalCopheneticIndex <- function(x) UseMethod('TotalCopheneticIndex')
+TotalCopheneticIndex <- function(x) UseMethod("TotalCopheneticIndex")
 
 .Depth <- function(parent, child) {
-  root   <- min(parent)
   depth  <- integer(max(parent))
   for (i in seq_along(parent)) {
     depth[child[i]] <- depth[parent[i]] + 1L
   }
 
   # Return:
-  as.integer(depth)
+  depth
 }
 
 #' @importFrom fastmatch %fin%
@@ -101,14 +100,16 @@ TotalCopheneticIndex.phylo <- function(x) {
 }
 
 #' @export
-TotalCopheneticIndex.list <- function(x) vapply(x, TotalCopheneticIndex, integer(1))
+TotalCopheneticIndex.list <- function(x) {
+  vapply(x, TotalCopheneticIndex, integer(1))
+}
 
 #' @export
 TotalCopheneticIndex.multiPhylo <- TotalCopheneticIndex.list
 
 #' @rdname TotalCopheneticIndex
 #' @export
-TCIContext <- function(x) UseMethod('TCIContext')
+TCIContext <- function(x) UseMethod("TCIContext")
 
 #' @export
 TCIContext.phylo <- function(x) {

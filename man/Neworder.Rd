@@ -8,7 +8,7 @@
 \usage{
 NeworderPruningwise(nTip, nNode, parent, child, nEdge)
 
-NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
+NeworderPhylo(nTip, parent, child, nEdge, whichwise)
 }
 \arguments{
 \item{nTip, nNode, nEdge}{Integer specifying the number of tips, nodes
@@ -20,7 +20,7 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
-\item{`whichwise`}{Integer specifying whether to order edges (1)
+\item{whichwise}{Integer specifying whether to order edges (1)
 cladewise; or (2) in postorder.}
 }
 \value{
