@@ -4,6 +4,7 @@
 \alias{CladisticInfo}
 \alias{PhylogeneticInfo}
 \alias{CladisticInfo.phylo}
+\alias{CladisticInfo.Splits}
 \alias{CladisticInfo.list}
 \alias{CladisticInfo.multiPhylo}
 \alias{PhylogeneticInformation}
@@ -15,6 +16,8 @@ CladisticInfo(x)
 PhylogeneticInfo(x)
 
 \method{CladisticInfo}{phylo}(x)
+
+\method{CladisticInfo}{Splits}(x)
 
 \method{CladisticInfo}{list}(x)
 
@@ -30,33 +33,31 @@ CladisticInformation(x)
 \value{
 \code{CladisticInfo()} returns a numeric giving the cladistic information
 content of the input tree(s), in bits.
+If passed a \code{Splits} object, it returns the information content of each
+split in turn.
 }
 \description{
 \code{CladisticInfo()} calculates the cladistic (phylogenetic) information
 content of a phylogenetic object, \emph{sensu} Thorley \emph{et al.} (1998).
 }
 \details{
-The \acronym{CIC} is the logarithm of the number of binary trees that include the
-specified topology.  A base two logarithm gives an information content in
-bits.
+The \acronym{CIC} is the logarithm of the number of binary trees that
+include the specified topology.
+A base two logarithm gives an information content in bits.
 
-The \acronym{CIC} was originally proposed by Rohlf (1982), and formalised,
-with an information-theoretic justification, by Thorley \emph{et al}. (1998).
-Steel and Penny (2006) term the equivalent quantity 'phylogenetic information
-content' in the context of individual characters.
+The \acronym{CIC} was originally proposed by
+\insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
+with an information-theoretic justification, by
+\insertCite{Thorley1998;textual}{TreeTools}.
+\insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
+"phylogenetic information content" in the context of individual characters.
 
 The number of binary trees consistent with a cladogram provides a more
 satisfactory measure of the resolution of a tree than simply
-counting the number of edges resolved (Page, 1992).
+counting the number of edges resolved \insertCite{Page1992}{TreeTools}.
 }
 \references{
-\insertRef{Page1992}{TreeTools}
-
-\insertRef{Rohlf1982}{TreeTools}
-
-\insertRef{Steel2006}{TreeTools}
-
-\insertRef{Thorley1998}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other tree information functions: 
@@ -64,11 +65,13 @@ Other tree information functions:
 \code{\link{TreesMatchingTree}()}
 
 Other tree characterization functions: 
+\code{\link{Consensus}()},
 \code{\link{Stemwardness}},
 \code{\link{TotalCopheneticIndex}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree characterization functions}
 \concept{tree information functions}

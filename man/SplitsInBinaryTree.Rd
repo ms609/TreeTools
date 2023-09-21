@@ -2,24 +2,30 @@
 % Please edit documentation in R/tree_properties.R
 \name{SplitsInBinaryTree}
 \alias{SplitsInBinaryTree}
-\alias{SplitsInBinaryTree.phylo}
-\alias{SplitsInBinaryTree.Splits}
 \alias{SplitsInBinaryTree.list}
 \alias{SplitsInBinaryTree.multiPhylo}
 \alias{SplitsInBinaryTree.numeric}
+\alias{SplitsInBinaryTree.NULL}
+\alias{SplitsInBinaryTree.default}
+\alias{SplitsInBinaryTree.Splits}
+\alias{SplitsInBinaryTree.phylo}
 \title{Maximum splits in an \emph{n}-leaf tree}
 \usage{
 SplitsInBinaryTree(tree)
-
-\method{SplitsInBinaryTree}{phylo}(tree)
-
-\method{SplitsInBinaryTree}{Splits}(tree)
 
 \method{SplitsInBinaryTree}{list}(tree)
 
 \method{SplitsInBinaryTree}{multiPhylo}(tree)
 
 \method{SplitsInBinaryTree}{numeric}(tree)
+
+\method{SplitsInBinaryTree}{`NULL`}(tree)
+
+\method{SplitsInBinaryTree}{default}(tree)
+
+\method{SplitsInBinaryTree}{Splits}(tree)
+
+\method{SplitsInBinaryTree}{phylo}(tree)
 }
 \arguments{
 \item{tree}{An object of a supported format that represents a tree or
@@ -34,9 +40,9 @@ of unique non-trivial splits in a binary tree with \emph{n} leaves.
 splits in a fully-resolved (binary) tree with \emph{n} leaves.
 }
 \examples{
-tree <- TreeTools::BalancedTree(8)
+tree <- BalancedTree(8)
 SplitsInBinaryTree(tree)
-SplitsInBinaryTree(TreeTools::as.Splits(tree))
+SplitsInBinaryTree(as.Splits(tree))
 SplitsInBinaryTree(8)
 SplitsInBinaryTree(list(tree, tree))
 }
@@ -45,19 +51,25 @@ Other tree properties:
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
 \concept{tree properties}

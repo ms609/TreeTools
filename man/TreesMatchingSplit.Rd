@@ -6,11 +6,11 @@
 \alias{Log2TreesMatchingSplit}
 \title{Number of trees matching a bipartition split}
 \usage{
-TreesMatchingSplit(A, B)
+TreesMatchingSplit(A, B = A[2])
 
-LnTreesMatchingSplit(A, B)
+LnTreesMatchingSplit(A, B = A[2])
 
-Log2TreesMatchingSplit(A, B)
+Log2TreesMatchingSplit(A, B = A[2])
 }
 \arguments{
 \item{A, B}{Integer specifying the number of taxa in each partition.}
@@ -40,6 +40,7 @@ Other split information functions:
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

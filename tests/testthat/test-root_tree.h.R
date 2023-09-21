@@ -1,9 +1,28 @@
-context("root_tree.cpp")
+ApeRoot <- function(tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
 
-ApeRoot <- function (tree, root, rr = TRUE) ape::root(tree, root, resolve.root = rr)
+test_that("Memory leak not encountered", {
+  # Example from TreeDist::ClusterTable
+  tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");
+  tree2 <- ape::read.tree(text = "(A, (B, (D, (C, E))));");
+  # as.ClusterTable(tree1) calls:
+  expect_equal(tree1, root_on_node(tree1, 1))
 
-test_that('Binary trees are rootable', {
-  Test <- function (tree, root) {
+  # Check for memory leaks...
+  root_on_node(RenumberTips(Preorder(tree2), LETTERS[1:5]), 1)[]
+  root_on_node(RenumberTips(StarTree(LETTERS[5:1]), LETTERS[1:5]), 1)[]
+
+  expect_error(root_on_node(tree1, 0), "`outgroup` must be a positive integer")
+  expect_error(root_on_node(tree1, 999), "`outgroup` exceeds number of nodes")
+})
+
+test_that("Big trees don't fail", {
+  # 2^14 + 1 is too big for int16
+  expect_equal(root_on_node(PectinateTree(2^14 + 1), 1),
+               PectinateTree(2^14 + 1))
+})
+
+test_that("Binary trees are rootable", {
+  Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root]))$edge,
                  root_binary(tree$edge, root))
   }
@@ -13,8 +32,8 @@ test_that('Binary trees are rootable', {
   Test(PectinateTree(9), 7)
 })
 
-test_that('Polytomous trees are rootable', {
-  Test <- function (tree, root) {
+test_that("Polytomous trees are rootable", {
+  Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root])),
                  root_on_node(tree, root))
   }

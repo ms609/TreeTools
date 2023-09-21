@@ -9,34 +9,48 @@
 \alias{Cladewise.list}
 \alias{Cladewise.multiPhylo}
 \alias{Cladewise.matrix}
+\alias{Cladewise.NULL}
 \alias{ApePostorder}
 \alias{ApePostorder.phylo}
 \alias{ApePostorder.list}
+\alias{ApePostorder.NULL}
 \alias{ApePostorder.multiPhylo}
 \alias{Postorder}
 \alias{Postorder.phylo}
+\alias{Postorder.NULL}
 \alias{Postorder.list}
 \alias{Postorder.multiPhylo}
 \alias{Postorder.numeric}
-\alias{PostorderEdges}
+\alias{PostorderOrder}
+\alias{PostorderOrder.phylo}
+\alias{PostorderOrder.numeric}
 \alias{Pruningwise}
 \alias{Pruningwise.phylo}
 \alias{Pruningwise.list}
 \alias{Pruningwise.multiPhylo}
+\alias{Pruningwise.NULL}
 \alias{Preorder}
 \alias{Preorder.phylo}
 \alias{Preorder.numeric}
 \alias{Preorder.multiPhylo}
 \alias{Preorder.list}
-\title{Reorder trees}
+\alias{Preorder.NULL}
+\alias{TntOrder}
+\alias{TNTOrder}
+\alias{TntOrder.phylo}
+\alias{TntOrder.numeric}
+\alias{TntOrder.multiPhylo}
+\alias{TntOrder.list}
+\alias{TntOrder.NULL}
+\title{Reorder tree edges and nodes}
 \usage{
-RenumberTree(parent, child)
+RenumberTree(parent, child, weight)
 
 RenumberEdges(parent, child, ...)
 
 Cladewise(tree, nTip, edge)
 
-\method{Cladewise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Cladewise}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{Cladewise}{list}(tree, nTip, edge)
 
@@ -44,33 +58,45 @@ Cladewise(tree, nTip, edge)
 
 \method{Cladewise}{matrix}(tree, nTip = min(tree[, 1]) - 1L, edge)
 
+\method{Cladewise}{`NULL`}(tree, nTip = min(tree[, 1]) - 1L, edge)
+
 ApePostorder(tree, nTip, edge)
 
-\method{ApePostorder}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{ApePostorder}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{ApePostorder}{list}(tree, nTip, edge)
 
+\method{ApePostorder}{`NULL`}(tree, nTip, edge)
+
 \method{ApePostorder}{multiPhylo}(tree, nTip, edge)
 
-Postorder(tree, force = FALSE, renumber = FALSE)
+Postorder(tree, force = FALSE)
 
-\method{Postorder}{phylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{phylo}(tree, force = FALSE)
 
-\method{Postorder}{list}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{`NULL`}(tree, force = FALSE)
 
-\method{Postorder}{multiPhylo}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{list}(tree, force = FALSE)
 
-\method{Postorder}{numeric}(tree, force = FALSE, renumber = FALSE)
+\method{Postorder}{multiPhylo}(tree, force = FALSE)
 
-PostorderEdges(edge, renumber = FALSE)
+\method{Postorder}{numeric}(tree, force = FALSE)
+
+PostorderOrder(tree)
+
+\method{PostorderOrder}{phylo}(tree)
+
+\method{PostorderOrder}{numeric}(tree)
 
 Pruningwise(tree, nTip, edge)
 
-\method{Pruningwise}{phylo}(tree, nTip = length(tree$tip.label), edge = tree$edge)
+\method{Pruningwise}{phylo}(tree, nTip = NTip(tree), edge = tree[["edge"]])
 
 \method{Pruningwise}{list}(tree, nTip, edge)
 
 \method{Pruningwise}{multiPhylo}(tree, nTip, edge)
+
+\method{Pruningwise}{`NULL`}(tree, nTip, edge)
 
 Preorder(tree)
 
@@ -81,13 +107,32 @@ Preorder(tree)
 \method{Preorder}{multiPhylo}(tree)
 
 \method{Preorder}{list}(tree)
+
+\method{Preorder}{`NULL`}(tree)
+
+TntOrder(tree)
+
+TNTOrder(tree)
+
+\method{TntOrder}{phylo}(tree)
+
+\method{TntOrder}{numeric}(tree)
+
+\method{TntOrder}{multiPhylo}(tree)
+
+\method{TntOrder}{list}(tree)
+
+\method{TntOrder}{`NULL`}(tree)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
+
+\item{weight}{Optional vector specifying the weight of each edge,
+corresponding to the \code{edge.length} property of a \code{phylo} object.}
 
 \item{\dots}{Deprecated; included for compatibility with previous versions.}
 
@@ -96,13 +141,10 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
 \item{nTip}{Integer specifying number of tips (leaves).}
 
 \item{edge}{Two-column matrix listing the parent and child of each edge in a
-tree, corresponding to \code{tree$edge}. Optional in \code{Cladewise()}.}
+tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
-postorder, in order to ensure edges are ordered in the 'TreeTools' fashion.}
-
-\item{renumber}{Logical specifying whether to renumber nodes such that they
-increase in number away from the root.}
+postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
 }
 \value{
 \code{RenumberTree()} returns an edge matrix for a tree of class \code{phylo}
@@ -118,27 +160,34 @@ specified numbering scheme.
 \code{Postorder.numeric} accepts a numeric matrix corresponding to the
 \code{edge} entry of a tree of class \code{phylo}, and returns a two-column array
 corresponding to \code{tree}, with edges listed in postorder
+
+\code{PostorderOrder()} returns an integer vector. Visiting edges in this
+order will traverse the tree in postorder.
 }
 \description{
+Functions for systematically ordering the internal edges of trees.
+}
+\details{
 \code{Reorder()} is a wrapper for \code{ape:::.reorder_ape}.
 Calling this C function directly is approximately twice as fast as using
 \code{ape::\link[ape:reorder.phylo]{cladewise}} or
 \code{ape::\link[ape:reorder.phylo]{postorder}}
-}
-\details{
+
 \code{Cladewise()}, \code{ApePostorder()} and \code{Pruningwise()} are convenience
-functions to the corresponding functions in 'ape'. Single nodes may
-need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.  'ape' functions
-can cause crashes if nodes are numbered unconventionally -- sometimes
-encountered after using tree rearrangement functions, e.g. \code{phangorn::SPR}.
+functions to the corresponding functions in "ape".
+Single nodes may need to be collapsed using \link[ape:collapse.singles]{ape::collapse.singles} first.
+"ape" functions can cause crashes if nodes are numbered unconventionally --
+sometimes arising after using tree rearrangement functions,
+e.g. \code{phangorn::SPR()}.
 
-\code{Preorder()} is more robust: it supports polytomies, nodes can be numbered
-in any sequence, and edges can be listed in any order in the input tree.
+\code{Preorder()} is more robust: it supports polytomies, nodes may be numbered
+in any sequence, and edges may be listed in any order in the input tree.
 Its output is guaranteed to be identical for any tree of an equivalent
-topology, allowing unique trees to be detected by comparing sorted edge
-matrices alone.
+leaf labelling (see \code{RenumberTips()}) and topology,
+allowing unique trees to be detected by comparing sorted edge matrices alone.
 
-A tree in preorder is numbered starting from the root node.
+Nodes and edges in a preorder tree are numbered starting from the deepest
+node.
 Each node is numbered in the sequence in which it is encountered, and
 each edge is listed in the sequence in which it is visited.
 
@@ -156,34 +205,38 @@ sorted into preorder, until each edge has been visited.
 \code{preorder_edges_and_nodes()}; they do not perform the same checks on input
 as \code{Preorder()} and are intended for use where performance is at a premium.
 
-\code{Postorder()} is modified from the 'ape' function to return a specific
-order: edges are listed from the node that subtends the smallest
-subtree to the one that subtends the largest (i.e. the root node), with
-all of a node's descendant edges listed adjacently.  If a tree is already
-in postorder, it will not be rearranged unless \code{force = TRUE}.
+\code{Postorder()} numbers nodes as in \code{Preorder()}, and lists edges in
+descending order of parent node number, breaking ties by listing child
+nodes in increasing order.  If a tree is already in postorder, it will not
+be rearranged unless \code{force = TRUE}.
 
 Methods applied to numeric inputs do not check input for sanity, so should
 be used with caution: malformed input may cause undefined results, including
 crashing R.
 
 Trees with >8191 leaves require additional memory and are not handled
-at present.  If you need to process such large trees, please contact the
-maintainer for advice.
+by \code{Postorder()} at present.
+If you need to process such large trees, please contact the maintainer for
+advice.
 }
 \section{Functions}{
 \itemize{
-\item \code{Cladewise}: Reorder tree cladewise.
+\item \code{Cladewise()}: Reorder tree cladewise.
 
-\item \code{ApePostorder}: Reorder tree in Postorder using ape's \code{postorder}
+\item \code{ApePostorder()}: Reorder tree in Postorder using ape's \code{postorder}
 function, which is robust to unconventional node numbering.
 
-\item \code{Postorder}: Reorder tree in Postorder. Edge lengths are not retained.
+\item \code{Pruningwise()}: Reorder tree Pruningwise.
 
-\item \code{Pruningwise}: Reorder tree Pruningwise.
+\item \code{Preorder()}: Reorder tree in Preorder (special case of cladewise).
 
-\item \code{Preorder}: Reorder tree in Preorder (special case of cladewise).
+\item \code{TntOrder()}: Reorder tree in postorder, numbering internal nodes
+according to \href{https://stackoverflow.com/a/54296100/3438001}{TNT's rules},
+which number the root node as \code{nTip + 1}, then the remaining nodes in
+the sequence encountered when traversing the tree in postorder, starting from
+each tip in sequence.
+
 }}
-
 \seealso{
 Rotate each node into a consistent orientation with \code{\link[=SortTree]{SortTree()}}.
 
@@ -193,14 +246,18 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 
 Other C wrappers: 
 \code{\link{Neworder}}

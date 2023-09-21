@@ -3,244 +3,450 @@
 
 #include <cstdio>
 #include <cstdlib> /* for calloc */
-#include <Rcpp.h>
+#include <stdexcept> /* for errors */
+#include <Rcpp/Lightest>
+#include "assert.h" /* for ASSERT */
 #include "types.h"
-using namespace Rcpp;
+
+#define MIN(a, b) ((a) < (b)) ? (a) : (b);
+#define PARENT(i) edge[(i)]
+#define CHILD(i) edge[(i) + n_edge]
 
 namespace TreeTools {
-  inline intx smallest_descendant(const intx *node,
-                                  intx *smallest_desc,
-                                  const intx *n_children,
-                                  const intx *children_of,
-                                  const intx *n_edge) {
-    if (!smallest_desc[*node]) {
-      smallest_desc[*node] =
-        smallest_descendant(&children_of[*node * *n_edge + 0], smallest_desc,
-                            n_children, children_of, n_edge);
-      for (intx j = 1; j != n_children[*node]; j++) {
-        const intx this_child =
-          smallest_descendant(&children_of[*node * *n_edge + j], smallest_desc,
-                              n_children, children_of, n_edge);
-        smallest_desc[*node] = smallest_desc[*node] < this_child
-          ? smallest_desc[*node] : this_child;
-      }
-    }
-    return smallest_desc[*node];
-  }
-
-  inline void swap(intx *a, intx *b) {
-    const intx temp = *a;
+  inline void swap(int32 *a, int32 *b) {
+    const int32 temp = *a;
     *a = *b;
     *b = temp;
   }
 
-  /* Requires unsigned integers. */
-  /* If we chose signed, we'd have to impose a limit on n_children, which
-   * would exclude star trees */
-  inline void quicksort_by_smallest(intx *to_sort, const intx *sort_by,
-                                    const intx left, const intx right) {
+  inline void quicksort_by_smallest(int32 *left, const int32 *right,
+                                    const int32 *sort_by) {
     if (left >= right) return;
 
-    const intx pivot = sort_by[to_sort[right]];
-    intx centre = left;
-    for (intx i = left; i <= right; i++) {
-      if (sort_by[to_sort[i]] <= pivot) {
-        swap(&to_sort[centre], &to_sort[i]);
-        centre++;
+    const int32 pivot = sort_by[*right];
+    int32 *centre = left;
+    for (int32 *i = left; i <= right; i++) {
+      if (sort_by[*i] <= pivot) {
+        swap(centre, i);
+        ++centre;
       }
     }
-    quicksort_by_smallest(to_sort, sort_by, left, centre - 2);
-    quicksort_by_smallest(to_sort, sort_by, centre, right);
+    quicksort_by_smallest(left, centre - 2, sort_by);
+    quicksort_by_smallest(centre, right, sort_by);
   }
 
-inline void add_child_edges(const intx node, const intx node_label,
-                            const intx *children_of, const intx *n_children,
-                            IntegerMatrix final_edges,
-                            intx *next_edge, intx *next_label,
-                            const intx *n_tip, const intx *n_edge) {
+  inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
+                                         int32* sort_by) {
+    ASSERT(arr_len > 0);
+    switch (arr_len) {
+    // case 0: return;
+    case 1: return;
+    case 2:
+      if (sort_by[arr[0]] > sort_by[arr[1]]) {
+        swap(&arr[0], &arr[1]);
+      }
+      return;
+    }
 
-    for (intx child = 0; child != n_children[node]; child++) {
+    for (int32 i = 1; i != arr_len; ++i) {
+      const int32
+        tmp = arr[i],
+        key = sort_by[tmp]
+      ;
+      int32 j = i;
+      while (j && sort_by[arr[j - 1]] > key) {
+        arr[j] = arr[j - 1];
+        --j;
+      }
+      arr[j] = tmp;
+    }
+  }
+
+  inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
+                                             int32* sort_by) {
+    ASSERT(arr_len > 0);
+    for (int32 i = 1; i != arr_len; ++i) {
+      const int32
+        tmp = arr[i],
+        key = sort_by[tmp]
+      ;
+      int32 j = i;
+      while (j && sort_by[arr[j - 1]] > key) {
+        arr[j] = arr[j - 1];
+        --j;
+      }
+      arr[j] = tmp;
+    }
+  }
+
+  // Modified from: https://www.geeksforgeeks.org/timsort/
+  inline void merge(int32* arr, int32 l, int32 m, int32 r,
+                    int32* sort_by) {
+
+    const int32
+      left_len = m - l + 1,
+      right_len = r - m
+    ;
+
+    auto
+      left = new int32[left_len],
+      right = new int32[right_len]
+    ;
+    for (int32 i = left_len; i--; ) {
+      left[i] = arr[l + i];
+    }
+    for (int32 i = right_len; i--; ) {
+      right[i] = arr[m + 1 + i];
+    }
+
+    int32
+      i = 0,
+      j = 0,
+      k = l
+    ;
+
+    while (i != left_len && j != right_len) {
+      if (sort_by[left[i]] <= sort_by[right[j]]) {
+        arr[k] = left[i];
+        i++;
+      } else {
+        arr[k] = right[j];
+        j++;
+      }
+      k++;
+    }
+
+    // Copy remaining elements of left, if any
+    while (i != left_len) {
+      arr[k] = left[i];
+      ++k;
+      ++i;
+    }
+    delete[] left;
+
+    // Copy remaining element of right, if any
+    while (j != right_len) {
+      arr[k] = right[j];
+      ++k;
+      ++j;
+    }
+    delete[] right;
+  }
+
+  inline void timsort_by_smallest(int32* arr, int32 arr_len, int32* sort_by) {
+    int32 run_length = arr_len;
+    while (run_length > 64) ++run_length /= 2;
+
+    // Sort individual subarrays of size run_length
+    for (int32 i = 0; i < arr_len; i += run_length) {
+      tim_insertion_sort_by_smallest(arr + i,
+                                 i + run_length > arr_len ?
+                                   arr_len % run_length : run_length,
+                                 sort_by);
+    }
+
+    // Merge sorted subarrays
+    for (int32 size = run_length; size < arr_len; size *= 2) {
+      for (int32 left = 0; left < arr_len; left += 2 * size) {
+        int32 mid = left + size - 1;
+        int32 right = MIN(left + (2 * size) - 1, arr_len - 1);
+        if (mid < right) merge(arr, left, mid, right, sort_by);
+      }
+    }
+  }
+
+  inline void add_child_edges(const int32 node, const int32 node_label,
+                            int32 const* const* children_of,
+                            const int32 *n_children,
+                            Rcpp::IntegerMatrix& final_edges,
+                            int32 *next_edge, int32 *next_label) {
+
+    for (int32 child = 0; child != n_children[node]; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
-      intx this_child = children_of[node * *n_edge + child];
+      const int32 this_child = children_of[node][child];
 
-      if (this_child <= *n_tip) {
+      if (n_children[this_child]) {
 
-        final_edges(*next_edge, 1) = this_child;
-        ++(*next_edge);
+        const int32 child_label = *next_label;
+        *next_label += 1;
+
+        final_edges(*next_edge, 1) = child_label;
+        *next_edge += 1;
+
+        add_child_edges(this_child, child_label, children_of, n_children,
+                        final_edges, next_edge, next_label);
 
       } else {
 
-        const intx child_label = (*next_label)++;
+        final_edges(*next_edge, 1) = this_child;
+        *next_edge += 1;
+
+      }
+    }
+  }
+
+  inline void add_child_edges(const int32 node, const int32 node_label,
+                            int32 const* const* children_of,
+                            const int32 *n_children,
+                            const double *wt_above,
+                            Rcpp::IntegerMatrix& final_edges,
+                            Rcpp::NumericVector& final_weight,
+                            int32 *next_edge, int32 *next_label) {
+
+    for (int32 child = 0; child != n_children[node]; ++child) {
+
+      final_edges(*next_edge, 0) = node_label;
+      
+      const int32 this_child = children_of[node][child];
+      final_weight[*next_edge] = wt_above[this_child];
+      
+      if (n_children[this_child]) {
+
+        const int32 child_label = *next_label;
+        *next_label += 1;
+
         final_edges(*next_edge, 1) = child_label;
-        ++(*next_edge);
+        *next_edge += 1;
 
         add_child_edges(this_child, child_label, children_of, n_children,
-                        final_edges, next_edge, next_label, n_tip, n_edge);
+                        wt_above,
+                        final_edges, final_weight, next_edge, next_label);
+
+      } else {
+
+        final_edges(*next_edge, 1) = this_child;
+        *next_edge += 1;
 
       }
     }
   }
 
   // [[Rcpp::export]]
-  inline IntegerMatrix preorder_edges_and_nodes(const IntegerVector parent,
-                                                const IntegerVector child)
+  inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
+      const Rcpp::IntegerVector parent,
+      const Rcpp::IntegerVector child)
   {
-    const intx n_edge = parent.length(),
-               node_limit = n_edge + 2;
-
-    if (2L * (2L + child.length()) > INTX_CONSERVATIVE_MAX) {
-      throw std::length_error("Too many edges: Contact maintainer for support.");
+    if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
+      Rcpp::stop("Too many edges in tree: "                        // #nocov
+                 "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
+
+    const int32
+      n_edge = parent.length(),
+      node_limit = n_edge + 2
+    ;
+
     if (child.length() != n_edge) {
-      throw std::invalid_argument("Length of parent and child must match");
+      Rcpp::stop("Length of parent and child must match");
     }
 
-    intx next_edge = 0,
-         root_node = n_edge + n_edge, /* Initialize with too-big value */
-         n_tip = 0;
+    int32
+      next_edge = 0,
+      root_node = n_edge * 2, /* Initialize with too-big value */
+      n_tip = 0
+    ;
 
-    intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * smallest_desc = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
-    if (!children_of) {
-      throw std::length_error("Could not allocate memory in "                     // # nocov
-                              "preorder_edges_and_nodes. Try 64-bit R?");         // # nocov
-    }
+    int32 * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
+          * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
+          * smallest_desc = (int32*) std::calloc(node_limit, sizeof(int32));
+    int32 ** children_of = new int32*[node_limit];
 
-    for (intx i = n_edge; i--; ) {
+    for (int32 i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
-      children_of[parent[i] * n_edge + n_children[parent[i]]] = child[i];
-      (n_children[parent[i]])++;
+      n_children[parent[i]] += 1;
     }
 
-    for (intx i = 1; i != node_limit; i++) {
-      if (!parent_of[i]) root_node = i;
-      if (!n_children[i]) ++n_tip;
+    for (int32 i = 1; i != node_limit; i++) {
+      if (!parent_of[i]) {
+        root_node = i;
+      }
+      if (!n_children[i]) {
+        ++n_tip;
+      } else {
+        children_of[i] = new int32[n_children[i]];
+      }
+    }
+
+    for (int32 tip = 1; tip != n_tip + 1; ++tip) {
+      smallest_desc[tip] = tip;
+      int32 parent = parent_of[tip];
+      while (!smallest_desc[parent]) {
+        smallest_desc[parent] = tip;
+        parent = parent_of[parent];
+      }
     }
     std::free(parent_of);
 
-    for (intx tip = 1; tip != n_tip + 1; tip++) {
-      smallest_desc[tip] = tip;
+    int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
+    for (int32 i = n_edge; i--; ) {
+      children_of[parent[i]][found_children[parent[i]]] = child[i];
+      found_children[parent[i]] += 1;
     }
+    std::free(found_children);
 
-    for (intx node = n_tip + 1; node != node_limit; node++) {
-      smallest_descendant(&node, smallest_desc, n_children, children_of, &n_edge);
-      quicksort_by_smallest(&children_of[node * n_edge], smallest_desc,
-                            0, n_children[node] - 1);
+    for (int32 node = n_tip + 1; node != node_limit; node++) {
+      insertion_sort_by_smallest(children_of[node], n_children[node],
+                                 smallest_desc);
     }
     std::free(smallest_desc);
 
-    intx next_label = n_tip + 2;
-    IntegerMatrix ret(n_edge, 2);
-    add_child_edges(root_node, n_tip + 1,
-                    children_of, n_children, ret,
-                    &next_edge, &next_label, &n_tip, &n_edge);
+    int32 next_label = n_tip + 2;
+    Rcpp::IntegerMatrix ret(n_edge, 2);
+    add_child_edges(root_node, n_tip + 1, children_of, n_children, ret,
+                    &next_edge, &next_label);
 
     std::free(n_children);
-    std::free(children_of);
 
-    return (ret);
+    for (int32 i = n_tip + 1; i != node_limit; i++) {
+      delete[] children_of[i];
+    }
+    delete[] children_of;
+
+    return ret;
   }
 
-inline intx get_subtree_size(intx node, intx *subtree_size, intx *n_children,
-                       intx *children_of, intx n_edge) {
+// [[Rcpp::export]]
+  inline Rcpp::List preorder_weighted(
+      const Rcpp::IntegerVector parent,
+      const Rcpp::IntegerVector child,
+      const Rcpp::DoubleVector weight)
+  {
+    if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
+      Rcpp::stop("Too many edges in tree: "                        // #nocov
+                 "Contact 'TreeTools' maintainer for support.");   // #nocov
+    }
+    
+    const int32
+      n_edge = parent.length(),
+      node_limit = n_edge + 2
+    ;
+    
+    if (child.length() != n_edge) {
+      Rcpp::stop("Length of parent and child must match");
+    }
+    if (weight.length() != n_edge) {
+      Rcpp::stop("weights must match number of edges");
+    }
+    
+    int32
+      next_edge = 0,
+      root_node = n_edge * 2, /* Initialize with too-big value */
+      n_tip = 0
+    ;
+    
+    int32 
+      * parent_of = (int32*) std::calloc(node_limit, sizeof(int32)),
+      * n_children = (int32*) std::calloc(node_limit, sizeof(int32)),
+      * smallest_desc = (int32*) std::calloc(node_limit, sizeof(int32))
+    ;
+    double * wt_above = (double*) std::calloc(node_limit, sizeof(double));
+    int32 ** children_of = new int32*[node_limit];
+      
+      for (int32 i = n_edge; i--; ) {
+        wt_above[child[i]] = weight[i];
+        parent_of[child[i]] = parent[i];
+        n_children[parent[i]] += 1;
+      }
+      
+      for (int32 i = 1; i != node_limit; i++) {
+        if (!parent_of[i]) {
+          root_node = i;
+        }
+        if (!n_children[i]) {
+          ++n_tip;
+        }
+        children_of[i] = new int32[n_children[i]];
+      }
+      
+      for (int32 tip = 1; tip != n_tip + 1; ++tip) {
+        smallest_desc[tip] = tip;
+        int32 parent = parent_of[tip];
+        while (!smallest_desc[parent]) {
+          smallest_desc[parent] = tip;
+          parent = parent_of[parent];
+        }
+      }
+      std::free(parent_of);
+      
+      int32 * found_children = (int32*) std::calloc(node_limit, sizeof(int32));
+      for (int32 i = n_edge; i--; ) {
+        children_of[parent[i]][found_children[parent[i]]] = child[i];
+        found_children[parent[i]] += 1;
+      }
+      std::free(found_children);
+      
+      for (int32 node = n_tip + 1; node != node_limit; node++) {
+        insertion_sort_by_smallest(children_of[node], n_children[node],
+                                   smallest_desc);
+      }
+      std::free(smallest_desc);
+      
+      int32 next_label = n_tip + 2;
+      Rcpp::IntegerMatrix ret(n_edge, 2);
+      Rcpp::NumericVector ret_wt(n_edge);
+      add_child_edges(root_node, n_tip + 1, children_of, n_children, wt_above,
+                      ret, ret_wt, &next_edge, &next_label);
+      
+      std::free(wt_above);
+      std::free(n_children);
+      
+      for (int32 i = 1; i != node_limit; i++) {
+        delete[] children_of[i];
+      }
+      delete[] children_of;
+      
+      return Rcpp::List::create(ret, ret_wt);
+  }
+
+  inline int32 get_subtree_size(int32 node, int32 *subtree_size,
+                                int32 *n_children, int32 **children_of,
+                                int32 n_edge) {
     if (!subtree_size[node]) {
-      for (intx i = 0; i != n_children[node]; i++) {
-        subtree_size[node] += get_subtree_size(children_of[node * n_edge + i],
+      for (int32 i = n_children[node]; i--; ) {
+        subtree_size[node] += get_subtree_size(children_of[node][i],
                                 subtree_size, n_children, children_of, n_edge);
       }
     }
     return subtree_size[node];
   }
 
-  // "Arkorder" is my term for a specific subset of postorder in which
-  // edges are ordered such that all occurrences of each parent node
-  // occur together.
-  // Subtract one from $edge before passing.
   // [[Rcpp::export]]
-  inline IntegerMatrix postorder_edges(const IntegerMatrix edge)
+  inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
-    if (1L + edge.nrow() > INTX_CONSERVATIVE_MAX) {
-      throw std::length_error("Too many edges in tree for postorder_edges: "
-                              "Contact maintainer for advice");
-      // In theory we could use INTX_MAX, which is larger than 16 bits on linux,
-      // or we could change intx to 32 bit.  The former has caused a seg fault
-      // with invalid permissions on linux builds, possibly related to callocing
-      // children_of?
-      // Rather than attempt to debug now, I've chosen to place a hard limit on
-      // edge.nrow for the time being.  --MS, 2020-05-26
-    }
-
-    const intx
+    const int32
       n_edge = edge.nrow(),
       node_limit = n_edge + 1;
-
-    intx
-      root_node = 0,
-      n_tip = 0;
-
-    // 0.9999 leaves room for memory overhead: seems in practice to avoid
-    // attempting a doomed call to calloc.
-    if (long(n_edge * node_limit * sizeof(intx)) > 0.9999L * INTPTR_MAX) {
-      throw std::length_error("Tree too large for postorder_edges. "              // # nocov
-                              "Try running 64-bit R?");                           // # nocov
+    
+    
+    if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
+      Rcpp::stop("Tree too large for postorder_order. "            // # nocov
+                              "Try running 64-bit R?");                         // # nocov
     }
-
-    intx * parent_of = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * n_children = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * subtree_size = (intx*) std::calloc(node_limit, sizeof(intx)),
-         * children_of = (intx*) std::calloc(n_edge * node_limit, sizeof(intx));
-    if (!children_of) {
-      throw std::length_error("Could not allocate memory in postorder_edges.");
+    
+    int32 * missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
+    for (int32 i = n_edge; i--; ) {
+      ++missing_children[PARENT(i)];
     }
-
-    for (intx i = 0; i != n_edge; i++) {
-      parent_of[edge(i, 1)] = edge(i, 0);
-      children_of[edge(i, 0) * n_edge + n_children[edge(i, 0)]] = edge(i, 1);
-      (n_children[edge(i, 0)])++;
-    }
-
-    for (intx i = 0; i != node_limit; i++) {
-      if (parent_of[i] == 0) root_node = i;
-      if (n_children[i] == 0) ++n_tip;
-    }
-    std::free(parent_of);
-
-    const intx n_node = n_edge - n_tip + 1;
-
-    for (intx tip = 0; tip != n_tip; tip++) {
-      subtree_size[tip] = 1;
-    }
-    get_subtree_size(root_node, subtree_size, n_children, children_of, n_edge);
-
-    for (intx node = n_tip; node != node_limit; node++) {
-      quicksort_by_smallest(&children_of[node * n_edge], subtree_size,
-                            0, n_children[node] - 1);
-    }
-    intx * node_order = (intx*) malloc(n_node * sizeof(intx));
-    for (intx i = 0; i != n_node; i++) {
-      node_order[i] = i + n_tip;
-    }
-    quicksort_by_smallest(node_order, subtree_size, 0, n_node - 1);
-    std::free(subtree_size);
-
-    IntegerMatrix ret(n_edge, 2);
-    intx this_edge = 0;
-    for (intx i = 0; i != n_node; i++) {
-      const intx this_parent = node_order[i];
-      for (intx j = 0; j != n_children[this_parent]; j++) {
-        ret(this_edge, 0) = this_parent + 1;
-        ret(this_edge, 1) = children_of[this_parent * n_edge + j] + 1;
-        ++this_edge;
+    
+    int32 found = 0;
+    bool * matched = (bool*) std::calloc(node_limit, sizeof(bool));
+    Rcpp::IntegerVector ret(n_edge);
+    do {
+      for (int32 i = n_edge; i--; ) {
+        if (!matched[i]) {
+          if (!missing_children[CHILD(i)]) {
+            matched[i] = true;
+            --missing_children[PARENT(i)];
+            ret[found++] = i + 1;
+          }
+        }
       }
-    }
-    std::free(n_children);
-    std::free(children_of);
-    std::free(node_order);
-
-    return (ret);
+    } while (found != n_edge);
+    std::free(missing_children);
+    std::free(matched);
+    
+    return ret;
   }
 }
 

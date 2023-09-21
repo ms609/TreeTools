@@ -11,10 +11,10 @@ AllAncestors(parent, child)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
 \item{node}{Integer giving the index of the node or tip whose ancestors are
 required, or \code{NULL} to return ancestors of all nodes.}
@@ -41,12 +41,12 @@ This will be true of trees listed in \link{Preorder}.
 }
 \section{Functions}{
 \itemize{
-\item \code{AllAncestors}: Alias for \code{ListAncestors(node = NULL)}.
-}}
+\item \code{AllAncestors()}: Alias for \code{ListAncestors(node = NULL)}.
 
+}}
 \examples{
 tree <- PectinateTree(5)
-edge   <- tree$edge
+edge <- tree[["edge"]]
 
 # Identify desired node with:
 plot(tree)
@@ -82,7 +82,6 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 
 Other tree navigation: 
@@ -95,12 +94,10 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
-
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

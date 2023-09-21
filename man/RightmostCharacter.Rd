@@ -22,7 +22,14 @@ character of a string.
 RightmostCharacter("Hello, World!")
 
 }
-\author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\seealso{
+Other string parsing functions: 
+\code{\link{EndSentence}()},
+\code{\link{MorphoBankDecode}()},
+\code{\link{Unquote}()}
 }
-\keyword{internal}
+\author{
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+}
+\concept{string parsing functions}

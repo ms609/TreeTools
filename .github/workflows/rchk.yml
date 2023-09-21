@@ -1,0 +1,49 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '.github/workflows/rchk.yml'
+      - 'src/**'
+      - 'inst/include/**'
+      - 'memcheck/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
+  pull_request:
+    paths:
+      - '.github/workflows/rchk.yml'
+      - 'src/**'
+      - 'inst/include/**'
+      - 'memcheck/**'
+      - 'tests/testthat/**.R'
+      - 'vignettes/**.Rmd'
+
+name: rchk
+
+jobs:  
+  rchk:
+    runs-on: ubuntu-latest
+    container:
+      image: rhub/ubuntu-rchk
+      options: --user=root
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Set up rchk
+      uses: r-lib/actions/run-rchk@v2
+      with:
+        setup-only: true
+        
+    - uses: randy3k/gh-actions/r-install-deps@main
+      with:
+        cache-version: rchk-1
+        
+    - name: Install package
+      run: |
+        remotes::install_local()
+      shell: Rscript {0}
+      
+    - uses: r-lib/actions/run-rchk@v2
+      with:
+        run-only: true

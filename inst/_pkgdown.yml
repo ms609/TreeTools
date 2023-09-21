@@ -2,7 +2,7 @@ url: https://ms609.github.io/TreeTools
 
 authors:
   Martin R. Smith:
-    href: https://community.dur.ac.uk/martin.smith/
+    href: https://smithlabdurham.github.io/
 
 development:
   mode: auto
@@ -12,30 +12,30 @@ reference:
     desc: >
       Functions for editing phylogenetic trees.
     contents:
-      - has_concept('tree manipulation')
+      - has_concept("tree manipulation")
 
   - title: "Tree navigation"
     desc: >
       Functions to navigate phylogenetic trees.
     contents:
-      - has_concept('tree navigation')
+      - has_concept("tree navigation")
 
   - title: "Tree creation"
     desc: >
       Functions to generate phylogenetic trees.
     contents:
-      - has_concept('tree generation functions')
-      - print.TreeNumber
+      - has_concept("tree generation functions")
+      - has_concept("'TreeNumber' utilities")
 
   - title: "Tree properties"
     desc: >
       Functions describing properties of trees.
     contents:
       - has_concept("tree characterization functions")
-      - NTip
+      - has_concept("tree properties")
+      - has_concept("consensus tree functions")
       - NPartitions
-      - TipLabels
-      - TreeIsRooted
+      - PairwiseDistances
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
@@ -51,10 +51,11 @@ reference:
       - ExtractTaxa
       - NewickTree
       - ReadCharacters
-      - ReadTntTree
       - StringToPhyDat
       - TNTText2Tree
       - WriteTntCharacters
+      - has_concept("string parsing functions")
+      - has_concept("tree import functions")
 
   - title: "Split manipulation"
     desc: "Functions that manipulate bipartition splits."
@@ -92,11 +93,21 @@ reference:
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
+      - as.multiPhylo
+      - ClusterTable
+      - ClusterTable-methods
+      - Hamming
       - MSTEdges
       - RightmostCharacter
       - SampleOne
       - sapply64
+      - sort.multiPhylo
       - UnshiftTree
+      
+  - title: "Developer functions"
+    desc: "Efficient functions without input checks, for developers"
+    contents: 
+      - has_concept("C++ wrappers")
 
 template:
   params:
@@ -104,4 +115,4 @@ template:
     docsearch:
       api_key: 6078115fdeb422f23fe2f8c478c70150
       index_name: treetools
-    ganalytics: UA-156666971-2
+    ganalytics: G-93LNK4JKY4

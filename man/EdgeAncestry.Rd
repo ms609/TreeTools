@@ -11,10 +11,10 @@ EdgeAncestry(edge, parent, child, stopAt = (parent == min(parent)))
 should be returned.}
 
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
 \item{stopAt}{Integer or logical vector specifying the edge(s) at which to
 terminate the search; defaults to the edges with the smallest parent,
@@ -26,7 +26,7 @@ which will be the root edges if nodes are numbered \link{Cladewise} or in
 in turn is a descendant of the specified edge.
 }
 \description{
-Quickly identify edges that are 'ancestral' to a particular edge in a tree.
+Quickly identify edges that are "ancestral" to a particular edge in a tree.
 }
 \examples{
 tree <- PectinateTree(6)
@@ -49,10 +49,10 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

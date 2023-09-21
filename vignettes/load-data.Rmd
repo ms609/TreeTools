@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 bibliography: ../inst/REFERENCES.bib
 csl: ../inst/apa-old-doi-prefix.csl
 vignette: >
-  %\VignetteIndexEntry{Load phylogenetic data}
+  %\VignetteIndexEntry{Loading phylogenetic data into R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,9 +22,10 @@ Then you are ready to load raw data:
 ## From an Excel spreadsheet
 
 If your data is in an Excel spreadsheet, one way to load it into R is using the
-`xlsx` package.  First you'll have to install it:
+'[readxl](https://readxl.tidyverse.org/)' package.
+First you'll have to install it:
 ```r
-install.packages('xlsx') # You only need to do this once
+install.packages("readxl") # You only need to do this once
 ```
 Then you should prepare your Excel spreadsheet such that each row corresponds to
 a taxon, and each column to a character.
@@ -33,24 +34,25 @@ Then you can read the data from the Excel file by telling R which sheet, rows
 and columns contain your data:
 
 ```r
-library('xlsx')
-raw_data <- as.matrix(read.xlsx(filename, 
-                      sheetIndex = 1, # Loads sheet number 1 from the excel file
-                      rowIndex = 2:21, # Extracts rows 2 to 21
-                      colIndex = 2:26, # Extracts columns B to Z
-                      header = FALSE
-                      ))
+library("readxl")
+raw_data <- as.matrix(read_excel(
+  filename,
+  sheet = 1,           # Loads sheet number 1 from the excel file
+  range = "B1:AA21",   # Extracts columns B to AA, rows 1 to 21
+  # Note that the first row is interpreted as column (character) names
+  col_types = "text"   # Read all columns as character strings
+))
 
-# In this example, the names of taxa are in column 1
-taxon_names <- read.xlsx(filename, sheetIndex = 1, rowIndex = 2:21, 
-                         colIndex = 1, as.data.frame=FALSE)
-                         
+# Read row (taxon) names from column A
+# Again, the first cell will be interpreted as a column name
+taxon_names <- unlist(read_excel(filename, sheet = 1, range = "A1:A21"))
+
 rownames(raw_data) <- taxon_names
 ```
 
 ## From a Nexus file
 
-`TreeTools` contains an inbuilt Nexus parser:
+TreeTools contains an inbuilt Nexus parser:
 
 ```r
 raw_data <- ReadCharacters(filename)
@@ -116,15 +118,15 @@ an unexpected dataset format -- if they don't work on your dataset, please
 [let me know](https://github.com/ms609/TreeTools/issues/new?title=data+to+PhyDat+conversion+issue&body=Please%20describe+the+problem+here:&labels=bug).  
 
 
-Failing that, you can enlist the help of the
-'phangorn' package, which was installed when you installed 'TreeTools':
+Failing that, you can enlist the help of the 'phangorn' package:
 
 ```r
+install.packages('phangorn')
 library('phangorn')
-my_data <- phyDat(raw_data, type='USER', levels=c(0:9, '-'))
+my_data <- phyDat(raw_data, type = "USER", levels = c(0:9, "-"))
 ```
 
-`type='USER'` tells the parser to expect morphological data.
+`type="USER"` tells the parser to expect morphological data.
 
 The `levels` parameter simply lists all the states that any character might 
 take.  `0:9` includes all the integer digits from 0 to 9.  If you have
@@ -141,21 +143,21 @@ For more details, see the 'phangorn-specials' vignette in the phangorn package,
    index > package vignettes.
 
 ```{r Contrast matrix}
-contrast.matrix <- matrix(data=c(
+contrast.matrix <- matrix(data = c(
 # 0 1 -  # Each column corresponds to a character-state
-  1,0,0, # Each row corresponds to a token, here 0, denoting the 
-         # character-state set {0} 
-  0,1,0, # 1 | {1}
-  0,0,1, # - | {-}
-  1,1,0, # A | {01}
-  1,1,0, # + | {01}
-  1,1,1  # ? | {01-}
-), ncol=3, # ncol should correspond to the number of columns in the matrix
-byrow=TRUE); 
+  1, 0, 0, # Each row corresponds to a token, here 0, denoting the 
+           # character-state set {0} 
+  0, 1, 0, # 1 | {1}
+  0, 0, 1, # - | {-}
+  1, 1, 0, # A | {01}
+  1, 1, 0, # + | {01}
+  1, 1, 1  # ? | {01-}
+), ncol = 3, # ncol corresponds to the number of columns in the matrix
+byrow = TRUE)
 dimnames(contrast.matrix) <- list(
-  c(0, 1, '-', 'A', '+', '?'), # A list of the tokens corresponding to each row
+  c(0, 1, "-", "A", "+", "?"), # A list of the tokens corresponding to each row
                                # in the contrast matrix
-  c(0, 1, '-') # A list of the character-states corresponding to the columns 
+  c(0, 1, "-") # A list of the character-states corresponding to the columns 
                # in the contrast matrix
 )
 
@@ -164,7 +166,7 @@ contrast.matrix
 
 If you need to use a contrast matrix, convert the data using 
 ```r
-my.phyDat <- phyDat(my.data, type='USER', contrast=contrast.matrix)
+my.phyDat <- phyDat(my.data, type = "USER", contrast = contrast.matrix)
 ```
 
 
@@ -175,7 +177,9 @@ You might want to:
 - [Load a phylogenetic tree](load-trees.html) into R.
 
 - Conduct parsimony search using Brazeau, Guillerme & Smith's [-@Brazeau2018]
-  [approach to inapplicable data](https://ms609.github.io/TreeSearch/articles/inapplicable.html),   or using [Profile parsimony](https://ms609.github.io/TreeSearch/articles/profile.html)
-  [@Faith2001].
+  [approach to inapplicable data](
+   https://ms609.github.io/TreeSearch/articles/tree-search.html),
+  or using [Profile parsimony](
+   https://ms609.github.io/TreeSearch/articles/profile.html) [@Faith2001].
 
 # References

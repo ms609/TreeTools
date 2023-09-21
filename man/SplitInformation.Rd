@@ -5,14 +5,12 @@
 \alias{MultiSplitInformation}
 \title{Phylogenetic information content of splitting leaves into two partitions}
 \usage{
-SplitInformation(A, B)
+SplitInformation(A, B = A[1])
 
 MultiSplitInformation(partitionSizes)
 }
 \arguments{
-\item{A}{Integer specifying the number of taxa in each partition.}
-
-\item{B}{Integer specifying the number of taxa in each partition.}
+\item{A, B}{Integer specifying the number of taxa in each partition.}
 
 \item{partitionSizes}{Integer vector specifying the number of taxa in each
 partition of a multi-partition split.}
@@ -24,10 +22,10 @@ into partitions of the specified sizes.
 }
 \description{
 Calculate the phylogenetic information content (\emph{sensu}
-Steel & Penny, 2006) of a split, which reflects the probability that a
-uniformly selected random tree will contain the split:
-a split that is consistent with a smaller number of trees will have a higher
-information content.
+\insertCite{Steel2006;nobrackets}{TreeTools}) of a split, which
+reflects the probability that a uniformly selected random tree will contain#
+the split: a split that is consistent with a smaller number of trees will
+have a higher information content.
 }
 \details{
 \code{SplitInformation()} addresses bipartition splits, which correspond to
@@ -65,7 +63,7 @@ information than multiple uneven splits -- see the examples section below.
 
 Summing the information content of all splits within a tree, perhaps using
 the '\href{https://ms609.github.io/TreeDist/}{TreeDist}' function
-\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{SplitwiseInfo()}},
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{SplitwiseInfo()}},
 arguably gives a more instructive picture of its resolution than simply
 counting the number of splits that are present -- though with the caveat
 that splits within a tree are not independent of one another, so some
@@ -77,7 +75,7 @@ perhaps using the '\href{https://ms609.github.io/Quartet/}{Quartet}' function
 \href{https://ms609.github.io/Quartet/reference/QuartetState.html}{\code{QuartetStates()}},
 or to use a different take on the information contained within a split, the
 clustering information: see the 'TreeDist' function
-\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{ClusteringInfo()}}
 for details.
 }
 \examples{
@@ -99,16 +97,14 @@ MultiSplitInformation(rep(2, 4))
 
 }
 \references{
-\itemize{
-\item \insertRef{Steel2006}{TreeTools}
-}
+\insertAllCited{}
 }
 \seealso{
 Sum the phylogenetic information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html}{\code{TreeDist::SplitwiseInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{TreeDist::SplitwiseInfo()}}
 
 Sum the clustering information content of splits within a tree:
-\href{https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html}{\code{TreeDist::ClusteringInfo()}}
+\href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{TreeDist::ClusteringInfo()}}
 
 Other split information functions: 
 \code{\link{CharacterInformation}()},
@@ -117,6 +113,7 @@ Other split information functions:
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

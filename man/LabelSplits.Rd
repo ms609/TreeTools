@@ -4,14 +4,15 @@
 \alias{LabelSplits}
 \title{Label splits}
 \usage{
-LabelSplits(tree, labels, unit = "", ...)
+LabelSplits(tree, labels = NULL, unit = "", ...)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{labels}{Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see
-\code{\link[=as.Splits]{as.Splits()}} for details.}
+\code{\link[=as.Splits]{as.Splits()}} for details.
+If \code{NULL}, each splits will be labelled with its associated node.}
 
 \item{unit}{Character specifying units of \code{labels}, if desired. Include a
 leading space if necessary.}
@@ -36,8 +37,8 @@ If the position of the root is significant, add a tip at the root using
 tree <- BalancedTree(LETTERS[1:5])
 splits <- as.Splits(tree)
 plot(tree)
-LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
-LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+LabelSplits(tree, as.character(splits), frame = "none", pos = 3L)
+LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
             pos = 1L)
 
 # An example forest of 100 trees, some identical
@@ -47,14 +48,39 @@ forest <- as.phylo(c(1, rep(10, 79), rep(100, 15), rep(1000, 5)), nTip = 9)
 cons <- ape::consensus(forest, p = 0.8)
 plot(cons)
 
+# Calculate split frequencies
 splitFreqs <- SplitFrequency(cons, forest)
-LabelSplits(cons, splitFreqs, unit = '\%',
+
+# Optionally, colour edges by corresponding frequency.
+# Note that not all edges are associated with a unique split
+# (and two root edges may be associated with one split - not handled here)
+edgeSupport <- rep(1, nrow(cons$edge)) # Initialize trivial splits to 1
+childNode <- cons$edge[, 2]
+edgeSupport[match(names(splitFreqs), childNode)] <- splitFreqs / 100
+
+plot(cons, edge.col = SupportColour(edgeSupport), edge.width = 3)
+
+# Annotate nodes by frequency 
+LabelSplits(cons, splitFreqs, unit = "\%",
             col = SupportColor(splitFreqs / 100),
-            frame = 'none', pos = 3L)
+            frame = "none", pos = 3L)
 
 }
 \seealso{
 Calculate split support: \code{\link[=SplitFrequency]{SplitFrequency()}}
 
 Colour labels according to value: \code{\link[=SupportColour]{SupportColour()}}
+
+Other Splits operations: 
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
+\code{\link{TipLabels}()},
+\code{\link{TipsInSplits}()},
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
+\concept{Splits operations}

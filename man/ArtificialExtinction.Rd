@@ -13,6 +13,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -22,6 +23,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -31,6 +33,7 @@ ArtificialExtinction(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 
@@ -40,6 +43,7 @@ ArtEx(
   template,
   replaceAmbiguous = "ambig",
   replaceCoded = "original",
+  replaceAll = TRUE,
   sampleFrom = NULL
 )
 }
@@ -63,6 +67,9 @@ probability;
 to their frequency.
 }}
 
+\item{replaceAll}{Logical: if \code{TRUE}, replace all tokens in a subject; if
+\code{FALSE}, leave any ambiguous tokens (\verb{?}) ambiguous.}
+
 \item{sampleFrom}{Vector identifying a subset of characters from which to
 sample replacement tokens.
 If \code{NULL}, replacement tokens will be sampled from the initial states of
@@ -73,11 +80,13 @@ A dataset with the same class as \code{dataset} in which entries that
 are ambiguous in \code{template} are made ambiguous in \code{subject}.
 }
 \description{
-Remove tokens that do not occur in a fossil 'template' taxon from a living
+Remove tokens that do not occur in a fossil "template" taxon from a living
 taxon, to simulate the process of fossilization in removing data from
 a phylogenetic dataset.
 }
 \details{
+Further details are provided in \insertCite{Asher2020;textual}{TreeTools}.
+
 Note: this simple implementation does not account for character contingency,
 e.g. characters whose absence imposes inapplicable or absent tokens on
 dependent characters.
@@ -85,11 +94,15 @@ dependent characters.
 \examples{
 set.seed(1)
 dataset <- matrix(c(sample(0:2, 4 * 8, TRUE),
-                    '0', '0', rep('?', 6)), nrow = 5,
-                    dimnames = list(c(LETTERS[1:4], 'FOSSIL'),
-                                    paste('char', 1:8)), byrow = TRUE)
-artex <- ArtificialExtinction(dataset, c('A', 'C'), 'FOSSIL')
+                    "0", "0", rep("?", 6)), nrow = 5,
+                    dimnames = list(c(LETTERS[1:4], "FOSSIL"),
+                                    paste("char", 1:8)), byrow = TRUE)
+artex <- ArtificialExtinction(dataset, c("A", "C"), "FOSSIL")
+}
+\references{
+\insertAllCited{}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

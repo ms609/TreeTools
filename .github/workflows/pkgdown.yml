@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'DESCRIPTION'
+      - '**pkgdown.yml'
+      - '*.md'
+      - 'inst/CITATION'
+      - 'inst/*.bib'
+      - 'man/**.Rd'
+      - 'vignettes/**.Rmd'
+  release:
+    types: [published]
+  workflow_dispatch:
+
+name: pkgdown
+
+jobs:
+  pkgdown:
+    runs-on: ubuntu-20.04
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: ms609/actions/pkgdown@main

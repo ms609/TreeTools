@@ -34,10 +34,14 @@ TrivialSplits(efgh)
 summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 }
 \seealso{
+\code{\link[=KeepTip]{KeepTip()}} is a less flexible but faster equivalent.
+
 Other split manipulation functions: 
+\code{\link{DropTip}()},
 \code{\link{TrivialSplits}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split manipulation functions}

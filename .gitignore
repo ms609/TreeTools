@@ -22,4 +22,6 @@ vignettes/*_files
 vignettes/*_cache*
 *.Rproj*
 .Rproj.user
+!TreeTools.Rproj
 *.site
+*.bak

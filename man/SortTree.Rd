@@ -2,31 +2,51 @@
 % Please edit documentation in R/tree_display.R
 \name{SortTree}
 \alias{SortTree}
+\alias{SortTree.phylo}
+\alias{SortTree.list}
+\alias{SortTree.multiPhylo}
 \title{Sort tree}
 \usage{
-SortTree(tree)
+SortTree(tree, how = "cladesize", order = TipLabels(tree))
+
+\method{SortTree}{phylo}(tree, how = "cladesize", order = TipLabels(tree))
+
+\method{SortTree}{list}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
+
+\method{SortTree}{multiPhylo}(tree, how = "cladesize", order = TipLabels(tree[[1]]))
 }
 \arguments{
-\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
+\item{tree}{One or more trees of class \code{phylo}, optionally as a list
+or a \code{multiPhylo} object.}
+
+\item{how}{Character vector specifying sort method:
+\code{"Cladesize"} rotates each node such that the larger clade is first,
+thus appearing lower when plotted;
+\code{"TipLabels"} rotates nodes such that labels listed sooner in \code{order}
+are listed first, and thus plot lower.}
+
+\item{order}{Character vector listing tip labels in sequence they should
+appear on tree. Clades containing a taxon earlier in this list will be listed
+sooner and thus plot lower on a tree.  Taxa not listed in \code{order} will be
+treated as if they were last in the list.}
 }
 \value{
-\code{SortTree()} returns a tree of class \code{phylo}, with each node sorted
-such that the larger clade is first.
+\code{SortTree()} returns tree in the format of \code{tree}, with each node
+in each tree sorted
 }
 \description{
 \code{SortTree()} sorts each node into a consistent order, so that node rotation
 does not obscure similarities between similar trees.
 }
 \details{
-At each node, clades will be listed in \code{tree$edge} in decreasing size order.
+At each node, clades will be listed in \code{tree[["edge"]]} in decreasing size
+order.
 
 Clades that contain the same number of leaves are sorted in decreasing order
 of minimum leaf number, so (2, 3) will occur before (1, 4).
 
-As trees are plotted from 'bottom up', the largest clades will 'sink' to the
+As trees are plotted from "bottom up", the largest clades will "sink" to the
 bottom of a plotted tree.
-
-\code{tree} must (presently) be binary (\href{https://github.com/ms609/TreeTools/issues/25}{#25}).
 }
 \examples{
 messyTree <- as.phylo(10, 6)
@@ -36,11 +56,16 @@ sorted <- SortTree(messyTree)
 plot(sorted)
 ape::nodelabels()
 ape::edgelabels()
+ape::tiplabels(adj = c(2, 1/3))
 
+plot(SortTree(messyTree, how = "tip"))
 }
 \seealso{
-\code{Preorder()} also rearranges trees into a consistent shape, but
-based on the index of leaves rather than the size of subtrees.
+\code{Preorder()} also rearranges trees into a consistent shape,
+based on the index of leaves.
+
+\code{\link[=sort.multiPhylo]{sort.multiPhylo()}} sorts a list of trees stored as a \code{multiPhylo}
+object.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},
@@ -48,16 +73,21 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

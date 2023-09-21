@@ -24,15 +24,15 @@ number of unrooted bifurcating trees consistent with the specified split.
 }
 \description{
 Calculates the number of unrooted bifurcating trees consistent with the
-specified multi-partition split, using the formula of Carter \emph{et al}. (1990).
+specified multi-partition split, using theorem two of
+\insertCite{Carter1990;textual}{TreeTools}.
 }
 \examples{
- UnrootedTreesMatchingSplit(c(3, 5))
- UnrootedTreesMatchingSplit(3, 2, 1, 2)
-
+UnrootedTreesMatchingSplit(c(3, 5))
+UnrootedTreesMatchingSplit(3, 2, 1, 2)
 }
 \references{
-See Theorem 2 in \insertRef{Carter1990}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other split information functions: 
@@ -42,6 +42,7 @@ Other split information functions:
 \code{\link{TreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

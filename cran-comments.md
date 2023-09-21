@@ -1,21 +1,23 @@
 ## Test environments
 
-* Local Windows 10 installation, R 4.0.2
-* Ubuntu 16.04.6 LTS, R 3.6.0, release and devel, via 
-  [Travis CI](https://travis-ci.org/ms609/TreeTools)
-* Mac OS X 10.13.6, R release, via Travis
-* R-hub, with `check_for_cran()` and `check_win_devel()`
+* Local PC:
+  - Windows 10, R 4.3.0 pre-release
+
+* [GitHub Actions](https://github.com/ms609/TreeTools/actions)
+  - Ubuntu 20.04
+    - R 3.6.3
+    - R release (tests, examples & vignettes run with valgrind)
+    - R devel
+  - Mac OS X 10.15.7, R release
+  - Microsoft Windows Server 2019 10.0.17763, R release
+  
+* R-hub, with `rhub::check_for_cran()` and `devtools::check_win_devel()`
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs or NOTEs.
 
 ## Downstream dependencies
 
-Downstream dependencies R CMD CHECKed locally: No changes to worse in
-
-√ Quartet 1.1.0                          -- E: 0     | W: 0     | N: 0
-√ TBRDist 1.0.1                          -- E: 0     | W: 0     | N: 1
-√ TreeDist 1.1.1                         -- E: 0     | W: 0     | N: 2
-√ TreeSearch 0.4.3                       -- E: 0     | W: 0     | N: 0
-
+Reverse dependencies have been checked using "revdepcheck" on
+[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/revdepcheck.yml).

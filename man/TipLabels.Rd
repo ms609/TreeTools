@@ -4,14 +4,22 @@
 \alias{TipLabels}
 \alias{TipLabels.matrix}
 \alias{TipLabels.phylo}
+\alias{TipLabels.default}
+\alias{TipLabels.phyDat}
+\alias{TipLabels.MixedBase}
 \alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
+\alias{AllTipLabels}
+\alias{AllTipLabels.list}
+\alias{AllTipLabels.multiPhylo}
+\alias{AllTipLabels.phylo}
+\alias{AllTipLabels.Splits}
+\alias{AllTipLabels.TreeNumber}
+\alias{AllTipLabels.matrix}
 \alias{TipLabels.multiPhylo}
 \alias{TipLabels.character}
 \alias{TipLabels.numeric}
-\alias{TipLabels.phyDat}
-\alias{TipLabels.default}
 \title{Extract tip labels}
 \usage{
 TipLabels(x, single = TRUE)
@@ -20,11 +28,31 @@ TipLabels(x, single = TRUE)
 
 \method{TipLabels}{phylo}(x, single = TRUE)
 
+\method{TipLabels}{default}(x, single = TRUE)
+
+\method{TipLabels}{phyDat}(x, single = TRUE)
+
+\method{TipLabels}{MixedBase}(x, single = TRUE)
+
 \method{TipLabels}{TreeNumber}(x, single = TRUE)
 
 \method{TipLabels}{Splits}(x, single = TRUE)
 
 \method{TipLabels}{list}(x, single = FALSE)
+
+AllTipLabels(x)
+
+\method{AllTipLabels}{list}(x)
+
+\method{AllTipLabels}{multiPhylo}(x)
+
+\method{AllTipLabels}{phylo}(x)
+
+\method{AllTipLabels}{Splits}(x)
+
+\method{AllTipLabels}{TreeNumber}(x)
+
+\method{AllTipLabels}{matrix}(x)
 
 \method{TipLabels}{multiPhylo}(x, single = FALSE)
 
@@ -49,14 +77,17 @@ appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
 }
 \description{
 \code{TipLabels()} extracts labels from an object: for example, names of taxa in
-a phylogenetic tree or data matrix.
+a phylogenetic tree or data matrix.  \code{AllTipLabels()} extracts all labels,
+where entries of a list of trees may pertain to different taxa.
 }
 \examples{
 TipLabels(BalancedTree(letters[5:1]))
 TipLabels(5)
 
-data('Lobo')
+data("Lobo")
 head(TipLabels(Lobo.phy))
+
+AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 
 }
 \seealso{
@@ -64,19 +95,25 @@ Other tree properties:
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
 \concept{tree properties}

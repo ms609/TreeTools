@@ -32,22 +32,22 @@ Collapses specified nodes or edges on a phylogenetic tree, resulting in
 polytomies.
 }
 \examples{
-set.seed(1)
-oldPar <- par(mfrow=c(3, 1), mar=rep(0.5, 4))
+oldPar <- par(mfrow = c(3, 1), mar = rep(0.5, 4))
 
-tree <- ape::rtree(7)
+tree <- as.phylo(898, 7)
+tree$edge.length <- 11:22
 plot(tree)
 nodelabels()
 edgelabels()
 edgelabels(round(tree$edge.length, 2),
-           cex = 0.6, frame = 'n', adj = c(1, -1))
+           cex = 0.6, frame = "n", adj = c(1, -1))
 
 # Collapse by node number
 newTree <- CollapseNode(tree, c(12, 13))
 plot(newTree)
 nodelabels()
 edgelabels(round(newTree$edge.length, 2),
-           cex = 0.6, frame = 'n', adj = c(1, -1))
+           cex = 0.6, frame = "n", adj = c(1, -1))
 
 # Collapse by edge number
 newTree <- CollapseEdge(tree, c(2, 4))
@@ -62,15 +62,19 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
 Martin R. Smith

@@ -13,8 +13,8 @@
 #'
 #' @examples
 #' data("brewer", package="TreeTools")
-#' plot(0, type='n', xlim=c(1, 12), ylim=c(12, 1),
-#'      xlab = 'Colour', ylab='Palette')
+#' plot(0, type="n", xlim=c(1, 12), ylim=c(12, 1),
+#'      xlab = "Colour", ylab="Palette")
 #' for (i in seq_along(brewer)) text(seq_len(i), i, col=brewer[[i]])
 #'
 #' @keywords datasets
@@ -70,13 +70,18 @@
 
 #' Data from Zhang et al. 2016
 #'
-#' Phylogenetic data from Zhang _et al._ (2016) in raw (`Lobo.data`) and
-#' `phyDat` (`Lobo.phy`) formats.
+#' Phylogenetic data from \insertCite{Zhang2016;textual}{TreeTools} in raw
+#' (`Lobo.data`) and `phyDat` (`Lobo.phy`) formats.
 #'
 #' @template LoboMods
 #'
-#' @source
-#'  \insertRef{Zhang2016}{TreeTools}
+#' @examples
+#' data("Lobo", package = "TreeTools")
+#' Lobo.data
+#' Lobo.phy
+#' @source \insertCite{Zhang2016;textual}{TreeTools}
+#' 
+#' @references \insertAllCited{}
 #'
 #' @keywords datasets
 "Lobo.data"

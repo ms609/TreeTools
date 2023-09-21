@@ -2,14 +2,18 @@
 % Please edit documentation in R/tree_properties.R
 \name{NTip}
 \alias{NTip}
+\alias{NTip.default}
 \alias{NTip.Splits}
 \alias{NTip.list}
 \alias{NTip.phylo}
 \alias{NTip.multiPhylo}
+\alias{NTip.phyDat}
 \alias{NTip.matrix}
 \title{Number of leaves in a phylogenetic tree}
 \usage{
 NTip(phy)
+
+\method{NTip}{default}(phy)
 
 \method{NTip}{Splits}(phy)
 
@@ -18,6 +22,8 @@ NTip(phy)
 \method{NTip}{phylo}(phy)
 
 \method{NTip}{multiPhylo}(phy)
+
+\method{NTip}{phyDat}(phy)
 
 \method{NTip}{matrix}(phy)
 }
@@ -37,17 +43,22 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NSplits}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \concept{Splits operations}
 \concept{tree properties}

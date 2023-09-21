@@ -9,7 +9,7 @@
 \alias{RootNodeDistance.numeric}
 \alias{RootNodeDistance.character}
 \alias{RootNodeDist}
-\title{'Stemwardness' of a leaf}
+\title{"Stemwardness" of a leaf}
 \usage{
 SisterSize(tree, tip)
 
@@ -39,18 +39,19 @@ in the clade that is sister to \code{tip}.
 }
 \description{
 Functions to describe the position of a leaf relative to the root.
-'Stemmier' leaves ought to exhibit a smaller root-node distance and a
-larger sister size,
+"Stemmier" leaves ought to exhibit a smaller root-node distance and a
+larger sister size.
 }
 \details{
 \code{RootNodeDistance()} calculates the number of nodes between the chosen leaf
 and the root of \code{tree}.
 This is an unsatisfactory measure, as the range of possible
-distances is a function of the shape of the tree.
+distances is a function of the shape of the tree
+\insertCite{Asher2020}{TreeTools}.
 As an example, leaf \emph{X1} in the tree \verb{(.,(.,(.,(.,(X1,(a,b))))))}
 falls outside the clade \emph{(a, b)} and has a root-node distance of 4,
 whereas leaf \emph{X2} in the tree \verb{(.,((.,(.,.)),(b,(X2,a))))}
-falls within the clade \emph{(a, b)}, so should be considered more 'crownwards',
+falls within the clade \emph{(a, b)}, so should be considered more "crownwards",
 yet has a smaller root-node distance (3).
 
 \insertFig{Stemwardness.png}{TreeTools}{
@@ -65,31 +66,33 @@ ape::edgelabels(1, 12)
 }
 
 \code{SisterSize()} measures the number of leaves in the clade that is sister to
-the chosen leaf.  In the examples above, \emph{X1} has a sister size of 2 leaves,
-whereas \emph{X2}, which is 'more crownwards', has a smaller sister size (1 leaf),
-as desired.
+the chosen leaf, as proposed by \insertCite{Asher2020;textual}{TreeTools}.
+In the examples above, \emph{X1} has a sister size of 2 leaves, whereas \emph{X2},
+which is "more crownwards", has a smaller sister size (1 leaf), as desired.
 }
 \examples{
 bal8 <- BalancedTree(8)
 pec8 <- PectinateTree(8)
 
 SisterSize(bal8, 3)
-SisterSize(pec8, 't3')
-SisterSize(RootTree(pec8, 't3'), 't3')
+SisterSize(pec8, "t3")
+SisterSize(RootTree(pec8, "t3"), "t3")
 
 RootNodeDist(bal8, 3)
-RootNodeDist(pec8, 't3')
-RootNodeDist(RootTree(pec8, 't3'), 't3')
+RootNodeDist(pec8, "t3")
+RootNodeDist(RootTree(pec8, "t3"), "t3")
 }
 \references{
-\insertRef{Asher2020}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},
+\code{\link{Consensus}()},
 \code{\link{TotalCopheneticIndex}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree characterization functions}

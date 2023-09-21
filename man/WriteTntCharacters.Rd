@@ -10,6 +10,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -18,6 +19,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -26,6 +28,7 @@ WriteTntCharacters(
   dataset,
   filepath = NULL,
   comment = "Dataset written by `TreeTools::WriteTntCharacters()`",
+  types = NULL,
   pre = "",
   post = ""
 )
@@ -37,6 +40,9 @@ WriteTntCharacters(
 
 \item{comment}{Optional comment with which to entitle matrix.}
 
+\item{types}{Optional list specifying where different data types begin.
+\code{c(num = 1, dna = 10)} sets characters 1..9 as numeric, 10..end as DNA.}
+
 \item{pre, post}{Character vector listing text to print before and after the
 character matrix.  Specify \verb{pre = 'piwe=;} if the matrix is to be analysed
 using extended implied weighting (\verb{xpiwe=}).}
@@ -45,19 +51,20 @@ using extended implied weighting (\verb{xpiwe=}).}
 Write morphological character matrix to TNT file
 }
 \examples{
-data('Lobo', package = 'TreeTools')
+data("Lobo", package = "TreeTools")
 
 WriteTntCharacters(Lobo.phy)
 
 # Read with extended implied weighting
-WriteTntCharacters(Lobo.phy, pre = 'piwe=10;', post = 'xpiwe=;')
+WriteTntCharacters(Lobo.phy, pre = "piwe=10;", post = "xpiwe=;")
 
 # Write to a file with:
-# WriteTntCharacters(Lobo.phy, 'example_file.tnt')
+# WriteTntCharacters(Lobo.phy, "example_file.tnt")
 }
 \seealso{
 \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

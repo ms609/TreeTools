@@ -21,14 +21,14 @@ longest such route will be returned.}
 each external and internal node in \code{x}.
 }
 \description{
-\code{NodeDepth()} evaluates how 'deep' each node is within a tree.
+\code{NodeDepth()} evaluates how "deep" each node is within a tree.
 }
 \details{
 For a rooted tree, the depth of a node is the minimum (if \code{shortest = TRUE})
 or maximum  (\code{shortest = FALSE}) number of edges that must be traversed,
 moving away from the root, to reach a leaf.
 
-Unrooted trees are treated as if a root node occurs in the 'middle' of the
+Unrooted trees are treated as if a root node occurs in the "middle" of the
 tree, meaning the position that will minimise the maximum node depth.
 }
 \examples{
@@ -64,10 +64,10 @@ Other tree navigation:
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

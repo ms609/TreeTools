@@ -14,7 +14,7 @@ EdgeDistances(tree)
 of edges that must be traversed to travel from each numbered edge to each
 other.
 The two edges straddling the root of a rooted tree
-are treated as a single edge.  Add a 'root' tip using \code{\link[=AddTip]{AddTip()}} if the
+are treated as a single edge.  Add a "root" tip using \code{\link[=AddTip]{AddTip()}} if the
 position of the root is significant.
 }
 \description{
@@ -41,10 +41,10 @@ Other tree navigation:
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},
-\code{\link{NonDuplicateRoot}()},
 \code{\link{RootNode}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree navigation}

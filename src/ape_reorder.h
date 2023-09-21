@@ -5,23 +5,22 @@ static R_NativePrimitiveArgType ape_node_depth_t[] = {
   INTSXP, REALSXP, INTSXP
 };
 extern void ape_node_depth(int *ntip, int *nnode, int *e1, int *e2,
-		int *nedge, double *xx, int *method)
+		int *nedge, double *xx, int *method) {
 /* method == 1: the node depths are proportional to the number of tips
    method == 2: the node depths are evenly spaced */
-{
   int i;
 
   /* First set the coordinates for all tips */
-  for (i = 0; i < *ntip; i++) xx[i] = 1;
+  for (i = 0; i != *ntip; i++) xx[i] = 1;
 
   /* Then compute recursively for the nodes; we assume `xx' has */
   /* been initialized with 0's which is true if it has been */
   /* created in R (the tree must be in pruningwise order) */
   if (*method == 1) {
-	for (i = 0; i < *nedge; i++)
+	for (i = 0; i != *nedge; i++)
     xx[e1[i] - 1] = xx[e1[i] - 1] + xx[e2[i] - 1];
   } else { /* *method == 2 */
-    for (i = 0; i < *nedge; i++) {
+    for (i = 0; i != *nedge; i++) {
     /* if a value > 0 has already been assigned to the ancestor
        node of this edge, check that the descendant node is not
        at the same level or more */
@@ -34,30 +33,31 @@ extern void ape_node_depth(int *ntip, int *nnode, int *e1, int *e2,
 
 void tabulate
 (const int *x, const int *n, const int *nbin, int *ans) {
-    int i, tmp;
-    for (i=0; i < *nbin; i++) ans[i]=0L;
-    for (i=0; i < *n; i++) {
-        tmp = x[i];
-        if( (tmp>0) & (tmp<(*nbin+1L)) )
-        ans[tmp-1L] ++;
-    }
+  int i, tmp;
+  for (i = 0; i != *nbin; i++) ans[i] = 0L;
+  for (i = 0; i != *n; i++) {
+    tmp = x[i];
+    if( (tmp > 0) & (tmp < (*nbin + 1L)) )
+    ans[tmp - 1L]++;
+  }
 }
 
 /* reorder_phylo.c       2012-09-03 */
 /* Copyright 2008-2012 Emmanuel Paradis */
 
-/* This file is part of the R-package `ape'. */
+/* This file is [modified from] part of the R-package `ape'. */
 /* See the file ../COPYING for licensing issues. */
 
 static int iii;
 
-void ape_foo_reorder(int node, int n_tips, int n_nodes, int *parent, int *child, int *neworder, int *L, int *pos)
-{
-	int i = node - n_tips - 1, j, k;
+void ape_foo_reorder(int node, int n_tips, int n_nodes, int *parent, int *child,
+                     int *neworder, int *L, int *pos) {
+	const int i = node - n_tips - 1;
+  int j, k;
 
 /* 'i' is the C index corresponding to 'node' */
 
-	for (j = 0; j < pos[i]; j++) {
+	for (j = 0; j != pos[i]; j++) {
 		k = L[i + n_nodes * j];
 		neworder[iii++] = k + 1;
 		if (child[k] > n_tips) /* is it an internal edge? */
@@ -65,14 +65,15 @@ void ape_foo_reorder(int node, int n_tips, int n_nodes, int *parent, int *child,
 	}
 }
 
-void ape_bar_reorder(int node, int n_tips, int n_nodes, int *parent, int *child, int *neworder, int *L, int *pos)
-{
-	int i = node - n_tips - 1, j, k;
+void ape_bar_reorder(int node, int n_tips, int n_nodes, int *parent, int *child,
+                     int *neworder, int *L, int *pos) {
+	const int i = node - n_tips - 1;
+  int j, k;
 
 	for (j = pos[i] - 1; j >= 0; j--)
 		neworder[iii--] = L[i + n_nodes * j] + 1;
 
-	for (j = 0; j < pos[i]; j++) {
+	for (j = 0; j != pos[i]; j++) {
 		k = child[L[i + n_nodes * j]];
 		if (k > n_tips)
 			ape_bar_reorder(k, n_tips, n_nodes, parent, child, neworder, L, pos);
@@ -82,13 +83,15 @@ void ape_bar_reorder(int node, int n_tips, int n_nodes, int *parent, int *child,
 static R_NativePrimitiveArgType ape_neworder_phylo_t[] = {
   INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP
 };
-extern void ape_neworder_phylo(int *n_tips, int *parent, int *child, int *n_edges, int *neworder, int *order)
+extern void ape_neworder_phylo(int *n_tips, int *parent, int *child,
+                               int *n_edges, int *neworder, int *order) {
 /* n_tips: nb of tips
    n_nodes: nb of nodes
    n_edges: nb of edges */
-{
-	int i, j, k, *L, *pos, n_nodes = *n_edges - *n_tips + 1,
-	  max_node = *n_tips - n_nodes + 1;
+	int i, j, k, *L, *pos,
+	  n_nodes = *n_edges - *n_tips + 1,
+	  max_node = *n_tips - n_nodes + 1
+  ;
 
 /* max_node is the largest value that a node degree can be */
 
@@ -107,7 +110,7 @@ extern void ape_neworder_phylo(int *n_tips, int *parent, int *child, int *n_edge
 
 /* we now go down along the edge matrix */
 
-	for (i = 0; i < *n_edges; i++) {
+	for (i = 0; i != *n_edges; i++) {
 		k = parent[i] - *n_tips - 1; /* k is the 'row' index in L corresponding to node parent[i] */
 		j = pos[k]; /* the current 'column' position corresponding to k */
 		pos[k]++; /* increment in case the same node is found in another row of the edge matrix */
@@ -192,7 +195,7 @@ extern void ape_neworder_pruningwise(int *ntip, int *nnode, int *edge1,
 	    }
         }
     }
-    for (i = 0; i < *nedge; i++) {
+    for (i = 0; i != *nedge; i++) {
         if (!ready[i]) continue;
         neworder[nextI] = i + 1;
         nextI++;

@@ -8,6 +8,8 @@
 \alias{NSplits.multiPhylo}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
+\alias{NSplits.NULL}
+\alias{NSplits.ClusterTable}
 \alias{NSplits.character}
 \title{Number of distinct splits}
 \usage{
@@ -24,6 +26,10 @@ NPartitions(x)
 \method{NSplits}{Splits}(x)
 
 \method{NSplits}{numeric}(x)
+
+\method{NSplits}{`NULL`}(x)
+
+\method{NSplits}{ClusterTable}(x)
 
 \method{NSplits}{character}(x)
 }
@@ -49,20 +55,26 @@ NSplits(as.Splits(BalancedTree(8)))
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
 \concept{tree properties}

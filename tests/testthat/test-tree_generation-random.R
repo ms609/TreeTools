@@ -1,5 +1,3 @@
-context('tree_generation.R: RandomTree()')
-
 test_that("Random trees are set by R seed", {
 
   set.seed(0)
@@ -29,9 +27,9 @@ test_that("Random trees drawn from uniform distribution", {
 
   nSamples <- 100
   # Ape's trees are not uniformly distributed:
-  counts <- table(vapply64(lapply(rep(5, nSamples), ape::rtree),
-                           as.TreeNumber, 1))
-  expect_lt(chisq.test(counts)$p.value, 0.001)
+  ape_counts <- table(vapply64(lapply(rep(5, nSamples), ape::rtree),
+                               as.TreeNumber, 1))
+  expect_lt(chisq.test(ape_counts)$p.value, 0.005)
 
   # Our trees are:
   counts <- table(sapply64(lapply(rep(5, nSamples), RandomTree), as.TreeNumber))

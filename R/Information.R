@@ -20,53 +20,58 @@
 #'
 #' @family split information functions
 #' @export
-TreesMatchingSplit <- function (A, B) {
-  if (A == 0) NUnrooted(B) else
-  if (B == 0) NUnrooted(A) else
-  NRooted(A) * NRooted(B)
+TreesMatchingSplit <- function(A, B = A[2]) {
+  if (A[1] == 0) NUnrooted(B) else
+  if (B == 0) NUnrooted(A[1]) else
+  NRooted(A[1]) * NRooted(B)
 }
 
 #' @rdname TreesMatchingSplit
 #' @export
-LnTreesMatchingSplit <- function (A, B) {
-  if (A == 0) LnUnrooted.int(B) else
-  if (B == 0) LnUnrooted.int(A) else
-  LnRooted.int(A) + LnRooted.int(B)
+LnTreesMatchingSplit <- function(A, B = A[2]) {
+  if (A[1] == 0) LnUnrooted.int(B) else
+  if (B == 0) LnUnrooted.int(A[1]) else
+  LnRooted.int(A[1]) + LnRooted.int(B)
 }
 
 #' @rdname TreesMatchingSplit
 #' @export
-Log2TreesMatchingSplit <- function (A, B) {
-  if (A == 0) Log2Unrooted.int(B) else
-  if (B == 0) Log2Unrooted.int(A) else
-  Log2Rooted.int(A) + Log2Rooted.int(B)
+Log2TreesMatchingSplit <- function(A, B = A[2]) {
+  if (A[1] == 0) Log2Unrooted.int(B) else
+  if (B == 0) Log2Unrooted.int(A[1]) else
+  Log2Rooted.int(A[1]) + Log2Rooted.int(B)
 }
 
 #' Character information content
 #'
-#' `CharacterInformation()` calculates the phylogenetic information content
-#' of a given character.
+#' `CharacterInformation()` calculates the cladistic information content
+#' \insertCite{Steel2006}{TreeTools} of a given character, in bits.
+#' The total information in all characters gives a measure of the potential
+#' utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
+#' compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+#' evaluate the degree of homoplasy within a dataset.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
-#' a character.  Example: `c(0, 0, 0, 1, 1, 1, '?', '-')`.
+#' a character.  Example: `c(0, 0, 0, 1, 1, 1, "?", "-")`.
 #'
 #' Note that ambiguous tokens such as `(01)` are not supported, and should be
 #' replaced with `?`.
 #'
 #' @return `CharacterInformation()` returns a numeric specifying the
-#' phylogenetic information content of the character (_sensu_ Steel & Penny
-#' 2006), in bits.
+#' phylogenetic information content of the character (_sensu_ 
+#' \insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 #'
 #' @references
-#' - \insertRef{Steel2006}{TreeTools}
+#' - \insertAllCited{}
 #' @family split information functions
 #' @template MRS
+#' @importFrom fastmatch %fin%
 #' @export
-CharacterInformation <- function (tokens) {
+CharacterInformation <- function(tokens) {
   tokenCounts <- table(tokens)
   # Our character splits our taxa into groups with the same token
   # ?s and -s are best ignored
-  splits <- tokenCounts[!(names(tokenCounts) %in% c('?', '-'))]
+  splits <- tokenCounts[!(names(tokenCounts) %fin% c("?", "-"))]
 
   # Return:
   MultiSplitInformation(splits)
@@ -74,11 +79,11 @@ CharacterInformation <- function (tokens) {
 
 #' Phylogenetic information content of splitting leaves into two partitions
 #'
-#' Calculate the phylogenetic information content (_sensu_
-#' Steel & Penny, 2006) of a split, which reflects the probability that a
-#' uniformly selected random tree will contain the split:
-#' a split that is consistent with a smaller number of trees will have a higher
-#' information content.
+#' Calculate the phylogenetic information content (_sensu_ 
+#' \insertCite{Steel2006;nobrackets}{TreeTools}) of a split, which
+#' reflects the probability that a uniformly selected random tree will contain#
+#' the split: a split that is consistent with a smaller number of trees will
+#' have a higher information content.
 #'
 #' `SplitInformation()` addresses bipartition splits, which correspond to
 #' edges in an unrooted phylogeny; `MultiSplitInformation()` supports splits
@@ -115,7 +120,7 @@ CharacterInformation <- function (tokens) {
 #'
 #' Summing the information content of all splits within a tree, perhaps using
 #' the '[TreeDist](https://ms609.github.io/TreeDist/)' function
-#' [`SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html),
+#' [`SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html),
 #' arguably gives a more instructive picture of its resolution than simply
 #' counting the number of splits that are present -- though with the caveat
 #' that splits within a tree are not independent of one another, so some
@@ -127,7 +132,7 @@ CharacterInformation <- function (tokens) {
 #' [`QuartetStates()`](https://ms609.github.io/Quartet/reference/QuartetState.html),
 #' or to use a different take on the information contained within a split, the
 #' clustering information: see the 'TreeDist' function
-#' [`ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
+#' [`ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
 #' for details.
 #'
 #'
@@ -148,25 +153,24 @@ CharacterInformation <- function (tokens) {
 #' # that seven maximally uneven splits on the same leaves:
 #' SplitInformation(25, 25)
 #' 7 * SplitInformation(2, 48)
-#' @references
-#' - \insertRef{Steel2006}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @family split information functions
 #'
 #' @seealso
 #'
 #' Sum the phylogenetic information content of splits within a tree:
-#'  [`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/SplitwiseInfo.html)
+#'  [`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
 #'
 #'
 #' Sum the clustering information content of splits within a tree:
-#'  [`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/ClusteringEntropy.html)
+#'  [`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
 #'
 #'
 #'
 #' @template MRS
 #' @export
-SplitInformation <- function (A, B) {
+SplitInformation <- function(A, B = A[1]) {
   -(Log2TreesMatchingSplit(A, B) - Log2Unrooted.int(A + B))
 }
 
@@ -181,14 +185,15 @@ SplitInformation <- function (A, B) {
 #'
 #'
 #' @export
-MultiSplitInformation <- function (partitionSizes) {
+MultiSplitInformation <- function(partitionSizes) {
   Log2Unrooted.int(sum(partitionSizes)) - Log2UnrootedMult(partitionSizes)
 }
 
 #' Number of trees consistent with split
 #'
 #' Calculates the number of unrooted bifurcating trees consistent with the
-#' specified multi-partition split, using the formula of Carter _et al_. (1990).
+#' specified multi-partition split, using theorem two of
+#' \insertCite{Carter1990;textual}{TreeTools}.
 #'
 #' @param \dots A series or vector of integers listing the number of tips in
 #' each of a number of tree splits (e.g. bipartitions).
@@ -200,22 +205,20 @@ MultiSplitInformation <- function (partitionSizes) {
 #'  number of unrooted bifurcating trees consistent with the specified split.
 #'
 #'
+#' @references \insertAllCited{}
+#' 
 #' @examples
-#'  UnrootedTreesMatchingSplit(c(3, 5))
-#'  UnrootedTreesMatchingSplit(3, 2, 1, 2)
-#'
-#' @references
-#' See Theorem 2 in \insertRef{Carter1990}{TreeTools}
-#'
+#' UnrootedTreesMatchingSplit(c(3, 5))
+#' UnrootedTreesMatchingSplit(3, 2, 1, 2)
 #' @template MRS
 #' @family split information functions
 #' @export
-UnrootedTreesMatchingSplit <- function (...) {
+UnrootedTreesMatchingSplit <- function(...) {
   # use exp and log as it's just as fast, but less likely to overflow to Inf
   exp(LnUnrootedTreesMatchingSplit(...))
 }
 
-.LogUTMS <- function (LogXDoubleFactorial, splits) {
+.LogUTMS <- function(LogXDoubleFactorial, splits) {
 
   splits <- splits[splits > 0L]
   totalTips <- sum(splits)
@@ -228,12 +231,12 @@ UnrootedTreesMatchingSplit <- function (...) {
 
 #' @rdname UnrootedTreesMatchingSplit
 #' @export
-LnUnrootedTreesMatchingSplit <- function (...) {
+LnUnrootedTreesMatchingSplit <- function(...) {
   .LogUTMS(LnDoubleFactorial, c(...))
 }
 
 #' @rdname UnrootedTreesMatchingSplit
 #' @export
-Log2UnrootedTreesMatchingSplit <- function (...) {
+Log2UnrootedTreesMatchingSplit <- function(...) {
   .LogUTMS(Log2DoubleFactorial, c(...))
 }

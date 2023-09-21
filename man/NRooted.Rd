@@ -72,34 +72,34 @@ Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow Cavalli-Sforza & Edwards (1967) and
-Carter \emph{et al.} 1990, Theorem 2.
+Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+\insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 }
 \section{Functions}{
 \itemize{
-\item \code{NUnrooted}: Number of unrooted trees
+\item \code{NUnrooted()}: Number of unrooted trees
 
-\item \code{NRooted64}: Exact number of rooted trees as 64-bit integer
+\item \code{NRooted64()}: Exact number of rooted trees as 64-bit integer
 (13 < \code{nTip} < 19)
 
-\item \code{NUnrooted64}: Exact number of unrooted trees as 64-bit integer
+\item \code{NUnrooted64()}: Exact number of unrooted trees as 64-bit integer
 (14 < \code{nTip} < 20)
 
-\item \code{LnUnrooted}: Log Number of unrooted trees
+\item \code{LnUnrooted()}: Log Number of unrooted trees
 
-\item \code{LnUnrooted.int}: Log Number of unrooted trees (as integer)
+\item \code{LnUnrooted.int()}: Log Number of unrooted trees (as integer)
 
-\item \code{LnRooted}: Log Number of rooted trees
+\item \code{LnRooted()}: Log Number of rooted trees
 
-\item \code{LnRooted.int}: Log Number of rooted trees (as integer)
+\item \code{LnRooted.int()}: Log Number of rooted trees (as integer)
 
-\item \code{NUnrootedSplits}: Number of unrooted trees consistent with a bipartition
+\item \code{NUnrootedSplits()}: Number of unrooted trees consistent with a bipartition
 split.
 
-\item \code{NUnrootedMult}: Number of unrooted trees consistent with a multi-partition
+\item \code{NUnrootedMult()}: Number of unrooted trees consistent with a multi-partition
 split.
+
 }}
-
 \examples{
 NRooted(10)
 NUnrooted(10)
@@ -119,9 +119,7 @@ NUnrootedSplits(c(2,4))
 NUnrootedSplits(3, 3)
 }
 \references{
-\insertRef{Carter1990}{TreeTools}
-
-\insertRef{CavalliSforza1967}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Other tree information functions: 
@@ -129,7 +127,8 @@ Other tree information functions:
 \code{\link{TreesMatchingTree}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information function}
 \concept{tree information functions}

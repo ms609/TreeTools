@@ -5,6 +5,7 @@
 \alias{RenumberTips.phylo}
 \alias{RenumberTips.multiPhylo}
 \alias{RenumberTips.list}
+\alias{RenumberTips.NULL}
 \title{Renumber a tree's tips}
 \usage{
 RenumberTips(tree, tipOrder)
@@ -14,12 +15,14 @@ RenumberTips(tree, tipOrder)
 \method{RenumberTips}{multiPhylo}(tree, tipOrder)
 
 \method{RenumberTips}{list}(tree, tipOrder)
+
+\method{RenumberTips}{`NULL`}(tree, tipOrder)
 }
 \arguments{
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tipOrder}{A character vector containing the values of
-\code{tree$tip.label} in the desired sort order, or an object
+\code{tree[["tip.label"]]} in the desired sort order, or an object
 (perhaps of class \code{phylo} or \code{Splits}) with tip labels.}
 }
 \value{
@@ -28,11 +31,11 @@ representation numbered to match \code{tipOrder}.
 }
 \description{
 \code{RenumberTips(tree, tipOrder)} sorts the tips of a phylogenetic tree \code{tree}
-such that the indices in \code{tree$edge[, 2]} correspond to the order of
+such that the indices in \code{tree[["edge"]][, 2]} correspond to the order of
 leaves given in \code{tipOrder}.
 }
 \examples{
-data('Lobo') # Loads the phyDat object Lobo.phy
+data("Lobo") # Loads the phyDat object Lobo.phy
 tree <- RandomTree(Lobo.phy)
 tree <- RenumberTips(tree, names(Lobo.phy))
 
@@ -44,16 +47,21 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
 \code{\link{RootTree}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

@@ -1,8 +1,8 @@
 #' @importFrom utils globalVariables
-utils::globalVariables(c('nRootedShapes',
-                         'nUnrootedShapes',
-                         'unrootedKeys'),
-                       'TreeTools')
+utils::globalVariables(c("nRootedShapes",
+                         "nUnrootedShapes",
+                         "unrootedKeys"),
+                       "TreeTools")
 
 #' Integer representing shape of a tree
 #'
@@ -67,7 +67,7 @@ utils::globalVariables(c('nRootedShapes',
 #'
 #' # If numbers larger than 2>31 are required, sapply needs a little help
 #' # with 64-bit integers:
-#' structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
+#' structure(sapply(allShapes, UnrootedTreeKey), class = "integer64")
 #'
 #'
 #' @seealso Unique number for a labelled tree: [`TreeNumber()`]
@@ -75,16 +75,16 @@ utils::globalVariables(c('nRootedShapes',
 #' @template MRS
 #' @name TreeShape
 #' @export
-RootedTreeShape <- function (tree) {
-  edge <- tree$edge
+RootedTreeShape <- function(tree) {
+  edge <- tree[["edge"]]
   nTip <- NTip(tree)
-  edge <- Postorder(edge, renumber = FALSE)
+  edge <- Postorder(edge)
   .Int64(edge_to_rooted_shape(edge[, 1], edge[, 2], nTip))
 }
 
 #' @importFrom bit64 as.integer64
 #' @keywords internal
-.Int64 <- function (n) {
+.Int64 <- function(n) {
   n <- as.integer64(n)
   if (length(n) == 2L) {
     n <- n[1] * 2147483647L + n[2]
@@ -101,21 +101,21 @@ RootedTreeShape <- function (tree) {
 #' @return `RootedTreeWithShape()` returns a tree of class `phylo`
 #' corresponding to the shape provided.  Tips are unlabelled.
 #' @export
-RootedTreeWithShape <- function (shape, nTip, tipLabels)
-  UseMethod('RootedTreeWithShape')
+RootedTreeWithShape <- function(shape, nTip, tipLabels)
+  UseMethod("RootedTreeWithShape")
 
 #' @export
-RootedTreeWithShape.numeric <- function (shape, nTip,
-                                         tipLabels = rep('', nTip)) {
+RootedTreeWithShape.numeric <- function(shape, nTip,
+                                        tipLabels = character(nTip)) {
   structure(list(edge = rooted_shape_to_edge(shape, nTip),
                  Nnode = nTip - 1L,
                  tip.label = tipLabels),
-            class = 'phylo')
+            class = "phylo")
 }
 
 #' @export
-RootedTreeWithShape.integer64 <- function (shape, nTip,
-                                           tipLabels = rep('', nTip)) {
+RootedTreeWithShape.integer64 <- function(shape, nTip,
+                                          tipLabels = character(nTip)) {
   if (shape < 0) {
     stop("Shape may not be negative.")
   } else if (shape > 2L^31L - 1L) {
@@ -131,13 +131,13 @@ RootedTreeWithShape.integer64 <- function (shape, nTip,
 #' @return `UnrootedTreeWithShape()` returns a tree of class `phylo`
 #' corresponding to the shape provided.  Tips are unlabelled.
 #' @export
-UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
+UnrootedTreeWithShape <- function(shape, nTip, tipLabels = character(nTip)) {
   if (nTip > 30) {
-    stop("Only trees with < 31 tips are presently handled")
+    stop("Only trees with < 31 leaves are presently handled")
   }
   nShapes <- nUnrootedShapes[nTip]
   if (shape >= as.integer(nShapes)) {
-    stop("Shape must be between 0 and ", nShapes)
+    stop("Shape must be between 0 and ", nShapes - 1L)
   }
 
   key <- UnrootedKeys(nTip)[shape + 1L]
@@ -150,9 +150,9 @@ UnrootedTreeWithShape <- function (shape, nTip, tipLabels = rep('', nTip)) {
 #' @return `UnrootedTreeWithKey()` returns a tree of class `phylo` corresponding
 #' to the key provided.  Tips are unlabelled.
 #' @export
-UnrootedTreeWithKey <- function (key, nTip, tipLabels = rep('', nTip)) {
-  AddRoot <- function (x) {
-    x$root.edge <- 1L
+UnrootedTreeWithKey <- function(key, nTip, tipLabels = character(nTip)) {
+  AddRoot <- function(x) {
+    x[["root.edge"]] <- 1L
     x
   }
   SingleTaxonTree(tipLabels[1]) + SingleTaxonTree(tipLabels[2]) +
@@ -160,9 +160,8 @@ UnrootedTreeWithKey <- function (key, nTip, tipLabels = rep('', nTip)) {
 }
 
 #' @rdname TreeShape
-#' @importFrom ape drop.tip root
 #' @export
-UnrootedTreeShape <- function (tree) {
+UnrootedTreeShape <- function(tree) {
   which(UnrootedKeys(NTip(tree)) == UnrootedTreeKey(tree)) - 1L
 }
 
@@ -170,18 +169,17 @@ UnrootedTreeShape <- function (tree) {
 #' @param asInteger Logical specifying whether to coerce the return value to
 #' mode `integer`: only possible for values < 2^31.
 #' If `FALSE`, values will have class `integer64`.
-#' @importFrom ape drop.tip root
 #' @importFrom bit64 integer64
 #' @export
-UnrootedTreeKey <- function (tree, asInteger = FALSE) {
-  tree <- Preorder(tree) # Guarantee unique representation of tree
-  edge <- Postorder(tree$edge, renumber = FALSE)
+UnrootedTreeKey <- function(tree, asInteger = FALSE) {
+  edge <- Postorder(tree[["edge"]])
   nTip <- NTip(tree)
   parent <- edge[, 1]
   child <- edge[, 2]
   nEdge <- length(child)
   unrooted <- nEdge %% 2L
-  nodeFirst <- c(rep(c(TRUE, FALSE), nEdge / 2L), logical(as.integer(unrooted)))
+  nodeFirst <- c(rep.int(c(TRUE, FALSE), nEdge / 2L),
+                 logical(as.integer(unrooted)))
   nodeSecond <- !nodeFirst
   nodeNumbers <- unique(parent)
   if (unrooted) {
@@ -190,8 +188,8 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
     nodeNumbers <- nodeNumbers[-(nTip - 2L)]
   }
 
-  RootedNumber <- function (nodeChildren) {
-    RootedTreeShape(Postorder(drop.tip(root(tree, nodeChildren[1]), nodeChildren)))
+  RootedNumber <- function(nodeChildren) {
+    RootedTreeShape(Postorder(DropTip(RootTree(tree, nodeChildren[1]), nodeChildren)))
   }
 
   basalTipEdges <- nEdge - (seq_len(4L - unrooted) - 1L)
@@ -202,9 +200,9 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
   }
 
   cherryNodes <- nodeNumbers[child[nodeFirst] <= nTip & child[nodeSecond] <= nTip]
-  allKeys <- structure(c(vapply(cherryNodes, function (node) {
+  allKeys <- structure(c(vapply(cherryNodes, function(node) {
     RootedNumber(child[parent == node])
-  }, integer64(1)), rootCandidate), class = 'integer64')
+  }, integer64(1)), rootCandidate), class = "integer64")
 
   # Return:
   min(if (asInteger) as.integer(allKeys) else allKeys)
@@ -214,7 +212,7 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
 #' @keywords internal
 #' @importFrom bit64 integer64
 #' @export
-.UnrootedKeys <- function (nTip) {
+.UnrootedKeys <- function(nTip) {
   if (nTip > 28L) {
     stop("Too many shapes to calculate with ", nTip, " leaves.")
   } else if (nTip > length(unrootedKeys)) {
@@ -222,9 +220,9 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
     # nocov start
     shapes <- as.integer(structure(
       vapply(seq_len(as.integer(NRootedShapes(nTip))) - 1L,
-             function (shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
+             function(shape) UnrootedTreeKey(RootedTreeWithShape(shape, nTip)),
              integer64(1L)),
-      class = 'integer64'))
+      class = "integer64"))
     uniqueShapes <- unique(shapes)
     # nocov end
   } else {
@@ -245,13 +243,13 @@ UnrootedTreeKey <- function (tree, asInteger = FALSE) {
 #' the function.
 #' @importFrom R.cache addMemoization
 #' @export
-UnrootedKeys <- addMemoization(.UnrootedKeys, envir = 'package:TreeTools')
+UnrootedKeys <- addMemoization(.UnrootedKeys, envir = "package:TreeTools")
 
 #' @rdname TreeShape
 #' @return `NUnrootedShapes()` returns an object of class `integer64` specifying
 #' the number of unique unrooted tree shapes with `nTip` (< 61) tips.
 #' @export
-NUnrootedShapes <- function (nTip) {
+NUnrootedShapes <- function(nTip) {
   if (nTip > 60L) {
     stop("Too many shapes to represent as a 64-bit integer. ",
          "Consult OEIS for value: https://oeis.org/A000672/b000672.txt")
@@ -264,7 +262,7 @@ NUnrootedShapes <- function (nTip) {
 #' the number of unique rooted tree shapes with `nTip` (< 56) leaves.
 #'
 #' @export
-NRootedShapes <- function (nTip) {
+NRootedShapes <- function(nTip) {
   if (nTip > 55L) {
     stop("Too many shapes to represent as a 64-bit integer. ",
          "Consult OEIS for value: https://oeis.org/A001190/b001190.txt")

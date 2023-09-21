@@ -1,8 +1,8 @@
 #' @importFrom utils globalVariables
-utils::globalVariables(c('doubleFactorials',
-                         'logDoubleFactorials',
-                         'log2DoubleFactorials'),
-                       'TreeTools')
+utils::globalVariables(c("doubleFactorials",
+                         "logDoubleFactorials",
+                         "log2DoubleFactorials"),
+                       "TreeTools")
 
 #' Double factorial
 #'
@@ -21,7 +21,7 @@ utils::globalVariables(c('doubleFactorials',
 #' @template MRS
 #' @family double factorials
 #' @export
-DoubleFactorial <- function (n) {
+DoubleFactorial <- function(n) {
   if (any(n > 300)) stop("301!! is too large to represent. Use LnDoubleFactorial() instead.")
 
   n[n < 2] <- 1
@@ -48,14 +48,14 @@ DoubleFactorial <- function (n) {
 #' @examples
 #' DoubleFactorial64(31)
 #' @export
-DoubleFactorial64 <- function (n) {
+DoubleFactorial64 <- function(n) {
   if (n < 2L) 1 else as.integer64(n * DoubleFactorial64(n - 2L))
 }
 
 # Memoizing this function makes it MUCH slower...
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
 #' @export
-LnDoubleFactorial <- (function (n) {
+LnDoubleFactorial <- (function(n) {
   n[n < 2L] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
 
@@ -81,7 +81,7 @@ LnDoubleFactorial <- (function (n) {
 
 #' @describeIn DoubleFactorial Returns the logarithm of the double factorial.
 #' @export
-Log2DoubleFactorial <- (function (n) {
+Log2DoubleFactorial <- (function(n) {
   n[n < 2L] <- 1 # Much faster than pmax
   if (any(n > 49999L)) {
 
@@ -112,7 +112,7 @@ LogDoubleFactorial <- LnDoubleFactorial
 #' @describeIn DoubleFactorial Slightly faster, when x is known to be length one
 #' and below 50001
 #' @export
-LnDoubleFactorial.int <- function (n) {
+LnDoubleFactorial.int <- function(n) {
   if (n < 2L) {
     0
   } else {
@@ -133,8 +133,8 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
 #'
-#' Calculations follow Cavalli-Sforza & Edwards (1967) and
-#' Carter _et al._ 1990, Theorem 2.
+#' Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+#' \insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 #'
 #' @param tips Integer specifying the number of leaves.
 #' @param \dots Integer vector, or series of integers, listing the number of
@@ -142,10 +142,7 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @template MRS
 #'
-#' @references
-#'  \insertRef{Carter1990}{TreeTools}
-#'
-#'  \insertRef{CavalliSforza1967}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @examples
 #' NRooted(10)
@@ -159,66 +156,67 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @family tree information functions
 #' @export
-NRooted     <- function (tips) DoubleFactorial(tips + tips - 3L) # addition faster than 2*
+NRooted     <- function(tips) DoubleFactorial(tips + tips - 3L) # addition faster than 2*
 
 #' @describeIn NRooted Number of unrooted trees
 #' @export
-NUnrooted   <- function (tips) DoubleFactorial(tips + tips - 5L)
+NUnrooted   <- function(tips) DoubleFactorial(tips + tips - 5L)
 
 #' @describeIn NRooted Exact number of rooted trees as 64-bit integer
 #' (13 < `nTip` < 19)
 #' @export
-NRooted64 <- function (tips) DoubleFactorial64(tips + tips - 3L)
+NRooted64 <- function(tips) DoubleFactorial64(tips + tips - 3L)
 
 #' @describeIn NRooted Exact number of unrooted trees as 64-bit integer
 #' (14 < `nTip` < 20)
 #' @examples
 #' NUnrooted64(18)
 #' @export
-NUnrooted64 <- function (tips) DoubleFactorial64(tips + tips - 5L)
+NUnrooted64 <- function(tips) DoubleFactorial64(tips + tips - 5L)
 
 #' @describeIn NRooted  Log Number of unrooted trees
 #' @export
-LnUnrooted  <- function (tips) LnDoubleFactorial(tips + tips - 5L)
+LnUnrooted  <- function(tips) LnDoubleFactorial(tips + tips - 5L)
 
 #' @describeIn NRooted  Log Number of unrooted trees (as integer)
 #' @export
-LnUnrooted.int <- function (tips) {
+LnUnrooted.int <- function(tips) {
   ifelse(tips < 3L, 0, logDoubleFactorials[tips + tips - 5L])
 }
 
 #' @rdname NRooted
 #' @export
-Log2Unrooted  <- function (tips) Log2DoubleFactorial(tips + tips - 5L)
+Log2Unrooted  <- function(tips) Log2DoubleFactorial(tips + tips - 5L)
 
 #' @rdname NRooted
 #' @export
-Log2Unrooted.int <- function (tips) {
+Log2Unrooted.int <- function(tips) {
   ifelse(tips < 3L, 0, log2DoubleFactorials[tips + tips - 5L])
 }
 
 #' @describeIn NRooted  Log Number of rooted trees
 #' @export
-LnRooted    <- function (tips) LnDoubleFactorial(tips + tips - 3L)
+LnRooted    <- function(tips) LnDoubleFactorial(tips + tips - 3L)
 #' @describeIn NRooted  Log Number of rooted trees (as integer)
 #' @export
-LnRooted.int <- function (tips) {
+LnRooted.int <- function(tips) {
   ifelse(tips < 2L, 0, logDoubleFactorials[tips + tips - 3L])
 }
 #' @rdname NRooted
 #' @export
-Log2Rooted    <- function (tips) Log2DoubleFactorial(tips + tips - 3L)
+Log2Rooted    <- function(tips) Log2DoubleFactorial(tips + tips - 3L)
 #' @rdname NRooted
 #' @export
-Log2Rooted.int <- function (tips) {
+Log2Rooted.int <- function(tips) {
   ifelse(tips < 2L, 0, log2DoubleFactorials[tips + tips - 3L])
 }
 
 #' Number of trees one SPR step away
 #'
 #' `N1Spr()` calculates the number of trees one subtree prune-and-regraft
-#' operation away from a binary input tree using the formula given by Allen and
-#' Steel (2001); `IC1Spr()` calculates the information content of trees at this
+#' operation away from a binary input tree using the formula given by 
+#' \insertCite{Allen2001;textual}{TreeTools};
+#' `IC1Spr()` calculates the information content of trees at this
 #' distance: i.e. the entropy corresponding to the proportion of all possible
 #' _n_-tip trees whose SPR distance is at most one from a specified tree.
 #'
@@ -231,11 +229,10 @@ Log2Rooted.int <- function (tips) {
 #' N1Spr(4:6)
 #' IC1Spr(5)
 #'
-#' @references
-#'  \insertRef{Allen2001}{TreeTools}
+#' @references \insertAllCited{}
 #'
 #' @export
-N1Spr <- function (n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
+N1Spr <- function(n) ifelse(n > 3L, (n + n - 6L) * (n + n - 7L), 0L)
 
 #' @rdname N1Spr
 #' @return `IC1Spr()` returns an numeric vector giving the phylogenetic
@@ -249,7 +246,7 @@ IC1Spr <- function(n) Log2Unrooted(n) - log2(1L + N1Spr(n))
 #' LnUnrootedSplits(c(2,4))
 #' LnUnrootedSplits(3, 3)
 #' @export
-LnUnrootedSplits <- function (...) {
+LnUnrootedSplits <- function(...) {
   splits <- c(...)
 
   if ((nSplits <- length(splits)) < 2L) {
@@ -266,7 +263,7 @@ LnUnrootedSplits <- function (...) {
 #' Log2UnrootedSplits(c(2,4))
 #' Log2UnrootedSplits(3, 3)
 #' @export
-Log2UnrootedSplits <- function (...) {
+Log2UnrootedSplits <- function(...) {
   splits <- c(...)
 
   if ((nSplits <- length(splits)) < 2L) {
@@ -285,7 +282,7 @@ Log2UnrootedSplits <- function (...) {
 #' NUnrootedSplits(3, 3)
 #' @family split information function
 #' @export
-NUnrootedSplits  <- function (...) {
+NUnrootedSplits  <- function(...) {
   splits <- c(...)
   if ((nSplits <- length(splits)) < 2L) {
     NUnrooted(splits)
@@ -298,7 +295,7 @@ NUnrootedSplits  <- function (...) {
 
 #' @rdname NRooted
 #' @export
-LnUnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
+LnUnrootedMult <- function(...) {  # Carter et al. 1990, Theorem 2
   splits <- c(...)
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
@@ -311,7 +308,7 @@ LnUnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
 
 #' @rdname NRooted
 #' @export
-Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
+Log2UnrootedMult <- function(...) {  # Carter et al. 1990, Theorem 2
   splits <- c(...)
   splits <- splits[splits > 0]
   totalTips <- sum(splits)
@@ -325,7 +322,7 @@ Log2UnrootedMult <- function (...) {  # Carter et al. 1990, Theorem 2
 #' @describeIn NRooted Number of unrooted trees consistent with a multi-partition
 #' split.
 #' @export
-NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
+NUnrootedMult  <- function(...) { # Carter et al. 1990, Theorem 2
   splits <- c(...)
   splits <- splits[splits > 0]
   nSplits <- length(splits)
@@ -344,7 +341,7 @@ NUnrootedMult  <- function (...) {  # Carter et al. 1990, Theorem 2
     denominator <- 2L * (totalTips - length(splits)) + 1L
 
     # Return:
-    prod(seq(numerator, denominator, -2L),
+    prod(seq.int(numerator, denominator, -2L),
          DoubleFactorial(splits + splits - 3L))
   }
 }
