@@ -8,7 +8,7 @@
 
 #define R_BIN_SIZE 8
 #define SL_BIN_SIZE 64
-#define SL_MAX_BINS 32
+#define SL_MAX_BINS 1024
 #define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
 #define SL_MAX_SPLITS SL_MAX_TIPS /* -3, but quicker if a power of two? */
 
