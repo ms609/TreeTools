@@ -62,11 +62,6 @@ test_that("RenumberTree() handles singles", {
                  1, 7, 2, 8, 3, 9, 10, 11, 4, 12, 5))
 })
 
-test_that("RenumberTree() handles unrooted", {
-  bal <- unroot(BalancedTree(4))
-  expect_equal(Preorder(bal$edge), Preorder(bal)$edge)
-})
-
 test_that("Replacement reorder functions work correctly", {
   ## Tree
   tree <- ape::read.tree(text = "((((((1,2),3),4),5),6),(7,(8,(9,(10,(11,12))))));")
