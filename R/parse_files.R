@@ -10,9 +10,8 @@
 #'
 #' @return `ApeTime()` returns the time that the specified file was created by
 #' ape, in the format specified by `format`.
-#' @export
 #' @template MRS
-#'
+#' @export
 ApeTime <- function(filepath, format = "double") {
   if (length(filepath) > 1L) {
     stop("`filepath` must be a character string of length 1")
