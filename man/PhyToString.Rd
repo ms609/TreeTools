@@ -46,13 +46,14 @@ PhydatToString(
 \item{string}{String of tokens, optionally containing whitespace, with no
 terminating semi-colon.}
 
-\item{tips}{Character vector corresponding to the names (in order)
-of each taxon in the matrix.}
+\item{tips}{(Optional) Character vector corresponding to the names (in order)
+of each taxon in the matrix, or an object such as a tree from which
+tip labels can be extracted.}
 
 \item{byTaxon}{Logical. If \code{TRUE}, write one taxon followed by the next.
 If \code{FALSE}, write one character followed by the next.}
 
-\item{phy}{An object of class \code{\link[phangorn:phyDat]{phyDat}}.}
+\item{phy}{An object of class \code{phyDat}.}
 
 \item{parentheses}{Character specifying format of parentheses with which to
 surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}, \code{<}.}
@@ -77,18 +78,17 @@ each entry.}
 representation of the phylogenetic character state for each taxon in turn.
 }
 \description{
-\code{PhyDatToString()} converts a \code{\link[phangorn:phyDat]{phyDat}} object as a
-string;
+\code{PhyDatToString()} converts a \code{phyDat} object as a string;
 \code{StringToPhyDat()} converts a string of character data to a \code{phyDat} object.
 }
 \examples{
-StringToPhyDat("-?01231230?-", c('Lion', 'Gazelle'), byTaxon = TRUE)
+StringToPhyDat("-?01231230?-", c("Lion", "Gazelle"), byTaxon = TRUE)
 # encodes the following matrix:
 # Lion     -?0123
 # Gazelle  1230?-
 
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/input/dataset.nex')
+fileName <- paste0(system.file(package = "TreeTools"),
+                   "/extdata/input/dataset.nex")
 phyDat <- ReadAsPhyDat(fileName)
 PhyToString(phyDat, concatenate = FALSE)
 
@@ -98,6 +98,7 @@ Other phylogenetic matrix conversion functions:
 \code{\link{MatrixToPhyDat}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{phylogenetic matrix conversion functions}

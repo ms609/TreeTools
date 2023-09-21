@@ -8,23 +8,27 @@ CharacterInformation(tokens)
 }
 \arguments{
 \item{tokens}{Character vector specifying the tokens assigned to each taxon for
-a character.  Example: \code{c(0, 0, 0, 1, 1, 1, '?', '-')}.
+a character.  Example: \code{c(0, 0, 0, 1, 1, 1, "?", "-")}.
 
 Note that ambiguous tokens such as \code{(01)} are not supported, and should be
 replaced with \verb{?}.}
 }
 \value{
 \code{CharacterInformation()} returns a numeric specifying the
-phylogenetic information content of the character (\emph{sensu} Steel & Penny
-2006), in bits.
+phylogenetic information content of the character (\emph{sensu}
+\insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 }
 \description{
-\code{CharacterInformation()} calculates the phylogenetic information content
-of a given character.
+\code{CharacterInformation()} calculates the cladistic information content
+\insertCite{Steel2006}{TreeTools} of a given character, in bits.
+The total information in all characters gives a measure of the potential
+utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
+compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+evaluate the degree of homoplasy within a dataset.
 }
 \references{
 \itemize{
-\item \insertRef{Steel2006}{TreeTools}
+\item \insertAllCited{}
 }
 }
 \seealso{
@@ -35,6 +39,7 @@ Other split information functions:
 \code{\link{UnrootedTreesMatchingSplit}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{split information functions}

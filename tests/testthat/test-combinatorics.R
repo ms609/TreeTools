@@ -1,8 +1,13 @@
-context("Combinatorics.R")
-
 test_that("Factorials are calculated correctly", {
   expect_equal(c(1L, 1L, 1L, 2L, 3L, 2L * 4L, 3L * 5L,
-                 2L * 4L * 6L, 3L * 5L * 7L), DoubleFactorial(-1:7))
+                 2L * 4L * 6L, 3L * 5L * 7L,
+                 2L * 4L * 6L * 8L,
+                 3L * 5L * 7L * 9L,
+                 2L * 4L * 6L * 8L * 10L,
+                 3L * 5L * 7L * 9L * 11L),
+               as.integer(DoubleFactorial((-1):11)))
+  expect_equal(floor(doubleFactorials[1:19]),
+               ceiling(doubleFactorials[1:19]))
   expect_equal(doubleFactorials[1:20], DoubleFactorial(1:20))
   expect_equal(LnDoubleFactorial(-1:10), log(DoubleFactorial(-1:10)))
   expect_equal(logDoubleFactorials[1:20], log(DoubleFactorial(1:20)))
@@ -17,7 +22,7 @@ test_that("Factorials are calculated correctly", {
 })
 
 test_that("N consistent with splits calculated correctly", {
-  Test <- function (nExpectation, ...) {
+  Test <- function(nExpectation, ...) {
     expect_equal(nExpectation, NUnrootedSplits(...))
     expect_equal(log(nExpectation), LnUnrootedSplits(...))
     expect_equal(log2(nExpectation), Log2UnrootedSplits(...))
@@ -28,9 +33,11 @@ test_that("N consistent with splits calculated correctly", {
          doubleFactorials[4 + 4 - 3] ^ 3, c(4, 4, 4))
 
 
-  Test <- function (...) {
+  Test <- function(...) {
     splits <- c(...)
-    if (length(splits) < 3L) stop ("Designed to test through to NUnrootedMult")
+    if (length(splits) < 3L) {
+      stop("Designed to test through to NUnrootedMult")
+    }
     splits <- splits[splits > 0]
     totalTips <- sum(splits)
     expect_equal(
@@ -48,7 +55,7 @@ test_that("N consistent with splits calculated correctly", {
 })
 
 test_that("N[Un]RootedMult() works", {
-  Test <- function (...) {
+  Test <- function(...) {
     splits <- c(...)
     splits <- splits[splits > 0]
     totalTips <- sum(splits)

@@ -8,19 +8,19 @@
 \usage{
 NeworderPruningwise(nTip, nNode, parent, child, nEdge)
 
-NeworderPhylo(nTip, parent, child, nb.edge, whichwise)
+NeworderPhylo(nTip, parent, child, nEdge, whichwise)
 }
 \arguments{
 \item{nTip, nNode, nEdge}{Integer specifying the number of tips, nodes
 and edges in the input tree.}
 
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 1]}}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree$edge[, 2]}.}
+matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
-\item{`whichwise`}{Integer specifying whether to order edges (1)
+\item{whichwise}{Integer specifying whether to order edges (1)
 cladewise; or (2) in postorder.}
 }
 \value{
@@ -39,13 +39,13 @@ as many checks on user input.  Bad input could crash R.
 \examples{
 nTip <- 8L
 tree <- BalancedTree(nTip)
-edge <- tree$edge
+edge <- tree[["edge"]]
 pruningwise <- NeworderPruningwise(nTip, tree$Nnode, edge[, 1], edge[, 2],
                                    dim(edge)[1])
 cladewise <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 1L)
 postorder <- NeworderPhylo(nTip, edge[, 1], edge[, 2], dim(edge)[1], 2L)
 
-tree$edge <- tree$edge[pruningwise, ]
+tree[["edge"]] <- tree[["edge"]][pruningwise, ]
 
 }
 \seealso{

@@ -1,3 +1,6 @@
+#' @importFrom methods new setClass
+setClass("Splits", representation("raw"))
+
 #' Convert object to `Splits`
 #'
 #' `as.Splits()` converts a phylogenetic tree to a `Splits` object representing
@@ -38,31 +41,62 @@
 #' print(moreSplits, details = TRUE)
 #' match(splits, moreSplits)
 #' moreSplits %in% splits
+#' 
+#' as.Splits("....**", letters[1:6])
 #'
 #' @family Splits operations
-#' @importFrom ape reorder.phylo
+#' @name Splits
 #' @export
-as.Splits <- function (x, tipLabels = NULL, ...) UseMethod('as.Splits')
+as.Splits <- function(x, tipLabels = NULL, ...) UseMethod("as.Splits")
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @param asSplits Logical specifying whether to return a `Splits` object,
 #'   or an unannotated two-dimensional array (useful where performance is
 #'   paramount).
 #' @export
-as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
+as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   if (!is.null(tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
-  edge <- Postorder(x, renumber = FALSE)$edge # In case tree already postordered
+  edge <- x[["edge"]]
+  nEdge <- dim(edge)[1]
+  order <- attr(x, "order")[1]
+  edgeOrder <- if (is.null(order)) {
+    postorder_order(edge)
+  } else {
+    switch(order,
+           "preorder" = nEdge:1,
+           "postorder" = seq_len(nEdge),
+           postorder_order(edge))
+  }
 
   # Return:
-  .as.Splits.edge(edge, tipLabels = x$tip.label, asSplits = asSplits,
-                  nTip = NTip(x), ...)
+  edge_to_splits(edge, edgeOrder, tipLabels = x[["tip.label"]],
+                 asSplits = asSplits, nTip = NTip(x), ...)
 }
 
-.as.Splits.edge <- function (edge, tipLabels = NULL, asSplits = TRUE,
-                             nTip = NTip(edge), ...) {
-  splits <- cpp_edge_to_splits(Postorder(edge), nTip)
+#' Efficiently convert edge matrix to splits
+#' 
+#' Wrapper for internal C++ function for maximum efficiency.
+#' Improper input may crash R.  Behaviour not guaranteed.
+#' It is advisable to contact the package maintainers before
+#' relying on this function.
+#' 
+#' @template edgeParam
+#' @param edgeOrder Integer vector such that `edge[edgeOrder, ]` returns a
+#' postorder ordering of edges.
+#' @param nTip Integer specifying number of leaves in tree.
+#' @inheritParams Splits
+#' @return `edge_to_splits()` uses the same return format as `as.Splits()`.
+#' 
+#' @seealso [`as.Splits()`][Splits] offers a safe access point to this
+#' function that should be suitable for most users.
+#' 
+#' @family C++ wrappers
+#' @export
+edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
+                           nTip = NTip(edge), ...) {
+  splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
   nSplits <- dim(splits)[1]
 
   # Return:
@@ -70,42 +104,42 @@ as.Splits.phylo <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
     structure(splits,
               nTip = nTip,
               tip.label = tipLabels,
-              class = 'Splits')
+              class = "Splits")
   }
   else {
     splits
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.Splits.multiPhylo <- function (x, tipLabels = x[[1]]$tip.label,
+as.Splits.multiPhylo <- function(x, tipLabels = unique(unlist(TipLabels(x))),
                                   asSplits = TRUE, ...) {
   lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
+as.Splits.Splits <- function(x, tipLabels = NULL, ...) {
   if (is.null(tipLabels)) {
     # Nothing needs doing.
     # Return:
     x
   } else {
     tipLabels <- TipLabels(tipLabels, single = TRUE)
-    oldLabels <- attr(x, 'tip.label')
+    oldLabels <- attr(x, "tip.label")
     if (is.null(oldLabels)) {
-      nTip <- attr(x, 'nTip')
+      nTip <- attr(x, "nTip")
       if (length(tipLabels) == nTip) {
-        attr(x, 'tip.label') <- tipLabels
+        attr(x, "tip.label") <- tipLabels
         x
       } else {
-        stop (length(tipLabels), " labels provided; expecting ", nTip)
+        stop(length(tipLabels), " labels provided; expecting ", nTip)
       }
     } else if (!identical(oldLabels, tipLabels)) {
-      nTip <- attr(x, 'nTip')
+      nTip <- attr(x, "nTip")
       if (length(x) == 0) {
-        attr(x, 'tip.label') <- tipLabels
+        attr(x, "tip.label") <- tipLabels
         x
       } else {
         if (all(oldLabels %in% tipLabels) && all(tipLabels %in% oldLabels)) {
@@ -113,7 +147,7 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
                             [, match(tipLabels, oldLabels), drop = FALSE],
                             tipLabels = tipLabels)
         } else {
-          stop ("Old and new labels must match")
+          stop("Old and new labels must match")
         }
       }
     } else {
@@ -122,212 +156,278 @@ as.Splits.Splits <- function (x, tipLabels = NULL, ...) {
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.Splits.list <- function (x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (inherits(x[[1]], 'phylo')) {
+as.Splits.list <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
+  if (inherits(x[[1]], "phylo")) {
     if (is.null(tipLabels)) {
-      tipLabels <- x[[1]]$tip.label
+      tipLabels <- unique(unlist(TipLabels(x)))
     }
-    lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
-  } else if (inherits(x[[1]], 'Splits')) {
+    lapply(x, function(sp) as.Splits(
+      sp,
+      tipLabels = intersect(tipLabels, TipLabels(sp)),
+      asSplits = asSplits
+      ))
+  } else if (inherits(x[[1]], "Splits")) {
     if (is.null(tipLabels)) {
-      tipLabels <- attr(x, 'tip.label')
+      tipLabels <- attr(x, "tip.label")
       if (is.null(tipLabels)) {
-        tipLabels <- attr(x[[1]], 'tip.label')
+        tipLabels <- attr(x[[1]], "tip.label")
       }
     }
     lapply(x, as.Splits, tipLabels = tipLabels, asSplits = asSplits)
   } else {
-    stop("Unsupported list type.")
+    stop("Unsupported list type; first item has class '",
+         paste0(class(x[[1]]), collapse = ", "), "'")
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.Splits.matrix <- function (x, tipLabels = NULL, ...) {
-  if (all(c('edge', 'Nnode') %in% rownames(x))) {
+as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
+  if (all(c("edge", "Nnode") %in% rownames(x))) {
     col1 <- x[, 1]
     if (is.list(col1)) {
       if (is.null(tipLabels)) {
-        tipLabels <- col1$tip.label
+        tipLabels <- col1[["tip.label"]]
         if (is.null(tipLabels)) {
-          nTip <- dim(col1$edge)[1] - col1$Nnode + 1L
+          nTip <- dim(col1[["edge"]])[1] - col1[["Nnode"]] + 1L
           tipLabels <- seq_len(nTip)
           x <- rbind(x, replicate(ncol(x), list(tip.label = tipLabels)))
-          rownames(x)[nrow(x)] <- 'tip.label'
+          rownames(x)[nrow(x)] <- "tip.label"
         }
       }
-      lapply(seq_len(ncol(x)), function (i) {
-        as.Splits(structure(x[, i], class = 'phylo'), tipLabels = tipLabels)
+      lapply(seq_len(ncol(x)), function(i) {
+        as.Splits(structure(x[, i], class = "phylo"), tipLabels = tipLabels)
       })
     } else {
       stop("Unsupported matrix. Columns should correspond to trees.")
     }
-  } else if (dim(x)[2] == 2) {
-    .as.Splits.edge(x, tipLabels = NULL, asSplits = TRUE, ...)
+  } else if (is.numeric(x) && dim(x)[2] == 2) {
+    edge_to_splits(x, postorder_order(x),
+                   tipLabels = NULL, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.Splits.logical <- function (x, tipLabels = NULL, ...) {
+as.Splits.logical <- function(x, tipLabels = NULL, ...) {
   powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
   if (is.null(dimX)) {
     nTip <- length(x)
-
+    if (nTip == 0) {
+      structure(
+        matrix(raw(0), 0, 0),
+        nTip = 0,
+        tip.label = TipLabels(0),
+        class = "Splits"
+      )
+    } else {
+      if (is.null(tipLabels)) {
+        tipLabels <- TipLabels(x)
+        if (is.null(tipLabels)) {
+          tipLabels <- TipLabels(nTip)
+        }
+      } else {
+        tipLabels <- TipLabels(tipLabels)
+      }
+  
+      structure(
+        matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
+        nTip = nTip,
+        tip.label = tipLabels,
+        class = "Splits"
+      )
+    }
+  } else {
     if (is.null(tipLabels)) {
       tipLabels <- TipLabels(x)
-      if (is.null(tipLabels)) {
-        tipLabels <- paste0('t', seq_len(nTip))
-      }
-    } else {
-      tipLabels <- TipLabels(tipLabels)
     }
-
-    structure(matrix(packBits(c(x, rep(F, (8L - nTip) %% 8))), nrow = 1L),
-    nTip = nTip,
-    tip.label = tipLabels,
-    class = 'Splits')
-  } else {
     nTip <- dimX[2]
     if (is.null(tipLabels)) {
-      tipLabels <- TipLabels(x)
-    }
-    if (is.null(tipLabels)) {
-      tipLabels <- paste0('t', seq_len(nTip))
+      tipLabels <- TipLabels(nTip)
     }
 
-    structure(matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
-                     nrow = dimX[1], byrow=TRUE, dimnames = list(rownames(x), NULL)),
+    nBin <- (nTip %% 8 != 0) + (nTip / 8)
+    structure(
+      matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
+             nrow = dimX[1], ncol = nBin,
+             byrow = TRUE, dimnames = list(rownames(x), NULL)),
       nTip = nTip,
       tip.label = tipLabels,
-      class = 'Splits')
+      class = "Splits"
+    )
   }
 }
 
-#' @rdname as.Splits
+#' @rdname Splits
 #' @export
-as.logical.Splits <- function (x, tipLabels = NULL, ...) {
-  nTip <- attr(x, 'nTip')
+as.Splits.character <- function(x, tipLabels = NULL, ...) {
+  nTip <- nchar(x[1])
+  
+  if (is.null(tipLabels)) {
+    tipLabels <- TipLabels(x)
+    if (length(tipLabels) == 1 && tipLabels == x) {
+      tipLabels <- paste0("t", seq_len(nTip))
+    }
+  } else {
+    tipLabels <- TipLabels(tipLabels)
+  }
+  
+  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip), nTip) > 0
+  structure(t(.apply(sp, 2, as.Splits.logical)),
+    nTip = nTip,
+    tip.label = tipLabels,
+    class = "Splits"
+  )
+}
+
+#' @rdname Splits
+#' @export
+as.logical.Splits <- function(x, tipLabels = attr(x, "tip.label"), ...) {
+  nTip <- attr(x, "nTip")
   if (dim(x)[1] == 0) {
     ret <- matrix(logical(0), 0, nTip)
   } else {
     ret <- matrix(as.logical(rawToBits(t(x))),
                   nrow = nrow(x), byrow = TRUE)[, seq_len(nTip), drop = FALSE]
   }
-  dimnames(ret) <- list(rownames(x), attr(x, 'tip.label'))
+  dimnames(ret) <- list(rownames(x), tipLabels)
   ret
 }
 
 #' @family Splits operations
 #' @export
-print.Splits <- function (x, details = FALSE, ...) {
-  nTip <- attr(x, 'nTip')
-  tipLabels <- attr(x, 'tip.label')
+print.Splits <- function(x, details = FALSE, ...) {
+  nTip <- attr(x, "nTip")
+  tipLabels <- attr(x, "tip.label")
   trivial <- TrivialSplits(x)
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
-      if(any(trivial)) paste0('(', sum(trivial), ' trivial)'),
+      if(any(trivial)) paste0("(", sum(trivial), " trivial)"),
       "dividing", nTip,
-      ifelse(is.null(tipLabels), "unlabelled tips.",
-             paste("tips,", tipLabels[1], "..", tipLabels[nTip]))
+      if(is.null(tipLabels)) {
+        "unlabelled tips."
+      } else {
+        if (nTip) {
+          if (nTip == 1) {
+            paste("tip,", tipLabels[1])
+          } else {
+            paste("tips,", tipLabels[1], "..", tipLabels[nTip])
+          }
+        } else {
+          "tips"
+        }
+      }
       )
   if (details) {
     splitNames <- rownames(x)
     if (!is.null(splitNames)) {
 
       nameLengths <- vapply(splitNames, nchar, 0)
-      namePads <- vapply(nameLengths, function (thisLength)
-        paste0(rep(' ', max(nameLengths) - thisLength), collapse=''), character(1))
+      namePads <- vapply(nameLengths, function(thisLength)
+        paste0(rep.int(" ", max(nameLengths) - thisLength), collapse=""), character(1))
       splitNames <- paste0(splitNames, namePads)
     } else {
-      splitNames <- rep('', length(x))
+      splitNames <- character(length(x))
       nameLengths = 0L
     }
-    cat("\n ", paste0(rep(' ', max(nameLengths)), collapse = ''),
-        paste0(rep(c(1:9, ' '), length.out = nTip), collapse = ''))
+    cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
+        paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
 
     for (i in seq_len(dim(x)[1])) {
       split <- x[i, , drop = FALSE]
-      cat("\n", splitNames[i], '',
-          paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), '*', '.'),
-                collapse = ''))
+      cat("\n", splitNames[i], "",
+          paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
+                collapse = ""))
     }
   }
 }
 
-
 #' @family Splits operations
+#' @importFrom utils head
 #' @export
-summary.Splits <- function (object, ...) {
-  print(object, details = TRUE, ...)
-  nTip <- attr(object, 'nTip')
-  if (is.null(attr(object, 'tip.label'))) {
-    cat("\n\nTips not labelled.")
+head.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[seq_len(n)]]
   } else {
-    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, 'tip.label'),
-                     "\t", c(rep('', 4), '\n')[seq_len(min(nTip, 5L))]))
+    x
   }
 }
 
+#' @family Splits operations
+#' @importFrom utils tail
+#' @export
+tail.Splits <- function(x, n = 6L, ...) {
+  if (n < 0) {
+    n <- max(0L, length(x) + n)
+  }
+  if (length(x) > n) {
+    x[[length(x) + 1L - rev(seq_len(n))]]
+  } else {
+    x
+  }
+}
 
 #' @family Splits operations
 #' @export
-as.character.Splits <- function (x, ...) {
-  tipLabels <- attr(x, 'tip.label')
-  nTip <- attr(x, 'nTip')
+summary.Splits <- function(object, ...) {
+  print(object, details = TRUE, ...)
+  nTip <- attr(object, "nTip")
+  if (is.null(attr(object, "tip.label"))) {
+    cat("\n\nTips not labelled.")
+  } else {
+    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, "tip.label"),
+                     "\t", c(character(4L), "\n")[seq_len(min(nTip, 5L))]))
+  }
+}
 
-  apply(as.logical(x), 1L, function (inSplit) {
-    paste0(paste(tipLabels[inSplit], collapse=' '), ' | ',
-           paste(tipLabels[!inSplit], collapse=' '))
+#' @family Splits operations
+#' @export
+names.Splits <- function(x) rownames(x)
+
+
+#' @family Splits operations
+#' @export
+`names<-.Splits` <- `rownames<-`
+
+
+#' @family Splits operations
+#' @export
+as.character.Splits <- function(x, ...) {
+  tipLabels <- attr(x, "tip.label")
+  nTip <- attr(x, "nTip")
+
+  apply(as.logical(x), 1L, function(inSplit) {
+    paste0(paste(tipLabels[inSplit], collapse=" "), " | ",
+           paste(tipLabels[!inSplit], collapse=" "))
   })
 
 }
 
-#' Tips contained within splits
-#'
-#' `TipsInSplits()` specifies the number of tips that occur within each
-#' bipartition split in a `Splits` object.
-#'
-#' @param splits Object of class `Splits`.
-#'
-#' @return `TipsInSplits()` returns a named vector of integers, specifying the
-#' number of tips contained within each split in `splits`.
-#'
-#' @examples
-#' tree <- PectinateTree(8)#'
-#' splits <- as.Splits(tree)
-#' TipsInSplits(splits)
-#'
-#' plot(tree)
-#' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L, cex = 0.7)
-#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
-#'             pos = 1L)
-#'
 #' @family Splits operations
 #' @export
-TipsInSplits <- function (splits) {
-  dims <- dim(splits)
-  ret <- .colSums(as.logical(rawToBits(t(splits))), 8L * dims[2], dims[1])
-  names(ret) <- names(splits)
-  ret
+as.phylo.Splits <- function(x, ...) {
+  ret <- .PreorderTree(
+    edge = splits_to_edge(x, NTip(x)),
+    tip.label = TipLabels(x)
+  )
 }
 
-#' @export
-names.Splits <- function (x) rownames(x)
-
 #' @family Splits operations
 #' @export
-c.Splits <- function (...) {
+c.Splits <- function(...) {
   splits <- list(...)
-  nTip <- unique(vapply(splits, attr, 1, 'nTip'))
+  nTip <- unique(vapply(splits, attr, 1, "nTip"))
   if (length(nTip) > 1L) {
     stop("Splits must relate to identical tips.")
   }
-  tips <- lapply(splits, attr, 'tip.label')
+  tips <- lapply(splits, attr, "tip.label")
   if (length(unique(lapply(tips, sort))) > 1L) {
     stop("All splits must bear identical tips")
   }
@@ -338,77 +438,135 @@ c.Splits <- function (...) {
   structure(do.call(rbind, splits),
             nTip = nTip,
             tip.label = tipLabels,
-            class='Splits')
+            class = "Splits")
 }
 
 #' @family Splits operations
 #' @export
-`+.Splits` <- function (...) c(...)
+`+.Splits` <- function(...) c(...)
 
 
 #' @family Splits operations
 #' @export
-`-.Splits` <- function (x, y) {
+`-.Splits` <- function(x, y) {
   x[[!x %in% y]]
 }
 
 #' @family Splits operations
 #' @export
-`[[.Splits` <- function (x, ..., drop = TRUE) {
+`[[.Splits` <- function(x, ..., drop = TRUE) {
   elements <- list(...)
   if (length(elements) == 0L) {
     x[]
   } else if (length(elements) == 1L) {
     ret <- x[elements[[1]], , drop = FALSE]
     at <- attributes(x)
-    at$dim<- dim(ret)
-    at$dimnames[[1]] <- rownames(x)[elements[[1]]]
+    at[["dim"]] <- dim(ret)
+    at[["dimnames"]][[1]] <- rownames(x)[elements[[1]]]
     attributes(ret) <- at
     ret
   } else {
-    stop ("Too many dimensions specified")
+    stop("Too many dimensions specified")
+  }
+}
+
+.MaskSplits <- function(x) {
+  mask_splits(x)
+}
+
+#' @family Splits operations
+#' @method ! Splits
+#' @export
+`!.Splits` <- function(x) {
+  not_splits(x)
+}
+
+#' @family Splits operations
+#' @method & Splits
+#' @export
+`&.Splits` <- function(e1, e2) {
+  and_splits(e1, e2)
+}
+
+#' @family Splits operations
+#' @method | Splits
+#' @export
+`|.Splits` <- function(e1, e2) {
+  or_splits(e1, e2)
+}
+
+
+#' Exclusive OR operation
+#' @rdname xor
+#' @param x,y Objects to be compared.
+setGeneric("xor")
+
+#' @family Splits operations
+#' @rdname xor
+#' @importFrom methods setMethod
+#' @export
+setMethod("xor", signature = representation(x = "Splits", y = "Splits"),
+          function(x, y) xor_splits(x, y))
+
+#' @export
+t.Splits <- function(x) t(x[])
+
+#' @family Splits operations
+#' @export
+length.Splits <- function(x) nrow(x)
+
+#' @family Splits operations
+#' @importFrom stats setNames
+#' @export
+duplicated.Splits <- function(x, incomparables, fromLast = FALSE,
+                              withNames = TRUE, ...) {
+  if (missing(incomparables)) {
+    ret <- duplicated_splits(x, isTRUE(fromLast))
+    if (withNames) names(ret) <- names(x)
+    ret
+  } else {
+    dupX <- !x
+    useOrig <- x[, 1] < dupX[, 1]
+    dupX[useOrig, ] <- x[useOrig, ]
+    
+    if (dim(dupX)[2] == 1) {
+      ret <- duplicated.default(dupX, incomparables = incomparables, 
+                         fromLast = fromLast, ...)
+      if (withNames) {
+        setNames(ret, names(dupX))
+      } else {
+        ret
+      }
+    } else {
+      ret <- duplicated.array(dupX, MARGIN = 1, incomparables = incomparables,
+                              fromLast = fromLast, ...)
+      if (withNames) {
+        ret
+      } else {
+        as.logical(ret)
+      }
+    }
   }
 }
 
 #' @family Splits operations
 #' @export
-`!.Splits` <- function (x) {
-  nTip <- attr(x, 'nTip')
-  x <- !unclass(x)
-  remainder <- (8L - nTip) %% 8L
-  if (remainder) {
-    lastSplit <- dim(x)[2]
-    endMask <- packBits(c(rep(TRUE, 8L - remainder), rep(FALSE, remainder)))
-    x[, lastSplit] <- x[, lastSplit] & endMask
-  }
-  class(x) <- 'Splits'
-  x
-}
-
-
-#' @family Splits operations
-#' @export
-length.Splits <- function (x) nrow(x)
-
-#' @family Splits operations
-#' @export
-duplicated.Splits <- function (x, incomparables = FALSE, ...) {
-  dupX <- !x
-  useOrig <- x[, 1] < dupX[, 1]
-  dupX[useOrig, ] <- x[useOrig, ]
-
-  duplicated.array(dupX, MARGIN = 1, ...)
-}
-
-#' @family Splits operations
-#' @export
-unique.Splits <- function (x, incomparables = FALSE, ...) {
+unique.Splits <- function(x, incomparables, ...) {
   at <- attributes(x)
   dups <- duplicated(x, incomparables, ...)
   x <- x[!dups, , drop = FALSE]
-  at$dim <- dim(x)
-  at$dimnames <- dimnames(x)
+  at[["dim"]] <- dim(x)
+  at[["dimnames"]] <- dimnames(x)
   attributes(x) <- at
+  x
+}
+
+#' @family Splits operations
+#' @export
+rev.Splits <- function(x) {
+  newOrder <- seq.int(dim(x)[1], 1)
+  x[] <- x[newOrder, ]
+  rownames(x) <- rownames(x)[newOrder]
   x
 }
 
@@ -421,11 +579,12 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' split in its left operand.
 #'
 #' `in.Splits()` is an alias for `%in%`, included for backwards compatibility.
-#' It will be deprecated in a future release.
+#' It is deprecated and will be removed in a future release.
 #'
 #' @param x,table Object of class `Splits`.
-#' @param \dots Specify `nomatch =` to provide an integer value that will be
-#' used in place of `NA` in the case where no match is found.
+#' @param nomatch Integer value that will be used in place of `NA` in the case
+#' where no match is found.
+#' @param incomparables Ignored. (Included for consistency with generic.)
 # @param incomparables A vector of values that cannot be matched. Any value in
 # `x` matching a value in this vector is assigned the `nomatch` value.
 # For historical reasons, `FALSE` is equivalent to `NULL`.
@@ -440,86 +599,96 @@ unique.Splits <- function (x, incomparables = FALSE, ...) {
 #' match(splits1, splits2)
 # Turns base functions into S3 generics that can handle `Splits` objects
 # (as well as `integer64`s).  This follows equivalent functions in the
-# '\pkg{bit64}' package.
+# "\pkg{bit64}" package.
 #
 #' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
-#' @export
-#' @keywords methods
-# Following https://github.com/cran/bit64/blob/master/R/patch64.R
-"match" <- if (!exists("match.default")) {
-  function(x, table, ...) UseMethod("match")
-} else {
-  match
-}
-
-#' @method match default
-#' @export
-"match.default" <- if (!exists("match.default")) {
-  function(x, table, ...) base::"match"(x, table, ...)
-} else {
-  match.default
-}
-
-#' @rdname match
+#' @aliases match,Splits,Splits-method
 #' @family Splits operations
-#' @method match Splits
-#' @export
-match.Splits <- function (x, table, ...) {
-  nomatch <- as.integer(c(...)['nomatch'])
-  if (length(nomatch) != 1L) {
-    nomatch <- NA_integer_
-  }
-
-  vapply(seq_along(x), function (i) {
-    ret <- which(table %in% x[[i]])
-    if (length(ret) == 0) ret <- nomatch
-    ret
-  }, integer(1))
-}
-
-#' @rdname match
-#' @export
-match.list <- function (x, table, ...) {
-  if (inherits(x, 'Splits')) {
-    match.Splits(x, table, ...)
-  } else {
-    NextMethod()
-  }
-}
-
-#' @rdname match
-#' @export
 #' @keywords methods
-`%in%` <- if (!exists("%in%.default")) {
-  function(x, table) UseMethod("%in%")
-} else {
-  `%in%`
+#' 
+#' @name match.Splits
+#' @export
+setMethod("match",
+          signature(x = "Splits", table = "Splits"),
+          function(x, table, nomatch, incomparables) {
+            if(missing("nomatch")) {
+              nomatch <- NA_integer_
+            }
+            nomatch <- as.integer(nomatch)
+            if (length(nomatch) != 1L) {
+              nomatch <- NA_integer_
+            }
+            vapply(seq_along(x), function(i) {
+              ret <- which(table %in% x[[i]])
+              if (length(ret) == 0) ret <- nomatch
+              ret
+            }, integer(1))
+})
+
+# Replaces a previous approach (TreeTools <= 1.6.0) that followed
+# https://github.com/cran/bit64/blob/master/R/patch64.R
+
+
+#' @rdname match.Splits
+in.Splits <- function(x, table) {
+  .Deprecated("%in%")
+  .in.Splits(x, table)
 }
 
-#' @method %in% default
-#' @export
-"%in%.default" <- if (!exists("%in%.default")) {
-  function(x, table) base::"%in%"(x, table)
-} else {
-  `%in%.default`
-}
-
-#' @rdname match
-#'
-#' @return `%in%` returns a logical vector specifying which of the splits in
-#' `x` are present in `table`.
-#'
-#' @examples
-#' splits1 %in% splits2
-#'
-#' @method %in% Splits
-#' @export
-`%in%.Splits` <- function (x, table) {
+.in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }
 
-#' @rdname match
+#' @rdname match.Splits
+setGeneric("match")
+
+
+#' @rdname match.Splits
 #' @export
-in.Splits <- `%in%.Splits`
+#' @keywords methods
+setMethod("%in%",
+          signature(x = "Splits", table = "Splits"),
+          .in.Splits)
+
+
+#' Polarize splits on a single taxon
+#'
+#' @param x Object of class [`Splits`].
+#' @param pole Numeric or character identifying tip that should polarize each
+#' split.
+#'
+#' @return `PolarizeSplits()` returns a `Splits` object in which `pole` is
+#' represented by a zero bit
+#' @family Splits operations
+#' @export
+PolarizeSplits <- function(x, pole = 1L) {
+  nTip <- attr(x, "nTip")
+  if (!is.numeric(pole)) {
+    pole <- match(pole, attr(x, "tip.label"))
+  }
+  if (is.na(pole)) {
+    stop("Could not find `pole` in labels of `x`")
+  }
+  if (pole < 1) {
+    stop("`pole` must be positive")
+  }
+  if (pole > nTip) {
+    stop("`pole` must correspond to a leaf")
+  }
+
+  poleMask <- logical(8 * ceiling(nTip / 8))
+  poleMask[pole] <- T
+  poleMask <- packBits(poleMask)
+  flip <- !apply(t(x) & poleMask, 2, function(x) any(as.logical(x)))
+
+  x[flip, ] <- !x[flip, ]
+  remainder <- (8L - nTip) %% 8L
+  if (remainder) {
+    lastSplit <- dim(x)[2]
+    endMask <- packBits(c(!logical(8L - remainder), logical(remainder)))
+    x[, lastSplit] <- x[, lastSplit] & endMask
+  }
+  x
+}

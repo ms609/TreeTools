@@ -9,76 +9,176 @@
 #'
 #' @template tree(s)Param
 #' @param outgroupTips Vector of type character, integer or logical, specifying
-#' the names or indices of the tips to include in the outgroup.
+#' the names or indices of the tips to include in the outgroup.  If
+#' `outgroupTips` is a of type character, and a tree contains multiple tips
+#' with a matching label, the first will be used.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
-#' clade that contains the specified tips.
+#' clade that contains the specified tips, with edges and nodes numbered in
+#' preorder.
 #'
 #' @examples
 #' tree <- PectinateTree(8)
 #' plot(tree)
 #' ape::nodelabels()
 #'
-#' plot(RootTree(tree, c('t6', 't7')))
+#' plot(RootTree(tree, c("t6", "t7")))
 #'
 #' plot(RootOnNode(tree, 12))
 #' plot(RootOnNode(tree, 2))
 #'
 #' @seealso
 #' - [`ape::root()`]
-#' - [`EnforceOutgroup()`]
 #'
 #' @family tree manipulation
 #'
 #' @template MRS
-#' @importFrom phangorn Ancestors Descendants
-#' @importFrom ape root
 #' @export
-RootTree <- function (tree, outgroupTips) UseMethod('RootTree')
-
-#' @export
-RootTree.phylo <- function (tree, outgroupTips) {
-  tipLabels <- tree$tip.label
-  if (is.character(outgroupTips)) {
-    if (!all(outgroupTips %in% tipLabels)) {
-      stop("Outgroup tips [", paste(outgroupTips, collapse=', '),
-           "] not found in tree's tip labels.")
-    }
-  } else {
-    outgroupTips <- tipLabels[outgroupTips]
-  }
-  if (length(outgroupTips) == 0) {
-    stop("No outgroup tips selected")
-  } else if (length(outgroupTips) == 1) {
-    outgroup <- outgroupTips
-  } else {
-    tipNos <- which(tipLabels %in% outgroupTips)
-    ancestry <- unlist(Ancestors(tree, tipNos))
-    ancestryTable <- table(ancestry)
-    lineage <- as.integer(names(ancestryTable))
-    lca <- max(lineage[ancestryTable == length(outgroupTips)])
-    rootNode <- length(tipLabels) + 1L
-    if (lca == rootNode) {
-      lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
-    }
-    outgroup <- Descendants(tree, lca)[[1]]
-  }
-
-  Renumber(root(tree, outgroup, resolve.root = TRUE))
+RootTree <- function(tree, outgroupTips) {
+  UseMethod("RootTree")
 }
 
 #' @export
-RootTree.list <- function (tree, outgroupTips) {
+RootTree.phylo <- function(tree, outgroupTips) {
+  if (missing(outgroupTips) ||
+      is.null(outgroupTips) ||
+      length(outgroupTips) == 0) {
+    return(tree)
+  }
+  tipLabels <- tree[["tip.label"]]
+  if (is.character(outgroupTips)) {
+    chosenTips <- match(outgroupTips, tipLabels)
+    if (any(is.na(chosenTips))) {
+      stop("Outgroup tips [",
+           paste(outgroupTips[is.na(chosenTips)], collapse = ", "),
+           "] not found in tree's tip labels.")
+    }
+    outgroupTips <- chosenTips
+  } else if (is.logical(outgroupTips)) {
+    outgroupTips <- which(outgroupTips)
+  }
+  tree <- Preorder(tree)
+  nTip <- NTip(tree)
+  if (length(outgroupTips) == 0) {
+    stop("No outgroup tips selected")
+  } else if (length(outgroupTips) == 1L) {
+    outgroup <- outgroupTips
+  } else if (length(outgroupTips) == nTip - 1L) {
+    outgroup <- setdiff(seq_len(nTip), outgroupTips)
+  } else {
+    ancestryTable <- .AncestorTable(tree, outgroupTips)
+    lineage <- ancestryTable[1, ]
+    lca <- max(lineage[ancestryTable[2, ] == length(outgroupTips)])
+    nTip <- length(tipLabels)
+    rootNode <- nTip + 1L
+    if (lca == rootNode) {
+      if (tree[["Nnode"]] > 2L) {
+        lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+        if (lca > rootNode + nTip - 2L) {
+          return(tree)
+        }
+      } else {
+        return(tree)
+      }
+    }
+    outgroup <- lca
+  }
+  if (outgroup > nTip + tree[["Nnode"]]) {
+    return(tree)
+  }
+
+  root_on_node(tree, outgroup)
+}
+
+.AllAncestors <- function(edge) {
+  edge <- Preorder(edge)
+  parents <- edge[, 1]
+  child <- edge[, 2]
+  nEdge <- length(child)
+  res <- vector("list", max(parents))
+  for (i in seq_len(nEdge)) {
+    pa <- parents[i]
+    res[[child[i]]] <- c(pa, res[[pa]])
+  }
+
+  # Return:
+  res
+}
+
+.AncestorTable <- function(tree, outgroupTips) {
+  edge <- tree[["edge"]]
+  parent <- edge[, 1]
+  child <- edge[, 2]
+  nVert <- max(parent)
+  parentOf <- rep_len(NA_integer_, nVert)
+  parentOf[child] <- parent
+  
+  counts <- integer(nVert)
+  i <- outgroupTips
+  while (length(i)) {
+    i <- parentOf[i]
+    i <- i[!is.na(i)]
+    for (j in i) {
+      counts[j] <- counts[j] + 1L
+    }
+  }
+  
+  counted <- counts > 0
+  
+  # Return:
+  rbind(node = which(counted),
+        count = counts[counted])
+}
+
+#' @export
+RootTree.matrix <- function(tree, outgroupTips) {
+  tree <- Preorder(tree)
+  if (missing(outgroupTips) ||
+      is.null(outgroupTips) ||
+      length(outgroupTips) == 0L) {
+    return(tree)
+  }
+  rootNode <- tree[1]
+  nNode <- max(tree[, 1]) - rootNode + 1L
+  if (length(outgroupTips) == 1L) {
+    outgroup <- outgroupTips
+  } else {
+    ancestry <- unlist(.AllAncestors(tree)[outgroupTips])
+    ancestryTable <- tabulate(ancestry)
+    lca <- max(which(ancestryTable == length(outgroupTips)))
+    
+    if (lca == rootNode) {
+      if (nNode > 2L) {
+        lineage <- which(as.logical(ancestryTable))
+        lca <- lineage[lineage - c(lineage[-1], 0) != -1][1] + 1L
+      } else {
+        return(tree)
+      }
+    }
+    outgroup <- lca
+  }
+
+  root_on_node(list(edge = tree, Nnode = nNode), outgroup)[["edge"]]
+}
+
+#' @export
+RootTree.list <- function(tree, outgroupTips) {
+  if (missing(outgroupTips)
+      || is.null(outgroupTips)
+      || length(outgroupTips) == 0) {
+    return(tree)
+  }
   lapply(tree, RootTree, outgroupTips)
 }
 
 #' @export
-RootTree.multiPhylo <- function (tree, outgroupTips) {
-  structure(RootTree.list(tree, outgroupTips), class = 'multiPhylo')
+RootTree.multiPhylo <- function(tree, outgroupTips) {
+  tree[] <- RootTree.list(tree, outgroupTips)
+  tree
 }
 
 #' @export
-RootTree.NULL <- function (tree, outgroupTips) NULL
+RootTree.NULL <- function(tree, outgroupTips) NULL
 
 #' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
@@ -88,15 +188,18 @@ RootTree.NULL <- function (tree, outgroupTips) NULL
 #' requested `node` and ordered in [`Preorder`].
 #'
 #' @export
-RootOnNode <- function (tree, node, resolveRoot = FALSE) UseMethod('RootOnNode')
+RootOnNode <- function(tree, node, resolveRoot = FALSE) {
+  UseMethod("RootOnNode", tree)
+}
 
+#' @importFrom fastmatch %fin%
 #' @export
-RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
-  edge <- tree$edge
+RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
+  edge <- tree[["edge"]]
   parent <- edge[, 1]
   child <- edge[, 2]
   nodeParentEdge <- child == node
-  rootEdges <- !parent %in% child
+  rootEdges <- !parent %fin% child
   rootNode <- parent[rootEdges][1]
   rooted <- sum(rootEdges) == 2L
 
@@ -107,7 +210,7 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
                                     stopAt = rootEdges)
 
       rootChildren <- child[rootEdges]
-      if (node %in% rootChildren) {
+      if (node %fin% rootChildren) {
         if (!resolveRoot) {
           if (node < NTip(tree)) {
             node <- rootChildren[rootChildren != node]
@@ -118,7 +221,7 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
           child <- child[!deletedEdge]
           parent[parent > node] <- parent[parent > node] - 1L
           child[child > node] <- child[child > node] - 1L
-          tree$Nnode <- tree$Nnode - 1L
+          tree[["Nnode"]] <- tree[["Nnode"]] - 1L
         }
         inverters <- logical(length(parent))
       } else {
@@ -145,7 +248,7 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
           parent[parent > rootNode] <- parent[parent > rootNode] - 1L
           child[child > rootNode] <- child[child > rootNode] - 1L
 
-          tree$Nnode <- tree$Nnode - 1L
+          tree[["Nnode"]] <- tree[["Nnode"]] - 1L
         }
       }
     } else {
@@ -155,15 +258,15 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
         parent <- c(parent, newNode)
         child <- c(child, parent[nodeParentEdge])
         parent[nodeParentEdge] <- newNode
-        tree$Nnode <- 1L + tree$Nnode
+        tree[["Nnode"]] <- 1L + tree[["Nnode"]]
       } else {
         inverters <- EdgeAncestry(which(nodeParentEdge), parent, child,
                                   stopAt = rootEdges)
       }
     }
-    tree$edge <- RenumberTree(ifelse(inverters, child, parent),
-                              ifelse(inverters, parent, child))
-    attr(tree, 'order') <- 'preorder'
+    tree[["edge"]] <- RenumberTree(ifelse(inverters, child, parent),
+                                   ifelse(inverters, parent, child))
+    attr(tree, "order") <- "preorder"
     tree
   } else {
     # Root position is already correct
@@ -178,55 +281,72 @@ RootOnNode.phylo <- function (tree, node, resolveRoot = FALSE) {
 }
 
 #' @export
-RootOnNode.list <- function (tree, node, resolveRoot = FALSE) {
+RootOnNode.list <- function(tree, node, resolveRoot = FALSE) {
   lapply(tree, RootOnNode, node, resolveRoot)
 }
 
 #' @export
-RootOnNode.multiPhylo <- function (tree, node, resolveRoot = FALSE) {
-  structure(RootOnNode.list(tree, node, resolveRoot), class = 'multiPhylo')
+RootOnNode.multiPhylo <- function(tree, node, resolveRoot = FALSE) {
+  tree[] <- RootOnNode.list(tree, node, resolveRoot)
+  tree
 }
 
 #' @export
-RootOnNode.NULL <- function (tree, node, resolveRoot = FALSE) NULL
+RootOnNode.NULL <- function(tree, node, resolveRoot = FALSE) NULL
 
 #' @rdname RootTree
 #' @return `UnrootTree()` returns `tree`, in preorder,
 #' having collapsed the first child of the root node in each tree.
 #' @export
-UnrootTree <- function (tree) UseMethod('UnrootTree')
+UnrootTree <- function(tree) UseMethod("UnrootTree")
 
 #' @export
 UnrootTree.phylo <- function(tree) {
   tree <- Preorder(tree)
-  edge <- tree$edge
-  if (dim(edge)[1] < 3) return (tree)
+  edge <- tree[["edge"]]
+  if (dim(edge)[1] < 3) {
+    return(tree)
+  }
 
   parent <- edge[, 1]
   rootNode <- parent[1]
   rootEdge2 <- parent[-1] == rootNode
-  if (sum(rootEdge2) > 1L) return (tree)
+  if (sum(rootEdge2) > 1L) {
+    return(tree)
+  }
 
-  deleted <- if (edge[1, 2] < rootNode) 1L + which(rootEdge2) else 1L
+  if (edge[1, 2] < rootNode) {
+    deleted <- 1L + which(rootEdge2)
+    weightTo <- 1L
+  } else {
+    deleted <- 1L
+    weightTo <- 1L + which(rootEdge2)
+  }
   renumber <- edge > rootNode
   edge[renumber] <- edge[renumber] - 1L
-  tree$edge <- edge[-deleted, ]
-  tree$Nnode <- tree$Nnode - 1L
+  tree[["edge"]] <- edge[-deleted, ]
+  tree[["Nnode"]] <- tree[["Nnode"]] - 1L
+  weight <- tree[["edge.length"]]
+  if (!is.null(weight)) {
+    weight[weightTo] <- weight[weightTo] + weight[deleted]
+    tree[["edge.length"]] <- weight[-deleted]
+  }
 
   # Return:
   tree
 }
 
 #' @export
-UnrootTree.list <- function (tree) lapply(tree, UnrootTree)
+UnrootTree.list <- function(tree) lapply(tree, UnrootTree)
 
 #' @export
-UnrootTree.multiPhylo <- function (tree) {
-  structure(UnrootTree.list(tree), class = 'multiPhylo')
+UnrootTree.multiPhylo <- function(tree) {
+  tree[] <- UnrootTree.list(tree)
+  tree
 }
 
 #' @export
-UnrootTree.NULL <- function (tree) NULL
+UnrootTree.NULL <- function(tree) NULL
 
 #' Collapse nodes on a phylogenetic tree
 #'
@@ -246,22 +366,22 @@ UnrootTree.NULL <- function (tree) NULL
 #' edge.
 #'
 #' @examples
-#' set.seed(1)
-#' oldPar <- par(mfrow=c(3, 1), mar=rep(0.5, 4))
+#' oldPar <- par(mfrow = c(3, 1), mar = rep(0.5, 4))
 #'
-#' tree <- ape::rtree(7)
+#' tree <- as.phylo(898, 7)
+#' tree$edge.length <- 11:22
 #' plot(tree)
 #' nodelabels()
 #' edgelabels()
 #' edgelabels(round(tree$edge.length, 2),
-#'            cex = 0.6, frame = 'n', adj = c(1, -1))
+#'            cex = 0.6, frame = "n", adj = c(1, -1))
 #'
 #' # Collapse by node number
 #' newTree <- CollapseNode(tree, c(12, 13))
 #' plot(newTree)
 #' nodelabels()
 #' edgelabels(round(newTree$edge.length, 2),
-#'            cex = 0.6, frame = 'n', adj = c(1, -1))
+#'            cex = 0.6, frame = "n", adj = c(1, -1))
 #'
 #' # Collapse by edge number
 #' newTree <- CollapseEdge(tree, c(2, 4))
@@ -272,28 +392,29 @@ UnrootTree.NULL <- function (tree) NULL
 #' @family tree manipulation
 #' @author  Martin R. Smith
 #' @export
-CollapseNode <- function (tree, nodes) UseMethod('CollapseNode')
+CollapseNode <- function(tree, nodes) UseMethod("CollapseNode")
 
 #' @rdname CollapseNode
+#' @importFrom fastmatch %fin%
 #' @export
-CollapseNode.phylo <- function (tree, nodes) {
-  if (length(nodes) == 0) return (tree)
+CollapseNode.phylo <- function(tree, nodes) {
+  if (length(nodes) == 0) return(tree)
 
-  edge <- tree$edge
-  lengths <- tree$edge.length
+  edge <- tree[["edge"]]
+  lengths <- tree[["edge.length"]]
   hasLengths <- !is.null(lengths)
   parent <- edge[, 1]
   child <- edge[, 2]
   root <- RootNode(edge)
   nTip <- NTip(tree)
   maxNode <- max(parent)
-  edgeBelow <- order(child, method = 'radix') # a little faster than 'auto'
+  edgeBelow <- order(child, method = "radix") # a little faster than "auto"
   tips <- seq_len(nTip)
   preRoot <- seq_len(root - 1L)
   edgeBelow <- c(edgeBelow[preRoot], NA, edgeBelow[-preRoot])
   nodes <- unique(nodes)
 
-  if (!all(nodes %in% (nTip + 1L):maxNode)) {
+  if (!all(nodes %fin% (nTip + 1L):maxNode)) {
     stop("nodes must be integers between ", nTip + 1L, " and ", maxNode)
   }
   if (any(nodes == root)) {
@@ -311,11 +432,12 @@ CollapseNode.phylo <- function (tree, nodes) {
     parent[parent == node] <- newParent
   }
 
-  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %in% parent))
+  newNumber <- c(seq_len(nTip), nTip + cumsum((nTip + 1L):maxNode %fin% parent))
 
-  tree$edge <-cbind(newNumber[parent[keptEdges]], newNumber[child[keptEdges]])
-  tree$edge.length <- lengths[keptEdges]
-  tree$Nnode <- tree$Nnode - length(nodes)
+  tree[["edge"]] <- cbind(newNumber[parent[keptEdges]],
+                          newNumber[child[keptEdges]])
+  tree[["edge.length"]] <- lengths[keptEdges]
+  tree[["Nnode"]] <- tree[["Nnode"]] - length(nodes)
 
   # TODO Renumber nodes sequentially
   # TODO Re-write this in C++.
@@ -324,118 +446,13 @@ CollapseNode.phylo <- function (tree, nodes) {
 
 #' @rdname CollapseNode
 #' @export
-CollapseEdge <- function (tree, edges) {
-  nodesToCollapse <- tree$edge[edges, 2]
+CollapseEdge <- function(tree, edges) {
+  nodesToCollapse <- tree[["edge"]][edges, 2]
   if (any(nodesToCollapse < NTip(tree))) {
     stop("Cannot collapse external edges: ",
-         paste(edges[nodesToCollapse <= NTip(tree)], collapse = ', '))
+         paste(edges[nodesToCollapse <= NTip(tree)], collapse = ", "))
   }
   CollapseNode(tree, nodesToCollapse)
-}
-
-#' Drop tips from tree
-#'
-#' `DropTip()` removes specified tips from a phylogenetic tree, collapsing
-#' incident branches.
-#'
-#' This function is more robust than [`ape::drop.tip()`] as it does not
-#' require any particular internal node numbering schema.  It is not presently
-#' as fast, though it is ripe for optimization; if you are finding this
-#' function is a rate-limiting step, please get in touch and I'll prioritise
-#' writing a faster implementation.
-#'
-#'
-#' @template treeParam
-#' @param tip Character vector specifying labels of leaves in tree to be dropped,
-#' or integer vector specifying the indices of leaves to be dropped.
-#' Specifying the index of an internal node will drop all descendants of that
-#' node.
-#'
-#' @return `DropTip()` returns a tree of class `phylo`, in [Preorder], with the
-#' requested leaves removed.
-#'
-#' @examples
-#' tree <- BalancedTree(8)
-#' plot(tree)
-#' plot(DropTip(tree, c('t4', 't5')))
-#'
-#' @family tree manipulation
-#' @template MRS
-#' @export
-DropTip <- function (tree, tip) {
-  #TODO Rewrite in C.
-  labels <- tree$tip.label
-  nTip <- length(labels)
-  if (is.character(tip)) {
-    found <- tip %in% labels
-    if (!all(found)) warning(paste(tip[!found], collapse = ', '),
-                             " not present in tree")
-    drop <- tree$tip.label %in% tip[found]
-  } else if (is.numeric(tip)) {
-    nNodes <- nTip + tree$Nnode
-    if (any(tip > nNodes)) warning("Tree only has ", nNodes, " nodes")
-    if (any(tip < 1L)) warning("tip must be > 0")
-
-    drop <- seq_len(nTip) %in% c(tip, unlist(Descendants(tree, tip[tip > nTip])))
-  } else {
-    stop("`tip` must be of type character or numeric")
-  }
-
-  if (any(drop)) {
-    if (all(drop)) {
-      return (NULL)
-    }
-    edge <- tree$edge
-    edge <- RenumberTree(edge[, 1], edge[, 2]) # Necessary to handle 'nasty node ordering'
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    external <- child <= nTip
-
-    # Drop tips:
-    keep <- !child %in% which(drop)
-
-    # Drop dangling nodes:
-    repeat {
-      nonDanglers <- (child[keep] %in% parent[keep]) | external[keep]
-      if (all(nonDanglers)) break
-      keep[keep] <- nonDanglers
-    }
-
-    parent <- parent[keep]
-    child <- child[keep]
-
-    # Collapse singles:
-    singletons <- tabulate(parent) == 1
-    if (any(singletons)) {
-      #edgeBelowSingles <- sort(match(which(singletons), parent),
-      #                     decreasing = TRUE) # If cladewise but not nasty ordering
-      edgeBelowSingles <- rev(which(parent %in% which(singletons)))
-      sortedSingles <- parent[edgeBelowSingles]
-      edgeAboveSingles <- match(sortedSingles, child)
-
-      for (i in seq_along(sortedSingles)) {
-        child[edgeAboveSingles[i]] <- child[edgeBelowSingles[i]]
-      }
-      edge <- c(parent[-edgeBelowSingles], child[-edgeBelowSingles])
-    } else {
-      edge <- c(parent, child)
-    }
-
-    newNumbers <- integer(max(edge))
-    uniqueInts <- unique(edge)
-    newNumbers[uniqueInts] <- rank(uniqueInts)
-    edge <- matrix(newNumbers[edge], ncol = 2L)
-    # Return:
-    structure(list(
-      edge = edge,
-      tip.label = labels[!drop],
-      Nnode = max(edge) - sum(!drop)
-    ), class = 'phylo', order = 'preorder')
-
-  } else {
-    # Return:
-    Preorder(tree)
-  }
 }
 
 #' Generate binary tree by collapsing polytomies
@@ -444,9 +461,9 @@ DropTip <- function (tree, tip) {
 #' trees, such that all trees compatible with the input topology are drawn
 #' with equal probability.
 #'
-#'
-#' @seealso Resolve polytomies such that some resolutions are more probable
-#' than others using [`ape::multi2di()`].
+#' @seealso Since ape v5.5, this functionality is available through
+#' [`ape::multi2di()`]; previous versions of "ape" did not return topologies
+#' in equal frequencies.
 #'
 #' @return `MakeTreeBinary()` returns a rooted binary tree of class `phylo`,
 #' corresponding to tree uniformly selected from all those compatible with
@@ -459,18 +476,18 @@ DropTip <- function (tree, tip) {
 #' @template treeParam
 #' @family tree manipulation
 #' @export
-MakeTreeBinary <- function (tree) {
-  UseMethod('MakeTreeBinary')
+MakeTreeBinary <- function(tree) {
+  UseMethod("MakeTreeBinary")
 }
 
 #' @export
-MakeTreeBinary.phylo <- function (tree) {
+MakeTreeBinary.phylo <- function(tree) {
   tree <- Preorder(tree)
   degree <- NodeOrder(tree, internalOnly = TRUE)
   degree[1] <- degree[1] + 1L # Root node
   polytomies <- degree > 3L
   if (!any(polytomies)) return(tree)
-  edge <- tree$edge
+  edge <- tree[["edge"]]
 
   nTip <- edge[1] - 1L
   polytomyN <- which(polytomies) + nTip
@@ -478,7 +495,7 @@ MakeTreeBinary.phylo <- function (tree) {
   for (i in seq_len(sum(polytomies))) {
     n <- polytomyN[i]
     nKids <- degree[i] - 1L
-    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the 'root'
+    newParent <- .RandomParent(nKids + 1L) # Tip 1 is the "root"
     newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids))
 
     nNewNodes <- nKids - 2L
@@ -504,17 +521,17 @@ MakeTreeBinary.phylo <- function (tree) {
 
     edge <- rbind(keep, add)
   }
-  tree$edge <- edge
-  tree$Nnode <- nTip - 1L
+  tree[["edge"]] <- edge
+  tree[["Nnode"]] <- nTip - 1L
   tree
 }
 
 #' @export
-MakeTreeBinary.list <- function (tree) lapply(tree, MakeTreeBinary)
+MakeTreeBinary.list <- function(tree) lapply(tree, MakeTreeBinary)
 
 #' @export
-MakeTreeBinary.multiPhylo <- function (tree) {
-  structure(MakeTreeBinary.list(tree), class = 'multiPhylo')
+MakeTreeBinary.multiPhylo <- function(tree) {
+  structure(MakeTreeBinary.list(tree), class = "multiPhylo")
 }
 
 
@@ -544,10 +561,10 @@ MakeTreeBinary.multiPhylo <- function (tree) {
 #' @template MRS
 #' @family tree manipulation
 #' @export
-LeafLabelInterchange <- function (tree, n = 2L) {
+LeafLabelInterchange <- function(tree, n = 2L) {
 
-  if (n < 2L) return (tree)
-  tipLabel <- tree$tip.label
+  if (n < 2L) return(tree)
+  tipLabel <- tree[["tip.label"]]
   nTip <- length(tipLabel)
   if (n > nTip) {
     stop("`n` cannot exceed number of tips in tree (", nTip, ")")
@@ -578,11 +595,13 @@ LeafLabelInterchange <- function (tree, n = 2L) {
   cycles <- cycles[cycles > 0L]
   nCycles <- length(cycles)
   start <- cumsum(c(0L, cycles[-nCycles]))
-  to <- unlist(lapply(seq_along(cycles), function (i) {
+  to <- unlist(lapply(seq_along(cycles), function(i) {
      c(seq_len(cycles[i] - 1L) + 1L, 1L) + start[i]
   }))
 
-  tree$tip.label[from] <- tipLabel[from[to]]
+  tree[["tip.label"]][from] <- tipLabel[from[to]]
+  
+  # Return:
   tree
 }
 

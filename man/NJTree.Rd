@@ -4,13 +4,16 @@
 \alias{NJTree}
 \title{Generate a neighbour joining tree}
 \usage{
-NJTree(dataset, edgeLengths = FALSE)
+NJTree(dataset, edgeLengths = FALSE, ratio = TRUE, ambig = "mean")
 }
 \arguments{
-\item{dataset}{A phylogenetic data matrix of class \code{\link[phangorn]{phyDat}},
+\item{dataset}{A phylogenetic data matrix of \pkg{phangorn} class \code{phyDat},
 whose names correspond to the labels of any accompanying tree.}
 
 \item{edgeLengths}{Logical specifying whether to include edge lengths.}
+
+\item{ambig, ratio}{Settings of \code{ambig} and \code{ratio} to be used when
+computing \code{\link[=Hamming]{Hamming()}} distances between sequences.}
 }
 \value{
 \code{NJTree} returns an object of class \code{phylo}.
@@ -20,17 +23,19 @@ whose names correspond to the labels of any accompanying tree.}
 dataset.
 }
 \examples{
-data('Lobo')
+data("Lobo")
 NJTree(Lobo.phy)
 
 }
 \seealso{
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}

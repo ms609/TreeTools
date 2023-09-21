@@ -24,15 +24,23 @@
 #' @template exampleNodeSupport
 #'
 #' @template MRS
+#' @family Splits operations
+#' @importFrom ape keep.tip
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
-  forestSplits <- as.Splits(forest,
-                            tipLabels = attr(referenceSplits, 'tip.label'))
+  refLabels <- attr(referenceSplits, "tip.label")
+  forest <- lapply(forest, keep.tip, refLabels)
+  forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
-  ret <- rowSums(vapply(forestSplits,
-                        function (cf) referenceSplits %in% cf,
-                        logical(length(referenceSplits))))
+  logicals <- vapply(forestSplits,
+                     function(cf) referenceSplits %in% cf,
+                     logical(length(referenceSplits)))
+  ret <- if (is.null(dim(logicals))) {
+    sum(logicals)
+  } else {
+    rowSums(logicals)
+  }
   names(ret) <- rownames(referenceSplits)
 
   # Return:
@@ -52,6 +60,7 @@ SplitFrequency <- function(reference, forest) {
 #' @param labels Named vector listing annotations for each split. Names
 #' should correspond to the node associated with each split; see
 #' [`as.Splits()`] for details.
+#' If `NULL`, each splits will be labelled with its associated node.
 #' @param unit Character specifying units of `labels`, if desired. Include a
 #' leading space if necessary.
 #' @param \dots Additional parameters to [`ape::edgelabels()`][ape::nodelabels].
@@ -63,8 +72,8 @@ SplitFrequency <- function(reference, forest) {
 #' tree <- BalancedTree(LETTERS[1:5])
 #' splits <- as.Splits(tree)
 #' plot(tree)
-#' LabelSplits(tree, as.character(splits), frame = 'none', pos = 3L)
-#' LabelSplits(tree, TipsInSplits(splits), unit = ' tips', frame = 'none',
+#' LabelSplits(tree, as.character(splits), frame = "none", pos = 3L)
+#' LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
 #'             pos = 1L)
 #'
 #' @template exampleNodeSupport
@@ -73,11 +82,28 @@ SplitFrequency <- function(reference, forest) {
 #'
 #' Colour labels according to value: [`SupportColour()`]
 #' @importFrom ape edgelabels
+#' @importFrom stats setNames
+#' @family Splits operations
 #' @export
-LabelSplits <- function (tree, labels, unit = '', ...) {
-  edgelabels(paste0(labels, unit),
-             edge = match(as.integer(names(labels)), tree$edge[, 2]),
-             ...)
+LabelSplits <- function(tree, labels = NULL, unit = "", ...) {
+  splits <- as.Splits(tree)
+  if (is.null(labels)) {
+    splitNames <- names(splits)
+    labels <- setNames(splitNames, splitNames)
+  } else if (length(names(labels)) == 0) {
+    if (length(splits) == length(labels)) {
+      labels <- setNames(labels, names(splits))
+    } else {
+      stop("`labels` must bear the same names as `as.Splits(tree)`")
+    }
+  }
+  
+  if (length(setdiff(names(labels), names(splits)))) {
+    warning("Label names do not correspond to splits in tree",
+            immediate. = TRUE)
+  }
+  whichEdge <- match(as.integer(names(labels)), tree[["edge"]][, 2])
+  edgelabels(paste0(labels, unit), edge = whichEdge, ...)
   # Return:
   invisible()
 }
@@ -90,33 +116,38 @@ LabelSplits <- function (tree, labels, unit = '', ...) {
 #' @param powersOf2 Integer vector of same length as `tipIndex`, specifying a
 #' power of 2 to be associated with each tip in turn.
 #' @export
-SplitNumber <- function (tips, tree, tipIndex, powersOf2) { # nocov start
+SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
-  included <- tipIndex %in% tree$tip.label[tips]
+  included <- tipIndex %in% tree[["tip.label"]][tips]
   as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
 }
 
 #' @describeIn SplitFrequency Frequency of splits in a given forest of trees
 #' @export
-ForestSplits <- function (forest, powersOf2) {
+ForestSplits <- function(forest, powersOf2) {
   .Deprecated("SplitFrequency")
-  if (inherits(forest, 'phylo')) forest <- structure(list(forest), class='multiPhylo')
-  tipIndex <- sort(forest[[1]]$tip.label)
+  if (inherits(forest, "phylo")) forest <- c(forest)
+  tipIndex <- sort(forest[[1]][["tip.label"]])
   nTip <- length(tipIndex)
 
   # Return:
-  table(vapply(forest, function (tr) {
+  table(vapply(forest, function(tr) {
+    edge <- tr[["edge"]]
+    parent <- edge[, 1]
+    child <- edge[, 2]
     # +2: Don't consider root node (not a node) or first node (duplicated)
-    vapply(Descendants(tr, nTip + 2L + seq_len(nTip - 3L), type='tips'),
+    vapply(.DescendantTips(parent, child, nTip,
+                           nodes = nTip + 2L + seq_len(nTip - 3L)),
            SplitNumber, character(1), tr, tipIndex, powersOf2)
   }, character(nTip - 3L)))
 }
 
 #' @describeIn SplitFrequency Deprecated. Listed the splits in a given tree.
 #' Use as.Splits instead.
+#' @importFrom lifecycle deprecate_warn
 #' @export
-TreeSplits <- function (tree) {
-  .Deprecated("as.Splits")
+TreeSplits <- function(tree) {
+  deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
 } # nocov end
 
 #' Colour for node support value
@@ -139,20 +170,21 @@ TreeSplits <- function (tree) {
 #' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
 #' possibly calculated using [`SplitFrequency()`].
 #'
+# TODO replace with grDevices palette when require R>3.6.0
 #' @importFrom colorspace diverge_hcl
 #' @export
-SupportColour <- function (support,
+SupportColour <- function(support,
                            show1 = TRUE,
                            scale = rev(diverge_hcl(101, h = c(260, 0), c = 100,
                                                    l = c(50, 90),
                                                    power = 1.0)),
-                           outOfRange = 'red') {
+                           outOfRange = "red") {
   # continuousScale <- rev(colorspace::heat_hcl(101, h=c(300, 75), c.=c(35, 95),
   #  l=c(15, 90), power=c(0.8, 1.2))) # Viridis prefered
 
   sanitized <- support
   sanitized[!is.numeric(support) | support < 0 | support > 1] <- NA
-  ifelse(is.na(support) | support < 0 | support > 1 | support == '',
+  ifelse(is.na(support) | support < 0 | support > 1 | support == "",
          outOfRange,
          ifelse(support == 1 & !show1,
                 "#ffffff00",

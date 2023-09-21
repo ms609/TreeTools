@@ -3,29 +3,46 @@
 \name{ReadCharacters}
 \alias{ReadCharacters}
 \alias{ReadTntCharacters}
+\alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
 \alias{PhyDat}
 \title{Read phylogenetic characters from file}
 \usage{
-ReadCharacters(filepath, character_num = NULL, session = NULL)
+ReadCharacters(filepath, character_num = NULL, encoding = "UTF8")
 
-ReadTntCharacters(filepath, character_num = NULL, session = NULL)
+ReadTntCharacters(
+  filepath,
+  character_num = NULL,
+  type = NULL,
+  encoding = "UTF8"
+)
 
-ReadAsPhyDat(filepath)
+ReadNotes(filepath, encoding = "UTF8")
 
-ReadTntAsPhyDat(filepath)
+ReadAsPhyDat(...)
+
+ReadTntAsPhyDat(...)
 
 PhyDat(dataset)
 }
 \arguments{
-\item{filepath}{character string specifying location of file}
+\item{filepath}{character string specifying location of file, or a
+\link[base:connections]{connection} to the file.}
 
 \item{character_num}{Index of character(s) to return.
 \code{NULL}, the default, returns all characters.}
 
-\item{session}{(Optional) A Shiny session with a \code{numericInput} named
-\code{character_num} whose maximum should be updated.}
+\item{encoding}{Character encoding of input file.}
+
+\item{type}{Character vector specifying categories of data to extract from
+file. Setting \code{type = c("num", "dna")} will return only characters
+following a \verb{&[num]} or \verb{&[dna]} tag in a TNT input file, listing \code{num}
+character blocks before \code{dna} characters.
+Leave as \code{NULL} (the default) to return all characters in their original
+sequence.}
+
+\item{\dots}{Parameters to pass to \verb{Read[Tnt]Characters()}.}
 
 \item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
 a list of sequences each made of a single character vector,
@@ -33,60 +50,83 @@ and named with the taxon name.}
 }
 \value{
 \code{ReadCharacters()} and \code{ReadTNTCharacters()} return a matrix whose
-row names correspond to
-tip labels, and column names correspond to character labels, with the
+row names correspond to tip labels, and
+column names correspond to character labels, with the
 attribute \code{state.labels} listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.
 
-\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a
-\code{\link[phangorn:phyDat]{phyDat}} object.
+\code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a \code{phyDat} object.
+
+\code{ReadNotes()} returns a list in which each entry corresponds to a
+single character, and itself contains a list of with two elements:
+\enumerate{
+\item A single character object listing any notes associated with the character
+\item A named character vector listing the notes associated with each taxon
+for that character, named with the names of each note-bearing taxon.
+}
 }
 \description{
-Parse a Nexus or TNT file, reading character states and names.
+Parse a Nexus \insertCite{Maddison1997}{TreeTools} or
+TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
+names.
 }
 \details{
-Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank},
-but should also work more widely; please
+Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank}
+\insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
-incorrectly parsed files.
+incompletely or incorrectly parsed files.
 
 Matrices must contain only continuous or only discrete characters;
 maximum one matrix per file.  Continuous characters will be read as strings
-(i.e. base type 'character').
+(i.e. base type "character").
+
+The encoding of an input file will be automatically determined by R.
+Errors pertaining to an \verb{invalid multibyte string} or
+\verb{string invalid at that locale} indicate that R has failed to detect
+the appropriate encoding.  Either
+\href{https://support.posit.co/hc/en-us/articles/200532197}{re-save the file}
+in a supported encoding (\code{UTF-8} is a good choice) or
+specify the file encoding (which you can find by, for example, opening in
+\href{https://notepad-plus-plus.org/downloads/}{Notepad++} and identifying
+the highlighted option in the "Encoding" menu) following the example below.
 }
 \section{Functions}{
 \itemize{
-\item \code{PhyDat}: A convenient wrapper for \pkg{phangorn}'s
+\item \code{PhyDat()}: A convenient wrapper for \pkg{phangorn}'s
 \code{phyDat()}, which converts a \strong{list} of morphological characters into a
 \code{phyDat} object.
 If your morphological characters are in the form of a \strong{matrix}, perhaps
 because they have been read using \code{\link[=read.table]{read.table()}}, try \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
 instead.
-}}
 
+}}
 \examples{
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/input/dataset.nex')
+fileName <- paste0(system.file(package = "TreeTools"),
+                   "/extdata/input/dataset.nex")
 ReadCharacters(fileName)
 
-fileName <- paste0(system.file(package='TreeTools'),
-                   '/extdata/tests/continuous.nex')
-continuous <- ReadCharacters(fileName)
+fileName <- paste0(system.file(package = "TreeTools"),
+                   "/extdata/tests/continuous.nex")
+
+continuous <- ReadCharacters(fileName, encoding = "UTF8")
 
 # To convert from strings to numbers:
 at <- attributes(continuous)
 continuous <- suppressWarnings(as.numeric(continuous))
 attributes(continuous) <- at
 continuous
-
 }
 \references{
-\insertRef{Maddison1997}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
-Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+\itemize{
+\item Convert between matrices and \code{phyDat} objects: \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}}
+\item Write characters to TNT-format file: \code{\link[=WriteTntCharacters]{WriteTntCharacters()}}
+}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

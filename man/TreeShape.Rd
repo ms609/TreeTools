@@ -27,9 +27,9 @@ RootedTreeShape(tree)
 
 RootedTreeWithShape(shape, nTip, tipLabels)
 
-UnrootedTreeWithShape(shape, nTip, tipLabels = rep("", nTip))
+UnrootedTreeWithShape(shape, nTip, tipLabels = character(nTip))
 
-UnrootedTreeWithKey(key, nTip, tipLabels = rep("", nTip))
+UnrootedTreeWithKey(key, nTip, tipLabels = character(nTip))
 
 UnrootedTreeShape(tree)
 
@@ -146,7 +146,7 @@ sapply(allShapes, UnrootedTreeKey, asInteger = TRUE) # Key >= number
 
 # If numbers larger than 2>31 are required, sapply needs a little help
 # with 64-bit integers:
-structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
+structure(sapply(allShapes, UnrootedTreeKey), class = "integer64")
 
 
 }
@@ -154,7 +154,8 @@ structure(sapply(allShapes, UnrootedTreeKey), class = 'integer64')
 Unique number for a labelled tree: \code{\link[=TreeNumber]{TreeNumber()}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \keyword{datasets}
 \keyword{internal}

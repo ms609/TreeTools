@@ -17,7 +17,9 @@ UnrootTree(tree)
 of class \code{list} or \code{multiPhylo}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
-the names or indices of the tips to include in the outgroup.}
+the names or indices of the tips to include in the outgroup.  If
+\code{outgroupTips} is a of type character, and a tree contains multiple tips
+with a matching label, the first will be used.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}
 
@@ -25,7 +27,8 @@ the names or indices of the tips to include in the outgroup.}
 }
 \value{
 \code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
-clade that contains the specified tips.
+clade that contains the specified tips, with edges and nodes numbered in
+preorder.
 
 \code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
 requested \code{node} and ordered in \code{\link{Preorder}}.
@@ -46,7 +49,7 @@ tree <- PectinateTree(8)
 plot(tree)
 ape::nodelabels()
 
-plot(RootTree(tree, c('t6', 't7')))
+plot(RootTree(tree, c("t6", "t7")))
 
 plot(RootOnNode(tree, 12))
 plot(RootOnNode(tree, 2))
@@ -55,7 +58,6 @@ plot(RootOnNode(tree, 2))
 \seealso{
 \itemize{
 \item \code{\link[ape:root]{ape::root()}}
-\item \code{\link[=EnforceOutgroup]{EnforceOutgroup()}}
 }
 
 Other tree manipulation: 
@@ -64,16 +66,21 @@ Other tree manipulation:
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
 \code{\link{EnforceOutgroup}()},
+\code{\link{ImposeConstraint}()},
+\code{\link{KeptPaths}()},
+\code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},
 \code{\link{MakeTreeBinary}()},
 \code{\link{RenumberTips}()},
 \code{\link{RenumberTree}()},
 \code{\link{Renumber}()},
-\code{\link{SingleTaxonTree}()},
 \code{\link{SortTree}()},
-\code{\link{Subtree}()}
+\code{\link{Subtree}()},
+\code{\link{TipTimedTree}()},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree manipulation}

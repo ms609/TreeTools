@@ -59,6 +59,28 @@ joint entropy of pairs of characters.
 \code{MutualCharacterInformation()} calculates the mutual information between
 each pair of characters: i.e. the extent to which the state of one character
 can be guessed based on the state of the other.
+
+The mutual information (MI) of two characters is assumed to represent the
+contribution of two components: background MI (\emph{MIb}), comprising
+a signal from shared ancestry overprinted with random noise, and
+MI arising from structure and function (\emph{MSsf}).
+Dunn \emph{et al.} (2008) use this
+measure to identify amino acids that play a role in the structure or
+function of proteins -- mutations in one AA will require compensatory
+mutations in other AA if the protein is to continue functioning.
+A morphological analogy is proposed.
+
+The average product correlation (APC), the product of the average MI of
+each character with  each other character in the dataset), approximates
+the background mutual information.
+A high mean value of MIb across a dataset implies that there is a strong
+phylogenetic signal.
+
+\emph{MIp}, the difference between the mutual information of two characters
+and their APC, approximates \emph{MIsf}.
+
+The runtime increases with the square of the number of characters --
+may take a couple of seconds to calculate with 100 characters.
 }
 \section{Ambiguity}{
 
@@ -72,14 +94,6 @@ a 6/10 chance of being token \code{0};
 \verb{[02]} will be treated as having a 100\% chance of being state \code{0}.
 }
 
-\section{#TODO Notes}{
-
-MI = MIb (background, = random noise + shared ancestry) +
-MIsf (structure and function)
-MIp approximates MIsf
-High mean MIb implies strong phylogenetic signal
-}
-
 \examples{
 data('Lobo', package = 'TreeTools')
 dat <- PhyDatToMatrix(Lobo.phy)[, 1:6]
@@ -89,7 +103,10 @@ apply(dat, 2, CharacterEntropy)
 JointCharacterEntropies(dat)
 MutualCharacterInformation(dat)
 
-
+h1 <- JointCharacterEntropies(dat)
+fit <- cmdscale(h1, k=2)
+plot(fit, type = 'n')
+text(fit[, 1], fit[, 2], 1:196, cex = 0.8)
 char <- c(rep('0', 6), rep('1', 4), '[01]', '[02]', '?')
 ShareAmbiguity(char)
 ShareAmbiguity(char, ignore = '[02]')
@@ -99,5 +116,6 @@ CharacterEntropy(char)
 \insertRef{Dunn2008}{TreeTools}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }

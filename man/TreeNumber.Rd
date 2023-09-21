@@ -7,8 +7,18 @@
 \alias{as.TreeNumber.phylo}
 \alias{as.TreeNumber.multiPhylo}
 \alias{as.TreeNumber.character}
+\alias{as.TreeNumber.TreeNumber}
+\alias{as.TreeNumber.MixedBase}
+\alias{as.MixedBase.TreeNumber}
+\alias{as.MixedBase.integer64}
+\alias{as.MixedBase.numeric}
 \alias{as.phylo.numeric}
 \alias{as.phylo.TreeNumber}
+\alias{as.MixedBase}
+\alias{as.MixedBase.MixedBase}
+\alias{as.MixedBase.phylo}
+\alias{as.MixedBase.multiPhylo}
+\alias{as.phylo.MixedBase}
 \title{Unique integer indices for bifurcating tree topologies}
 \usage{
 as.TreeNumber(x, ...)
@@ -19,9 +29,29 @@ as.TreeNumber(x, ...)
 
 \method{as.TreeNumber}{character}(x, nTip, tipLabels = TipLabels(nTip), ...)
 
+\method{as.TreeNumber}{TreeNumber}(x, ...)
+
+\method{as.TreeNumber}{MixedBase}(x, ...)
+
+\method{as.MixedBase}{TreeNumber}(x, ...)
+
+\method{as.MixedBase}{integer64}(x, tipLabels = NULL, ...)
+
+\method{as.MixedBase}{numeric}(x, tipLabels = NULL, ...)
+
 \method{as.phylo}{numeric}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
 \method{as.phylo}{TreeNumber}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
+
+as.MixedBase(x, ...)
+
+\method{as.MixedBase}{MixedBase}(x, ...)
+
+\method{as.MixedBase}{phylo}(x, ...)
+
+\method{as.MixedBase}{multiPhylo}(x, ...)
+
+\method{as.phylo}{MixedBase}(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 }
 \arguments{
 \item{x}{Integer identifying the tree (see details).}
@@ -38,13 +68,15 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 which comprises a numeric vector, whose elements represent successive
 nine-digit chunks of the decimal integer corresponding to the tree topology
 (in big endian order).  The \code{TreeNumber} object has attributes
-\code{nTip} and \code{tip.labels}.
+\code{nTip} and \code{tip.label}.  If \code{x} is a list of trees or a \code{multiPhylo} object,
+then \code{as.TreeNumber()} returns a corresponding list of \code{TreeNumber} objects.
 
 \code{as.phylo.numeric()} returns a tree of class \code{phylo}.
 }
 \description{
 Functions converting between phylogenetic trees and their unique decimal
-representation.
+representation, based on a concept by John Tromp, employed in
+\insertCite{Li1996}{TreeTools}.
 }
 \details{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} leaves.
@@ -57,23 +89,27 @@ number, with bases 1, 3, 5, 7, … (2 \emph{n} - 5).
 Each digit of this mixed base number corresponds to a leaf, and determines
 the location on a growing tree to which that leaf should be added.
 
-We start with a two-leaf tree, and treat 0 as the origin of the tree.\preformatted{
+We start with a two-leaf tree, and treat 0 as the origin of the tree.
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 1
 
-}
+}\if{html}{\out{</div>}}
 
 We add leaf 2 by breaking an edge and inserting a node (numbered
 \code{2 + nTip - 1}).
 In this example, we'll work up to a six-leaf tree; this node will be numbered
 2 + 6 - 1 = 7.
 There is only one edge on which leaf 2 can be added.  Let's add node 7 and
-leaf 2:\preformatted{
+leaf 2:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
        2
 
-}
+}\if{html}{\out{</div>}}
 
 There are now three edges on which leaf 3 can be added.  Our options are:
 
@@ -83,7 +119,9 @@ Option 1: the edge leading to 2;
 
 Option 2: the edge leading to 7.
 
-If we select option 1, we produce:\preformatted{
+If we select option 1, we produce:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 0 ---- 7 ---- 1
        |
        |
@@ -92,7 +130,7 @@ If we select option 1, we produce:\preformatted{
        |
        3
 
-}
+}\if{html}{\out{</div>}}
 
 \code{1} is now the final digit of our mixed-base number.
 
@@ -125,11 +163,8 @@ with the mixed-base number 0021.  We can convert this into decimal:
 = 10
 
 Note that the hyperexponential nature of tree space means that there are >
-2^30 unique 12-leaf trees.  As integers > 2^31 are not supported by R,
-numbers representing larger trees are represented internally as a vector of
-nine-digit integer 'chunks' and passed to the underlying C code, where they
-are combined into a single 64-bit integer.  This allows trees with up to
-42 leaves to be accommodated.
+2^64 unique 20-leaf trees.  As a \code{TreeNumber} is a 64-bit integer,
+only trees with at most 19 leaves can be accommodated.
 }
 \examples{
 tree <- as.phylo(10, nTip = 6)
@@ -146,20 +181,25 @@ as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
 
 }
 \references{
-Based on a concept by John Tromp, employed in Li \emph{et al.} 1996.
-
-\insertRef{Li1996}{TreeTools}
+\insertAllCited{}
 }
 \seealso{
 Describe the shape of a tree topology, independent of leaf labels:
 \code{\link[=TreeShape]{TreeShape()}}
 
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{GenerateTree}},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()}
+\code{\link{TrivialTree}}
+
+Other 'TreeNumber' utilities: 
+\code{\link{is.TreeNumber}()},
+\code{\link{print.TreeNumber}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{'TreeNumber' utilities}
 \concept{tree generation functions}

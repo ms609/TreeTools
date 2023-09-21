@@ -6,14 +6,17 @@
 \alias{TreeTools-package}
 \title{TreeTools}
 \description{
-'TreeTools' is an R package that provides functions for creating, modifying and
+"TreeTools" is an R package that provides functions for creating, modifying and
 analysing phylogenetic trees.
 It complements packages such as
-\href{https://cran.r-project.org/package=ape}{'ape'},
-\href{https://cran.r-project.org/package=phangorn}{'phangorn'} and
-\href{https://cran.r-project.org/package=phytools}{'phytools'},
+\href{https://cran.r-project.org/package=ape}{\pkg{ape}},
+\href{https://cran.r-project.org/package=phangorn}{\pkg{phangorn}} and
+\href{https://cran.r-project.org/package=phytools}{\pkg{phytools}},
 aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
+}
+\details{
+Full documentation is available \href{https://ms609.github.io/TreeTools/}{online}.
 }
 \seealso{
 Useful links:
@@ -30,7 +33,6 @@ Useful links:
 Other contributors:
 \itemize{
   \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) [copyright holder]
-  \item Klaus Schliep (\href{https://orcid.org/0000-0003-2941-0161}{ORCID}) [copyright holder]
 }
 
 }

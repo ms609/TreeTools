@@ -22,8 +22,9 @@ in bits.
 }
 \description{
 \code{N1Spr()} calculates the number of trees one subtree prune-and-regraft
-operation away from a binary input tree using the formula given by Allen and
-Steel (2001); \code{IC1Spr()} calculates the information content of trees at this
+operation away from a binary input tree using the formula given by
+\insertCite{Allen2001;textual}{TreeTools};
+\code{IC1Spr()} calculates the information content of trees at this
 distance: i.e. the entropy corresponding to the proportion of all possible
 \emph{n}-tip trees whose SPR distance is at most one from a specified tree.
 }
@@ -33,5 +34,5 @@ IC1Spr(5)
 
 }
 \references{
-\insertRef{Allen2001}{TreeTools}
+\insertAllCited{}
 }

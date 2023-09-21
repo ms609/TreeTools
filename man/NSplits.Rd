@@ -4,10 +4,13 @@
 \alias{NSplits}
 \alias{NPartitions}
 \alias{NSplits.phylo}
-\alias{NSplits.multiPhylo}
 \alias{NSplits.list}
+\alias{NSplits.multiPhylo}
 \alias{NSplits.Splits}
 \alias{NSplits.numeric}
+\alias{NSplits.NULL}
+\alias{NSplits.ClusterTable}
+\alias{NSplits.character}
 \title{Number of distinct splits}
 \usage{
 NSplits(x)
@@ -16,18 +19,25 @@ NPartitions(x)
 
 \method{NSplits}{phylo}(x)
 
-\method{NSplits}{multiPhylo}(x)
-
 \method{NSplits}{list}(x)
+
+\method{NSplits}{multiPhylo}(x)
 
 \method{NSplits}{Splits}(x)
 
 \method{NSplits}{numeric}(x)
+
+\method{NSplits}{`NULL`}(x)
+
+\method{NSplits}{ClusterTable}(x)
+
+\method{NSplits}{character}(x)
 }
 \arguments{
-\item{x}{A phylogenetic tree of class \code{phylo}, or a list of such trees
-(of class \code{list} or \code{multiPhylo}), or a \code{Splits} object,
-or a vector of integers.}
+\item{x}{A phylogenetic tree of class \code{phylo}; a list of such trees
+(of class \code{list} or \code{multiPhylo}); a \code{Splits} object;
+a vector of integers; or a character vector listing tips of a tree,
+or a character of length one specifying a tree in Newick format.}
 }
 \value{
 \code{NSplits()} returns an integer specifying the number of bipartitions in
@@ -45,20 +55,26 @@ NSplits(as.Splits(BalancedTree(8)))
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NTip}()},
+\code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}
 
 Other Splits operations: 
+\code{\link{LabelSplits}()},
 \code{\link{NTip}()},
+\code{\link{PolarizeSplits}()},
+\code{\link{SplitFrequency}()},
 \code{\link{SplitsInBinaryTree}()},
+\code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{as.Splits}()},
-\code{\link{match}()}
+\code{\link{match.Splits}},
+\code{\link{xor}()}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{Splits operations}
 \concept{tree properties}

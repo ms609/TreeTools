@@ -8,7 +8,7 @@
 \alias{StarTree}
 \title{Generate pectinate, balanced or random trees}
 \usage{
-RandomTree(tips, root = FALSE)
+RandomTree(tips, root = FALSE, nodes)
 
 PectinateTree(tips)
 
@@ -23,6 +23,10 @@ extract leaf labels.}
 
 \item{root}{Character or integer specifying tip to use as root, if desired;
 or \code{FALSE} for an unrooted tree.}
+
+\item{nodes}{Number of nodes to generate.  The default and maximum,
+\code{tips - 1}, generates a binary tree; setting a lower value will induce
+polytomies.}
 }
 \value{
 Each function returns an unweighted binary tree of class \code{phylo} with
@@ -38,7 +42,7 @@ basal position.  Otherwise, the tree will be rooted on \code{root}.
 
 \code{PectinateTree()} returns a pectinate (caterpillar) tree.
 
-\code{BalancedTree()} returns a balanced (symmetrical) tree.
+\code{BalancedTree()} returns a balanced (symmetrical) tree, in preorder.
 
 \code{StarTree()} returns a completely unresolved (star) tree.
 }
@@ -49,7 +53,7 @@ generate trees with the specified shapes and leaf labels.
 \examples{
 RandomTree(LETTERS[1:10])
 
-data('Lobo')
+data("Lobo")
 RandomTree(Lobo.phy)
 
 plot(PectinateTree(LETTERS[1:10]))
@@ -60,11 +64,13 @@ plot(StarTree(LETTERS[1:10]))
 }
 \seealso{
 Other tree generation functions: 
+\code{\link{ConstrainedNJ}()},
 \code{\link{NJTree}()},
-\code{\link{SingleTaxonTree}()},
-\code{\link{TreeNumber}}
+\code{\link{TreeNumber}},
+\code{\link{TrivialTree}}
 }
 \author{
-Martin R. Smith (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
+\href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
+(\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
 \concept{tree generation functions}
