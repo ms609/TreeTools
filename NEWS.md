@@ -1,3 +1,8 @@
+# treeInfo branch (development) #
+
+- Experiments with clustering information.
+
+
 # TreeTools 1.10.0 (2023-08-18) #
 
 ## New methods and functions
