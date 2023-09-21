@@ -1,6 +1,6 @@
 test_that("big trees can be compared", {
   nTip <- 10000
-  bal <- unroot(BalancedTree(nTip))
+  bal <- UnrootTree(BalancedTree(nTip))
   balSplits <- as.Splits(bal)
   expect_equal(dim(balSplits), c(NTip(bal) - 3, ceiling(NTip(bal) / 8)))
   expect_equal(Preorder(splits_to_edge(balSplits, nTip)), Preorder(bal$edge))
