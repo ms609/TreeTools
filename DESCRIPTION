@@ -1,4 +1,4 @@
-Package: TreeTools
+Package: BigTreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
 Version: 1.10.0
 Authors@R: c(
