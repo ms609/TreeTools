@@ -1,6 +1,6 @@
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
-#include "../inst/include/TreeTools.h"
+#include "../inst/include/BigTreeTools.h"
 using namespace Rcpp;
 
 const uint_fast32_t powers_of_two[32] = {

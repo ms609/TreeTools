@@ -1,5 +1,5 @@
-#ifndef _TREETOOLS_CLUSTERTABLE_H
-#define _TREETOOLS_CLUSTERTABLE_H
+#ifndef _BIGTREETOOLS_CLUSTERTABLE_H
+#define _BIGTREETOOLS_CLUSTERTABLE_H
 
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
@@ -9,7 +9,7 @@
 #include "root_tree.h" /* for root_on_node */
 
 #define UNINIT -999
-#define INF TreeTools::INTX_MAX
+#define INF BigTreeTools::INTX_MAX
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
@@ -31,7 +31,7 @@ const int_fast32_t
   CT_MAX_LEAVES = 16383
 ;
 
-namespace TreeTools {
+namespace BigTreeTools {
 
   class ClusterTable {
 
@@ -270,7 +270,7 @@ namespace TreeTools {
 
   inline ClusterTable::ClusterTable(Rcpp::List phylo) {
 
-    const Rcpp::List rooted = TreeTools::root_on_node(phylo, 1);
+    const Rcpp::List rooted = BigTreeTools::root_on_node(phylo, 1);
     const Rcpp::IntegerMatrix edge = rooted["edge"];
 
     // BEGIN

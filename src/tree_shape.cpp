@@ -1,6 +1,6 @@
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
-#include "../inst/include/TreeTools/types.h"
+#include "../inst/include/BigTreeTools/types.h"
 using namespace Rcpp;
 using namespace std;
 

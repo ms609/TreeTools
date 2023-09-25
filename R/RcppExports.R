@@ -2,102 +2,102 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 ClusterTable_new <- function(phylo) {
-    .Call(`_TreeTools_ClusterTable_new`, phylo)
+    .Call(`_BigTreeTools_ClusterTable_new`, phylo)
 }
 
 ClusterTable_matrix <- function(xp) {
-    .Call(`_TreeTools_ClusterTable_matrix`, xp)
+    .Call(`_BigTreeTools_ClusterTable_matrix`, xp)
 }
 
 ClusterTable_decode <- function(xp) {
-    .Call(`_TreeTools_ClusterTable_decode`, xp)
+    .Call(`_BigTreeTools_ClusterTable_decode`, xp)
 }
 
 as_newick <- function(edge) {
-    .Call(`_TreeTools_as_newick`, edge)
+    .Call(`_BigTreeTools_as_newick`, edge)
 }
 
 consensus_tree <- function(trees, p) {
-    .Call(`_TreeTools_consensus_tree`, trees, p)
+    .Call(`_BigTreeTools_consensus_tree`, trees, p)
 }
 
 num_to_parent <- function(n, nTip) {
-    .Call(`_TreeTools_num_to_parent`, n, nTip)
+    .Call(`_BigTreeTools_num_to_parent`, n, nTip)
 }
 
 random_parent <- function(nTip, seed) {
-    .Call(`_TreeTools_random_parent`, nTip, seed)
+    .Call(`_BigTreeTools_random_parent`, nTip, seed)
 }
 
 edge_to_num <- function(parent, child, nTip) {
-    .Call(`_TreeTools_edge_to_num`, parent, child, nTip)
+    .Call(`_BigTreeTools_edge_to_num`, parent, child, nTip)
 }
 
 edge_to_mixed_base <- function(parent, child, nTip) {
-    .Call(`_TreeTools_edge_to_mixed_base`, parent, child, nTip)
+    .Call(`_BigTreeTools_edge_to_mixed_base`, parent, child, nTip)
 }
 
 mixed_base_to_parent <- function(n, nTip) {
-    .Call(`_TreeTools_mixed_base_to_parent`, n, nTip)
+    .Call(`_BigTreeTools_mixed_base_to_parent`, n, nTip)
 }
 
 kept_vertices <- function(edge, kept) {
-    .Call(`_TreeTools_kept_vertices`, edge, kept)
+    .Call(`_BigTreeTools_kept_vertices`, edge, kept)
 }
 
 minimum_spanning_tree <- function(order) {
-    .Call(`_TreeTools_minimum_spanning_tree`, order)
+    .Call(`_BigTreeTools_minimum_spanning_tree`, order)
 }
 
 path_lengths <- function(edge, weight) {
-    .Call(`_TreeTools_path_lengths`, edge, weight)
+    .Call(`_BigTreeTools_path_lengths`, edge, weight)
 }
 
 cpp_edge_to_splits <- function(edge, order, nTip) {
-    .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
+    .Call(`_BigTreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
 
 duplicated_splits <- function(splits, fromLast) {
-    .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
+    .Call(`_BigTreeTools_duplicated_splits`, splits, fromLast)
 }
 
 mask_splits <- function(x) {
-    .Call(`_TreeTools_mask_splits`, x)
+    .Call(`_BigTreeTools_mask_splits`, x)
 }
 
 not_splits <- function(x) {
-    .Call(`_TreeTools_not_splits`, x)
+    .Call(`_BigTreeTools_not_splits`, x)
 }
 
 xor_splits <- function(x, y) {
-    .Call(`_TreeTools_xor_splits`, x, y)
+    .Call(`_BigTreeTools_xor_splits`, x, y)
 }
 
 and_splits <- function(x, y) {
-    .Call(`_TreeTools_and_splits`, x, y)
+    .Call(`_BigTreeTools_and_splits`, x, y)
 }
 
 or_splits <- function(x, y) {
-    .Call(`_TreeTools_or_splits`, x, y)
+    .Call(`_BigTreeTools_or_splits`, x, y)
 }
 
 thin_splits <- function(splits, drop) {
-    .Call(`_TreeTools_thin_splits`, splits, drop)
+    .Call(`_BigTreeTools_thin_splits`, splits, drop)
 }
 
 splits_to_edge <- function(splits, nTip) {
-    .Call(`_TreeTools_splits_to_edge`, splits, nTip)
+    .Call(`_BigTreeTools_splits_to_edge`, splits, nTip)
 }
 
 tips_in_splits <- function(splits) {
-    .Call(`_TreeTools_tips_in_splits`, splits)
+    .Call(`_BigTreeTools_tips_in_splits`, splits)
 }
 
 edge_to_rooted_shape <- function(parent, child, nTip) {
-    .Call(`_TreeTools_edge_to_rooted_shape`, parent, child, nTip)
+    .Call(`_BigTreeTools_edge_to_rooted_shape`, parent, child, nTip)
 }
 
 rooted_shape_to_edge <- function(shape, nTip) {
-    .Call(`_TreeTools_rooted_shape_to_edge`, shape, nTip)
+    .Call(`_BigTreeTools_rooted_shape_to_edge`, shape, nTip)
 }
 

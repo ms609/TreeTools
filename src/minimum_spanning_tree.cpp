@@ -1,7 +1,7 @@
 #include <Rcpp/Lightest>
 #include <vector> /* for vector */
 #include <cmath> /* for ceil, sqrt() */
-#include "../inst/include/TreeTools/types.h"
+#include "../inst/include/BigTreeTools/types.h"
 using namespace Rcpp;
 
 int16 island_housing(int16 x, std::vector<int16> &island) {

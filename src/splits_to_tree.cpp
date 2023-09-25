@@ -1,12 +1,12 @@
 #include <Rcpp/Lightest>
 using namespace Rcpp;
 
-#include "../inst/include/TreeTools/assert.h"
-#include "../inst/include/TreeTools/SplitList.h"
-#include "../inst/include/TreeTools/renumber_tree.h"
-using namespace TreeTools;
+#include "../inst/include/BigTreeTools/assert.h"
+#include "../inst/include/BigTreeTools/SplitList.h"
+#include "../inst/include/BigTreeTools/renumber_tree.h"
+using namespace BigTreeTools;
 
-TREETOOLS_SPLITLIST_INIT
+BIGTREETOOLS_SPLITLIST_INIT
 
 inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
                                       const int16* sort_by) {

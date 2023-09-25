@@ -1,5 +1,5 @@
-#ifndef TreeTools_keep_tip_
-#define TreeTools_keep_tip_
+#ifndef BigTreeTools_keep_tip_
+#define BigTreeTools_keep_tip_
 
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
@@ -21,7 +21,7 @@ if (rm_root && parent <= root_placeholder) {                   \
 }
 
 
-namespace TreeTools {
+namespace BigTreeTools {
   // entry 0, 1... of keep is TRUE if leaf "1", "2"... should be retained, 
   // false otherwise.
   // [[Rcpp::export]]

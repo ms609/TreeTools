@@ -1,5 +1,5 @@
-#ifndef _TREETOOLS_SPLITLIST_H
-#define _TREETOOLS_SPLITLIST_H
+#ifndef _BIGTREETOOLS_SPLITLIST_H
+#define _BIGTREETOOLS_SPLITLIST_H
 
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
@@ -19,20 +19,20 @@
 
 #define right16bits splitbit(65535U)
 
-#define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
-  void _treetools_initialize_bitcounts() {                     \
+#define BIGTREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
+  void _bigtreetools_initialize_bitcounts() {                     \
   for (int i = 65536; i--; ) {                                 \
     int16 n_bits = 0;                                          \
     for (int j = 16; j--; ) {                                  \
       if (i & (1 << j)) n_bits += 1;                           \
     }                                                          \
-    TreeTools::bitcounts[i] = n_bits;                          \
+    BigTreeTools::bitcounts[i] = n_bits;                          \
   }                                                            \
 }                                                              \
 
 typedef uint_fast64_t splitbit;
 
-namespace TreeTools {
+namespace BigTreeTools {
 
   const splitbit powers_of_two[SL_BIN_SIZE] = {
     0x1, 0x2, 0x4, 0x8,

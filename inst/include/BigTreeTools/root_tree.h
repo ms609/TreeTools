@@ -1,5 +1,5 @@
-#ifndef TreeTools_root_tree_
-#define TreeTools_root_tree_
+#ifndef BigTreeTools_root_tree_
+#define BigTreeTools_root_tree_
 
 #include <Rcpp/Lightest>
 #include <memory> /* for std::unique_ptr, make_unique */
@@ -8,7 +8,7 @@
 #include "renumber_tree.h"
 #include "types.h"
 
-namespace TreeTools {
+namespace BigTreeTools {
   extern inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child);

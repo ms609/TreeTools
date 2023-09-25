@@ -1,6 +1,6 @@
 #include <Rcpp/Lightest>
 #include <memory> /* for make_unique */
-#include "../inst/include/TreeTools/types.h"
+#include "../inst/include/BigTreeTools/types.h"
 using namespace Rcpp;
 
 #define PARENT(i) edge(i, 0)

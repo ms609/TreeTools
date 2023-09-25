@@ -1,5 +1,5 @@
-#ifndef TreeTools_renumber_tree_
-#define TreeTools_renumber_tree_
+#ifndef BigTreeTools_renumber_tree_
+#define BigTreeTools_renumber_tree_
 
 #include <cstdio>
 #include <cstdlib> /* for calloc */
@@ -12,7 +12,7 @@
 #define PARENT(i) edge[(i)]
 #define CHILD(i) edge[(i) + n_edge]
 
-namespace TreeTools {
+namespace BigTreeTools {
   inline void swap(int32 *a, int32 *b) {
     const int32 temp = *a;
     *a = *b;

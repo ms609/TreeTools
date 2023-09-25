@@ -2,7 +2,7 @@
 utils::globalVariables(c("doubleFactorials",
                          "logDoubleFactorials",
                          "log2DoubleFactorials"),
-                       "TreeTools")
+                        "BigTreeTools")
 
 #' Double factorial
 #'

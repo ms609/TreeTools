@@ -1,5 +1,5 @@
-#ifndef TreeTools_assert_
-#define TreeTools_assert_
+#ifndef BigTreeTools_assert_
+#define BigTreeTools_assert_
 
 #ifdef DEBUG
 #define ASSERT(x) if (!(x)) {                                  \

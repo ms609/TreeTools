@@ -1,10 +1,10 @@
-#include "../inst/include/TreeTools.h"
-#include "../inst/include/TreeTools/root_tree.h"
-#include "../inst/include/TreeTools/keep_tip.h"
+#include "../inst/include/BigTreeTools.h"
+#include "../inst/include/BigTreeTools/root_tree.h"
+#include "../inst/include/BigTreeTools/keep_tip.h"
 #include <Rcpp/Lightest>
 
 using namespace Rcpp;
-using namespace TreeTools;
+using namespace BigTreeTools;
 
 // keep_tip
 RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
@@ -13,7 +13,7 @@ RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
   Rcpp::traits::input_parameter< const LogicalVector >::type keep(keepSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::keep_tip(edge, keep));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::keep_tip(edge, keep));
   return rcpp_result_gen;
   END_RCPP
 }
@@ -27,7 +27,7 @@ RcppExport SEXP _TreeTools_preorder_weighted(SEXP parentSEXP,
   Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
   Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
   Rcpp::traits::input_parameter< const NumericVector >::type weight(lengthsSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::preorder_weighted(parent, child, weight));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::preorder_weighted(parent, child, weight));
   return rcpp_result_gen;
   END_RCPP
 }
@@ -38,7 +38,7 @@ RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childS
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
   Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::preorder_edges_and_nodes(parent, child));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::preorder_edges_and_nodes(parent, child));
   return rcpp_result_gen;
   END_RCPP
 }
@@ -48,19 +48,19 @@ RcppExport SEXP _TreeTools_postorder_order(SEXP edgeSEXP) {
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::postorder_order(edge));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::postorder_order(edge));
   return rcpp_result_gen;
   END_RCPP
 }
 // root_binary
-IntegerMatrix TreeTools::root_binary(const IntegerMatrix edge, const int outgroup);
+IntegerMatrix BigTreeTools::root_binary(const IntegerMatrix edge, const int outgroup);
 RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< Rcpp::IntegerMatrix >::type edge(edgeSEXP);
   Rcpp::traits::input_parameter< const int >::type outgroup(outgroupSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::root_binary(edge, outgroup));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::root_binary(edge, outgroup));
   return rcpp_result_gen;
   END_RCPP
 }
@@ -71,7 +71,7 @@ RcppExport SEXP _TreeTools_root_on_node(SEXP phySEXP, SEXP outgroupSEXP) {
   Rcpp::RNGScope rcpp_rngScope_gen;
   Rcpp::traits::input_parameter< const List >::type phy(phySEXP);
   Rcpp::traits::input_parameter< const int >::type outgroup(outgroupSEXP);
-  rcpp_result_gen = Rcpp::wrap(TreeTools::root_on_node(phy, outgroup));
+  rcpp_result_gen = Rcpp::wrap(BigTreeTools::root_on_node(phy, outgroup));
   return rcpp_result_gen;
   END_RCPP
 }

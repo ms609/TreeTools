@@ -1,8 +1,8 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
 #include <stdexcept> /* for errors */
-#include "../inst/include/TreeTools/assert.h"
-#include "../inst/include/TreeTools.h"
+#include "../inst/include/BigTreeTools/assert.h"
+#include "../inst/include/BigTreeTools.h"
 using namespace Rcpp;
 
 const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
@@ -10,7 +10,7 @@ const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
 const uintx BIN_SIZE = 8;
 const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
-#define NOT_TRIVIAL TreeTools::UINTX_MAX
+#define NOT_TRIVIAL BigTreeTools::UINTX_MAX
 
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)

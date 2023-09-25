@@ -2,7 +2,7 @@
 utils::globalVariables(c("nRootedShapes",
                          "nUnrootedShapes",
                          "unrootedKeys"),
-                       "TreeTools")
+                       "BigTreeTools")
 
 #' Integer representing shape of a tree
 #'

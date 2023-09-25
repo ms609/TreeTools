@@ -1,6 +1,6 @@
 #include <Rcpp/Lighter>
 #include <string>
-#include "../inst/include/TreeTools/renumber_tree.h"
+#include "../inst/include/BigTreeTools/renumber_tree.h"
 
 using namespace Rcpp;
 
@@ -48,7 +48,7 @@ CharacterVector as_newick(const IntegerMatrix edge) {
   std::string ret;
   ret.reserve(n_row * 6); /* Four characters for tip + "," + "(" or ")" */
   IntegerMatrix preorder =
-    TreeTools::preorder_edges_and_nodes(edge(_, 0) + 1, edge(_, 1) + 1) - 1;
+    BigTreeTools::preorder_edges_and_nodes(edge(_, 0) + 1, edge(_, 1) + 1) - 1;
   const unsigned int n_tip = preorder(0, 0);
 
   for (unsigned int i = 0; i != n_row; i++) {

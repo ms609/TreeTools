@@ -1,7 +1,7 @@
 #include <Rcpp/Lighter> /* for is_na */
 #include <random>
 #include <stdexcept> /* for errors */
-#include "../inst/include/TreeTools.h"
+#include "../inst/include/BigTreeTools.h"
 using namespace Rcpp;
 
 const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
