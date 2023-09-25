@@ -30,7 +30,7 @@
 #'  - R wrapper: Martin R. Smith
 #' @family C wrappers
 #' @keywords internal
-#' @useDynLib TreeTools, .registration = TRUE
+#' @useDynLib BigTreeTools, .registration = TRUE
 #' @name Neworder
 #' @export
 NeworderPruningwise <- function(nTip, nNode, parent, child, nEdge) {
@@ -67,9 +67,9 @@ NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
 #' @export
 RenumberTree <- function(parent, child, weight) {
   if (missing(weight)) {
-    .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+    .Call(`_BigTreeTools_preorder_edges_and_nodes`, parent, child)
   } else {
-    .Call(`_TreeTools_preorder_weighted`, parent, child, weight)
+    .Call(`_BigTreeTools_preorder_weighted`, parent, child, weight)
   }
 }
 
@@ -80,7 +80,7 @@ RenumberTree <- function(parent, child, weight) {
 #' whose two entries correspond to the new parent and child vectors.
 #' @export
 RenumberEdges <- function(parent, child, ...) {
-  oenn <- .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
+  oenn <- .Call(`_BigTreeTools_preorder_edges_and_nodes`, parent, child)
 
   # Return:
   list(oenn[, 1], oenn[, 2])

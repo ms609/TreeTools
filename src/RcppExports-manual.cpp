@@ -7,7 +7,7 @@ using namespace Rcpp;
 using namespace BigTreeTools;
 
 // keep_tip
-RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
+RcppExport SEXP _BigTreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
@@ -18,7 +18,7 @@ RcppExport SEXP _TreeTools_keep_tip(SEXP edgeSEXP, SEXP keepSEXP) {
   END_RCPP
 }
 // preorder_weighted
-RcppExport SEXP _TreeTools_preorder_weighted(SEXP parentSEXP,
+RcppExport SEXP _BigTreeTools_preorder_weighted(SEXP parentSEXP,
                                              SEXP childSEXP,
                                              SEXP lengthsSEXP) {
   BEGIN_RCPP
@@ -32,7 +32,7 @@ RcppExport SEXP _TreeTools_preorder_weighted(SEXP parentSEXP,
   END_RCPP
 }
 // preorder_edges_and_nodes
-RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childSEXP) {
+RcppExport SEXP _BigTreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
@@ -43,7 +43,7 @@ RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP parentSEXP, SEXP childS
   END_RCPP
 }
 // postorder_order
-RcppExport SEXP _TreeTools_postorder_order(SEXP edgeSEXP) {
+RcppExport SEXP _BigTreeTools_postorder_order(SEXP edgeSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
@@ -54,7 +54,7 @@ RcppExport SEXP _TreeTools_postorder_order(SEXP edgeSEXP) {
 }
 // root_binary
 IntegerMatrix BigTreeTools::root_binary(const IntegerMatrix edge, const int outgroup);
-RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
+RcppExport SEXP _BigTreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;
@@ -65,7 +65,7 @@ RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   END_RCPP
 }
 // root_on_node
-RcppExport SEXP _TreeTools_root_on_node(SEXP phySEXP, SEXP outgroupSEXP) {
+RcppExport SEXP _BigTreeTools_root_on_node(SEXP phySEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP
   Rcpp::RObject rcpp_result_gen;
   Rcpp::RNGScope rcpp_rngScope_gen;

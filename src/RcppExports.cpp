@@ -310,12 +310,12 @@ END_RCPP
 
 RcppExport void ape_neworder_phylo(void *, void *, void *, void *, void *, void *);
 RcppExport void ape_neworder_pruningwise(void *, void *, void *, void *, void *, void *);
-RcppExport SEXP _TreeTools_keep_tip(void *, void *);
-RcppExport SEXP _TreeTools_postorder_order(void *);
-RcppExport SEXP _TreeTools_preorder_edges_and_nodes(void *, void *);
-RcppExport SEXP _TreeTools_preorder_weighted(void *, void *, void *);
-RcppExport SEXP _TreeTools_root_binary(void *, void *);
-RcppExport SEXP _TreeTools_root_on_node(void *, void *);
+RcppExport SEXP _BigTreeTools_keep_tip(void *, void *);
+RcppExport SEXP _BigTreeTools_postorder_order(void *);
+RcppExport SEXP _BigTreeTools_preorder_edges_and_nodes(void *, void *);
+RcppExport SEXP _BigTreeTools_preorder_weighted(void *, void *, void *);
+RcppExport SEXP _BigTreeTools_root_binary(void *, void *);
+RcppExport SEXP _BigTreeTools_root_on_node(void *, void *);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_BigTreeTools_ClusterTable_new", (DL_FUNC) &_BigTreeTools_ClusterTable_new, 1},
@@ -345,12 +345,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_BigTreeTools_rooted_shape_to_edge", (DL_FUNC) &_BigTreeTools_rooted_shape_to_edge, 2},
     {"ape_neworder_phylo",       (DL_FUNC) &ape_neworder_phylo,       6},
     {"ape_neworder_pruningwise", (DL_FUNC) &ape_neworder_pruningwise, 6},
-    {"_TreeTools_keep_tip",                 (DL_FUNC) &_TreeTools_keep_tip,                 2},
-    {"_TreeTools_postorder_order",          (DL_FUNC) &_TreeTools_postorder_order,          1},
-    {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
-    {"_TreeTools_preorder_weighted",        (DL_FUNC) &_TreeTools_preorder_weighted,        3},
-    {"_TreeTools_root_binary",              (DL_FUNC) &_TreeTools_root_binary,              2},
-    {"_TreeTools_root_on_node",             (DL_FUNC) &_TreeTools_root_on_node,             2},
+    {"_BigTreeTools_keep_tip",                 (DL_FUNC) &_BigTreeTools_keep_tip,                 2},
+    {"_BigTreeTools_postorder_order",          (DL_FUNC) &_BigTreeTools_postorder_order,          1},
+    {"_BigTreeTools_preorder_edges_and_nodes", (DL_FUNC) &_BigTreeTools_preorder_edges_and_nodes, 2},
+    {"_BigTreeTools_preorder_weighted",        (DL_FUNC) &_BigTreeTools_preorder_weighted,        3},
+    {"_BigTreeTools_root_binary",              (DL_FUNC) &_BigTreeTools_root_binary,              2},
+    {"_BigTreeTools_root_on_node",             (DL_FUNC) &_BigTreeTools_root_on_node,             2},
     {NULL, NULL, 0}
 };
 
