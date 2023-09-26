@@ -55,7 +55,7 @@ namespace BigTreeTools {
 
   // Static here means that each translation unit (i.e. file, resulting in an .o)
   // will have its own copy of the variable (which it will initialize separately).
-  static int16 bitcounts[65536];
+  static int16 bitcounts[65536U];
 
   inline int16 count_bits (splitbit x) {
     /* For 32-bit splitbits: */
