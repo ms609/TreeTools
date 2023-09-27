@@ -63,7 +63,8 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   int16 parent[SL_MAX_TIPS + SL_MAX_SPLITS]{};
   int16 patriarch[SL_MAX_TIPS]{};
 
-  int16 split_order[SL_MAX_SPLITS];
+  /* int32 as x.state contains >2^15 elements */
+  int32 split_order[SL_MAX_SPLITS];
   for (int16 i = x.n_splits; i--; ) {
     split_order[i] = i;
   }
