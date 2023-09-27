@@ -33,7 +33,7 @@ each edge connects, with the lower value listed first.
 \code{MSTLength()} returns the length of the minimum spanning tree.
 }
 \description{
-Calculate or plot the minimum spanning tree \insertCite{Gower1969}{TreeTools}
+Calculate or plot the minimum spanning tree \insertCite{Gower1969}{BigTreeTools}
 of a distance matrix.
 }
 \examples{

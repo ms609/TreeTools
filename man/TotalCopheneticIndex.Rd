@@ -28,7 +28,7 @@ be obtained by calculation for the Uniform model.
 }
 \description{
 \code{TotalCopheneticIndex()} calculates the total cophenetic index
-\insertCite{Mir2013}{TreeTools} for any tree, a measure of its balance;
+\insertCite{Mir2013}{BigTreeTools} for any tree, a measure of its balance;
 \code{TCIContext()} lists its possible values.
 }
 \details{
@@ -45,7 +45,7 @@ The minimum value is higher for a perfectly resolved (i.e. dichotomous) tree
 Formulae to calculate the expected values under the Yule and Uniform models
 of evolution are given in Theorems 17 and 23.
 
-Full details are provided by \insertCite{Mir2013;textual}{TreeTools}.
+Full details are provided by \insertCite{Mir2013;textual}{BigTreeTools}.
 }
 \examples{
 # Balanced trees have the minimum index for a binary tree;

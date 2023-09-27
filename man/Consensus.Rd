@@ -22,7 +22,7 @@ first entry of \code{trees}.
 }
 \description{
 \code{Consensus()} calculates the consensus of a set of trees, using the
-algorithm of \insertCite{Day1985}{TreeTools}.
+algorithm of \insertCite{Day1985}{BigTreeTools}.
 }
 \examples{
 Consensus(as.phylo(0:2, 8))

@@ -47,14 +47,14 @@ larger sister size.
 and the root of \code{tree}.
 This is an unsatisfactory measure, as the range of possible
 distances is a function of the shape of the tree
-\insertCite{Asher2020}{TreeTools}.
+\insertCite{Asher2020}{BigTreeTools}.
 As an example, leaf \emph{X1} in the tree \verb{(.,(.,(.,(.,(X1,(a,b))))))}
 falls outside the clade \emph{(a, b)} and has a root-node distance of 4,
 whereas leaf \emph{X2} in the tree \verb{(.,((.,(.,.)),(b,(X2,a))))}
 falls within the clade \emph{(a, b)}, so should be considered more "crownwards",
 yet has a smaller root-node distance (3).
 
-\insertFig{Stemwardness.png}{TreeTools}{
+\insertFig{Stemwardness.png}{BigTreeTools}{
 par(mfrow = c(1, 2), mar = rep(0.3, 4))
 plot(ape::read.tree(text="(.,(.,(.,(.,(X1,(a,b))))));"))
 ape::nodelabels(1:4, 9:12)
@@ -66,7 +66,7 @@ ape::edgelabels(1, 12)
 }
 
 \code{SisterSize()} measures the number of leaves in the clade that is sister to
-the chosen leaf, as proposed by \insertCite{Asher2020;textual}{TreeTools}.
+the chosen leaf, as proposed by \insertCite{Asher2020;textual}{BigTreeTools}.
 In the examples above, \emph{X1} has a sister size of 2 leaves, whereas \emph{X2},
 which is "more crownwards", has a smaller sister size (1 leaf), as desired.
 }

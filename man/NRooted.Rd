@@ -72,8 +72,8 @@ Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
-\insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
+Calculations follow \insertCite{CavalliSforza1967;textual}{BigTreeTools} and
+\insertCite{Carter1990;textual}{BigTreeTools}, Theorem 2.
 }
 \section{Functions}{
 \itemize{

@@ -25,7 +25,7 @@ number of unrooted bifurcating trees consistent with the specified split.
 \description{
 Calculates the number of unrooted bifurcating trees consistent with the
 specified multi-partition split, using theorem two of
-\insertCite{Carter1990;textual}{TreeTools}.
+\insertCite{Carter1990;textual}{BigTreeTools}.
 }
 \examples{
 UnrootedTreesMatchingSplit(c(3, 5))

@@ -78,11 +78,11 @@ of the consensus tree.
 \description{
 Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 according to the proportion of trees in which the taxon attaches to that
-edge, after \insertCite{Klopfstein2019;textual}{TreeTools}.
+edge, after \insertCite{Klopfstein2019;textual}{BigTreeTools}.
 }
 \details{
 Rogue taxa can be identified using the package \pkg{Rogue}
-\insertCite{SmithCons}{TreeTools}.
+\insertCite{SmithCons}{BigTreeTools}.
 }
 \examples{
 trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),

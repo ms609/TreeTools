@@ -16,14 +16,14 @@ replaced with \verb{?}.}
 \value{
 \code{CharacterInformation()} returns a numeric specifying the
 phylogenetic information content of the character (\emph{sensu}
-\insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
+\insertCite{Steel2006;nobrackets}{BigTreeTools}), in bits.
 }
 \description{
 \code{CharacterInformation()} calculates the cladistic information content
-\insertCite{Steel2006}{TreeTools} of a given character, in bits.
+\insertCite{Steel2006}{BigTreeTools} of a given character, in bits.
 The total information in all characters gives a measure of the potential
-utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
-compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+utility of a dataset \insertCite{Cotton2008}{BigTreeTools}, which can be
+compared with a profile parsimony score \insertCite{Faith2001}{BigTreeTools} to
 evaluate the degree of homoplasy within a dataset.
 }
 \references{

@@ -11,7 +11,7 @@ An object of class \code{list} of length 48.
 An object of class \code{phyDat} of length 48.
 }
 \source{
-\insertCite{Zhang2016;textual}{TreeTools}
+\insertCite{Zhang2016;textual}{BigTreeTools}
 }
 \usage{
 Lobo.data
@@ -19,7 +19,7 @@ Lobo.data
 Lobo.phy
 }
 \description{
-Phylogenetic data from \insertCite{Zhang2016;textual}{TreeTools} in raw
+Phylogenetic data from \insertCite{Zhang2016;textual}{BigTreeTools} in raw
 (\code{Lobo.data}) and \code{phyDat} (\code{Lobo.phy}) formats.
 }
 \examples{
