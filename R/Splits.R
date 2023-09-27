@@ -413,7 +413,7 @@ as.character.Splits <- function(x, ...) {
 #' @family Splits operations
 #' @export
 as.phylo.Splits <- function(x, ...) {
-  ret <- .PreorderTree(
+  .PreorderTree(
     edge = splits_to_edge(x, NTip(x)),
     tip.label = TipLabels(x)
   )
