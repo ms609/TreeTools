@@ -14,7 +14,7 @@
  * refactoring to run on the heap (and, trivially, converting int16 to int32
  * for split*bin implicit calculation in state[split][bin]?) */
 #define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
-#define SL_MAX_SPLITS SL_MAX_TIPS /* -3, but quicker if a power of two? */
+#define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
 
 #define INLASTBIN(n, size) ((size) - ((size) - ((n) % (size))) % (size))
 #define INSUBBIN(bin, offset)                                  \
