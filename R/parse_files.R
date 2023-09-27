@@ -137,12 +137,12 @@ NexusTokens <- function(tokens, character_num = NULL) {
 
 #' Read phylogenetic characters from file
 #'
-#' Parse a Nexus \insertCite{Maddison1997}{TreeTools} or 
-#' TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
+#' Parse a Nexus \insertCite{Maddison1997}{BigTreeTools} or 
+#' TNT \insertCite{Goloboff2008}{BigTreeTools} file, reading character states and
 #' names.
 #'
 #' Tested with matrices downloaded from [MorphoBank](https://morphobank.org)
-#' \insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
+#' \insertCite{OLeary2011}{BigTreeTools}, but should also work more widely; please
 #' [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incompletely or incorrectly parsed files.
 #'

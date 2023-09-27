@@ -2,10 +2,10 @@
 #'
 #' Plots a consensus of trees with a rogue taxon omitted, with edges coloured
 #' according to the proportion of trees in which the taxon attaches to that
-#' edge, after \insertCite{Klopfstein2019;textual}{TreeTools}.
+#' edge, after \insertCite{Klopfstein2019;textual}{BigTreeTools}.
 #' 
 #' Rogue taxa can be identified using the package \pkg{Rogue}
-#' \insertCite{SmithCons}{TreeTools}.
+#' \insertCite{SmithCons}{BigTreeTools}.
 #'
 #' @param trees List or `multiPhylo` object containing phylogenetic trees
 #' of class `phylo` to be summarized.

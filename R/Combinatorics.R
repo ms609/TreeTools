@@ -133,8 +133,8 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
 #'
-#' Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
-#' \insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
+#' Calculations follow \insertCite{CavalliSforza1967;textual}{BigTreeTools} and
+#' \insertCite{Carter1990;textual}{BigTreeTools}, Theorem 2.
 #'
 #' @param tips Integer specifying the number of leaves.
 #' @param \dots Integer vector, or series of integers, listing the number of
@@ -215,7 +215,7 @@ Log2Rooted.int <- function(tips) {
 #'
 #' `N1Spr()` calculates the number of trees one subtree prune-and-regraft
 #' operation away from a binary input tree using the formula given by 
-#' \insertCite{Allen2001;textual}{TreeTools};
+#' \insertCite{Allen2001;textual}{BigTreeTools};
 #' `IC1Spr()` calculates the information content of trees at this
 #' distance: i.e. the entropy corresponding to the proportion of all possible
 #' _n_-tip trees whose SPR distance is at most one from a specified tree.

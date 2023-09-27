@@ -45,10 +45,10 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #' Character information content
 #'
 #' `CharacterInformation()` calculates the cladistic information content
-#' \insertCite{Steel2006}{TreeTools} of a given character, in bits.
+#' \insertCite{Steel2006}{BigTreeTools} of a given character, in bits.
 #' The total information in all characters gives a measure of the potential
-#' utility of a dataset \insertCite{Cotton2008}{TreeTools}, which can be
-#' compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
+#' utility of a dataset \insertCite{Cotton2008}{BigTreeTools}, which can be
+#' compared with a profile parsimony score \insertCite{Faith2001}{BigTreeTools} to
 #' evaluate the degree of homoplasy within a dataset.
 #'
 #' @param tokens Character vector specifying the tokens assigned to each taxon for
@@ -59,7 +59,7 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #'
 #' @return `CharacterInformation()` returns a numeric specifying the
 #' phylogenetic information content of the character (_sensu_ 
-#' \insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
+#' \insertCite{Steel2006;nobrackets}{BigTreeTools}), in bits.
 #'
 #' @references
 #' - \insertAllCited{}
@@ -80,7 +80,7 @@ CharacterInformation <- function(tokens) {
 #' Phylogenetic information content of splitting leaves into two partitions
 #'
 #' Calculate the phylogenetic information content (_sensu_ 
-#' \insertCite{Steel2006;nobrackets}{TreeTools}) of a split, which
+#' \insertCite{Steel2006;nobrackets}{BigTreeTools}) of a split, which
 #' reflects the probability that a uniformly selected random tree will contain#
 #' the split: a split that is consistent with a smaller number of trees will
 #' have a higher information content.
@@ -193,7 +193,7 @@ MultiSplitInformation <- function(partitionSizes) {
 #'
 #' Calculates the number of unrooted bifurcating trees consistent with the
 #' specified multi-partition split, using theorem two of
-#' \insertCite{Carter1990;textual}{TreeTools}.
+#' \insertCite{Carter1990;textual}{BigTreeTools}.
 #'
 #' @param \dots A series or vector of integers listing the number of tips in
 #' each of a number of tree splits (e.g. bipartitions).

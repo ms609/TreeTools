@@ -1,7 +1,7 @@
 #' Construct consensus trees
 #'
 #' `Consensus()` calculates the consensus of a set of trees, using the
-#' algorithm of \insertCite{Day1985}{TreeTools}.
+#' algorithm of \insertCite{Day1985}{BigTreeTools}.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
 #' @param p Proportion of trees that must contain a split for it to be reported

@@ -4,7 +4,7 @@
 #' taxon, to simulate the process of fossilization in removing data from
 #' a phylogenetic dataset.
 #'
-#' Further details are provided in \insertCite{Asher2020;textual}{TreeTools}.
+#' Further details are provided in \insertCite{Asher2020;textual}{BigTreeTools}.
 #'
 #' Note: this simple implementation does not account for character contingency,
 #' e.g. characters whose absence imposes inapplicable or absent tokens on

@@ -8,14 +8,14 @@
 #' and the root of `tree`.
 #' This is an unsatisfactory measure, as the range of possible
 #' distances is a function of the shape of the tree
-#' \insertCite{Asher2020}{TreeTools}.
+#' \insertCite{Asher2020}{BigTreeTools}.
 #' As an example, leaf _X1_ in the tree `(.,(.,(.,(.,(X1,(a,b))))))`
 #' falls outside the clade _(a, b)_ and has a root-node distance of 4,
 #' whereas leaf _X2_ in the tree `(.,((.,(.,.)),(b,(X2,a))))`
 #' falls within the clade _(a, b)_, so should be considered more "crownwards",
 #' yet has a smaller root-node distance (3).
 #'
-#' \insertFig{Stemwardness.png}{TreeTools}{
+#' \insertFig{Stemwardness.png}{BigTreeTools}{
 #'   par(mfrow = c(1, 2), mar = rep(0.3, 4))
 #'   plot(ape::read.tree(text="(.,(.,(.,(.,(X1,(a,b))))));"))
 #'   ape::nodelabels(1:4, 9:12)
@@ -27,7 +27,7 @@
 #' }
 #'
 #' `SisterSize()` measures the number of leaves in the clade that is sister to
-#' the chosen leaf, as proposed by \insertCite{Asher2020;textual}{TreeTools}.
+#' the chosen leaf, as proposed by \insertCite{Asher2020;textual}{BigTreeTools}.
 #' In the examples above, _X1_ has a sister size of 2 leaves, whereas _X2_,
 #' which is "more crownwards", has a smaller sister size (1 leaf), as desired.
 #'

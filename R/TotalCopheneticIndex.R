@@ -1,7 +1,7 @@
 #' Total Cophenetic Index
 #'
 #' `TotalCopheneticIndex()` calculates the total cophenetic index
-#' \insertCite{Mir2013}{TreeTools} for any tree, a measure of its balance;
+#' \insertCite{Mir2013}{BigTreeTools} for any tree, a measure of its balance;
 #' `TCIContext()` lists its possible values.
 #'
 #' The Total Cophenetic Index is a measure of tree balance -- i.e. whether
@@ -17,7 +17,7 @@
 #' Formulae to calculate the expected values under the Yule and Uniform models
 #' of evolution are given in Theorems 17 and 23.
 #'
-#' Full details are provided by \insertCite{Mir2013;textual}{TreeTools}.
+#' Full details are provided by \insertCite{Mir2013;textual}{BigTreeTools}.
 #'
 #' @template xPhylo
 #'

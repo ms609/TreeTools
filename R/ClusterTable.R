@@ -18,7 +18,7 @@
 #'
 #' @return `as.ClusterTable()` returns an object of class `ClusterTable`.
 #'
-#' @references \insertRef{Day1985}{TreeTools}
+#' @references \insertRef{Day1985}{BigTreeTools}
 #' @seealso [S3 methods][ClusterTable-methods] for `ClusterTable` objects.
 #' @examples
 #' tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");

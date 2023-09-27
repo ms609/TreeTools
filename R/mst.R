@@ -1,6 +1,6 @@
 #' Minimum spanning tree
 #'
-#' Calculate or plot the minimum spanning tree \insertCite{Gower1969}{TreeTools}
+#' Calculate or plot the minimum spanning tree \insertCite{Gower1969}{BigTreeTools}
 #' of a distance matrix.
 #'
 #' @param distances Either a matrix that can be interpreted as a distance

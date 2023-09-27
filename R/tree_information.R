@@ -51,15 +51,15 @@ Log2TreesMatchingTree <- function(tree) {
 #' A base two logarithm gives an information content in bits.
 #'
 #' The \acronym{CIC} was originally proposed by 
-#' \insertCite{Rohlf1982;textual}{TreeTools}, and formalised,
+#' \insertCite{Rohlf1982;textual}{BigTreeTools}, and formalised,
 #' with an information-theoretic justification, by 
-#' \insertCite{Thorley1998;textual}{TreeTools}.
-#' \insertCite{Steel2006;textual}{TreeTools} term the equivalent quantity
+#' \insertCite{Thorley1998;textual}{BigTreeTools}.
+#' \insertCite{Steel2006;textual}{BigTreeTools} term the equivalent quantity
 #' "phylogenetic information content" in the context of individual characters.
 #'
 #' The number of binary trees consistent with a cladogram provides a more
 #' satisfactory measure of the resolution of a tree than simply
-#' counting the number of edges resolved \insertCite{Page1992}{TreeTools}.
+#' counting the number of edges resolved \insertCite{Page1992}{BigTreeTools}.
 #'
 #' @param x Tree of class `phylo`, or a list thereof.
 #'
