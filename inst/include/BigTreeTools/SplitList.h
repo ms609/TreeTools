@@ -88,8 +88,9 @@ namespace BigTreeTools {
                    "Please contact the TreeTools maintainer if "
                    "you need to use more!");
       }
-
-      for (int16 split = 0; split != n_splits; split++) {
+      
+      /* MAX_SPLITS * MAX_BINS > 2^15 -> can't use int16 to populate state */
+      for (int32 split = 0; split != n_splits; split++) {
         int16 last_bin = n_bins - 1;
         const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
         /*Rcout << n_input_bins << " bins in; " << raggedy_bins << " raggedy bins\n";*/
