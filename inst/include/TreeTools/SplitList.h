@@ -84,9 +84,9 @@ namespace TreeTools {
         Rcpp::stop("Negative number of splits!?");                 // # nocov
       }
       if (n_bins > SL_MAX_BINS) {
-        Rcpp::stop("This many leaves cannot be supported. "        // # nocov
-                   "Please contact the TreeTools maintainer if "   // # nocov
-                   "you need to use more!");                       // # nocov
+        Rcpp::stop("This many leaves cannot be supported. "
+                   "Please contact the TreeTools maintainer if "
+                   "you need to use more!");
       }
 
       for (int16 split = 0; split != n_splits; split++) {

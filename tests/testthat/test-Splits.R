@@ -491,6 +491,13 @@ test_that("Split combination", {
   #TODO: Fully test splits with large (> 8 tip) trees
 })
 
+test_that("as.phylo.Splits() fails gracefully", {
+  expect_error(
+    as.phylo(as.Splits(BalancedTree(3000))),
+    "many leaves cannot be supported"
+  )
+})
+
 test_that("as.phylo.Splits()", {
   Test <- function(tr) {
     expect_true(all.equal(as.phylo(as.Splits(tr)), UnrootTree(tr)))
