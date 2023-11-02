@@ -2,10 +2,19 @@
 % Please edit documentation in R/tree_properties.R
 \name{DescendantEdges}
 \alias{DescendantEdges}
+\alias{DescendantTips}
 \alias{AllDescendantEdges}
 \title{Identify descendant edges}
 \usage{
 DescendantEdges(parent, child, edge = NULL, nEdge = length(parent))
+
+DescendantTips(
+  parent,
+  child,
+  edge = NULL,
+  nEdge = length(parent),
+  nTip = min(parent) - 1L
+)
 
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
@@ -16,15 +25,21 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
 \item{child}{Integer vector corresponding to the second column of the edge
 matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 
-\item{edge}{Integer specifying the number of the edge whose child edges are
+\item{edge}{Integer specifying the number of the edge whose children are
 required (see \code{\link[ape:nodelabels]{edgelabels}()}).}
 
 \item{nEdge}{number of edges (calculated from \code{length(parent)} if not
 supplied).}
+
+\item{nTip}{Integer specifying number of leaves in the tree.
+Computed if not supplied.}
 }
 \value{
 \code{DescendantEdges()} returns a logical vector stating whether each
-edge in turn is a descendant of the specified edge (or the edge itself).
+edge in turn is the specified edge or one of its descendants.
+
+\code{DescendantTips()} returns a logical vector stating whether each
+leaf in turn is a descendant of the specified edge.
 
 \code{AllDescendantEdges()} is deprecated; use \code{DescendantEdges()}
 instead.
@@ -33,6 +48,19 @@ edge is a descendant of edge \emph{N} (or the edge itself).
 }
 \description{
 Quickly identify edges that are "descended" from edges in a tree.
+
+Quickly identify leaves (external nodes) that are "descended" from edges in
+a tree.
+}
+\examples{
+tree <- as.phylo(0, 6)
+plot(tree)
+desc <- DescendantEdges(tree$edge[, 1], tree$edge[, 2], edge = 5)
+which(desc)
+ape::edgelabels(bg = 3 + desc)
+tips <- DescendantTips(tree$edge[, 1], tree$edge[, 2], edge = 5)
+which(tips)
+tiplabels(bg = 3 + tips)
 }
 \seealso{
 Other tree navigation: 

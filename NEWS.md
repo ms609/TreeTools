@@ -1,3 +1,8 @@
+# TreeTools 1.10.0.9000 (development) #
+
+- `DescendantTips()` complements `DescendantEdges()`.
+
+
 # TreeTools 1.10.0 (2023-08-18) #
 
 ## New methods and functions
