@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.10.0",
+  "version": "1.10.0.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "runtimePlatform": "R version 4.3.2 (2023-10-31)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -293,7 +293,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1617.774KB",
+  "fileSize": "1620.404KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -308,7 +308,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.5281/zenodo.3522725",
-      "description": "R package version 1.10.0",
+      "description": "R package version 1.10.0.9000",
       "@id": "https://doi.org/10.5281/zenodo.3522725",
       "sameAs": "https://doi.org/10.5281/zenodo.3522725"
     }

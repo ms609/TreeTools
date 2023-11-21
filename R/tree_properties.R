@@ -4,12 +4,18 @@
 #'
 #' @template treeParent
 #' @template treeChild
-#' @param edge Integer specifying the number of the edge whose child edges are
+#' @param edge Integer specifying the number of the edge whose children are
 #' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
 #' @return `DescendantEdges()` returns a logical vector stating whether each
-#' edge in turn is a descendant of the specified edge (or the edge itself).
+#' edge in turn is the specified edge or one of its descendants.
+#' @examples
+#' tree <- as.phylo(0, 6)
+#' plot(tree)
+#' desc <- DescendantEdges(tree$edge[, 1], tree$edge[, 2], edge = 5)
+#' which(desc)
+#' ape::edgelabels(bg = 3 + desc)
 #' @family tree navigation
 #' @export
 DescendantEdges <- function(parent, child, edge = NULL,
@@ -39,6 +45,33 @@ DescendantEdges <- function(parent, child, edge = NULL,
       # Return:
       ret
     }
+  }
+}
+
+#' Identify descendant tips
+#'
+#' Quickly identify leaves (external nodes) that are "descended" from edges in
+#' a tree.
+#'
+#' @inheritParams DescendantEdges
+#' @param nTip Integer specifying number of leaves in the tree.
+#' Computed if not supplied.
+#' @return `DescendantTips()` returns a logical vector stating whether each
+#' leaf in turn is a descendant of the specified edge.
+#' @examples
+#' tips <- DescendantTips(tree$edge[, 1], tree$edge[, 2], edge = 5)
+#' which(tips)
+#' tiplabels(bg = 3 + tips)
+#' @rdname DescendantEdges
+#' @export
+DescendantTips <- function(parent, child, edge = NULL,
+                           nEdge = length(parent),
+                           nTip = min(parent) - 1L) {
+  descend <- DescendantEdges(parent, child, edge, nEdge)
+  if (is.null(edge)) {
+    descend[, match(seq_len(nTip), child)]
+  } else {
+    descend[match(seq_len(nTip), child)]
   }
 }
 

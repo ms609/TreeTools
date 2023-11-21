@@ -22,6 +22,18 @@ test_that("AllDescendantEdges() works", {
                  "deprecated")
 })
 
+test_that("DescendantTips() works", {
+  tree <- as.phylo(0, 6)
+  parent <- tree$edge[, 1]
+  child <- tree$edge[, 2]
+  expect_equal(DescendantTips(parent, child, 5), 1:6 %in% c(2, 6))
+  expect_equal(
+    DescendantTips(parent, child),
+    t(vapply(1:10, function(x) DescendantTips(parent, child, x),
+             logical(6)))
+    )
+})
+
 test_that("EdgeAncestry() works", {
   tree <- BalancedTree(10)
   edge <- tree$edge
