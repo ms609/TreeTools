@@ -40,7 +40,7 @@
 #'  `.tre` file specified in `filepath`.
 #'
 #' @return `ReadTntTree()` returns a tree of class `phylo` in 
-#' \link{TNTOrder}{\code{tnt} order},
+#' \link[=TNTOrder]{TNT order},
 #' corresponding to the tree in `filepath`, or NULL if no trees are found.
 #'
 #' @examples

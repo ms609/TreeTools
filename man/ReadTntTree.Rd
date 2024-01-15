@@ -34,7 +34,7 @@ in the parenthetical format output by TNT.}
 }
 \value{
 \code{ReadTntTree()} returns a tree of class \code{phylo} in
-\link{TNTOrder}{\code{tnt} order},
+\link[=TNTOrder]{TNT order},
 corresponding to the tree in \code{filepath}, or NULL if no trees are found.
 }
 \description{
