@@ -34,8 +34,8 @@
 <text x='21.60' y='536.93' style='font-size: 12.00px; font-family: sans;' textLength='36.69px' lengthAdjust='spacingAndGlyphs'>3 trees</text>
 <text x='21.60' y='551.33' style='font-size: 12.00px; font-family: sans;' textLength='36.69px' lengthAdjust='spacingAndGlyphs'>2 trees</text>
 <text x='21.60' y='565.73' style='font-size: 12.00px; font-family: sans;' textLength='30.69px' lengthAdjust='spacingAndGlyphs'>1 tree</text>
-<line x1='5.40' y1='561.60' x2='5.40' y2='551.88' style='stroke-width: 3.00; stroke-linecap: square;' />
-<line x1='5.40' y1='552.00' x2='5.40' y2='542.28' style='stroke-width: 3.00; stroke: #174C39; stroke-linecap: square;' />
-<line x1='5.40' y1='542.40' x2='5.40' y2='532.68' style='stroke-width: 3.00; stroke: #009E72; stroke-linecap: square;' />
+<line x1='5.40' y1='561.60' x2='5.40' y2='551.88' style='stroke-width: 3.00; stroke-linecap: butt;' />
+<line x1='5.40' y1='552.00' x2='5.40' y2='542.28' style='stroke-width: 3.00; stroke: #174C39; stroke-linecap: butt;' />
+<line x1='5.40' y1='542.40' x2='5.40' y2='532.68' style='stroke-width: 3.00; stroke: #009E72; stroke-linecap: butt;' />
 </g>
 </svg>

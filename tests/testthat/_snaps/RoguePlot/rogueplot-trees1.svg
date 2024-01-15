@@ -43,11 +43,11 @@
 <text x='677.91' y='536.93' style='font-size: 12.00px; font-family: sans;' textLength='36.69px' lengthAdjust='spacingAndGlyphs'>3 trees</text>
 <text x='677.91' y='551.33' style='font-size: 12.00px; font-family: sans;' textLength='36.69px' lengthAdjust='spacingAndGlyphs'>2 trees</text>
 <text x='677.91' y='565.73' style='font-size: 12.00px; font-family: sans;' textLength='30.69px' lengthAdjust='spacingAndGlyphs'>1 tree</text>
-<line x1='661.71' y1='561.60' x2='661.71' y2='549.31' style='stroke-width: 3.00; stroke: #040404; stroke-linecap: square;' />
-<line x1='661.71' y1='549.60' x2='661.71' y2='537.31' style='stroke-width: 3.00; stroke: #4C1258; stroke-linecap: square;' />
-<line x1='661.71' y1='537.60' x2='661.71' y2='525.31' style='stroke-width: 3.00; stroke: #A01975; stroke-linecap: square;' />
-<line x1='661.71' y1='525.60' x2='661.71' y2='513.31' style='stroke-width: 3.00; stroke: #E45358; stroke-linecap: square;' />
-<line x1='661.71' y1='513.60' x2='661.71' y2='501.31' style='stroke-width: 3.00; stroke: #F7AA2D; stroke-linecap: square;' />
-<line x1='661.71' y1='501.60' x2='661.71' y2='489.31' style='stroke-width: 3.00; stroke: #FFFE9E; stroke-linecap: square;' />
+<line x1='661.71' y1='561.60' x2='661.71' y2='549.31' style='stroke-width: 3.00; stroke: #040404; stroke-linecap: butt;' />
+<line x1='661.71' y1='549.60' x2='661.71' y2='537.31' style='stroke-width: 3.00; stroke: #4C1258; stroke-linecap: butt;' />
+<line x1='661.71' y1='537.60' x2='661.71' y2='525.31' style='stroke-width: 3.00; stroke: #A01975; stroke-linecap: butt;' />
+<line x1='661.71' y1='525.60' x2='661.71' y2='513.31' style='stroke-width: 3.00; stroke: #E45358; stroke-linecap: butt;' />
+<line x1='661.71' y1='513.60' x2='661.71' y2='501.31' style='stroke-width: 3.00; stroke: #F7AA2D; stroke-linecap: butt;' />
+<line x1='661.71' y1='501.60' x2='661.71' y2='489.31' style='stroke-width: 3.00; stroke: #FFFE9E; stroke-linecap: butt;' />
 </g>
 </svg>
