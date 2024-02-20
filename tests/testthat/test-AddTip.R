@@ -41,22 +41,60 @@ test_that("AddTip() with edge lengths", {
   expect_equal(dim(add1$edge)[1], length(add1[["edge.length"]]))
   
   # case = 1 -> y is bound on the root of x
-  expect_equal(c(0.6, rep(1, 14), 2),
-               AddTip(pec8, 0, edgeLength = 2, lengthBelow = 0.6)$edge.length)
+  expect_equal(
+    AddTip(pec8, 0, edgeLength = NULL, lengthBelow = 0.6)$edge.length),
+    c(0.6, rep(1, 14), 0.6)
+  )
+  expect_equal(
+    AddTip(pec8, 0, edgeLength = 2, lengthBelow = 0.6)$edge.length,
+    c(0.6, rep(1, 14), 2)
+  )
   # case = 2 -> y is bound on a tip of x
-  expect_equal(c(rep(1, 2), 0.3, 0.7, 2, rep(1, 11)),
-               AddTip(pec8, 2, edgeLength = 2, lengthBelow = 0.7)$edge.length)
-  expect_equal(c(rep(1, 2), 0.5, 0.5, 2, rep(1, 11)),
-               AddTip(pec8, 2, edgeLength = 2, lengthBelow = NULL)$edge.length)
+  expect_equal(
+    AddTip(pec8, 2, edgeLength = NULL, lengthBelow = 0.7)$edge.length,
+    c(rep(1, 2), 0.3, 0.7, 0.7, rep(1, 11))
+  )
+  expect_equal(
+    AddTip(pec8, 2, edgeLength = 2, lengthBelow = 0.7)$edge.length,
+    c(rep(1, 2), 0.3, 0.7, 2, rep(1, 11))
+  )
+  expect_equal(
+    AddTip(pec8, 2, edgeLength = NULL, lengthBelow = NULL)$edge.length,
+    c(rep(1, 2), 0.5, 0.5, 0.5, rep(1, 11))
+  )
+  expect_equal(
+    AddTip(pec8, 2, edgeLength = 2, lengthBelow = NULL)$edge.length,
+    c(rep(1, 2), 0.5, 0.5, 2, rep(1, 11))
+  )
   # case = 3 -> y is bound on a node of x
-  expect_equal(c(rep(1, 11), 0.3, 2, 0.7, 1, 1),
-               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 0.7)$edge.length)
-  expect_equal(c(rep(1, 11), 0.5, 0, 0.5, 1, 1),
-               AddTip(pec8, 15)$edge.length)
-  expect_equal(c(rep(1, 11), 0, 2, 1, 1, 1),
-               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1)$edge.length)
-  expect_equal(c(rep(1, 11), -0.6, 2, 1.6, 1, 1),
-               AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1.6)$edge.length)
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = NULL, lengthBelow = 0.7)$edge.length,
+    c(rep(1, 11), 0.3, 0.7, 0.7, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = 2, lengthBelow = 0.7)$edge.length,
+    c(rep(1, 11), 0.3, 2, 0.7, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15)$edge.length,
+    c(rep(1, 11), 0.5, 0, 0.5, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = NULL, lengthBelow = 1)$edge.length,
+    c(rep(1, 11), 0, 1, 1, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1)$edge.length,
+    c(rep(1, 11), 0, 2, 1, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = NULL, lengthBelow = 1.6)$edge.length,
+    c(rep(1, 11), -0.6, 1.6, 1.6, 1, 1)
+  )
+  expect_equal(
+    AddTip(pec8, 15, edgeLength = 2, lengthBelow = 1.6)$edge.length,
+    c(rep(1, 11), -0.6, 2, 1.6, 1, 1)
+  )
 })
 
 test_that("AddTipEverywhere() handles nasty tree", {

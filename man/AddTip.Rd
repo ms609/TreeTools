@@ -27,7 +27,10 @@ new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
 
-\item{edgeLength}{Numeric specifying length of new edge}
+\item{edgeLength}{Numeric specifying length of new edge. If \code{NULL},
+defaults to \code{lengthBelow}.
+This will become the default behaviour in a
+future release; please manually specify the desired behaviour in your code.}
 
 \item{lengthBelow}{Numeric specifying length below neighbour at which to
 graft new edge. Values greater than the length of the edge will result
@@ -70,7 +73,7 @@ ape::nodelabels(15, 15, bg = "green")
 
 plot(AddTip(tree, 15, "NEW_TIP"))
 
-# With edge lengths: ultrametric tree
+# Add edge lengths for an ultrametric tree
 tree$edge.length <- rep(c(rep(1, 5), 2, 1, 2, 2), 2)
 
 # Add a leaf to an external edge
@@ -78,9 +81,7 @@ leaf <- 5
 plot(tree)
 ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
 
-len <- tree$edge.length[tree$edge[, 2] == leaf]
-
-plot(AddTip(tree, 5, "NEW_TIP", edgeLength = len / 2))
+plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NULL))
 
 # Set up multi-panel plot
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)

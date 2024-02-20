@@ -10,7 +10,11 @@
 #' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
-#' @param edgeLength Numeric specifying length of new edge
+#' @param edgeLength Numeric specifying length of new edge. If `NULL`,
+#' defaults to `lengthBelow`.
+# Notice added in v1.10.0.9001, 2024-02-20:
+#' This will become the default behaviour in a
+#' future release; please manually specify the desired behaviour in your code.
 #' @param lengthBelow Numeric specifying length below neighbour at which to
 #' graft new edge. Values greater than the length of the edge will result
 #' in negative edge lengths. If `NULL`, the default, the new tip will be added
@@ -38,7 +42,7 @@
 #'
 #' plot(AddTip(tree, 15, "NEW_TIP"))
 #' 
-#' # With edge lengths: ultrametric tree
+#' # Add edge lengths for an ultrametric tree
 #' tree$edge.length <- rep(c(rep(1, 5), 2, 1, 2, 2), 2)
 #' 
 #' # Add a leaf to an external edge
@@ -46,13 +50,10 @@
 #' plot(tree)
 #' ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
 #' 
-#' len <- tree$edge.length[tree$edge[, 2] == leaf]
-#' 
-#' plot(AddTip(tree, 5, "NEW_TIP", edgeLength = len / 2))
+#' plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NULL))
 #' 
 #' @keywords tree
 #' @family tree manipulation
-#'
 #' @export
 AddTip <- function(tree,
                    where = sample.int(tree[["Nnode"]] * 2 + 2L, size = 1) - 1L,
@@ -70,7 +71,9 @@ AddTip <- function(tree,
   
   if (is.character(where)) {
     tmp <- match(where, TipLabels(tree))
-    if (is.na(tmp)) stop("No tip labelled '", where, "'")
+    if (is.na(tmp)) {
+      stop("No tip labelled '", where, "'")
+    }
     where <- tmp
   }
   ## find the row of "where" before renumbering
@@ -98,7 +101,8 @@ AddTip <- function(tree,
       if (is.null(lengthBelow)) {
         lengthBelow <- 0
       }
-      edgeLengths <- c(lengthBelow, edgeLengths, edgeLength)
+      edgeLengths <- c(lengthBelow, edgeLengths, 
+                       if(is.null(edgeLength)) lengthBelow else edgeLength)
     }
     rootNode <- nextNode
   }, { # case = 2 -> y is bound on a tip of x
@@ -115,7 +119,7 @@ AddTip <- function(tree,
       edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
                        edgeLengths[insertionEdge] - lengthBelow,
                        lengthBelow,
-                       edgeLength,
+                       if(is.null(edgeLength)) lengthBelow else edgeLength,
                        edgeLengths[-beforeInsertion])
     }
   }, { # case = 3 -> y is bound on a node of x
@@ -133,7 +137,7 @@ AddTip <- function(tree,
       }
       edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
                        edgeLengths[insertionEdge] - lengthBelow,
-                       edgeLength,
+                       if(is.null(edgeLength)) lengthBelow else edgeLength,
                        lengthBelow,
                        edgeLengths[-beforeInsertion])
     }
