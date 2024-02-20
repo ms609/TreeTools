@@ -176,18 +176,21 @@ AddTip <- function(tree,
 #' the trees produced by adding `label` to each edge of `tree` in turn.
 #'
 #' @examples
+#' # Set up multi-panel plot
 #' oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 #'
+#' # Add leaf to each edge on a tree in turn
 #' backbone <- BalancedTree(4)
 #' # Treating the position of the root as instructive:
 #' additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 #' xx <- lapply(additions, plot)
 #'
-#' par(mfrow=c(2, 3))
+#' par(mfrow = c(2, 3))
 #' # Don't treat root edges as distinct:
 #' additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 #' xx <- lapply(additions, plot)
 #'
+#' # Restore original plotting parameters
 #' par(oldPar)
 #'
 #' @importFrom ape is.rooted

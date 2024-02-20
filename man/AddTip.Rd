@@ -82,18 +82,21 @@ len <- tree$edge.length[tree$edge[, 2] == leaf]
 
 plot(AddTip(tree, 5, "NEW_TIP", edgeLength = len / 2))
 
+# Set up multi-panel plot
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 
+# Add leaf to each edge on a tree in turn
 backbone <- BalancedTree(4)
 # Treating the position of the root as instructive:
 additions <- AddTipEverywhere(backbone, includeRoot = TRUE)
 xx <- lapply(additions, plot)
 
-par(mfrow=c(2, 3))
+par(mfrow = c(2, 3))
 # Don't treat root edges as distinct:
 additions <- AddTipEverywhere(backbone, includeRoot = FALSE)
 xx <- lapply(additions, plot)
 
+# Restore original plotting parameters
 par(oldPar)
 
 }
