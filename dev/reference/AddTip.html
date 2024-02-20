@@ -111,7 +111,10 @@ new tip is added to a random edge.</p></dd>
 
 
 <dt>edgeLength</dt>
-<dd><p>Numeric specifying length of new edge</p></dd>
+<dd><p>Numeric specifying length of new edge. If <code>NULL</code>,
+defaults to <code>lengthBelow</code>.
+This will become the default behaviour in a
+future release; please manually specify the desired behaviour in your code.</p></dd>
 
 
 <dt>lengthBelow</dt>
@@ -193,7 +196,7 @@ single-taxon trees.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">15</span>, <span class="st">"NEW_TIP"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># With edge lengths: ultrametric tree</span></span></span>
+<span class="r-in"><span><span class="co"># Add edge lengths for an ultrametric tree</span></span></span>
 <span class="r-in"><span><span class="va">tree</span><span class="op">$</span><span class="va">edge.length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Add a leaf to an external edge</span></span></span>
@@ -202,24 +205,25 @@ single-taxon trees.</p>
 <span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">tiplabels</a></span><span class="op">(</span>bg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="va">leaf</span>, <span class="st">"green"</span>, <span class="st">"grey"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">len</span> <span class="op">&lt;-</span> <span class="va">tree</span><span class="op">$</span><span class="va">edge.length</span><span class="op">[</span><span class="va">tree</span><span class="op">$</span><span class="va">edge</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">==</span> <span class="va">leaf</span><span class="op">]</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">5</span>, <span class="st">"NEW_TIP"</span>, edgeLength <span class="op">=</span> <span class="va">len</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">5</span>, <span class="st">"NEW_TIP"</span>, edgeLength <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Set up multi-panel plot</span></span></span>
 <span class="r-in"><span><span class="va">oldPar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">4</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Add leaf to each edge on a tree in turn</span></span></span>
 <span class="r-in"><span><span class="va">backbone</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Treating the position of the root as instructive:</span></span></span>
 <span class="r-in"><span><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Don't treat root edges as distinct:</span></span></span>
 <span class="r-in"><span><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Restore original plotting parameters</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldPar</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
