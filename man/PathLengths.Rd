@@ -38,6 +38,7 @@ Other tree properties:
 \code{\link{ConsensusWithout}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
+\code{\link{NodeNumbers}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TreeIsRooted}()}

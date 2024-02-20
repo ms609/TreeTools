@@ -45,6 +45,13 @@ test_that("EdgeAncestry() works", {
   expect_equal(EdgeAncestry(10, parent, child), logical(18))
 })
 
+test_that("NodeNumbers() works", {
+  expect_equal(NodeNumbers(BalancedTree(5)), 6:9)
+  expect_equal(NodeNumbers(StarTree(5)), 6L)
+  expect_equal(NodeNumbers(BalancedTree(5), TRUE), 1:9)
+  expect_equal(NodeNumbers(StarTree(5), TRUE), 1:6)
+})
+
 test_that("Root node can be found", {
   rooted <- BalancedTree(8)
   postorder <- Postorder(rooted)

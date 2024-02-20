@@ -100,6 +100,26 @@ AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
   ret
 }
 
+#' Numeric index of each node in a tree
+#' `NodeNumbers()` returns a sequence corresponding to the nodes in a tree
+#' 
+#' @template treeParam
+#' @param tips Logical specifying whether to also include the indices of leaves.
+#' @return `NodeNumbers()` returns an integer vector corresponding to the
+#' indices of nodes within a tree.
+#' @template MRS
+#' @family tree properties
+#' @family tree navigation
+#' @export
+NodeNumbers <- function(tree, tips = FALSE) {
+  if (tips) {
+    seq_len(NTip(tree) + tree[["Nnode"]])
+  } else {
+    NTip(tree) + seq_len(tree[["Nnode"]])
+  }
+}
+
+
 #' Count descendants for each node in a tree
 #'
 #' `NDescendants()` counts the number of nodes (including leaves) directly

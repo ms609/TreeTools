@@ -55,6 +55,7 @@ Other tree navigation:
 \code{\link{ListAncestors}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
+\code{\link{NodeNumbers}()},
 \code{\link{NodeOrder}()},
 \code{\link{RootNode}()}
 }

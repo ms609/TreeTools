@@ -38,7 +38,8 @@
 #' # Add a leaf below an internal node
 #' plot(tree)
 #' ape::nodelabels()
-#' ape::nodelabels(15, 15, bg = "green")
+#' node <- 15
+#' ape::nodelabels(bg = ifelse(NodeNumbers(tree) == node, "green", "grey"))
 #'
 #' plot(AddTip(tree, 15, "NEW_TIP"))
 #' 

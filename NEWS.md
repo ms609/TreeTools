@@ -1,9 +1,9 @@
 # TreeTools 1.10.0.9001 (development) #
 
 - `DescendantTips()` complements `DescendantEdges()`.
+- `NodeNumbers()` returns the indices of nodes within a tree.
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
   default in a future release.
-
 
 # TreeTools 1.10.0 (2023-08-18) #
 

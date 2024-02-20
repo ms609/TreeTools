@@ -55,6 +55,7 @@ NSplits(as.Splits(BalancedTree(8)))
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
 \code{\link{NTip}()},
+\code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},

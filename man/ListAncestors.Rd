@@ -81,6 +81,7 @@ Other tree navigation:
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
+\code{\link{NodeNumbers}()},
 \code{\link{NodeOrder}()},
 \code{\link{RootNode}()}
 
@@ -93,6 +94,7 @@ Other tree navigation:
 \code{\link{MRCA}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
+\code{\link{NodeNumbers}()},
 \code{\link{NodeOrder}()},
 \code{\link{RootNode}()}
 }
