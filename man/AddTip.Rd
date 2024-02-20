@@ -61,11 +61,21 @@ single-taxon trees.
 \code{AddTipEverywhere()} adds a tip to each edge in turn.
 }
 \examples{
-plot(tree <- BalancedTree(10))
+tree <- BalancedTree(10)
+
+# Add a leaf below an internal node
+plot(tree)
 ape::nodelabels()
-ape::nodelabels(15, 15, bg="green")
+ape::nodelabels(15, 15, bg = "green")
 
 plot(AddTip(tree, 15, "NEW_TIP"))
+
+# Add a leaf to an external edge
+plot(tree)
+ape::tiplabels()
+ape::tiplabels(5, 5, bg = "green")
+
+plot(AddTip(tree, 5, "NEW_TIP"))
 
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 

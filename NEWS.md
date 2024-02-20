@@ -1,6 +1,7 @@
-# TreeTools 1.10.0.9000 (development) #
+# TreeTools 1.10.0.9001 (development) #
 
 - `DescendantTips()` complements `DescendantEdges()`.
+- Document breaking of external edges in `AddTip()`.
 
 
 # TreeTools 1.10.0 (2023-08-18) #
