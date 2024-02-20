@@ -20,10 +20,10 @@
 #' in negative edge lengths. If `NULL`, the default, the new tip will be added
 #' at the midpoint of the broken edge. If inserting at the root (`where = 0`),
 #' a new edge of length `lengthBelow` will be inserted.
-#' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips and
-#' nodes in `tree`, and index of root node.
-#' Not checked for correctness: specifying values here trades code safety for a
-#' nominal speed increase.
+#' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips
+#' and nodes in `tree`, and index of root node.
+#' Not checked for correctness: specifying values here yields a marginal speed
+#' increase at the cost of code safety.
 #'
 #' @return `AddTip()` returns a tree of class `phylo` with an additional tip
 #' at the desired location.

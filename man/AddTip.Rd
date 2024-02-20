@@ -38,10 +38,10 @@ in negative edge lengths. If \code{NULL}, the default, the new tip will be added
 at the midpoint of the broken edge. If inserting at the root (\code{where = 0}),
 a new edge of length \code{lengthBelow} will be inserted.}
 
-\item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips and
-nodes in \code{tree}, and index of root node.
-Not checked for correctness: specifying values here trades code safety for a
-nominal speed increase.}
+\item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips
+and nodes in \code{tree}, and index of root node.
+Not checked for correctness: specifying values here yields a marginal speed
+increase at the cost of code safety.}
 
 \item{includeRoot}{Logical; if \code{TRUE}, each position adjacent
 to the root edge is considered to represent distinct edges; if \code{FALSE},

@@ -42,7 +42,7 @@ test_that("AddTip() with edge lengths", {
   
   # case = 1 -> y is bound on the root of x
   expect_equal(
-    AddTip(pec8, 0, edgeLength = NULL, lengthBelow = 0.6)$edge.length),
+    AddTip(pec8, 0, edgeLength = NULL, lengthBelow = 0.6)$edge.length,
     c(0.6, rep(1, 14), 0.6)
   )
   expect_equal(
