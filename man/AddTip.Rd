@@ -70,12 +70,17 @@ ape::nodelabels(15, 15, bg = "green")
 
 plot(AddTip(tree, 15, "NEW_TIP"))
 
-# Add a leaf to an external edge
-plot(tree)
-ape::tiplabels()
-ape::tiplabels(5, 5, bg = "green")
+# With edge lengths: ultrametric tree
+tree$edge.length <- rep(c(rep(1, 5), 2, 1, 2, 2), 2)
 
-plot(AddTip(tree, 5, "NEW_TIP"))
+# Add a leaf to an external edge
+leaf <- 5
+plot(tree)
+ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
+
+len <- tree$edge.length[tree$edge[, 2] == leaf]
+
+plot(AddTip(tree, 5, "NEW_TIP", edgeLength = len / 2))
 
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
 
