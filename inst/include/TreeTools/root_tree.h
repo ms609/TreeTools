@@ -21,9 +21,10 @@ namespace TreeTools {
   // #TODO Write test cases
   // edge must be BINARY
   // edge must be in preorder
-  // #TODO establish the extent to which this really outperforms root_on_node.
-  // # Plan to replace with that to reduce future maintenance burden.
-  //  [[Rcpp::export]]
+  // Benchmarking at 2024-02-23 established that this is consistently twice
+  // as fast as root_on_node, so is worth retaining,
+  // despite some overlap in code.
+  // [[Rcpp::export]]
   inline Rcpp::IntegerMatrix root_binary(const Rcpp::IntegerMatrix edge,
                                          const int outgroup) {
 
