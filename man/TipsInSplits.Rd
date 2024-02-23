@@ -63,8 +63,8 @@ Other Splits operations:
 \code{\link{NTip}()},
 \code{\link{PolarizeSplits}()},
 \code{\link{SplitFrequency}()},
-\code{\link{SplitsInBinaryTree}()},
 \code{\link{Splits}},
+\code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{match.Splits}},
 \code{\link{xor}()}

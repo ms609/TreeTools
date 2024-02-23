@@ -101,8 +101,8 @@ RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
 }
 \seealso{
 Other consensus tree functions: 
-\code{\link{ConsensusWithout}()},
-\code{\link{Consensus}()}
+\code{\link{Consensus}()},
+\code{\link{ConsensusWithout}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
