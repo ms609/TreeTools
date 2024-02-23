@@ -25,12 +25,11 @@
 #'
 #' @template MRS
 #' @family Splits operations
-#' @importFrom ape keep.tip
 #' @export
 SplitFrequency <- function(reference, forest) {
   referenceSplits <- as.Splits(reference)
   refLabels <- attr(referenceSplits, "tip.label")
-  forest <- lapply(forest, keep.tip, refLabels)
+  forest <- lapply(forest, KeepTip, refLabels)
   forestSplits <- as.Splits(forest, tipLabels = refLabels)
 
   logicals <- vapply(forestSplits,

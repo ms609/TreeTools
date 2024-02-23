@@ -6,6 +6,8 @@
   default in a future release.
 - An entry point to the C++ function `root_on_node()` is now exported
   (intended for expert use only).
+- Use `KeepTip()` internally so `SplitFrequency()` supports `Splits` objects
+  as documented.
 
 # TreeTools 1.10.0 (2023-08-18) #
 
