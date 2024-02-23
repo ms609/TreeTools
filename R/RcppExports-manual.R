@@ -26,8 +26,9 @@ root_binary <- function(edge, outgroup) {
 #' @param phy Minimally, a named list with entries `edge` and `Nnode`, in the
 #' format of equivalent entries in a tree of class `phylo`. `edge.length` will
 #' also be considered if supplied.
-#' @param outgroup Numeric specifying index of leaf to use as outgroup.
-#' @returns `root_on_node()` returns `phy` rooted on the speficied leaf.
+#' @param outgroup Integer specifying index of leaf or node to set as the
+#' outgroup.
+#' @returns `root_on_node()` returns `phy` rooted on the specified node.
 #' 
 #' @template MRS
 #' @export

@@ -11,10 +11,11 @@ root_on_node(phy, outgroup)
 format of equivalent entries in a tree of class \code{phylo}. \code{edge.length} will
 also be considered if supplied.}
 
-\item{outgroup}{Numeric specifying index of leaf to use as outgroup.}
+\item{outgroup}{Integer specifying index of leaf or node to set as the
+outgroup.}
 }
 \value{
-\code{root_on_node()} returns \code{phy} rooted on the speficied leaf.
+\code{root_on_node()} returns \code{phy} rooted on the specified node.
 }
 \description{
 Direct entry point to \code{root_on_node()}; recommended for expert use only.
