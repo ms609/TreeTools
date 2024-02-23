@@ -142,8 +142,12 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   consSplits <- PolarizeSplits(as.Splits(cons), pole)
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
-  edgeMatches <- fmatch(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
-                        data.frame(t(splits[, -pole, drop = FALSE])))
+  # Had previously used fmatch here, but encountered unexpected error
+  # Error in fmatch: cannot take a writable DATAPTR of an ALTLIST
+  #  [class: wrap_list, pkg: base]
+  # Replaced with match for safety (?)
+  edgeMatches <- match(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
+                       data.frame(t(splits[, -pole, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
   tab <- tabulate(edgeMatches)
