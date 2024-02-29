@@ -1,11 +1,11 @@
-pandoc: 2.19.2
+pandoc: 3.1.11
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   filesystem-navigation: filesystem-navigation.html
   load-data: load-data.html
   load-trees: load-trees.html
-last_built: 2024-02-23T17:49Z
+last_built: 2024-02-29T09:36Z
 urls:
   reference: https://ms609.github.io/TreeTools/reference
   article: https://ms609.github.io/TreeTools/articles
