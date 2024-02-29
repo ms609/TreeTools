@@ -1,6 +1,7 @@
 #' Identify descendant edges
 #'
-#' Quickly identify edges that are "descended" from edges in a tree.
+#' `DescendantEdges()` efficiently identifies edges that are "descended" from
+#' edges in a tree.
 #'
 #' @template treeParent
 #' @template treeChild
@@ -50,8 +51,8 @@ DescendantEdges <- function(parent, child, edge = NULL,
 
 #' Identify descendant tips
 #'
-#' Quickly identify leaves (external nodes) that are "descended" from edges in
-#' a tree.
+#' `DescendantTips()` efficiently identifies leaves (external nodes) that are
+#' "descended" from edges in a tree.
 #'
 #' @param nTip Integer specifying number of leaves in the tree.
 #' Computed if not supplied.

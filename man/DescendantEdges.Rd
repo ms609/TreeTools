@@ -47,10 +47,11 @@ It returns a matrix of class logical, with row \emph{N} specifying whether each
 edge is a descendant of edge \emph{N} (or the edge itself).
 }
 \description{
-Quickly identify edges that are "descended" from edges in a tree.
+\code{DescendantEdges()} efficiently identifies edges that are "descended" from
+edges in a tree.
 
-Quickly identify leaves (external nodes) that are "descended" from edges in
-a tree.
+\code{DescendantTips()} efficiently identifies leaves (external nodes) that are
+"descended" from edges in a tree.
 }
 \examples{
 tree <- as.phylo(0, 6)
