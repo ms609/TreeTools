@@ -21,8 +21,12 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
-inf_consensus_tree <- function(trees, p) {
-    .Call(`_TreeTools_inf_consensus_tree`, trees, p)
+count_splits <- function(trees) {
+    .Call(`_TreeTools_count_splits`, trees)
+}
+
+count_splits_bku <- function(trees) {
+    .Call(`_TreeTools_count_splits_bku`, trees)
 }
 
 num_to_parent <- function(n, nTip) {

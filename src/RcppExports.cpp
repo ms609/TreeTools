@@ -67,15 +67,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// inf_consensus_tree
-LogicalMatrix inf_consensus_tree(const List trees, const NumericVector p);
-RcppExport SEXP _TreeTools_inf_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
+// count_splits
+List count_splits(const List trees);
+RcppExport SEXP _TreeTools_count_splits(SEXP treesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(inf_consensus_tree(trees, p));
+    rcpp_result_gen = Rcpp::wrap(count_splits(trees));
+    return rcpp_result_gen;
+END_RCPP
+}
+// count_splits_bku
+List count_splits_bku(const List trees);
+RcppExport SEXP _TreeTools_count_splits_bku(SEXP treesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    rcpp_result_gen = Rcpp::wrap(count_splits_bku(trees));
     return rcpp_result_gen;
 END_RCPP
 }

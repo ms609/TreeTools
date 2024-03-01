@@ -39,7 +39,9 @@ void compute_double_factorials() {
 namespace TreeTools {
 inline double split_phylo_info(const int16 n_in, const int16 *n_tip,
                                const double p) {
+  if (!p || n_in < 2) return 0;
   const int16 n_out = *n_tip - n_in;
+  if (n_out < 2) return 0;
   assert(p > 0);
   assert(p <= 1);
   assert(n_in > 1);
@@ -64,7 +66,9 @@ inline double split_phylo_info(const int16 n_in, const int16 *n_tip,
 
 inline double split_clust_info(const int16 n_in, const int16 *n_tip,
                                const double p) {
+  if (!p || n_in < 2) return 0;
   const int16 n_out = *n_tip - n_in;
+  if (n_out < 2) return 0;
   assert(p > 0);
   assert(p <= 1);
   assert(n_in > 1);

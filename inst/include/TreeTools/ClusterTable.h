@@ -209,9 +209,17 @@ namespace TreeTools {
     inline void SETSWX(int16* row) {
       Xswitch[*row] = true;
     }
-
+    
+    inline bool SETSWX() {
+      return Xswitch[enumeration - 1] = true;
+    }
+    
     inline bool GETSWX(int16* row) {
       return Xswitch[*row];
+    }
+
+    inline bool GETSWX() {
+      return Xswitch[enumeration - 1];
     }
 
     inline bool NOSWX(const std::size_t& n) {
@@ -261,9 +269,15 @@ namespace TreeTools {
       // If m clusters are in X, they are returned by the first m invocations
       // of NCLUS after initialization by XRESET; thereafter NCLUS returns the
       // invalid cluster <0,0>.
-      *L = X(enumeration, 0);
-      *R = X(enumeration, 1);
-      ++enumeration;
+      *L = 0;
+      while (*L == 0) {
+        if (enumeration >= X_ROWS) {
+          return;
+        }
+        *L = X(enumeration, 0);
+        *R = X(enumeration, 1);
+        ++enumeration;
+      }
     }
 
   };

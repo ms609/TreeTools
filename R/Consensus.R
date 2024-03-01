@@ -52,9 +52,31 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, inf = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  splits <- as.Splits(
-    if (inf) inf_consensus_tree(trees, p) else consensus_tree(trees, p),
-    tipLabels = TipLabels(trees[[1]]))
+  if (inf) {
+    counts <- count_splits(trees)
+    info <- counts[["pic"]]
+    allSplits <- as.Splits(counts[["splits"]])
+    kept <- logical(length(info))
+    active <- !kept
+    dput(counts)
+    stop(counts)
+    repeat {
+      best <- which.max(info * active)
+      message("Keeping split ", best)
+      kept[best] <- TRUE
+      active[best] <- FALSE
+      compatible <- CompatibleSplits(allSplits[[best]], allSplits[[active]])
+      active[active][!compatible] <- FALSE
+      if (!any(active)) {
+        break
+      }
+       summary(allSplits[[kept]])
+    }
+    which.max(info)
+  } else {
+    splits <- as.Splits(consensus_tree(trees, p),
+                        tipLabels = TipLabels(trees[[1]]))
+  }
   tree1 <- Preorder(trees[[1]])
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
