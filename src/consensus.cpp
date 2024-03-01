@@ -169,13 +169,10 @@ List count_splits(const List trees) {
 
     // UNTESTED ASSERTION: we can change to n_tip - 1, as the final entry is
     // all tips, thus is uninteresting.
-    for (int16 it = n_tip - 2; it--; ) {
-      Rcout << "pos: " << it <<
-        ", " << tables[i].X(it + 2, 0) << "-" << tables[i].X(it + 2, 1) <<
-        ": switch " <<  tables[i].GETSWX(&it) << ".\n";
-      split_count[it + 1] = 1 - tables[i].GETSWX(&it);
+    for (int16 it = 1; it != n_tip - 1; it++) {
+      split_count[it - 1] = 1 - tables[i].GETSWX(&it);
     }
-    for (int16 j = 1; j != n_tip - 1; ++j) {
+    for (int16 j = 0; j != n_tip - 2; ++j) {
       Rcout << split_count[j];
     }
     Rcout << "\n\n";
@@ -183,13 +180,14 @@ List count_splits(const List trees) {
     for (int32 j = i + 1; j != n_trees; j++) {
 
       //tables[i].CLEAR();
-      Rcout << "Reading table " << j << "; " << tables[j].NOSWX() << 
+      Rcout << "\n * Reading table " << j << "; " << tables[j].NOSWX() << 
         " switches on.\n";
 
       tables[j].TRESET();
       tables[j].READT(&v, &w);
 
       int16 j_pos = 0;
+      int16 j_row = 0;
       int32 Spos = 0; // Empty the stack S. Used in CT_PUSH /CT_POP macros.
 
       do {
@@ -210,20 +208,28 @@ List count_splits(const List trees) {
           CT_PUSH(L, R, N, W);
 
           ++j_pos;
-          if (tables[j].GETSWX(&j_pos)) {
+          // Rcout << " j Row " << j_pos << ": " << tables[j].X(j_pos, 0)
+          //   << "-" << tables[j].X(j_pos, 1) << "\n";
+          Rcout << " Examining I's " << L << "-" << R<<"\n";
+          j_row = (tables[j].CLUSTONL(&L_j, &R_j) ? L_j : R_j);
+          Rcout << " Row " << j_row << " on J: " << tables[j].X(j_row, 0)
+            << "-" << tables[j].X(j_row, 1) << "\n";
+          if (tables[j].GETSWX(&j_row)) {
             // Split has already been counted; next!
-            Rcout << "Already counted at position " << j_pos << ".\n";
+            Rcout << "Already counted at row " << j_row << ".\n";
           } else {
             if (N == R - L + 1) { // L..R is contiguous, and must be tested
               if (tables[i].CLUSTONL(&L, &R)) {
-                tables[j].SETSWX(&j_pos);
+                Rcout << "Counting " << L << "-" << R << " on tree " << j
+                << " at pos " << j_pos << "L.\n";
+                tables[j].SETSWX(&j_row);
+                
                 ASSERT(L > 0);
-                Rcout << "Found at " << (L - 1) << "L.\n";
                 ++split_count[L - 1];
               } else if (tables[i].CLUSTONR(&L, &R)) {
-                tables[j].SETSWX(&j_pos);
+                Rcout << "Counting tree " << j << " at pos " << j_pos << "R.\n";
+                tables[j].SETSWX(&j_row);
                 ASSERT(R > 0);
-                Rcout << "Found at " << (R - 1) << "R.\n";
                 ++split_count[R - 1];
               }
             }
@@ -234,9 +240,9 @@ List count_splits(const List trees) {
     }
 
     for (int32 k = n_tip - 2; k--; ) {
-      L_i = tables[i].X(k + 2, 0);
-      R_i = tables[i].X(k + 2, 1);
-      count = split_count[k + 1];
+      L_i = tables[i].X(k + 1, 0);
+      R_i = tables[i].X(k + 1, 1);
+      count = split_count[k];
       Rcout << L_i << "-"<<R_i<<"...\n";
       int32 in_split = R_i - L_i + 1;
       if (//count &&
