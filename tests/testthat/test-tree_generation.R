@@ -78,6 +78,18 @@ test_that("YuleTree() works", {
   )
 })
 
+test_that("YuleTree() root parameter", {
+  expect_equal(
+    {set.seed(0); YuleTree(10, root = FALSE)},
+    {set.seed(0); UnrootTree(YuleTree(10, root = TRUE))}
+  )
+  
+  expect_warning(expect_equal(
+    {set.seed(0); YuleTree(10, root = NA)},
+    {set.seed(0); YuleTree(10, root = FALSE)}
+  ), "root = NA")
+})
+  
 test_that("Hamming() works", {
   dataset <- StringToPhyDat("111100 ???000 ???000 111??? 10??10",
                             letters[1:5], byTaxon = TRUE)
