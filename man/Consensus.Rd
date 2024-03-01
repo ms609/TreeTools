@@ -4,7 +4,7 @@
 \alias{Consensus}
 \title{Construct consensus trees}
 \usage{
-Consensus(trees, p = 1, check.labels = TRUE)
+Consensus(trees, p = 1, check.labels = TRUE, inf = TRUE)
 }
 \arguments{
 \item{trees}{List of trees, optionally of class \code{multiPhylo}.}

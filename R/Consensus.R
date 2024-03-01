@@ -23,7 +23,7 @@
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function(trees, p = 1, check.labels = TRUE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE, inf = TRUE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -52,8 +52,9 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  splits <- as.Splits(consensus_tree(trees, p),
-                      tipLabels = TipLabels(trees[[1]]))
+  splits <- as.Splits(
+    if (inf) inf_consensus_tree(trees, p) else consensus_tree(trees, p),
+    tipLabels = TipLabels(trees[[1]]))
   tree1 <- Preorder(trees[[1]])
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]

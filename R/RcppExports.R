@@ -21,6 +21,10 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
+inf_consensus_tree <- function(trees, p) {
+    .Call(`_TreeTools_inf_consensus_tree`, trees, p)
+}
+
 num_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_num_to_parent`, n, nTip)
 }

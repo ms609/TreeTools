@@ -67,6 +67,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// inf_consensus_tree
+LogicalMatrix inf_consensus_tree(const List trees, const NumericVector p);
+RcppExport SEXP _TreeTools_inf_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(inf_consensus_tree(trees, p));
+    return rcpp_result_gen;
+END_RCPP
+}
 // num_to_parent
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {

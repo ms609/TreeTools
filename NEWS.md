@@ -1,3 +1,10 @@
+# branch max-inf-cons-tree
+
+- Aims to produce a consensus tree based on a greedy information-content
+  algorithm
+- Standard consensus works backwards from % trees containing clades; what if
+  we worked from most to least informative splits to present?
+
 # TreeTools 1.10.0.9001 (development) #
 
 - `DescendantTips()` complements `DescendantEdges()`.

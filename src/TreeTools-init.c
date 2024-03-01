@@ -15,6 +15,7 @@ extern SEXP _TreeTools_duplicated_splits(SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_mixed_base(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_rooted_shape(SEXP, SEXP, SEXP);
+extern SEXP _TreeTools_inf_consensus_tree(SEXP, SEXP);
 extern SEXP _TreeTools_keep_tip(SEXP, SEXP);
 extern SEXP _TreeTools_kept_vertices(SEXP, SEXP);
 extern SEXP _TreeTools_minimum_spanning_tree(SEXP);
@@ -55,6 +56,7 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_edge_to_mixed_base", (DL_FUNC) &_TreeTools_edge_to_mixed_base, 3},
   {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
   {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
+  {"_TreeTools_inf_consensus_tree", (DL_FUNC) &_TreeTools_inf_consensus_tree, 2},
   {"_TreeTools_kept_vertices", (DL_FUNC) &_TreeTools_kept_vertices, 2},
   {"_TreeTools_keep_tip", (DL_FUNC) &_TreeTools_keep_tip, 2},
   {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
