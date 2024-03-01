@@ -131,7 +131,9 @@ List count_splits(const List trees) {
   int16
     v = 0, w = 0,
     L, R, N, W,
-    L_j, R_j, N_j, W_j
+    L_i, R_i,
+    L_j, R_j, N_j, W_j,
+    count
   ;
   const int32 n_trees = trees.length();
   
@@ -163,14 +165,26 @@ List count_splits(const List trees) {
     if (tables[i].NOSWX(ntip_3)) {
       continue;
     }
+    Rcout << "\nTree " << i << " ===========\n";
 
-    for (int16 it = n_tip; it--; ) {
-      split_count[it] = 1 - tables[i].GETSWX(&it);
+    // UNTESTED ASSERTION: we can change to n_tip - 1, as the final entry is
+    // all tips, thus is uninteresting.
+    for (int16 it = n_tip - 2; it--; ) {
+      Rcout << "pos: " << it <<
+        ", " << tables[i].X(it + 2, 0) << "-" << tables[i].X(it + 2, 1) <<
+        ": switch " <<  tables[i].GETSWX(&it) << ".\n";
+      split_count[it + 1] = 1 - tables[i].GETSWX(&it);
     }
+    for (int16 j = 1; j != n_tip - 1; ++j) {
+      Rcout << split_count[j];
+    }
+    Rcout << "\n\n";
 
     for (int32 j = i + 1; j != n_trees; j++) {
 
-      tables[i].CLEAR();
+      //tables[i].CLEAR();
+      Rcout << "Reading table " << j << "; " << tables[j].NOSWX() << 
+        " switches on.\n";
 
       tables[j].TRESET();
       tables[j].READT(&v, &w);
@@ -198,15 +212,18 @@ List count_splits(const List trees) {
           ++j_pos;
           if (tables[j].GETSWX(&j_pos)) {
             // Split has already been counted; next!
+            Rcout << "Already counted at position " << j_pos << ".\n";
           } else {
             if (N == R - L + 1) { // L..R is contiguous, and must be tested
               if (tables[i].CLUSTONL(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
                 ASSERT(L > 0);
+                Rcout << "Found at " << (L - 1) << "L.\n";
                 ++split_count[L - 1];
               } else if (tables[i].CLUSTONR(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
                 ASSERT(R > 0);
+                Rcout << "Found at " << (R - 1) << "R.\n";
                 ++split_count[R - 1];
               }
             }
@@ -216,22 +233,26 @@ List count_splits(const List trees) {
       } while (v);
     }
 
-    for (int32 k = n_tip; k--; ) {
-      int32 in_split = tables[i].X(k + 1, 1) - tables[i].X(k + 1, 0) + 1;
-      if (split_count[k] && 
+    for (int32 k = n_tip - 2; k--; ) {
+      L_i = tables[i].X(k + 2, 0);
+      R_i = tables[i].X(k + 2, 1);
+      count = split_count[k + 1];
+      Rcout << L_i << "-"<<R_i<<"...\n";
+      int32 in_split = R_i - L_i + 1;
+      if (//count &&
           in_split > 1 &&
           in_split < n_tip - 1
         ) {
         Rcout << splits_found << ": Found tree " << i << "'s split " << k
-              << " in " << split_count[k] << " trees.\n";
-        for (int32 j = tables[i].X(k + 1, 0);
-             j != tables[i].X(k + 1, 1) + 1;
-             ++j) {
-          Rcout << ", " << tables[i].DECODE(j);
-          split_members(splits_found, tables[i].DECODE(j) - 1) = true;
+              << " in " << count << " trees.\n";
+        for (int32 leaf = L_i; leaf != R_i + 1; ++leaf) {
+          Rcout << ", " << tables[i].DECODE(leaf);
+          if (count)//////////////////
+          split_members(splits_found, tables[i].DECODE(leaf) - 1) = true;
         }
+        if (!count) continue; ////////////////
         
-        split_n[splits_found] = split_count[k];
+        split_n[splits_found] = count;
           
         split_pi[splits_found] = TreeTools::split_phylo_info(
           int16(in_split), &n_tip_16, split_n[splits_found] / double(n_trees));
