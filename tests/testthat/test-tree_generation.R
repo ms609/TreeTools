@@ -63,6 +63,33 @@ test_that("Random trees are generated correctly", {
   }
 })
 
+test_that("YuleTree() works", {
+  expect_equal(YuleTree(0), ZeroTaxonTree())
+  expect_equal(YuleTree("a"), SingleTaxonTree("a"))
+  expect_equal(YuleTree(2, addInTurn = TRUE), BalancedTree(2))
+  expect_equal(NTip(YuleTree(10)), 10)
+  expect_equal(YuleTree(10)$Nnode, 9)
+  expect_true(all(TipLabels(YuleTree(10)) %in% TipLabels(10)))
+  expect_equal(TipLabels(YuleTree(10, addInTurn = TRUE)), TipLabels(10))
+  expect_equal(
+    mean(replicate(100, TotalCopheneticIndex(YuleTree(10)))),
+    TCIContext(10)$yule.expected,
+    tolerance = 0.1
+  )
+})
+
+test_that("YuleTree() root parameter", {
+  expect_equal(
+    {set.seed(0); YuleTree(10, root = FALSE)},
+    {set.seed(0); UnrootTree(YuleTree(10, root = TRUE))}
+  )
+  
+  expect_warning(expect_equal(
+    {set.seed(0); YuleTree(10, root = NA)},
+    {set.seed(0); YuleTree(10, root = FALSE)}
+  ), "root = NA")
+})
+  
 test_that("Hamming() works", {
   dataset <- StringToPhyDat("111100 ???000 ???000 111??? 10??10",
                             letters[1:5], byTaxon = TRUE)
