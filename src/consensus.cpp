@@ -151,6 +151,8 @@ LogicalMatrix inf_consensus_tree(const List trees, const NumericVector p) {
 
   std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
   std::array<int32, CT_MAX_LEAVES> split_count;
+  std::array<double, CT_MAX_LEAVES> split_pi;
+  std::array<double, CT_MAX_LEAVES> split_ci;
 
   LogicalMatrix ret(ntip_3, n_tip);
 
@@ -224,14 +226,12 @@ LogicalMatrix inf_consensus_tree(const List trees, const NumericVector p) {
         Rcout << splits_found << ": Found tree " << i << "'s split " << k
               << " in " << split_count[k] << " trees.\n";
         Rcout << "Count: " << split_count[k] <<"\n";
-        Rcout << "Phylo Information content: " << 
-          TreeTools::split_phylo_info(int16(in_split), &n_tip_16,
-                                      split_count[k] / double(n_trees))
-          << "\n";
-        Rcout << "Clust Information content: " << 
-          TreeTools::split_clust_info(int16(in_split), &n_tip_16,
-                                      split_count[k] / double(n_trees))
-          << "\n";
+        split_pi[k] = TreeTools::split_phylo_info(
+          int16(in_split), &n_tip_16, split_count[k] / double(n_trees));
+        Rcout << "Phylo Information content: " << split_pi[k] << "\n";
+        split_ci[k] = TreeTools::split_clust_info(
+          int16(in_split), &n_tip_16, split_count[k] / double(n_trees));
+        Rcout << "Clust Information content: " << split_ci[k] << "\n";
         for (int32 j = tables[i].X(k + 1, 0);
              j != tables[i].X(k + 1, 1) + 1;
              ++j) {
