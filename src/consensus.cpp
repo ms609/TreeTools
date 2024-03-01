@@ -99,6 +99,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       } while (v);
     }
 
+    // TODO Check: should this be n_tip - 1; or stop at k = 1 instead of 0?
     for (int32 k = n_tip; k--; ) {
       if (split_count[k] >= thresh) {
         // Rcout << splits_found << ": Found tree " << i << "'s split " << k
