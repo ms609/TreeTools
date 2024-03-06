@@ -5,8 +5,9 @@
 - Standard consensus works backwards from % trees containing clades; what if
   we worked from most to least informative splits to present?
 
-# TreeTools 1.10.0.9001 (development) #
+# TreeTools 1.10.0.9002 (development) #
 
+- `YuleTree()` generates a random tree by the Yule process.
 - `DescendantTips()` complements `DescendantEdges()`.
 - `NodeNumbers()` returns the indices of nodes within a tree.
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
