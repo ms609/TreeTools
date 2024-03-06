@@ -125,9 +125,139 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     LogicalMatrix(0, n_tip);
 }
 
-// equivalent to consensus_tree
+// TODO document parameters and return value
 // [[Rcpp::export]]
 List count_splits(const List trees) {
+  int16
+    v = 0, w = 0,
+    L, R, N, W,
+    L_i, R_i, count,
+    L_j, R_j, N_j, W_j
+  ;
+  const int32 n_trees = trees.length();
+
+  std::vector<TreeTools::ClusterTable> tables;
+  tables.reserve(n_trees);
+  for (int32 i = n_trees; i--; ) {
+    tables.emplace_back(TreeTools::ClusterTable(Rcpp::List(trees(i))));
+  }
+
+  const int32
+    n_tip = tables[0].N(),
+    ntip_3 = n_tip - 3
+  ;
+  const int16 n_tip_16 = int16(n_tip);
+
+  std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
+  std::array<int32, CT_MAX_LEAVES> split_count;
+  
+  IntegerVector split_n (ntip_3 * n_trees);
+  NumericVector split_pi (ntip_3 * n_trees);
+  NumericVector split_ci (ntip_3 * n_trees);
+  LogicalMatrix split_members(ntip_3 * n_trees, n_tip);
+
+  int32
+    i = 0,
+    splits_found = 0
+  ;
+  do {
+    std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
+
+    for (int32 j = 0; j != n_trees; j++) {
+      if (i == j) continue;
+
+      tables[i].CLEAR();
+
+      tables[j].TRESET();
+      tables[j].READT(&v, &w);
+
+      int16 j_pos = 0;
+      int32 Spos = 0; // Empty the stack S. Used in CT_PUSH /CT_POP macros.
+
+      do {
+        if (CT_IS_LEAF(v)) {
+          CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
+        } else {
+          CT_POP(L, R, N, W_j);
+          W = 1 + W_j;
+          w = w - W_j;
+          while (w) {
+            CT_POP(L_j, R_j, N_j, W_j);
+            if (L_j < L) L = L_j;
+            if (R_j > R) R = R_j;
+            N = N + N_j;
+            W = W + W_j;
+            w = w - W_j;
+          };
+          CT_PUSH(L, R, N, W);
+
+          ++j_pos;
+          
+          if (N == R - L + 1) { // L..R is contiguous, and must be tested
+            if (tables[i].CLUSTONL(&L, &R)) {
+              ASSERT(L > 0);
+              ++split_count[L - 1];
+            } else if (tables[i].CLUSTONR(&L, &R)) {
+              ASSERT(R > 0);
+              ++split_count[R - 1];
+            }
+          
+          }
+        }
+        tables[j].NVERTEX_short(&v, &w);
+      } while (v);
+    }
+    
+    // TODO Check: should this be n_tip - 1; or stop at k = 1 instead of 0?
+    for (int32 k = 1; k <= ntip_3; k++) {
+      L_i = tables[i].X(k + 1, 0);
+      R_i = tables[i].X(k + 1, 1);
+      count = split_count[k];
+      Rcout << L_i << "-"<<R_i<<"...\n";
+      int32 in_split = R_i - L_i + 1;
+      if (count &&
+          in_split > 1 &&
+          in_split < n_tip - 1
+      ) {
+        Rcout << splits_found << ": Found tree " << i << "'s split " << k
+              << " in " << count << " trees.\n";
+        for (int32 leaf = L_i; leaf != R_i + 1; ++leaf) {
+          Rcout << ", " << tables[i].DECODE(leaf);
+          split_members(splits_found, tables[i].DECODE(leaf) - 1) = true;
+        }
+        
+        split_n[splits_found] = count;
+        
+        split_pi[splits_found] = TreeTools::split_phylo_info(
+          int16(in_split), &n_tip_16, split_n[splits_found] / double(n_trees));
+        
+        split_ci[splits_found] = TreeTools::split_clust_info(
+          int16(in_split), &n_tip_16, split_n[splits_found] / double(n_trees));
+        
+        Rcout << "\n\n";
+        ++splits_found;
+        
+      }
+    }
+  } while (++i != n_trees);
+
+  return splits_found ? 
+    List::create(
+      Named("splits") = split_members(Range(0, splits_found - 1), _),
+      _["count"] = split_n[Range(0, splits_found - 1)],
+      _["pic"] = split_pi[Range(0, splits_found - 1)],
+      _["cic"] = split_ci[Range(0, splits_found - 1)]
+  ) : List::create(
+      Named("splits") = LogicalMatrix(0, n_tip),
+      _["count"] = IntegerVector::create(0),
+      _["pic"] = NumericVector::create(0),
+      _["cic"] = NumericVector::create(0)
+  );
+}
+
+// equivalent to consensus_tree
+// [[Rcpp::export]]
+List count_splits_wrongly(const List trees) {
   int16
     v = 0, w = 0,
     L, R, N, W,
