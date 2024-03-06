@@ -61,7 +61,6 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, inf = FALSE) {
     active <- !kept
     repeat {
       best <- which.max(info * active)
-      message("Keeping split ", best)
       kept[best] <- TRUE
       active[best] <- FALSE
       compatible <- CompatibleSplits(allSplits[[best]], allSplits[[active]])
