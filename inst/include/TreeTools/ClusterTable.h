@@ -210,16 +210,8 @@ namespace TreeTools {
       Xswitch[*row] = true;
     }
     
-    inline bool SETSWX() {
-      return Xswitch[enumeration - 1] = true;
-    }
-    
     inline bool GETSWX(int16* row) {
       return Xswitch[*row];
-    }
-
-    inline bool GETSWX() {
-      return Xswitch[enumeration - 1];
     }
 
     inline bool NOSWX(const std::size_t& n) {
