@@ -213,16 +213,12 @@ List count_splits(const List trees) {
       L_i = tables[i].X(k + 1, 0);
       R_i = tables[i].X(k + 1, 1);
       count = split_count[k];
-      Rcout << L_i << "-"<<R_i<<"...\n";
       int32 in_split = R_i - L_i + 1;
       if (count &&
           in_split > 1 &&
           in_split < n_tip - 1
       ) {
-        Rcout << splits_found << ": Found tree " << i << "'s split " << k
-              << " in " << count << " trees.\n";
         for (int32 leaf = L_i; leaf != R_i + 1; ++leaf) {
-          Rcout << ", " << tables[i].DECODE(leaf);
           split_members(splits_found, tables[i].DECODE(leaf) - 1) = true;
         }
         
@@ -234,7 +230,6 @@ List count_splits(const List trees) {
         split_ci[splits_found] = TreeTools::split_clust_info(
           int16(in_split), &n_tip_16, split_n[splits_found] / double(n_trees));
         
-        Rcout << "\n\n";
         ++splits_found;
         
       }

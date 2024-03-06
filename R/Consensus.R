@@ -23,7 +23,7 @@
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function(trees, p = 1, check.labels = TRUE, inf = TRUE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE, inf = FALSE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -54,12 +54,11 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, inf = TRUE) {
   }
   if (inf) {
     counts <- count_splits(trees)
-    info <- counts[["pic"]]
-    allSplits <- as.Splits(counts[["splits"]])
+    duplicate <- duplicated(counts[["splits"]])
+    allSplits <- as.Splits(counts[["splits"]][!duplicate, ])
+    info <- counts[["pic"]][!duplicate]
     kept <- logical(length(info))
     active <- !kept
-    dput(counts)
-    stop(counts)
     repeat {
       best <- which.max(info * active)
       message("Keeping split ", best)
@@ -70,9 +69,8 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, inf = TRUE) {
       if (!any(active)) {
         break
       }
-       summary(allSplits[[kept]])
     }
-    which.max(info)
+    splits <- allSplits[[kept]]
   } else {
     splits <- as.Splits(consensus_tree(trees, p),
                         tipLabels = TipLabels(trees[[1]]))
