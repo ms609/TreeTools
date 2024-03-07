@@ -103,3 +103,19 @@ test_that("ConsensusWithout() is robust", {
   expect_true(all.equal(DropTip(nasty, 2), ConsensusWithout(nasty, "b")))
 
 })
+
+test_that(".CountSplits() is safe", {
+  expect_error(.CountSplits(list(as.phylo(1, 4), "b")), "class")
+  expect_error(.CountSplits(list(as.phylo(1, 4), as.phylo(0:1, 4))), "class")
+  expect_error(.CountSplits(list(as.phylo(1, 4), as.phylo(1, 5))), "leaves")
+  
+  uncompressed <- as.phylo(0:2, 5)
+  tmp <- tempfile()
+  write.nexus(uncompressed, file = tmp)
+  on.exit(unlink(tmp))
+  compressed <- read.nexus(tmp)
+  expect_equal(
+    .CountSplits(compressed),
+    .CountSplits(RenumberTips(uncompressed, compressed))
+  )
+})

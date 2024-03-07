@@ -23,7 +23,7 @@
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function(trees, p = 1, check.labels = TRUE, inf = FALSE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE, info = FALSE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -52,11 +52,21 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, inf = FALSE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  if (inf) {
-    counts <- count_splits(trees)
+  if (isTRUE(info)) {
+    info <- "phylogenetic"
+  }
+  
+  if (!is.logical(info)) {
+    mode <- pmatch(tolower(info),
+                  c("phylogenetic", "clustering", "credibility"))
+    if (is.na(mode)) {
+      stop("`info` must be 'phylogenetic', 'clustering' or 'credibility'")
+    }
+    counts <- .CountSplits(trees)
     duplicate <- duplicated(counts[["splits"]])
-    allSplits <- as.Splits(counts[["splits"]][!duplicate, ])
-    info <- counts[["pic"]][!duplicate]
+    allSplits <- as.Splits(counts[["splits"]][!duplicate, ],
+                           tipLabels = TipLabels(trees[[1]]))
+    info <- counts[[switch(mode, "pic", "cic", "count")]][!duplicate]
     kept <- logical(length(info))
     active <- !kept
     repeat {
@@ -138,6 +148,50 @@ ConsensusWithout.multiPhylo <- function(trees, tip = character(0), ...) {
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.list <- ConsensusWithout.multiPhylo
+
+#' Count splits and calculate information content
+#' 
+#' Counts the number of times that each split occurs in a posterior sample of
+#' trees, and computes the information content implied by split membership
+#' and probability.
+#' 
+#' This is marked as an internal function as its behaviour is subject to change;
+#' it may be replaced with more efficient functions for specific applications
+#' in future. Please alert the maintainer if you plan to call the function
+#' directly in your own work.
+#' 
+#' @param trees List or multiPhylo object containing phylogenetic trees of 
+#' class "phylo", on the same set of tips.
+#' @return `.CountSplits()` currently returns a list with four elements:
+#' - `splits` is a logical matrix; each column corresponds to a leaf, each row
+#' to a split
+#' - `count` lists the number of occurrences of that split
+#' - `pic` lists the phylogenetic information content of that split, assuming
+#' that split frequency is proportional to split probability
+#' - `cic` lists the clustering information content of each split, on the same
+#' basis.
+#' Splits are listed tree by tree, including duplicates.
+#' The order of splits corresponds to their position in the cluster table
+#' representation of each tree, so may differ from the sequence given by
+#' `as.Splits(trees)`.
+#' @template MRS
+#' @keywords internal
+#' @export
+.CountSplits <- function(trees) {
+  if (!is.null(attr(trees, "TipLabel"))) {
+    # Decompress tip labels
+    trees <- lapply(trees, I)
+  }
+  if (!all(vapply(trees, inherits, TRUE, "phylo"))) {
+    stop("All `trees` must be of class \"phylo\"")
+  }
+  if (length(unique(NTip(trees))) > 1) {
+    stop("All `trees` must contain same leaves")
+  }
+  
+  # Return:
+  count_splits(trees)
+}
 
 #' @rdname ConsensusWithout
 #' @param position Where to plot the missing taxa.
