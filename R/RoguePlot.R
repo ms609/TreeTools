@@ -39,6 +39,8 @@
 #' - `atNode`: a vector of integers specifying the number of trees in `trees`
 #' in which the rogue leaf is attached to an edge collapsed into each node
 #' of the consensus tree.
+#' - `legendLabels`: A character vector suggesting labels for a plot legend;
+#' suitable for `PlotTools::SpectrumLegend(legend = x$legendLabels)`.
 #' @references \insertAllCited{}
 #' @examples
 #' trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
@@ -50,7 +52,13 @@
 #'               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
 #'               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
 #'               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-#' RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
+#' plotted <- RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
+#' PlotTools::SpectrumLegend(
+#'   "bottomleft",
+#'   palette = colorRampPalette(c(par("fg"), "#009E73"), space = "Lab")(100),
+#'   legend = plotted$legendLabels,
+#'   cex = 0.4
+#' )
 #' @template MRS
 #' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
@@ -187,10 +195,26 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     cons[["edge.length"]] <- rep_len(edgeLength, dim(cons[["edge"]])[1])
   }
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
+  maxVal <- max(c(nOnEdge, nAtNode)) + 1L
 
+  legendLabels <- if (maxVal < 8) {
+    maxVal:1
+  } else if ((maxVal - 1) %% 5 == 0) {
+    seq(maxVal, 1, length.out = 6)
+  } else if ((maxVal - 1) %% 4 == 0) {
+    seq(maxVal, 1, length.out = 5)
+  } else if ((maxVal - 1) %% 3 == 0) {
+    seq(maxVal, 1, length.out = 4)
+  } else if ((maxVal - 1) %% 6 == 0) {
+    seq(maxVal, 1, length.out = 7)
+  } else {
+    ceiling(seq(maxVal, 1, length.out = 5))
+  }
+  legendLabels <- c(paste(legendLabels[-length(legendLabels)], "trees"),
+                    "1 tree")
+  
   if (plot) {
     #pal <- c(NA, Palette(length(trees)))
-    maxVal <- max(c(nOnEdge, nAtNode)) + 1L
     pal <- Palette(maxVal)
     plot(cons,
          edge.color = ifelse(nOnEdge > 0, pal[nOnEdge + 1L], nullCol),
@@ -201,31 +225,19 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
                              fat, thin),
          ...)
     if (legend != "none") {
-      labels <- if (maxVal < 8) {
-        maxVal:1
-      } else if ((maxVal - 1) %% 5 == 0) {
-        seq(maxVal, 1, length.out = 6)
-      } else if ((maxVal - 1) %% 4 == 0) {
-        seq(maxVal, 1, length.out = 5)
-      } else if ((maxVal - 1) %% 3 == 0) {
-        seq(maxVal, 1, length.out = 4)
-      } else if ((maxVal - 1) %% 6 == 0) {
-        seq(maxVal, 1, length.out = 7)
-      } else {
-        ceiling(seq(maxVal, 1, length.out = 5))
-      }
       PlotTools::SpectrumLegend(
         legend,
         bty = "n",
         palette = pal,
-        legend = c(paste(labels[-length(labels)], "trees"), "1 tree"),
+        legend = legendLabels,
         inset = legend.inset
       )
     }
   }
 
   # Return:
-  invisible(list(cons = cons, onEdge = nOnEdge, atNode = nAtNode))
+  invisible(list(cons = cons, onEdge = nOnEdge, atNode = nAtNode,
+                 legendLabels = legendLabels))
 }
 
 # `tree` must be in preorder

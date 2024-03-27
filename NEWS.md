@@ -1,6 +1,7 @@
-# TreeTools 1.10.0.9002 (development) #
+# TreeTools 1.10.0.9003 (development) #
 
 - `YuleTree()` generates a random tree by the Yule process.
+- `RoguePlot()$legendLabels` returns suggested labels for legend.
 - `DescendantTips()` complements `DescendantEdges()`.
 - `NodeNumbers()` returns the indices of nodes within a tree.
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the

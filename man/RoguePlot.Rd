@@ -73,6 +73,8 @@ of the consensus tree;
 \item \code{atNode}: a vector of integers specifying the number of trees in \code{trees}
 in which the rogue leaf is attached to an edge collapsed into each node
 of the consensus tree.
+\item \code{legendLabels}: A character vector suggesting labels for a plot legend;
+suitable for \code{PlotTools::SpectrumLegend(legend = x$legendLabels)}.
 }
 }
 \description{
@@ -94,7 +96,13 @@ trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
               read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
               read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
               read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))
-RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
+plotted <- RoguePlot(trees, "rogue", legend = "topleft", legend.inset = 0.02)
+PlotTools::SpectrumLegend(
+  "bottomleft",
+  palette = colorRampPalette(c(par("fg"), "#009E73"), space = "Lab")(100),
+  legend = plotted$legendLabels,
+  cex = 0.4
+)
 }
 \references{
 \insertAllCited{}
