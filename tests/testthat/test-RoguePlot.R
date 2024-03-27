@@ -33,7 +33,6 @@ test_that("Simple rogue plot", {
   )
 
   skip_if_not_installed("vdiffr", "1.0")
-  skip_if_not_installed("ape", "5.5.2")
   RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees, "rogue",
@@ -113,7 +112,6 @@ test_that("Complex rogue plot", {
   AllTreesCounted(trees3, "rogue")
 
   skip_if_not_installed("vdiffr", "1.0")
-  skip_if_not_installed("ape", "5.5.2")
   RoguePlotTest <- function() {
     par(mar = rep(0, 4))
     RoguePlot(trees1, "rogue",
