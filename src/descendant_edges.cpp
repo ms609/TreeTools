@@ -4,20 +4,6 @@ using namespace Rcpp;
 
 #define R_TO_C 1
 
-void mark_children(
-    const int r_node_id,
-    const IntegerVector& parent,
-    const IntegerVector& child,
-    LogicalVector& ret) {
-  
-  for (int i = parent.size(); i--; ) {
-    if (parent[i] == r_node_id) {
-      ret[i] = true;
-      mark_children(child[i], parent, child, ret);
-    }
-  }
-}
-
 // [[Rcpp::export]]
 LogicalMatrix descendant_edges(
     const IntegerVector parent,
