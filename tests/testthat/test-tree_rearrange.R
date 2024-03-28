@@ -296,6 +296,42 @@ test_that("CollapseNode() works", {
   expect_error(CollapseEdge(tree, 9))
 })
 
+test_that("CollapseNode() handles node labels", {
+  bal6 <- BalancedTree(6)
+  startLabels <- paste("Node", 7:11)
+  bal6[["node.label"]] <- startLabels
+  if (interactive()) {
+    plot(bal6, show.node.label = TRUE)
+  }
+  
+  # Collapse a cherry
+  expect_equal(
+    CollapseNode(bal6, 9)[["node.label"]],
+    startLabels[-3]
+  )
+  
+  # Collapse an internal node
+  expect_equal(
+    CollapseNode(bal6, 8)[["node.label"]],
+    startLabels[-2]
+  )
+  
+  # Collapse an internal node
+  expect_equal(
+    CollapseEdge(bal6, 1)[["node.label"]],
+    startLabels[-2]
+  )
+  
+  # case = 3 -> y is bound on an internal edge
+  expect_equal(
+    CollapseNode(bal6, c(8, 11))[["node.label"]],
+    startLabels[-c(2, 5)]
+  )
+  
+  expect_equal(AddTipEverywhere(bal6)[[1]][["node.label"]],
+               AddTip(bal6, where = 1)[["node.label"]])
+})
+
 test_that("Binarification is uniform", {
   set.seed(0)
   Test <- function(tree, nTree, nSamples = 200L, ape = FALSE) {
