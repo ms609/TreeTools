@@ -76,13 +76,22 @@ DescendantEdges <- function(parent, child, edge = NULL, node = NULL,
 #' @rdname DescendantEdges
 #' @export
 DescendantTips <- function(parent, child, edge = NULL,
-                           nEdge = length(parent),
-                           nTip = min(parent) - 1L) {
-  descend <- DescendantEdges(parent, child, edge, nEdge, includeSelf = TRUE)
-  if (is.null(edge)) {
-    descend[, match(seq_len(nTip), child)]
+                           node = NULL,
+                           nEdge = length(parent)) {
+  tips <- descendant_tips(parent, child, PostorderOrder(cbind(parent, child)))
+  nTip <- dim(tips)[[2]]
+  if (is.null(node)) {
+    if (is.null(edge)) {
+      tips[child, ]
+    } else {
+      tips[child[edge], ]
+    }
   } else {
-    descend[match(seq_len(nTip), child)]
+    if (length(node) == 1 && node == 0) {
+      tips
+    } else {
+      tips[node - nTip, ]
+    }
   }
 }
 

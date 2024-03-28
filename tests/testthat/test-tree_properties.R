@@ -6,6 +6,17 @@ nasty <- structure(list(edge = structure(
   tip.label = letters[1:8]),
   class = "phylo") # Danger: Do not plot!
 
+test_that("descendant_edges() handles errors", {
+  expect_error(descendant_edges(1:2, 1:3, 1:2),
+               "`parent` and `child` must be the same length")
+  expect_error(descendant_tips(1:2, 1:3, 1:2),
+               "`parent` and `child` must be the same length")
+  expect_error(descendant_edges(1:2, 1:2, 1:3),
+               "`postorder` must list each edge once")
+  expect_error(descendant_tips(1:2, 1:2, 1:3),
+               "`postorder` must list each edge once")
+})
+
 test_that("AllDescendantEdges() works", {
   pec5 <- UnrootTree(PectinateTree(5))
   V <- TRUE
@@ -39,7 +50,7 @@ test_that("DescendantTips() works", {
   expect_equal(DescendantTips(parent, child, 5), 1:6 %in% c(2, 6))
   expect_equal(
     DescendantTips(parent, child),
-    t(vapply(1:10, function(x) DescendantTips(parent, child, x),
+    t(vapply(1:10, function(x) DescendantTips(parent, child, edge = x),
              logical(6)))
     )
   
@@ -49,10 +60,10 @@ test_that("DescendantTips() works", {
     edgelabels()
   }
   polyEdge <- polytomies[["edge"]]
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 5)), 4:5)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 1)), 1:5)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 8)), 6:9)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 10)), 7)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 5)), 4:5)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 1)), 1:5)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 8)), 6:9)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 10)), 7)
 })
 
 test_that("DescendantTips() handles postorder", {
@@ -67,8 +78,8 @@ test_that("DescendantTips() handles postorder", {
   }
   parent <- post6[["edge"]][, 1]
   child <- post6[["edge"]][, 2]
-  expect_equal(DescendantTips(parent, child, 7), 1:6 %in% 1:2)
-  expect_equal(DescendantTips(parent, child, 9), 1:6 %in% 4:6)
+  expect_equal(DescendantTips(parent, child, edge = 7), 1:6 %in% 1:2)
+  expect_equal(DescendantTips(parent, child, edge = 9), 1:6 %in% 4:6)
   # edge = NULL is handled by .AllDescendantEdges
   expect_equal(DescendantTips(parent, child),
                t(vapply(list(5, 4, 4:5, 6, 2, 1, 1:2, 3, 4:6, 1:3),
