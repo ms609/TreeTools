@@ -17,8 +17,8 @@
 #' @family tree properties
 #' @export
 MatchEdges <- function(x, table, nomatch = NA_integer_) {
-  xEdge <- x[["edge"]]
-  tableEdge <- table[["edge"]]
+  xEdge <- .Edge(x)
+  tableEdge <- .Edge(table)
   tipMatch <- match(TipLabels(x), TipLabels(table))
   seek <- DescendantTips(xEdge[, 1], xEdge[, 2])
   find <- DescendantTips(tableEdge[, 1], tableEdge[, 2])[, tipMatch]
@@ -26,12 +26,35 @@ MatchEdges <- function(x, table, nomatch = NA_integer_) {
   match(as.data.frame(t(seek)), as.data.frame(t(find)))
 }
 
+.Edge <- function(x) {
+  UseMethod(".Edge")
+}
+
+#' @export
+.Edge.phylo <- function(x) {
+  x[["edge"]]
+}
+
+#' @export
+.Edge.numeric <- function(x) {
+  x
+}
+
+#' @export
+.Edge.list <- function(x) {
+  if (is.null(x[["edge"]])) {
+    cbind(x[[1]], x[[2]])
+  } else {
+    x[["edge"]]
+  }
+}
+
 #' @rdname MatchEdges
 #' @export
 MatchNodes <- function(x, table, nomatch = NA_integer_) {
-  xEdge <- x[["edge"]]
+  xEdge <- .Edge(x)
   xLab <- TipLabels(x)
-  tableEdge <- table[["edge"]]
+  tableEdge <- .Edge(table)
   tabLab <- TipLabels(table)
   allLab <- union(xLab, tabLab)
   tipMatch <- match(xLab, tabLab)
@@ -46,12 +69,10 @@ MatchNodes <- function(x, table, nomatch = NA_integer_) {
                      findFrame)
   
   nodeIndex <- c(tableEdge[, 2], length(tabLab) + 1)
-  xRoot <- NTip(x) + 1L
+  xRoot <- length(xLab) + 1L
   ret <- nodeIndex[matching][order(c(xEdge[, 2], xRoot))]
   ret[xRoot] <- nodeIndex[matchRoot]
   
   # Return:
   `[<-`(ret, is.na(ret), nomatch)
-
 }
-

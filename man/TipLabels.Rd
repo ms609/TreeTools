@@ -93,6 +93,7 @@ AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},

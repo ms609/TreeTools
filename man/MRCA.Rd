@@ -53,6 +53,7 @@ Other tree navigation:
 \code{\link{EdgeAncestry}()},
 \code{\link{EdgeDistances}()},
 \code{\link{ListAncestors}()},
+\code{\link{MatchEdges}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeNumbers}()},

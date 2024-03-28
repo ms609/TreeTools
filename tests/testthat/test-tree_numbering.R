@@ -236,6 +236,21 @@ test_that("Reorder methods retain edge weights", {
                bal7$edge.)
 })
 
+test_that("Reorder methods retain node labels", {
+  bal7 <- BalancedTree(7)
+  startLabels <- paste("Node", 8:13)
+  bal7[["node.label"]] <- startLabels
+  attr(bal7, "order") <- NULL
+  if (interactive()) {
+    plot(bal7, show.node.label = TRUE, xpd = NA)
+  }
+  expect_equal(Preorder(bal7)[["node.label"]], startLabels)
+  expect_equal(Cladewise(bal7)[["node.label"]], startLabels)
+  expect_equal(Preorder(Cladewise(bal7))[["node.label"]], startLabels)
+  expect_equal(Postorder(bal7)[["node.label"]], startLabels)
+  expect_equal(Preorder(Postorder(bal7))[["node.label"]], startLabels)
+})
+
 test_that("Malformed trees don't cause crashes", {
   treeDoubleNode <- read.tree(text = "((((((1,2)),3),4),5),6);")
   treePolytomy   <- read.tree(text = "((((1,2,3),4),5),6);")
