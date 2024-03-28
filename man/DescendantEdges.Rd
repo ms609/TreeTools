@@ -15,13 +15,7 @@ DescendantEdges(
   includeSelf = TRUE
 )
 
-DescendantTips(
-  parent,
-  child,
-  edge = NULL,
-  nEdge = length(parent),
-  nTip = min(parent) - 1L
-)
+DescendantTips(parent, child, edge = NULL, node = NULL, nEdge = length(parent))
 
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
@@ -44,9 +38,6 @@ supplied).}
 
 \item{includeSelf}{Logical specifying whether to mark \code{edge} as its own
 descendant.}
-
-\item{nTip}{Integer specifying number of leaves in the tree.
-Computed if not supplied.}
 }
 \value{
 \code{DescendantEdges()} returns a logical vector stating whether each
