@@ -421,7 +421,7 @@ namespace TreeTools {
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
       Rcpp::stop("Tree too large for postorder_order. "            // # nocov
-                              "Try running 64-bit R?");                         // # nocov
+                              "Try running 64-bit R?");            // # nocov
     }
     
     int32 * missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));

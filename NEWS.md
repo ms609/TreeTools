@@ -2,7 +2,8 @@
 
 - `YuleTree()` generates a random tree by the Yule process.
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
-- `DescendantTips()` complements `DescendantEdges()`.
+- `DescendantTips()` complements `DescendantEdges()`, rewritten in C++,
+  fixing a bug when edges were not in preorder.
 - `NodeNumbers()` returns the indices of nodes within a tree.
 - Support node labels in `AddTip()`, `CollapseNode()`, `DropTip()`, `Subtree()`
   ([#149](https://github.com/ms609/TreeTools/issues/149)).

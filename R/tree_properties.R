@@ -7,10 +7,16 @@
 #' @template treeChild
 #' @param edge Integer specifying the number of the edge whose children are
 #' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
+#' @param node Integer specifying the number(s) of nodes whose children are
+#' required.  Specify `0` to return all nodes.  If `NULL` (the default), the 
+#' `edge` parameter will be used instead.
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
+#' @param includeSelf Logical specifying whether to mark `edge` as its own
+#' descendant.
 #' @return `DescendantEdges()` returns a logical vector stating whether each
-#' edge in turn is the specified edge or one of its descendants.
+#' edge in turn is the specified edge (if `includeSelf = TRUE`)
+#' or one of its descendants.
 #' @examples
 #' tree <- as.phylo(0, 6)
 #' plot(tree)
@@ -19,32 +25,37 @@
 #' ape::edgelabels(bg = 3 + desc)
 #' @family tree navigation
 #' @export
-DescendantEdges <- function(parent, child, edge = NULL,
-                            nEdge = length(parent)) {
-  if (is.null(edge)) {
-    .AllDescendantEdges(parent, child, nEdge)
-  } else {
-    ret <- logical(nEdge)
-    edgeSister <- match(parent[edge], parent[-edge])
-    if (edgeSister >= edge) {
-      # edgeSister is really 1 higher than you think, because we knocked out
-      # edge "edge" in the match
-      ret[edge:edgeSister] <- TRUE
-  
-      # Return:
-      ret
-    } else {
-      nextEdge <- edge
-      revParent <- rev(parent)
-      repeat {
-        if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
-          nextEdge <- 1 + nEdge - revDescendant
-        } else break;
+DescendantEdges <- function(parent, child, edge = NULL, node = NULL,
+                            nEdge = length(parent),
+                            includeSelf = TRUE
+                            ) {
+  nodeDescendants <- descendant_edges(parent, child,
+                                      PostorderOrder(cbind(parent, child)))
+  if (is.null(node)) {
+    if (is.null(edge)) {
+      entries <- pmax(0, child - min(parent) + 1)
+      ret <- matrix(FALSE, nEdge, nEdge)
+      ret[entries > 0, ] <- nodeDescendants[entries, ]
+      if (includeSelf) {
+        diag(ret) <- TRUE
       }
-      ret[edge:nextEdge] <- TRUE
-  
-      # Return:
-      ret
+    } else {
+      entry <- child[edge] - min(parent) + 1
+      ret <- if (entry > 0) {
+        nodeDescendants[entry, ]
+      } else {
+        logical(nEdge)
+      }
+      if (includeSelf) {
+        ret[edge] <- TRUE
+      }
+    }
+    ret
+  } else {
+    if (length(node) == 1 && node == 0) {
+      nodeDescendants
+    } else {
+      nodeDescendants[node - min(parent) + 1, ]
     }
   }
 }
@@ -65,13 +76,22 @@ DescendantEdges <- function(parent, child, edge = NULL,
 #' @rdname DescendantEdges
 #' @export
 DescendantTips <- function(parent, child, edge = NULL,
-                           nEdge = length(parent),
-                           nTip = min(parent) - 1L) {
-  descend <- DescendantEdges(parent, child, edge, nEdge)
-  if (is.null(edge)) {
-    descend[, match(seq_len(nTip), child)]
+                           node = NULL,
+                           nEdge = length(parent)) {
+  tips <- descendant_tips(parent, child, PostorderOrder(cbind(parent, child)))
+  nTip <- dim(tips)[[2]]
+  if (is.null(node)) {
+    if (is.null(edge)) {
+      tips[child, ]
+    } else {
+      tips[child[edge], ]
+    }
   } else {
-    descend[match(seq_len(nTip), child)]
+    if (length(node) == 1 && node == 0) {
+      tips
+    } else {
+      tips[node - nTip, ]
+    }
   }
 }
 

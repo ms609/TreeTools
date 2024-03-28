@@ -11,6 +11,8 @@ extern SEXP _TreeTools_ClusterTable_matrix(SEXP);
 extern SEXP _TreeTools_ClusterTable_new(SEXP);
 extern SEXP _TreeTools_consensus_tree(SEXP, SEXP);
 extern SEXP _TreeTools_cpp_edge_to_splits(SEXP, SEXP, SEXP);
+extern SEXP _TreeTools_descendant_edges(SEXP, SEXP, SEXP);
+extern SEXP _TreeTools_descendant_tips(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_duplicated_splits(SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_mixed_base(SEXP, SEXP, SEXP);
 extern SEXP _TreeTools_edge_to_num(SEXP, SEXP, SEXP);
@@ -51,6 +53,8 @@ static const R_CallMethodDef callMethods[] = {
   {"_TreeTools_ClusterTable_new", (DL_FUNC) &_TreeTools_ClusterTable_new, 1},
   {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
   {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
+  {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
+  {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
   {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},
   {"_TreeTools_edge_to_mixed_base", (DL_FUNC) &_TreeTools_edge_to_mixed_base, 3},
   {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},

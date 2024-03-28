@@ -21,6 +21,14 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
+descendant_edges <- function(parent, child, postorder) {
+    .Call(`_TreeTools_descendant_edges`, parent, child, postorder)
+}
+
+descendant_tips <- function(parent, child, postorder) {
+    .Call(`_TreeTools_descendant_tips`, parent, child, postorder)
+}
+
 num_to_parent <- function(n, nTip) {
     .Call(`_TreeTools_num_to_parent`, n, nTip)
 }
