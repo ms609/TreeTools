@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.10.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.10.0.9004</span>
       </span>
     </div>
 
@@ -84,6 +84,7 @@
 <span>  <span class="va">tree</span>,</span>
 <span>  where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="st">"Nnode"</span><span class="op">]</span><span class="op">]</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">2L</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span>,</span>
 <span>  label <span class="op">=</span> <span class="st">"New tip"</span>,</span>
+<span>  nodeLabel <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  edgeLength <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lengthBelow <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nTip <span class="op">=</span> <span class="fu"><a href="NTip.html">NTip</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span>,</span>
@@ -108,6 +109,11 @@ new tip is added to a random edge.</p></dd>
 
 <dt>label</dt>
 <dd><p>Character string providing the label to apply to the new tip.</p></dd>
+
+
+<dt>nodeLabel</dt>
+<dd><p>Character string providing a label to apply to the newly
+created node, if <code>tree$node.label</code> is specified.</p></dd>
 
 
 <dt>edgeLength</dt>

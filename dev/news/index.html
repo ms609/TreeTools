@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.10.0.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.10.0.9004</span>
       </span>
     </div>
 
@@ -75,7 +75,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.10.0.9003" id="treetools-11009003-development">TreeTools 1.10.0.9003 (development)<a class="anchor" aria-label="anchor" href="#treetools-11009003-development"></a></h2>
+<h2 class="page-header" data-toc-text="1.10.0.9004" id="treetools-11009004-development">TreeTools 1.10.0.9004 (development)<a class="anchor" aria-label="anchor" href="#treetools-11009004-development"></a></h2>
 <ul><li>
 <code><a href="../reference/GenerateTree.html">YuleTree()</a></code> generates a random tree by the Yule process.</li>
 <li>
@@ -85,7 +85,9 @@
 <li>
 <code><a href="../reference/NodeNumbers.html">NodeNumbers()</a></code> returns the indices of nodes within a tree.</li>
 <li>
-<code>AddTip(edgeLength = NULL)</code> defaults to <code>lengthBelow</code>. This will become the default in a future release.</li>
+<code><a href="../reference/AddTip.html">AddTip()</a></code> supports node labels.</li>
+<li>
+<code>AddTip(edgeLength = NULL)</code> defaults to <code>lengthBelow</code>. This will become the default in a future release. (<a href="https://github.com/ms609/TreeTools/issues/149" class="external-link">#149</a>).</li>
 <li>An entry point to the C++ function <code><a href="../reference/root_on_node.html">root_on_node()</a></code> is now exported (intended for expert use only).</li>
 <li>Use <code><a href="../reference/DropTip.html">KeepTip()</a></code> internally so <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> supports <code>Splits</code> objects as documented.</li>
 </ul></div>
