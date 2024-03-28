@@ -48,6 +48,12 @@ test_that("DescendantTips() handles postorder", {
   child <- post6[["edge"]][, 2]
   expect_equal(DescendantTips(parent, child, 7), 1:6 %in% 1:2)
   expect_equal(DescendantTips(parent, child, 9), 1:6 %in% 4:6)
+  # edge = NULL is handled by .AllDescendantEdges
+  expect_equal(DescendantTips(parent, child),
+               t(vapply(list(5, 4, 4:5, 6, 2, 1, 1:2, 3, 4:6, 1:3),
+                        function (table) 1:6 %in% table,
+                        logical(6)))
+  )
 })
 
 test_that("EdgeAncestry() works", {

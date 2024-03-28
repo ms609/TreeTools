@@ -9,8 +9,11 @@
 #' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
+#' @param includeSelf Logical specifying whether to mark `edge` as its own
+#' descendant.
 #' @return `DescendantEdges()` returns a logical vector stating whether each
-#' edge in turn is the specified edge or one of its descendants.
+#' edge in turn is the specified edge (if `includeSelf = TRUE`)
+#' or one of its descendants.
 #' @examples
 #' tree <- as.phylo(0, 6)
 #' plot(tree)
@@ -20,33 +23,30 @@
 #' @family tree navigation
 #' @export
 DescendantEdges <- function(parent, child, edge = NULL,
-                            nEdge = length(parent)) {
+                            nEdge = length(parent),
+                            includeSelf = TRUE
+                            ) {
+  nodeDescendants <- descendant_edges(parent, child,
+                                      PostorderOrder(cbind(parent, child)))
   if (is.null(edge)) {
-    .AllDescendantEdges(parent, child, nEdge)
+    entries <- pmax(0, child - min(parent) + 1)
+    ret <- matrix(FALSE, nEdge, nEdge)
+    ret[entries > 0, ] <- nodeDescendants[entries, ]
+    if (includeSelf) {
+      diag(ret) <- TRUE
+    }
   } else {
-    ret <- logical(nEdge)
-    edgeSister <- match(parent[edge], parent[-edge])
-    if (edgeSister >= edge) {
-      # edgeSister is really 1 higher than you think, because we knocked out
-      # edge "edge" in the match
-      ret[edge:edgeSister] <- TRUE
-  
-      # Return:
-      ret
+    entry <- child[edge] - min(parent) + 1
+    ret <- if (entry > 0) {
+      nodeDescendants[entry, ]
     } else {
-      nextEdge <- edge
-      revParent <- rev(parent)
-      repeat {
-        if (revDescendant <- match(child[nextEdge], revParent, nomatch=FALSE)) {
-          nextEdge <- 1 + nEdge - revDescendant
-        } else break;
-      }
-      ret[edge:nextEdge] <- TRUE
-  
-      # Return:
-      ret
+      logical(nEdge)
+    }
+    if (includeSelf) {
+      ret[edge] <- TRUE
     }
   }
+  ret
 }
 
 #' Identify descendant tips
@@ -67,7 +67,7 @@ DescendantEdges <- function(parent, child, edge = NULL,
 DescendantTips <- function(parent, child, edge = NULL,
                            nEdge = length(parent),
                            nTip = min(parent) - 1L) {
-  descend <- DescendantEdges(parent, child, edge, nEdge)
+  descend <- DescendantEdges(parent, child, edge, nEdge, includeSelf = TRUE)
   if (is.null(edge)) {
     descend[, match(seq_len(nTip), child)]
   } else {
