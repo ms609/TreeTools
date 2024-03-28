@@ -88,7 +88,7 @@ DescendantTips <- function(parent, child, edge = NULL,
     if (length(node) == 1 && node == 0) {
       tips
     } else {
-      tips[node - nTip, ]
+      tips[node, ]
     }
   }
 }

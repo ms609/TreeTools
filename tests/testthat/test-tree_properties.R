@@ -58,12 +58,17 @@ test_that("DescendantTips() works", {
   if (interactive()) {
     plot(polytomies)
     edgelabels()
+    nodelabels()
   }
-  polyEdge <- polytomies[["edge"]]
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 5)), 4:5)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 1)), 1:5)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 8)), 6:9)
-  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], edge = 10)), 7)
+  pol <- polytomies[["edge"]]
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], edge = 5)), 4:5)
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], edge = 1)), 1:5)
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], edge = 8)), 6:9)
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], edge = 10)), 7)
+  
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], node = 5)), 5)
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], node = 11)), 1:5)
+  expect_equal(which(DescendantTips(pol[, 1], pol[, 2], node = 0)[11, ]), 1:5)
 })
 
 test_that("DescendantTips() handles postorder", {
