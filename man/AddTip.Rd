@@ -9,6 +9,7 @@ AddTip(
   tree,
   where = sample.int(tree[["Nnode"]] * 2 + 2L, size = 1) - 1L,
   label = "New tip",
+  nodeLabel = "",
   edgeLength = 0,
   lengthBelow = NULL,
   nTip = NTip(tree),
@@ -26,6 +27,9 @@ node.  To add a new tip at the root, use \code{where = 0}.  By default, the
 new tip is added to a random edge.}
 
 \item{label}{Character string providing the label to apply to the new tip.}
+
+\item{nodeLabel}{Character string providing a label to apply to the newly
+created node, if \code{tree$node.label} is specified.}
 
 \item{edgeLength}{Numeric specifying length of new edge. If \code{NULL},
 defaults to \code{lengthBelow}.
