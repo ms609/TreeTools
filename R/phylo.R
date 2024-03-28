@@ -123,8 +123,12 @@ Subtree <- function(tree, node) {
   }
   tipLabel <- tree[["tip.label"]]
   nTip <- length(tipLabel)
-  if (node <= nTip) return(SingleTaxonTree(tipLabel[node]))
-  if (node == nTip + 1L) return(tree)
+  if (node <= nTip) {
+    return(SingleTaxonTree(tipLabel[node]))
+  }
+  if (node == nTip + 1L) {
+    return(tree)
+  }
 
   edge <- tree[["edge"]]
   parent <- edge[, 1]
@@ -148,16 +152,22 @@ Subtree <- function(tree, node) {
 
   ## renumber nodes:
   nodeAdjust <- new.nTip + 1 - node
+  keptLabels <- c(node, edge2[!isTip]) - nTip
   edge2[!isTip] <- edge2[!isTip] + nodeAdjust
   edge[, 1] <- edge1 + nodeAdjust
   edge[, 2] <- edge2
 
-  # Return:
-  structure(list(
+  ret <- structure(list(
     tip.label = name,
-    Nnode = dim(edge)[1] - new.nTip + 1L,
+    Nnode = dim(edge)[[1]] - new.nTip + 1L,
     edge = edge
   ), class = "phylo", order = "preorder")
+  if (!is.null(tree[["node.label"]])) {
+    ret[["node.label"]] <- tree[["node.label"]][keptLabels]
+  }
+  
+  # Return:
+  ret
 }
 
 #' List ancestors

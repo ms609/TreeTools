@@ -4,7 +4,7 @@
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
 - `DescendantTips()` complements `DescendantEdges()`.
 - `NodeNumbers()` returns the indices of nodes within a tree.
-- Support node labels in `AddTip()`, `CollapseNode()`
+- Support node labels in `AddTip()`, `CollapseNode()`, `Subtree()`
   ([#149](https://github.com/ms609/TreeTools/issues/149)).
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
   default in a future release.

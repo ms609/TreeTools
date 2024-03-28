@@ -15,6 +15,12 @@ test_that("Subtree() works", {
   expect_true(all.equal(SingleTaxonTree("t1"), Subtree(t4, 1)))
 })
 
+test_that("Subtree() handles node labels", {
+  bal8 <- ape::makeNodeLabel(RootTree(BalancedTree(8), 1), prefix = "Node ")
+  expect_equal(Subtree(bal8, 5 + 8)[["node.label"]],
+               paste("Node", 5:7))
+})
+
 
 test_that("ListAncestors() works", {
   edge <- nasty$edge
@@ -28,11 +34,11 @@ test_that("ListAncestors() works", {
 test_that("CladeSizes() works", {
   #plot(Preorder(nasty)); nodelabels(c(12, 10, 13, 11, 9)); tiplabels(1:8)
   #edgelabels(c(2, 3, 6, 4, 8, 10, 9, 5, 7, 1, 12, 11))
-
+  
   expect_equal(c(3, 8 + 4, 3 + 1, 7 + 3, 2),
                CladeSizes(nasty, internal = TRUE, 13:9))
   expect_equal(c(3, 8, 3, 7, 2), CladeSizes(nasty, internal = FALSE, 13:9))
-
+  
   # Misspecification:
   expect_warning(expect_equal(CladeSizes(BalancedTree(7), internal = FALSE),
                               CladeSizes(BalancedTree(7), internal = 8:9)))
