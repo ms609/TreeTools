@@ -65,8 +65,6 @@ DescendantEdges <- function(parent, child, edge = NULL, node = NULL,
 #' `DescendantTips()` efficiently identifies leaves (external nodes) that are
 #' "descended" from edges in a tree.
 #'
-#' @param nTip Integer specifying number of leaves in the tree.
-#' Computed if not supplied.
 #' @return `DescendantTips()` returns a logical vector stating whether each
 #' leaf in turn is a descendant of the specified edge.
 #' @examples
