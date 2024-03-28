@@ -45,7 +45,4 @@ test_that("MatchNodes() works", {
   }
   expect_equal(MatchNodes(bal8, Postorder(bal8)),
                c(1:15))
-               
-    
-    
 })

@@ -26,6 +26,8 @@ MatchEdges <- function(x, table, nomatch = NA_integer_) {
   match(as.data.frame(t(seek)), as.data.frame(t(find)))
 }
 
+#' @rdname MatchEdges
+#' @export
 MatchNodes <- function(x, table, nomatch = NA_integer_) {
   xEdge <- x[["edge"]]
   xLab <- TipLabels(x)
