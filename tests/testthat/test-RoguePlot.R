@@ -7,6 +7,10 @@ ExpectedCons <- function(text) {
   Preorder(read.tree(text = text))
 }
 
+LegendLabels <- function(n) {
+  paste0(n:1, " tree", c(rep("s", n - 1), ""))
+}
+
 test_that(".apply() helper function", {
   Splat <- function (...) paste(..., collapse = " ")
   mat <- matrix(1:12, 3, 4)
@@ -25,7 +29,9 @@ test_that("Simple rogue plot", {
     RoguePlot(trees, tip = "rogue", plot = FALSE),
     list(cons = ExpectedCons("(a, (b, (c, (d, e))));"),
          onEdge = c(0, 0, 0, 0, 0, 3, 0, 1),
-         atNode = double(4))
+         atNode = double(4),
+         legendLabels = LegendLabels(4)
+         )
   )
   expect_equal(
     RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)$cons,
@@ -50,10 +56,13 @@ test_that("polytomy id", {
                 read.tree(text = "(a,(rogue,(e,((b,d),c))));"))
   AllTreesCounted(trees, "rogue")
 
-  expect_equal(list(cons = ExpectedCons("(a, (b, c, d, e));"),
-                    onEdge = c(0, 2, 0, 0, 0, 0),
-                    atNode = c(0, 1)),
-               RoguePlot(trees, "rogue", plot = FALSE))
+  expect_equal(
+    RoguePlot(trees, "rogue", plot = FALSE),
+    list(cons = ExpectedCons("(a, (b, c, d, e));"),
+         onEdge = c(0, 2, 0, 0, 0, 0),
+         atNode = c(0, 1),
+         legendLabels = LegendLabels(3))
+  )
 
   skip_if_not_installed("vdiffr", "1.0")
   RoguePlotTest <- function() {
@@ -82,16 +91,21 @@ test_that("Complex rogue plot", {
     RoguePlot(trees = trees1, tip = "rogue", plot = FALSE),
     list(cons = ExpectedCons("(a, (b, (c, d, (e, f))));"),
          onEdge = c(2, 1, 0, 0, 0, 1, 2, 0, 0),
-         atNode = c(1, 0, 5, 0))
+         atNode = c(1, 0, 5, 0),
+         legendLabels = LegendLabels(6))
     )
 
   expectedCons <- Preorder(RenumberTips(
     read.tree(text = "(f, (e, (d, c, (b, a))));"), letters[1:6]))
   
-  expect_equal(list(cons = expectedCons,
-                    onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
-                    atNode = c(0, 0, 5, 0)),
-               RoguePlot(trees1, "rogue", outgroupTips = "f", plot = FALSE))
+  expect_equal(
+    RoguePlot(trees1, "rogue", outgroupTips = "f", plot = FALSE),
+    list(cons = expectedCons,
+         onEdge = c(0, 2, 0, 4, 0, 0, 1, 0, 0),
+         atNode = c(0, 0, 5, 0),
+         legendLabels = LegendLabels(6)
+         )
+  )
 
   trees2 <- list(read.tree(text = "(a, (b, (rogue, ((d, c), (e, f)))));"),
                  read.tree(text = "(a, (b, ((rogue, (d, c)), (e, f))));"),
@@ -101,7 +115,8 @@ test_that("Complex rogue plot", {
                  read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"))
   expected <- list(cons = Preorder(read.tree(text = "(a, (b, (c, d), (e, f)));")),
                    onEdge = c(0, 0, 0, 2, 0, 0, 3, 0, 0),
-                   atNode = c(0, 1, 0, 0))
+                   atNode = c(0, 1, 0, 0),
+                   legendLabels = LegendLabels(5))
   actual <- RoguePlot(trees = trees2, tip = "rogue", plot = FALSE)
   expect_equal(names(actual), names(expected))
   expect_true(all.equal(actual$cons, expected$cons))
