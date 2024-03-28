@@ -34,6 +34,22 @@ test_that("DescendantTips() works", {
     )
 })
 
+test_that("DescendantTips() handles postorder", {
+  post6 <- Postorder(BalancedTree(6))
+  if (interactive()) {
+    oPar <- par(mar = rep(0.5, 4), cex = 0.9)
+    on.exit(par(oPar))
+    plot(post6)
+    nodelabels()
+    edgelabels()
+    tiplabels()
+  }
+  parent <- post6[["edge"]][, 1]
+  child <- post6[["edge"]][, 2]
+  expect_equal(DescendantTips(parent, child, 7), 1:6 %in% 1:2)
+  expect_equal(DescendantTips(parent, child, 9), 1:6 %in% 4:6)
+})
+
 test_that("EdgeAncestry() works", {
   tree <- BalancedTree(10)
   edge <- tree$edge
