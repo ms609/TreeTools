@@ -222,8 +222,8 @@ DropTip.NULL <-  function(tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 #' @describeIn DropTip Faster version with no checks.
-#' Does not retain tip labels or edge weights.
-#' edges must be listed in preorder.
+#' Does not retain labels or edge weights.
+#' Edges must be listed in preorder.
 #' May crash if improper input is specified.
 #' @export
 KeepTipPreorder <- function(tree, tip) {
@@ -241,8 +241,8 @@ KeepTipPreorder <- function(tree, tip) {
 }
   
 #' @describeIn DropTip Faster version with no checks.
-#' Does not retain tip labels or edge weights.
-#' edges must be listed in postorder.
+#' Does not retain labels or edge weights.
+#' Edges must be listed in postorder.
 #' May crash if improper input is specified.
 #' @export
 KeepTipPostorder <- function(tree, tip) {
