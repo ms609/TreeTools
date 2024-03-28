@@ -122,6 +122,9 @@ test_that("AddTip() handles node labels", {
     AddTip(bal6, where = 11)[["node.label"]],
     c(startLabels[1:4], "", startLabels[[5]])
   )
+  
+  expect_equal(AddTipEverywhere(bal6)[[1]][["node.label"]],
+               AddTip(bal6, where = 1)[["node.label"]])
 })
 
 test_that("AddTipEverywhere() handles nasty tree", {
