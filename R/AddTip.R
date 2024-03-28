@@ -10,6 +10,8 @@
 #' node.  To add a new tip at the root, use `where = 0`.  By default, the
 #' new tip is added to a random edge.
 #' @param label Character string providing the label to apply to the new tip.
+#' @param nodeLabel Character string providing a label to apply to the newly
+#' created node, if `tree$node.label` is specified.
 #' @param edgeLength Numeric specifying length of new edge. If `NULL`,
 #' defaults to `lengthBelow`.
 # Notice added in v1.10.0.9001, 2024-02-20:
@@ -59,6 +61,7 @@
 AddTip <- function(tree,
                    where = sample.int(tree[["Nnode"]] * 2 + 2L, size = 1) - 1L,
                    label = "New tip",
+                   nodeLabel = "",
                    edgeLength = 0,
                    lengthBelow = NULL,
                    nTip = NTip(tree),
@@ -164,6 +167,13 @@ AddTip <- function(tree,
   tree[["edge"]] <- treeEdge
   if (lengths) {
     tree[["edge.length"]] <- edgeLengths
+  }
+  
+  nodeLabels <- tree[["node.label"]]
+  if (!is.null(nodeLabels)) {
+    newLabels <- character(nNode)
+    newLabels[newNumbering - newTipNumber] <- c(nodeLabels, "")
+    tree[["node.label"]] <- newLabels
   }
   
   # Return:

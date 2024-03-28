@@ -1,11 +1,13 @@
-# TreeTools 1.10.0.9003 (development) #
+# TreeTools 1.10.0.9004 (development) #
 
 - `YuleTree()` generates a random tree by the Yule process.
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
 - `DescendantTips()` complements `DescendantEdges()`.
 - `NodeNumbers()` returns the indices of nodes within a tree.
+- `AddTip()` supports node labels.
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
   default in a future release.
+  ([#149](https://github.com/ms609/TreeTools/issues/149)).
 - An entry point to the C++ function `root_on_node()` is now exported
   (intended for expert use only).
 - Use `KeepTip()` internally so `SplitFrequency()` supports `Splits` objects

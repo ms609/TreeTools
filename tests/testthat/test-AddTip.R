@@ -97,6 +97,33 @@ test_that("AddTip() with edge lengths", {
   )
 })
 
+test_that("AddTip() handles node labels", {
+  bal6 <- BalancedTree(6)
+  startLabels <- paste("Node", 7:11)
+  bal6[["node.label"]] <- startLabels
+  if (interactive()) {
+    plot(bal6, show.node.label = TRUE)
+  }
+  
+  # case = 1 -> y is bound on the root of x
+  expect_equal(
+    AddTip(bal6, where = 0)[["node.label"]],
+    c("", startLabels)
+  )
+  
+  # case = 2 -> y is bound on a tip of x
+  expect_equal(
+    AddTip(bal6, where = 1)[["node.label"]],
+    c(startLabels[1:3], "", startLabels[4:5])
+  )
+  
+  # case = 3 -> y is bound on a node of x
+  expect_equal(
+    AddTip(bal6, where = 11)[["node.label"]],
+    c(startLabels[1:4], "", startLabels[[5]])
+  )
+})
+
 test_that("AddTipEverywhere() handles nasty tree", {
   added <- AddTipEverywhere(nasty)
   lapply(added, function(tr) expect_true(all(tr$edge > 0)))
