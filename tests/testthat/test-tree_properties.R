@@ -32,6 +32,17 @@ test_that("DescendantTips() works", {
     t(vapply(1:10, function(x) DescendantTips(parent, child, x),
              logical(6)))
     )
+  
+  polytomies <- CollapseNode(BalancedTree(9), c(12, 13, 16))
+  if (interactive()) {
+    plot(polytomies)
+    edgelabels()
+  }
+  polyEdge <- polytomies[["edge"]]
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 5)), 4:5)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 1)), 1:5)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 8)), 6:9)
+  expect_equal(which(DescendantTips(polyEdge[, 1], polyEdge[, 2], 10)), 7)
 })
 
 test_that("DescendantTips() handles postorder", {
