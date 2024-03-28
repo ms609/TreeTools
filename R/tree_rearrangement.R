@@ -403,6 +403,8 @@ CollapseNode.phylo <- function(tree, nodes) {
   edge <- tree[["edge"]]
   lengths <- tree[["edge.length"]]
   hasLengths <- !is.null(lengths)
+  nodeLabels <- tree[["node.label"]]
+  hasLabels <- !is.null(nodeLabels)
   parent <- edge[, 1]
   child <- edge[, 2]
   root <- RootNode(edge)
@@ -428,7 +430,9 @@ CollapseNode.phylo <- function(tree, nodes) {
 
   for (node in nodes[order(depths)]) {
     newParent <- parent[edgeBelow[node]]
-    if (hasLengths) lengths[parent == node] <- lengths[parent == node] + lengths[child == node]
+    if (hasLengths) {
+      lengths[parent == node] <- lengths[parent == node] + lengths[child == node]
+    }
     parent[parent == node] <- newParent
   }
 
@@ -438,6 +442,9 @@ CollapseNode.phylo <- function(tree, nodes) {
                           newNumber[child[keptEdges]])
   tree[["edge.length"]] <- lengths[keptEdges]
   tree[["Nnode"]] <- tree[["Nnode"]] - length(nodes)
+  if (hasLabels) {
+    tree[["node.label"]] <- nodeLabels[-(nodes - nTip)]
+  }
 
   # TODO Renumber nodes sequentially
   # TODO Re-write this in C++.

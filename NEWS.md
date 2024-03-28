@@ -4,10 +4,10 @@
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
 - `DescendantTips()` complements `DescendantEdges()`.
 - `NodeNumbers()` returns the indices of nodes within a tree.
-- `AddTip()` supports node labels.
+- Support node labels in `AddTip()`, `CollapseNode()`
+  ([#149](https://github.com/ms609/TreeTools/issues/149)).
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
   default in a future release.
-  ([#149](https://github.com/ms609/TreeTools/issues/149)).
 - An entry point to the C++ function `root_on_node()` is now exported
   (intended for expert use only).
 - Use `KeepTip()` internally so `SplitFrequency()` supports `Splits` objects
