@@ -43,9 +43,13 @@ MatchNodes <- function(x, table, nomatch = NA_integer_) {
   matchRoot <- match(as.data.frame(allLab %in% xLab, optional = TRUE),
                      findFrame)
   
+  nodeIndex <- c(tableEdge[, 2], length(tabLab) + 1)
   xRoot <- NTip(x) + 1L
-  ret <- tableEdge[matching, 2][order(c(xEdge[, 2], xRoot))]
-  ret[xRoot] <- tableEdge[matchRoot, 2]
-  ret
+  ret <- nodeIndex[matching][order(c(xEdge[, 2], xRoot))]
+  ret[xRoot] <- nodeIndex[matchRoot]
+  
+  # Return:
+  `[<-`(ret, is.na(ret), nomatch)
+
 }
 

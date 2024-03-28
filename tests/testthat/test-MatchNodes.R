@@ -17,8 +17,8 @@ test_that("MatchNodes() works", {
   expect_equal(MatchEdges(bal16, bal8),
                c(NA, 1:14, rep(NA, 15)))
   expect_equal(MatchNodes(bal8, bal16), c(1:8, 18:24))
-  expect_equal(MatchNodes(BalancedTree(16), bal8), 
-               c(NA, 9:15, rep(NA, 7)))
+  expect_equal(MatchNodes(BalancedTree(16), bal8, nomatch = -1),
+               c(1:8, rep(-1, 8), -1, 9:15, rep(-1, 7)))
   
   
   expect_equal(MatchNodes(bal8, table, nomatch = -1),
