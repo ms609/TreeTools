@@ -7,6 +7,9 @@
 #' @template treeChild
 #' @param edge Integer specifying the number of the edge whose children are
 #' required (see \code{\link[ape:nodelabels]{edgelabels}()}).
+#' @param node Integer specifying the number(s) of nodes whose children are
+#' required.  Specify `0` to return all nodes.  If `NULL` (the default), the 
+#' `edge` parameter will be used instead.
 #' @param nEdge number of edges (calculated from `length(parent)` if not
 #' supplied).
 #' @param includeSelf Logical specifying whether to mark `edge` as its own
@@ -22,31 +25,39 @@
 #' ape::edgelabels(bg = 3 + desc)
 #' @family tree navigation
 #' @export
-DescendantEdges <- function(parent, child, edge = NULL,
+DescendantEdges <- function(parent, child, edge = NULL, node = NULL,
                             nEdge = length(parent),
                             includeSelf = TRUE
                             ) {
   nodeDescendants <- descendant_edges(parent, child,
                                       PostorderOrder(cbind(parent, child)))
-  if (is.null(edge)) {
-    entries <- pmax(0, child - min(parent) + 1)
-    ret <- matrix(FALSE, nEdge, nEdge)
-    ret[entries > 0, ] <- nodeDescendants[entries, ]
-    if (includeSelf) {
-      diag(ret) <- TRUE
-    }
-  } else {
-    entry <- child[edge] - min(parent) + 1
-    ret <- if (entry > 0) {
-      nodeDescendants[entry, ]
+  if (is.null(node)) {
+    if (is.null(edge)) {
+      entries <- pmax(0, child - min(parent) + 1)
+      ret <- matrix(FALSE, nEdge, nEdge)
+      ret[entries > 0, ] <- nodeDescendants[entries, ]
+      if (includeSelf) {
+        diag(ret) <- TRUE
+      }
     } else {
-      logical(nEdge)
+      entry <- child[edge] - min(parent) + 1
+      ret <- if (entry > 0) {
+        nodeDescendants[entry, ]
+      } else {
+        logical(nEdge)
+      }
+      if (includeSelf) {
+        ret[edge] <- TRUE
+      }
     }
-    if (includeSelf) {
-      ret[edge] <- TRUE
+    ret
+  } else {
+    if (length(node) == 1 && node == 0) {
+      nodeDescendants
+    } else {
+      nodeDescendants[node - min(parent) + 1, ]
     }
   }
-  ret
 }
 
 #' Identify descendant tips

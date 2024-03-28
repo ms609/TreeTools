@@ -8,18 +8,28 @@ nasty <- structure(list(edge = structure(
 
 test_that("AllDescendantEdges() works", {
   pec5 <- UnrootTree(PectinateTree(5))
-  V <- TRUE; x <- FALSE
+  V <- TRUE
+  x <- FALSE
+  answer <- matrix(c(V, x, x, x, x, x, x,
+                     x, V, x, x, x, x, x,
+                     x, x, V, V, V, V, V,
+                     x, x, x, V, x, x, x,
+                     x, x, x, x, V, V, V,
+                     x, x, x, x, x, V, x,
+                     x, x, x, x, x, x, V), 7, 7, byrow = T)
   expect_equal(
     DescendantEdges(edge = NULL, pec5$edge[, 1], pec5$edge[, 2]),
-    matrix(c(V, x, x, x, x, x, x,
-             x, V, x, x, x, x, x,
-             x, x, V, V, V, V, V,
-             x, x, x, V, x, x, x,
-             x, x, x, x, V, V, V,
-             x, x, x, x, x, V, x,
-             x, x, x, x, x, x, V), 7, 7, byrow = T))
+    answer)
   expect_warning(AllDescendantEdges(pec5$edge[, 1], pec5$edge[, 2]),
                  "deprecated")
+  expect_equal(
+    apply(DescendantEdges(node = 0, pec5$edge[, 1], pec5$edge[, 2]), 1, which),
+    list(1:7, 4:7, 6:7)
+  )
+  expect_equal(
+    apply(DescendantEdges(node = 8:7, pec5$edge[, 1], pec5$edge[, 2]), 1, which),
+    list(6:7, 4:7)
+  )
 })
 
 test_that("DescendantTips() works", {

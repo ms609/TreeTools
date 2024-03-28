@@ -134,7 +134,7 @@ Subtree <- function(tree, node) {
   parent <- edge[, 1]
   child <- edge[, 2]
   subtreeParentEdge <- match(node, child)
-  keepEdge <- DescendantEdges(parent, child, subtreeParentEdge)
+  keepEdge <- DescendantEdges(parent, child, edge = subtreeParentEdge)
   keepEdge[subtreeParentEdge] <- FALSE
 
   edge <- edge[keepEdge, ]
