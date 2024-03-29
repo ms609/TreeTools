@@ -30,14 +30,27 @@ test_that("AddUnconstrained() works", {
 test_that("ImposeConstraint() works", {
   tips <- letters[1:9]
   tree <- as.phylo(1, 9, tips)
+  tree[["node.label"]] <- paste("Node", 10:17)
   
   expect_equal(ImposeConstraint(tree, c()), tree)
   expect_equal(ImposeConstraint(tree, KeepTip(tree, character(0))), tree)
   
-  constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
+  # Weak constraint, test node labels
+  constraint <- StringToPhyDat("000000011", tips, FALSE)
+  constrained <- ImposeConstraint(tree, constraint)
   expect_true(all.equal(
-    ImposeConstraint(tree, constraint),
+    constrained,
+    read.tree(text = "(a, ((c, d), (e, (f, (g, (b, (h, i)))))));")))
+  expect_equal(constrained[["node.label"]],
+               c(paste("Node", 10:15), NA, "Node 17"))
+
+  # Strong constraint for very different tree
+  constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)
+  constrained <- ImposeConstraint(tree, constraint)
+  expect_true(all.equal(
+    constrained,
     read.tree(text = "((a, (b, c)), (d, (e, (f, (i, (g, h))))));")))
+  expect_equal(constrained[["node.label"]], c("Node 10", rep(NA, 7)))
 
   expect_equal(ImposeConstraint(tree, constraint),
                ImposeConstraint(tree, PhyDatToMatrix(constraint)))

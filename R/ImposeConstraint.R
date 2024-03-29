@@ -51,8 +51,8 @@ ImposeConstraint <- function(tree, constraint) {
                         function(x) setdiff(x, "?")[1])
 
     const <- const[setdiff(rownames(const), collapseNames[-1]), , drop = FALSE]
-    const[collapseNames[1], ] <- collapsing
-    rownames(const)[match(collapseNames[1], rownames(const))] <- paste0(
+    const[collapseNames[[1]], ] <- collapsing
+    rownames(const)[match(collapseNames[[1]], rownames(const))] <- paste0(
       "(", paste0(collapseNames, collapse = ","), ")")
 
   }
@@ -74,7 +74,7 @@ ImposeConstraint <- function(tree, constraint) {
     kept <- KeepTip(tree, standIns)[["edge"]]
     newNodes <- kept > length(standIns)
     kept[newNodes] <- kept[newNodes] - kept[1] + max(edge[, 1])
-    kept[kept == kept[1]] <- node
+    kept[kept == kept[[1]]] <- node
 
     kept2 <- kept[, 2] # don't replace twice if standins[i - 1] < i
     for (i in seq_along(standIns)) {
@@ -85,7 +85,10 @@ ImposeConstraint <- function(tree, constraint) {
   edge <- edge[order(edge[, 1]), ]
   backbone[["edge"]] <- RenumberTree(edge[, 1], edge[, 2])
   backbone[["Nnode"]] <- max(backbone[["edge"]][, 1]) - nTip
-
+  nodeLabels <- tree[["node.label"]]
+  if (!is.null(nodeLabels)) {
+    backbone[["node.label"]] <- .UpdateNodeLabel(backbone[["edge"]], tree)
+  }
 
   # Return:
   backbone

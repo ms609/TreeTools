@@ -464,9 +464,7 @@ Preorder.phylo <- function(tree) {
     }
     nodeLabels <- tree[["node.label"]]
     if (!is.null(nodeLabels)) {
-      index <- MatchNodes(list(edge = edge, tip.label = TipLabels(tree)), tree,
-                          tips = FALSE)
-      tree[["node.label"]] <- nodeLabels[index - NTip(tree)]
+      tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
     }
     attr(tree, "order") <- "preorder"
     attr(tree, "suborder") <- NULL

@@ -81,3 +81,19 @@ MatchNodes <- function(x, table, nomatch = NA_integer_, tips = FALSE) {
   # Return:
   `[<-`(ret, is.na(ret), nomatch)
 }
+
+.UpdateNodeLabel <- function(new, old, nodeLabel = old[["node.label"]], ...) {
+  UseMethod(".UpdateNodeLabel")
+}
+
+#' @export
+.UpdateNodeLabel.numeric <- function(new, old, nodeLabel = old[["node.label"]],
+                                     newTips = TipLabels(old)) {
+  nodeLabel[MatchNodes(list(edge = new, tip.label = newTips),
+             old, tips = FALSE) - NTip(old)]
+}
+
+#' @export
+.UpdateNodeLabel.phylo <- function(new, old, nodeLabel = old[["node.label"]]) {
+  nodeLabel[MatchNodes(new, old, tips = FALSE) - NTip(old)]
+}

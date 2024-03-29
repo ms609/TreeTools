@@ -52,3 +52,19 @@ test_that("MatchNodes() works", {
   expect_equal(MatchNodes(bal8, Postorder(bal8)),
                c(9:15))
 })
+
+test_that(".UpdateNodeLabel() works", {
+  .Node <- function(n) paste("Node", n)
+  bal4 <- BalancedTree(4)
+  bal4[["node.label"]] <- .Node(5:7)
+  bal8 <- BalancedTree(8)
+  bal8[["node.label"]] <- .Node(9:15)
+  expect_equal(.UpdateNodeLabel(bal4, bal8), .Node(10:12))
+  expect_equal(.UpdateNodeLabel(bal8, bal4), c(NA, .Node(5:7), rep(NA, 3)))
+  
+  expect_equal(.UpdateNodeLabel(bal4$edge, bal8, newTips = TipLabels(4)),
+               .Node(10:12))
+  expect_equal(.UpdateNodeLabel(bal8$edge, bal4, newTips = TipLabels(8)),
+               c(NA, .Node(5:7), rep(NA, 3)))
+  
+})
