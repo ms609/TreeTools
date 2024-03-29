@@ -3,7 +3,7 @@ test_that("Subsplits", {
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
   expect_equal(TipsInSplits(efgh),
                setNames(c(4, 4, 4, 3, 2, 1), 12:17))
-  expect_equal(DropTip(splits, letters[c(1:4, 9)]), 
+  expect_equal(DropTip(splits, letters[c(1:4, 9)]),
                KeepTip(splits, letters[5:8]))
   expect_equal(KeepTip(splits, letters[5:8]), Subsplit(splits, letters[5:8]))
   expect_equal(c("12" = TRUE, "13" = TRUE, "14" = TRUE, "15" = TRUE,
@@ -196,6 +196,10 @@ test_that("Tip labels are found", {
                                    as.Splits(BalancedTree(5)))))
 
   expect_equal(t1..4, TipLabels(c(t1 = 1, t2 = 3, t3 = 3, t4 = 4)))
+  
+  # Duplicates permitted
+  expect_equal(TipLabels(c(1:4, 4:1)), c(1:4, 4:1))
+  expect_equal(TipLabels(c(t1..4, t1..4)), c(t1..4, t1..4))
   
   # Actual cases tested by test cases eludes me
   expect_equal(TipLabels(list(tip.label = list(tip.label = t1..4))),

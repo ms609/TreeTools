@@ -81,6 +81,7 @@ Other tree manipulation:
 \code{\link{TrivialTree}}
 
 Other tree properties: 
+\code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},

@@ -458,9 +458,13 @@ Preorder.phylo <- function(tree) {
     if (is.null(lengths)) {
       tree[["edge"]] <- RenumberTree(parent, child)
     } else {
-      edge <- RenumberTree(parent, child, lengths)
-      tree[["edge"]] <- edge[[1]]
-      tree[["edge.length"]] <- edge[[2]]
+      newEdge <- RenumberTree(parent, child, lengths)
+      tree[["edge"]] <- newEdge[[1]]
+      tree[["edge.length"]] <- newEdge[[2]]
+    }
+    nodeLabels <- tree[["node.label"]]
+    if (!is.null(nodeLabels)) {
+      tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
     }
     attr(tree, "order") <- "preorder"
     attr(tree, "suborder") <- NULL

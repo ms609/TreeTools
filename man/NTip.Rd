@@ -42,6 +42,7 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},

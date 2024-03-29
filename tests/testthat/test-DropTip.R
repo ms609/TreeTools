@@ -78,6 +78,14 @@ test_that("DropTip() works", {
                  "Tips not in tree: tip")
 })
 
+test_that("DropTip() supports node labels", {
+  bal8 <- RootTree(BalancedTree(8), 1)
+  startLabel <- paste("Node", 9:15)
+  bal8$node.label <- startLabel
+  expect_equal(DropTip(bal8, 1)[["node.label"]], startLabel[-1])
+  expect_equal(DropTip(bal8, 5:6)[["node.label"]], startLabel[-(5:6)])
+})
+
 test_that("DropTip() root relocation", {
   nTip <- 12
   nKept <- nTip / 2L

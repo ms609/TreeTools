@@ -33,6 +33,7 @@ Other tree navigation:
 \code{\link{EdgeDistances}()},
 \code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
+\code{\link{MatchEdges}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeNumbers}()},
 \code{\link{NodeOrder}()},

@@ -46,6 +46,8 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   }
   labels <- tree[["tip.label"]]
   nTip <- length(labels)
+  
+  # Establish which tips should be dropped
   if (is.null(tip) || !length(tip) || any(is.na(tip))) {
     drop <- logical(nTip)
   } else if (is.character(tip)) {
@@ -95,6 +97,8 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     stop("`tip` must be of type character or numeric")
   }
   
+  # Having established which tips to drop,
+  # work out what to do about it
   if (all(drop)) {
     return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
                           Nnode = 0), class = "phylo"))
@@ -103,9 +107,11 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (any(drop)) {
     weights <- tree[["edge.length"]]
     keep <- !drop
-    if (!is.null(weights)) {
+    nodeLabel <- tree[["node.label"]]
+    if (!is.null(weights) || !is.null(nodeLabel)) {
       original <- PathLengths(tree, fullMatrix = TRUE)
       verts <- KeptVerts(tree, keep)
+      tree[["node.label"]] <- nodeLabel[verts[-seq_len(nTip)]]
     }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
     tree[["tip.label"]] <- labels[keep]
@@ -222,8 +228,8 @@ DropTip.NULL <-  function(tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 #' @describeIn DropTip Faster version with no checks.
-#' Does not retain tip labels or edge weights.
-#' edges must be listed in preorder.
+#' Does not retain labels or edge weights.
+#' Edges must be listed in preorder.
 #' May crash if improper input is specified.
 #' @export
 KeepTipPreorder <- function(tree, tip) {
@@ -241,8 +247,8 @@ KeepTipPreorder <- function(tree, tip) {
 }
   
 #' @describeIn DropTip Faster version with no checks.
-#' Does not retain tip labels or edge weights.
-#' edges must be listed in postorder.
+#' Does not retain labels or edge weights.
+#' Edges must be listed in postorder.
 #' May crash if improper input is specified.
 #' @export
 KeepTipPostorder <- function(tree, tip) {

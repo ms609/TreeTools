@@ -23,6 +23,7 @@ Numeric index of each node in a tree
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{PathLengths}()},
@@ -38,6 +39,7 @@ Other tree navigation:
 \code{\link{EdgeDistances}()},
 \code{\link{ListAncestors}()},
 \code{\link{MRCA}()},
+\code{\link{MatchEdges}()},
 \code{\link{NDescendants}()},
 \code{\link{NodeDepth}()},
 \code{\link{NodeOrder}()},

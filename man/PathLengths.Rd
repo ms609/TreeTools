@@ -36,6 +36,7 @@ PathLengths(tree)
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},

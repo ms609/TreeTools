@@ -86,7 +86,7 @@ SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
       }
     }, { # Tip labels
       #TODO would it be quicker to do this using RenumberTips() |> Preorder()?
-      # If not, perhaps we can accellerate preorder?
+      # If not, perhaps we can accelerate preorder?
       mass <- match(TipLabels(tree), order, nomatch = NTip(tree) + 1L)
       MinKid <- function(tips) min(mass[tips])
       for (node in nTip + seq_len(tree[["Nnode"]])) {

@@ -348,12 +348,17 @@ test_that("Binarification is uniform", {
   Test(CollapseNode(BalancedTree(7), c(10, 13)), NRooted(3) * NRooted(3))
 
   bal7 <- BalancedTree(7)
+  bal7[["node.label"]] <- paste("Node", 8:13)
   expect_true(all.equal(bal7, MakeTreeBinary(bal7)))
   expect_true(all.equal(list(bal7, bal7), MakeTreeBinary(list(bal7, bal7))))
   expect_true(all.equal(
     structure(list(bal7, bal7), class = "multiPhylo"),
     MakeTreeBinary(structure(list(bal7, bal7), class = "multiPhylo"))))
 
+  set.seed(1)
+  binNodes <- MakeTreeBinary(CollapseNode(bal7, 9:10))[["node.label"]]
+  expect_equal(binNodes[!is.na(binNodes)], bal7[["node.label"]][-(2:3)])
+  
 })
 
 test_that("LeafLabelInterchange() fails", {
