@@ -440,9 +440,11 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #nocov begin
 #' Generate a tree with a specified outgroup
 #'
-#' Deprecated. Use `RootTree()` instead.
+#' **Deprecated.** This function will be removed in a future version of
+#' \pkg{TreeTools}.
+#' Use `RootTree()` instead.
 #'
-#' Given a tree or a list of taxa, `EnforceOutgroup()` rearranges the ingroup
+#' Given a tree or a list of taxa, `EnforceOutgroup()` rearranged the ingroup
 #' and outgroup taxa such that the two are sister taxa across the root, without
 #' changing the relationships within the ingroup or within the outgroup.
 #'
@@ -452,7 +454,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
 #' @param outgroup Character vector containing the names of taxa to include in
 #' the outgroup.
 #'
-#' @return `EnforceOutgroup()` returns a tree of class `phylo` where all
+#' @return `EnforceOutgroup()` returned a tree of class `phylo` where all
 #' outgroup taxa are sister to all remaining taxa, without modifying the
 #' ingroup topology.
 #'
