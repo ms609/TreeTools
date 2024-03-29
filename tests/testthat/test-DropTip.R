@@ -83,7 +83,7 @@ test_that("DropTip() supports node labels", {
   startLabel <- paste("Node", 9:15)
   bal8$node.label <- startLabel
   expect_equal(DropTip(bal8, 1)[["node.label"]], startLabel[-1])
-  expect_equal(DropTip(bal8, 5:6)[["node.label"]], startLabel[-6])
+  expect_equal(DropTip(bal8, 5:6)[["node.label"]], startLabel[-(5:6)])
 })
 
 test_that("DropTip() root relocation", {
