@@ -582,11 +582,7 @@ NTip.Splits <- NTip.default
 #' @rdname NTip
 #' @export
 NTip.list <- function(phy) {
-  if (is.null(phy[["tip.label"]])) {
-    vapply(phy, NTip, integer(1))
-  } else {
-    length(phy[["tip.label"]])
-  }
+  vapply(phy, NTip, integer(1))
 }
 
 #' @rdname NTip
