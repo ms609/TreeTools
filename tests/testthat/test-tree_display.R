@@ -7,6 +7,18 @@ test_that("SortTree() works", {
       SortTree(as.phylo(10, 6))
     )
   )
+  
+  start <- makeNodeLabel(as.phylo(10, 6))
+  if(interactive()) {
+    oPar <- par(mfrow = c(2, 1), mar = rep(0.5, 4), cex = 0.9)
+    on.exit(par(oPar))
+    plot(start, show.node.label = TRUE, xpd = NA)
+    nodelabels()
+    plot(SortTree(start), show.node.label = TRUE, xpd = NA)
+    nodelabels()
+  }
+  expect_equal(SortTree(start)[["node.label"]], paste0("Node", c(1:3, 5, 4)))
+  
   tipSorted <- SortTree(as.phylo(10, 6), how = "tip")
   children <- tipSorted[["edge"]][, 2]
   expect_equal(children[children < 7],
