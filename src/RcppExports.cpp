@@ -363,3 +363,54 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+
+RcppExport SEXP _TreeTools_keep_tip(SEXP, SEXP);
+RcppExport SEXP _TreeTools_postorder_order(SEXP);
+RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
+RcppExport SEXP _TreeTools_preorder_weighted(SEXP, SEXP, SEXP);
+RcppExport SEXP _TreeTools_root_binary(SEXP, SEXP);
+RcppExport SEXP _TreeTools_root_on_node(SEXP, SEXP);
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_TreeTools_ClusterTable_new", (DL_FUNC) &_TreeTools_ClusterTable_new, 1},
+    {"_TreeTools_ClusterTable_matrix", (DL_FUNC) &_TreeTools_ClusterTable_matrix, 1},
+    {"_TreeTools_ClusterTable_decode", (DL_FUNC) &_TreeTools_ClusterTable_decode, 1},
+    {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 5},
+    {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 5},
+    {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
+    {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
+    {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
+    {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
+    {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
+    {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
+    {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
+    {"_TreeTools_edge_to_mixed_base", (DL_FUNC) &_TreeTools_edge_to_mixed_base, 3},
+    {"_TreeTools_mixed_base_to_parent", (DL_FUNC) &_TreeTools_mixed_base_to_parent, 2},
+    {"_TreeTools_kept_vertices", (DL_FUNC) &_TreeTools_kept_vertices, 2},
+    {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
+    {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 2},
+    {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
+    {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},
+    {"_TreeTools_mask_splits", (DL_FUNC) &_TreeTools_mask_splits, 1},
+    {"_TreeTools_not_splits", (DL_FUNC) &_TreeTools_not_splits, 1},
+    {"_TreeTools_xor_splits", (DL_FUNC) &_TreeTools_xor_splits, 2},
+    {"_TreeTools_and_splits", (DL_FUNC) &_TreeTools_and_splits, 2},
+    {"_TreeTools_or_splits", (DL_FUNC) &_TreeTools_or_splits, 2},
+    {"_TreeTools_thin_splits", (DL_FUNC) &_TreeTools_thin_splits, 2},
+    {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
+    {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
+    {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
+    {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
+    {"_TreeTools_keep_tip",                 (DL_FUNC) &_TreeTools_keep_tip,                 2},
+    {"_TreeTools_postorder_order",          (DL_FUNC) &_TreeTools_postorder_order,          1},
+    {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},
+    {"_TreeTools_preorder_weighted",        (DL_FUNC) &_TreeTools_preorder_weighted,        3},
+    {"_TreeTools_root_binary",              (DL_FUNC) &_TreeTools_root_binary,              2},
+    {"_TreeTools_root_on_node",             (DL_FUNC) &_TreeTools_root_on_node,             2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_TreeTools(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}
