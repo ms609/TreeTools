@@ -260,11 +260,11 @@ TipLabels.matrix <- function(x, single = TRUE) colnames(x)
 
 #' @rdname TipLabels
 #' @export
-TipLabels.phylo <- function(x, single = TRUE) x[["tip.label"]]
+TipLabels.logical <- function(x, single = TRUE) TipLabels.numeric(length(x))
 
 #' @rdname TipLabels
 #' @export
-TipLabels.default <- function(x, single = TRUE) attr(x, "tip.label")
+TipLabels.phylo <- function(x, single = TRUE) x[["tip.label"]]
 
 #' @rdname TipLabels
 #' @export
