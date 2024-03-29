@@ -13,6 +13,14 @@ ClusterTable_decode <- function(xp) {
     .Call(`_TreeTools_ClusterTable_decode`, xp)
 }
 
+ape_neworder_phylo <- function(n_tips, parent, child, n_edges, order) {
+    .Call(`_TreeTools_ape_neworder_phylo`, n_tips, parent, child, n_edges, order)
+}
+
+ape_neworder_pruningwise <- function(n_tips, n_node, parent, child, n_edges) {
+    .Call(`_TreeTools_ape_neworder_pruningwise`, n_tips, n_node, parent, child, n_edges)
+}
+
 as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }

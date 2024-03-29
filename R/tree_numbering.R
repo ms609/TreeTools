@@ -34,9 +34,9 @@
 #' @name Neworder
 #' @export
 NeworderPruningwise <- function(nTip, nNode, parent, child, nEdge) {
-  .C(`ape_neworder_pruningwise`, as.integer(nTip), as.integer(nNode),
-     as.integer(parent), as.integer(child), as.integer(nEdge),
-     integer(nEdge))[[6]]
+  .Call(`_TreeTools_ape_neworder_pruningwise`, as.integer(nTip),
+        as.integer(nNode), as.integer(parent), as.integer(child),
+        as.integer(nEdge))
 }
 
 #' @rdname Neworder
@@ -47,9 +47,8 @@ NeworderPruningwise <- function(nTip, nNode, parent, child, nEdge) {
 #' @keywords internal
 #' @export
 NeworderPhylo <- function(nTip, parent, child, nEdge, whichwise) {
-  .C(`ape_neworder_phylo`, as.integer(nTip), as.integer(parent),
-     as.integer(child), as.integer(nEdge), integer(nEdge),
-     as.integer(whichwise), NAOK = TRUE)[[5]]
+  .Call(`_TreeTools_ape_neworder_phylo`, as.integer(nTip), as.integer(parent),
+        as.integer(child), as.integer(nEdge), as.integer(whichwise))
 }
 
 #' @rdname Reorder

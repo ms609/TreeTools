@@ -44,6 +44,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// ape_neworder_phylo
+IntegerVector ape_neworder_phylo(IntegerVector n_tips, IntegerVector parent, IntegerVector child, IntegerVector n_edges, IntegerVector order);
+RcppExport SEXP _TreeTools_ape_neworder_phylo(SEXP n_tipsSEXP, SEXP parentSEXP, SEXP childSEXP, SEXP n_edgesSEXP, SEXP orderSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type n_tips(n_tipsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type n_edges(n_edgesSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type order(orderSEXP);
+    rcpp_result_gen = Rcpp::wrap(ape_neworder_phylo(n_tips, parent, child, n_edges, order));
+    return rcpp_result_gen;
+END_RCPP
+}
+// ape_neworder_pruningwise
+IntegerVector ape_neworder_pruningwise(IntegerVector n_tips, IntegerVector n_node, IntegerVector parent, IntegerVector child, IntegerVector n_edges);
+RcppExport SEXP _TreeTools_ape_neworder_pruningwise(SEXP n_tipsSEXP, SEXP n_nodeSEXP, SEXP parentSEXP, SEXP childSEXP, SEXP n_edgesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type n_tips(n_tipsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type n_node(n_nodeSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type n_edges(n_edgesSEXP);
+    rcpp_result_gen = Rcpp::wrap(ape_neworder_pruningwise(n_tips, n_node, parent, child, n_edges));
+    return rcpp_result_gen;
+END_RCPP
+}
 // as_newick
 CharacterVector as_newick(const IntegerMatrix edge);
 RcppExport SEXP _TreeTools_as_newick(SEXP edgeSEXP) {
