@@ -16,6 +16,7 @@ IntegerVector ape_neworder_phylo(IntegerVector n_tips, IntegerVector parent,
     reinterpret_cast<int*>(neworder.begin()),
     reinterpret_cast<int*>(order.begin())
   );
+  
   return neworder;
 }
   
@@ -25,7 +26,16 @@ IntegerVector ape_neworder_pruningwise(
     IntegerVector parent, IntegerVector child,
     IntegerVector n_edges) {
   IntegerVector neworder(parent.size() * 2);
-  // ape_neworder_pruningwise(&n_tips, &n_node, &parent, &child, &n_edges, &neworder);
+  
+  ape_neworder_pruningwise(
+    reinterpret_cast<int*>(n_tips.begin()),
+    reinterpret_cast<int*>(n_node.begin()),
+    reinterpret_cast<int*>(parent.begin()),
+    reinterpret_cast<int*>(child.begin()),
+    reinterpret_cast<int*>(n_edges.begin()),
+    reinterpret_cast<int*>(neworder.begin())
+  );
+  
   return neworder;
 }
   

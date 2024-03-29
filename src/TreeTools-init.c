@@ -40,8 +40,8 @@ extern SEXP _TreeTools_mask_splits(SEXP);
 extern SEXP _TreeTools_not_splits(SEXP);
 
 static const R_CallMethodDef callMethods[] = {
-  {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 6},
-  {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 6},
+  {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 5},
+  {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 5},
   {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
   {"_TreeTools_ClusterTable_decode", (DL_FUNC) &_TreeTools_ClusterTable_decode, 1},
   {"_TreeTools_ClusterTable_matrix", (DL_FUNC) &_TreeTools_ClusterTable_matrix, 1},
