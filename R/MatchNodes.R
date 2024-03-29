@@ -21,7 +21,16 @@
 MatchEdges <- function(x, table, nomatch = NA_integer_) {
   xEdge <- .Edge(x)
   tableEdge <- .Edge(table)
-  tipMatch <- match(TipLabels(x), TipLabels(table))
+  xLab <- TipLabels(x)
+  tabLab <- TipLabels(table)
+  tipMatch <- if (is.null(xLab) && is.null(tabLab)) {
+    # Match tips by number
+    xTip <- min(xEdge[, 1]) - 1
+    tabTip <- min(tableEdge[, 1]) - 1
+    `length<-`(seq_len(tabTip), xTip)
+  } else {
+    match(xLab, tabLab)
+  }
   seek <- DescendantTips(xEdge[, 1], xEdge[, 2])
   find <- DescendantTips(tableEdge[, 1], tableEdge[, 2])[, tipMatch]
   find[is.na(find)] <- FALSE
@@ -88,12 +97,12 @@ MatchNodes <- function(x, table, nomatch = NA_integer_, tips = FALSE) {
 
 #' @export
 .UpdateNodeLabel.numeric <- function(new, old, nodeLabel = old[["node.label"]],
-                                     newTips = TipLabels(old)) {
+                                     newTips = TipLabels(old), ...) {
   nodeLabel[MatchNodes(list(edge = new, tip.label = newTips),
              old, tips = FALSE) - NTip(old)]
 }
 
 #' @export
-.UpdateNodeLabel.phylo <- function(new, old, nodeLabel = old[["node.label"]]) {
+.UpdateNodeLabel.phylo <- function(new, old, nodeLabel = old[["node.label"]], ...) {
   nodeLabel[MatchNodes(new, old, tips = FALSE) - NTip(old)]
 }

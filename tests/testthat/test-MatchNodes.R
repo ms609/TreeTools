@@ -13,8 +13,13 @@ test_that("MatchNodes() works", {
     nodelabels()
   }
   expect_equal(MatchEdges(bal8, bal16), 2:15)
-  expect_equal(MatchEdges(bal16, bal8),
-               c(NA, 1:14, rep(NA, 15)))
+  e16 <- bal16[["edge"]]
+  expect_equal(.Edge(bal8$edge), bal8[["edge"]])
+  l16 <- structure(list(e16[, 1], e16[, 2]), tip.label = TipLabels(bal16))
+  expect_equal(.Edge(l16), e16)
+  
+  expect_equal(MatchEdges(l16, bal8), c(NA, 1:14, rep(NA, 15)))
+  expect_equal(MatchEdges(bal16$edge, bal8$edge), c(NA, 1:14, rep(NA, 15)))
   expect_equal(MatchNodes(bal8, bal16, tips = FALSE), 18:24)
   expect_equal(MatchNodes(bal8, bal16, tips = TRUE), c(1:8, 18:24))
   expect_equal(MatchNodes(BalancedTree(16), bal8, tips = TRUE, nomatch = -1),
