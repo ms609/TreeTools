@@ -106,15 +106,15 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   
   if (any(drop)) {
     weights <- tree[["edge.length"]]
-    nodeLabel <- tree[["node.label"]]
     keep <- !drop
+    nodeLabel <- tree[["node.label"]]
     if (!is.null(weights) || !is.null(nodeLabel)) {
       original <- PathLengths(tree, fullMatrix = TRUE)
       verts <- KeptVerts(tree, keep)
+      tree[["node.label"]] <- nodeLabel[verts[-seq_len(nTip)]]
     }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
     tree[["tip.label"]] <- labels[keep]
-    tree[["node.label"]] <- nodeLabel[verts[-seq_len(nTip)]]
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(keep)
     
     if (!is.null(weights)) {
