@@ -6,15 +6,16 @@
 \alias{AllDescendantEdges}
 \title{Identify descendant edges}
 \usage{
-DescendantEdges(parent, child, edge = NULL, nEdge = length(parent))
-
-DescendantTips(
+DescendantEdges(
   parent,
   child,
   edge = NULL,
+  node = NULL,
   nEdge = length(parent),
-  nTip = min(parent) - 1L
+  includeSelf = TRUE
 )
+
+DescendantTips(parent, child, edge = NULL, node = NULL, nEdge = length(parent))
 
 AllDescendantEdges(parent, child, nEdge = length(parent))
 }
@@ -28,15 +29,20 @@ matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
 \item{edge}{Integer specifying the number of the edge whose children are
 required (see \code{\link[ape:nodelabels]{edgelabels}()}).}
 
+\item{node}{Integer specifying the number(s) of nodes whose children are
+required.  Specify \code{0} to return all nodes.  If \code{NULL} (the default), the
+\code{edge} parameter will be used instead.}
+
 \item{nEdge}{number of edges (calculated from \code{length(parent)} if not
 supplied).}
 
-\item{nTip}{Integer specifying number of leaves in the tree.
-Computed if not supplied.}
+\item{includeSelf}{Logical specifying whether to mark \code{edge} as its own
+descendant.}
 }
 \value{
 \code{DescendantEdges()} returns a logical vector stating whether each
-edge in turn is the specified edge or one of its descendants.
+edge in turn is the specified edge (if \code{includeSelf = TRUE})
+or one of its descendants.
 
 \code{DescendantTips()} returns a logical vector stating whether each
 leaf in turn is a descendant of the specified edge.

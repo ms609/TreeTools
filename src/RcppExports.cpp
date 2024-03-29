@@ -67,6 +67,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// descendant_edges
+LogicalMatrix descendant_edges(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder);
+RcppExport SEXP _TreeTools_descendant_edges(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
+    rcpp_result_gen = Rcpp::wrap(descendant_edges(parent, child, postorder));
+    return rcpp_result_gen;
+END_RCPP
+}
+// descendant_tips
+LogicalMatrix descendant_tips(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder);
+RcppExport SEXP _TreeTools_descendant_tips(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
+    rcpp_result_gen = Rcpp::wrap(descendant_tips(parent, child, postorder));
+    return rcpp_result_gen;
+END_RCPP
+}
 // num_to_parent
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {

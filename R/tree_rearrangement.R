@@ -110,7 +110,7 @@ RootTree.phylo <- function(tree, outgroupTips) {
   parent <- edge[, 1]
   child <- edge[, 2]
   nVert <- max(parent)
-  parentOf <- rep_len(NA_integer_, nVert)
+  parentOf <- `length<-`(integer(), nVert)
   parentOf[child] <- parent
   
   counts <- integer(nVert)
