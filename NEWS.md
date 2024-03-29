@@ -1,4 +1,4 @@
-# TreeTools 1.10.0.9004 (development) #
+# TreeTools 1.10.0.9005 (development) #
 
 ## New methods and functions
 
@@ -9,6 +9,7 @@
 
 ## Enhancements
 
+- `RandomTree(root = TRUE)` roots the tree on a random edge.
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
 - Support node labels in `AddTip()`, `CollapseNode()`, `DropTip()`, 
   `MakeTreeBinary()`, `Renumber()`, `Reorder()`, `SortTree()`, `Subtree()`

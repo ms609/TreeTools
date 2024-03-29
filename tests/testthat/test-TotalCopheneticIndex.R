@@ -30,3 +30,26 @@ test_that("Trees from Mir et al. 2013 are scored correctly", {
 
   expect_equal(TCIContext(BalancedTree(5)), TCIContext(5L))
 })
+
+test_that("Expectations are correct", {
+  nTip <- 5
+  uniform <- DropTip(
+    unlist(recursive = FALSE,
+           lapply(
+             lapply(as.phylo(1:NUnrooted(nTip) - 1, nTip),
+                    AddTipEverywhere, "ROOT"),
+             RootTree, "ROOT")
+           ),
+    "ROOT")
+  tci <- TotalCopheneticIndex(uniform)
+  context <- TCIContext(nTip)
+  expect_equal(range(tci), range(context[1:2]))
+  expect_equal(mean(tci), context[["uniform.expected"]])
+  
+  unif <- replicate(100, TotalCopheneticIndex(RandomTree(10, root = TRUE)))
+  expect_equal(
+    mean(unif),
+    TCIContext(10)$uniform.expected, # 76
+    tolerance = 0.05
+  )
+})
