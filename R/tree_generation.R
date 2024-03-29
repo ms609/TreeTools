@@ -17,13 +17,11 @@
 #' @name GenerateTree
 NULL
 
-# Until require R >= 3.5.0
-.isFALSE <- function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
-
 #' @rdname GenerateTree
 #'
-#' @param root Character or integer specifying tip to use as root, if desired;
-#' or `FALSE` for an unrooted tree.
+#' @param root Character or integer specifying tip to use as root;
+#' or `TRUE` to root the tree on a random edge;
+#' or `FALSE` to return an unrooted tree.
 #' @param nodes Number of nodes to generate.  The default and maximum,
 #' `tips - 1`, generates a binary tree; setting a lower value will induce
 #' polytomies.
@@ -88,8 +86,12 @@ RandomTree <- function(tips, root = FALSE, nodes) {
                          br = NULL),
                     class = "phylo")
 
-  if (.isFALSE(root)) {
-    tree <- UnrootTree(tree)
+  if (is.logical(root)) {
+    if (root[[1]]) {
+      tree <- root_on_node(tree, sample.int(nTips + nodes, 1))
+    } else {
+      tree <- UnrootTree(tree)
+    }
   }
 
   if (nodes < nodesInBinary) {
