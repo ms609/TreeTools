@@ -86,15 +86,16 @@ edges in a tree.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, edge <span class="op">=</span> <span class="cn">NULL</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">DescendantTips</span><span class="op">(</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DescendantEdges</span><span class="op">(</span></span>
 <span>  <span class="va">parent</span>,</span>
 <span>  <span class="va">child</span>,</span>
 <span>  edge <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  node <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span>,</span>
-<span>  nTip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1L</span></span>
+<span>  includeSelf <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">DescendantTips</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, edge <span class="op">=</span> <span class="cn">NULL</span>, node <span class="op">=</span> <span class="cn">NULL</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">AllDescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -116,14 +117,20 @@ matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.h
 required (see <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">edgelabels</a>()</code>).</p></dd>
 
 
+<dt>node</dt>
+<dd><p>Integer specifying the number(s) of nodes whose children are
+required.  Specify <code>0</code> to return all nodes.  If <code>NULL</code> (the default), the
+<code>edge</code> parameter will be used instead.</p></dd>
+
+
 <dt>nEdge</dt>
 <dd><p>number of edges (calculated from <code>length(parent)</code> if not
 supplied).</p></dd>
 
 
-<dt>nTip</dt>
-<dd><p>Integer specifying number of leaves in the tree.
-Computed if not supplied.</p></dd>
+<dt>includeSelf</dt>
+<dd><p>Logical specifying whether to mark <code>edge</code> as its own
+descendant.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -131,7 +138,8 @@ Computed if not supplied.</p></dd>
     
 
 <p><code>DescendantEdges()</code> returns a logical vector stating whether each
-edge in turn is the specified edge or one of its descendants.</p>
+edge in turn is the specified edge (if <code>includeSelf = TRUE</code>)
+or one of its descendants.</p>
 
 
 <p><code>DescendantTips()</code> returns a logical vector stating whether each
