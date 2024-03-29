@@ -256,6 +256,19 @@ TipLabels <- function(x, single = TRUE) UseMethod("TipLabels")
 
 #' @rdname TipLabels
 #' @export
+TipLabels.default <- function(x, single = TRUE) {
+  tla <- attr(x, "tip.label")
+  if (!is.null(tla)) {
+    tla
+  } else if (is.null(names(x))) {
+    x
+  } else {
+    names(x)
+  }
+}
+
+#' @rdname TipLabels
+#' @export
 TipLabels.matrix <- function(x, single = TRUE) colnames(x)
 
 #' @rdname TipLabels
@@ -300,6 +313,54 @@ TipLabels.list <- function(x, single = FALSE) {
 
 #' @rdname TipLabels
 #' @export
+TipLabels.multiPhylo <- function(x, single = FALSE) {
+  xTipLabel <- x[["tip.label"]]
+  if (!is.null(xTipLabel)) {
+    if (is.list(xTipLabel) && !is.null(xTipLabel[["tip.label"]])) {
+      return(xTipLabel[["tip.label"]])
+    } else {
+      return(xTipLabel)
+    }
+  }
+  if (single) {
+    firstEntry <- x[[1]]
+    if (!is.null(firstEntry[["tip.label"]])) {
+      return(firstEntry[["tip.label"]])
+    }
+  } else {
+    .ListLabels(x, single, TipLabels.phylo)
+  }
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.character <- function(x, single = TRUE) {
+  if (is.null(attr(x, "tip.label"))) {
+    NextMethod("TipLabels", as.character(x))
+  } else {
+    attr(x, "tip.label")
+  }
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.numeric <- function(x, single = TRUE) {
+  if (length(x) == 1L) {
+    if (x < 0) {
+      stop("`x` may not be negative")
+    }
+    paste0(rep_len("t", x), seq_len(x))
+  } else {
+    NextMethod("TipLabels", as.character(x))
+  }
+}
+
+#' @rdname TipLabels
+#' @export
+TipLabels.phyDat <- function(x, single = TRUE) names(x)
+
+#' @rdname TipLabels
+#' @export
 AllTipLabels <- function(x) UseMethod("AllTipLabels")
 
 #' @rdname TipLabels
@@ -341,68 +402,6 @@ AllTipLabels.matrix <- function(x) TipLabels.matrix(x)
   } else {
     # else Return:
     NULL
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.multiPhylo <- function(x, single = FALSE) {
-  xTipLabel <- x[["tip.label"]]
-  if (!is.null(xTipLabel)) {
-    if (is.list(xTipLabel) && !is.null(xTipLabel[["tip.label"]])) {
-      return(xTipLabel[["tip.label"]])
-    } else {
-      return(xTipLabel)
-    }
-  }
-  if (single) {
-    firstEntry <- x[[1]]
-    if (!is.null(firstEntry[["tip.label"]])) {
-      return(firstEntry[["tip.label"]])
-    }
-  } else {
-    .ListLabels(x, single, TipLabels.phylo)
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.character <- function(x, single = TRUE) {
-  if (is.null(attr(x, "tip.label"))) {
-    x
-  } else {
-    attr(x, "tip.label")
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.numeric <- function(x, single = TRUE) {
-  if (length(x) == 1L) {
-    if (x < 0) {
-      stop("`x` may not be negative")
-    }
-    paste0(rep_len("t", x), seq_len(x))
-  } else {
-    NextMethod("TipLabels", as.character(x))
-  }
-}
-
-#' @rdname TipLabels
-#' @export
-TipLabels.phyDat <- function(x, single = TRUE) names(x)
-
-#' @rdname TipLabels
-#' @export
-TipLabels.default <- function(x, single = TRUE) {
-  if (is.null(names(x))) {
-    if (any(duplicated(x))) {
-      NULL
-    } else {
-      x
-    }
-  } else {
-    names(x)
   }
 }
 

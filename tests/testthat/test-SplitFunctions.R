@@ -197,14 +197,16 @@ test_that("Tip labels are found", {
 
   expect_equal(t1..4, TipLabels(c(t1 = 1, t2 = 3, t3 = 3, t4 = 4)))
   
+  # Duplicates permitted
+  expect_equal(TipLabels(c(1:4, 4:1)), c(1:4, 4:1))
+  expect_equal(TipLabels(c(t1..4, t1..4)), c(t1..4, t1..4))
+  
   # Actual cases tested by test cases eludes me
   expect_equal(TipLabels(list(tip.label = list(tip.label = t1..4))),
                t1..4)
   expect_equal(TipLabels(structure(list(tip.label = list(tip.label = t1..4)),
                                    class = "multiPhylo")),
                t1..4)
-  expect_equal(TipLabels(c(t1..4, paste0(t1..4, "_", 1:4), t1..4)),
-               c(t1..4, paste0(t1..4, "_", 1:4), paste0(t1..4, "_", 1:4, "_", 1:4)))
 })
 
 test_that("AllTipLabels()", {
