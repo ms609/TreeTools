@@ -24,8 +24,9 @@ StarTree(tips)
 naming the tips, or any other object from which \code{\link[=TipLabels]{TipLabels()}} can
 extract leaf labels.}
 
-\item{root}{Character or integer specifying tip to use as root, if desired;
-or \code{FALSE} for an unrooted tree.}
+\item{root}{Character or integer specifying tip to use as root;
+or \code{TRUE} to root the tree on a random edge;
+or \code{FALSE} to return an unrooted tree.}
 
 \item{nodes}{Number of nodes to generate.  The default and maximum,
 \code{tips - 1}, generates a binary tree; setting a lower value will induce
