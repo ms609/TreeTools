@@ -15,9 +15,15 @@ test_that("MatchNodes() works", {
   expect_equal(MatchEdges(bal8, bal16), 2:15)
   expect_equal(MatchEdges(bal16, bal8),
                c(NA, 1:14, rep(NA, 15)))
-  expect_equal(MatchNodes(bal8, bal16), c(1:8, 18:24))
-  expect_equal(MatchNodes(BalancedTree(16), bal8, nomatch = -1),
+  expect_equal(MatchNodes(bal8, bal16, tips = FALSE), 18:24)
+  expect_equal(MatchNodes(bal8, bal16, tips = TRUE), c(1:8, 18:24))
+  expect_equal(MatchNodes(BalancedTree(16), bal8, tips = TRUE, nomatch = -1),
                c(1:8, rep(-1, 8), -1, 9:15, rep(-1, 7)))
+  
+  bal8rn <- bal8
+  bal8rn[["tip.label"]][7:8] <- letters[7:8]
+  expect_equal(MatchNodes(bal8rn, bal8, tips = TRUE),
+               c(1:6, rep(NA, 2), NA, 10:12, NA, 14, NA))
   
   table <- RootTree(bal8, 1)
   if (interactive()) {

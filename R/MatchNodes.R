@@ -9,6 +9,8 @@
 #' 
 #' @param x Tree whose nodes are to be matched.
 #' @param table Tree containing nodes to be matched against.
+#' @param tips Logical specifying whether to return matches for tips;
+#' unless `TRUE`, only the matches for internal nodes will be returned.
 #' @examples
 #' MatchNodes(BalancedTree(8), RootTree(BalancedTree(8)))
 #' @inheritParams match
@@ -51,7 +53,7 @@ MatchEdges <- function(x, table, nomatch = NA_integer_) {
 
 #' @rdname MatchEdges
 #' @export
-MatchNodes <- function(x, table, nomatch = NA_integer_) {
+MatchNodes <- function(x, table, nomatch = NA_integer_, tips = FALSE) {
   xEdge <- .Edge(x)
   xLab <- TipLabels(x)
   tableEdge <- .Edge(table)
@@ -72,6 +74,9 @@ MatchNodes <- function(x, table, nomatch = NA_integer_) {
   xRoot <- length(xLab) + 1L
   ret <- nodeIndex[matching][order(c(xEdge[, 2], xRoot))]
   ret[xRoot] <- nodeIndex[matchRoot]
+  if (!isTRUE(tips)) {
+    ret <- ret[-seq_along(xLab)]
+  }
   
   # Return:
   `[<-`(ret, is.na(ret), nomatch)

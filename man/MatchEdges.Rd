@@ -7,7 +7,7 @@
 \usage{
 MatchEdges(x, table, nomatch = NA_integer_)
 
-MatchNodes(x, table, nomatch = NA_integer_)
+MatchNodes(x, table, nomatch = NA_integer_, tips = FALSE)
 }
 \arguments{
 \item{x}{Tree whose nodes are to be matched.}
@@ -16,6 +16,9 @@ MatchNodes(x, table, nomatch = NA_integer_)
 
 \item{nomatch}{Integer value that will be used in place of \code{NA} in the case
 where no match is found.}
+
+\item{tips}{Logical specifying whether to return matches for tips;
+unless \code{TRUE}, only the matches for internal nodes will be returned.}
 }
 \description{
 \code{MatchNodes()} and \code{MatchEdges()} matches nodes or edges in one tree to
