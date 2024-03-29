@@ -86,13 +86,16 @@ where entries of a list of trees may pertain to different taxa.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for default</span></span>
+<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for matrix</span></span>
 <span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for logical</span></span>
 <span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for default</span></span>
+<span><span class="co"># S3 method for phylo</span></span>
 <span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for phyDat</span></span>
@@ -110,6 +113,18 @@ where entries of a list of trees may pertain to different taxa.</p>
 <span><span class="co"># S3 method for list</span></span>
 <span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for character</span></span>
+<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for numeric</span></span>
+<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for phyDat</span></span>
+<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">AllTipLabels</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for list</span></span>
@@ -128,22 +143,7 @@ where entries of a list of trees may pertain to different taxa.</p>
 <span><span class="fu">AllTipLabels</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for matrix</span></span>
-<span><span class="fu">AllTipLabels</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for multiPhylo</span></span>
-<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for character</span></span>
-<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for numeric</span></span>
-<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for phyDat</span></span>
-<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># S3 method for default</span></span>
-<span><span class="fu">TipLabels</span><span class="op">(</span><span class="va">x</span>, single <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">AllTipLabels</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -169,6 +169,7 @@ appropriate to <code>x</code>. If <code>x</code> is a single integer, this will 
     <h2>See also</h2>
     <div class="dont-index"><p>Other tree properties: 
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
+<code><a href="MatchEdges.html">MatchEdges</a>()</code>,
 <code><a href="NSplits.html">NSplits</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
 <code><a href="NodeNumbers.html">NodeNumbers</a>()</code>,
