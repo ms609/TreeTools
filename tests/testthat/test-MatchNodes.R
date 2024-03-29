@@ -36,9 +36,9 @@ test_that("MatchNodes() works", {
     nodelabels()
   }
   expect_equal(MatchNodes(bal8, table),
-               c(1:9, rep(NA_integer_, 2), 12:15))
+               c(9, rep(NA_integer_, 2), 12:15))
   expect_equal(MatchNodes(bal8, table, nomatch = -1),
-               c(1:9, rep(-1, 2), 12:15))
+               c(9, rep(-1, 2), 12:15))
   
   
   if (interactive()) {
@@ -50,5 +50,5 @@ test_that("MatchNodes() works", {
     nodelabels()
   }
   expect_equal(MatchNodes(bal8, Postorder(bal8)),
-               c(1:15))
+               c(9:15))
 })
