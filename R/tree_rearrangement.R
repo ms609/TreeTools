@@ -528,6 +528,13 @@ MakeTreeBinary.phylo <- function(tree) {
 
     edge <- rbind(keep, add)
   }
+  nodeLabel <- tree[["node.label"]]
+  if (!is.null(nodeLabel)) {
+    # Inefficient but pragmatic
+    tree[["node.label"]] <- nodeLabel[
+      MatchNodes(list(edge = edge, tip.label = TipLabels(tree)),
+                 tree, tips = FALSE) - NTip(tree)]
+  }
   tree[["edge"]] <- edge
   tree[["Nnode"]] <- nTip - 1L
   tree

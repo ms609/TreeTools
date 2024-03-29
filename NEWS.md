@@ -10,7 +10,8 @@
 ## Enhancements
 
 - `RoguePlot()$legendLabels` returns suggested labels for legend.
-- Support node labels in `AddTip()`, `CollapseNode()`, `DropTip()`, `Subtree()`
+- Support node labels in `AddTip()`, `CollapseNode()`, `DropTip()`, 
+  `MakeTreeBinary()`, `Subtree()`
   ([#149](https://github.com/ms609/TreeTools/issues/149)).
 - `AddTip(edgeLength = NULL)` defaults to `lengthBelow`. This will become the
   default in a future release.
