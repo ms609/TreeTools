@@ -9,13 +9,13 @@
 #'
 #' @template tree(s)Param
 #' @param outgroupTips Vector of type character, integer or logical, specifying
-#' the names or indices of the tips to include in the outgroup.  If
-#' `outgroupTips` is a of type character, and a tree contains multiple tips
+#' the names or indices of the tips to include in the outgroup.
+#' If `outgroupTips` is a of type character, and a tree contains multiple tips
 #' with a matching label, the first will be used.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips, with edges and nodes numbered in
-#' preorder.
+#' preorder. Node labels are not retained.
 #'
 #' @examples
 #' tree <- PectinateTree(8)

@@ -47,8 +47,8 @@ all edges to unit length.}
 never / sometimes does attach to them.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
-the names or indices of the tips to include in the outgroup.  If
-\code{outgroupTips} is a of type character, and a tree contains multiple tips
+the names or indices of the tips to include in the outgroup.
+If \code{outgroupTips} is a of type character, and a tree contains multiple tips
 with a matching label, the first will be used.}
 
 \item{sort}{Logical specifying whether to sort consensus tree using

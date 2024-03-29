@@ -17,8 +17,8 @@ UnrootTree(tree)
 of class \code{list} or \code{multiPhylo}.}
 
 \item{outgroupTips}{Vector of type character, integer or logical, specifying
-the names or indices of the tips to include in the outgroup.  If
-\code{outgroupTips} is a of type character, and a tree contains multiple tips
+the names or indices of the tips to include in the outgroup.
+If \code{outgroupTips} is a of type character, and a tree contains multiple tips
 with a matching label, the first will be used.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}
@@ -28,7 +28,7 @@ with a matching label, the first will be used.}
 \value{
 \code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest
 clade that contains the specified tips, with edges and nodes numbered in
-preorder.
+preorder. Node labels are not retained.
 
 \code{RootOnNode()} returns a tree of class \code{phylo}, rooted on the
 requested \code{node} and ordered in \code{\link{Preorder}}.

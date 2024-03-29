@@ -2,14 +2,18 @@
 % Please edit documentation in R/SplitFunctions.R
 \name{TipLabels}
 \alias{TipLabels}
-\alias{TipLabels.matrix}
-\alias{TipLabels.phylo}
 \alias{TipLabels.default}
+\alias{TipLabels.matrix}
+\alias{TipLabels.logical}
+\alias{TipLabels.phylo}
 \alias{TipLabels.phyDat}
 \alias{TipLabels.MixedBase}
 \alias{TipLabels.TreeNumber}
 \alias{TipLabels.Splits}
 \alias{TipLabels.list}
+\alias{TipLabels.multiPhylo}
+\alias{TipLabels.character}
+\alias{TipLabels.numeric}
 \alias{AllTipLabels}
 \alias{AllTipLabels.list}
 \alias{AllTipLabels.multiPhylo}
@@ -17,18 +21,17 @@
 \alias{AllTipLabels.Splits}
 \alias{AllTipLabels.TreeNumber}
 \alias{AllTipLabels.matrix}
-\alias{TipLabels.multiPhylo}
-\alias{TipLabels.character}
-\alias{TipLabels.numeric}
 \title{Extract tip labels}
 \usage{
 TipLabels(x, single = TRUE)
 
+\method{TipLabels}{default}(x, single = TRUE)
+
 \method{TipLabels}{matrix}(x, single = TRUE)
 
-\method{TipLabels}{phylo}(x, single = TRUE)
+\method{TipLabels}{logical}(x, single = TRUE)
 
-\method{TipLabels}{default}(x, single = TRUE)
+\method{TipLabels}{phylo}(x, single = TRUE)
 
 \method{TipLabels}{phyDat}(x, single = TRUE)
 
@@ -39,6 +42,14 @@ TipLabels(x, single = TRUE)
 \method{TipLabels}{Splits}(x, single = TRUE)
 
 \method{TipLabels}{list}(x, single = FALSE)
+
+\method{TipLabels}{multiPhylo}(x, single = FALSE)
+
+\method{TipLabels}{character}(x, single = TRUE)
+
+\method{TipLabels}{numeric}(x, single = TRUE)
+
+\method{TipLabels}{phyDat}(x, single = TRUE)
 
 AllTipLabels(x)
 
@@ -53,16 +64,6 @@ AllTipLabels(x)
 \method{AllTipLabels}{TreeNumber}(x)
 
 \method{AllTipLabels}{matrix}(x)
-
-\method{TipLabels}{multiPhylo}(x, single = FALSE)
-
-\method{TipLabels}{character}(x, single = TRUE)
-
-\method{TipLabels}{numeric}(x, single = TRUE)
-
-\method{TipLabels}{phyDat}(x, single = TRUE)
-
-\method{TipLabels}{default}(x, single = TRUE)
 }
 \arguments{
 \item{x}{An object of a supported class (see Usage section above).}
