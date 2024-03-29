@@ -46,6 +46,8 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   }
   labels <- tree[["tip.label"]]
   nTip <- length(labels)
+  
+  # Establish which tips should be dropped
   if (is.null(tip) || !length(tip) || any(is.na(tip))) {
     drop <- logical(nTip)
   } else if (is.character(tip)) {
@@ -95,6 +97,8 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     stop("`tip` must be of type character or numeric")
   }
   
+  # Having established which tips to drop,
+  # work out what to do about it
   if (all(drop)) {
     return(structure(list(edge = matrix(0, 0, 2), tip.label = character(0),
                           Nnode = 0), class = "phylo"))
@@ -102,13 +106,15 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   
   if (any(drop)) {
     weights <- tree[["edge.length"]]
+    nodeLabel <- tree[["node.label"]]
     keep <- !drop
-    if (!is.null(weights)) {
+    if (!is.null(weights) || !is.null(nodeLabel)) {
       original <- PathLengths(tree, fullMatrix = TRUE)
       verts <- KeptVerts(tree, keep)
     }
     tree[["edge"]] <- keep_tip(tree[["edge"]], keep)
     tree[["tip.label"]] <- labels[keep]
+    tree[["node.label"]] <- nodeLabel[verts[-seq_len(nTip)]]
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(keep)
     
     if (!is.null(weights)) {
