@@ -3,7 +3,7 @@ test_that("Subsplits", {
   efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE, unique = FALSE)
   expect_equal(TipsInSplits(efgh),
                setNames(c(4, 4, 4, 3, 2, 1), 12:17))
-  expect_equal(DropTip(splits, letters[c(1:4, 9)]), 
+  expect_equal(DropTip(splits, letters[c(1:4, 9)]),
                KeepTip(splits, letters[5:8]))
   expect_equal(KeepTip(splits, letters[5:8]), Subsplit(splits, letters[5:8]))
   expect_equal(c("12" = TRUE, "13" = TRUE, "14" = TRUE, "15" = TRUE,
@@ -203,6 +203,8 @@ test_that("Tip labels are found", {
   expect_equal(TipLabels(structure(list(tip.label = list(tip.label = t1..4)),
                                    class = "multiPhylo")),
                t1..4)
+  expect_equal(TipLabels(c(t1..4, paste0(t1..4, "_", 1:4), t1..4)),
+               c(t1..4, paste0(t1..4, "_", 1:4), paste0(t1..4, "_", 1:4, "_", 1:4)))
 })
 
 test_that("AllTipLabels()", {
