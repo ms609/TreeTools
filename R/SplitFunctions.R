@@ -261,6 +261,9 @@ TipLabels.default <- function(x, single = TRUE) {
   if (!is.null(tla)) {
     tla
   } else if (is.null(names(x))) {
+    # while(any(dups <- duplicated(x))) {
+    #   x[dups] <- paste0(x[dups], "_", seq_len(sum(dups)))
+    # }
     x
   } else {
     names(x)
