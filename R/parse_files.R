@@ -459,7 +459,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
     # Missing EOL might occur in user-generated file, so warning not helpful
     try1 <- enc2utf8(readLines(con, warn = FALSE)),
     warning = function(e) {
-      if (substr(e$message, 0, 39) == 
+      if (substr(e[["message"]], 0, 39) == 
           "invalid input found on input connection") {
         newEnc <- if (toupper(encoding) %in% c("UTF-8", "UTF8")) {
           "latin1"
@@ -799,14 +799,14 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
   }
   
   at <- attributes(dataset)
-  allLevels <- as.character(at$allLevels)
+  allLevels <- as.character(at[["allLevels"]])
   if (inappNA) {
     allLevels[allLevels == "-"] <- NA_character_
   }
   if (ambigNA) {
-    allLevels[rowSums(at$contrast) != 1L] <- NA_character_
+    allLevels[rowSums(at[["contrast"]]) != 1L] <- NA_character_
   } else if (!is.null(parentheses)) {
-    cont <- at$contrast
+    cont <- at[["contrast"]]
     nTokens <- rowSums(cont)
     levels <- colnames(cont)
     partAmbig <- nTokens != 1L & nTokens < dim(cont)[2]
@@ -818,8 +818,8 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
       parentheses[2])
   }
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
-         ncol = at$nr, byrow = TRUE, dimnames = list(at$names, NULL)
-         )[, at$index, drop = FALSE]
+         ncol = at[["nr"]], byrow = TRUE, dimnames = list(at[["names"]], NULL)
+         )[, at[["index"]], drop = FALSE]
 }
 
 #' @rdname ReadCharacters
@@ -929,7 +929,7 @@ StringToPhydat <- StringToPhyDat
 PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
   at <- attributes(phy)
-  phyLevels <- at$allLevels
+  phyLevels <- at[["allLevels"]]
   if (sum(phyLevels == "-") > 1) {
     stop("More than one inapplicable level identified.  Is phy$levels malformed?")
   }

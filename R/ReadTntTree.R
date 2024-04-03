@@ -110,7 +110,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     ), double(1)
   ))
   
-  if (!any(grepl("[A-z]", trees[[1]]$tip.label))) {
+  if (!any(grepl("[A-z]", trees[[1]][["tip.label"]]))) {
     if (is.null(tipLabels)) {
       tipLabels <- rownames(ReadTntCharacters(filepath))
       if (is.null(tipLabels)) {
@@ -155,7 +155,7 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
           }
         } else {
           warning("`filepath` does not link to taxon names; try specifying `tipLabels`")
-          tipLabels <- as.character(seq_len(trees[[1]]$edge[1] - 1) - 1)
+          tipLabels <- as.character(seq_len(trees[[1]][["edge"]][1] - 1) - 1)
         }
       }
     }
@@ -263,11 +263,11 @@ TntText2Tree <- function(treeText) {
   tr <- read.tree(text = treeText)
   if (inherits(tr, "multiPhylo")) {
     tr[] <- lapply(tr, function (tree) {
-      tree$tip.label[] <- Unquote(tree$tip.label)
+      tree$tip.label[] <- Unquote(tree[["tip.label"]])
       tree
     })
   } else if (inherits(tr, "phylo")) {
-    tr$tip.label[] <- Unquote(tr$tip.label)
+    tr[["tip.label"]][] <- Unquote(tr[["tip.label"]])
   }
   
   # Return:
