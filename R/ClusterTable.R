@@ -44,7 +44,7 @@ as.ClusterTable <- function(x, tipLabels = NULL, ...) {
 as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
   x <- Preorder(x)
   if (is.null(tipLabels)) {
-    tipLabels <- x$tip.label
+    tipLabels <- x[["tip.label"]]
   } else {
     x <- RenumberTips(x, tipLabels)
   }

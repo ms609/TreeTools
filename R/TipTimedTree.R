@@ -26,7 +26,7 @@
 #' @family tree manipulation
 #' @export
 TipTimedTree <- function(tree, tipAge, minEdge = 1) {
-  edge <- tree$edge
+  edge <- tree[["edge"]]
   nEdge <- dim(edge)[1]
   if (nEdge < 2) {
     warning("`tree` does not contain multiple edges")
@@ -44,7 +44,7 @@ TipTimedTree <- function(tree, tipAge, minEdge = 1) {
   for (i in PostorderOrder(tree)) {
     age[edge[i, 1]] <- max(age[edge[i, 2]] + minEdge, age[edge[i, 1]])
   }
-  tree$edge.length <- apply(edge, 1, function(i) age[i[1]] - age[i[2]])
+  tree[["edge.length"]] <- apply(edge, 1, function(i) age[i[1]] - age[i[2]])
   # Return:
   tree
 }

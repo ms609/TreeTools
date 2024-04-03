@@ -541,7 +541,7 @@ TntOrder.phylo <- function(tree) {
       }
     }
     stopifnot(all(newNo > 0)) # TODO remove once fully tested
-    tree$edge[] <- newNo[edge]
+    tree[["edge"]][] <- newNo[edge]
     attr(tree, "order") <- "tnt"
     attr(tree, "suborder") <- NULL
     
