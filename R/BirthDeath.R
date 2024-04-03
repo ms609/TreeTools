@@ -8,16 +8,35 @@
 #' @param psi Numeric vector giving sampling rate for a lineage of each type
 #' @param rA Numeric vector giving probability that a lineage of each type
 #' dies after sampling
-#' @param gamma Rate of anagenic mutation (i.e. change of type without a birth).
+#' @param gamma Square numeric matrix giving rate of anagenic mutation 
+#' (i.e. change of type without a birth)
+#' @param rho Numeric vector giving sampling probability
+#' from each type to each other. Diagonal is ignored (treated as zero).
 #' @param rAL Numeric vector giving probability of dying after a concerted
 #' sampling event.
 #' 
-#' @param tMax time at which to start simulation (in units of time ago)
-#' @param nMax Abort simulation when more than `nMax` lineages exist
+#' @param tMax time at which to start simulation (in units of time before present)
+#' @param nMax Numeric; simulation will terminate when more than `nMax` lineages
+#' exist, to avoid interminable simulation times.
 #' 
 #' Uses the forward-equivalent simulation described by
 #' \insertRef{Celentano2024}{TreeTools}
 #' https://arxiv.org/pdf/2402.17153v1.pdf
+#' @examples
+#' lambda <- rbind(fit = c(fit = 1, unfit = 1), unfit = c(0.25, 0.25))
+#' mu <- c(fit = 0.25, unfit = 0.25)
+#' gamma <- cbind(fit = c(fit = 0, unfit = 0.5),
+#'               unfit = c(fit = 0.5, unfit = 0))
+#' 
+#' BirthDeath(
+#'  pi = c(fit = 0.5, unfit = 0.5),
+#'  lambda = lambda,
+#'  mu = mu,
+#'  psi = c(fit = 1, unfit = 1),
+#'  gamma = gamma,
+#'  rho = c(fit = 0.25, unfit = 0.25) # moderate
+#'  )
+#' 
 #' @references \insertAllCited{}
 #' @template MRS
 #' @export
@@ -25,10 +44,7 @@ BirthDeath <- function() {
   .FullBirthDeath(...)
 }
 
-.GetNextEvent <- function(
-    popSize,
-    tau,
-    ...)
+
 
 .FullBirthDeath <- function(
     pi,
@@ -47,6 +63,9 @@ BirthDeath <- function() {
   stopifnot(nrow(lambda) == d)
   stopifnot(length(mu) == d)
   stopifnot(length(psi) == d)
+  stopifnot(length(rho) == d)
+  stopifnot(min(rho) >= 0)
+  stopifnot(max(rho) <= 1)
   stopifnot(length(rA) == d)
   stopifnot(min(rA) >= 0)
   stopifnot(max(rA) <= 1)
@@ -56,6 +75,86 @@ BirthDeath <- function() {
   stopifnot(length(gamma) == d)
   
   tau <- tMax
-  popSize <- 
+  types <- names(pi)
+  if (is.null(types)) {
+    types <- seq_along(pi)
+  }
+  set <- setNames(vector("list", length(pi)), types)
   eventTypes <- c("birth", "death", "mutation", "sampling")
+  
+  .GetNextEvent <- function(
+    popSize,
+    tau
+  ) {
+    
+    # Return:
+    c(eventTime, eventType, a, b)
+  }
+  
+  .NewNode <- function(type, event, time) {
+    
+  }
+    
+  while(tau >= 0) {
+    nextEvent <- .GetNextEvent(lengths(setA), tau)
+    tau <- nextEvent[[1]]
+    eventType <- nextEvent[[2]]
+    eventA <- nextEvent[[3]]
+    eventB <- nextEvent[[4]]
+    if (tau < 0) {
+      for (a in types) {
+        for (node in set[[a]]) {
+          child <- .NewNode(type = a, event = "survival", time = 0)
+          .SetChildren(node, child)
+          .Replace(set[[a]], node, child)
+        }
+      }
+      break;
+    }
+    switch(
+      eventType,
+      "birth" = {
+        child1 <- .NewNode(type = eventA, event = "birth", time = tau)
+        child2 <- .NewNode(type = eventB, event = "birth", time = tau)
+        parent <- .GetRandom(set[[eventA]])
+        .SetChildren(parent, c(child1, child2))
+        .Replace(set[[eventA]], parent, child1)
+        .Insert(set[[eventB]], child2)
+      }, "death" = {
+        child <- .NewNode(type = eventA, event = "death", time = tau)
+        parent <- .GetRandom(set[[eventA]])
+        .SetChildren(parent, child)
+        .Remove(set[[eventA]], parent)
+      }, "mutation" = {
+        child <- .NewNode(type = eventB, event = "mutation", time = tau)
+        parent <- .GetRandom(set[[eventA]])
+        .SetChildren(parent, child)
+        .Remove(set[[eventA]], parent)
+        .Remove(set[[eventB]], child)
+      }, "sampling" = {
+        child <- .NewNode(type = eventA, event = "sampling", time = tau)
+        parent <- .GetRandom(set[[eventA]])
+        .SetChildren(parent, child)
+        .Replace(set[[eventA]], parent, child)
+      }
+    )
+    n <- sum(lengths(set))
+    if (n <= 0) {
+      return(-Inf)
+    }
+    if (n > nMax) {
+      return(Inf)
+    }
+    
+    if (n <= nMax) { # Redundant check, if I've understood the return criteria
+      for (a in types) {
+        for (node in set[[a]]) {
+          if (Bernoulli(rho[[a]]) == 1) {
+            .SetEventType(node, event = "sampling")
+          }
+        }
+      }
+      .PruneTree()
+    }
+  }
 }
