@@ -61,8 +61,7 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #' phylogenetic information content of the character
 #' (_sensu_ \insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 #'
-#' @references
-#' - \insertAllCited{}
+#' @references \insertAllCited{}
 #' @family split information functions
 #' @template MRS
 #' @importFrom fastmatch %fin%
