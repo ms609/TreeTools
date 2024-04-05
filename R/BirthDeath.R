@@ -34,13 +34,15 @@
 #'  mu = mu,
 #'  psi = c(fit = 1, unfit = 1),
 #'  gamma = gamma,
-#'  rho = c(fit = 0.25, unfit = 0.25) # moderate
+#'  rho = c(fit = 0.25, unfit = 0.25), # moderate
+#'  tMax = 500,
+#'  nMax = 500
 #'  )
 #' 
 #' @references \insertAllCited{}
 #' @template MRS
 #' @export
-BirthDeath <- function() {
+BirthDeath <- function(...) {
   .FullBirthDeath(...)
 }
 
@@ -72,23 +74,23 @@ BirthDeath <- function() {
   stopifnot(length(rAL) == d)
   stopifnot(min(rAL) >= 0)
   stopifnot(max(rAL) <= 1)
-  stopifnot(length(gamma) == d)
+  stopifnot(ncol(gamma) == d)
+  stopifnot(nrow(gamma) == d)
   
   tau <- tMax
   types <- names(pi)
   if (is.null(types)) {
     types <- seq_along(pi)
   }
-  set <- setNames(vector("list", length(pi)), types)
+  nTypes <- length(types)
+  set <- setNames(vector("list", nTypes), types)
+  set[[sample(types, 1, prob = pi)]] <- "birth" # TODO what does a new node look like?
   eventTypes <- c("birth", "death", "mutation", "sampling")
   
-  .GetNextEvent <- function(
-    popSize,
-    tau
-  ) {
-    
-    # Return:
-    c(eventTime, eventType, a, b)
+  .MatrixMin <- function(mat) {
+    #index <- which.min(mat)
+    #c(floor(index / nTypes), index %% nTypes + 1)
+    which(mat == min(mat), arr.ind = TRUE, useNames = FALSE)
   }
   
   .NewNode <- function(type, event, time) {
@@ -96,11 +98,28 @@ BirthDeath <- function() {
   }
     
   while(tau >= 0) {
-    nextEvent <- .GetNextEvent(lengths(setA), tau)
-    tau <- nextEvent[[1]]
-    eventType <- nextEvent[[2]]
-    eventA <- nextEvent[[3]]
-    eventB <- nextEvent[[4]]
+    
+    # Get next event
+    popSize <- lengths(set)
+    births <- rexp(nTypes * nTypes) / (lambda * popSize)
+    deaths <- rexp(nTypes) / (mu * popSize)
+    mutations <- rexp(nTypes * nTypes) / (gamma * popSize)
+    samplings <- rexp(nTypes) / (psi * popSize)
+    nextTime <- vapply(list(births, deaths, mutations, samplings), min, double(1))
+    nextEvent <- which.min(nextTime)
+    ab <- switch(
+      nextEvent, 
+      .MatrixMin(births),
+      c(which.min(deaths), NA_real_),
+      .MatrixMin(mutations),
+      c(which.min(samplings), NA_real_)
+    )
+    
+    tau <- tau - nextTime[nextEvent]
+    eventType <- eventTypes[nextEvent]
+    eventA <- ab[[1]]
+    eventB <- ab[[2]]
+    
     if (tau < 0) {
       for (a in types) {
         for (node in set[[a]]) {
