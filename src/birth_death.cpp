@@ -45,6 +45,8 @@ struct bd_node {
   }
 };
 
+typedef bd_node* node_ptr;
+
 inline void validate_dimension(const NumericMatrix &x, std::string x_name,
                                const int *size) {
   if (x.ncol() != *size) {
@@ -127,11 +129,11 @@ List birth_death(
   std::exponential_distribution<double> exp1(1.0);
   
   // Reserve memory for "Set" 
-  std::vector<std::vector<*bd_node>> set;
+  std::vector<std::vector<node_ptr>> set;
   set.reserve(n_types);
   
   for (int i = n_types; i--; ) {
-    std::vector<*bd_node> inner_vector;
+    std::vector<node_ptr> inner_vector;
     inner_vector.reserve(nMax[0]);
     set.push_back(inner_vector);
   }
@@ -146,7 +148,7 @@ List birth_death(
       break;
     }
   }
-  const bd_node root_node(&root_type, Event::root, tau);
+  bd_node root_node(&root_type, Event::root, tau);
   set[root_type].push_back(&root_node);
   
   // Generate events until t < 0
@@ -205,7 +207,7 @@ List birth_death(
       for (int i = n_types; i--; ) {
         for (int node = set[a].size(); node--; ) {
           bd_node child(&i, Event::survival, 0);
-          set[a][node].set_children(&child);
+          set[a][node]->set_children(&child);
           set[a][node] = &child;
         }
       }
@@ -220,7 +222,7 @@ List birth_death(
           child1(&a, Event::birth, tau),
           child2(&b, Event::birth, tau)
         ;
-        set[a][parent_i].set_children(&child1, &child2);
+        set[a][parent_i]->set_children(&child1, &child2);
         set[a][parent_i] = &child1;
         set[b].push_back(&child2);
         break;
@@ -228,22 +230,22 @@ List birth_death(
       /*case Event::death: {
         bd_node child(&a, Event::death, tau);
         set[a][parent_i].set_children(&child);
-        set[a].erase(parent_i);
+        set[a].erase(set[a].begin() + parent_i);
         break;
       }*/
       case Event::mutation: {
         bd_node child(&b, Event::mutation, tau);
-        set[a][parent_i].set_children(&child);
-        set[a].erase(parent_i);
+        set[a][parent_i]->set_children(&child);
+        set[a].erase(set[a].begin() + parent_i);
         set[b].push_back(&child);
         break;
       }
       case Event::sampling: {
         bd_node child(&a, Event::sampling, tau);
-        set[a][parent_i].set_children(&child);
+        set[a][parent_i]->set_children(&child);
         if (uniform(generator) < rA[a]) {
           // If sampled, it dies with probability ra
-          set[a].erase(parent_i);
+          set[a].erase(set[a].begin() + parent_i);
         } else {
           set[a][parent_i] = &child;
         }
@@ -277,7 +279,7 @@ List birth_death(
       } else {
         // Remove survivor from set (and update iterator)
         // Preempts pruning tree
-        node = set[type].erase(node);
+        node = set[type].erase(set[a].begin() + node);
       }
     }
   }*/

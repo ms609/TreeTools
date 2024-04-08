@@ -383,12 +383,12 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport SEXP _TreeTools_keep_tip(void *, void *);
-RcppExport SEXP _TreeTools_postorder_order(void *);
-RcppExport SEXP _TreeTools_preorder_edges_and_nodes(void *, void *);
-RcppExport SEXP _TreeTools_preorder_weighted(void *, void *, void *);
-RcppExport SEXP _TreeTools_root_binary(void *, void *);
-RcppExport SEXP _TreeTools_root_on_node(void *, void *);
+RcppExport SEXP _TreeTools_keep_tip(SEXP, SEXP);
+RcppExport SEXP _TreeTools_postorder_order(SEXP);
+RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
+RcppExport SEXP _TreeTools_preorder_weighted(SEXP, SEXP, SEXP);
+RcppExport SEXP _TreeTools_root_binary(SEXP, SEXP);
+RcppExport SEXP _TreeTools_root_on_node(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_ClusterTable_new", (DL_FUNC) &_TreeTools_ClusterTable_new, 1},
