@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 #include <limits> // for infinity
-#include <cstdio> // for sprintf
+#include <string> // for std::string&
 
 using namespace Rcpp;
 
@@ -45,42 +45,43 @@ struct bd_node {
   }
 };
 
-inline void validate_dimension(const NumericMatrix &x, char* x_name,
+inline void validate_dimension(const NumericMatrix &x, std::string& x_name,
                                const int *size) {
   if (x.ncol() != *size) {
-    Rcpp::stop(std::sprintf("%s has %i columns; expecting %i",
-                            x_name, x.ncol(), *size);
+    Rcpp::stop(x_name + "has " + std::to_string(x.ncol()) +
+      " columns; expecting " + std::to_string(*size));
   }
   if (x.nrow() != *size) {
-    Rcpp::stop(std::sprintf("%s has %i rows; expecting %s",
-                            x_name, x.nrow(), *size);
+    Rcpp::stop(x_name + "has " + std::to_string(x.nrow()) +
+      " rows; expecting " + std::to_string(*size));
   }
 }
-inline void validate_dimension(const NumericVector &x, char* x_name,
+inline void validate_dimension(const NumericVector &x, std::string& x_name,
                                const int *size) {
   if (x.size() != *size) {
-    Rcpp::stop(std::sprintf("%s has length %i; expecting %i",
-                            x_name, x.length(), *size);
+    Rcpp::stop(x_name + " has length " + std::to_sting(x.size) +
+      "; expecting " + std::to_string(*size));
   }
 }
 
-inline void validate_probability(const NumericVector &x, char* x_name) {
+inline void validate_probability(const NumericVector &x, std::string& x_name) {
   if (min(x) < 0) {
-    Rcpp::stop(std::sprintf("%s contains entries < 0", x_name));
+    Rcpp::stop(x_name + " contains entries < 0");
   }
   if (max(x) > 1) {
-    Rcpp::stop(std::sprintf("%s contains entries > 1", x_name));
+    Rcpp::stop(x_name + " contains entries > 1");
   }
 }
 
-inline void validate_sum_to_one(const NumericVector &x, char* x_name) {
+inline void validate_sum_to_one(const NumericVector &x, std::string& x_name) {
   const int n = x.size();
   double sum = 0.0;
   for (int i = n; i--; ) {
     sum += x[i];
   }
   if (sum != 1) {
-    Rcpp::stop(std::sprintf("Sum of %s should be one, not %d", x_name, sum);
+    Rcpp::stop("Sum of " + x_name + " should be one, not " + 
+      std::to_string(sum));
   }
 }
 
@@ -111,12 +112,12 @@ List birth_death(
   
   const int n_max = nMax[0];
   if (n_max < 1) {
-    Rcpp::stop(std::sprintf("`nMax` (%d) must be at least 1", n_max));
+    Rcpp::stop("`nMax` (" + std::to_string(n_max) + " must be at least 1");
   }
   
   double tau = tMax[0];
   if (tau < 0) {
-    Rcpp::stop(std::sprintf("`tMax` (%d) must be non-negative", tau));
+    Rcpp::stop("`tMax` (" + std::to_strung(tau) + ") must be non-negative");
   }
   
   
