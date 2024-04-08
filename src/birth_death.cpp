@@ -1,4 +1,4 @@
-#include <Rcpp/Lightest>
+#include <Rcpp/Light> // for min
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include <cmath> // for max, min
 #include <random>
@@ -56,6 +56,7 @@ inline void validate_dimension(const NumericMatrix &x, std::string x_name,
       " rows; expecting " + std::to_string(*size));
   }
 }
+
 inline void validate_dimension(const NumericVector &x, std::string x_name,
                                const int *size) {
   if (x.size() != *size) {
@@ -73,7 +74,7 @@ inline void validate_probability(const NumericVector &x, std::string x_name) {
   }
 }
 
-inline void validate_sum_to_one(const NumericVector &x, std::string& x_name) {
+inline void validate_sum_to_one(const NumericVector &x, std::string x_name) {
   const int n = x.size();
   double sum = 0.0;
   for (int i = n; i--; ) {
@@ -126,11 +127,11 @@ List birth_death(
   std::exponential_distribution<double> exp1(1.0);
   
   // Reserve memory for "Set" 
-  std::vector<std::vector<&bd_node>> set;
+  std::vector<std::vector<*bd_node>> set;
   set.reserve(n_types);
   
   for (int i = n_types; i--; ) {
-    std::vector<&bd_node> inner_vector;
+    std::vector<*bd_node> inner_vector;
     inner_vector.reserve(nMax[0]);
     set.push_back(inner_vector);
   }
@@ -211,6 +212,8 @@ List birth_death(
       break;
     }
     
+    // select parent node uniformly at random
+    const int parent_i = set[a].size() * uniform(generator);
     switch (next_event) {
       case Event::birth: {
         bd_node 
@@ -222,12 +225,12 @@ List birth_death(
         set[b].push_back(&child2);
         break;
       }
-      case Event::death: {/*
+      /*case Event::death: {
         bd_node child(&a, Event::death, tau);
         set[a][parent_i].set_children(&child);
         set[a].erase(parent_i);
-        break;*/
-      }
+        break;
+      }*/
       case Event::mutation: {
         bd_node child(&b, Event::mutation, tau);
         set[a][parent_i].set_children(&child);
