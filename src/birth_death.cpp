@@ -45,7 +45,7 @@ struct bd_node {
   }
 };
 
-inline void validate_dimension(const NumericMatrix &x, std::string& x_name,
+inline void validate_dimension(const NumericMatrix &x, std::string x_name,
                                const int *size) {
   if (x.ncol() != *size) {
     Rcpp::stop(x_name + "has " + std::to_string(x.ncol()) +
@@ -56,19 +56,19 @@ inline void validate_dimension(const NumericMatrix &x, std::string& x_name,
       " rows; expecting " + std::to_string(*size));
   }
 }
-inline void validate_dimension(const NumericVector &x, std::string& x_name,
+inline void validate_dimension(const NumericVector &x, std::string x_name,
                                const int *size) {
   if (x.size() != *size) {
-    Rcpp::stop(x_name + " has length " + std::to_sting(x.size) +
+    Rcpp::stop(x_name + " has length " + std::to_string(x.size()) +
       "; expecting " + std::to_string(*size));
   }
 }
 
-inline void validate_probability(const NumericVector &x, std::string& x_name) {
-  if (min(x) < 0) {
+inline void validate_probability(const NumericVector &x, std::string x_name) {
+  if (Rcpp::min(x) < 0) {
     Rcpp::stop(x_name + " contains entries < 0");
   }
-  if (max(x) > 1) {
+  if (Rcpp::max(x) > 1) {
     Rcpp::stop(x_name + " contains entries > 1");
   }
 }
@@ -117,7 +117,7 @@ List birth_death(
   
   double tau = tMax[0];
   if (tau < 0) {
-    Rcpp::stop("`tMax` (" + std::to_strung(tau) + ") must be non-negative");
+    Rcpp::stop("`tMax` (" + std::to_string(tau) + ") must be non-negative");
   }
   
   
@@ -169,7 +169,7 @@ List birth_death(
       if (!n_of_type) continue;
       // birth
       for (int j = n_types; j--; ) {
-        const double offset = exp1(generator) / (n_of_type * lambda[i, j]);
+        const double offset = exp1(generator) / (n_of_type * lambda(i, j));
         if (offset < next_offset) {
           next_offset = offset;
           next_event = Event::birth;
@@ -188,7 +188,7 @@ List birth_death(
       // mutation
       for (int j = n_types; j--; ) {
         if (i == j) continue;
-        const double offset = exp1(generator) / (n_of_type * gamma[i, j]);
+        const double offset = exp1(generator) / (n_of_type * gamma(i, j));
         if (offset < next_offset) {
           next_offset = offset;
           next_event = Event::mutation;
@@ -230,12 +230,12 @@ List birth_death(
         set[b].push_back(&child2);
         break;
       }
-      /*
-      case Event::death:
+      case Event::death: {/*
         bd_node child(&a, Event::death, tau);
         set[a][parent_i].set_children(&child);
         set[a].erase(parent_i);
         break;*/
+      }
       case Event::mutation: {
         bd_node child(&b, Event::mutation, tau);
         set[a][parent_i].set_children(&child);
@@ -254,6 +254,8 @@ List birth_death(
         }
         break;
       }
+      case Event::survival: {}
+      case Event::root: {}
     }
     int n_lineages = 0;
     for (int i = n_types; i--; ) {
