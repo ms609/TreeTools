@@ -28,7 +28,8 @@ struct bd_node {
   */
   
   bd_node(int* node_type, Event event_type, double time) :
-    node_type(*node_type), event_type(event_type), time(time) {}
+    child_1(nullptr), child_2(nullptr), node_type(*node_type),
+    event_type(event_type), time(time) {}
   
   void set_children(bd_node *child) {
     child_1 = child;
