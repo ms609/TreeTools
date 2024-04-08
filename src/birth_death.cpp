@@ -8,7 +8,7 @@
 
 using namespace Rcpp;
 
-enum class Event {root, birth, death, mutation, sampling, survival};
+enum class Event {root, birth, /*death,*/ mutation, sampling, survival};
 
 struct bd_node {
   
@@ -45,7 +45,7 @@ struct bd_node {
   }
 };
 
-inline void validate_dimension(const NumericMatrix &x, const char* x_name,
+inline void validate_dimension(const NumericMatrix &x, char* x_name,
                                const int *size) {
   if (x.ncol() != *size) {
     Rcpp::stop(std::sprintf("%s has %i columns; expecting %i",
@@ -56,7 +56,7 @@ inline void validate_dimension(const NumericMatrix &x, const char* x_name,
                             x_name, x.nrow(), *size);
   }
 }
-inline void validate_dimension(const NumericVector &x, const char* x_name,
+inline void validate_dimension(const NumericVector &x, char* x_name,
                                const int *size) {
   if (x.size() != *size) {
     Rcpp::stop(std::sprintf("%s has length %i; expecting %i",
@@ -64,7 +64,7 @@ inline void validate_dimension(const NumericVector &x, const char* x_name,
   }
 }
 
-inline void validate_probability(const NumericVector &x, const char* x_name) {
+inline void validate_probability(const NumericVector &x, char* x_name) {
   if (min(x) < 0) {
     Rcpp::stop(std::sprintf("%s contains entries < 0", x_name));
   }
@@ -73,14 +73,14 @@ inline void validate_probability(const NumericVector &x, const char* x_name) {
   }
 }
 
-inline void validate_sum_to_one(const NumericVector &x, const char* x_name) {
-  const int n = n.size();
+inline void validate_sum_to_one(const NumericVector &x, char* x_name) {
+  const int n = x.size();
   double sum = 0.0;
   for (int i = n; i--; ) {
     sum += x[i];
   }
   if (sum != 1) {
-    Rcpp::stop(sprintf("Sum of %s should be one, not %d", x_name, sum);
+    Rcpp::stop(std::sprintf("Sum of %s should be one, not %d", x_name, sum);
   }
 }
 
@@ -111,12 +111,12 @@ List birth_death(
   
   const int n_max = nMax[0];
   if (n_max < 1) {
-    Rcpp::stop(sprintf("`nMax` (%d) must be at least 1", n_max));
+    Rcpp::stop(std::sprintf("`nMax` (%d) must be at least 1", n_max));
   }
   
   double tau = tMax[0];
   if (tau < 0) {
-    Rcpp::stop(sprintf("`tMax` (%d) must be non-negative", tau));
+    Rcpp::stop(std::sprintf("`tMax` (%d) must be non-negative", tau));
   }
   
   
@@ -125,7 +125,7 @@ List birth_death(
   std::exponential_distribution<double> exp1(1.0);
 
   
-  inline int random_index(const std::vector<bd_type>& x) {
+  inline int random_index(const std::vector<bd_node>& x) {
     static std::uniform_real_distribution<double> uniform_ref = uniform;
     static std::mt19937 generator_ref = generator;
     
@@ -133,27 +133,27 @@ List birth_death(
   }
   
   // Reserve memory for "Set" 
-  std::vector<std::vector<bd_node>> set;
+  std::vector<std::vector<&bd_node>> set;
   set.reserve(n_types);
   
   for (int i = n_types; i--; ) {
-    std::vector<bd_type> inner_vector;
+    std::vector<&bd_node> inner_vector;
     inner_vector.reserve(nMax[0]);
     set.push_back(inner_vector);
   }
   
   // Draw RootNode with type a ~ pi
   double root_draw = uniform(generator);
-  bd_node root_node;
+  int root_type;
   for (int root_type = n_types; root_type--; ) {
     root_draw -= pi[root_type];
     if (root_draw < 0) {
-      root_node = bd_node(&root_type, Event::root, tau);
       // Insert(RootNode, Sa)
-      set[root_type].push_back(&root_node);
       break;
     }
   }
+  const bd_node root_node(&root_type, Event::root, tau);
+  set[root_type].push_back(&root_node);
   
   // Generate events until t < 0
   while (true) {
@@ -211,8 +211,7 @@ List birth_death(
       for (int i = n_types; i--; ) {
         for (int node = set[a].size(); node--; ) {
           bd_node child(&i, Event::survival, 0);
-          node.set_children(&child);
-          
+          set[a][node].set_children(&child);
           set[a][node] = &child;
         }
       }
@@ -220,36 +219,40 @@ List birth_death(
     }
     const int parent_i = random_index(set[a]);
     switch (next_event) {
-      case Event::birth:
+      case Event::birth: {
         bd_node 
-          child1(&a, Event::birth, tau)
+          child1(&a, Event::birth, tau),
           child2(&b, Event::birth, tau)
         ;
         set[a][parent_i].set_children(&child1, &child2);
         set[a][parent_i] = &child1;
         set[b].push_back(&child2);
-        break;/*
+        break;
+      }
+      /*
       case Event::death:
         bd_node child(&a, Event::death, tau);
         set[a][parent_i].set_children(&child);
         set[a].erase(parent_i);
         break;*/
-      case Event::mutation: 
+      case Event::mutation: {
         bd_node child(&b, Event::mutation, tau);
         set[a][parent_i].set_children(&child);
         set[a].erase(parent_i);
         set[b].push_back(&child);
         break;
-      case Event::sampling:
+      }
+      case Event::sampling: {
         bd_node child(&a, Event::sampling, tau);
         set[a][parent_i].set_children(&child);
-        if (uniform(generator) < ra[a]) {
+        if (uniform(generator) < rA[a]) {
           // If sampled, it dies with probability ra
           set[a].erase(parent_i);
         } else {
           set[a][parent_i] = &child;
         }
         break;
+      }
     }
     int n_lineages = 0;
     for (int i = n_types; i--; ) {
