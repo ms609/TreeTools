@@ -124,14 +124,6 @@ List birth_death(
   std::mt19937 generator(rSeed[0]);
   std::uniform_real_distribution<double> uniform(0.0, 1.0);
   std::exponential_distribution<double> exp1(1.0);
-
-  
-  inline int random_index(const std::vector<bd_node>& x) {
-    static std::uniform_real_distribution<double> uniform_ref = uniform;
-    static std::mt19937 generator_ref = generator;
-    
-    return x.size() * uniform_ref(generator_ref);
-  }
   
   // Reserve memory for "Set" 
   std::vector<std::vector<&bd_node>> set;
@@ -218,7 +210,7 @@ List birth_death(
       }
       break;
     }
-    const int parent_i = random_index(set[a]);
+    
     switch (next_event) {
       case Event::birth: {
         bd_node 
