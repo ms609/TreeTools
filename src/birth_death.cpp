@@ -289,4 +289,5 @@ List birth_death(
   // prune_tree()
   
   // Now can convert the nodes into a phylogenetic tree
+  return List::create();
 }
