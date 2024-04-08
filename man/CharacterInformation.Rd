@@ -15,8 +15,8 @@ replaced with \verb{?}.}
 }
 \value{
 \code{CharacterInformation()} returns a numeric specifying the
-phylogenetic information content of the character (\emph{sensu}
-\insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
+phylogenetic information content of the character
+(\emph{sensu} \insertCite{Steel2006;nobrackets}{TreeTools}), in bits.
 }
 \description{
 \code{CharacterInformation()} calculates the cladistic information content
@@ -27,9 +27,7 @@ compared with a profile parsimony score \insertCite{Faith2001}{TreeTools} to
 evaluate the degree of homoplasy within a dataset.
 }
 \references{
-\itemize{
-\item \insertAllCited{}
-}
+\insertAllCited{}
 }
 \seealso{
 Other split information functions: 
