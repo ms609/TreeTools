@@ -1,8 +1,46 @@
 #include <Rcpp/Lightest>
-#include <cmath>
+#include <cmath> // for max, min
+#include <random>
+#include <vector>
+
 using Rcpp;
 
-void validate_dimension(const NumericMatrix x, const char x_name,
+enum class Event {root, birth, death, mutation, sampling, survival};
+
+struct bd_node {
+  
+  using enum class Event;
+  
+  bd_node *child_1;
+  bd_node *child_2;
+  int node_type;
+  Event event_type;
+  double time;
+  
+  /*
+  Equivalent to : 
+  bd_node(int node_type, event event_type, double time) {
+    this.node_type = node_type;
+    this.event_type = event_type;
+    this.time = time;
+  }
+  */
+  
+  bd_node(int node_type, Event event_type, double time) :
+    node_type(node_type), event_type(event_type), time(time) {}
+  
+  void set_children(bd_node *child) {
+    child_1 = child;
+    // child_2 = nullptr;
+  }
+  
+  void set_children(bd_node *first, bd_node *second) {
+    child_1 = first;
+    child_2 = second;
+  }
+};
+
+void validate_dimension(const NumericMatrix &x, const char x_name,
                         const int *size) {
   if (x.ncol() != size) {
     Rcpp::stop(sprintf("%s has %i columns; expecting %i",
@@ -13,15 +51,15 @@ void validate_dimension(const NumericMatrix x, const char x_name,
                        x_name, n.nrow(), *size)
   }
 }
-void validate_dimension(const NumericVector x, const char x_name,
+void validate_dimension(const NumericVector &x, const char x_name,
                         const int *size) {
-  if (x.length() != size) {
+  if (x.size() != size) {
     Rcpp::stop(sprintf("%s has length %i; expecting %i",
                        x_name, x.length(), *size)
   }
 }
 
-void validate_probability(const NumericVector x, const char x_name) {
+void validate_probability(const NumericVector &x, const char x_name) {
   if (std::min(x) < 0) {
     Rcpp::stop(sprintf("%s contains entries < 0", x_name));
   }
@@ -30,6 +68,17 @@ void validate_probability(const NumericVector x, const char x_name) {
   }
 })
 
+void validate_sum_to_one(const NumericVector &x, const char x_name) {
+  const int n = n.size();
+  double sum = 0.0;
+  for (int i = n; i--; ) {
+    sum += x[i];
+  }
+  if (sum != 1) {
+    Rcpp::stop(sprintf("Sum of %s should be one, not %d", x_name, sum);
+  }
+}
+    
 // [[Rcpp::export]]
 List birth_death(
     const NumericVector pi,
@@ -45,31 +94,43 @@ List birth_death(
 ) {
   const int n_types = pi.length();
   // Check input is valid
-  validate_dimension(lambda, "lambda", &n_types);
-  validate_dimension(mu, "mu", &n_types);
-  validate_dimension(psi, "psi", &n_types);
-  validate_dimension(rho, "rho", &n_types);
-  validate_probability(rho, "rho");
-  validate_dimension(rA, "rA", &n_types);
-  validate_probability(rA, "rA");
-  validate_dimension(rAL, "rAL", &n_types);
-  validate_probability(rAL, "rAL");
-  validate_dimension(gamma, "gamma", &n_types);
+  validate_probability(&pi, "pi");
+  validate_sum_to_one(&pi, "pi");
+  validate_dimension(&lambda, "lambda", &n_types);
+  validate_dimension(&mu, "mu", &n_types);
+  validate_dimension(&psi, "psi", &n_types);
+  validate_dimension(&rho, "rho", &n_types);
+  validate_probability(&rho, "rho");
+  validate_dimension(&rA, "rA", &n_types);
+  validate_probability(&rA, "rA");
+  validate_dimension(&rAL, "rAL", &n_types);
+  validate_probability(&rAL, "rAL");
+  validate_dimension(&gamma, "gamma", &n_types);
   
   double tau = tMax[0];
+  
+  std::mt19937 generator(std::random_device{}());
+  std::uniform_real_distribution<double> uniform(0.0, 1.0);
 
-  set <- setNames(vector("list", nTypes), types)
-  set[[sample(types, 1, prob = pi)]] <- "birth" # TODO what does a new node look like?
-  eventTypes <- c("birth", "death", "mutation", "sampling")
-    
-    .MatrixMin <- function(mat) {
-#index <- which.min(mat)
-#c(floor(index / nTypes), index %% nTypes + 1)
-    which(mat == min(mat), arr.ind = TRUE, useNames = FALSE)
+  // Reserve memory for "Set" 
+  std::vector<std::vector<bd_node>> set;
+  set.reserve(n_types);
+  
+  for (int i = n_types; i--; ) {
+    std::vector<bd_type> inner_vector;
+    inner_vector.reserve(nMax[0]);
+    set.push_back(inner_vector);
+  }
+  
+  // Draw RootNode with type a ~ pi
+  double root_draw = uniform(generator);
+  for (int root_type = n_types; root_type--; ) {
+    root_draw -= pi[root_type];
+    if (root_draw < 0) {
+      // Insert(RootNode, Sa)
+      set[root_type].push_back(root_type, Event::root, tau);
+      break;
     }
-  
-  .NewNode <- function(type, event, time) {
-  
   }
   
   while(tau >= 0) {
