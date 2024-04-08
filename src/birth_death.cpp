@@ -92,11 +92,11 @@ inline void random_index(const &std::vector<bd_node> x) {
   return x.size() * uniform_ref(generator_ref);
 }
 
+// removed: const NumericVector mu,
 // [[Rcpp::export]]
 List birth_death(
     const NumericVector pi,
     const NumericMatrix lambda,
-    // const NumericVector mu,
     const NumericVector psi,
     const NumericVector rA,
     const NumericMatrix gamma,
