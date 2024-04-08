@@ -10,10 +10,15 @@
 #' dies after sampling
 #' @param gamma Square numeric matrix giving rate of anagenic mutation 
 #' (i.e. change of type without a birth)
-#' @param rho Numeric vector giving sampling probability
 #' from each type to each other. Diagonal is ignored (treated as zero).
-#' @param rAL Numeric vector giving probability of dying after a concerted
-#' sampling event.
+#' @param rho Numeric vector giving probability that each type will be sampled
+#' if it survives to the present.
+# @param t Numeric vector specifying times of occurrence of concerted
+# sampling events.  Not currently supported.
+# @param rho Numeric matrix; each column gives sampling probability of each
+# type at the concerted sampling event represented by each row.
+# @param rAL Numeric matrix giving probability of dying after being sampled
+# during each concerted sampling event.
 #' 
 #' @param tMax time at which to start simulation (in units of time before present)
 #' @param nMax Numeric; simulation will terminate when more than `nMax` lineages
@@ -34,7 +39,6 @@
 #'  mu = mu,
 #'  psi = c(fit = 1, unfit = 1),
 #'  gamma = gamma,
-#'  rho = c(fit = 0.25, unfit = 0.25), # moderate
 #'  tMax = 500,
 #'  nMax = 500
 #'  )
@@ -55,8 +59,7 @@ BirthDeath <- function(...) {
     psi,
     rA = double(length(pi)),
     gamma,
-    rho,
-    rAL = double(length(pi)),
+    rho = rep_len(1, length(pi)),
     tMax,
     nMax
   ) {

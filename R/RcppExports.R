@@ -25,6 +25,10 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
+birth_death <- function(pi, lambda, mu, psi, rA, gamma, rho, tMax, nMax, rSeed) {
+    .Call(`_TreeTools_birth_death`, pi, lambda, mu, psi, rA, gamma, rho, tMax, nMax, rSeed)
+}
+
 consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
