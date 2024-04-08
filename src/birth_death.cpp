@@ -4,14 +4,13 @@
 #include <random>
 #include <vector>
 #include <limits> // for infinity
+#include <cstdio> // for sprintf
 
-using Rcpp;
+using namespace Rcpp;
 
 enum class Event {root, birth, death, mutation, sampling, survival};
 
 struct bd_node {
-  
-  using enum class Event;
   
   bd_node *child_1;
   bd_node *child_2;
@@ -46,35 +45,35 @@ struct bd_node {
   }
 };
 
-inline void validate_dimension(const NumericMatrix &x, const char x_name,
-                        const int *size) {
-  if (x.ncol() != size) {
-    Rcpp::stop(sprintf("%s has %i columns; expecting %i",
-                       x_name, x.ncol(), *size)
-  }
-  if (x.nrow() != size) {
-    Rcpp::stop(sprintf("%s has %i rows; expecting %s",
-                       x_name, n.nrow(), *size)
-  }
-}
-inline void validate_dimension(const NumericVector &x, const char x_name,
+inline void validate_dimension(const NumericMatrix &x, const char* x_name,
                                const int *size) {
-  if (x.size() != size) {
-    Rcpp::stop(sprintf("%s has length %i; expecting %i",
-                       x_name, x.length(), *size)
+  if (x.ncol() != *size) {
+    Rcpp::stop(std::sprintf("%s has %i columns; expecting %i",
+                            x_name, x.ncol(), *size);
+  }
+  if (x.nrow() != *size) {
+    Rcpp::stop(std::sprintf("%s has %i rows; expecting %s",
+                            x_name, x.nrow(), *size);
+  }
+}
+inline void validate_dimension(const NumericVector &x, const char* x_name,
+                               const int *size) {
+  if (x.size() != *size) {
+    Rcpp::stop(std::sprintf("%s has length %i; expecting %i",
+                            x_name, x.length(), *size);
   }
 }
 
-inline void validate_probability(const NumericVector &x, const char x_name) {
-  if (std::min(x) < 0) {
-    Rcpp::stop(sprintf("%s contains entries < 0", x_name));
+inline void validate_probability(const NumericVector &x, const char* x_name) {
+  if (min(x) < 0) {
+    Rcpp::stop(std::sprintf("%s contains entries < 0", x_name));
   }
-  if (std::max(x) > 1) {
-    Rcpp::stop(sprintf("%s contains entries > 1", x_name));
+  if (max(x) > 1) {
+    Rcpp::stop(std::sprintf("%s contains entries > 1", x_name));
   }
-})
+}
 
-inline void validate_sum_to_one(const NumericVector &x, const char x_name) {
+inline void validate_sum_to_one(const NumericVector &x, const char* x_name) {
   const int n = n.size();
   double sum = 0.0;
   for (int i = n; i--; ) {
@@ -85,14 +84,6 @@ inline void validate_sum_to_one(const NumericVector &x, const char x_name) {
   }
 }
 
-inline void random_index(const &std::vector<bd_node> x) {
-  static std::uniform_real_distribution<double>& uniform_ref = uniform;
-  static std::mt19937& generator_ref = generator;
-  
-  return x.size() * uniform_ref(generator_ref);
-}
-
-// removed: const NumericVector mu,
 // [[Rcpp::export]]
 List birth_death(
     const NumericVector pi,
@@ -107,16 +98,16 @@ List birth_death(
 ) {
   const int n_types = pi.length();
   // Check input is valid
-  validate_probability(&pi, "pi");
-  validate_sum_to_one(&pi, "pi");
-  validate_dimension(&lambda, "lambda", &n_types);
+  validate_probability(pi, "pi");
+  validate_sum_to_one(pi, "pi");
+  validate_dimension(lambda, "lambda", &n_types);
   // validate_dimension(&mu, "mu", &n_types);
-  validate_dimension(&psi, "psi", &n_types);
-  validate_dimension(&rho, "rho", &n_types);
-  validate_probability(&rho, "rho");
-  validate_dimension(&rA, "rA", &n_types);
-  validate_probability(&rA, "rA");
-  validate_dimension(&gamma, "gamma", &n_types);
+  validate_dimension(psi, "psi", &n_types);
+  validate_dimension(rho, "rho", &n_types);
+  validate_probability(rho, "rho");
+  validate_dimension(rA, "rA", &n_types);
+  validate_probability(rA, "rA");
+  validate_dimension(gamma, "gamma", &n_types);
   
   const int n_max = nMax[0];
   if (n_max < 1) {
@@ -133,6 +124,14 @@ List birth_death(
   std::uniform_real_distribution<double> uniform(0.0, 1.0);
   std::exponential_distribution<double> exp1(1.0);
 
+  
+  inline int random_index(const std::vector<bd_type>& x) {
+    static std::uniform_real_distribution<double> uniform_ref = uniform;
+    static std::mt19937 generator_ref = generator;
+    
+    return x.size() * uniform_ref(generator_ref);
+  }
+  
   // Reserve memory for "Set" 
   std::vector<std::vector<bd_node>> set;
   set.reserve(n_types);
