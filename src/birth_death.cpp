@@ -1,5 +1,6 @@
 #include <Rcpp/Light> // for min
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
+#include "../inst/include/TreeTools/renumber_tree.h" /* for preorder */
 #include <cmath> // for max, min
 #include <random>
 #include <vector>
@@ -8,12 +9,12 @@
 
 using namespace Rcpp;
 
-enum class Event {root, birth, /*death,*/ mutation, sampling, survival};
+enum class Event {root, birth, /*death, survival*/ mutation, sampling};
 
 struct bd_node {
   
-  bd_node *child_1;
-  bd_node *child_2;
+  bd_node *child1;
+  bd_node *child2;
   int node_type;
   Event event_type;
   double time;
@@ -28,17 +29,17 @@ struct bd_node {
   */
   
   bd_node(int* node_type, Event event_type, double time) :
-    child_1(nullptr), child_2(nullptr), node_type(*node_type),
+    child1(nullptr), child2(nullptr), node_type(*node_type),
     event_type(event_type), time(time) {}
   
   void set_children(bd_node *child) {
-    child_1 = child;
-    // child_2 = nullptr;
+    child1 = child;
+    // child2 = nullptr;
   }
   
   void set_children(bd_node *first, bd_node *second) {
-    child_1 = first;
-    child_2 = second;
+    child1 = first;
+    child2 = second;
   }
   
   void sample() {
@@ -88,6 +89,79 @@ inline void validate_sum_to_one(const NumericVector &x, std::string x_name) {
       std::to_string(sum));
   }
 }
+
+void process_node(node_ptr node, int* tip_i, int* node_i,
+                  IntegerVector &edge1, IntegerVector& edge2,
+                  NumericVector &length) {
+  // tip_i is populated with the next UNUSED tip number.
+  // Increment once used.
+  // node_i is populated with the next UNUSED node number.
+  // Decrement once used.
+  
+  switch (node->event_type) {
+  
+    case Event::root: {
+      edge1.push_back((*node_i)--);
+      node_ptr desc = node->child1;
+      length.push_back(desc->time - node->time);
+      process_node(desc, tip_i, node_i, edge1, edge2, length);
+      break;
+    }
+    
+    case Event::birth: {
+      const int parent_node = (*node_i)--;
+      const double parent_time = node->time;
+      // 0. Terminate incoming edge
+      edge2.push_back(parent_node);
+      ASSERT(edge1.size() == edge2.size());
+      ASSERT(edge1.size() == length.size());
+      
+      // 1. Create left edge and populate its parent
+      edge1.push_back(parent_node);
+      // 2. Set length of edge
+      length.push_back(parent_time - node->child1->time);
+      // 3. Process next event to continue left edge
+      process_node(node->child1, tip_i, node_i, edge1, edge2, length);
+      
+      // 4. Do it all again for right edge
+      edge1.push_back(parent_node);
+      length.push_back(parent_time - node->child2->time);
+      process_node(node->child2, tip_i, node_i, edge1, edge2, length);
+      
+      break;
+    }
+    case Event::mutation: {
+      // 1. Add elapsed time to length of edge
+      length[length.size() - 1] += (node->time - node->child1->time);
+      // 2. Process next event to continue edge
+      process_node(node->child1, tip_i, node_i, edge1, edge2, length);
+      break;
+    }
+    case Event::sampling: {
+      if (node->child1 == nullptr) {
+        // Sampling marks end of lineage; label tip
+        edge2.push_back((*tip_i)++);
+        ASSERT(edge1.size() == edge2.size());
+        ASSERT(edge1.size() == length.size());
+      } else {
+        // We have sampled an ancestor; create a zero-length edge and continue
+        edge2.push_back((*node_i));
+        ASSERT(edge1.size() == edge2.size());
+        ASSERT(edge1.size() == length.size());
+        
+        edge1.push_back(*node_i);
+        edge2.push_back((*tip_i)++);
+        length.push_back(0.0);
+        
+        edge1.push_back((*node_i)--);
+        length.push_back(node->time - node->child1->time);
+        process_node(node->child1, tip_i, node_i, edge1, edge2, length);
+      }
+      break;
+    }
+  }
+}
+
 
 // [[Rcpp::export]]
 List birth_death(
@@ -141,13 +215,9 @@ List birth_death(
   
   // Draw RootNode with type a ~ pi
   double root_draw = uniform(generator);
-  int root_type;
-  for (int root_type = n_types; root_type--; ) {
-    root_draw -= pi[root_type];
-    if (root_draw < 0) {
-      // Insert(RootNode, Sa)
-      break;
-    }
+  int root_type = n_types;
+  while (root_draw >= 0) {
+    root_draw -= pi[--root_type];
   }
   bd_node root_node(&root_type, Event::root, tau);
   set[root_type].push_back(&root_node);
@@ -157,8 +227,8 @@ List birth_death(
     
     // Get next event
     double next_offset = std::numeric_limits<double>::infinity();
-    Event next_event;
-    int a, b;
+    Event next_event = Event::root;
+    int a = -1, b = -1;
     
     for (int i = n_types; i--; ) {
       const int n_of_type = set[i].size();
@@ -207,7 +277,10 @@ List birth_death(
     if (tau < 0) {
       for (int i = n_types; i--; ) {
         for (int node = set[a].size(); node--; ) {
-          bd_node child(&i, Event::survival, 0);
+          // bd_node child(&i, Event::survival, 0); // Full model version
+          
+          // Under FE model, everything that survives is sampled
+          bd_node child(&i, Event::sampling, 0);
           set[a][node]->set_children(&child);
           set[a][node] = &child;
         }
@@ -225,6 +298,7 @@ List birth_death(
         ;
         set[a][parent_i]->set_children(&child1, &child2);
         set[a][parent_i] = &child1;
+        ASSERT(b >= 0);
         set[b].push_back(&child2);
         break;
       }
@@ -238,6 +312,7 @@ List birth_death(
         bd_node child(&b, Event::mutation, tau);
         set[a][parent_i]->set_children(&child);
         set[a].erase(set[a].begin() + parent_i);
+        ASSERT(b >= 0);
         set[b].push_back(&child);
         break;
       }
@@ -252,8 +327,10 @@ List birth_death(
         }
         break;
       }
-      case Event::survival: {}
-      case Event::root: {}
+      // case Event::survival: {} // All survivors are sampled in FE model
+      case Event::root: {
+        Rcpp::stop("Event cannot be of type `root`. Please report this bug");
+      }
     }
     int n_lineages = 0;
     for (int i = n_types; i--; ) {
@@ -291,6 +368,23 @@ List birth_death(
   // In the forward-equivalent simulation, pruning is not required.
   // prune_tree()
   
-  // Now can convert the nodes into a phylogenetic tree
-  return List::create();
+  // Now convert the nodes into a phylogenetic tree
+  int tip = 1, node = -1;
+  IntegerVector parent(0), child(0);
+  NumericVector length(0);
+  process_node(&root_node, &tip, &node, parent, child, length);
+  
+  ASSERT(parent.size() == child.size());
+  ASSERT(parent.size() == length.size());
+  
+  for (int i = parent.size(); i--; ) {
+    if (parent[i] < 0) {
+      parent[i] = tip - parent[i];
+    }
+    if (child[i] < 0) {
+      child[i] = tip - child[i];
+    }
+  }
+  
+  return TreeTools::preorder_weighted(parent, child, length);
 }
