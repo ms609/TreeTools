@@ -26,8 +26,8 @@
 #' exist, to avoid interminable simulation times.
 #' @param seed Integer with which to seed mt19937 generator in C++.
 #' Override the default to set a stated value for reproducible results.
-#' @param steps Integer giving number of time steps to use when solving
-#' differential equations.  More steps give higher precision but require more
+#' @param times Vector giving time steps at which to solve differential
+#' equations.  More steps give higher precision but require more
 #' memory and take longer to initialize.
 #' 
 #' Uses the forward-equivalent simulation described by
@@ -64,12 +64,21 @@ BirthDeath <- function(
     tMax = 10,
     nMax = 1e5,
     seed = sample.int(.Machine[["integer.max"]], 1),
-    steps = 1e3
+    times = seq(from = 0, to = tMax, length.out = 1001)
     ) {
   
   nTypes <- length(pi)
   yini  <- 1 - rho
-  times <- seq(from = 0, to = tMax, length.out = steps)
+  if (times[[1]] != 0) {
+    stop("`times` must start at 0")
+  }
+  steps <- length(times)
+  if (times[[steps]] != tMax) {
+    stop("`times` must stop at `tMax` (", tMax, ")")
+  }
+  if (!all(times == cummax(times))) {
+    stop("`times` must increase monotonically")
+  }
   dEa_dt <- function(t, y, parms) {
     dy <-
       rowSums(vapply(seq_along(y),
@@ -106,14 +115,14 @@ BirthDeath <- function(
   # rhoFE = 1
   
   birth_death(
-    piFe,
+    piFE,
     lambdaFE,
     psiFE,
     rFE,
     gammaFE,
-    tMax,
+    times,
     nMax,
-    rSeed
+    seed
   )
 }
 

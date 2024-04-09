@@ -50,14 +50,22 @@ struct bd_node {
 typedef bd_node* node_ptr;
 
 inline void validate_dimension(const NumericMatrix &x, std::string x_name,
-                               const int *size) {
-  if (x.ncol() != *size) {
+                               const int *exp_rows, const int *exp_cols) {
+  if (x.ncol() != *exp_cols) {
     Rcpp::stop(x_name + "has " + std::to_string(x.ncol()) +
-      " columns; expecting " + std::to_string(*size));
+      " columns; expecting " + std::to_string(*exp_cols));
   }
-  if (x.nrow() != *size) {
+  if (x.nrow() != *exp_cols) {
     Rcpp::stop(x_name + "has " + std::to_string(x.nrow()) +
-      " rows; expecting " + std::to_string(*size));
+      " rows; expecting " + std::to_string(*exp_rows));
+  }
+}
+
+inline void validate_size(const NumericVector &x, std::string x_name,
+                          const int size) {
+  if (x.size() != size) {
+    Rcpp::stop(x_name + " has " + std::to_string(x.size()) +
+      " elements; expecting " + std::to_string(size));
   }
 }
 
@@ -77,6 +85,16 @@ inline void validate_probability(const NumericVector &x, std::string x_name) {
     Rcpp::stop(x_name + " contains entries > 1");
   }
 }
+
+inline void validate_probability(const NumericMatrix &x, std::string x_name) {
+  if (Rcpp::min(x) < 0) {
+    Rcpp::stop(x_name + " contains entries < 0");
+  }
+  if (Rcpp::max(x) > 1) {
+    Rcpp::stop(x_name + " contains entries > 1");
+  }
+}
+
 
 inline void validate_sum_to_one(const NumericVector &x, std::string x_name) {
   const int n = x.size();
@@ -166,33 +184,35 @@ void process_node(node_ptr node, int* tip_i, int* node_i,
 // [[Rcpp::export]]
 List birth_death(
     const NumericVector pi,
-    const NumericMatrix lambda,
-    const NumericVector psi,
-    const NumericVector rA,
-    const NumericMatrix gamma,
-    const NumericVector tMax,
+    const NumericVector lambda,
+    const NumericMatrix psi,
+    const NumericMatrix rA,
+    const NumericVector gamma,
+    const NumericVector times,
     const IntegerVector nMax,
     const IntegerVector rSeed
 ) {
-  const int n_types = pi.length();
+  const int n_types = pi.size();
+  const int n_steps = times.size();
+  
   // Check input is valid
   validate_probability(pi, "pi");
   validate_sum_to_one(pi, "pi");
-  validate_dimension(lambda, "lambda", &n_types);
+  validate_size(lambda, "lambda", n_steps * n_types * n_types);
   // validate_dimension(&mu, "mu", &n_types);
-  // validate_dimension(psi, "psi", &n_types);
+  validate_dimension(psi, "psi", &n_steps, &n_types);
   // validate_dimension(rho, "rho", &n_types);
   // validate_probability(rho, "rho");
-  validate_dimension(rA, "rA", &n_types);
+  validate_dimension(rA, "rA", &n_steps, &n_types);
   validate_probability(rA, "rA");
-  validate_dimension(gamma, "gamma", &n_types);
+  validate_size(gamma, "gamma", n_steps * n_types * n_types);
   
   const int n_max = nMax[0];
   if (n_max < 1) {
     Rcpp::stop("`nMax` (" + std::to_string(n_max) + " must be at least 1");
   }
   
-  double tau = tMax[0];
+  double tau = times[n_steps - 1];
   if (tau < 0) {
     Rcpp::stop("`tMax` (" + std::to_string(tau) + ") must be non-negative");
   }

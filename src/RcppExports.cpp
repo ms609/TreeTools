@@ -86,20 +86,20 @@ BEGIN_RCPP
 END_RCPP
 }
 // birth_death
-List birth_death(const NumericVector pi, const NumericMatrix lambda, const NumericVector psi, const NumericVector rA, const NumericMatrix gamma, const NumericVector tMax, const IntegerVector nMax, const IntegerVector rSeed);
-RcppExport SEXP _TreeTools_birth_death(SEXP piSEXP, SEXP lambdaSEXP, SEXP psiSEXP, SEXP rASEXP, SEXP gammaSEXP, SEXP tMaxSEXP, SEXP nMaxSEXP, SEXP rSeedSEXP) {
+List birth_death(const NumericVector pi, const NumericVector lambda, const NumericMatrix psi, const NumericMatrix rA, const NumericVector gamma, const NumericVector times, const IntegerVector nMax, const IntegerVector rSeed);
+RcppExport SEXP _TreeTools_birth_death(SEXP piSEXP, SEXP lambdaSEXP, SEXP psiSEXP, SEXP rASEXP, SEXP gammaSEXP, SEXP timesSEXP, SEXP nMaxSEXP, SEXP rSeedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const NumericVector >::type pi(piSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix >::type lambda(lambdaSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type psi(psiSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type rA(rASEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type tMax(tMaxSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix >::type psi(psiSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix >::type rA(rASEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type gamma(gammaSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type times(timesSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type nMax(nMaxSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type rSeed(rSeedSEXP);
-    rcpp_result_gen = Rcpp::wrap(birth_death(pi, lambda, psi, rA, gamma, tMax, nMax, rSeed));
+    rcpp_result_gen = Rcpp::wrap(birth_death(pi, lambda, psi, rA, gamma, times, nMax, rSeed));
     return rcpp_result_gen;
 END_RCPP
 }
