@@ -7,7 +7,8 @@
 #' @param mu Numeric vector giving death rate for a lineage of each type
 #' @param psi Numeric vector giving sampling rate for a lineage of each type
 #' @param rA Numeric vector giving probability that a lineage of each type
-#' dies after sampling
+#' dies after sampling. Defaults to certainty (`1`), such that ancestors
+#' will not be sampled.
 #' @param gamma Square numeric matrix giving rate of anagenic mutation 
 #' (i.e. change of type without a birth)
 #' from each type to each other. Diagonal is ignored (treated as zero).
@@ -23,6 +24,11 @@
 #' @param tMax time at which to start simulation (in units of time before present)
 #' @param nMax Numeric; simulation will terminate when more than `nMax` lineages
 #' exist, to avoid interminable simulation times.
+#' @param seed Integer with which to seed mt19937 generator in C++.
+#' Override the default to set a stated value for reproducible results.
+#' @param steps Integer giving number of time steps to use when solving
+#' differential equations.  More steps give higher precision but require more
+#' memory and take longer to initialize.
 #' 
 #' Uses the forward-equivalent simulation described by
 #' \insertRef{Celentano2024}{TreeTools}
@@ -37,7 +43,7 @@
 #'  pi = c(fit = 0.5, unfit = 0.5),
 #'  lambda = lambda,
 #'  mu = mu,
-#'  psi = c(fit = 1, unfit = 1),
+#'  psi = c(fit = 0, unfit = 0),
 #'  gamma = gamma,
 #'  tMax = 500,
 #'  nMax = 500
@@ -45,9 +51,53 @@
 #' 
 #' @references \insertAllCited{}
 #' @template MRS
+#' @importFrom deSolve ode
 #' @export
-BirthDeath <- function(...) {
-  .FullBirthDeath(...)
+BirthDeath <- function(
+    pi,
+    lambda,
+    mu,
+    psi,
+    gamma = matrix(0, length(pi), length(pi)),
+    rA = rep_len(1, length(pi)),
+    rho = rep_len(1, length(pi)),
+    tMax = 100,
+    nMax = 1e5,
+    seed = sample.int(.Machine[["integer.max"]], 1),
+    steps = 1e3
+    ) {
+  
+  nTypes <- length(pi)
+  yini  <- 1 - rho
+  times <- seq(from = 0, to = tMax, length.out = steps)
+  dEa_dt <- function(t, y, parms) {
+    dy <-
+      rowSums(vapply(seq_along(y),
+                     function(b) lambda[, b] * ((y * y[b]) - y), y)) +
+      mu * (1 - y) +
+      psi * (0 - y) +
+      rowSums(vapply(seq_along(y), function(b) gamma[, b] * (y[b] - y), y))
+    list(dy)
+  }
+  bigE <- ode(times = times, y = yini, func = dEa_dt, parms = NULL)
+  oneMinusE <- 1 - bigE
+  piBits <- pi * (1 - bigE[, steps])
+  piFE <- piBits / sum(piBits)
+  psiFE <- psi / oneMinusE
+  lambdaFE <- oneMinusE * lambda # ... 
+  # ... #
+  
+  birth_death(
+    piFe,
+    lambdaFE,
+    psiFE,
+    rAFE,
+    gammaFE,
+    rhoFE,
+    tMax,
+    nMax,
+    rSeed
+  )
 }
 
 

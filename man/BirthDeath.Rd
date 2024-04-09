@@ -4,7 +4,19 @@
 \alias{BirthDeath}
 \title{Simulate trees under the birth-death process}
 \usage{
-BirthDeath()
+BirthDeath(
+  pi,
+  lambda,
+  mu,
+  psi,
+  gamma = matrix(0, length(pi), length(pi)),
+  rA = rep_len(1, length(pi)),
+  rho = rep_len(1, length(pi)),
+  tMax = 100,
+  nMax = 1e+05,
+  seed = sample.int(.Machine[["integer.max"]], 1),
+  steps = 1000
+)
 }
 \arguments{
 \item{pi}{Vector of probabilities associated with each of \emph{d} types}
@@ -17,17 +29,28 @@ Entries on the diagonal give rate of (cladogenic) birth without mutation.}
 
 \item{psi}{Numeric vector giving sampling rate for a lineage of each type}
 
+\item{gamma}{Square numeric matrix giving rate of anagenic mutation
+(i.e. change of type without a birth)
+from each type to each other. Diagonal is ignored (treated as zero).}
+
 \item{rA}{Numeric vector giving probability that a lineage of each type
-dies after sampling}
+dies after sampling. Defaults to certainty (\code{1}), such that ancestors
+will not be sampled.}
 
-\item{gamma}{Rate of anagenic mutation (i.e. change of type without a birth).}
+\item{rho}{Numeric vector giving probability that each type will be sampled
+if it survives to the present.}
 
-\item{rAL}{Numeric vector giving probability of dying after a concerted
-sampling event.}
+\item{tMax}{time at which to start simulation (in units of time before present)}
 
-\item{tMax}{time at which to start simulation (in units of time ago)}
+\item{nMax}{Numeric; simulation will terminate when more than \code{nMax} lineages
+exist, to avoid interminable simulation times.}
 
-\item{nMax}{Abort simulation when more than \code{nMax} lineages exist
+\item{seed}{Integer with which to seed mt19937 generator in C++.
+Override the default to set a stated value for reproducible results.}
+
+\item{steps}{Integer giving number of time steps to use when solving
+differential equations.  More steps give higher precision but require more
+memory and take longer to initialize.
 
 Uses the forward-equivalent simulation described by
 \insertRef{Celentano2024}{TreeTools}
@@ -35,6 +58,23 @@ https://arxiv.org/pdf/2402.17153v1.pdf}
 }
 \description{
 Simulate trees under the birth-death process
+}
+\examples{
+lambda <- rbind(fit = c(fit = 1, unfit = 1), unfit = c(0.25, 0.25))
+mu <- c(fit = 0.25, unfit = 0.25)
+gamma <- cbind(fit = c(fit = 0, unfit = 0.5),
+              unfit = c(fit = 0.5, unfit = 0))
+
+BirthDeath(
+ pi = c(fit = 0.5, unfit = 0.5),
+ lambda = lambda,
+ mu = mu,
+ psi = c(fit = 0, unfit = 0),
+ gamma = gamma,
+ tMax = 500,
+ nMax = 500
+ )
+
 }
 \references{
 \insertAllCited{}
