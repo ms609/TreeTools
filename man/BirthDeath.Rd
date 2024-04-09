@@ -10,9 +10,9 @@ BirthDeath(
   mu,
   psi,
   gamma = matrix(0, length(pi), length(pi)),
-  rA = rep_len(1, length(pi)),
+  r = rep_len(1, length(pi)),
   rho = rep_len(1, length(pi)),
-  tMax = 100,
+  tMax = 10,
   nMax = 1e+05,
   seed = sample.int(.Machine[["integer.max"]], 1),
   steps = 1000
@@ -33,7 +33,7 @@ Entries on the diagonal give rate of (cladogenic) birth without mutation.}
 (i.e. change of type without a birth)
 from each type to each other. Diagonal is ignored (treated as zero).}
 
-\item{rA}{Numeric vector giving probability that a lineage of each type
+\item{r}{Numeric vector giving probability that a lineage of each type
 dies after sampling. Defaults to certainty (\code{1}), such that ancestors
 will not be sampled.}
 

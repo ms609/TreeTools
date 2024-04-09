@@ -86,8 +86,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // birth_death
-List birth_death(const NumericVector pi, const NumericMatrix lambda, const NumericVector psi, const NumericVector rA, const NumericMatrix gamma, const NumericVector rho, const NumericVector tMax, const IntegerVector nMax, const IntegerVector rSeed);
-RcppExport SEXP _TreeTools_birth_death(SEXP piSEXP, SEXP lambdaSEXP, SEXP psiSEXP, SEXP rASEXP, SEXP gammaSEXP, SEXP rhoSEXP, SEXP tMaxSEXP, SEXP nMaxSEXP, SEXP rSeedSEXP) {
+List birth_death(const NumericVector pi, const NumericMatrix lambda, const NumericVector psi, const NumericVector rA, const NumericMatrix gamma, const NumericVector tMax, const IntegerVector nMax, const IntegerVector rSeed);
+RcppExport SEXP _TreeTools_birth_death(SEXP piSEXP, SEXP lambdaSEXP, SEXP psiSEXP, SEXP rASEXP, SEXP gammaSEXP, SEXP tMaxSEXP, SEXP nMaxSEXP, SEXP rSeedSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -96,11 +96,10 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const NumericVector >::type psi(psiSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type rA(rASEXP);
     Rcpp::traits::input_parameter< const NumericMatrix >::type gamma(gammaSEXP);
-    Rcpp::traits::input_parameter< const NumericVector >::type rho(rhoSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type tMax(tMaxSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type nMax(nMaxSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type rSeed(rSeedSEXP);
-    rcpp_result_gen = Rcpp::wrap(birth_death(pi, lambda, psi, rA, gamma, rho, tMax, nMax, rSeed));
+    rcpp_result_gen = Rcpp::wrap(birth_death(pi, lambda, psi, rA, gamma, tMax, nMax, rSeed));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -397,7 +396,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 5},
     {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 5},
     {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
-    {"_TreeTools_birth_death", (DL_FUNC) &_TreeTools_birth_death, 9},
+    {"_TreeTools_birth_death", (DL_FUNC) &_TreeTools_birth_death, 8},
     {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},

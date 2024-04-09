@@ -170,7 +170,6 @@ List birth_death(
     const NumericVector psi,
     const NumericVector rA,
     const NumericMatrix gamma,
-    const NumericVector rho,
     const NumericVector tMax,
     const IntegerVector nMax,
     const IntegerVector rSeed
@@ -181,9 +180,9 @@ List birth_death(
   validate_sum_to_one(pi, "pi");
   validate_dimension(lambda, "lambda", &n_types);
   // validate_dimension(&mu, "mu", &n_types);
-  validate_dimension(psi, "psi", &n_types);
-  validate_dimension(rho, "rho", &n_types);
-  validate_probability(rho, "rho");
+  // validate_dimension(psi, "psi", &n_types);
+  // validate_dimension(rho, "rho", &n_types);
+  // validate_probability(rho, "rho");
   validate_dimension(rA, "rA", &n_types);
   validate_probability(rA, "rA");
   validate_dimension(gamma, "gamma", &n_types);

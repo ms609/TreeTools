@@ -6,7 +6,7 @@
 #' Entries on the diagonal give rate of (cladogenic) birth without mutation.
 #' @param mu Numeric vector giving death rate for a lineage of each type
 #' @param psi Numeric vector giving sampling rate for a lineage of each type
-#' @param rA Numeric vector giving probability that a lineage of each type
+#' @param r Numeric vector giving probability that a lineage of each type
 #' dies after sampling. Defaults to certainty (`1`), such that ancestors
 #' will not be sampled.
 #' @param gamma Square numeric matrix giving rate of anagenic mutation 
@@ -18,7 +18,7 @@
 # sampling events.  Not currently supported.
 # @param rho Numeric matrix; each column gives sampling probability of each
 # type at the concerted sampling event represented by each row.
-# @param rAL Numeric matrix giving probability of dying after being sampled
+# @param rL Numeric matrix giving probability of dying after being sampled
 # during each concerted sampling event.
 #' 
 #' @param tMax time at which to start simulation (in units of time before present)
@@ -59,9 +59,9 @@ BirthDeath <- function(
     mu,
     psi,
     gamma = matrix(0, length(pi), length(pi)),
-    rA = rep_len(1, length(pi)),
+    r = rep_len(1, length(pi)),
     rho = rep_len(1, length(pi)),
-    tMax = 100,
+    tMax = 10,
     nMax = 1e5,
     seed = sample.int(.Machine[["integer.max"]], 1),
     steps = 1e3
@@ -79,21 +79,38 @@ BirthDeath <- function(
       rowSums(vapply(seq_along(y), function(b) gamma[, b] * (y[b] - y), y))
     list(dy)
   }
-  bigE <- ode(times = times, y = yini, func = dEa_dt, parms = NULL)
+  bigE <- ode(y = yini, times = times, func = dEa_dt, parms = NULL)[, -1]
   oneMinusE <- 1 - bigE
-  piBits <- pi * (1 - bigE[, steps])
+  
+  piBits <- pi * (1 - bigE[steps, ])
   piFE <- piBits / sum(piBits)
+  
+  # Careful with the dimensions:
+  # Dimension 1 = Time step tau; dim 2 = a; dim 3 = b
+  lambdaFE <- vapply(seq_len(nTypes), function(a) 
+    vapply(seq_len(nTypes), function(b) 
+      oneMinusE[, b] * lambda[a, b], double(steps)),
+    oneMinusE)
+  
   psiFE <- psi / oneMinusE
-  lambdaFE <- oneMinusE * lambda # ... 
-  # ... #
+  
+  rFE <- r + ((1 - r) * bigE)
+  
+  gammaFE <- vapply(seq_len(nTypes), function(a) 
+    vapply(seq_len(nTypes), function(b) 
+      (oneMinusE[, b] / oneMinusE[, a]) * (
+        gamma[a, b] + 
+          if(a == b) bigE[, a] * lambda[a, b] else 0
+      ), double(steps)), oneMinusE)
+  
+  # rhoFE = 1
   
   birth_death(
     piFe,
     lambdaFE,
     psiFE,
-    rAFE,
+    rFE,
     gammaFE,
-    rhoFE,
     tMax,
     nMax,
     rSeed
@@ -107,7 +124,7 @@ BirthDeath <- function(
     lambda,
     mu,
     psi,
-    rA = double(length(pi)),
+    r = double(length(pi)),
     gamma,
     rho = rep_len(1, length(pi)),
     tMax,
@@ -121,12 +138,12 @@ BirthDeath <- function(
   stopifnot(length(rho) == d)
   stopifnot(min(rho) >= 0)
   stopifnot(max(rho) <= 1)
-  stopifnot(length(rA) == d)
-  stopifnot(min(rA) >= 0)
-  stopifnot(max(rA) <= 1)
-  stopifnot(length(rAL) == d)
-  stopifnot(min(rAL) >= 0)
-  stopifnot(max(rAL) <= 1)
+  stopifnot(length(r) == d)
+  stopifnot(min(r) >= 0)
+  stopifnot(max(r) <= 1)
+  stopifnot(length(rL) == d)
+  stopifnot(min(rL) >= 0)
+  stopifnot(max(rL) <= 1)
   stopifnot(ncol(gamma) == d)
   stopifnot(nrow(gamma) == d)
   
