@@ -1,4 +1,4 @@
-# TreeTools 1.10.0.9005 (development) #
+# TreeTools 1.10.0.9006 (development) #
 
 ## New methods and functions
 
@@ -18,6 +18,7 @@
   default in a future release.
 - An entry point to the C++ function `root_on_node()` is now exported
   (intended for expert use only).
+- Fix handling of weighted trees by `root_on_node()`.
 - Use `KeepTip()` internally so `SplitFrequency()` supports `Splits` objects
   as documented.
 

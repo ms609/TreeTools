@@ -126,7 +126,7 @@ namespace TreeTools {
     if (outgroup == root_node) {
       ret["edge"] = edge;
       if (weighted) {
-        ret["edge.weight"] = weight;
+        ret["edge.length"] = weight;
       }
       return ret;
     }
