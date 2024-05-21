@@ -44,9 +44,13 @@ NULL
 RandomTree <- function(tips, root = FALSE, nodes) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
-  if (any(is.na(root))) {
-    warning("treating `root = NA` as `FALSE`")
-    root[is.na(root)] <- FALSE
+  if (length(root) > 1L) {
+    root <- root[[1]]
+    warning("More than one entry in `root`; using ", root)
+  }
+  if (is.na(root)) {
+    warning("Treating `root = NA` as `FALSE`")
+    root <- FALSE
   }
   unrooted <- !is.logical(root) || root == FALSE
   nodesInBinary <- nTips - ifelse(unrooted, 2L, 1L)
@@ -63,8 +67,8 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   edge <- do.call(cbind,
                   RenumberEdges(.RandomParent(nTips),
                                 seq_len(nTips + nTips - 2L)))
-  if (!is.logical(root)
-      && !(length(root) == 1L && root == 1L)) {
+  # If root identifies a specific tip, root edge on that tip
+  if (!is.logical(root) && root != 1L) {
     if (is.character(root)) {
       root <- which(tips == root)
     }
@@ -74,31 +78,29 @@ RandomTree <- function(tips, root = FALSE, nodes) {
     if (!is.integer(root)) {
       root <- as.integer(root)
     }
-    if (length(root) > 1L) {
-      root <- root[1]
-      warning("More than one entry in `root`; using ", root)
-    }
     edge <- root_binary(edge, root)
   }
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,
-                         tip.label = tips,
-                         br = NULL),
+                         tip.label = tips),
                     class = "phylo")
 
+  # If root is simply a logical T/F, then root our tree randomly - or don't!
   if (is.logical(root)) {
-    if (root[[1]]) {
+    if (root) {
       tree <- root_on_node(tree, sample.int(nTips + nodes, 1))
     } else {
       tree <- UnrootTree(tree)
     }
   }
 
+  # Collapse nodes at random to obtain desired resolution
   if (nodes < nodesInBinary) {
     tree <- CollapseNode(tree,
                          nTips + 1L + sample.int(nodesInBinary - 1L,
                                                  tree[["Nnode"]] - nodes))
   }
+  
   # Return:
   tree
 }

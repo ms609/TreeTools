@@ -40,20 +40,35 @@ test_that("StarTree() works", {
 })
 
 test_that("Random trees are generated correctly", {
-  expect_equal(c(4, 4, 5, 5, 1, 5, 2, 3), RandomTree(3, root = TRUE)$edge[1:8])
+  # These two seeds give two different node labellings
+  random3 <- c(4, 4, 5, 5, 1, 5, 2, 3)
+  set.seed(1)
+  expect_equal(random3, RandomTree(3, root = 1)$edge[1:8])
+  set.seed(4)
+  expect_equal(random3, RandomTree(3, root = "t1")$edge[1:8])
+  
   expect_true(all.equal(RandomTree(3, root = "t2"),
     PectinateTree(c("t2", "t3", "t1"))))
   expect_equal(c(4, 4, 4), RandomTree(3, root = FALSE)$edge[1:3])
   expect_warning(expect_equal(RandomTree(3, root = "t2"),
                               RandomTree(3, root = 2:3)))
-  expect_error(RandomTree(4, root = "not_there"))
-  expect_error(RandomTree(4, root = 999))
-  expect_error(RandomTree(4, root = -1))
-  expect_error(expect_warning(RandomTree(4, root = NA_integer_)))
-  expect_error(RandomTree(4, nodes = 0))
+  expect_error(RandomTree(4, root = "not_there"), "No match found for `root`")
+  expect_error(RandomTree(4, root = 999), "exceeds number of nodes")
+  expect_error(RandomTree(4, root = -1), "must be a positive integer")
+    
+  expect_warning(expect_equal({
+    set.seed(1)
+    RandomTree(8, root = NA_integer_)
+  }, {
+    set.seed(1)
+    RandomTree(8, root = FALSE)
+  }), "Treating `root = NA` as `FALSE`")
+  expect_error(RandomTree(4, nodes = 0), "A tree must contain one .*node")
 
-  expect_warning(RandomTree(4, nodes = 4))
-  expect_warning(RandomTree(4, root = FALSE, nodes = 3))
+  expect_warning(RandomTree(4, nodes = 4),
+                 "`nodes` higher than number in binary tree")
+  expect_warning(RandomTree(4, root = FALSE, nodes = 3),
+                 "`nodes` higher than number in binary tree")
 
   for (nNode in 1:8) {
     expect_equal(RandomTree(10, nodes = nNode)$Nnode, nNode)
