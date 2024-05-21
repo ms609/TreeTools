@@ -1,13 +1,7 @@
+# Manual exports are required for functions that are defined in the 
+# TreeTools namespace in header files.
 keep_tip <- function(edge, keep) {
   .Call(`_TreeTools_keep_tip`, edge, keep)
-}
-
-preorder_edges_and_nodes <- function(parent, child) {
-  .Call(`_TreeTools_preorder_edges_and_nodes`, parent, child)
-}
-
-preorder_weighted <- function(parent, child, edgeLen) {
-  .Call(`_TreeTools_preorder_weighted`, parent, child, edgeLen)
 }
 
 postorder_order <- function(edge) {
