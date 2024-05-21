@@ -30,6 +30,9 @@ test_that("Binary trees are rootable", {
   Test(BalancedTree(9), 1)
   Test(PectinateTree(9), 1)
   Test(PectinateTree(9), 7)
+  ed9 <- PectinateTree(9)$edge
+  expect_equal(root_binary(ed9, 10), ed9)
+  expect_equal(root_binary(ed9, 1), ed9)
 })
 
 test_that("Polytomous trees are rootable", {
