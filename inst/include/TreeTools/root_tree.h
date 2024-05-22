@@ -110,8 +110,8 @@ namespace TreeTools {
         edge(Rcpp::_, 1),
         phy["edge.length"]
       );
-      Rcpp::IntegerMatrix edge = reweighted[0];
-      Rcpp::NumericVector weight = reweighted[1];
+      edge = Rcpp::IntegerMatrix(reweighted[0]);
+      weight = Rcpp::NumericVector(reweighted[1]);
     } else {
       edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
     }
