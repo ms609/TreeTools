@@ -122,8 +122,8 @@ namespace TreeTools {
       Rcpp::stop("`outgroup` exceeds number of nodes");
     }
     Rcpp::List ret = Rcpp::clone(phy);
-    ret.attr("order") = "preorder";
     if (outgroup == root_node) {
+      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
       ret["edge"] = edge;
       if (weighted) {
         ret["edge.length"] = weight;
@@ -182,6 +182,7 @@ namespace TreeTools {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
       }
+      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
 
     } else { // Root node will be retained; we need a new root edge
 
@@ -224,6 +225,7 @@ namespace TreeTools {
                                                new_edge(Rcpp::_, 1));
       }
       
+      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
     }
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
