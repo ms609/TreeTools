@@ -175,7 +175,7 @@ namespace TreeTools {
         Rcpp::List preorder_res;
         preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
                                          new_edge(Rcpp::_, 1),
-                                         phy["edge.length"]);
+                                         weight);
         ret["edge"] = preorder_res[0];
         ret["edge.length"] = preorder_res[1];
       } else {
@@ -188,7 +188,6 @@ namespace TreeTools {
       Rcpp::IntegerMatrix new_edge(n_edge + 1, 2);
       Rcpp::NumericVector new_wt(n_edge + 1);
       if (weighted) {
-        weight = phy["edge.length"];
         for (int i = n_edge; i--; ) {
           new_wt[i] = weight[i];
         }
