@@ -91,15 +91,10 @@ test_that("Rooted trees report preorder accurately", {
   expect_preorder(root_on_node(tree, deepNode))
   
   weighted <- tree
-  weighted[["edge.length"]] <- seq_len(dim(edge)[[1]])
-  # Currently failing:
+  weights <- seq_len(dim(edge)[[1]])
+  weighted[["edge.length"]] <- weights
   expect_equal(sort(root_on_node(weighted, rootNode)[["edge.length"]]),
                     weighted[["edge.length"]])
   expect_preorder(root_on_node(weighted, rootNode))
   expect_preorder(root_on_node(weighted, deepNode))
-  # Motivation: 
-  # 
-  # set.seed(0)
-  # trueTree <- TreeTools::RandomTree(20, root = TRUE)
-  # TreeSearch::TBR(trueTree)$edge # explodes
 })
