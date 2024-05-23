@@ -83,6 +83,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,
                          tip.label = tips),
+                    order = "preorder",
                     class = "phylo")
 
   # If root is simply a logical T/F, then root our tree randomly - or don't!
