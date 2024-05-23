@@ -151,7 +151,8 @@ postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
 following the preorder convention for edge and node numbering.
 
 \code{RenumberEdges()} formats the output of \code{RenumberTree()} into a list
-whose two entries correspond to the new parent and child vectors.
+whose two entries correspond to the new parent and child vectors,
+in preorder.
 
 \code{ApePostorder()}, \code{Cladewise()}, \code{Postorder()}, \code{Preorder()} and
 \code{Pruningwise()} each return a tree of class \code{phylo} with nodes following the
