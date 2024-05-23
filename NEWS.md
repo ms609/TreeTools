@@ -1,4 +1,4 @@
-# TreeTools 1.10.0.9006 (development) #
+# TreeTools 1.11.0 #
 
 ## New methods and functions
 
