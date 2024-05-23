@@ -85,7 +85,7 @@ The encoding of an input file will be automatically determined by R.
 Errors pertaining to an \verb{invalid multibyte string} or
 \verb{string invalid at that locale} indicate that R has failed to detect
 the appropriate encoding.  Either
-\href{https://support.posit.co/hc/en-us/articles/200532197}{re-save the file}
+\href{https://support.posit.co/hc/en-us/articles/200532197-Character-Encoding-in-the-RStudio-IDE}{re-save the file}
 in a supported encoding (\code{UTF-8} is a good choice) or
 specify the file encoding (which you can find by, for example, opening in
 \href{https://notepad-plus-plus.org/downloads/}{Notepad++} and identifying
