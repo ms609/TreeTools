@@ -29,7 +29,7 @@ name: mem-check
 
 jobs:
   mem-check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     name: valgrind ${{ matrix.config.test }}
 
