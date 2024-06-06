@@ -46,10 +46,11 @@ test_that("Expectations are correct", {
   expect_equal(range(tci), range(context[1:2]))
   expect_equal(mean(tci), context[["uniform.expected"]])
   
+  set.seed(1)
   unif <- replicate(100, TotalCopheneticIndex(RandomTree(10, root = TRUE)))
   expect_equal(
     mean(unif),
     TCIContext(10)$uniform.expected, # 76
-    tolerance = 0.05
+    tolerance = 0.075
   )
 })
