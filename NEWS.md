@@ -1,3 +1,9 @@
+# TreeTools 1.11.1.9000 (2024-06-19) #
+
+- Support larger trees in `TotalCopheneticIndex()`, fixing
+  [#158](https://github.com/ms609/TreeTools/issues/158).
+
+
 # TreeTools 1.11.1 (2024-06-06) #
 
 - Set random seed and increase tolerance to avoid false negatives on tests.

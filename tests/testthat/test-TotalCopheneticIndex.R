@@ -54,3 +54,23 @@ test_that("Expectations are correct", {
     tolerance = 0.075
   )
 })
+
+test_that("Large trees work", {
+  expect_equal(TotalCopheneticIndex(BalancedTree(164)), .MCI(164))
+  H  <- function(n) sum(1 / seq_len(n))
+  H2 <- function(n) sum(1 / (seq_len(n) ^ 2))
+  
+  x <- 1024
+  
+  expect_equal(unlist(TCIContext(x)),
+               c(maximum = choose(x, 3), minimum = .MCI(x),
+                 uniform.expected = exp(lchoose(x, 2) - log(2) +
+                                          LnDoubleFactorial((x + x) - 2L) - 
+                                          LnDoubleFactorial((x + x) - 3L)
+                                        ) - choose(x, 2),
+                 yule.expected =  (x * (x + 1)) - (2 * x * H(x)),
+                 yule.variance = (
+                   (1 / 12) * (x^4 - (10 * x^3) + (131 * x^2) - (2 * x))
+                   ) - (4 * x^2 * H2(x)) - (6 * x * H(x))
+               ))
+})
