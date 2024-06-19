@@ -76,6 +76,7 @@ provides an alternative implementation of this index and its predecessors.
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},
 \code{\link{Consensus}()},
+\code{\link{J1Index}()},
 \code{\link{Stemwardness}}
 }
 \author{

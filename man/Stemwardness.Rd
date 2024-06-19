@@ -89,6 +89,7 @@ RootNodeDist(RootTree(pec8, "t3"), "t3")
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},
 \code{\link{Consensus}()},
+\code{\link{J1Index}()},
 \code{\link{TotalCopheneticIndex}()}
 }
 \author{
