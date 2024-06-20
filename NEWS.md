@@ -1,3 +1,10 @@
+# TreeTools 1.11.1.9001 (2024-06-19) #
+
+- `J1Index()` computes the robust, universal tree balance measure of 
+  Lemant _et al_. 2022 <doi:10.1093/sysbio/syac027>, incorporating [code](
+  https://github.com/robjohnnoble/RUtreebalance) by Rob Noble.
+
+
 # TreeTools 1.11.1.9000 (2024-06-19) #
 
 - Support larger trees in `TotalCopheneticIndex()`, fixing
