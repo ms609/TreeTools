@@ -38,4 +38,3 @@ IntegerVector ape_neworder_pruningwise(
   
   return neworder;
 }
-  
