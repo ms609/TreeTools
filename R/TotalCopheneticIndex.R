@@ -20,7 +20,7 @@
 #' Full details are provided by \insertCite{Mir2013;textual}{TreeTools}.
 #' 
 #' The \ifelse{html}{\out{J<sup>1</sup>}}{\eqn{J^1}} index
-#' \insertCite{Lemant2002}{TreeTools} has advantages over the Total Cophenetic
+#' \insertCite{Lemant2022}{TreeTools} has advantages over the Total Cophenetic
 #' Index, particularly when comparing trees with different numbers of leaves,
 #' or where the population size of nodes is meaningful; see [`J1Index()`].
 #'  

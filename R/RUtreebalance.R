@@ -177,27 +177,27 @@
 #' @examples
 #' # Using phylo object as input:
 #' phylo_tree <- read.tree(text="((a:0.1)A:0.5,(b1:0.2,b2:0.1)B:0.2);")
-#' J1_index(phylo_tree)
+#' J1Index(phylo_tree)
 #' phylo_tree2 <- read.tree(text='((A, B), ((C, D), (E, F)));')
-#' J1_index(phylo_tree2)
+#' J1Index(phylo_tree2)
 #' 
 #' # Using edges lists as input:
 #' tree1 <- data.frame(Parent = c(1, 1, 1, 1, 2, 3, 4),
 #'                     Identity = 1:7,
 #'                     Population = c(1, rep(5, 6)))
-#' J1_index(tree1)
+#' J1Index(tree1)
 #' tree2 <- data.frame(Parent = c(1, 1, 1, 1, 2, 3, 4),
 #'                     Identity = 1:7,
 #'                     Population = c(rep(0, 4), rep(1, 3)))
-#' J1_index(tree2)
+#' J1Index(tree2)
 #' tree3 <- data.frame(Parent = c(1, 1, 1, 1, 2, 3, 4),
 #'                     Identity = 1:7,
 #'                     Population = c(0, rep(1, 3), rep(0, 3)))
-#' J1_index(tree3)
+#' J1Index(tree3)
 #' cat_tree <- data.frame(Parent = c(1, 1:14, 1:15, 15),
 #'                        Identity = 1:31,
 #'                        Population = c(rep(0, 15), rep(1, 16)))
-#' J1_index(cat_tree)
+#' J1Index(cat_tree)
 #'
 #' # If population sizes are omitted then internal nodes are assigned population
 #' # size zero and leaves are assigned population size one:
@@ -207,6 +207,8 @@
 #' # Equivalently:                        
 #' sym_tree2 <- data.frame(Parent = c(1, rep(1:15, each = 2)),
 #'                        Identity = 1:31)
+#' J1Index(sym_tree1)
+#' J1Index(sym_tree2)
 #' @author Rob Noble, adapted by Martin R. Smith
 #' @references \insertAllCited{}
 #' @family tree characterization functions
