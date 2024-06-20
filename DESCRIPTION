@@ -1,16 +1,19 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.11.1.9000
+Version: 1.11.1.9001
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
          comment = c(ORCID = "0000-0001-5660-1727")),
   person(given = "Emmanuel", family = "Paradis", role = c("cph"),
-         comment = c(ORCID = "0000-0003-3092-2199"))
+         comment = c(ORCID = "0000-0003-3092-2199")),
+  person(given = "Robert", family = "Noble", role = c("cph"),
+         comment = c(ORCID = "0000-0002-8057-4252"))
   )
 License: GPL (>= 3)
 Copyright: Incorporates C/C++ code from 'ape' by Emmanuel Paradis
-  <doi:10.1093/bioinformatics/bty633>
+  <doi:10.1093/bioinformatics/bty633> and 'RUtreebalance' by Robert Noble
+  <doi:10.5281/zenodo.5873857>.
 Description: Efficient implementations of functions for the creation, 
   modification and analysis of phylogenetic trees.
   Applications include:
@@ -23,7 +26,8 @@ Description: Efficient implementations of functions for the creation,
   <doi:10.1371/journal.pone.0212942>;
   calculation of ancestor-descendant relationships,
   of 'stemwardness' (Asher & Smith, 2022) <doi:10.1093/sysbio/syab072>,
-  and of tree balance (Mir et al. 2013) <doi:10.1016/j.mbs.2012.10.005>;
+  and of tree balance (Mir et al. 2013, Lemant et al. 2022)
+  <doi:10.1016/j.mbs.2012.10.005>, <doi:10.1093/sysbio/syac027>;
   artificial extinction (Asher & Smith, 2022) <doi:10.1093/sysbio/syab072>;
   import and export of trees from Newick, Nexus (Maddison et al. 1997)
   <doi:10.1093/sysbio/46.4.590>,

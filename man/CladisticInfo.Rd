@@ -66,6 +66,7 @@ Other tree information functions:
 
 Other tree characterization functions: 
 \code{\link{Consensus}()},
+\code{\link{J1Index}()},
 \code{\link{Stemwardness}},
 \code{\link{TotalCopheneticIndex}()}
 }

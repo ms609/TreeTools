@@ -46,6 +46,11 @@ Formulae to calculate the expected values under the Yule and Uniform models
 of evolution are given in Theorems 17 and 23.
 
 Full details are provided by \insertCite{Mir2013;textual}{TreeTools}.
+
+The \ifelse{html}{\out{J<sup>1</sup>}}{\eqn{J^1}} index
+\insertCite{Lemant2022}{TreeTools} has advantages over the Total Cophenetic
+Index, particularly when comparing trees with different numbers of leaves,
+or where the population size of nodes is meaningful; see \code{\link[=J1Index]{J1Index()}}.
 }
 \examples{
 # Balanced trees have the minimum index for a binary tree;
@@ -69,13 +74,17 @@ TCIContext(5L) # Context for a tree with 5 leaves.
 \insertAllCited{}
 }
 \seealso{
-\code{cophen.index()} in the package
+\itemize{
+\item \code{\link[=J1Index]{J1Index()}} provides a more robust, universal tree balance index.
+\item \code{cophen.index()} in the package
 \href{https://github.com/LuciaRotger/CollessLike}{\pkg{CollessLike}}
 provides an alternative implementation of this index and its predecessors.
+}
 
 Other tree characterization functions: 
 \code{\link{CladisticInfo}()},
 \code{\link{Consensus}()},
+\code{\link{J1Index}()},
 \code{\link{Stemwardness}}
 }
 \author{
