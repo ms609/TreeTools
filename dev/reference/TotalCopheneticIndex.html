@@ -26,7 +26,7 @@ TCIContext() lists its possible values."><meta name="robots" content="noindex"><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9000</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9001</span>
       </span>
     </div>
 
@@ -129,10 +129,19 @@ Formulae to calculate the expected values under the Yule and Uniform models
 of evolution are given in Theorems 17 and 23.</p>
 <p>Full details are provided by Mir et al. (2013)
 .</p>
+<p>The J<sup>1</sup> index
+(Lemant et al. 2022)
+ has advantages over the Total Cophenetic
+Index, particularly when comparing trees with different numbers of leaves,
+or where the population size of nodes is meaningful; see <code><a href="J1Index.html">J1Index()</a></code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Mir A, Rosselló F, Rotger LA (2013).
+    <p>Lemant J, Le Sueur C, Manojlović V, Noble R (2022).
+“Robust, Universal Tree Balance Indices.”
+<em>Systematic Biology</em>, <b>71</b>(5), 1210--1224.
+<a href="https://doi.org/10.1093/sysbio/syac027" class="external-link">doi:10.1093/sysbio/syac027</a>
+.<br><br> Mir A, Rosselló F, Rotger LA (2013).
 “A new balance index for phylogenetic trees.”
 <em>Mathematical Biosciences</em>, <b>241</b>(1), 125--136.
 <a href="https://doi.org/10.1016/j.mbs.2012.10.005" class="external-link">doi:10.1016/j.mbs.2012.10.005</a>
@@ -140,12 +149,15 @@ of evolution are given in Theorems 17 and 23.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code>cophen.index()</code> in the package
+    <div class="dont-index">
+<ul><li><p><code><a href="J1Index.html">J1Index()</a></code> provides a more robust, universal tree balance index.</p></li>
+<li><p><code>cophen.index()</code> in the package
 <a href="https://github.com/LuciaRotger/CollessLike" class="external-link"><span class="pkg">CollessLike</span></a>
-provides an alternative implementation of this index and its predecessors.</p>
-<p>Other tree characterization functions: 
+provides an alternative implementation of this index and its predecessors.</p></li>
+</ul><p>Other tree characterization functions: 
 <code><a href="CladisticInfo.html">CladisticInfo</a>()</code>,
 <code><a href="Consensus.html">Consensus</a>()</code>,
+<code><a href="J1Index.html">J1Index</a>()</code>,
 <code><a href="Stemwardness.html">Stemwardness</a></code></p></div>
     </div>
     <div id="author">
