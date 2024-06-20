@@ -70,6 +70,8 @@ sym_tree1 <- data.frame(Parent = c(1, rep(1:15, each = 2)),
 # Equivalently:                        
 sym_tree2 <- data.frame(Parent = c(1, rep(1:15, each = 2)),
                        Identity = 1:31)
+J1Index(sym_tree1)
+J1Index(sym_tree2)
 }
 \references{
 \insertAllCited{}
