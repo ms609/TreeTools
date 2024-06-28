@@ -1,3 +1,8 @@
+# TreeTools 1.11.1.9003 (2024-06-28) #
+
+- Consistent sequence of list entries in phylo objects.
+
+
 # TreeTools 1.11.1.9002 (2024-06-28) #
 
 - `root_on_node()` handles trees with < 2 leaves.
