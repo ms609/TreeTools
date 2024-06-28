@@ -51,4 +51,6 @@ test_that("Tree list entries are in consistent order", {
   expect_equal(names(PectinateTree(2)), expected)
   expect_equal(names(StarTree(2)), expected)
   expect_equal(names(RandomTree(3)), expected)
+  expect_equal(names(RootTree(BalancedTree(4))), expected)
+  expect_equal(names(RootTree(KeepTip(BalancedTree(14), 1:4))), expected)
 })
