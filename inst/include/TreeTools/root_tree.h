@@ -18,24 +18,27 @@ namespace TreeTools {
     const Rcpp::IntegerVector child,
     const Rcpp::DoubleVector weight);
 
-  // #TODO Write test cases
   // edge must be BINARY
   // edge must be in preorder
+  // 
   // Benchmarking at 2024-02-23 established that this is consistently twice
   // as fast as root_on_node, so is worth retaining,
   // despite some overlap in code.
+  // 
+  // #TODO Write test cases
+  // 
   // [[Rcpp::export]]
   inline Rcpp::IntegerMatrix root_binary(const Rcpp::IntegerMatrix edge,
                                          const int outgroup) {
-
-    if (edge(0, 1) == outgroup) return edge;
 
     const intx n_edge = edge.nrow(),
       n_node = n_edge / 2,
       n_tip = n_node + 1,
       root_node = n_tip + 1,
       max_node = n_node + n_tip;
-
+    
+    if (!n_edge || !n_node || n_tip < 2) return edge;
+    if (edge(0, 1) == outgroup) return edge;
     if (outgroup < 1) {
       Rcpp::stop("`outgroup` must be a positive integer");
     }
@@ -102,8 +105,9 @@ namespace TreeTools {
       n_tip = max_node - n_node,
       root_node = n_tip + 1
     ;
-    const bool weighted = phy.containsElementNamed("edge.length");
+    if (!n_edge || !n_node || n_tip < 2) return phy;
 
+    const bool weighted = phy.containsElementNamed("edge.length");
     if (weighted) {
       Rcpp::List reweighted = preorder_weighted(
         edge(Rcpp::_, 0),

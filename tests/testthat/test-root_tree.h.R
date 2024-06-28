@@ -21,6 +21,17 @@ test_that("Big trees don't fail", {
                PectinateTree(2^14 + 1))
 })
 
+test_that("Small trees are rootable", {
+  ztt <- ZeroTaxonTree()
+  expect_equal(root_on_node(ztt, 1), ztt)
+  expect_equal(root_binary(ztt[["edge"]], 1), ztt$edge)
+  expect_equal(root_on_node(ztt, 999), ztt)
+  
+  stt <- SingleTaxonTree()
+  expect_equal(root_on_node(stt, 1), stt)
+  expect_equal(root_on_node(stt, 2), root_on_node(stt, 1))
+})
+
 test_that("Binary trees are rootable", {
   Test <- function(tree, root) {
     expect_equal(Preorder(ApeRoot(tree, tree$tip.label[root]))$edge,
@@ -33,6 +44,7 @@ test_that("Binary trees are rootable", {
   ed9 <- PectinateTree(9)$edge
   expect_equal(root_binary(ed9, 10), ed9)
   expect_equal(root_binary(ed9, 1), ed9)
+  expect_error(root_binary(ed9, 9999), "exceeds number of nodes")
 })
 
 test_that("Polytomous trees are rootable", {
@@ -78,6 +90,7 @@ test_that("Rooted trees report preorder accurately", {
   
   expect_preorder(root_binary(edge, 2))
   expect_preorder(root_binary(edge, 6))
+  expect_error(root_binary(edge, 999), "exceeds number of nodes")
   
   tree <- structure(list(edge = edge,
                          Nnode = nTips - 1L,

@@ -1,3 +1,8 @@
+# TreeTools 1.11.1.9002 (2024-06-28) #
+
+- `root_on_node()` handles trees with < 2 leaves.
+
+
 # TreeTools 1.11.1.9001 (2024-06-19) #
 
 - `J1Index()` computes the robust, universal tree balance measure of 
