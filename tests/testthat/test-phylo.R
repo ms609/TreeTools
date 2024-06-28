@@ -43,3 +43,12 @@ test_that("CladeSizes() works", {
   expect_warning(expect_equal(CladeSizes(BalancedTree(7), internal = FALSE),
                               CladeSizes(BalancedTree(7), internal = 8:9)))
 })
+
+test_that("Tree list entries are in consistent order", {
+  expected <- names(ape::read.tree(text = "(a, b);"))
+  expect_equal(names(ZeroTaxonTree()), expected)
+  expect_equal(names(BalancedTree(2)), expected)
+  expect_equal(names(PectinateTree(2)), expected)
+  expect_equal(names(StarTree(2)), expected)
+  expect_equal(names(RandomTree(3)), expected)
+})

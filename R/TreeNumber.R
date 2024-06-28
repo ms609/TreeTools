@@ -293,8 +293,8 @@ as.phylo.numeric <- function(x, nTip = attr(x, "nTip"),
                             seq_len(nTip + nTip - 2L))
       .PreorderTree(
         edge = do.call(cbind, edge),
-        Nnode = nTip - 1L,
-        tip.label = tipLabels
+        tip.label = tipLabels,
+        Nnode = nTip - 1L
       )
     }
   }
