@@ -60,6 +60,9 @@ RandomTree <- function(tips, root = FALSE, nodes) {
   if (nodes > nodesInBinary) {
     warning("`nodes` higher than number in binary tree. Ignoring.")
   }
+  if (nTips < 3) {
+    return(BalancedTree(tips))
+  }
   if (nodes < 1L) {
     stop("A tree must contain one or more `nodes`")
   }

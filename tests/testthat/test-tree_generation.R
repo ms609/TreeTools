@@ -78,6 +78,18 @@ test_that("Random trees are generated correctly", {
   }
 })
 
+test_that("Small random trees are generated", {
+  expect_equal(RandomTree(0, root = FALSE), ZeroTaxonTree())
+  expect_equal(RandomTree(0, root = TRUE), ZeroTaxonTree())
+  expect_equal(RandomTree(0), ZeroTaxonTree())
+  expect_equal(RandomTree("one", root = FALSE), SingleTaxonTree("one"))
+  expect_equal(RandomTree("one", root = TRUE), SingleTaxonTree("one"))
+  expect_equal(RandomTree(letters[1:2], root = FALSE),
+               UnrootTree(PectinateTree(letters[1:2])))
+  expect_equal(RandomTree(letters[1:2], root = TRUE),
+               UnrootTree(PectinateTree(letters[1:2])))
+})
+
 test_that("YuleTree() works", {
   expect_equal(YuleTree(0), ZeroTaxonTree())
   expect_equal(YuleTree("a"), SingleTaxonTree("a"))

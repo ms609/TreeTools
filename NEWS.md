@@ -1,6 +1,7 @@
 # TreeTools 1.11.1.9003 (2024-06-28) #
 
 - Consistent sequence of list entries in phylo objects.
+- `RandomTree()` returns trees for < 3 leaves.
 
 
 # TreeTools 1.11.1.9002 (2024-06-28) #
