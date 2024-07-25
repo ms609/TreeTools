@@ -36,6 +36,7 @@ reference:
       - has_concept("consensus tree functions")
       - NPartitions
       - PairwiseDistances
+      - TopologyOnly
 
   - title: "Phylogenetic data"
     desc: "Functions for modifying and evaluating datasets."
