@@ -44,7 +44,8 @@ sequence.}
 
 \item{\dots}{Parameters to pass to \verb{Read[Tnt]Characters()}.}
 
-\item{dataset}{list of taxa and characters, in the format produced by \link{read.nexus.data}:
+\item{dataset}{list of taxa and characters, in the format produced by
+\code{\link[ape]{read.nexus.data}()}:
 a list of sequences each made of a single character vector,
 and named with the taxon name.}
 }

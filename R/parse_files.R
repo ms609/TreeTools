@@ -845,9 +845,10 @@ ReadTntAsPhyDat <- function(...) {
 #' because they have been read using [`read.table()`], try [`MatrixToPhyDat()`]
 #' instead.
 #'
-#' @param dataset list of taxa and characters, in the format produced by [read.nexus.data]:
-#'                a list of sequences each made of a single character vector,
-#'                and named with the taxon name.
+#' @param dataset list of taxa and characters, in the format produced by 
+#' \code{\link[ape]{read.nexus.data}()}:
+#'   a list of sequences each made of a single character vector,
+#'   and named with the taxon name.
 #'
 #' @export
 PhyDat <- function(dataset) {

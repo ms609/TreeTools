@@ -7,8 +7,8 @@
 Subtree(tree, node)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}, with internal numbering
-in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}, with internal
+numbering in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
 \code{\link{Cladewise}(tree)}) .}
 
 \item{node}{The number of the node at the base of the clade to be extracted.}
@@ -21,8 +21,8 @@ clade extracted from the original tree.
 \code{Subtree()} safely extracts a clade from a phylogenetic tree.
 }
 \details{
-Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
-sometimes behaves erratically.
+Modified from the \pkg{ape} function \code{\link[ape]{extract.clade}}, which
+sometimes behaves unpredictably.
 Unlike extract.clade, this function supports the extraction of "clades"
 that constitute a single tip.
 }

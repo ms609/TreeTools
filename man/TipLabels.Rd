@@ -74,7 +74,7 @@ object only (\code{TRUE}), or for each object in a list (\code{FALSE}).}
 \value{
 \code{TipLabels()} returns a character vector listing the tip labels
 appropriate to \code{x}. If \code{x} is a single integer, this will be a vector
-\code{t1}, \code{t2} ... \code{tx}, to match the default of \code{ape::\link{rtree}()}.
+\code{t1}, \code{t2} ... \code{tx}, to match the default of \code{\link[ape]{rtree}()}.
 }
 \description{
 \code{TipLabels()} extracts labels from an object: for example, names of taxa in
