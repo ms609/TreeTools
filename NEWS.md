@@ -1,28 +1,17 @@
-# TreeTools 1.11.1.9004 (2024-07-25) #
+# TreeTools 1.12.0 (2024-07-25) #
+
+## New methods and functions
 
 - `TopologyOnly()` removes metadata from phylo objects.
-
-
-# TreeTools 1.11.1.9003 (2024-06-28) #
-
-- Consistent sequence of list entries in phylo objects.
-- `RandomTree()` returns trees for < 3 leaves.
-
-
-# TreeTools 1.11.1.9002 (2024-06-28) #
-
-- `root_on_node()` handles trees with < 2 leaves.
-
-
-# TreeTools 1.11.1.9001 (2024-06-19) #
-
 - `J1Index()` computes the robust, universal tree balance measure of 
   Lemant _et al_. 2022 <doi:10.1093/sysbio/syac027>, incorporating [code](
   https://github.com/robjohnnoble/RUtreebalance) by Rob Noble.
 
+## Enhancements
 
-# TreeTools 1.11.1.9000 (2024-06-19) #
-
+- Consistent sequence of list entries in phylo objects.
+- `RandomTree()` returns trees for < 3 leaves.
+- `root_on_node()` handles trees with < 2 leaves.
 - Support larger trees in `TotalCopheneticIndex()`, fixing
   [#158](https://github.com/ms609/TreeTools/issues/158).
 
