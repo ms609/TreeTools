@@ -11,10 +11,12 @@ AllAncestors(parent, child)
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
+matrix of a tree of class \code{\link[ape]{phylo}}, i.e.
+\code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
+matrix of a tree of class \code{\link[ape]{phylo}}, i.e.
+\code{tree[["edge"]][, 2]}.}
 
 \item{node}{Integer giving the index of the node or tip whose ancestors are
 required, or \code{NULL} to return ancestors of all nodes.}

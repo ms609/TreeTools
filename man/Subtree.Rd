@@ -21,8 +21,8 @@ clade extracted from the original tree.
 \code{Subtree()} safely extracts a clade from a phylogenetic tree.
 }
 \details{
-Modified from the \pkg{ape} function \code{\link{extract.clade}}, which
-sometimes behaves erratically.
+Modified from the \pkg{ape} function \code{\link[ape]{extract.clade}}, which
+sometimes behaves unpredictably.
 Unlike extract.clade, this function supports the extraction of "clades"
 that constitute a single tip.
 }

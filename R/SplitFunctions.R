@@ -238,7 +238,7 @@ LnSplitMatchProbability <- function(split1, split2) {
 #'
 #' @return `TipLabels()` returns a character vector listing the tip labels
 #' appropriate to `x`. If `x` is a single integer, this will be a vector
-#' `t1`, `t2` ... `tx`, to match the default of \code{ape::\link{rtree}()}.
+#' `t1`, `t2` ... `tx`, to match the default of \code{\link[ape]{rtree}()}.
 #'
 #' @examples
 #' TipLabels(BalancedTree(letters[5:1]))

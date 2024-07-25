@@ -235,7 +235,7 @@ UnrootedTreeKey <- function(tree, asInteger = FALSE) {
 
 #' @rdname TreeShape
 #' @param \dots Value of `nTip`, to pass to memoized `.UnrootedKeys`.
-#' @param envir Unused; passed to [`addMemoization`].
+#' @param envir Unused; passed to \code{\link[R.cache]{addMemoization}()}.
 #' @return `UnrootedKeys()` returns a vector of integers corresponding to the
 #' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
 #' It is a wrapper to `.UnrootedKeys()`, with memoization, meaning that results

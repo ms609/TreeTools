@@ -21,10 +21,12 @@ AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 1]}}
+matrix of a tree of class \code{\link[ape]{phylo}}, i.e.
+\code{tree[["edge"]][, 1]}}
 
 \item{child}{Integer vector corresponding to the second column of the edge
-matrix of a tree of class \code{\link{phylo}}, i.e. \code{tree[["edge"]][, 2]}.}
+matrix of a tree of class \code{\link[ape]{phylo}}, i.e.
+\code{tree[["edge"]][, 2]}.}
 
 \item{edge}{Integer specifying the number of the edge whose children are
 required (see \code{\link[ape:nodelabels]{edgelabels}()}).}

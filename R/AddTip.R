@@ -2,7 +2,7 @@
 #'
 #' `AddTip()` adds a tip to a phylogenetic tree at a specified location.
 #'
-#' `AddTip()` extends \code{\link{bind.tree}}, which cannot handle
+#' `AddTip()` extends \code{\link[ape]{bind.tree}}, which cannot handle
 #'   single-taxon trees.
 #'
 #' @template treeParam
@@ -32,7 +32,7 @@
 #'
 #' @template MRS
 #'
-#' @seealso Add one tree to another: \code{\link{bind.tree}()}
+#' @seealso Add one tree to another: \code{\link[ape]{bind.tree}()}
 #'
 #' @examples
 #' tree <- BalancedTree(10)

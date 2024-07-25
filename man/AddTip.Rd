@@ -62,7 +62,7 @@ the trees produced by adding \code{label} to each edge of \code{tree} in turn.
 \code{AddTip()} adds a tip to a phylogenetic tree at a specified location.
 }
 \details{
-\code{AddTip()} extends \code{\link{bind.tree}}, which cannot handle
+\code{AddTip()} extends \code{\link[ape]{bind.tree}}, which cannot handle
 single-taxon trees.
 
 \code{AddTipEverywhere()} adds a tip to each edge in turn.
@@ -107,7 +107,7 @@ par(oldPar)
 
 }
 \seealso{
-Add one tree to another: \code{\link{bind.tree}()}
+Add one tree to another: \code{\link[ape]{bind.tree}()}
 
 Other tree manipulation: 
 \code{\link{CollapseNode}()},
