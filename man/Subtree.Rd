@@ -7,7 +7,7 @@
 Subtree(tree, node)
 }
 \arguments{
-\item{tree}{A tree of class \code{\link{phylo}}, with internal numbering
+\item{tree}{A tree of class  \code{\link[ape:read.tree]{phylo}}, with internal numbering
 in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
 \code{\link{Cladewise}(tree)}) .}
 
