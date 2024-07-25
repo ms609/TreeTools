@@ -1,3 +1,8 @@
+# TreeTools 1.11.1.9004 (2024-07-25) #
+
+- `TopologyOnly()` removes metadata from phylo objects.
+
+
 # TreeTools 1.11.1.9003 (2024-06-28) #
 
 - Consistent sequence of list entries in phylo objects.
