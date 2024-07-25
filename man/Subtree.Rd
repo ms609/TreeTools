@@ -7,8 +7,8 @@
 Subtree(tree, node)
 }
 \arguments{
-\item{tree}{A tree of class  \code{\link[ape:read.tree]{phylo}}, with internal numbering
-in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
+\item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}, with internal
+numbering in cladewise order (use \code{\link{Preorder}(tree)} or (slower)
 \code{\link{Cladewise}(tree)}) .}
 
 \item{node}{The number of the node at the base of the clade to be extracted.}
