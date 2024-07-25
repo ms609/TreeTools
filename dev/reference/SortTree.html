@@ -10,7 +10,7 @@ does not obscure similarities between similar trees."><meta name="robots" conten
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -24,7 +24,7 @@ does not obscure similarities between similar trees."><meta name="robots" conten
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ does not obscure similarities between similar trees."><meta name="robots" conten
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -54,25 +54,25 @@ does not obscure similarities between similar trees."><meta name="robots" conten
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sort tree</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/tree_display.R" class="external-link"><code>R/tree_display.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/tree_display.R" class="external-link"><code>R/tree_display.R</code></a></small>
     <div class="hidden name"><code>SortTree.Rd</code></div>
     </div>
 
@@ -84,24 +84,26 @@ does not obscure similarities between similar trees.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for list</span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">SortTree</span><span class="op">(</span><span class="va">tree</span>, how <span class="op">=</span> <span class="st">"cladesize"</span>, order <span class="op">=</span> <span class="fu"><a href="TipLabels.html">TipLabels</a></span><span class="op">(</span><span class="va">tree</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>tree</dt>
+
+
+<dl><dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>One or more trees of class <code>phylo</code>, optionally as a list
 or a <code>multiPhylo</code> object.</p></dd>
 
 
-<dt>how</dt>
+<dt id="arg-how">how<a class="anchor" aria-label="anchor" href="#arg-how"></a></dt>
 <dd><p>Character vector specifying sort method:
 <code>"Cladesize"</code> rotates each node such that the larger clade is first,
 thus appearing lower when plotted;
@@ -109,7 +111,7 @@ thus appearing lower when plotted;
 are listed first, and thus plot lower.</p></dd>
 
 
-<dt>order</dt>
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p>Character vector listing tip labels in sequence they should
 appear on tree. Clades containing a taxon earlier in this list will be listed
 sooner and thus plot lower on a tree.  Taxa not listed in <code>order</code> will be
@@ -118,9 +120,7 @@ treated as if they were last in the list.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>SortTree()</code> returns tree in the format of <code>tree</code>, with each node
+    <p><code>SortTree()</code> returns tree in the format of <code>tree</code>, with each node
 in each tree sorted</p>
     </div>
     <div id="details">
@@ -138,7 +138,7 @@ bottom of a plotted tree.</p>
 based on the index of leaves.</p>
 <p><code><a href="sort.multiPhylo.html">sort.multiPhylo()</a></code> sorts a list of trees stored as a <code>multiPhylo</code>
 object.</p>
-<p>Other tree manipulation: 
+<p>Other tree manipulation:
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
@@ -192,16 +192,16 @@ object.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

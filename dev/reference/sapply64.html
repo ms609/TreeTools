@@ -13,7 +13,7 @@ resulting in a vector of numerics that require conversion back to
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -27,7 +27,7 @@ resulting in a vector of numerics that require conversion back to
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -38,7 +38,7 @@ resulting in a vector of numerics that require conversion back to
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -57,25 +57,25 @@ resulting in a vector of numerics that require conversion back to
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Apply a function that returns 64-bit integers over a list or vector</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/helper_functions.R" class="external-link"><code>R/helper_functions.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/helper_functions.R" class="external-link"><code>R/helper_functions.R</code></a></small>
     <div class="hidden name"><code>sapply64.Rd</code></div>
     </div>
 
@@ -97,23 +97,25 @@ resulting in a vector of numerics that require conversion back to
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>X</dt>
+
+
+<dl><dt id="arg-x">X<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>a vector (atomic or list) or an <code><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></code>
     object.  Other objects (including classed objects) will be coerced
     by <code>base::<a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></code>.</p></dd>
 
 
-<dt>FUN</dt>
+<dt id="arg-fun">FUN<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
 <dd><p>the function to be applied to each element of <code>X</code>:
     see ‘Details’.  In the case of functions like
     <code>+</code>, <code>%*%</code>, the function name must be backquoted or quoted.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>optional arguments to <code>FUN</code>.</p></dd>
 
 
-<dt>simplify</dt>
+<dt id="arg-simplify">simplify<a class="anchor" aria-label="anchor" href="#arg-simplify"></a></dt>
 <dd><p>logical or character string; should the result be
     simplified to a vector, matrix or higher dimensional array if
     possible?  For <code>sapply</code> it must be named and not abbreviated.
@@ -124,22 +126,22 @@ resulting in a vector of numerics that require conversion back to
     of <code>FUN(X[[i]])</code>.</p></dd>
 
 
-<dt>USE.NAMES</dt>
+<dt id="arg-use-names">USE.NAMES<a class="anchor" aria-label="anchor" href="#arg-use-names"></a></dt>
 <dd><p>logical; if <code>TRUE</code> and if <code>X</code> is character,
     use <code>X</code> as <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></code> for the result unless it had names
     already.  Since this argument follows <code>...</code> its name cannot
     be abbreviated.</p></dd>
 
 
-<dt>FUN.LEN</dt>
+<dt id="arg-fun-len">FUN.LEN<a class="anchor" aria-label="anchor" href="#arg-fun-len"></a></dt>
 <dd><p>Integer specifying the length of the output of <code>FUN</code>.</p></dd>
 
 
-<dt>n</dt>
+<dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>integer: the number of replications.</p></dd>
 
 
-<dt>expr</dt>
+<dt id="arg-expr">expr<a class="anchor" aria-label="anchor" href="#arg-expr"></a></dt>
 <dd><p>the expression (a <a href="https://rdrr.io/r/base/is.language.html" class="external-link">language object</a>, usually a call)
     to evaluate repeatedly.</p></dd>
 
@@ -184,16 +186,16 @@ resulting in a vector of numerics that require conversion back to
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

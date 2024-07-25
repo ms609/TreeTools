@@ -11,7 +11,7 @@ Use RootTree() instead."><meta name="robots" content="noindex"><!-- mathjax --><
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -25,7 +25,7 @@ Use RootTree() instead."><meta name="robots" content="noindex"><!-- mathjax --><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -36,7 +36,7 @@ Use RootTree() instead."><meta name="robots" content="noindex"><!-- mathjax --><
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -55,25 +55,25 @@ Use RootTree() instead."><meta name="robots" content="noindex"><!-- mathjax --><
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Generate a tree with a specified outgroup</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/tree_generation.R" class="external-link"><code>R/tree_generation.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/tree_generation.R" class="external-link"><code>R/tree_generation.R</code></a></small>
     <div class="hidden name"><code>EnforceOutgroup.Rd</code></div>
     </div>
 
@@ -86,31 +86,31 @@ Use <code><a href="RootTree.html">RootTree()</a></code> instead.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">EnforceOutgroup</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroup</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">EnforceOutgroup</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroup</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for character</span></span>
+<span><span class="co"># S3 method for class 'character'</span></span>
 <span><span class="fu">EnforceOutgroup</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroup</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>tree</dt>
+
+
+<dl><dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>Either a tree of class <code>phylo</code>; or (for <code>EnforceOutgroup()</code>)
 a character vector listing the names of all the taxa in the tree, from which
 a random tree will be generated.</p></dd>
 
 
-<dt>outgroup</dt>
+<dt id="arg-outgroup">outgroup<a class="anchor" aria-label="anchor" href="#arg-outgroup"></a></dt>
 <dd><p>Character vector containing the names of taxa to include in
 the outgroup.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>EnforceOutgroup()</code> returned a tree of class <code>phylo</code> where all
+    <p><code>EnforceOutgroup()</code> returned a tree of class <code>phylo</code> where all
 outgroup taxa are sister to all remaining taxa, without modifying the
 ingroup topology.</p>
     </div>
@@ -125,7 +125,7 @@ changing the relationships within the ingroup or within the outgroup.</p>
     <div class="dont-index"><p>For a more robust implementation, see <code><a href="RootTree.html">RootTree()</a></code>, which will
 eventually replace this function
 (<a href="https://github.com/ms609/TreeTools/issues/30" class="external-link">#30</a>).</p>
-<p>Other tree manipulation: 
+<p>Other tree manipulation:
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
@@ -162,16 +162,16 @@ eventually replace this function
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

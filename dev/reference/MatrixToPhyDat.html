@@ -10,7 +10,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><meta name="ro
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -24,7 +24,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><meta name="ro
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><meta name="ro
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -54,25 +54,25 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><meta name="ro
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert between matrices and <code>phyDat</code> objects</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/parse_files.R" class="external-link"><code>R/parse_files.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/parse_files.R" class="external-link"><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>MatrixToPhyDat.Rd</code></div>
     </div>
 
@@ -95,23 +95,25 @@ PhyDatToMatrix() converts a phyDat object to a matrix of tokens."><meta name="ro
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>tokens</dt>
+
+
+<dl><dt id="arg-tokens">tokens<a class="anchor" aria-label="anchor" href="#arg-tokens"></a></dt>
 <dd><p>Matrix of tokens, possibly created with <code><a href="ReadCharacters.html">ReadCharacters()</a></code>
 or <code><a href="ReadCharacters.html">ReadTntCharacters()</a></code>.
 Row names should correspond to leaf labels; column names may optionally
 correspond to character labels.</p></dd>
 
 
-<dt>dataset</dt>
+<dt id="arg-dataset">dataset<a class="anchor" aria-label="anchor" href="#arg-dataset"></a></dt>
 <dd><p>A dataset of class <code>phyDat</code>.</p></dd>
 
 
-<dt>ambigNA, inappNA</dt>
+<dt id="arg-ambigna-inappna">ambigNA, inappNA<a class="anchor" aria-label="anchor" href="#arg-ambigna-inappna"></a></dt>
 <dd><p>Logical specifying whether to denote ambiguous /
 inapplicable characters as <code>NA</code> values.</p></dd>
 
 
-<dt>parentheses</dt>
+<dt id="arg-parentheses">parentheses<a class="anchor" aria-label="anchor" href="#arg-parentheses"></a></dt>
 <dd><p>Character vector specifying style of parentheses
 with which to enclose ambiguous characters. <code>c("[", "]")</code> or <code>"[]"</code> will
 render <code>[01]</code>.
@@ -120,24 +122,20 @@ this will be treated as a distinct (non-ambiguous) token if re-encoding with
 <code>PhyDatToMatrix()</code>.</p></dd>
 
 
-<dt>sep</dt>
+<dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
 <dd><p>Character with which to separate ambiguous tokens, e.g. <code>','</code>
 will render <code>[0,1]</code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>MatrixToPhyDat()</code> returns an object of class <code>phyDat</code>.</p>
-
-
+    <p><code>MatrixToPhyDat()</code> returns an object of class <code>phyDat</code>.</p>
 <p><code>PhyDatToMatrix()</code> returns a matrix corresponding to the
 uncompressed character states within a <code>phyDat</code> object.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other phylogenetic matrix conversion functions: 
+    <div class="dont-index"><p>Other phylogenetic matrix conversion functions:
 <code><a href="PhyToString.html">StringToPhyDat</a>()</code></p></div>
     </div>
     <div id="author">
@@ -224,16 +222,16 @@ uncompressed character states within a <code>phyDat</code> object.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

@@ -1,354 +1,121 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/load-data.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/articles/load-trees.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/AddTip.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/AncestorEdge.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ApeTime.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ArtificialExtinction.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/CharacterInformation.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/CladeSizes.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/CladisticInfo.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ClusterTable-methods.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ClusterTable.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/CompatibleSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Consensus.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ConstrainedNJ.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/DescendantEdges.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/DoubleFactorial.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/DropTip.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/EdgeDistances.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/EndSentence.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/EnforceOutgroup.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Hamming.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/J1Index.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/KeptPaths.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/KeptVerts.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/LeafLabelInterchange.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ListAncestors.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Lobo.data.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MSTEdges.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MakeTreeBinary.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MatchEdges.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/MorphoBankDecode.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/N1Spr.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NDescendants.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NJTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NPartitionPairs.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NRooted.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NTip.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NewickTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Neworder.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NodeDepth.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NodeNumbers.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PairwiseDistances.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PathLengths.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/PolarizeSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ReadMrBayesTrees.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/ReadTntTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Renumber.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RenumberTips.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Reorder.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RoguePlot.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RootNode.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/RootTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SampleOne.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SortTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SpectrumLegend.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SplitFrequency.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SplitInformation.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Splits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Stemwardness.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Subsplit.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Subtree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/SupportColour.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TipLabels.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TipTimedTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TotalCopheneticIndex.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreeIsRooted.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreeNumber.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreeShape.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreeTools-package.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TreesMatchingTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/TrivialTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/Unquote.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/WriteTntCharacters.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/as.multiPhylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/brewer.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/dot-RandomParent.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/edge_to_splits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/is.TreeNumber.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/match.Splits.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/nRootedShapes.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/print.TreeNumber.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/root_on_node.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/sort.multiPhylo.html</loc>
-  </url>
-  <url>
-    <loc>https://ms609.github.io/TreeTools/reference/xor.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/CONTRIBUTING.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/articles/index.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/articles/load-data.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/articles/load-trees.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/authors.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/index.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/news/index.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/AddTip.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/AncestorEdge.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ApeTime.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ArtificialExtinction.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/CharacterInformation.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/CladeSizes.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/CladisticInfo.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ClusterTable-methods.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ClusterTable.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/CollapseNode.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/CompatibleSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Consensus.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ConsensusWithout.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ConstrainedNJ.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/DescendantEdges.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/DoubleFactorial.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/DropTip.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/EdgeDistances.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/EndSentence.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/EnforceOutgroup.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Hamming.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ImposeConstraint.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/J1Index.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/KeptPaths.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/KeptVerts.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/LabelSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/LeafLabelInterchange.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ListAncestors.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Lobo.data.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MSTEdges.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MakeTreeBinary.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MatchEdges.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/MorphoBankDecode.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/N1Spr.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NDescendants.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NJTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NPartitionPairs.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NRooted.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NTip.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NewickTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Neworder.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NodeDepth.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NodeNumbers.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/NodeOrder.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/PairwiseDistances.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/PathLengths.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/PhyToString.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/PolarizeSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ReadCharacters.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ReadMrBayesTrees.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/ReadTntTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Renumber.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/RenumberTips.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Reorder.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/RightmostCharacter.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/RoguePlot.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/RootNode.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/RootTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SampleOne.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SortTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SpectrumLegend.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SplitFrequency.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SplitInformation.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Splits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Stemwardness.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Subsplit.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Subtree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SupportColour.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TipLabels.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TipTimedTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TipsInSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TopologyOnly.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TotalCopheneticIndex.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreeIsRooted.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreeNumber.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreeShape.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreeTools-package.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TreesMatchingTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/TrivialTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Unquote.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/UnrootedTreesMatchingSplit.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/UnshiftTree.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/WriteTntCharacters.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/as.Newick.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/as.multiPhylo.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/brewer.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/dot-RandomParent.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/doubleFactorials.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/edge_to_splits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/index.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/is.TreeNumber.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/logDoubleFactorials.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/match.Splits.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/nRootedShapes.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/print.TreeNumber.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/root_on_node.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/sapply64.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/sort.multiPhylo.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/xor.html</loc></url>
 </urlset>
+

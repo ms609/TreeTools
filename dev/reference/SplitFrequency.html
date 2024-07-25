@@ -12,7 +12,7 @@ or bootstrap trees.'><meta name="robots" content="noindex"><!-- mathjax --><scri
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -26,7 +26,7 @@ or bootstrap trees.'><meta name="robots" content="noindex"><!-- mathjax --><scri
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@ or bootstrap trees.'><meta name="robots" content="noindex"><!-- mathjax --><scri
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -56,25 +56,25 @@ or bootstrap trees.'><meta name="robots" content="noindex"><!-- mathjax --><scri
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Frequency of splits</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
     <div class="hidden name"><code>SplitFrequency.Rd</code></div>
     </div>
 
@@ -97,40 +97,40 @@ or bootstrap trees.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>reference</dt>
+
+
+<dl><dt id="arg-reference">reference<a class="anchor" aria-label="anchor" href="#arg-reference"></a></dt>
 <dd><p>A tree of class <code>phylo</code>, a <code>Splits</code> object.</p></dd>
 
 
-<dt>forest</dt>
+<dt id="arg-forest">forest<a class="anchor" aria-label="anchor" href="#arg-forest"></a></dt>
 <dd><p>a list of trees of class <code>phylo</code>, or a <code>multiPhylo</code> object; or a
 <code>Splits</code> object. See
 <a href="https://ms609.github.io/TreeTools/articles/load-trees.html">vignette</a> for
 possible methods of loading trees into R.</p></dd>
 
 
-<dt>tips</dt>
+<dt id="arg-tips">tips<a class="anchor" aria-label="anchor" href="#arg-tips"></a></dt>
 <dd><p>Integer vector specifying the tips of the tree within the chosen
 split.</p></dd>
 
 
-<dt>tree</dt>
+<dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
 
 
-<dt>tipIndex</dt>
+<dt id="arg-tipindex">tipIndex<a class="anchor" aria-label="anchor" href="#arg-tipindex"></a></dt>
 <dd><p>Character vector of tip names, in a fixed order.</p></dd>
 
 
-<dt>powersOf2</dt>
+<dt id="arg-powersof-">powersOf2<a class="anchor" aria-label="anchor" href="#arg-powersof-"></a></dt>
 <dd><p>Integer vector of same length as <code>tipIndex</code>, specifying a
 power of 2 to be associated with each tip in turn.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>SplitFrequency()</code> returns the number of trees in <code>forest</code> that
+    <p><code>SplitFrequency()</code> returns the number of trees in <code>forest</code> that
 contain each split in <code>reference</code>.
 If <code>reference</code> is a tree of class <code>phylo</code>, then the sequence will correspond
 to the order of nodes (use <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">ape::nodelabels()</a></code> to view).
@@ -144,7 +144,7 @@ constituent functions (see examples)</p>
     </div>
     <div id="functions">
     <h2>Functions</h2>
-    
+
 <ul><li><p><code>SplitNumber()</code>: Assign a unique integer to each split</p></li>
 <li><p><code>ForestSplits()</code>: Frequency of splits in a given forest of trees</p></li>
 <li><p><code>TreeSplits()</code>: Deprecated. Listed the splits in a given tree.
@@ -152,7 +152,7 @@ Use as.Splits instead.</p></li>
 </ul></div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other Splits operations: 
+    <div class="dont-index"><p>Other Splits operations:
 <code><a href="LabelSplits.html">LabelSplits</a>()</code>,
 <code><a href="NSplits.html">NSplits</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
@@ -212,16 +212,16 @@ Use as.Splits instead.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

@@ -12,7 +12,7 @@ Nodes are dated to the youngest possible value, plus an additional "buffer"
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -26,7 +26,7 @@ Nodes are dated to the youngest possible value, plus an additional "buffer"
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@ Nodes are dated to the youngest possible value, plus an additional "buffer"
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -56,25 +56,25 @@ Nodes are dated to the youngest possible value, plus an additional "buffer"
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Display time-calibrated tree using tip information only</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/TipTimedTree.R" class="external-link"><code>R/TipTimedTree.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/TipTimedTree.R" class="external-link"><code>R/TipTimedTree.R</code></a></small>
     <div class="hidden name"><code>TipTimedTree.Rd</code></div>
     </div>
 
@@ -91,25 +91,25 @@ Nodes are dated to the youngest possible value, plus an additional "buffer"
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>tree</dt>
+
+
+<dl><dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
 
 
-<dt>tipAge</dt>
+<dt id="arg-tipage">tipAge<a class="anchor" aria-label="anchor" href="#arg-tipage"></a></dt>
 <dd><p>Numeric vector specifying the age (in units-of-time ago)
 associated with each tip in <code>tree$tip.label</code> in turn.
 Older ages signify earlier tips.</p></dd>
 
 
-<dt>minEdge</dt>
+<dt id="arg-minedge">minEdge<a class="anchor" aria-label="anchor" href="#arg-minedge"></a></dt>
 <dd><p>Minimum length of edge to allow (in units-of-time)</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>TipTimedTree()</code> returns a tree with edge lengths set based on the
+    <p><code>TipTimedTree()</code> returns a tree with edge lengths set based on the
 ages of each tip.</p>
     </div>
     <div id="details">
@@ -121,7 +121,7 @@ production-ready version can be prioritized.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other tree manipulation: 
+    <div class="dont-index"><p>Other tree manipulation:
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
@@ -160,16 +160,16 @@ production-ready version can be prioritized.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

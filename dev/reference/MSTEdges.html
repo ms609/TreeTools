@@ -11,7 +11,7 @@ of a distance matrix."><meta name="robots" content="noindex"><!-- mathjax --><sc
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -25,7 +25,7 @@ of a distance matrix."><meta name="robots" content="noindex"><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -36,7 +36,7 @@ of a distance matrix."><meta name="robots" content="noindex"><!-- mathjax --><sc
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -55,25 +55,25 @@ of a distance matrix."><meta name="robots" content="noindex"><!-- mathjax --><sc
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Minimum spanning tree</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/mst.R" class="external-link"><code>R/mst.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/mst.R" class="external-link"><code>R/mst.R</code></a></small>
     <div class="hidden name"><code>MSTEdges.Rd</code></div>
     </div>
 
@@ -91,47 +91,45 @@ of a distance matrix.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>distances</dt>
+
+
+<dl><dt id="arg-distances">distances<a class="anchor" aria-label="anchor" href="#arg-distances"></a></dt>
 <dd><p>Either a matrix that can be interpreted as a distance
 matrix, or an object of class <code>dist</code>.</p></dd>
 
 
-<dt>plot</dt>
+<dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
 <dd><p>Logical specifying whether to add the minimum spanning tree
 to an existing plot.</p></dd>
 
 
-<dt>x, y</dt>
+<dt id="arg-x-y">x, y<a class="anchor" aria-label="anchor" href="#arg-x-y"></a></dt>
 <dd><p>Numeric vectors specifying the X and Y coordinates of each
 element in <code>distances</code>.  Necessary only if <code>plot = TRUE</code>.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional parameters to send to <code>[lines()]</code>.</p></dd>
 
 
-<dt>mst</dt>
+<dt id="arg-mst">mst<a class="anchor" aria-label="anchor" href="#arg-mst"></a></dt>
 <dd><p>Optional parameter specifying the minimum spanning tree in the
 format returned by <code>MSTEdges()</code>; if <code>NULL</code>, calculated from <code>distances</code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>MSTEdges()</code> returns a matrix in which each row corresponds to an
+    <p><code>MSTEdges()</code> returns a matrix in which each row corresponds to an
 edge of the minimum spanning tree, listed in non-decreasing order of length.
 The two columns contain the indices of the entries in <code>distances</code> that
 each edge connects, with the lower value listed first.</p>
-
-
 <p><code>MSTLength()</code> returns the length of the minimum spanning tree.</p>
     </div>
     <div id="references">
     <h2>References</h2>
     <p>Gower JC, Ross GJS (1969).
 “Minimum spanning trees and single linkage cluster analysis.”
-<em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em>, <b>18</b>(1), 54--64.
+<em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em>, <b>18</b>(1), 54–64.
 <a href="https://doi.org/10.2307/2346439" class="external-link">doi:10.2307/2346439</a>
 .</p>
     </div>
@@ -173,16 +171,16 @@ tree: <code><a href="https://rdrr.io/pkg/ape/man/mst.html" class="external-link"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

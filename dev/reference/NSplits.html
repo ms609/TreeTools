@@ -9,7 +9,7 @@
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9003</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.11.1.9004</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -53,25 +53,25 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Number of distinct splits</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/tree_properties.R" class="external-link"><code>R/tree_properties.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/tree_properties.R" class="external-link"><code>R/tree_properties.R</code></a></small>
     <div class="hidden name"><code>NSplits.Rd</code></div>
     </div>
 
@@ -84,34 +84,36 @@
 <span></span>
 <span><span class="fu">NPartitions</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for list</span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for Splits</span></span>
+<span><span class="co"># S3 method for class 'Splits'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for numeric</span></span>
+<span><span class="co"># S3 method for class 'numeric'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for `NULL`</span></span>
+<span><span class="co"># S3 method for class '`NULL`'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for ClusterTable</span></span>
+<span><span class="co"># S3 method for class 'ClusterTable'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for character</span></span>
+<span><span class="co"># S3 method for class 'character'</span></span>
 <span><span class="fu">NSplits</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A phylogenetic tree of class <code>phylo</code>; a list of such trees
 (of class <code>list</code> or <code>multiPhylo</code>); a <code>Splits</code> object;
 a vector of integers; or a character vector listing tips of a tree,
@@ -120,14 +122,12 @@ or a character of length one specifying a tree in Newick format.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>NSplits()</code> returns an integer specifying the number of bipartitions in
+    <p><code>NSplits()</code> returns an integer specifying the number of bipartitions in
 the specified objects, or in a binary tree with <code>x</code> tips.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other tree properties: 
+    <div class="dont-index"><p>Other tree properties:
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
 <code><a href="MatchEdges.html">MatchEdges</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
@@ -136,7 +136,7 @@ the specified objects, or in a binary tree with <code>x</code> tips.</p>
 <code><a href="SplitsInBinaryTree.html">SplitsInBinaryTree</a>()</code>,
 <code><a href="TipLabels.html">TipLabels</a>()</code>,
 <code><a href="TreeIsRooted.html">TreeIsRooted</a>()</code></p>
-<p>Other Splits operations: 
+<p>Other Splits operations:
 <code><a href="LabelSplits.html">LabelSplits</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
 <code><a href="PolarizeSplits.html">PolarizeSplits</a>()</code>,
@@ -176,16 +176,16 @@ the specified objects, or in a binary tree with <code>x</code> tips.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',
