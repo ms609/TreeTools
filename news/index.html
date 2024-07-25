@@ -9,7 +9,7 @@
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-news">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -53,27 +53,46 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.12.0" id="treetools-1120-2024-07-25">TreeTools 1.12.0 (2024-07-25)<a class="anchor" aria-label="anchor" href="#treetools-1120-2024-07-25"></a></h2>
+<div class="section level3">
+<h3 id="new-methods-and-functions-1-12-0">New methods and functions<a class="anchor" aria-label="anchor" href="#new-methods-and-functions-1-12-0"></a></h3>
+<ul><li>
+<code><a href="../reference/TopologyOnly.html">TopologyOnly()</a></code> removes metadata from phylo objects.</li>
+<li>
+<code><a href="../reference/J1Index.html">J1Index()</a></code> computes the robust, universal tree balance measure of Lemant <em>et al</em>. 2022 <a href="doi:10.1093/sysbio/syac027" class="uri">doi:10.1093/sysbio/syac027</a>, incorporating <a href="https://github.com/robjohnnoble/RUtreebalance" class="external-link">code</a> by Rob Noble.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="enhancements-1-12-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-1-12-0"></a></h3>
+<ul><li>Consistent sequence of list entries in phylo objects.</li>
+<li>
+<code><a href="../reference/GenerateTree.html">RandomTree()</a></code> returns trees for &lt; 3 leaves.</li>
+<li>
+<code><a href="../reference/root_on_node.html">root_on_node()</a></code> handles trees with &lt; 2 leaves.</li>
+<li>Support larger trees in <code><a href="../reference/TotalCopheneticIndex.html">TotalCopheneticIndex()</a></code>, fixing <a href="https://github.com/ms609/TreeTools/issues/158" class="external-link">#158</a>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.11.1" id="treetools-1111-2024-06-06">TreeTools 1.11.1 (2024-06-06)<small>2024-06-07</small><a class="anchor" aria-label="anchor" href="#treetools-1111-2024-06-06"></a></h2>
 <ul><li>Set random seed and increase tolerance to avoid false negatives on tests.</li>
@@ -503,16 +522,16 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

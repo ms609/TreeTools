@@ -12,7 +12,7 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -26,7 +26,7 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -56,25 +56,25 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Total Cophenetic Index</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/TotalCopheneticIndex.R" class="external-link"><code>R/TotalCopheneticIndex.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/TotalCopheneticIndex.R" class="external-link"><code>R/TotalCopheneticIndex.R</code></a></small>
     <div class="hidden name"><code>TotalCopheneticIndex.Rd</code></div>
     </div>
 
@@ -90,23 +90,21 @@ TCIContext() lists its possible values."><!-- mathjax --><script src="https://cd
 <span></span>
 <span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for numeric</span></span>
+<span><span class="co"># S3 method for class 'numeric'</span></span>
 <span><span class="fu">TCIContext</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>A tree of class <code>phylo</code>, its <code>$edge</code> property, or a list thereof.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>TotalCopheneticIndex()</code> returns an integer denoting the total cophenetic index.</p>
-
-
+    <p><code>TotalCopheneticIndex()</code> returns an integer denoting the total cophenetic index.</p>
 <p><code>TCIContext()</code> returns a data frame detailing the maximum and minimum value
 obtainable for the Total Cophenetic Index for rooted binary trees with the
 number of leaves of the given tree, and the expected value under the Yule
@@ -116,7 +114,7 @@ be obtained by calculation for the Uniform model.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>The Total Cophenetic Index is a measure of tree balance -- i.e. whether
+    <p>The Total Cophenetic Index is a measure of tree balance – i.e. whether
 a (phylogenetic) tree comprises symmetric pairs of nodes, or has a pectinate
 "caterpillar" shape.
 The index has a greater resolution power than Sackin's and Colless' indices,
@@ -129,23 +127,35 @@ Formulae to calculate the expected values under the Yule and Uniform models
 of evolution are given in Theorems 17 and 23.</p>
 <p>Full details are provided by Mir et al. (2013)
 .</p>
+<p>The J<sup>1</sup> index
+(Lemant et al. 2022)
+ has advantages over the Total Cophenetic
+Index, particularly when comparing trees with different numbers of leaves,
+or where the population size of nodes is meaningful; see <code><a href="J1Index.html">J1Index()</a></code>.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Mir A, Rosselló F, Rotger LA (2013).
+    <p>Lemant J, Le Sueur C, Manojlović V, Noble R (2022).
+“Robust, Universal Tree Balance Indices.”
+<em>Systematic Biology</em>, <b>71</b>(5), 1210–1224.
+<a href="https://doi.org/10.1093/sysbio/syac027" class="external-link">doi:10.1093/sysbio/syac027</a>
+.<br><br> Mir A, Rosselló F, Rotger LA (2013).
 “A new balance index for phylogenetic trees.”
-<em>Mathematical Biosciences</em>, <b>241</b>(1), 125--136.
+<em>Mathematical Biosciences</em>, <b>241</b>(1), 125–136.
 <a href="https://doi.org/10.1016/j.mbs.2012.10.005" class="external-link">doi:10.1016/j.mbs.2012.10.005</a>
 .</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code>cophen.index()</code> in the package
+    <div class="dont-index">
+<ul><li><p><code><a href="J1Index.html">J1Index()</a></code> provides a more robust, universal tree balance index.</p></li>
+<li><p><code>cophen.index()</code> in the package
 <a href="https://github.com/LuciaRotger/CollessLike" class="external-link"><span class="pkg">CollessLike</span></a>
-provides an alternative implementation of this index and its predecessors.</p>
-<p>Other tree characterization functions: 
+provides an alternative implementation of this index and its predecessors.</p></li>
+</ul><p>Other tree characterization functions:
 <code><a href="CladisticInfo.html">CladisticInfo</a>()</code>,
 <code><a href="Consensus.html">Consensus</a>()</code>,
+<code><a href="J1Index.html">J1Index</a>()</code>,
 <code><a href="Stemwardness.html">Stemwardness</a></code></p></div>
     </div>
     <div id="author">
@@ -197,16 +207,16 @@ provides an alternative implementation of this index and its predecessors.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

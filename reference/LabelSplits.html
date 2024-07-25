@@ -9,7 +9,7 @@
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -34,7 +34,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -53,25 +53,25 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Label splits</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
     <div class="hidden name"><code>LabelSplits.Rd</code></div>
     </div>
 
@@ -85,31 +85,31 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>tree</dt>
+
+
+<dl><dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
 
 
-<dt>labels</dt>
+<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
 <dd><p>Named vector listing annotations for each split. Names
 should correspond to the node associated with each split; see
 <code><a href="Splits.html">as.Splits()</a></code> for details.
 If <code>NULL</code>, each splits will be labelled with its associated node.</p></dd>
 
 
-<dt>unit</dt>
+<dt id="arg-unit">unit<a class="anchor" aria-label="anchor" href="#arg-unit"></a></dt>
 <dd><p>Character specifying units of <code>labels</code>, if desired. Include a
 leading space if necessary.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional parameters to <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">ape::edgelabels()</a></code>.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>LabelSplits()</code> returns <code><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible()</a></code>, after plotting <code>labels</code> on
+    <p><code>LabelSplits()</code> returns <code><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible()</a></code>, after plotting <code>labels</code> on
 each relevant edge of a plot (which should already have been produced using
 <code>plot(tree)</code>).</p>
     </div>
@@ -124,7 +124,7 @@ If the position of the root is significant, add a tip at the root using
     <h2>See also</h2>
     <div class="dont-index"><p>Calculate split support: <code><a href="SplitFrequency.html">SplitFrequency()</a></code></p>
 <p>Colour labels according to value: <code><a href="SupportColour.html">SupportColour()</a></code></p>
-<p>Other Splits operations: 
+<p>Other Splits operations:
 <code><a href="NSplits.html">NSplits</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
 <code><a href="PolarizeSplits.html">PolarizeSplits</a>()</code>,
@@ -187,16 +187,16 @@ If the position of the root is significant, add a tip at the root using
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

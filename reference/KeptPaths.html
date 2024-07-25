@@ -10,7 +10,7 @@ dropped."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -24,7 +24,7 @@ dropped."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ dropped."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -54,25 +54,25 @@ dropped."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Paths present in reduced tree</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/KeptPaths.R" class="external-link"><code>R/KeptPaths.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/KeptPaths.R" class="external-link"><code>R/KeptPaths.R</code></a></small>
     <div class="hidden name"><code>KeptPaths.Rd</code></div>
     </div>
 
@@ -84,26 +84,28 @@ dropped.</p>
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">KeptPaths</span><span class="op">(</span><span class="va">paths</span>, <span class="va">keptVerts</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for data.frame</span></span>
+<span><span class="co"># S3 method for class 'data.frame'</span></span>
 <span><span class="fu">KeptPaths</span><span class="op">(</span><span class="va">paths</span>, <span class="va">keptVerts</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for matrix</span></span>
+<span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">KeptPaths</span><span class="op">(</span><span class="va">paths</span>, <span class="va">keptVerts</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>paths</dt>
+
+
+<dl><dt id="arg-paths">paths<a class="anchor" aria-label="anchor" href="#arg-paths"></a></dt>
 <dd><p><code>data.frame</code> of paths in master tree, perhaps generated using
 <code><a href="PathLengths.html">PathLengths()</a></code>.</p></dd>
 
 
-<dt>keptVerts</dt>
+<dt id="arg-keptverts">keptVerts<a class="anchor" aria-label="anchor" href="#arg-keptverts"></a></dt>
 <dd><p>Logical specifying whether each entry is retained in the
 reduced tree, perhaps generated using <code><a href="KeptVerts.html">KeptVerts()</a></code>.</p></dd>
 
 
-<dt>all</dt>
+<dt id="arg-all">all<a class="anchor" aria-label="anchor" href="#arg-all"></a></dt>
 <dd><p>Logical: if <code>TRUE</code>, return all paths that occur in the reduced
 tree; if <code>FALSE</code>, return only those paths that correspond to a single edge.
 that correspond to edges in the reduced tree.
@@ -112,14 +114,12 @@ Ignored if <code>paths</code> is a matrix.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>KeptPaths()</code> returns a logical vector specifying whether each path
+    <p><code>KeptPaths()</code> returns a logical vector specifying whether each path
 in <code>paths</code> occurs when <code>keptVerts</code> vertices are retained.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other tree manipulation: 
+    <div class="dont-index"><p>Other tree manipulation:
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
@@ -177,16 +177,16 @@ in <code>paths</code> occurs when <code>keptVerts</code> vertices are retained.<
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

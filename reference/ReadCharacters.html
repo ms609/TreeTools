@@ -13,7 +13,7 @@ names."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -27,7 +27,7 @@ names."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -38,7 +38,7 @@ names."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -57,25 +57,25 @@ names."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/math
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read phylogenetic characters from file</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/parse_files.R" class="external-link"><code>R/parse_files.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/parse_files.R" class="external-link"><code>R/parse_files.R</code></a></small>
     <div class="hidden name"><code>ReadCharacters.Rd</code></div>
     </div>
 
@@ -108,21 +108,23 @@ names.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>filepath</dt>
+
+
+<dl><dt id="arg-filepath">filepath<a class="anchor" aria-label="anchor" href="#arg-filepath"></a></dt>
 <dd><p>character string specifying location of file, or a
 <a href="https://rdrr.io/r/base/connections.html" class="external-link">connection</a> to the file.</p></dd>
 
 
-<dt>character_num</dt>
+<dt id="arg-character-num">character_num<a class="anchor" aria-label="anchor" href="#arg-character-num"></a></dt>
 <dd><p>Index of character(s) to return.
 <code>NULL</code>, the default, returns all characters.</p></dd>
 
 
-<dt>encoding</dt>
+<dt id="arg-encoding">encoding<a class="anchor" aria-label="anchor" href="#arg-encoding"></a></dt>
 <dd><p>Character encoding of input file.</p></dd>
 
 
-<dt>type</dt>
+<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Character vector specifying categories of data to extract from
 file. Setting <code>type = c("num", "dna")</code> will return only characters
 following a <code>&amp;[num]</code> or <code>&amp;[dna]</code> tag in a TNT input file, listing <code>num</code>
@@ -131,31 +133,26 @@ Leave as <code>NULL</code> (the default) to return all characters in their origi
 sequence.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Parameters to pass to <code>Read[Tnt]Characters()</code>.</p></dd>
 
 
-<dt>dataset</dt>
-<dd><p>list of taxa and characters, in the format produced by <a href="https://rdrr.io/pkg/ape/man/read.nexus.data.html" class="external-link">read.nexus.data</a>:
+<dt id="arg-dataset">dataset<a class="anchor" aria-label="anchor" href="#arg-dataset"></a></dt>
+<dd><p>list of taxa and characters, in the format produced by
+<code><a href="https://rdrr.io/pkg/ape/man/read.nexus.data.html" class="external-link">read.nexus.data</a>()</code>:
 a list of sequences each made of a single character vector,
 and named with the taxon name.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>ReadCharacters()</code> and <code>ReadTNTCharacters()</code> return a matrix whose
+    <p><code>ReadCharacters()</code> and <code>ReadTNTCharacters()</code> return a matrix whose
 row names correspond to tip labels, and
 column names correspond to character labels, with the
 attribute <code>state.labels</code> listing the state labels for each character; or
 a list of length one containing a character string explaining why the
 function call was unsuccessful.</p>
-
-
 <p><code>ReadAsPhyDat()</code> and <code>ReadTntAsPhyDat()</code> return a <code>phyDat</code> object.</p>
-
-
 <p><code>ReadNotes()</code> returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:</p><ol><li><p>A single character object listing any notes associated with the character</p></li>
 <li><p>A named character vector listing the notes associated with each taxon
@@ -183,7 +180,7 @@ the highlighted option in the "Encoding" menu) following the example below.</p>
     </div>
     <div id="functions">
     <h2>Functions</h2>
-    
+
 <ul><li><p><code>PhyDat()</code>: A convenient wrapper for <span class="pkg">phangorn</span>'s
 <code>phyDat()</code>, which converts a <strong>list</strong> of morphological characters into a
 <code>phyDat</code> object.
@@ -195,13 +192,13 @@ instead.</p></li>
     <h2>References</h2>
     <p>Goloboff PA, Farris JS, Nixon KC (2008).
 “TNT, a free program for phylogenetic analysis.”
-<em>Cladistics</em>, <b>24</b>(5), 774--786.<br><br> Maddison DR, Swofford DL, Maddison WP (1997).
+<em>Cladistics</em>, <b>24</b>(5), 774–786.<br><br> Maddison DR, Swofford DL, Maddison WP (1997).
 “Nexus: an extensible file format for systematic information.”
-<em>Systematic Biology</em>, <b>46</b>, 590--621.
+<em>Systematic Biology</em>, <b>46</b>, 590–621.
 <a href="https://doi.org/10.1093/sysbio/46.4.590" class="external-link">doi:10.1093/sysbio/46.4.590</a>
 .<br><br> O’Leary MA, Kaufman S (2011).
 “MorphoBank: phylophenomics in the "cloud".”
-<em>Cladistics</em>, <b>27</b>(5), 529--537.</p>
+<em>Cladistics</em>, <b>27</b>(5), 529–537.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -285,16 +282,16 @@ instead.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

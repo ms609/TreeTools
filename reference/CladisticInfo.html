@@ -10,7 +10,7 @@ content of a phylogenetic object, sensu Thorley et al. (1998)."><!-- mathjax -->
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -24,7 +24,7 @@ content of a phylogenetic object, sensu Thorley et al. (1998)."><!-- mathjax -->
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -35,7 +35,7 @@ content of a phylogenetic object, sensu Thorley et al. (1998)."><!-- mathjax -->
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -54,25 +54,25 @@ content of a phylogenetic object, sensu Thorley et al. (1998)."><!-- mathjax -->
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cladistic information content of a tree</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/tree_information.R" class="external-link"><code>R/tree_information.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/tree_information.R" class="external-link"><code>R/tree_information.R</code></a></small>
     <div class="hidden name"><code>CladisticInfo.Rd</code></div>
     </div>
 
@@ -86,16 +86,16 @@ content of a phylogenetic object, <em>sensu</em> Thorley <em>et al.</em> (1998).
 <span></span>
 <span><span class="fu">PhylogeneticInfo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">CladisticInfo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for Splits</span></span>
+<span><span class="co"># S3 method for class 'Splits'</span></span>
 <span><span class="fu">CladisticInfo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for list</span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">CladisticInfo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">CladisticInfo</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">PhylogeneticInformation</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -105,15 +105,15 @@ content of a phylogenetic object, <em>sensu</em> Thorley <em>et al.</em> (1998).
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>Tree of class <code>phylo</code>, or a list thereof.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>CladisticInfo()</code> returns a numeric giving the cladistic information
+    <p><code>CladisticInfo()</code> returns a numeric giving the cladistic information
 content of the input tree(s), in bits.
 If passed a <code>Splits</code> object, it returns the information content of each
 split in turn.</p>
@@ -141,29 +141,30 @@ counting the number of edges resolved (Page 1992)
     <h2>References</h2>
     <p>Page RD (1992).
 “Comments on the information content of classifications.”
-<em>Cladistics</em>, <b>8</b>(1), 87--95.
+<em>Cladistics</em>, <b>8</b>(1), 87–95.
 <a href="https://doi.org/10.1111/j.1096-0031.1992.tb00054.x" class="external-link">doi:10.1111/j.1096-0031.1992.tb00054.x</a>
 .<br><br> Rohlf FJ (1982).
 “Consensus indices for comparing classifications.”
-<em>Mathematical Biosciences</em>, <b>59</b>(1), 131--144.
+<em>Mathematical Biosciences</em>, <b>59</b>(1), 131–144.
 <a href="https://doi.org/10.1016/0025-5564%2882%2990112-2" class="external-link">doi:10.1016/0025-5564(82)90112-2</a>
 .<br><br> Steel MA, Penny D (2006).
 “Maximum parsimony and the phylogenetic information in multistate characters.”
-In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163--178.
+In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163–178.
 Oxford University Press, Oxford.<br><br> Thorley JL, Wilkinson M, Charleston M (1998).
 “The information content of consensus trees.”
-In Rizzi A, Vichi M, Bock H (eds.), <em>Advances in Data Science and Classification</em>, 91--98.
+In Rizzi A, Vichi M, Bock H (eds.), <em>Advances in Data Science and Classification</em>, 91–98.
 Springer, Berlin.
 ISBN 978-3-540-64641-9, <a href="https://doi.org/10.1007/978-3-642-72253-0" class="external-link">doi:10.1007/978-3-642-72253-0</a>
 .</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other tree information functions: 
+    <div class="dont-index"><p>Other tree information functions:
 <code><a href="NRooted.html">NRooted</a>()</code>,
 <code><a href="TreesMatchingTree.html">TreesMatchingTree</a>()</code></p>
-<p>Other tree characterization functions: 
+<p>Other tree characterization functions:
 <code><a href="Consensus.html">Consensus</a>()</code>,
+<code><a href="J1Index.html">J1Index</a>()</code>,
 <code><a href="Stemwardness.html">Stemwardness</a></code>,
 <code><a href="TotalCopheneticIndex.html">TotalCopheneticIndex</a>()</code></p></div>
     </div>
@@ -185,16 +186,16 @@ ISBN 978-3-540-64641-9, <a href="https://doi.org/10.1007/978-3-642-72253-0" clas
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

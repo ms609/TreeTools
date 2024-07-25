@@ -14,7 +14,7 @@ have a higher information content."><!-- mathjax --><script src="https://cdnjs.c
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -28,7 +28,7 @@ have a higher information content."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@ have a higher information content."><!-- mathjax --><script src="https://cdnjs.c
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -58,25 +58,25 @@ have a higher information content."><!-- mathjax --><script src="https://cdnjs.c
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Phylogenetic information content of splitting leaves into two partitions</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/Information.R" class="external-link"><code>R/Information.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/Information.R" class="external-link"><code>R/Information.R</code></a></small>
     <div class="hidden name"><code>SplitInformation.Rd</code></div>
     </div>
 
@@ -97,20 +97,20 @@ have a higher information content.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>A, B</dt>
+
+
+<dl><dt id="arg-a-b">A, B<a class="anchor" aria-label="anchor" href="#arg-a-b"></a></dt>
 <dd><p>Integer specifying the number of taxa in each partition.</p></dd>
 
 
-<dt>partitionSizes</dt>
+<dt id="arg-partitionsizes">partitionSizes<a class="anchor" aria-label="anchor" href="#arg-partitionsizes"></a></dt>
 <dd><p>Integer vector specifying the number of taxa in each
 partition of a multi-partition split.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>SplitInformation()</code> and <code>MultiSplitInformation()</code> return the
+    <p><code>SplitInformation()</code> and <code>MultiSplitInformation()</code> return the
 phylogenetic information content, in bits, of a split that subdivides leaves
 into partitions of the specified sizes.</p>
     </div>
@@ -142,12 +142,12 @@ bits.</p>
 it occurs in just nine of the 105 six-leaf trees, and
 <em>h</em>(<code>ABC|DEF</code>) = -log(9/105) ~ 3.54 bits.</p>
 <p>As the number of leaves increases, a single even split may contain more
-information than multiple uneven splits -- see the examples section below.</p>
+information than multiple uneven splits – see the examples section below.</p>
 <p>Summing the information content of all splits within a tree, perhaps using
 the '<a href="https://ms609.github.io/TreeDist/" class="external-link">TreeDist</a>' function
 <a href="https://ms609.github.io/TreeDist/reference/TreeInfo.html" class="external-link"><code>SplitwiseInfo()</code></a>,
 arguably gives a more instructive picture of its resolution than simply
-counting the number of splits that are present -- though with the caveat
+counting the number of splits that are present – though with the caveat
 that splits within a tree are not independent of one another, so some
 information may be double counted.  (This same charge applies to simply
 counting nodes, too.)</p>
@@ -163,7 +163,7 @@ for details.</p>
     <h2>References</h2>
     <p>Steel MA, Penny D (2006).
 “Maximum parsimony and the phylogenetic information in multistate characters.”
-In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163--178.
+In Albert VA (ed.), <em>Parsimony, Phylogeny, and Genomics</em>, 163–178.
 Oxford University Press, Oxford.</p>
     </div>
     <div id="see-also">
@@ -172,7 +172,7 @@ Oxford University Press, Oxford.</p>
 <a href="https://ms609.github.io/TreeDist/reference/TreeInfo.html" class="external-link"><code>TreeDist::SplitwiseInfo()</code></a></p>
 <p>Sum the clustering information content of splits within a tree:
 <a href="https://ms609.github.io/TreeDist/reference/TreeInfo.html" class="external-link"><code>TreeDist::ClusteringInfo()</code></a></p>
-<p>Other split information functions: 
+<p>Other split information functions:
 <code><a href="CharacterInformation.html">CharacterInformation</a>()</code>,
 <code><a href="SplitMatchProbability.html">SplitMatchProbability</a>()</code>,
 <code><a href="TreesMatchingSplit.html">TreesMatchingSplit</a>()</code>,
@@ -223,16 +223,16 @@ Oxford University Press, Oxford.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',

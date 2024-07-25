@@ -12,7 +12,7 @@ MarkMissing() adds missing taxa as loose leaves on the plot."><!-- mathjax --><s
 
   gtag('config', 'G-93LNK4JKY4');
 </script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -26,7 +26,7 @@ MarkMissing() adds missing taxa as loose leaves on the plot."><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">TreeTools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.12.0</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@ MarkMissing() adds missing taxa as loose leaves on the plot."><!-- mathjax --><s
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
@@ -56,25 +56,25 @@ MarkMissing() adds missing taxa as loose leaves on the plot."><!-- mathjax --><s
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/ms609/TreeTools/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Reduced consensus, omitting specified taxa</h1>
-    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/HEAD/R/Consensus.R" class="external-link"><code>R/Consensus.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/Consensus.R" class="external-link"><code>R/Consensus.R</code></a></small>
     <div class="hidden name"><code>ConsensusWithout.Rd</code></div>
     </div>
 
@@ -88,13 +88,13 @@ when a few wildcard taxa obscure a consistent set of relationships.
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ConsensusWithout</span><span class="op">(</span><span class="va">trees</span>, tip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for phylo</span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">ConsensusWithout</span><span class="op">(</span><span class="va">trees</span>, tip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for multiPhylo</span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">ConsensusWithout</span><span class="op">(</span><span class="va">trees</span>, tip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for list</span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">ConsensusWithout</span><span class="op">(</span><span class="va">trees</span>, tip <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">MarkMissing</span><span class="op">(</span><span class="va">tip</span>, position <span class="op">=</span> <span class="st">"bottomleft"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -102,39 +102,37 @@ when a few wildcard taxa obscure a consistent set of relationships.
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>trees</dt>
+
+
+<dl><dt id="arg-trees">trees<a class="anchor" aria-label="anchor" href="#arg-trees"></a></dt>
 <dd><p>A list of phylogenetic trees, of class <code>multiPhylo</code> or <code>list</code>.</p></dd>
 
 
-<dt>tip</dt>
+<dt id="arg-tip">tip<a class="anchor" aria-label="anchor" href="#arg-tip"></a></dt>
 <dd><p>A character vector specifying the names (or numbers) of tips to
 drop (using <code><a href="https://rdrr.io/pkg/ape/man/drop.tip.html" class="external-link">ape::drop.tip()</a></code>).</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional parameters to pass on to <code><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">ape::consensus()</a></code> or
 <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend()</a></code>.</p></dd>
 
 
-<dt>position</dt>
+<dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
 <dd><p>Where to plot the missing taxa.
 See <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend()</a></code> for options.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p><code>ConsensusWithout()</code> returns a consensus tree (of class <code>phylo</code>)
+    <p><code>ConsensusWithout()</code> returns a consensus tree (of class <code>phylo</code>)
 without the excluded taxa.</p>
-
-
 <p><code>MarkMissing()</code> provides a null return, after plotting the specified
 <code>tip</code>s as a legend.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p>Other tree manipulation: 
+    <div class="dont-index"><p>Other tree manipulation:
 <code><a href="AddTip.html">AddTip</a>()</code>,
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="DropTip.html">DropTip</a>()</code>,
@@ -152,7 +150,7 @@ without the excluded taxa.</p>
 <code><a href="Subtree.html">Subtree</a>()</code>,
 <code><a href="TipTimedTree.html">TipTimedTree</a>()</code>,
 <code><a href="TrivialTree.html">TrivialTree</a></code></p>
-<p>Other tree properties: 
+<p>Other tree properties:
 <code><a href="MatchEdges.html">MatchEdges</a>()</code>,
 <code><a href="NSplits.html">NSplits</a>()</code>,
 <code><a href="NTip.html">NTip</a>()</code>,
@@ -161,7 +159,7 @@ without the excluded taxa.</p>
 <code><a href="SplitsInBinaryTree.html">SplitsInBinaryTree</a>()</code>,
 <code><a href="TipLabels.html">TipLabels</a>()</code>,
 <code><a href="TreeIsRooted.html">TreeIsRooted</a>()</code></p>
-<p>Other consensus tree functions: 
+<p>Other consensus tree functions:
 <code><a href="Consensus.html">Consensus</a>()</code>,
 <code><a href="RoguePlot.html">RoguePlot</a>()</code></p></div>
     </div>
@@ -204,16 +202,16 @@ without the excluded taxa.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
-    
-    
+
+
     apiKey: '6078115fdeb422f23fe2f8c478c70150',
     indexName: 'treetools',
     inputSelector: 'input#search-input.form-control',
