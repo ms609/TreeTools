@@ -41,7 +41,7 @@ states occur in, a step that may be overlooked by re-users of the data.
 Careful consideration is warranted when evaluating whether a group of
 related characteristics ought to be treated as ordered
 \insertCite{Wilkinson1992}{TreeTools}.
-On the one hand, the ‘principle of indifference’ states that we should treat
+On the one hand, the 'principle of indifference' states that we should treat
 all transformations as equally probable (/ surprising / informative);
 ordered characters fail this test, as larger changes are treated as less
 probable than smaller ones.
@@ -61,8 +61,9 @@ data("Lobo")
 # The present codings 0, 1 and 2 will be replaced with 00, 10, and 11.
 decomposed <- Decompose(Lobo.phy, 11)
 
-attr(Lobo.phy, "nr")   # 113 characters
-attr(decomposed, "nr") # 114 character rows
+NumberOfChars <- function(x) sum(attr(x, "weight"))
+NumberOfChars(Lobo.phy)   # 115 characters in original
+NumberOfChars(decomposed) # 116 characters in decomposed
 
 }
 \references{

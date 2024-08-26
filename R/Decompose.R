@@ -21,7 +21,7 @@
 #' Careful consideration is warranted when evaluating whether a group of
 #' related characteristics ought to be treated as ordered
 #' \insertCite{Wilkinson1992}{TreeTools}.
-#' On the one hand, the ‘principle of indifference’ states that we should treat
+#' On the one hand, the 'principle of indifference' states that we should treat
 #' all transformations as equally probable (/ surprising / informative);
 #' ordered characters fail this test, as larger changes are treated as less
 #' probable than smaller ones.
