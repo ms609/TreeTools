@@ -13,7 +13,15 @@
 #' characters have been decomposed into a number of binary characters.  
 #' 
 #' @examples
+#' data("Lobo")
 #' 
+#' # Identify character 11 as additive
+#' # Character 11 will be replaced with two characters
+#' # The present codings 0, 1 and 2 will be replaced with 00, 10, and 11.
+#' decomposed <- Decompose(Lobo.phy, 11)
+#' 
+#' attr(Lobo.phy, "nr")   # 113 characters
+#' attr(decomposed, "nr") # 114 character rows
 #' 
 #' @template MRS
 #' @export
