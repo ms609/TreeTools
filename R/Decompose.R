@@ -105,6 +105,13 @@ Decompose <- function(dataset, indices) {
     ret[, replInd] <- do.call(cbind, replacements)
   }
   
+  # Consistent ambiguity symbols
+  ret <- gsub("\\[(\\d)\\]", "\\1", 
+              gsub("{", "[", fixed = TRUE,
+                   gsub("}", "]", fixed = TRUE, ret)
+              )
+            )
+  
   # Return:
   MatrixToPhyDat(ret)
 }

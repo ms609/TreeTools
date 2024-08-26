@@ -19,10 +19,14 @@ test_that("Decompose()", {
   }
   expect_equal(decompMat[taxa, 11:12],
                matrix(c("?", "{01}", "0", "1", "1",
-                        "?", "{0}", "0", "0", "1"), ncol = 2,
+                        "?", "0", "0", "0", "1"), ncol = 2,
                       dimnames = list(names(Lobo.phy)[taxa])))
   
-  expect_equal(Decompose(Lobo.phy, logical(115)), Lobo.phy)
+  unchanged <- Decompose(Lobo.phy, logical(115))
+  
+  expect_equal(gsub("\\{\\-(\\d)\\}", "{\\1-}", perl = TRUE,
+                    as.matrix(unchanged)), # Order unimportant
+               as.matrix(Lobo.phy))
   
   expect_equal(Decompose(Lobo.phy[, 1], TRUE), Lobo.phy[, 1])
   
