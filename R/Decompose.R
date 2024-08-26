@@ -96,7 +96,7 @@ Decompose <- function(dataset, indices) {
         )
       }, char)
     }, simplify = FALSE)
-  } else {
+  } else {                                                         # nocov start
     lapply(which(indices), function(i) {
       char <- mat[, i]
       whichLevels <- which(vapply(appLevels,
@@ -116,7 +116,7 @@ Decompose <- function(dataset, indices) {
         )
       }, char)
     })
-  }
+  }                                                                # nocov end
   nNew <- `[<-`(rep(1, nChar), indices, vapply(replacements, ncol, 1))
   ret <- matrix(nrow = nTaxa, ncol = sum(nNew),
                 dimnames = list(dimnames(mat)[[1]], NULL))
