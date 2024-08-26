@@ -111,9 +111,9 @@ reference:
       - has_concept("C++ wrappers")
 
 template:
+  bootstrap: 5
+  bslib:
+    danger: "#A6081A" # Accessibility suggestion
   params:
     bootswatch: flatly
-    docsearch:
-      api_key: 6078115fdeb422f23fe2f8c478c70150
-      index_name: treetools
     ganalytics: G-93LNK4JKY4
