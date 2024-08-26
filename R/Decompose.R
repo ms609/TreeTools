@@ -54,6 +54,7 @@
 #' NumberOfChars(decomposed) # 116 characters in decomposed
 #' 
 #' @template MRS
+#' @importFrom utils packageVersion
 #' @export
 Decompose <- function(dataset, indices) {
   levels <- attr(dataset, "levels")
