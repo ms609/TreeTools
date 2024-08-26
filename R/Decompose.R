@@ -49,21 +49,40 @@
 #' # The present codings 0, 1 and 2 will be replaced with 00, 10, and 11.
 #' decomposed <- Decompose(Lobo.phy, 11)
 #' 
-#' attr(Lobo.phy, "nr")   # 113 characters
-#' attr(decomposed, "nr") # 114 character rows
+#' NumberOfChars <- function(x) sum(attr(x, "weight"))
+#' NumberOfChars(Lobo.phy)   # 115 characters in original
+#' NumberOfChars(decomposed) # 116 characters in decomposed
 #' 
 #' @template MRS
 #' @export
 Decompose <- function(dataset, indices) {
-  cont <- attr(dataset, "contrast")
   levels <- attr(dataset, "levels")
   inappLevel <- levels == "-"
   appLevels <- levels[!inappLevel]
   mat <- as.matrix(dataset)
+  nTaxa <- dim(mat)[[1]]
+  nChar <- dim(mat)[[2]]
+  if (is.numeric(indices)) {
+    if (any(indices > nChar)) {
+      warning("Only ", nChar, " characters; indices ",
+              paste(indices[indices > nChar], collapse = ", "),
+              " not found.")
+    }
+    indices <- seq_len(nChar) %in% indices
+  } else {
+    if (length(indices) != nChar) {
+      stop("`length(indices)` must correspond to the number of characters in ",
+           "`dataset`")
+    }
+  }
   replacements <- apply(mat[, indices, drop = FALSE], 2, function(char) {
-    maxLevel <- max(which(vapply(appLevels,
-                                 function(x) any(grepl(x, char, fixed = TRUE)),
-                                 logical(1))))
+    whichLevels <- which(vapply(appLevels,
+                               function(x) any(grepl(x, char, fixed = TRUE)),
+                               logical(1)))
+    if (!length(whichLevels)) {
+      return(matrix(character(0), nrow = nTaxa, ncol = 0))
+    }
+    maxLevel <- max(whichLevels)
     vapply(seq_len(maxLevel)[-1], function(i) {
       zero <- .RegExpEscape(appLevels[1:(i - 1)])
       one <- .RegExpEscape(appLevels[(i):maxLevel])
@@ -74,9 +93,21 @@ Decompose <- function(dataset, indices) {
       )
     }, char)
   }, simplify = FALSE)
+  nNew <- `[<-`(rep(1, nChar), indices, vapply(replacements, ncol, 1))
+  ret <- matrix(nrow = nTaxa, ncol = sum(nNew),
+                dimnames = list(dimnames(mat)[[1]], NULL))
+  newInd <- cumsum(nNew)
+  ret[, newInd[!indices]] <- mat[, !indices]
+  replInd <- unlist(lapply(
+    which(indices), function(i) i + seq_len(nNew[[i]]) - 1
+  ))
+  if (!is.null(replInd)) {
+    ret[, replInd] <- do.call(cbind, replacements)
+  }
   
+  # Return:
+  MatrixToPhyDat(ret)
 }
-
 
 .RegExpEscape <- function(x) {
   gsub("([\\[\\]\\{\\}\\?\\.\\+\\*\\|\\^\\$\\-\\(\\)\\\\/])", "\\\\\\1", x,
