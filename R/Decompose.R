@@ -76,8 +76,8 @@ Decompose <- function(dataset, indices) {
     }
   }
   
-  replacements <- if (packageVersion("base") > "4.0") {
-    # apply(simplify = FALSE) not available in R < 4.0
+  replacements <- if (packageVersion("base") >= "4.1") {
+    # apply(simplify = FALSE) becomes available in R4.1.0
     apply(mat[, indices, drop = FALSE], 2, function(char) {
       whichLevels <- which(vapply(appLevels,
                                  function(x) any(grepl(x, char, fixed = TRUE)),
