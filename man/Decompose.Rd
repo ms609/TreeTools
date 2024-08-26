@@ -23,6 +23,36 @@ characters, which is mathematically equivalent when analysed under
 equal weights parsimony.  (This equivalence is not exact
 under implied weights or under probabilistic tree inference methods.)
 }
+\details{
+An ordered (additive) character can be rewritten as a mathematically
+equivalent hierarchy of binary neomorphic characters
+\insertCite{Farris1970}{TreeTools}.
+Two reasons to prefer the latter approach are:
+\itemize{
+\item It makes explicit the evolutionary assumptions underlying an ordered
+character, whether the underlying ordering is linear, reticulate or
+branched \insertCite{Mabee1989}{TreeTools}.
+\item It avoids having to identify characters requiring special treatment to
+phylogenetic software, which requires the maintenance of an up-to-date
+log of which characters are treated as additive and which sequence their
+states occur in, a step that may be overlooked by re-users of the data.
+}
+
+Careful consideration is warranted when evaluating whether a group of
+related characteristics ought to be treated as ordered
+\insertCite{Wilkinson1992}{TreeTools}.
+On the one hand, the ‘principle of indifference’ states that we should treat
+all transformations as equally probable (/ surprising / informative);
+ordered characters fail this test, as larger changes are treated as less
+probable than smaller ones.
+On the other hand, ordered characters allow more opportunities for homology
+of different character states, and might thus be defended under the auspices
+of Hennig’s Auxiliary Principle \insertCite{Wilkinson1992}{TreeTools}.
+
+For a case study of how ordering phylogenetic characters can affect
+phylogenetic outcomes in practice, see
+\insertCite{Brady2024;textual}{TreeTools}.
+}
 \examples{
 data("Lobo")
 
@@ -34,6 +64,9 @@ decomposed <- Decompose(Lobo.phy, 11)
 attr(Lobo.phy, "nr")   # 113 characters
 attr(decomposed, "nr") # 114 character rows
 
+}
+\references{
+\insertAllCited{}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
