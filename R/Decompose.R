@@ -75,24 +75,48 @@ Decompose <- function(dataset, indices) {
            "`dataset`")
     }
   }
-  replacements <- apply(mat[, indices, drop = FALSE], 2, function(char) {
-    whichLevels <- which(vapply(appLevels,
-                               function(x) any(grepl(x, char, fixed = TRUE)),
-                               logical(1)))
-    if (!length(whichLevels)) {
-      return(matrix(character(0), nrow = nTaxa, ncol = 0))
-    }
-    maxLevel <- max(whichLevels)
-    vapply(seq_len(maxLevel)[-1], function(i) {
-      zero <- .RegExpEscape(appLevels[1:(i - 1)])
-      one <- .RegExpEscape(appLevels[(i):maxLevel])
-      gsub("(0)0+|(1)1+", "\\1",
-           gsub(paste0(c("[", one, "]"), collapse = ""), "1",
-                gsub(paste0(c("[", zero, "]"), collapse = ""), "0", char)
-           )
-      )
-    }, char)
-  }, simplify = FALSE)
+  
+  replacements <- if (packageVersion("base") > "4.0") {
+    # apply(simplify = FALSE) not available in R < 4.0
+    apply(mat[, indices, drop = FALSE], 2, function(char) {
+      whichLevels <- which(vapply(appLevels,
+                                 function(x) any(grepl(x, char, fixed = TRUE)),
+                                 logical(1)))
+      if (!length(whichLevels)) {
+        return(matrix(character(0), nrow = nTaxa, ncol = 0))
+      }
+      maxLevel <- max(whichLevels)
+      vapply(seq_len(maxLevel)[-1], function(i) {
+        zero <- .RegExpEscape(appLevels[1:(i - 1)])
+        one <- .RegExpEscape(appLevels[(i):maxLevel])
+        gsub("(0)0+|(1)1+", "\\1",
+             gsub(paste0(c("[", one, "]"), collapse = ""), "1",
+                  gsub(paste0(c("[", zero, "]"), collapse = ""), "0", char)
+             )
+        )
+      }, char)
+    }, simplify = FALSE)
+  } else {
+    lapply(which(indices), function(i) {
+      char <- mat[, i]
+      whichLevels <- which(vapply(appLevels,
+                                 function(x) any(grepl(x, char, fixed = TRUE)),
+                                 logical(1)))
+      if (!length(whichLevels)) {
+        return(matrix(character(0), nrow = nTaxa, ncol = 0))
+      }
+      maxLevel <- max(whichLevels)
+      vapply(seq_len(maxLevel)[-1], function(i) {
+        zero <- .RegExpEscape(appLevels[1:(i - 1)])
+        one <- .RegExpEscape(appLevels[(i):maxLevel])
+        gsub("(0)0+|(1)1+", "\\1",
+             gsub(paste0(c("[", one, "]"), collapse = ""), "1",
+                  gsub(paste0(c("[", zero, "]"), collapse = ""), "0", char)
+             )
+        )
+      }, char)
+    })
+  }
   nNew <- `[<-`(rep(1, nChar), indices, vapply(replacements, ncol, 1))
   ret <- matrix(nrow = nTaxa, ncol = sum(nNew),
                 dimnames = list(dimnames(mat)[[1]], NULL))
