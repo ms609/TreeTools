@@ -1,3 +1,8 @@
+# TreeTools 1.12.0.9000 (2024-08) #
+
+- `Decompose()` decomposes additive (ordered) phylogenetic characters by
+  binary decomposition.
+
 # TreeTools 1.12.0 (2024-07-25) #
 
 ## New methods and functions
