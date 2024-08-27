@@ -66,12 +66,17 @@ decomposed <- Decompose(Lobo.phy, 11)
 NumberOfChars <- function(x) sum(attr(x, "weight"))
 NumberOfChars(Lobo.phy)   # 115 characters in original
 NumberOfChars(decomposed) # 116 characters in decomposed
-
 }
 \references{
 \insertAllCited{}
+}
+\seealso{
+Other phylogenetic matrix conversion functions: 
+\code{\link{MatrixToPhyDat}()},
+\code{\link{StringToPhyDat}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{phylogenetic matrix conversion functions}

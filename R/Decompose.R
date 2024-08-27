@@ -54,8 +54,8 @@
 #' NumberOfChars <- function(x) sum(attr(x, "weight"))
 #' NumberOfChars(Lobo.phy)   # 115 characters in original
 #' NumberOfChars(decomposed) # 116 characters in decomposed
-#' 
 #' @template MRS
+#' @family phylogenetic matrix conversion functions
 #' @importFrom utils packageVersion
 #' @export
 Decompose <- function(dataset, indices) {
