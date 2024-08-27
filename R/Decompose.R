@@ -56,7 +56,6 @@
 #' NumberOfChars(decomposed) # 116 characters in decomposed
 #' @template MRS
 #' @family phylogenetic matrix conversion functions
-#' @importFrom utils packageVersion
 #' @export
 Decompose <- function(dataset, indices) {
   levels <- attr(dataset, "levels")
@@ -79,7 +78,7 @@ Decompose <- function(dataset, indices) {
     }
   }
   
-  replacements <- if (packageVersion("base") >= "4.1") {
+  replacements <- if (getRversion() >= "4.1") {
     # apply(simplify = FALSE) becomes available in R4.1.0
     apply(mat[, indices, drop = FALSE], 2, function(char) {
       whichLevels <- which(vapply(appLevels,
