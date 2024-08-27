@@ -15,7 +15,9 @@ that should be decomposed}
 }
 \value{
 \code{Decompose()} returns a \code{phyDat} object in which the specified
-characters have been decomposed into a number of binary characters.
+ordered characters have been decomposed into binary characters.
+The attribute \code{originalIndex} lists the index of the character in
+\code{dataset} to which each element corresponds.
 }
 \description{
 \code{Decompose()} decomposes additive characters into a series of binary

@@ -11,6 +11,10 @@ test_that("Decompose()", {
   expect_equal(NumberOfChars(decomposed),
                NumberOfChars(Lobo.phy) + 1)
   
+  expect_equal(attr(decomposed, "originalIndex"),
+               c(1:11, 11:115))
+               
+  
   decompMat <- as.matrix(decomposed)
   taxa <- c(8, 11, 12, 37, 36)
   if (interactive()) {
@@ -28,6 +32,7 @@ test_that("Decompose()", {
                     as.matrix(unchanged)), # Order unimportant
                as.matrix(Lobo.phy))
   
-  expect_equal(Decompose(Lobo.phy[, 1], TRUE), Lobo.phy[, 1])
+  expect_equal(Decompose(Lobo.phy[, 1], TRUE), 
+               structure(Lobo.phy[, 1], originalIndex = 1))
   
 })

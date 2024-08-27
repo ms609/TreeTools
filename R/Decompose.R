@@ -39,7 +39,9 @@
 #' that should be decomposed
 #' 
 #' @return `Decompose()` returns a `phyDat` object in which the specified
-#' characters have been decomposed into a number of binary characters.  
+#' ordered characters have been decomposed into binary characters.  
+#' The attribute `originalIndex` lists the index of the character in
+#' `dataset` to which each element corresponds.
 #' 
 #' @examples
 #' data("Lobo")
@@ -138,7 +140,10 @@ Decompose <- function(dataset, indices) {
             )
   
   # Return:
-  MatrixToPhyDat(ret)
+  structure(
+    MatrixToPhyDat(ret),
+    originalIndex = rep(seq_len(nChar), nNew)
+  )
 }
 
 .RegExpEscape <- function(x) {
