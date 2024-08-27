@@ -49,7 +49,7 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-20.04, r: '4.0', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-20.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
@@ -87,9 +87,23 @@ jobs:
           needs: |
             check
             coverage
-            
-      - name: Set up R dependencies (Non-Windows)
-        if: runner.os != 'Windows'
+                  
+      - name: Set up R dependencies (R 3.6)
+        if: matrix.config.r == '3.6'
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            evaluate@0.23
+            knitr@1.45
+            phangorn@2.7.1
+            Rfast@1.9.8
+            rjson@0.2.20
+            XML@3.99-0.3
+          needs: |
+            check
+      
+      - name: Set up R dependencies
+        if: matrix.config.r != '3.6' && runner.os != 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: |
