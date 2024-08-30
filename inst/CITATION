@@ -8,10 +8,10 @@ bibentry(
   author = mrs,
   note = vers,
   year = 2019,
-  doi = "10.5281/zenodo.3522725",
+  doi = "10.32614/CRAN.package.TreeTools",
   organization = "Comprehensive R Archive Network",
   textVersion = paste0(
     "Smith (2019). TreeTools: create, modify and analyse phylogenetic trees. ",
-    "Comprehensive R Archive Network. doi: 10.5281/zenodo.3522725"
+    "Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools"
   )
 )
