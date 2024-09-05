@@ -14,6 +14,8 @@ test_that("Decompose()", {
   expect_equal(attr(decomposed, "originalIndex"),
                c(1:11, 11:115))
                
+  expect_equal(attr(Decompose(Lobo.phy, 10:12), "originalIndex"),
+               c(1:11, 11:115))
   
   decompMat <- as.matrix(decomposed)
   taxa <- c(8, 11, 12, 37, 36)
