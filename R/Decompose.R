@@ -130,8 +130,14 @@ Decompose <- function(dataset, indices) {
                 dimnames = list(dimnames(mat)[[1]], NULL))
   newInd <- cumsum(nNew)
   ret[, newInd[!indices]] <- mat[, !indices]
-  replInd <- unlist(lapply(
-    which(indices), function(i) i + seq_len(nNew[[i]]) - 1
+  
+  offset <- c(0, cumsum(nNew[indices] - 1))
+  
+  whichInds <- which(indices)
+  replInd <- unlist(lapply(seq_along(whichInds), function(i) {
+    index <- whichInds[[i]]
+    index + offset[[i]] + seq_len(nNew[[index]]) - 1
+    }
   ))
   if (!is.null(replInd)) {
     ret[, replInd] <- do.call(cbind, replacements)
