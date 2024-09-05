@@ -452,7 +452,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   tokens
 }
 
-#' @rdname ReadTntCharacters
+#' @rdname ReadCharacters
 #' @export
 ReadTNTCharacters <- ReadTntCharacters
 

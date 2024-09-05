@@ -3,6 +3,7 @@
 \name{ReadCharacters}
 \alias{ReadCharacters}
 \alias{ReadTntCharacters}
+\alias{ReadTNTCharacters}
 \alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
@@ -13,6 +14,13 @@
 ReadCharacters(filepath, character_num = NULL, encoding = "UTF8")
 
 ReadTntCharacters(
+  filepath,
+  character_num = NULL,
+  type = NULL,
+  encoding = "UTF8"
+)
+
+ReadTNTCharacters(
   filepath,
   character_num = NULL,
   type = NULL,
