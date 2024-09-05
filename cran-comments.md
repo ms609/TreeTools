@@ -1,11 +1,11 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.4.0
+  - Windows 10, R 4.5.0 devel
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu 20.04
-    - R 4.0
+    - R 3.6
     - R release (tests, examples & vignettes run with valgrind)
     - R devel
   - Mac OS X 10.15.7, R release
