@@ -452,6 +452,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   tokens
 }
 
+#' @rdname ReadTntCharacters
+#' @export
+ReadTNTCharacters <- ReadTntCharacters
+
 .UTFLines <- function(filepath, encoding) {
   con <- file(filepath, encoding = encoding)
   on.exit(close(con))
@@ -836,6 +840,10 @@ ReadAsPhyDat <- function(...) {
 ReadTntAsPhyDat <- function(...) {
   MatrixToPhyDat(ReadTntCharacters(...))
 }
+
+#' @rdname ReadCharacters
+#' @export
+ReadTNTAsPhyDat <- ReadTntAsPhyDat
 
 
 #' @describeIn ReadCharacters A convenient wrapper for \pkg{phangorn}'s

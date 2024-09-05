@@ -6,6 +6,7 @@
 \alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
+\alias{ReadTNTAsPhyDat}
 \alias{PhyDat}
 \title{Read phylogenetic characters from file}
 \usage{
@@ -23,6 +24,8 @@ ReadNotes(filepath, encoding = "UTF8")
 ReadAsPhyDat(...)
 
 ReadTntAsPhyDat(...)
+
+ReadTNTAsPhyDat(...)
 
 PhyDat(dataset)
 }

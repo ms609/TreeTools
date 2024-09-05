@@ -166,6 +166,10 @@ ReadTntTree <- function(filepath, relativePath = NULL, keepEnd = 1L,
     })
   }
   
+  #' @rdname ReadTntTree
+  #' @export
+  ReadTNTTree <- ReadTntTree
+  
   if (length(tipLabels)) {
     trees <- RenumberTips(trees, tipLabels)
   }
