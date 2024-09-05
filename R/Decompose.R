@@ -58,6 +58,12 @@
 #' @family phylogenetic matrix conversion functions
 #' @export
 Decompose <- function(dataset, indices) {
+  if (is.matrix(dataset)) {
+    dataset <- MatrixToPhyDat(dataset)
+  }
+  if (!inherits(dataset, "phyDat")) {
+    stop("`dataset` must be an object of class `phyDat`")
+  }
   levels <- attr(dataset, "levels")
   inappLevel <- levels == "-"
   appLevels <- levels[!inappLevel]

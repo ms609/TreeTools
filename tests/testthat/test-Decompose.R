@@ -1,5 +1,7 @@
 test_that("Decompose()", {
   data("Lobo")
+  
+  expect_error(Decompose("Lobo.phy"), "phyDat")
 
   expect_error(Decompose(Lobo.phy, logical(11)),
                "length.indices.* number of characters in .dataset.")
@@ -34,7 +36,7 @@ test_that("Decompose()", {
                     as.matrix(unchanged)), # Order unimportant
                as.matrix(Lobo.phy))
   
-  expect_equal(Decompose(Lobo.phy[, 1], TRUE), 
+  expect_equal(Decompose(Lobo.phy[, 1], TRUE),
                structure(Lobo.phy[, 1], originalIndex = 1))
   
 })
