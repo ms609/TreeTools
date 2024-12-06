@@ -471,7 +471,7 @@ ReadTNTCharacters <- ReadTntCharacters
         } else {
           "UTF8"
         }
-        message("Problem reading; trying ", newEnc, " file encoding")
+        message("Problem reading characters; trying ", newEnc, " file encoding")
         close(con)
         con <- file(filepath, encoding = newEnc)
         enc2utf8(readLines(con, warn = FALSE))
