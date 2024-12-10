@@ -1,4 +1,6 @@
-# TreeTools 1.12.0.9000 (2024-08) #
+# TreeTools 1.12.0.9001 (2024-12) #
+
+- `%in%` and `match` methods for phylo / multiPhylo objects.
 
 - `Decompose()` decomposes additive (ordered) phylogenetic characters by
   binary decomposition.
