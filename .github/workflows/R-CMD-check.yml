@@ -93,6 +93,8 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
+            waldo@0.5.3
+            testthat@3.2.1
             downlit@0.4.3
             pkgdown@2.0.9
             profvis@0.3.8
