@@ -26,6 +26,6 @@ Other Splits operations:
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match.Splits}}
+\code{\link{match,Splits,Splits-method}}
 }
 \concept{Splits operations}

@@ -111,7 +111,7 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match.Splits}},
+\code{\link{match,Splits,Splits-method}},
 \code{\link{xor}()}
 }
 \author{

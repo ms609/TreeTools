@@ -66,7 +66,7 @@ Other Splits operations:
 \code{\link{Splits}},
 \code{\link{TipLabels}()},
 \code{\link{TipsInSplits}()},
-\code{\link{match.Splits}},
+\code{\link{match,Splits,Splits-method}},
 \code{\link{xor}()}
 }
 \author{

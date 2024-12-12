@@ -36,7 +36,7 @@
 #' @family Splits operations
 #' @keywords methods
 #' 
-#' @name match.Splits
+#' @rdname match.Splits
 #' @export
 setMethod("match",
           signature(x = "Splits", table = "Splits"),
@@ -113,11 +113,11 @@ setOldClass(c("phylo", "multiPhylo"))
 #' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
-#' @aliases match
 #' @family Utility functions
 #' @keywords methods
 #' 
-#' @name match.multiPhylo
+#' @rdname match.multiPhylo
+#' @aliases match,phylo,phylo-method
 #' @export
 setMethod("match",
           signature(x = "phylo", table = "phylo"),
@@ -175,6 +175,7 @@ setMethod("match",
           })
 
 #' @rdname match.multiPhylo
+#' @aliases match,multiPhylo,multiPhylo-method
 #' @export
 setMethod("match",
           signature(x = "multiPhylo", table = "multiPhylo"),
