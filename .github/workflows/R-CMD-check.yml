@@ -93,6 +93,22 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
+            waldo@0.5.3
+            testthat@3.2.1
+            vdiffr@1.0.7
+            cpp11@0.5.0
+            httr2@1.0.1
+            downlit@0.4.3
+            pkgdown@2.0.9
+            profvis@0.3.8
+            gtable@0.3.5
+            evaluate@0.23
+            knitr@1.45
+            phangorn@2.7.1
+            Rfast@1.9.8
+            rjson@0.2.20
+            XML@3.99-0.3
+          
             ade4@1.7-22
             ape@5.8
             askpass@1.2.1
