@@ -126,7 +126,7 @@ jobs:
             credentials@2.0.2
             curl@6.0.1
             data.table@1.16.4
-            datasets@*@3.6.3
+            datasets@3.6.3
             DBI@1.2.3
             decor@1.0.2
             desc@1.4.3
@@ -153,8 +153,8 @@ jobs:
             gifski@1.32.0-1
             gitcreds@0.1.2
             glue@1.8.0
-            graphics@*@3.6.3
-            grDevices@*@3.6.3
+            graphics@3.6.3
+            grDevices@3.6.3
             grid@3.6.3
             gridSVG@1.7-5
             gtable@0.3.5
@@ -191,7 +191,7 @@ jobs:
             MassSpecWavelet@1.52.0
             Matrix@1.2-18
             memoise@2.0.1
-            methods@*@3.6.3
+            methods@3.6.3
             mgcv@1.8-31
             mime@0.12
             miniUI@0.1.1.1
@@ -276,7 +276,7 @@ jobs:
             spatial@7.3-11
             spelling@2.3.1
             splines@3.6.3
-            stats@*@3.6.3
+            stats@3.6.3
             stats4@3.6.3
             stringi@1.8.4
             stringr@1.5.1
@@ -300,7 +300,7 @@ jobs:
             urlchecker@1.0.1
             usethis@3.1.0
             utf8@1.2.4
-            utils@*@3.6.3
+            utils@3.6.3
             vctrs@0.6.5
             vdiffr@1.0.7
             viridisLite@0.4.2
