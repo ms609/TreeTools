@@ -97,7 +97,6 @@ jobs:
             ape@5.8
             askpass@1.2.1
             backports@1.5.0
-            base@*@3.6.3
             base64enc@0.1-3
             base64url@1.4
             bench@1.1.3
