@@ -102,7 +102,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
       ++n_trivial;
     } else {
       for (uintx j = 0; j != n_bin; j++) {
-        ret(i - n_tip - n_trivial, j) = splits[i][j];
+        ret(i - n_tip - n_trivial, j) = decltype(ret(0, 0))(splits[i][j]);
         names[i - n_tip - n_trivial] = (i + 1);
       }
     }
