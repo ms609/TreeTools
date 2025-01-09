@@ -231,9 +231,10 @@ namespace TreeTools {
       Rcpp::stop("Too many edges in tree: "                        // #nocov
                  "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
-
+    
+    ASSERT(parent.length < INT_FAST32_MAX - 2);
     const int32
-      n_edge = parent.length(),
+      n_edge = int32(parent.length()),
       node_limit = n_edge + 2
     ;
 
@@ -317,8 +318,9 @@ namespace TreeTools {
                  "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
     
+    ASSERT(parent.length < INT_FAST32_MAX - 2);
     const int32
-      n_edge = parent.length(),
+      n_edge = int32(parent.length()),
       node_limit = n_edge + 2
     ;
     

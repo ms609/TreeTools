@@ -4,6 +4,7 @@
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
 #include <memory> /* for make_unique */
+#include <limits> /* for INT_MAX */
 #include "assert.h" /* for ASSERT */
 // #define TTDEBUG
 
@@ -33,9 +34,10 @@ namespace TreeTools {
       Rcpp::stop("edge must have two columns");
     }
     
+    ASSERT(keep.length() < INT_MAX - 1);
     const int
       start_edge = edge.nrow(),
-      n_tip = keep.length(),
+      n_tip = int(keep.length()),
       root_node = n_tip + 1,
       all_nodes = start_edge + 2
     ;

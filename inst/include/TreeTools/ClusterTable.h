@@ -167,7 +167,8 @@ namespace TreeTools {
     inline int16 X(int16 row, int16 col) {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
-      return Xarr(col, row - 1);
+      ASSERT(Xarr(col, row - 1) < INT16_MAX);
+      return int16(Xarr(col, row - 1));
     }
 
     inline void setX(int16 row, int16 col, int16 value) {
@@ -280,8 +281,13 @@ namespace TreeTools {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
-    n_leaves = leaf_labels.length(); // = N
-    n_edge = edge.nrow();
+    ASSERT(CT_MAX_LEAVES <= INT16_MAX);
+    n_leaves = int16(leaf_labels.length()); // = N
+    if (edge.nrow() > INT16_MAX) {
+      Rcpp::stop("Tree has too many edges. "
+                 "Contact the 'TreeTools' maintainer.");
+    }
+    n_edge = int16(edge.nrow());
     const int16 n_vertex = M() + N();
     Tlen = 2 * n_vertex;
     Tlen_short = Tlen - (2 * 3);
@@ -303,8 +309,8 @@ namespace TreeTools {
     }
     for (int16 i = n_edge; i--; ) {
       const int16
-      parent_i = edge(i, 0),
-        child_i = edge(i, 1)
+        parent_i = int16(edge(i, 0)),
+        child_i = int16(edge(i, 1))
       ;
       if (!GET_LEFTMOST(parent_i)) {
         SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
@@ -318,7 +324,7 @@ namespace TreeTools {
         ENTER(child_i, weights[child_i]);
       }
     }
-    ENTER(edge(0, 0), weights[edge(0, 0)]);
+    ENTER(int16(edge(0, 0)), weights[edge(0, 0)]);
 
     // BUILD Cluster table
     X_ROWS = n_leaves;
