@@ -313,7 +313,7 @@ namespace TreeTools {
       const Rcpp::IntegerVector child,
       const Rcpp::DoubleVector weight)
   {
-    if (2.0 * (2 + child.length()) > double(INT_FAST32_MAX)) {
+    if (2.0 * (2 + child.length()) > R_xlen_t(INT_FAST32_MAX)) {
       Rcpp::stop("Too many edges in tree: "                        // #nocov
                  "Contact 'TreeTools' maintainer for support.");   // #nocov
     }
