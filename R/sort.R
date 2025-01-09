@@ -9,6 +9,7 @@
 #' @examples
 #' sort(as.phylo(5:0, 7))
 #' @template MRS
+#' @family utility functions
 #' @export
 sort.multiPhylo <- function(x, decreasing = FALSE, na.last = NA, ...) {
   maxTip <- max(NTip(x))

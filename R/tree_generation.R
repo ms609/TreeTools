@@ -340,6 +340,7 @@ NJTree <- function(dataset, edgeLengths = FALSE,
 #' dataset <- MatrixToPhyDat(tokens)
 #' Hamming(dataset)
 #' @template MRS
+#' @family utility functions
 #' @importFrom stats median
 #' @importFrom utils combn
 #' @export

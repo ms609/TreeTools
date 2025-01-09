@@ -36,6 +36,18 @@ tree <- BalancedTree(6)
 plot(TipTimedTree(tree, tipAge = 1:6, minEdge = 2))
 }
 \seealso{
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{MSTEdges}()},
+\code{\link{SampleOne}()},
+\code{\link{UnshiftTree}()},
+\code{\link{as.multiPhylo}()},
+\code{\link{match,phylo,phylo-method}},
+\code{\link{sapply64}()},
+\code{\link{sort.multiPhylo}()}
+
 Other tree manipulation: 
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},

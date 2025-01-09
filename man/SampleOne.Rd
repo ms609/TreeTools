@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{SampleOne}
 \alias{SampleOne}
-\title{Quickly sample}
+\title{Select element at random}
 \usage{
 SampleOne(x, len = length(x))
 }
@@ -22,8 +22,21 @@ SampleOne(9:10)
 SampleOne(letters[1:4])
 
 }
+\seealso{
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{MSTEdges}()},
+\code{\link{TipTimedTree}()},
+\code{\link{UnshiftTree}()},
+\code{\link{as.multiPhylo}()},
+\code{\link{match,phylo,phylo-method}},
+\code{\link{sapply64}()},
+\code{\link{sort.multiPhylo}()}
+}
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
-\keyword{internal}
+\concept{utility functions}

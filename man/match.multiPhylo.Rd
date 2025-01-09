@@ -55,6 +55,18 @@ match(tree1, trees)
 \seealso{
 Corresponding base functions are documented in
 \code{\link[base:match]{match()}}.
+
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{MSTEdges}()},
+\code{\link{SampleOne}()},
+\code{\link{TipTimedTree}()},
+\code{\link{UnshiftTree}()},
+\code{\link{as.multiPhylo}()},
+\code{\link{sapply64}()},
+\code{\link{sort.multiPhylo}()}
 }
-\concept{Utility functions}
+\concept{utility functions}
 \keyword{methods}

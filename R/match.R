@@ -113,7 +113,7 @@ setOldClass(c("phylo", "multiPhylo"))
 #' @seealso Corresponding base functions are documented in
 #' [`match()`][base::match].
 #'
-#' @family Utility functions
+#' @family utility functions
 #' @keywords methods
 #' 
 #' @rdname match.multiPhylo

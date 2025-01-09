@@ -33,6 +33,7 @@
 #' plot(points[, 1:2], ann = FALSE, asp = 1)
 #' MSTEdges(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 #' @template MRS
+#' @family utility functions
 #' @importFrom graphics lines
 #' @export
 MSTEdges <- function(distances, plot = FALSE, x = NULL, y = NULL, ...) {

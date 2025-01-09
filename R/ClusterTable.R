@@ -30,6 +30,7 @@
 #' # Tip label order must match ct1 to allow comparison
 #' ct2 <- as.ClusterTable(tree2, tipLabels = LETTERS[1:5])
 #' @template MRS
+#' @family utility functions
 #' @name ClusterTable
 NULL
 
@@ -76,6 +77,7 @@ as.ClusterTable.multiPhylo <- as.ClusterTable.list
 #' clustab <- as.ClusterTable(TreeTools::BalancedTree(6))
 #' as.matrix(clustab)
 #' @template MRS
+#' @family utility functions
 #' @name ClusterTable-methods
 #' @export
 as.matrix.ClusterTable <- function(x, ...) {

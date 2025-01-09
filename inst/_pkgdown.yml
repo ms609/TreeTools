@@ -94,16 +94,7 @@ reference:
   - title: "Utility functions"
     desc: "Miscellaneous functions to simplify or expedite basic functionality."
     contents:
-      - as.multiPhylo
-      - ClusterTable
-      - ClusterTable-methods
-      - Hamming
-      - MSTEdges
-      - RightmostCharacter
-      - SampleOne
-      - sapply64
-      - sort.multiPhylo
-      - UnshiftTree
+      - has_concept("utility functions")
       
   - title: "Developer functions"
     desc: "Efficient functions without input checks, for developers"

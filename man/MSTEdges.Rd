@@ -53,8 +53,21 @@ MSTEdges(distances, TRUE, x = points[, 1], y = points[, 2], lwd = 2)
 \seealso{
 Slow implementation returning the association matrix of the minimum spanning
 tree: \code{\link[ape:mst]{ape::mst()}}.
+
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{SampleOne}()},
+\code{\link{TipTimedTree}()},
+\code{\link{UnshiftTree}()},
+\code{\link{as.multiPhylo}()},
+\code{\link{match,phylo,phylo-method}},
+\code{\link{sapply64}()},
+\code{\link{sort.multiPhylo}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{utility functions}

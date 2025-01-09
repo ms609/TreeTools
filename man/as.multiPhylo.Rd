@@ -37,3 +37,17 @@ as.multiPhylo(list(BalancedTree(8), PectinateTree(8)))
 data("Lobo")
 as.multiPhylo(Lobo.phy)
 }
+\seealso{
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{MSTEdges}()},
+\code{\link{SampleOne}()},
+\code{\link{TipTimedTree}()},
+\code{\link{UnshiftTree}()},
+\code{\link{match,phylo,phylo-method}},
+\code{\link{sapply64}()},
+\code{\link{sort.multiPhylo}()}
+}
+\concept{utility functions}

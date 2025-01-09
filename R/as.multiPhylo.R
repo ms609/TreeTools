@@ -9,6 +9,7 @@
 #' as.multiPhylo(list(BalancedTree(8), PectinateTree(8)))
 #' data("Lobo")
 #' as.multiPhylo(Lobo.phy)
+#' @family utility functions
 #' @export
 as.multiPhylo <- function(x) UseMethod("as.multiPhylo")
 

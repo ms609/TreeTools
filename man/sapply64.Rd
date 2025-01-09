@@ -62,8 +62,21 @@ replicate64(6, as.TreeNumber(RandomTree(6)))
 }
 \seealso{
 \code{\link[bit64]{integer64}()}
+
+Other utility functions: 
+\code{\link{ClusterTable}},
+\code{\link{ClusterTable-methods}},
+\code{\link{Hamming}()},
+\code{\link{MSTEdges}()},
+\code{\link{SampleOne}()},
+\code{\link{TipTimedTree}()},
+\code{\link{UnshiftTree}()},
+\code{\link{as.multiPhylo}()},
+\code{\link{match,phylo,phylo-method}},
+\code{\link{sort.multiPhylo}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{utility functions}

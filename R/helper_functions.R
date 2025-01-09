@@ -1,4 +1,4 @@
-#' Quickly sample
+#' Select element at random
 #'
 #' `SampleOne()` is a fast alternative to  [`sample()`] that avoids some checks.
 #'
@@ -12,7 +12,7 @@
 #' SampleOne(letters[1:4])
 #'
 #' @template MRS
-#' @keywords internal
+#' @family utility functions
 #' @export
 SampleOne <- function(x, len = length(x)) {
   x[[sample.int(len, 1L, FALSE, NULL, FALSE)]]
@@ -48,6 +48,7 @@ SampleOne <- function(x, len = length(x)) {
 #' UnshiftTree(tree, forest)
 #' UnshiftTree(tree, tree)
 #' @template MRS
+#' @family utility functions
 #'
 #' @export
 UnshiftTree <- function(add, treeList) {
@@ -78,6 +79,7 @@ UnshiftTree <- function(add, treeList) {
 #' replicate64(6, as.TreeNumber(RandomTree(6)))
 #' @template MRS
 #' @seealso \code{\link[bit64]{integer64}()}
+#' @family utility functions
 #' @export
 sapply64 <- function(X, FUN, ..., simplify = TRUE, USE.NAMES = TRUE) {
   structure(sapply(X, FUN, ..., simplify, USE.NAMES), class = "integer64")
