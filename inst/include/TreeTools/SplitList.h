@@ -97,7 +97,7 @@ namespace TreeTools {
       const int16 n_input_bins = int16(x.cols()),
         input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;
 
-      n_bins = (n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
+      n_bins = int16(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
 
       if (n_bins > SL_MAX_BINS) {
         Rcpp::stop("This many leaves cannot be supported. "
