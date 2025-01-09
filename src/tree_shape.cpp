@@ -102,7 +102,7 @@ IntegerVector edge_to_rooted_shape(IntegerVector parent, IntegerVector child,
   }
   const intx
     n_tip = nTip[0],
-    n_edge = parent.length(),
+    n_edge = intx(parent.length()),
     r_to_c = 1
   ;
   if (n_tip > 55) {

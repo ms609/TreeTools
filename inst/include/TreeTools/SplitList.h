@@ -18,7 +18,7 @@
 #define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
 #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
 
-#define INLASTBIN(n, size) ((size) - ((size) - ((n) % (size))) % (size))
+#define INLASTBIN(n, size) int16((size) - int16((size) - int16((n) % (size))) % (size))
 #define INSUBBIN(bin, offset)                                  \
   splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
