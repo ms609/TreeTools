@@ -1,7 +1,7 @@
 #include <Rcpp/Lightest>
 using namespace Rcpp;
 
-#include "../inst/include/TreeTools/assert.h"
+#include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools/SplitList.h"
 #include "../inst/include/TreeTools/renumber_tree.h"
 using namespace TreeTools;

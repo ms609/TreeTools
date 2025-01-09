@@ -5,7 +5,7 @@
 - `Decompose()` decomposes additive (ordered) phylogenetic characters by
   binary decomposition.
   
-- Check for int16 overflow in splits functions.
+- Check for overflow in splits functions.
 
 
 # TreeTools 1.12.0 (2024-07-25) #

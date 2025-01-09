@@ -4,6 +4,7 @@
 #include <Rcpp/Lightest>
 #include <stdexcept> /* for errors */
 
+#include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
 
 #define R_BIN_SIZE 8
