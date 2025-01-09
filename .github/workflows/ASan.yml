@@ -1,5 +1,6 @@
 # Address Sanitizer: Replicate CRAN's gcc-ASAN 'Additional Test'
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -25,7 +26,7 @@ name: gcc-ASAN
 
 jobs:
   mem-check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     name: AddressSanitizer ${{ matrix.config.test }}
 
