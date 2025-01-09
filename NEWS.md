@@ -1,14 +1,12 @@
-# TreeTools 1.12.0.9002 (2025-01) #
-
-- Check for int16 overflow in splits functions.
-
-
-# TreeTools 1.12.0.9001 (2024-12) #
+# TreeTools 1.13.0 (2025-01-09) #
 
 - `%in%` and `match` methods for phylo / multiPhylo objects.
 
 - `Decompose()` decomposes additive (ordered) phylogenetic characters by
   binary decomposition.
+  
+- Check for int16 overflow in splits functions.
+
 
 # TreeTools 1.12.0 (2024-07-25) #
 
