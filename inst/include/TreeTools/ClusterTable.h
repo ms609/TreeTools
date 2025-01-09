@@ -167,7 +167,7 @@ namespace TreeTools {
     inline int16 X(int16 row, int16 col) {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
-      ASSERT(Xarr(col, row - 1) < INT16_MAX);
+      ASSERT(Xarr(col, row - 1) < std::numeric_limits<int16>::max());
       return int16(Xarr(col, row - 1));
     }
 
@@ -281,9 +281,9 @@ namespace TreeTools {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
-    ASSERT(CT_MAX_LEAVES <= INT16_MAX);
+    ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
-    if (edge.nrow() > INT16_MAX) {
+    if (edge.nrow() > std::numeric_limits<int16>::max()) {
       Rcpp::stop("Tree has too many edges. "
                  "Contact the 'TreeTools' maintainer.");
     }
