@@ -255,7 +255,7 @@ void fill_edges(intx *parent, intx *child, uint64_t n, const intx n_tip,
 }
 
 // [[Rcpp::export]]
-IntegerMatrix rooted_shape_to_edge(NumericVector shape, IntegerVector nTip) {
+IntegerMatrix rooted_shape_to_edge(IntegerVector shape, IntegerVector nTip) {
   const intx
     n_tip = nTip[0],
     n_edge = n_tip + n_tip - 2;

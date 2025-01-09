@@ -352,12 +352,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // rooted_shape_to_edge
-IntegerMatrix rooted_shape_to_edge(NumericVector shape, IntegerVector nTip);
+IntegerMatrix rooted_shape_to_edge(IntegerVector shape, IntegerVector nTip);
 RcppExport SEXP _TreeTools_rooted_shape_to_edge(SEXP shapeSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type shape(shapeSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type shape(shapeSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(rooted_shape_to_edge(shape, nTip));
     return rcpp_result_gen;

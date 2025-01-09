@@ -107,7 +107,7 @@ RootedTreeWithShape <- function(shape, nTip, tipLabels)
 #' @export
 RootedTreeWithShape.numeric <- function(shape, nTip,
                                         tipLabels = character(nTip)) {
-  structure(list(edge = rooted_shape_to_edge(shape, nTip),
+  structure(list(edge = rooted_shape_to_edge(as.integer(shape), nTip),
                  Nnode = nTip - 1L,
                  tip.label = tipLabels),
             class = "phylo")
