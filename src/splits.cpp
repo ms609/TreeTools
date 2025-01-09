@@ -121,7 +121,7 @@ LogicalVector duplicated_splits(const RawMatrix splits,
   if (!splits.hasAttribute("nTip")) {
     Rcpp::stop("`splits` lacks an `nTip` attribute.");
   }
-  const IntegerVector nTip = int(splits.attr("nTip"));
+  const IntegerVector nTip = as<IntegerVector>(splits.attr("nTip"));
   const intx
     n_split = splits.rows(),
     n_tip = nTip[0],
