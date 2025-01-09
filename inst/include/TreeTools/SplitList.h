@@ -13,6 +13,7 @@
  * on the stack (as required in TreeDist; supporting more leaves would mean
  * refactoring to run on the heap (and, trivially, converting int16 to int32
  * for split*bin implicit calculation in state[split][bin]?) */
+#define INT16_MAX 32767
 #define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
 #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
 
@@ -78,15 +79,25 @@ namespace TreeTools {
     int16 in_split[SL_MAX_SPLITS];
     splitbit state[SL_MAX_SPLITS][SL_MAX_BINS];
     SplitList(Rcpp::RawMatrix x) {
-      n_splits = x.rows();
-      const int16 n_input_bins = x.cols(),
+      if (x.rows() > INT16_MAX) {
+        Rcpp::stop("This many splits cannot be supported. "
+                   "Please contact the TreeTools maintainer if "
+                   "you need to use more!");
+      }
+      if (x.cols() > INT16_MAX) {
+        Rcpp::stop("This many leaves cannot be supported. "
+                     "Please contact the TreeTools maintainer if "
+                     "you need to use more!");
+      }
+      
+      n_splits = int16(x.rows());
+      ASSERT(n_splits >= 0);
+      
+      const int16 n_input_bins = int16(x.cols()),
         input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;
 
       n_bins = (n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
 
-      if (n_splits < 0) {
-        Rcpp::stop("Negative number of splits!?");                 // # nocov
-      }
       if (n_bins > SL_MAX_BINS) {
         Rcpp::stop("This many leaves cannot be supported. "
                    "Please contact the TreeTools maintainer if "

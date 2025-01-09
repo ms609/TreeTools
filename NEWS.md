@@ -1,3 +1,8 @@
+# TreeTools 1.12.0.9002 (2025-01) #
+
+- Check for int16 overflow in splits functions.
+
+
 # TreeTools 1.12.0.9001 (2024-12) #
 
 - `%in%` and `match` methods for phylo / multiPhylo objects.
