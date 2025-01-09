@@ -121,7 +121,7 @@ LogicalVector duplicated_splits(const RawMatrix splits,
   if (!splits.hasAttribute("nTip")) {
     Rcpp::stop("`splits` lacks an `nTip` attribute.");
   }
-  const IntegerVector nTip = splits.attr("nTip");
+  const IntegerVector nTip = int(splits.attr("nTip"));
   const intx
     n_split = splits.rows(),
     n_tip = nTip[0],
@@ -164,7 +164,7 @@ LogicalVector duplicated_splits(const RawMatrix splits,
     for (intx i = n_split; i--; ) {
       if (splits(i, 0) % 2) {
         compare(i, check_bins - 1) = splits(i, check_bins - 1) ^
-          bin_mask[n_spare];
+          decltype(splits(0, 0))(bin_mask[n_spare]);
         for (intx j = check_bins - 1; j--; ) {
           compare(i, j) = ~splits(i, j);
         }
@@ -223,9 +223,12 @@ RawMatrix mask_splits(RawMatrix x) {
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
   }
+  if (x.size() > std::numeric_limits<int16>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
   const int16
     n_tip = x.attr("nTip"),
-    last_bin = x.cols() - 1,
+    last_bin = int16(x.cols() - 1),
     unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
   ;
   
@@ -233,8 +236,8 @@ RawMatrix mask_splits(RawMatrix x) {
     return x;
   } else {
     const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
-    for (int16 i = x.rows(); i--; ) {
-      x(i, last_bin) &= unset_mask;
+    for (int16 i = int16(x.rows()); i--; ) {
+      x(i, last_bin) &= decltype(x(0, 0))(unset_mask);
     }
   }
   return x;
@@ -245,23 +248,27 @@ RawMatrix not_splits(const RawMatrix x) {
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
   }
+  if (x.size() > std::numeric_limits<int16>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
+  
   const int16
     n_tip = x.attr("nTip"),
-    last_bin = x.cols() - 1,
+    last_bin = int16(x.cols() - 1),
     unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
   ;
   
   RawMatrix ret = clone(x);
   if (unset_tips == 0) {
-    for (int16 i = x.size(); i--; ) {
+    for (int16 i = int16(x.size()); i--; ) {
       ret[i] = ~ret[i];
     }
   } else {
     const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
-    for (int16 i = x.rows(); i--; ) {
-      ret(i, last_bin) = ~ret(i, last_bin) & unset_mask;
+    for (int16 i = int16(x.rows()); i--; ) {
+      ret(i, last_bin) = ~ret(i, last_bin) & decltype(ret(0, 0))(unset_mask);
     }
-    for (int16 i = x.rows() * last_bin; i--; ) {
+    for (int16 i = int16(x.rows()) * last_bin; i--; ) {
       ret[i] = ~ret[i];
     }
   }
@@ -270,8 +277,12 @@ RawMatrix not_splits(const RawMatrix x) {
 
 // [[Rcpp::export]]
 RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
-  const int16 n_split = x.rows();
-  if (n_split != y.rows()) {
+  if (x.size() > std::numeric_limits<int16>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
+  
+  const int16 n_split = int16(x.rows());
+  if (n_split != int16(y.rows())) {
     Rcpp::stop("Input splits contain same number of splits.");
   }
   if (!x.hasAttribute("nTip")) {
@@ -286,21 +297,22 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
   }
   
   const int16
-    last_bin = x.cols() - 1,
+    last_bin = int16(x.cols() - 1),
     unset_tips = (n_tip % BIN_SIZE) ? BIN_SIZE - n_tip % BIN_SIZE : 0
   ;
   
   RawMatrix ret = clone(x);
   if (unset_tips == 0) {
-    for (int16 i = x.size(); i--; ) {
+    for (int16 i = int16(x.size()); i--; ) {
       ret[i] ^= y[i];
     }
   } else {
     const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
-    for (int16 i = x.rows(); i--; ) {
-      ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & unset_mask;
+    for (int16 i = int16(x.rows()); i--; ) {
+      ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & 
+        decltype(ret(0, 0))(unset_mask);
     }
-    for (int16 i = x.rows() * last_bin; i--; ) {
+    for (int16 i = int16(x.rows()) * last_bin; i--; ) {
       ret[i] ^= y[i];
     }
   }
@@ -309,7 +321,11 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
 
 // [[Rcpp::export]]
 RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
-  const int16 n_split = x.rows();
+  if (x.size() > std::numeric_limits<int16>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
+  
+  const int16 n_split = int16(x.rows());
   if (n_split != y.rows()) {
     Rcpp::stop("Input splits contain same number of splits.");
   }
@@ -325,7 +341,7 @@ RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
   }
   
   RawMatrix ret = clone(x);
-  for (int16 i = x.size(); i--; ) {
+  for (int16 i = int16(x.size()); i--; ) {
     ret[i] &= y[i];
   }
   return ret;
@@ -333,7 +349,11 @@ RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
 
 // [[Rcpp::export]]
 RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
-  const int16 n_split = x.rows();
+  if (x.size() > std::numeric_limits<int16>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
+  
+  const int16 n_split = int16(x.rows());
   if (n_split != y.rows()) {
     Rcpp::stop("Input splits contain same number of splits.");
   }
@@ -349,7 +369,7 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
   }
   
   RawMatrix ret = clone(x);
-  for (int16 i = x.size(); i--; ) {
+  for (int16 i = int16(x.size()); i--; ) {
     ret[i] |= y[i];
   }
   return ret;
@@ -358,9 +378,13 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
-    // Initialize
-  const uintx n_split = splits.rows(),
-              n_tip = drop.length(),
+  if (drop.length() > std::numeric_limits<uintx>::max()) {
+    Rcpp::stop("Splits this large are not (yet) supported.");
+  }
+  
+  // Initialize
+  const uintx n_split = uintx(splits.rows()),
+              n_tip = uintx(drop.length()),
               n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
   ASSERT(n_bin == splits.cols());
 
@@ -377,7 +401,7 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
       if (splits(split, uintx(tip / BIN_SIZE))
             & powers_of_two[tip % BIN_SIZE]) {
         ret(split, uintx(kept_tip / BIN_SIZE)) |= 
-          powers_of_two[kept_tip % BIN_SIZE];
+          decltype(ret(0, 0))(powers_of_two[kept_tip % BIN_SIZE]);
         ++in_split[split];
       }
     }
