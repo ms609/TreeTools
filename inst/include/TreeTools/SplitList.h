@@ -7,9 +7,9 @@
 #include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
 
-#define R_BIN_SIZE 8
-#define SL_BIN_SIZE 64
-#define SL_MAX_BINS 32
+#define R_BIN_SIZE int16(8)
+#define SL_BIN_SIZE int16(64)
+#define SL_MAX_BINS int16(32)
 /* 64*32 is about the largest size for which two SplitList objects reliably fit
  * on the stack (as required in TreeDist; supporting more leaves would mean
  * refactoring to run on the heap (and, trivially, converting int16 to int32
@@ -68,9 +68,9 @@ namespace TreeTools {
     /* return bitcounts[x & right16bits] + bitcounts[x >> 16]; */
 
     /* For 64-bit splitbits: */
-    return bitcounts[x & right16bits] + bitcounts[(x >> 16) & right16bits]
+    return int16(bitcounts[x & right16bits] + bitcounts[(x >> 16) & right16bits]
     + bitcounts[(x >> 32) & right16bits]
-    + bitcounts[(x >> 48)];
+    + bitcounts[(x >> 48)]);
   }
 
 
