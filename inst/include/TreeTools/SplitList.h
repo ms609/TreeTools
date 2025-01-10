@@ -80,12 +80,12 @@ namespace TreeTools {
     int16 in_split[SL_MAX_SPLITS];
     splitbit state[SL_MAX_SPLITS][SL_MAX_BINS];
     SplitList(Rcpp::RawMatrix x) {
-      if (x.rows() > std::numeric_limits<int16>::max()) {
+      if (double(x.rows()) > double(std::numeric_limits<int16>::max())) {
         Rcpp::stop("This many splits cannot be supported. "
                    "Please contact the TreeTools maintainer if "
                    "you need to use more!");
       }
-      if (x.cols() > std::numeric_limits<int16>::max()) {
+      if (double(x.cols()) > double(std::numeric_limits<int16>::max())) {
         Rcpp::stop("This many leaves cannot be supported. "
                      "Please contact the TreeTools maintainer if "
                      "you need to use more!");

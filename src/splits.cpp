@@ -15,6 +15,12 @@ const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)
 
+inline void check_16_bit(double x) {
+  if (x > double(std::numeric_limits<int16>::max())) {
+    Rcpp::stop("Cannot represent object this large in 16-bit register.");
+  }
+}
+
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
@@ -223,9 +229,7 @@ RawMatrix mask_splits(RawMatrix x) {
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
   }
-  if (x.size() > std::numeric_limits<int16>::max()) {
-    Rcpp::stop("Splits this large are not (yet) supported.");
-  }
+  check_16_bit(x.size());
   const int16
     n_tip = x.attr("nTip"),
     last_bin = int16(x.cols() - 1),
@@ -248,9 +252,7 @@ RawMatrix not_splits(const RawMatrix x) {
   if (!x.hasAttribute("nTip")) {
     Rcpp::stop("`x` lacks nTip attribute");
   }
-  if (x.size() > std::numeric_limits<int16>::max()) {
-    Rcpp::stop("Splits this large are not (yet) supported.");
-  }
+  check_16_bit(x.size());
   
   const int16
     n_tip = x.attr("nTip"),
@@ -277,9 +279,7 @@ RawMatrix not_splits(const RawMatrix x) {
 
 // [[Rcpp::export]]
 RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
-  if (x.size() > std::numeric_limits<int16>::max()) {
-    Rcpp::stop("Splits this large are not (yet) supported.");
-  }
+  check_16_bit(x.size());
   
   const int16 n_split = int16(x.rows());
   if (n_split != int16(y.rows())) {
@@ -321,9 +321,7 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
 
 // [[Rcpp::export]]
 RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
-  if (x.size() > std::numeric_limits<int16>::max()) {
-    Rcpp::stop("Splits this large are not (yet) supported.");
-  }
+  check_16_bit(x.size());
   
   const int16 n_split = int16(x.rows());
   if (n_split != y.rows()) {
@@ -349,9 +347,7 @@ RawMatrix and_splits(const RawMatrix x, const RawMatrix y) {
 
 // [[Rcpp::export]]
 RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
-  if (x.size() > std::numeric_limits<int16>::max()) {
-    Rcpp::stop("Splits this large are not (yet) supported.");
-  }
+  check_16_bit(x.size());
   
   const int16 n_split = int16(x.rows());
   if (n_split != y.rows()) {

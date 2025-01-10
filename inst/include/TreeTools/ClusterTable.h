@@ -283,7 +283,7 @@ namespace TreeTools {
     }
     ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
-    if (edge.nrow() > std::numeric_limits<int16>::max()) {
+    if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "
                  "Contact the 'TreeTools' maintainer.");
     }
