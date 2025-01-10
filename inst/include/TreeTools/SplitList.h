@@ -2,7 +2,7 @@
 #define _TREETOOLS_SPLITLIST_H
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall"
+#pragma GCC diagnostic ignored "-Wconversion"
 #include <Rcpp/Lightest>
 #pragma GCC diagnostic pop
 

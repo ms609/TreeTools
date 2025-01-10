@@ -3,8 +3,7 @@
 
 #ifdef DEBUG
 #define ASSERT(x) if (!(x)) {                                  \
-Rcpp::Rcerr << "Failed assertion: ";                           \
-Rcpp::stop(#x);                                                \
+Rcpp::stop("Assertion failed: " #x);                           \
 }
 #else
 #define ASSERT(x) ((void)0)

@@ -386,7 +386,7 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
   const uintx n_split = uintx(splits.rows()),
               n_tip = uintx(drop.length()),
               n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
-  ASSERT(n_bin == splits.cols());
+  ASSERT(int(n_bin) == splits.cols());
 
   
   RawMatrix ret(n_split, n_bin);
