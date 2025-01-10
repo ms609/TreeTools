@@ -1,7 +1,4 @@
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
 #include <Rcpp/Lightest>
-#pragma GCC diagnostic pop
 
 #include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools.h"

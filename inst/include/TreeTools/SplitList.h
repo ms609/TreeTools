@@ -1,10 +1,7 @@
 #ifndef _TREETOOLS_SPLITLIST_H
 #define _TREETOOLS_SPLITLIST_H
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
 #include <Rcpp/Lightest>
-#pragma GCC diagnostic pop
 
 #include <stdexcept> /* for errors */
 
