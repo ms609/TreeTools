@@ -8,8 +8,8 @@
     - R 3.6
     - R release (tests, examples & vignettes run with valgrind)
     - R devel
-  - Mac OS X 10.15.7, R release
-  - Microsoft Windows Server 2019 10.0.17763, R release
+  - Mac OS X latest, R release
+  - Microsoft Windows Server latest, R release
   - RHub checks
   
 
