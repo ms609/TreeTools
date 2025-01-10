@@ -1,5 +1,5 @@
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wall  -Wconversion "
+#pragma GCC diagnostic ignored "-Wconversion"
 #include <Rcpp/Lightest>
 #pragma GCC diagnostic pop
 
