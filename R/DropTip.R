@@ -52,14 +52,12 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     drop <- logical(nTip)
   } else if (is.character(tip)) {
     if (check) {
-      drop <- labels %in% tip
-      if (sum(drop) != length(tip)) {
+      if (sum(unique(labels) %in% tip) != length(tip)) {
         warning(paste(tip[!tip %in% labels], collapse = ", "),
                 " not present in tree")
       }
-    } else {
-      drop <- labels %in% tip
     }
+    drop <- labels %in% tip
   } else if (is.numeric(tip)) {
     if (check) {
       nNodes <- nTip + tree[["Nnode"]]
