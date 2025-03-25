@@ -141,7 +141,7 @@ NexusTokens <- function(tokens, character_num = NULL) {
 #' TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
 #' names.
 #'
-#' Tested with matrices downloaded from [MorphoBank](https://morphobank.org)
+#' Tested with matrices downloaded from [MorphoBank](https://morphobank.org/)
 #' \insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 #' [report](https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->)
 #' incompletely or incorrectly parsed files.
