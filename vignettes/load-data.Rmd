@@ -14,6 +14,8 @@ vignette: >
 It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you
 are not used to working with files in the Nexus format.
 
+# Load raw data
+
 First off, make sure that you are comfortable 
 [telling R where to find a file](filesystem-navigation.html).
 
@@ -48,6 +50,23 @@ raw_data <- as.matrix(read_excel(
 taxon_names <- unlist(read_excel(filename, sheet = 1, range = "A1:A21"))
 
 rownames(raw_data) <- taxon_names
+```
+
+## From a text or csv (comma separated values) file
+
+Characters can be read from a text file in a similar manner to Excel.
+You may need to adjust the R commands to match the particular format of your
+input file.
+
+```r
+raw_data <- read.table(
+  filename,            # Path to your input file
+  sep = ",",           # What character separates columns?
+  header = TRUE,       # Does the data contain a header row?
+  row.names = 1,       # Which column contains the row names?
+  na.strings = "", 
+  stringsAsFactors = FALSE
+)
 ```
 
 ## From a Nexus file
@@ -121,8 +140,8 @@ an unexpected dataset format -- if they don't work on your dataset, please
 Failing that, you can enlist the help of the 'phangorn' package:
 
 ```r
-install.packages('phangorn')
-library('phangorn')
+install.packages("phangorn")
+library("phangorn")
 my_data <- phyDat(raw_data, type = "USER", levels = c(0:9, "-"))
 ```
 
@@ -169,6 +188,14 @@ If you need to use a contrast matrix, convert the data using
 my.phyDat <- phyDat(my.data, type = "USER", contrast = contrast.matrix)
 ```
 
+# Store processed data
+
+To simplify subsequent analysis, or to allow the data to be read into the
+`EasyTrees()` interface, you could save your processed data in Nexus format:
+
+```r
+ape::write.nexus.data(my.phyDat, "my_data.nex", format = "standard")
+```
 
 # What next?
 
