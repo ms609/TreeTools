@@ -14,12 +14,12 @@ vignette: >
 It can be a bit fiddly to get a phylogenetic dataset into R, particularly if you
 are not used to working with files in the Nexus format.
 
-# Load raw data
-
 First off, make sure that you are comfortable 
 [telling R where to find a file](filesystem-navigation.html).
 
 Then you are ready to load raw data:
+
+# Load raw data
 
 ## From an Excel spreadsheet
 
@@ -116,8 +116,8 @@ my_data <- ReadTntAsPhyDat(filename)
 
 # Processing raw data
 
-The next stage is to get the raw data into a format that most R packages can
-understand. If you've used the `ReadAsPhyDat` or `ReadTntAsPhyDat` functions,
+Next, we need the raw data in the R-friendly `phyDat` format.
+If you've used the `ReadAsPhyDat` or `ReadTntAsPhyDat` functions,
 then you can skip this step -- you're already there.
 
 Otherwise, you can try 
