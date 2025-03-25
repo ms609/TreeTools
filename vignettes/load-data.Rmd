@@ -190,8 +190,10 @@ my.phyDat <- phyDat(my.data, type = "USER", contrast = contrast.matrix)
 
 # Store processed data
 
-To simplify subsequent analysis, or to allow the data to be read into the
-`EasyTrees()` interface, you could save your processed data in Nexus format:
+To simplify subsequent analysis, or to allow the data to be read into other
+contexts (e.g. via the [`TreeSearch::EasyTrees()`](
+   https://ms609.github.io/TreeSearch/articles/tree-search.html) interface),
+you could save your processed data in Nexus format:
 
 ```r
 ape::write.nexus.data(my.phyDat, "my_data.nex", format = "standard")

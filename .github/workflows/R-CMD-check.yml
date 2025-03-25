@@ -2,6 +2,8 @@
 # https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 4'  # Thursdays, 4am
   push:
     branches:
       - main
@@ -134,3 +136,16 @@ jobs:
         run: |
           covr::codecov()
         shell: Rscript {0}
+        
+      - name: Notify on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            });
