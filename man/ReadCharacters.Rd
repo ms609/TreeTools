@@ -84,7 +84,7 @@ TNT \insertCite{Goloboff2008}{TreeTools} file, reading character states and
 names.
 }
 \details{
-Tested with matrices downloaded from \href{https://morphobank.org}{MorphoBank}
+Tested with matrices downloaded from \href{https://morphobank.org/}{MorphoBank}
 \insertCite{OLeary2011}{TreeTools}, but should also work more widely; please
 \href{https://github.com/ms609/TreeTools/issues/new?title=Error+parsing+Nexus+file&body=<!--Tell+me+more+and+attach+your+file...-->}{report}
 incompletely or incorrectly parsed files.

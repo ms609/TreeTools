@@ -52,7 +52,7 @@ taxon_names <- unlist(read_excel(filename, sheet = 1, range = "A1:A21"))
 rownames(raw_data) <- taxon_names
 ```
 
-## From a text or csv (comma separated values) file
+## From a text or CSV (comma separated values) file
 
 Characters can be read from a text file in a similar manner to Excel.
 You may need to adjust the R commands to match the particular format of your
