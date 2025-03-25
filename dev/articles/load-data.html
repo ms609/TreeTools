@@ -82,12 +82,12 @@
 <p>It can be a bit fiddly to get a phylogenetic dataset into R,
 particularly if you are not used to working with files in the Nexus
 format.</p>
-<div class="section level2">
-<h2 id="load-raw-data">Load raw data<a class="anchor" aria-label="anchor" href="#load-raw-data"></a>
-</h2>
 <p>First off, make sure that you are comfortable <a href="filesystem-navigation.html">telling R where to find a
 file</a>.</p>
 <p>Then you are ready to load raw data:</p>
+<div class="section level2">
+<h2 id="load-raw-data">Load raw data<a class="anchor" aria-label="anchor" href="#load-raw-data"></a>
+</h2>
 <div class="section level3">
 <h3 id="from-an-excel-spreadsheet">From an Excel spreadsheet<a class="anchor" aria-label="anchor" href="#from-an-excel-spreadsheet"></a>
 </h3>
@@ -117,7 +117,7 @@ sheet, rows and columns contain your data:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">raw_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">taxon_names</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="from-a-text-or-csv-comma-separated-values-file">From a text or csv (comma separated values) file<a class="anchor" aria-label="anchor" href="#from-a-text-or-csv-comma-separated-values-file"></a>
+<h3 id="from-a-text-or-csv-comma-separated-values-file">From a text or CSV (comma separated values) file<a class="anchor" aria-label="anchor" href="#from-a-text-or-csv-comma-separated-values-file"></a>
 </h3>
 <p>Characters can be read from a text file in a similar manner to Excel.
 You may need to adjust the R commands to match the particular format of
@@ -174,8 +174,8 @@ me know</a> and I’ll try to fix it.</p>
 <div class="section level2">
 <h2 id="processing-raw-data">Processing raw data<a class="anchor" aria-label="anchor" href="#processing-raw-data"></a>
 </h2>
-<p>The next stage is to get the raw data into a format that most R
-packages can understand. If you’ve used the <code>ReadAsPhyDat</code> or
+<p>Next, we need the raw data in the R-friendly <code>phyDat</code>
+format. If you’ve used the <code>ReadAsPhyDat</code> or
 <code>ReadTntAsPhyDat</code> functions, then you can skip this step –
 you’re already there.</p>
 <p>Otherwise, you can try</p>
