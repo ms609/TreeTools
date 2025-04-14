@@ -51,7 +51,7 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: macOS-latest, r: 'release'}
-          - {os: ubuntu-latest, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: ubuntu-22.04, r: '3.6', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-latest, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           - {os: ubuntu-latest, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
@@ -59,6 +59,7 @@ jobs:
       _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
       _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
       R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      STRINGI_DISABLE_PKG_CONFIG: true
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
       R_REMOTES_STANDALONE: true
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
