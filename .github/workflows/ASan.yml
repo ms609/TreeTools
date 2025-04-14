@@ -64,9 +64,9 @@ jobs:
         with:
           r-version: release # CRAN uses devel, but takes ages to load deps.
       
-      - name: Setup pandoc
-        if: ${{ matrix.config.test }} == 'vignettes'
-        uses: r-lib/actions/setup-pandoc@v2
+      - name: Initialize stringi
+        run: sudo apt-get install libicu-dev
+        shell: bash
 
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
