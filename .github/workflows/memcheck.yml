@@ -46,6 +46,7 @@ jobs:
       _R_CHECK_FORCE_SUGGESTS_: false
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/noble/latest
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      ASAN_OPTIONS: verify_asan_link_order=0
 
     steps:
       - uses: ms609/actions/memcheck@main
