@@ -86,7 +86,6 @@ jobs:
         run: |
           install.packages("pak")
           pak::pkg_install("rlang")
-          pak::lockfile_install(".github/pkg.lock")
         shell: Rscript {0}
         
       - name: Cache R packages
