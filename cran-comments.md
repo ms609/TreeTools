@@ -4,7 +4,7 @@
   - Windows 10, R 4.5.0 devel
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
-  - Ubuntu 20.04
+  - Ubuntu latest
     - R 3.6
     - R release (tests, examples & vignettes run with valgrind)
     - R devel
