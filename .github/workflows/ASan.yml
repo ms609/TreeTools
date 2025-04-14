@@ -44,7 +44,7 @@ jobs:
       USING_ASAN: true
       STRINGI_DISABLE_PKG_CONFIG: true
       BIOCONDUCTOR_USE_CONTAINER_REPOSITORY: FALSE # For stringi
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/noble/latest
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ASAN_OPTIONS: verify_asan_link_order=0
 
@@ -64,15 +64,10 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: release # CRAN uses devel, but takes ages to load deps.
-      
-      - name: Initialize stringi
-        run: sudo apt-get install libicu-dev
-        shell: bash
 
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          cache-version: 4547
           dependencies: "'soft'"
           needs: |
             memcheck
