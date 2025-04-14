@@ -71,7 +71,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           cache-version: 4547
-          dependencies: "soft"
+          dependencies: "'soft'"
           needs: |
             memcheck
 
