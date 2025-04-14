@@ -63,6 +63,10 @@ jobs:
         with:
           r-version: release # CRAN uses devel, but takes ages to load deps.
 
+      - name: Install stringi with bundled ICU
+        run: |
+          Rscript -e 'install.packages("stringi", configure.args="--disable-pkg-config")'
+      
       - name: Setup pandoc
         if: ${{ matrix.config.test }} == 'vignettes'
         uses: r-lib/actions/setup-pandoc@v2
