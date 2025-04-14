@@ -70,6 +70,8 @@ jobs:
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          cache-version: 4547
+          dependencies: "soft"
           needs: |
             memcheck
 
