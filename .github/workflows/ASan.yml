@@ -26,7 +26,7 @@ name: gcc-ASAN
 
 jobs:
   mem-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Update RSPM when increasing
 
     name: AddressSanitizer ${{ matrix.config.test }}
 
@@ -41,6 +41,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
+      RSPM: https://packagemanager.rstudio.com/cran/__linux__/noble/latest
       USING_ASAN: true
       STRINGI_DISABLE_PKG_CONFIG: true
       BIOCONDUCTOR_USE_CONTAINER_REPOSITORY: FALSE # For stringi
