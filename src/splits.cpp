@@ -374,7 +374,7 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
-  if (drop.length() > std::numeric_limits<uintx>::max()) {
+  if (static_cast<uintx>(drop.length()) > std::numeric_limits<uintx>::max()) {
     Rcpp::stop("Splits this large are not (yet) supported.");
   }
   
