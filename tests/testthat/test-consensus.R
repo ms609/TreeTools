@@ -72,6 +72,12 @@ test_that("Consensus() handles large sets of trees", {
   ))
 })
 
+test_that("Consensus() handles non-preorder trees", {
+  trees <- ape::read.nexus(test_path("testdata", "nonPreCons.nex"))
+  expect_equal(Consensus(trees)$Nnode, 3)
+  expect_equal(Consensus(trees), Preorder(trees[[1]]))
+})
+
 test_that("ConsensusWithout() is robust", {
   tr <- as.phylo(0:6, 16)
   expect_identical(ConsensusWithout(tr, paste0("t", 1:16)),
