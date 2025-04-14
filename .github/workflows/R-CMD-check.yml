@@ -120,6 +120,7 @@ jobs:
         if: matrix.config.r != '3.6' && runner.os != 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          pandoc-version: "latest"
           needs: |
             check
           extra-packages: |
