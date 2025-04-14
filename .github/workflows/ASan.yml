@@ -42,6 +42,7 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
       USING_ASAN: true
+      STRINGI_DISABLE_PKG_CONFIG: true
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       ASAN_OPTIONS: verify_asan_link_order=0
@@ -62,10 +63,6 @@ jobs:
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: release # CRAN uses devel, but takes ages to load deps.
-
-      - name: Install stringi with bundled ICU
-        run: |
-          Rscript -e 'install.packages("stringi", configure.args="--disable-pkg-config")'
       
       - name: Setup pandoc
         if: ${{ matrix.config.test }} == 'vignettes'
