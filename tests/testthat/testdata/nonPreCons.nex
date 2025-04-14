@@ -1,0 +1,24 @@
+#NEXUS
+[R-package APE, Mon Apr 14 14:21:04 2025]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 4;
+	TAXLABELS
+		Lucernaria
+		Haliclystus
+		Calvadosia
+		Placozoa
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Lucernaria,
+		2	Haliclystus,
+		3	Calvadosia,
+		4	Placozoa
+	;
+	TREE * UNTITLED = [&R] (((1,2),3),4);
+	TREE * UNTITLED = [&R] (((1,2),3),4);
+	TREE * UNTITLED = [&R] (((4,3),2),1);
+	TREE * UNTITLED = [&R] (((4,3),2),1);
+END;

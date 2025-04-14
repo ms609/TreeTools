@@ -39,7 +39,7 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
       warning("Tree sizes differ; removing leaves not in smallest.")
       trees <- lapply(trees, KeepTip, trees[[which.min(nTip)]][["tip.label"]])
     } else {
-      nTip <- nTip[1]
+      nTip <- nTip[[1]]
       break
     }
   }
@@ -52,9 +52,11 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
+  trees <- Preorder(trees) # Per #168; could be dispensed with with further
+                           # investigation of consensus_tree
   splits <- as.Splits(consensus_tree(trees, p),
                       tipLabels = TipLabels(trees[[1]]))
-  tree1 <- Preorder(trees[[1]])
+  tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
   root <- root[root <= NTip(tree1)]

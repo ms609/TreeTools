@@ -1,3 +1,9 @@
+# TreeTools 1.13.1.9000 (2025-04-14) #
+
+- Fix unexpected polytomies in `Consensus()`
+  ([#168](https://github.com/ms609/TreeTools/issues/168))
+
+
 # TreeTools 1.13.1 (2025-04-07) #
 
 - Support non-unique labels in `DropTip()` checks.
