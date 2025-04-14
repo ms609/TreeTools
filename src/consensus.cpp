@@ -10,6 +10,9 @@ using namespace Rcpp;
 
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
+// Per #168, unexpected behaviour if root position differs in non-preorder trees
+// Further investigation could be beneficial; for now, suggest applying
+// the function to preorder trees only.
 // [[Rcpp::export]]
 LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
   int16
