@@ -81,7 +81,7 @@ jobs:
       - name: Install apt packages
         if: runner.os == 'Linux'
         run: |
-          sudo apt-get install texlive-latex-base texlive-fonts-recommended libcurl4-openssl-dev
+          sudo apt-get install texlive-latex-base texlive-fonts-recommended
       
       - name: Set up R dependencies (Windows)
         if: runner.os == 'Windows'
