@@ -80,10 +80,7 @@ jobs:
       - name: Install apt packages
         if: runner.os == 'Linux'
         run: |
-          sudo add-apt-repository -y ppa:apt-fast/stable
-          sudo apt-get update
-          sudo apt-get -y install apt-fast
-          sudo apt-fast install texlive-latex-base texlive-fonts-recommended libcurl4-openssl-dev
+          sudo apt-get install texlive-latex-base texlive-fonts-recommended libcurl4-openssl-dev
       
       - name: Cache R packages
         uses: actions/cache@v4
