@@ -81,6 +81,11 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended
+          
+      - name: Install libgsl-dev (R 3.6)
+        if: matrix.config.r == '3.6' && runner.os == 'Linux'
+        run: |
+          sudo apt-get install libgsl-dev
       
       - name: Set up R dependencies (Windows)
         if: runner.os == 'Windows'
