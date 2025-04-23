@@ -139,8 +139,11 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   # Vector, each entry corresponds to a tree
   tipsAboveRogue <- colSums(aboveRogue) # includes dummy root
+  
+  # Initialize count of trees where rogue occurs alongside a leaf
   nAtTip <- c(double(nTip - 1L),
               sum(tipsAboveRogue == nTip - 1L)) # At pole
+  # Populate nAtTip
   atTip <- tipsAboveRogue == 1L
   tipMatches <- apply(aboveRogue[, atTip, drop = FALSE], 2, which)
   tab <- tabulate(as.integer(tipMatches))
