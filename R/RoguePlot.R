@@ -151,7 +151,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   unmatchedTrees <- !(tipsAboveRogue %fin% c(0L, 1L, nTip - 1L))
   consSplits <- PolarizeSplits(as.Splits(
-    cons, tipLabels = c(TipLabels(trees[[1]]), dummyRoot), pole))
+    cons, tipLabels = c(tipLabels[-tip], dummyRoot)), pole)
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   # Had previously used fmatch here, but encountered unexpected error
