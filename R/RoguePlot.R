@@ -82,7 +82,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   nTip <- length(tipLabels)
 
   at <- attributes(trees)
-  if(!missing(outgroupTips)) {
+  if (!missing(outgroupTips)) {
     trees <- lapply(trees, RootTree, intersect(outgroupTips, tipLabels))
   }
   trees <- RenumberTips(trees, tipLabels)
@@ -115,21 +115,21 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     parent <- edge[, 1]
     child <- edge[, 2]
     rogueEdge <- fmatch(tip, child)
-    rogueParent <- parent[rogueEdge]
-    aboveRogue <- fmatch(rogueParent, child)
+    rogueParent <- parent[[rogueEdge]]
+    aboveRogue <- fmatch(rogueParent, child) # edge above parent of rogue tip
     splitTips <- allTips
-    if (is.na(aboveRogue)) {
-      splitKids <- child
+    splitKids <- if (is.na(aboveRogue)) {
+      child
     } else {
       edgeInSplit <- DescendantEdges(parent = parent, child = child,
                                      edge = aboveRogue)
-      splitKids <- child[edgeInSplit]
+      child[edgeInSplit]
     }
     splitTips[splitKids[splitKids <= nTip + 1L]] <- TRUE
     splitTips <- splitTips[-tip]
 
     #ret <- packBits(splitTips[-1]) # TODO can do something clever like this?
-    if (splitTips[pole]) {
+    if (splitTips[[pole]]) {
       !splitTips[-pole]
     } else {
       splitTips[-pole]
@@ -147,7 +147,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   nAtTip[seq_along(tab)] <- tab
 
   unmatchedTrees <- !(tipsAboveRogue %fin% c(0L, 1L, nTip - 1L))
-  consSplits <- PolarizeSplits(as.Splits(cons), pole)
+  consSplits <- PolarizeSplits(as.Splits(
+    cons, tipLabels = c(TipLabels(trees[[1]]), dummyRoot), pole))
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   # Had previously used fmatch here, but encountered unexpected error

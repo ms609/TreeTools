@@ -50,6 +50,13 @@ test_that("Simple rogue plot", {
   vdiffr::expect_doppelganger("RoguePlot(simple)", RoguePlotTest)
 })
 
+test_that("RoguePlot(sort = TRUE)", {
+  trees <- c(PectinateTree(7), PectinateTree(7))
+  rp <- RoguePlot(trees, "t5", sort = TRUE)
+  expect_equal(rp[["atNode"]], rep(0, 5))
+  expect_equal(rp[["onEdge"]], `[<-`(double(10), 4, 2))
+})
+
 test_that("polytomy id", {
   trees <- list(read.tree(text = "(a,(((b,(c,d)),e),rogue));"),
                 read.tree(text = "(a,((((c,d),e),rogue),b));"),
