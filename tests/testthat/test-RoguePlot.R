@@ -22,7 +22,7 @@ test_that(".apply() helper function", {
 
 test_that("Simple rogue plot", {
   trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
-                read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
+                read.tree(text = "(a, (b, (c, ((d, e), rogue))));"),
                 read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
                 read.tree(text = "(a, (b, (c, (d, (rogue, e)))));"))
   expect_equal(

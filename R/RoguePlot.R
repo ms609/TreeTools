@@ -90,7 +90,6 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   noRogue <- trees
   attr(noRogue, "TipLabel") <- NULL
-  noRogue[] <- lapply(noRogue, DropTip, tip)
   dummyRoot <- "xxTREETOOLSxxDUMMYxxROOTxx"
   noRogue[] <- lapply(lapply(noRogue, DropTip, tip),
                       AddTip, 0, dummyRoot)
@@ -126,11 +125,11 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     splitTips <- splitTips[-tip]
 
     #ret <- packBits(splitTips[-1]) # TODO can do something clever like this?
-    if (splitTips[[pole]]) {
-      !splitTips[-pole]
-    } else {
-      splitTips[-pole]
-    }
+    
+    # `pole` is the dummy root, so cannot have been in the rogue's sister clade
+    # We thus guarantee the polarity of splitTips
+    stopifnot(!splitTips[[pole]]) # if NOT, return !splitTips[-pole]
+    splitTips[-pole]
   #}, raw((length(allTips) - 2L)  / 8L))
   }, logical((length(allTips) - 2L)))
 
