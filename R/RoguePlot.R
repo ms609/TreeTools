@@ -92,8 +92,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   attr(noRogue, "TipLabel") <- NULL
   noRogue[] <- lapply(noRogue, DropTip, tip)
   dummyRoot <- "xxTREETOOLSxxDUMMYxxROOTxx"
-  # TODO replace with noRogue[] <- again
-  noRogue[] <- lapply(noRogue, AddTip, 0, dummyRoot)
+  noRogue[] <- lapply(lapply(noRogue, DropTip, tip),
+                      AddTip, 0, dummyRoot)
   class(noRogue) <- "multiPhylo"
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
