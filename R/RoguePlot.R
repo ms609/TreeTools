@@ -118,13 +118,10 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     rogueParent <- parent[[rogueEdge]]
     aboveRogue <- fmatch(rogueParent, child) # edge above parent of rogue tip
     splitTips <- allTips
-    splitKids <- if (is.na(aboveRogue)) {
-      child
-    } else {
-      edgeInSplit <- DescendantEdges(parent = parent, child = child,
-                                     edge = aboveRogue)
-      child[edgeInSplit]
-    }
+    stopifnot(!is.na(aboveRogue))
+    edgeInSplit <- DescendantEdges(parent = parent, child = child,
+                                   edge = aboveRogue)
+    splitKids <- child[edgeInSplit]
     splitTips[splitKids[splitKids <= nTip + 1L]] <- TRUE
     splitTips <- splitTips[-tip]
 
