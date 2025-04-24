@@ -22,7 +22,7 @@ test_that(".apply() helper function", {
 
 test_that("Simple rogue plot", {
   trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
-                read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
+                read.tree(text = "(a, (b, (c, ((d, e), rogue))));"),
                 read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
                 read.tree(text = "(a, (b, (c, (d, (rogue, e)))));"))
   expect_equal(
@@ -34,8 +34,8 @@ test_that("Simple rogue plot", {
          )
   )
   expect_equal(
-    RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)$cons,
-    Preorder(SortTree(RoguePlot(trees, tip = "rogue", plot = FALSE)$cons))
+    RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)[["cons"]],
+    Preorder(SortTree(RoguePlot(trees, tip = "rogue", plot = FALSE)[["cons"]]))
   )
 
   skip_if_not_installed("vdiffr", "1.0")
@@ -48,6 +48,13 @@ test_that("Simple rogue plot", {
               )
   }
   vdiffr::expect_doppelganger("RoguePlot(simple)", RoguePlotTest)
+})
+
+test_that("RoguePlot(sort = TRUE)", {
+  trees <- c(PectinateTree(7), PectinateTree(7))
+  rp <- RoguePlot(trees, "t5", sort = TRUE, plot = FALSE)
+  expect_equal(rp[["atNode"]], rep(0, 5))
+  expect_equal(rp[["onEdge"]], `[<-`(double(10), 4, 2))
 })
 
 test_that("polytomy id", {
@@ -79,10 +86,12 @@ test_that("Complex rogue plot", {
                  read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),  # node 9
                  read.tree(text = "(a, (b, (c, (rogue, (d, (f, e))))));"),  # node 9
                  read.tree(text = "(a, (b, (c, (rogue, ((e, f), d)))));"),  # node 9
+                 
                  read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),  # node 9 x 5
                  read.tree(text = "(rogue, (a, (b, (c, (d, (e, f))))));"),  # node 7 x 1
                  read.tree(text = "(a, (rogue, (b, (c, (d, (e, f))))));"),  # edge 2 x 1
                  read.tree(text = "((rogue, a), (b, (c, (d, (e, f)))));"),  # edge 1
+                 
                  read.tree(text = "((rogue, a), (b, (c, (d, (e, f)))));"),  # edge 1 x 2
                  read.tree(text = "(a, (b, ((c, d), (rogue, (f, e)))));"),  # edge 7
                  read.tree(text = "(a, (b, (((rogue, d), c), (e, f))));"),  # edge 6 x 1
@@ -95,8 +104,9 @@ test_that("Complex rogue plot", {
          legendLabels = LegendLabels(6))
     )
 
-  expectedCons <- Preorder(RenumberTips(
-    read.tree(text = "(f, (e, (d, c, (b, a))));"), letters[1:6]))
+  expectedCons <- Preorder(
+    RenumberTips(read.tree(text = "(f, (e, (d, c, (b, a))));"), letters[1:6])
+  )
   
   expect_equal(
     RoguePlot(trees1, "rogue", outgroupTips = "f", plot = FALSE),
