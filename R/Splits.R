@@ -60,7 +60,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
   }
   edge <- x[["edge"]]
   nEdge <- dim(edge)[1]
-  order <- attr(x, "order")[1]
+  order <- attr(x, "order")[[1]]
   edgeOrder <- if (is.null(order)) {
     postorder_order(edge)
   } else {
