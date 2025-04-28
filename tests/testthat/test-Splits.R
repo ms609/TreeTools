@@ -4,6 +4,7 @@ expect_splits_equal <- function(s1, s2, ...) {
 }
 
 test_that("as.Splits() fails gracefully", {
+  # Reported at https://github.com/emmanuelparadis/ape/issues/142
   dud <- ape::read.tree(text = "(A,B,C),(D,E,F);")
   expect_error(as.Splits(dud), "no crash observed")
   dud <- ape::read.tree(text = "(A,B,C),(D,E,F);")
