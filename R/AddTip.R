@@ -22,6 +22,9 @@
 #' in negative edge lengths. If `NULL`, the default, the new tip will be added
 #' at the midpoint of the broken edge. If inserting at the root (`where = 0`),
 #' a new edge of length `lengthBelow` will be inserted.
+#' If `NA`, the new leaf will be attached adjacent to `where`; at internal
+#' nodes, this will result in polytomy.
+#' 
 #' @param nTip,nNode,rootNode Optional integer vectors specifying number of tips
 #' and nodes in `tree`, and index of root node.
 #' Not checked for correctness: specifying values here yields a marginal speed
@@ -39,8 +42,8 @@
 #' 
 #' # Add a leaf below an internal node
 #' plot(tree)
-#' ape::nodelabels()
-#' node <- 15
+#' ape::nodelabels() # Identify node numbers 
+#' node <- 15        # Select location to add leaf
 #' ape::nodelabels(bg = ifelse(NodeNumbers(tree) == node, "green", "grey"))
 #'
 #' plot(AddTip(tree, 15, "NEW_TIP"))
@@ -54,6 +57,9 @@
 #' ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
 #' 
 #' plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NULL))
+#' 
+#' # Create a polytomy, rather than a new node
+#' plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NA))
 #' 
 #' @keywords tree
 #' @family tree manipulation
@@ -80,7 +86,8 @@ AddTip <- function(tree,
     }
     where <- tmp
   }
-  ## find the row of "where" before renumbering
+  
+  # Find the row of "where" before renumbering
   if (where < 1L || where == rootNode) {
     case <- 1L
   } else {
@@ -100,7 +107,9 @@ AddTip <- function(tree,
   rootNode <- nTip - rootNode
   
   switch(case, { # case = 1 -> y is bound on the root of x
-    treeEdge <- rbind(c(nextNode, treeEdge[1]), treeEdge, c(nextNode, newTipNumber))
+    treeEdge <- rbind(c(nextNode, treeEdge[[1]]),
+                      treeEdge,
+                      c(nextNode, newTipNumber))
     if (lengths) {
       if (is.null(lengthBelow)) {
         lengthBelow <- 0

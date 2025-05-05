@@ -1,3 +1,7 @@
+# TreeTools 1.13.1.9002 (2025-04-23) #
+
+- `AddTip(lengthBelow = NA)` creates a polytomy rather than a new edge.
+
 # TreeTools 1.13.1.9001 (2025-04-23) #
 
 - Fix misplaced taxa with `RoguePlot(sort = TRUE)`.
