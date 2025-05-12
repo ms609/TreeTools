@@ -105,15 +105,16 @@ AddTip <- function(tree,
   treeEdge[nodes] <- nTip - treeEdge[nodes]  # -1, ..., -nTip
   nextNode <- -nNode - 1L
   rootNode <- nTip - rootNode
-  addingNode <- !is.na(lengthBelow) || case == 2 # Define before overwriting lb
+  addingNode <- (!is.null(lengthBelow) && !is.na(lengthBelow)) ||
+    case == 2 # Define before overwriting lengthBelow
   
   switch(case, { # case = 1 -> y is bound on the root of x
-    if (is.na(lengthBelow)) {
-      treeEdge <- rbind(treeEdge, c(rootNode, newTipNumber))
-    } else {
+    if (addingNode) {
       treeEdge <- rbind(c(nextNode, treeEdge[[1]]),
                         treeEdge,
                         c(nextNode, newTipNumber))
+    } else {
+      treeEdge <- rbind(treeEdge, c(rootNode, newTipNumber))
     }
     if (hasLengths) {
       if (is.null(lengthBelow) || is.na(lengthBelow)) {
@@ -133,6 +134,8 @@ AddTip <- function(tree,
     if (hasLengths) {
       if (is.null(lengthBelow)) {
         lengthBelow <- edgeLengths[insertionEdge] / 2L
+      } else if (is.na(lengthBelow)) {
+        lengthBelow <- 0
       }
       edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
                        edgeLengths[insertionEdge] - lengthBelow,
