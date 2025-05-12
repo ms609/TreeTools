@@ -77,7 +77,7 @@ AddTip <- function(tree,
   newTipNumber <- nTip + 1L
   treeEdge <- tree[["edge"]]
   edgeLengths <- tree[["edge.length"]]
-  lengths <- !is.null(edgeLengths)
+  hasLengths <- !is.null(edgeLengths)
   
   if (is.character(where)) {
     tmp <- match(where, TipLabels(tree))
@@ -105,16 +105,21 @@ AddTip <- function(tree,
   treeEdge[nodes] <- nTip - treeEdge[nodes]  # -1, ..., -nTip
   nextNode <- -nNode - 1L
   rootNode <- nTip - rootNode
+  addingNode <- !is.na(lengthBelow) || case == 2 # Define before overwriting lb
   
   switch(case, { # case = 1 -> y is bound on the root of x
-    treeEdge <- rbind(c(nextNode, treeEdge[[1]]),
-                      treeEdge,
-                      c(nextNode, newTipNumber))
-    if (lengths) {
-      if (is.null(lengthBelow)) {
+    if (is.na(lengthBelow)) {
+      treeEdge <- rbind(treeEdge, c(rootNode, newTipNumber))
+    } else {
+      treeEdge <- rbind(c(nextNode, treeEdge[[1]]),
+                        treeEdge,
+                        c(nextNode, newTipNumber))
+    }
+    if (hasLengths) {
+      if (is.null(lengthBelow) || is.na(lengthBelow)) {
         lengthBelow <- 0
       }
-      edgeLengths <- c(lengthBelow, edgeLengths, 
+      edgeLengths <- c(if (addingNode) lengthBelow, edgeLengths,
                        if(is.null(edgeLength)) lengthBelow else edgeLength)
     }
     rootNode <- nextNode
@@ -125,7 +130,7 @@ AddTip <- function(tree,
                       c(nextNode, where),
                       c(nextNode, newTipNumber),
                       treeEdge[-beforeInsertion, ])
-    if (lengths) {
+    if (hasLengths) {
       if (is.null(lengthBelow)) {
         lengthBelow <- edgeLengths[insertionEdge] / 2L
       }
@@ -144,7 +149,7 @@ AddTip <- function(tree,
                       treeEdge[-beforeInsertion, ])
     treeEdge[insertionEdge, 2] <- nextNode
     
-    if (lengths) {
+    if (hasLengths) {
       if (is.null(lengthBelow)) {
         lengthBelow <- edgeLengths[insertionEdge] / 2L
       }
@@ -159,30 +164,40 @@ AddTip <- function(tree,
   )
   tree[["tip.label"]] <- c(tree[["tip.label"]], label)
   
-  nNode <- nNode + 1L
-  tree[["Nnode"]] <- nNode
+  if (addingNode) {
+    nNode <- nNode + 1L
+    tree[["Nnode"]] <- nNode
+  }
   
   ## renumber nodes:
-  newNumbering <- integer(nNode)
-  newNumbering[-rootNode] <- newTipNumber + 1L
-  childNodes <- treeEdge[, 2] < 0L
+  if (addingNode) {
+    newNumbering <- integer(nNode)
+    newNumbering[-rootNode] <- newTipNumber + 1L
+    childNodes <- treeEdge[, 2] < 0L
+    ## executed from right to left, so newNb is modified before x$edge:
+    treeEdge[childNodes, 2] <-
+      newNumbering[-treeEdge[childNodes, 2]] <-
+      newTipNumber + 2:nNode
+    treeEdge[, 1] <- newNumbering[-treeEdge[, 1]]
+  } else {
+    newNumbering <- newTipNumber + 1:nNode
+    treeEdge[treeEdge < 0] <- newNumbering[-treeEdge[treeEdge < 0]]
+  }
   
-  ## executed from right to left, so newNb is modified before x$edge:
-  treeEdge[childNodes, 2] <-
-    newNumbering[-treeEdge[childNodes, 2]] <-
-    newTipNumber + 2:nNode
-  treeEdge[, 1] <- newNumbering[-treeEdge[, 1]]
+  
   
   tree[["edge"]] <- treeEdge
-  if (lengths) {
+  if (hasLengths) {
     tree[["edge.length"]] <- edgeLengths
   }
   
-  nodeLabels <- tree[["node.label"]]
-  if (!is.null(nodeLabels)) {
-    newLabels <- character(nNode)
-    newLabels[newNumbering - newTipNumber] <- c(nodeLabels, "")
-    tree[["node.label"]] <- newLabels
+  if (addingNode) {
+    nodeLabels <- tree[["node.label"]]
+    if (!is.null(nodeLabels)) {
+      newLabels <- character(nNode)
+      newLabels[newNumbering - newTipNumber] <- c(nodeLabels, "")
+      tree[["node.label"]] <- newLabels
+    }
   }
   
   # Return:
