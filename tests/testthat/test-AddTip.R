@@ -149,7 +149,12 @@ test_that("AddTip(lengthBelow = NA)", {
   expect_equal(at5$node.label[6], "")
   
   # Case 3: Internal node
-  AddTip(tree, 12, "NEW_TIP", lengthBelow = NA)
+  at15 <- AddTip(tree, 15, "NEW_TIP", lengthBelow = NA)
+  expect_equal(at15$edge[-8, ], tree$edge + ifelse(tree$edge > 10, 1, 0))
+  expect_equal(at15$edge[8, ], c(16, 11))
+  expect_equal(at15$edge.length[-8], tree$edge.length)
+  expect_equal(at15$edge.length[8], 0)
+  expect_equal(at15$node.label, tree$node.label)
 })
 
 test_that("AddTipEverywhere() handles nasty tree", {

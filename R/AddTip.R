@@ -146,21 +146,33 @@ AddTip <- function(tree,
   }, { # case = 3 -> y is bound on a node of x
     beforeInsertion <- seq_len(insertionEdge)
     
-    treeEdge <- rbind(treeEdge[beforeInsertion, ],
-                      c(nextNode, newTipNumber),
-                      c(nextNode, treeEdge[insertionEdge, 2]),
-                      treeEdge[-beforeInsertion, ])
-    treeEdge[insertionEdge, 2] <- nextNode
+    if (addingNode) {
+      treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(nextNode, newTipNumber),
+                        c(nextNode, treeEdge[insertionEdge, 2]),
+                        treeEdge[-beforeInsertion, ])
+      treeEdge[insertionEdge, 2] <- nextNode
+    } else {
+      treeEdge <- rbind(treeEdge[beforeInsertion, ],
+                        c(treeEdge[insertionEdge, 2], newTipNumber),
+                        treeEdge[-beforeInsertion, ])
+    }
     
     if (hasLengths) {
       if (is.null(lengthBelow)) {
         lengthBelow <- edgeLengths[insertionEdge] / 2L
+      } else if (is.na(lengthBelow)) {
+        lengthBelow <- 0
       }
-      edgeLengths <- c(edgeLengths[beforeInsertion[-insertionEdge]],
-                       edgeLengths[insertionEdge] - lengthBelow,
-                       if(is.null(edgeLength)) lengthBelow else edgeLength,
-                       lengthBelow,
-                       edgeLengths[-beforeInsertion])
+      edgeLengths <- if (addingNode) {
+        c(edgeLengths[beforeInsertion[-insertionEdge]],
+          edgeLengths[insertionEdge] - lengthBelow,
+          if (is.null(edgeLength)) lengthBelow else edgeLength,
+          lengthBelow, edgeLengths[-beforeInsertion])
+      } else {
+        c(edgeLengths[beforeInsertion], edgeLength,
+          edgeLengths[-beforeInsertion])
+      }
     }
     
   }
