@@ -105,8 +105,10 @@ AddTip <- function(tree,
   treeEdge[nodes] <- nTip - treeEdge[nodes]  # -1, ..., -nTip
   nextNode <- -nNode - 1L
   rootNode <- nTip - rootNode
-  addingNode <- (!is.null(lengthBelow) && !is.na(lengthBelow)) ||
-    case == 2 # Define before overwriting lengthBelow
+  # Determine now, before we overwrite lengthBelow
+  addingNode <- is.null(lengthBelow) || 
+    (!is.null(lengthBelow) && !is.na(lengthBelow)) ||
+    case == 2 
   
   switch(case, { # case = 1 -> y is bound on the root of x
     if (addingNode) {
