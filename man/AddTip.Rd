@@ -91,7 +91,7 @@ ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
 plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NULL))
 
 # Create a polytomy, rather than a new node
-plot(AddTip(tree, 5, "NEW_TIP", lengthBelow = NA))
+plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NA))
 
 # Set up multi-panel plot
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)
