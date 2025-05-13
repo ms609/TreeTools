@@ -127,6 +127,36 @@ test_that("AddTip() handles node labels", {
                AddTip(bal6, where = 1)[["node.label"]])
 })
 
+test_that("AddTip(lengthBelow = NA)", {
+  tree <- BalancedTree(10)
+  tree$edge.length <- 1 + (1:18 / 100)
+  tree$node.label <- paste("n", 11:19)
+  
+  # Case 1: At root
+  at11 <- AddTip(tree, 11, "NEW_TIP", lengthBelow = NA)
+  expect_equal(at11$edge, rbind(tree$edge + ifelse(tree$edge > 10, 1, 0),
+                                c(12, 11)))
+  expect_equal(at11$edge.length, c(tree$edge.length, 0))
+  expect_equal(at11$node.label, tree$node.label)
+  
+  # Case 2: At leaf
+  at5 <- AddTip(tree, 5, "NEW_TIP", lengthBelow = NA)
+  new5 <- tree$edge + ifelse(tree$edge > 10, 1, 0)
+  expect_equal(at5$edge, AddTip(tree, 5)$edge)
+  expect_equal(at5$edge.length[-10:-11], tree$edge.length)
+  expect_equal(at5$edge.length[10:11], c(0, 0))
+  expect_equal(at5$node.label[-6], tree$node.label)
+  expect_equal(at5$node.label[6], "")
+  
+  # Case 3: Internal node
+  at15 <- AddTip(tree, 15, "NEW_TIP", lengthBelow = NA)
+  expect_equal(at15$edge[-8, ], tree$edge + ifelse(tree$edge > 10, 1, 0))
+  expect_equal(at15$edge[8, ], c(16, 11))
+  expect_equal(at15$edge.length[-8], tree$edge.length)
+  expect_equal(at15$edge.length[8], 0)
+  expect_equal(at15$node.label, tree$node.label)
+})
+
 test_that("AddTipEverywhere() handles nasty tree", {
   added <- AddTipEverywhere(nasty)
   lapply(added, function(tr) expect_true(all(tr$edge > 0)))
