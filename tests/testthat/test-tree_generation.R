@@ -91,6 +91,15 @@ test_that("Random trees are generated correctly", {
   }
 })
 
+test_that("RandomTree(lengths)", {
+  expect_equal(RandomTree(0, lengths = 1), ZeroTaxonTree())
+  expect_equal(RandomTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
+  expect_equal(RandomTree(3, lengths = 2)$edge.length, c(2, 2, 2))
+  expect_equal(RandomTree(3, lengths = 1:3, root = FALSE)$edge.length, 1:3)
+  expect_equal(RandomTree(3, lengths = 1:3, root = TRUE)$edge.length, c(1:3, 1))
+  expect_equal(RandomTree(5, nodes = 2, lengths = 1:3)$edge.length, c(1:3, 1:3))
+})
+
 test_that("Small random trees are generated", {
   expect_equal(RandomTree(0, root = FALSE), ZeroTaxonTree())
   expect_equal(RandomTree(0, root = TRUE), ZeroTaxonTree())

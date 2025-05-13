@@ -42,7 +42,7 @@ NULL
 #' RandomTree(Lobo.phy)
 #'
 #' @export
-RandomTree <- function(tips, root = FALSE, nodes) {
+RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
   tips <- TipLabels(tips)
   nTips <- length(tips)
   if (length(root) > 1L) {
@@ -62,7 +62,7 @@ RandomTree <- function(tips, root = FALSE, nodes) {
     warning("`nodes` higher than number in binary tree. Ignoring.")
   }
   if (nTips < 3) {
-    return(BalancedTree(tips))
+    return(BalancedTree(tips = tips, lengths = lengths))
   }
   if (nodes < 1L) {
     stop("A tree must contain one or more `nodes`")
@@ -104,6 +104,10 @@ RandomTree <- function(tips, root = FALSE, nodes) {
     tree <- CollapseNode(tree,
                          nTips + 1L + sample.int(nodesInBinary - 1L,
                                                  tree[["Nnode"]] - nodes))
+  }
+  
+  if (!is.null(lengths)) {
+    tree[["edge.length"]] <- rep(lengths, length.out = dim(tree[["edge"]])[[1]])
   }
   
   # Return:

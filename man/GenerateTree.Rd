@@ -9,13 +9,13 @@
 \alias{StarTree}
 \title{Generate pectinate, balanced or random trees}
 \usage{
-RandomTree(tips, root = FALSE, nodes)
+RandomTree(tips, root = FALSE, nodes, lengths)
 
 YuleTree(tips, addInTurn = FALSE, root = TRUE)
 
-PectinateTree(tips)
+PectinateTree(tips, lengths = NULL)
 
-BalancedTree(tips)
+BalancedTree(tips, lengths = NULL)
 
 StarTree(tips)
 }
@@ -31,6 +31,8 @@ or \code{FALSE} to return an unrooted tree.}
 \item{nodes}{Number of nodes to generate.  The default and maximum,
 \code{tips - 1}, generates a binary tree; setting a lower value will induce
 polytomies.}
+
+\item{lengths}{a numeric vector specifying the edge lengths of the tree.}
 
 \item{addInTurn}{Logical specifying whether to add leaves in the order of
 \code{tips}.  If \code{FALSE}, leaves will be added in a random order.}
