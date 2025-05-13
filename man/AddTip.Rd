@@ -40,7 +40,9 @@ future release; please manually specify the desired behaviour in your code.}
 graft new edge. Values greater than the length of the edge will result
 in negative edge lengths. If \code{NULL}, the default, the new tip will be added
 at the midpoint of the broken edge. If inserting at the root (\code{where = 0}),
-a new edge of length \code{lengthBelow} will be inserted.}
+a new edge of length \code{lengthBelow} will be inserted.
+If \code{NA}, the new leaf will be attached adjacent to \code{where}; at internal
+nodes, this will result in polytomy.}
 
 \item{nTip, nNode, rootNode}{Optional integer vectors specifying number of tips
 and nodes in \code{tree}, and index of root node.
@@ -72,8 +74,8 @@ tree <- BalancedTree(10)
 
 # Add a leaf below an internal node
 plot(tree)
-ape::nodelabels()
-node <- 15
+ape::nodelabels() # Identify node numbers 
+node <- 15        # Select location to add leaf
 ape::nodelabels(bg = ifelse(NodeNumbers(tree) == node, "green", "grey"))
 
 plot(AddTip(tree, 15, "NEW_TIP"))
@@ -87,6 +89,9 @@ plot(tree)
 ape::tiplabels(bg = ifelse(seq_len(NTip(tree)) == leaf, "green", "grey"))
 
 plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NULL))
+
+# Create a polytomy, rather than a new node
+plot(AddTip(tree, 5, "NEW_TIP", edgeLength = NA))
 
 # Set up multi-panel plot
 oldPar <- par(mfrow = c(2, 4), mar = rep(0.3, 4), cex = 0.9)

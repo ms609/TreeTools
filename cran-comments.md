@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.5.0 devel
+  - Windows 10, R 4.6.0 devel
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu latest

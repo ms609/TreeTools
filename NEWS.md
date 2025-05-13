@@ -1,8 +1,8 @@
-# TreeTools 1.13.1.9001 (2025-04-23) #
+# TreeTools 1.14.0 (2025-05-13) #
 
-- Fix misplaced taxa with `RoguePlot(sort = TRUE)`.
+- `AddTip(lengthBelow = NA)` adds leaf at node without adding a new edge.
 
-# TreeTools 1.13.1.9000 (2025-04-14) #
+- Fix taxa misplaced by `RoguePlot(sort = TRUE)`.
 
 - Fix unexpected polytomies in `Consensus()`
   ([#168](https://github.com/ms609/TreeTools/issues/168)).
