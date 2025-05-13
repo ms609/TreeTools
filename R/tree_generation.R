@@ -3,8 +3,9 @@
 #' `RandomTree()`, `PectinateTree()`, `BalancedTree()` and `StarTree()`
 #' generate trees with the specified shapes and leaf labels.
 #'
-#'
-#' @template tipsForTreeGeneration
+#' @param tips An integer specifying the number of tips, or a character vector
+#' naming the tips, or any other object from which [`TipLabels()`] can
+#' extract leaf labels.
 #'
 #' @return
 #' Each function returns an unweighted binary tree of class `phylo` with
