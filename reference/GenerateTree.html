@@ -54,15 +54,15 @@ generate trees with the specified shapes and leaf labels.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">tips</span>, root <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">nodes</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">tips</span>, root <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">nodes</span>, lengths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">YuleTree</span><span class="op">(</span><span class="va">tips</span>, addInTurn <span class="op">=</span> <span class="cn">FALSE</span>, root <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">YuleTree</span><span class="op">(</span><span class="va">tips</span>, addInTurn <span class="op">=</span> <span class="cn">FALSE</span>, root <span class="op">=</span> <span class="cn">TRUE</span>, lengths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">PectinateTree</span><span class="op">(</span><span class="va">tips</span><span class="op">)</span></span>
+<span><span class="fu">PectinateTree</span><span class="op">(</span><span class="va">tips</span>, lengths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">BalancedTree</span><span class="op">(</span><span class="va">tips</span><span class="op">)</span></span>
+<span><span class="fu">BalancedTree</span><span class="op">(</span><span class="va">tips</span>, lengths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">StarTree</span><span class="op">(</span><span class="va">tips</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">StarTree</span><span class="op">(</span><span class="va">tips</span>, lengths <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -85,6 +85,10 @@ or <code>FALSE</code> to return an unrooted tree.</p></dd>
 <dd><p>Number of nodes to generate.  The default and maximum,
 <code>tips - 1</code>, generates a binary tree; setting a lower value will induce
 polytomies.</p></dd>
+
+
+<dt id="arg-lengths">lengths<a class="anchor" aria-label="anchor" href="#arg-lengths"></a></dt>
+<dd><p>a numeric vector specifying the edge lengths of the tree.</p></dd>
 
 
 <dt id="arg-addinturn">addInTurn<a class="anchor" aria-label="anchor" href="#arg-addinturn"></a></dt>
