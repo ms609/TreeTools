@@ -175,51 +175,66 @@ YuleTree <- function(tips, addInTurn = FALSE, root = TRUE) {
 #' plot(PectinateTree(LETTERS[1:10]))
 #'
 #' @export
-PectinateTree <- function(tips) {
+PectinateTree <- function(tips, lengths = NULL) {
   tips <- TipLabels(tips)
-  nTips <- length(tips)
-
-  nEdge <- nTips + nTips - 2L
-  tipSeq <- seq_len(nTips - 1L)
-
-  parent <- rep(seq_len(nTips - 1L) + nTips, each = 2L)
-
-  child <- integer(nEdge)
-  child[tipSeq + tipSeq - 1L] <- tipSeq
-  child[tipSeq + tipSeq] <- tipSeq + nTips + 1L
-  child[nEdge] <- nTips
-
-  structure(list(
-    edge = matrix(c(parent, child), ncol = 2L),
-    Nnode = nTips - 1L,
-    tip.label = tips
-  ), order = "cladewise", class = "phylo")
+  nTip <- length(tips)
+  if (nTip == 0) {
+    ZeroTaxonTree()
+  } else if (nTip == 1) {
+    SingleTaxonTree(tips, lengths)
+  } else {
+  
+    nEdge <- nTip + nTip - 2L
+    tipSeq <- seq_len(nTip - 1L)
+  
+    parent <- rep(seq_len(nTip - 1L) + nTip, each = 2L)
+  
+    child <- integer(nEdge)
+    child[tipSeq + tipSeq - 1L] <- tipSeq
+    child[tipSeq + tipSeq] <- tipSeq + nTip + 1L
+    child[nEdge] <- nTip
+  
+    tr <- list(
+        edge = matrix(c(parent, child), ncol = 2L),
+        Nnode = nTip - 1L,
+        tip.label = tips
+      )
+    if (!is.null(lengths) && nTip > 1) {
+      tr[["edge.length"]] <- rep(lengths, length.out = 2 * (nTip - 1))
+    }
+    structure(tr, order = "cladewise", class = "phylo")
+  }
 }
 
 
 #' @rdname GenerateTree
 #'
+#' @inheritParams SingleTaxonTree
 #' @return `BalancedTree()` returns a balanced (symmetrical) tree, in preorder.
 #'
 #' @examples
 #' plot(BalancedTree(LETTERS[1:10]))
 #' @export
-BalancedTree <- function(tips) {
+BalancedTree <- function(tips, lengths = NULL) {
   tips <- TipLabels(tips)
   nTip <- length(tips)
   if (nTip < 2L) {
     if (nTip == 1L) {
-      SingleTaxonTree(tips)
+      SingleTaxonTree(tips, lengths)
     } else if (nTip == 0L) {
       ZeroTaxonTree()
     } else {
       NULL
     }
   } else {
+    tr <- list(edge = .BalancedBit(seq_len(nTip), nTips = nTip),
+               Nnode = nTip - 1L,
+               tip.label = as.character(tips))
+    if (!is.null(lengths)) {
+      tr[["edge.length"]] <- rep(lengths, length.out = 2 * (nTip - 1))
+    }
     # Return:
-    structure(list(edge = .BalancedBit(seq_len(nTip)), Nnode = nTip - 1L,
-                         tip.label = as.character(tips)),
-              order = "preorder", class = "phylo")
+    structure(tr, order = "preorder", class = "phylo")
   }
 }
 

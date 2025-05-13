@@ -2,6 +2,9 @@
 
 - `AddTip(lengthBelow = NA)` adds leaf at node without adding a new edge.
 
+- `BalancedTree()` and equivalent gain a `lengths` parameter to specify edge
+  lengths.
+
 - Fix taxa misplaced by `RoguePlot(sort = TRUE)`.
 
 - Fix unexpected polytomies in `Consensus()`

@@ -33,6 +33,19 @@ test_that("Balanced trees are generated correctly", {
   expect_true(is.integer(BalancedTree(8)[["edge"]]))
 })
 
+test_that("BalancedTree(lengths)", {
+  expect_equal(BalancedTree(0, lengths = 1), ZeroTaxonTree())
+  expect_equal(BalancedTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
+  expect_equal(BalancedTree(2, lengths = 2)$edge.length, c(2, 2))
+  expect_equal(BalancedTree(3, lengths = 1:3)$edge.length, c(1:3, 1))
+})
+test_that("PectinateTree(lengths)", {
+  expect_equal(PectinateTree(0, lengths = 1), ZeroTaxonTree())
+  expect_equal(PectinateTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
+  expect_equal(PectinateTree(2, lengths = 2)$edge.length, c(2, 2))
+  expect_equal(PectinateTree(3, lengths = 1:3)$edge.length, c(1:3, 1))
+})
+
 test_that("StarTree() works", {
   expect_equal(ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"),
                StarTree(8L))
