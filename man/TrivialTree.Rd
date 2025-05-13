@@ -6,12 +6,14 @@
 \alias{ZeroTaxonTree}
 \title{Generate trivial trees}
 \usage{
-SingleTaxonTree(label = "t1")
+SingleTaxonTree(label = "t1", lengths = NULL)
 
 ZeroTaxonTree()
 }
 \arguments{
 \item{label}{a character vector specifying the label of the tip.}
+
+\item{lengths}{a numeric vector specifying the edge lengths of the tree.}
 }
 \value{
 \code{SingleTaxonTree()} returns a \code{phylo} object containing a single
