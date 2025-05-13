@@ -9,15 +9,15 @@
 \alias{StarTree}
 \title{Generate pectinate, balanced or random trees}
 \usage{
-RandomTree(tips, root = FALSE, nodes, lengths)
+RandomTree(tips, root = FALSE, nodes, lengths = NULL)
 
-YuleTree(tips, addInTurn = FALSE, root = TRUE)
+YuleTree(tips, addInTurn = FALSE, root = TRUE, lengths = NULL)
 
 PectinateTree(tips, lengths = NULL)
 
 BalancedTree(tips, lengths = NULL)
 
-StarTree(tips)
+StarTree(tips, lengths = NULL)
 }
 \arguments{
 \item{tips}{An integer specifying the number of tips, or a character vector
