@@ -20,4 +20,4 @@ There were no ERRORs or WARNINGs or NOTEs.
 ## Downstream dependencies
 
 Reverse dependencies have been checked using "revdepcheck" on
-[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/revdepcheck.yml).
+[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/revdep.yml).
