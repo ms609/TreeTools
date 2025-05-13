@@ -47,9 +47,11 @@ test_that("PectinateTree(lengths)", {
 })
 
 test_that("StarTree() works", {
-  expect_equal(ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"),
-               StarTree(8L))
+  expect_equal(StarTree(8L),
+               ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"))
   expect_true(is.integer(StarTree(8)$edge))
+  expect_null(StarTree(8L)[["edge.length"]])
+  expect_equal(StarTree(8L, 8:1)[["edge.length"]], 8:1)
 })
 
 test_that("Random trees are generated correctly", {
@@ -138,7 +140,15 @@ test_that("YuleTree() root parameter", {
     {set.seed(0); YuleTree(10, root = FALSE)}
   ), "root = NA")
 })
-  
+
+test_that("YuleTree(lengths)", {
+  expect_equal(YuleTree(0, lengths = 1), ZeroTaxonTree())
+  expect_equal(YuleTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
+  expect_equal(YuleTree(3, lengths = 2)$edge.length, rep(2, 4))
+  expect_equal(YuleTree(3, lengths = 1:3, root = FALSE)$edge.length, 1:3)
+  expect_equal(YuleTree(3, lengths = 1:3, root = TRUE)$edge.length, c(1:3, 1))
+})
+
 test_that("Hamming() works", {
   dataset <- StringToPhyDat("111100 ???000 ???000 111??? 10??10",
                             letters[1:5], byTaxon = TRUE)

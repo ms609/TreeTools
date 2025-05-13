@@ -125,9 +125,9 @@ RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
 #' YuleTree(LETTERS[1:10])
 #'
 #' @export
-YuleTree <- function(tips, addInTurn = FALSE, root = TRUE) {
+YuleTree <- function(tips, addInTurn = FALSE, root = TRUE, lengths = NULL) {
   tips <- TipLabels(tips)
-  if (!addInTurn) {
+  if (!addInTurn[[1]]) {
     tips <- sample(tips)
   }
   nTips <- length(tips)
@@ -135,23 +135,29 @@ YuleTree <- function(tips, addInTurn = FALSE, root = TRUE) {
     warning("treating `root = NA` as `FALSE`")
     root[is.na(root)] <- FALSE
   }
+  
   if (nTips < 1) {
     return(ZeroTaxonTree())
+  } else if (nTips == 1) {
+    return(SingleTaxonTree(tips, lengths))
   }
-  if (nTips == 1) {
-    return(SingleTaxonTree(tips))
-  }
+  
   tree <- BalancedTree(tips[1:2])
   if (nTips > 2) for (i in 3:nTips) {
-    tree <- AddTip(tree, sample.int(i - 1, 1), tips[i])
+    tree <- AddTip(tree, sample.int(i - 1, 1), tips[[i]])
   }
+  
   unrooted <- !is.logical(root) || root == FALSE
-  # Return:
   if (unrooted) {
-    UnrootTree(tree)
-  } else {
-    tree
+    tree <- UnrootTree(tree)
   }
+  
+  if (!is.null(lengths)) {
+    tree[["edge.length"]] <- rep(lengths, length.out = dim(tree[["edge"]])[[1]])
+  }
+  
+  # Return:
+  tree
 }
 
 #' Random parent vector
@@ -271,18 +277,28 @@ BalancedTree <- function(tips, lengths = NULL) {
 #' plot(StarTree(LETTERS[1:10]))
 #'
 #' @export
-StarTree <- function(tips) {
+StarTree <- function(tips, lengths = NULL) {
   tips <- TipLabels(tips)
-  nTips <- length(tips)
+  nTip <- length(tips)
 
-  parent <- rep.int(nTips + 1L, nTips)
-  child <- seq_len(nTips)
+  parent <- rep.int(nTip + 1L, nTip)
+  child <- seq_len(nTip)
 
-  structure(list(
-    edge = matrix(c(parent, child), ncol = 2L),
-    Nnode = 1L,
-    tip.label = tips
-  ), order = "cladewise", class = "phylo")
+  tr <- if (is.null(lengths)) {
+    list(
+      edge = matrix(c(parent, child), ncol = 2L),
+      Nnode = 1L,
+      tip.label = tips
+    )
+  } else {
+    list(
+      edge = matrix(c(parent, child), ncol = 2L),
+      Nnode = 1L,
+      tip.label = tips,
+      edge.length =  rep(lengths, length.out = nTip)
+    )
+  }
+  structure(tr, order = "cladewise", class = "phylo")
 }
 
 #' Generate a neighbour joining tree
@@ -308,7 +324,7 @@ StarTree <- function(tips) {
 NJTree <- function(dataset, edgeLengths = FALSE,
                     ratio = TRUE, ambig = "mean") {
   tree <- nj(Hamming(dataset, ratio = ratio, ambig = ambig))
-  tree <- RootTree(tree, names(dataset)[1])
+  tree <- RootTree(tree, names(dataset)[[1]])
   if (!edgeLengths) {
     tree[["edge.length"]] <- NULL
   }
