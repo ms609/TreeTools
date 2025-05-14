@@ -6,7 +6,7 @@
 \alias{UnrootTree}
 \title{Root or unroot a phylogenetic tree}
 \usage{
-RootTree(tree, outgroupTips)
+RootTree(tree, outgroupTips, fallback = NULL)
 
 RootOnNode(tree, node, resolveRoot = FALSE)
 
@@ -20,6 +20,15 @@ of class \code{list} or \code{multiPhylo}.}
 the names or indices of the tips to include in the outgroup.
 If \code{outgroupTips} is a of type character, and a tree contains multiple tips
 with a matching label, the first will be used.}
+
+\item{fallback}{Vector corresponding to \code{outgroupTips} determining behaviour
+when \code{outgroupTips} do not root a tree. Details are given below.
+
+Where the smallest clade that contains \code{outgroupTips} includes all taxa,
+\code{RootTree()} will not change the topology of a tree.
+If \code{fallback = NULL}, \code{RootTree()} will return \code{tree}.
+Otherwise, taxa will be dropped from \code{outgroupTips} in the sequence specified
+by until the outgroup is smaller than \code{tree}.}
 
 \item{node}{integer specifying node (internal or tip) to set as the root.}
 

@@ -12,6 +12,14 @@
 #' the names or indices of the tips to include in the outgroup.
 #' If `outgroupTips` is a of type character, and a tree contains multiple tips
 #' with a matching label, the first will be used.
+#' @param fallback Vector corresponding to `outgroupTips` determining behaviour
+#' when `outgroupTips` do not root a tree. Details are given below.
+#'
+#' Where the smallest clade that contains `outgroupTips` includes all taxa,
+#' `RootTree()` will not change the topology of a tree.
+#' If `fallback = NULL`, `RootTree()` will return `tree`.
+#' Otherwise, taxa will be dropped from `outgroupTips` in the sequence specified
+#' by until the outgroup is smaller than `tree`.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips, with edges and nodes numbered in
@@ -34,12 +42,12 @@
 #'
 #' @template MRS
 #' @export
-RootTree <- function(tree, outgroupTips) {
+RootTree <- function(tree, outgroupTips, fallback = NULL) {
   UseMethod("RootTree")
 }
 
 #' @export
-RootTree.phylo <- function(tree, outgroupTips) {
+RootTree.phylo <- function(tree, outgroupTips, fallback = NULL) {
   if (missing(outgroupTips) ||
       is.null(outgroupTips) ||
       length(outgroupTips) == 0) {
@@ -131,7 +139,7 @@ RootTree.phylo <- function(tree, outgroupTips) {
 }
 
 #' @export
-RootTree.matrix <- function(tree, outgroupTips) {
+RootTree.matrix <- function(tree, outgroupTips, fallback = NULL) {
   tree <- Preorder(tree)
   if (missing(outgroupTips) ||
       is.null(outgroupTips) ||
@@ -162,7 +170,7 @@ RootTree.matrix <- function(tree, outgroupTips) {
 }
 
 #' @export
-RootTree.list <- function(tree, outgroupTips) {
+RootTree.list <- function(tree, outgroupTips, fallback = NULL) {
   if (missing(outgroupTips)
       || is.null(outgroupTips)
       || length(outgroupTips) == 0) {
@@ -172,13 +180,13 @@ RootTree.list <- function(tree, outgroupTips) {
 }
 
 #' @export
-RootTree.multiPhylo <- function(tree, outgroupTips) {
+RootTree.multiPhylo <- function(tree, outgroupTips, fallback = NULL) {
   tree[] <- RootTree.list(tree, outgroupTips)
   tree
 }
 
 #' @export
-RootTree.NULL <- function(tree, outgroupTips) NULL
+RootTree.NULL <- function(tree, outgroupTips, fallback = NULL) NULL
 
 #' @rdname RootTree
 #' @param node integer specifying node (internal or tip) to set as the root.
@@ -616,4 +624,3 @@ LeafLabelInterchange <- function(tree, n = 2L) {
   # Return:
   tree
 }
-
