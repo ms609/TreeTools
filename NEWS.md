@@ -1,3 +1,9 @@
+# TreeTools 1.14.0.9000 (development) #
+
+- `RootTree()` gains `fallback` argument to handle outgroups that do not root a
+  tree.
+
+
 # TreeTools 1.14.0 (2025-05-13) #
 
 - `AddTip(lengthBelow = NA)` adds leaf at node without adding a new edge.
