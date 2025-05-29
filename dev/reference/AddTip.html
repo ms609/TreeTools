@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.13.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.14.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,9 @@ future release; please manually specify the desired behaviour in your code.</p><
 graft new edge. Values greater than the length of the edge will result
 in negative edge lengths. If <code>NULL</code>, the default, the new tip will be added
 at the midpoint of the broken edge. If inserting at the root (<code>where = 0</code>),
-a new edge of length <code>lengthBelow</code> will be inserted.</p></dd>
+a new edge of length <code>lengthBelow</code> will be inserted.
+If <code>NA</code>, the new leaf will be attached adjacent to <code>where</code>; at internal
+nodes, this will result in polytomy.</p></dd>
 
 
 <dt id="arg-ntip-nnode-rootnode">nTip, nNode, rootNode<a class="anchor" aria-label="anchor" href="#arg-ntip-nnode-rootnode"></a></dt>
@@ -164,8 +166,8 @@ single-taxon trees.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Add a leaf below an internal node</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">node</span> <span class="op">&lt;-</span> <span class="fl">15</span></span></span>
+<span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Identify node numbers </span></span></span>
+<span class="r-in"><span><span class="va">node</span> <span class="op">&lt;-</span> <span class="fl">15</span>        <span class="co"># Select location to add leaf</span></span></span>
 <span class="r-in"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span>bg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="NodeNumbers.html">NodeNumbers</a></span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="op">==</span> <span class="va">node</span>, <span class="st">"green"</span>, <span class="st">"grey"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -184,6 +186,11 @@ single-taxon trees.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">5</span>, <span class="st">"NEW_TIP"</span>, edgeLength <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="AddTip-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Create a polytomy, rather than a new node</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">AddTip</span><span class="op">(</span><span class="va">tree</span>, <span class="fl">5</span>, <span class="st">"NEW_TIP"</span>, edgeLength <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>1 branch length(s) NA(s): branch lengths ignored in the plot</span>
+<span class="r-plt img"><img src="AddTip-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Set up multi-panel plot</span></span></span>
 <span class="r-in"><span><span class="va">oldPar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">4</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -194,14 +201,14 @@ single-taxon trees.</p>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="AddTip-5.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="AddTip-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># Don't treat root edges as distinct:</span></span></span>
 <span class="r-in"><span><span class="va">additions</span> <span class="op">&lt;-</span> <span class="fu">AddTipEverywhere</span><span class="op">(</span><span class="va">backbone</span>, includeRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">additions</span>, <span class="va">plot</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Restore original plotting parameters</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">oldPar</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="AddTip-6.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="AddTip-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -214,7 +221,7 @@ single-taxon trees.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
     </footer></div>
