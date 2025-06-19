@@ -12,7 +12,8 @@ to occur in \code{table}.}
 
 \item{Fail}{Function to call if a mismatch is found.}
 
-\item{\dots}{Additional arguments to \code{\link[base:agrep]{agrep()}}.}
+\item{max.distance, \dots}{Arguments to \code{\link[base:agrep]{agrep()}},
+used to propose possible matches to the user.}
 }
 \value{
 \code{MatchStrings()} returns the elements of \code{x} that occur in \code{table}.

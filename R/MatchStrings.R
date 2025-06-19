@@ -6,8 +6,8 @@
 #' @param x,table Character vectors, in which all elements of `x` are expected
 #' to occur in `table`.
 #' @param Fail Function to call if a mismatch is found.
-#' @inheritParams agrep
-#' @param \dots Additional arguments to \code{\link[base:agrep]{agrep()}}.
+#' @param max.distance,\dots Arguments to \code{\link[base:agrep]{agrep()}},
+#' used to propose possible matches to the user.
 #' @return `MatchStrings()` returns the elements of `x` that occur in `table`.
 #' @examples
 #' tree <- BalancedTree(8)
