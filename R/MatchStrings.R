@@ -8,6 +8,11 @@
 #' @param Fail Function to call if a mismatch is found.
 #' @inheritParams agrep
 #' @param \dots Additional arguments to \code{\link[base:agrep]{agrep()}}.
+#' @return `MatchStrings()` returns the elements of `x` that occur in `table`.
+#' @examples
+#' tree <- BalancedTree(8)
+#' MatchStrings(c("t1", "tip2", "t3"), TipLabels(tree), Fail = message)
+#' @template MRS
 MatchStrings <- function(x, table, Fail = stop, max.distance = 0.5, ...) {
   matches <- match(x, table)
   missing <- is.na(matches)
@@ -19,8 +24,9 @@ MatchStrings <- function(x, table, Fail = stop, max.distance = 0.5, ...) {
                       "' in ", deparse(substitute(table)), ".  ",
                       if (length(nearMiss)) {
                         paste0("Did you mean '", 
-                               paste(table[nearMiss], collapse = "', '"), "'?")
+                               paste(unique(table[nearMiss]), collapse = "', '"), "'?")
                       })
     Fail(message)
   }
+  table[matches[!missing]]
 }
