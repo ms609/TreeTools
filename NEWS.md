@@ -1,6 +1,6 @@
 # TreeTools 1.14.0.9000 (development) #
 
-- No changes yet.
+- `MatchStrings()` checks for mismatched tip labels, suggesting corrections.
 
 # TreeTools 1.14.0 (2025-05-13) #
 
