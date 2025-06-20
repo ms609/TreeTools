@@ -13,6 +13,7 @@
 #' tree <- BalancedTree(8)
 #' MatchStrings(c("t1", "tip2", "t3"), TipLabels(tree), Fail = message)
 #' @template MRS
+#' @export
 MatchStrings <- function(x, table, Fail = stop, max.distance = 0.5, ...) {
   matches <- match(x, table)
   missing <- is.na(matches)
