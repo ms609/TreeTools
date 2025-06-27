@@ -9,8 +9,9 @@
 #' 
 #' @return `Reweight()` returns `dataset` after reweighting characters.
 #' For a matrix, this will be attained by repeating each column the specified
-#' number of times. For a `phyDat` object, the `weights` attribute will be
-#' modified.
+#' number of times. For a `phyDat` object, the "weight", "index" and "nr"
+#' attributes will be modified, 
+#' but the data and "contrast" attribute will not be compressed.
 #' 
 #' @examples
 #' mat <- rbind(a = c(0, 2, 0), b = c(0, 2, 0), c = c(1, 3, 0), d = c(1, 3, 0))
@@ -26,9 +27,10 @@ Reweight <- function(dataset, weights) {
   UseMethod("Reweight")
 }
 
-#' @export
-Reweight.matrix <- function(dataset, weights) {
-  nChar <- dim(dataset)[[2]]
+.MakeWeights <- function(weights, nChar) {
+  if (!is.numeric(weights)) {
+    stop("`weights` must be a numeric vector")
+  }
   
   keys <- as.integer(names(weights))
   if (!is.null(keys) && length(keys) > 0) {
@@ -37,18 +39,23 @@ Reweight.matrix <- function(dataset, weights) {
     weights <- w
   }
   
-  if (!is.numeric(weights)) {
-    stop("`weights` must be a numeric vector")
-  }
-  
   if (length(weights) != nChar) {
     stop("Length of `weights` (", length(weights),
          ") must match number of characters (", nChar, ")")
   }
-  charName <- colnames(dataset)
+  
+  # Return:
+  weights
+}
+
+#' @export
+Reweight.matrix <- function(dataset, weights) {
+  nChar <- dim(dataset)[[2]]
+  weights <- .MakeWeights(weights, nChar)
+  
   dataset <- dataset[, rep(seq_len(nChar), times = weights), drop = FALSE]
   `colnames<-`(dataset,
-               paste0(charName, "_", 
+               paste0(colnames(dataset), "_", 
                       unlist(sapply(weights, seq_len, USE.NAMES = FALSE),
                              recursive = FALSE, use.names = FALSE)))
   
@@ -56,5 +63,12 @@ Reweight.matrix <- function(dataset, weights) {
 
 #' @export
 Reweight.phyDat <- function(dataset, weights) {
+  nChar <- attr(dataset, "nr")
+  weights <- .MakeWeights(weights, length(dataset$weight))
+  attr(dataset, "weight") <- weights
+  attr(dataset, "nr") <- sum(weights)
+  attr(dataset, "index") <- rep(seq_len(nChar), weights)
   
+  # Return:
+  dataset
 }
