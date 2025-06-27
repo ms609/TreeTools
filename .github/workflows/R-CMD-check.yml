@@ -121,6 +121,7 @@ jobs:
             Rfast@1.9.8
             rjson@0.2.20
             XML@3.99-0.3
+            TreeSearch=?ignore-before-r=4.0.0
           needs: |
             check
       
