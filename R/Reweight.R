@@ -64,6 +64,10 @@ Reweight <- function(dataset, weights) {
   
   keys <- as.integer(names(weights))
   if (!is.null(keys) && length(keys) > 0) {
+    if (any(keys < 1 | keys > nChar)) {
+      stop("Indices in `names(weights)` must be between 1 and ", nChar, 
+           ". Found ", paste(keys[keys < 1 | keys > nChar], collapse = ", "))
+    }
     w <- rep(1, nChar)
     w[as.integer(keys)] <- weights
     weights <- w

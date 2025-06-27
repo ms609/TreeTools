@@ -12,6 +12,8 @@ test_that("Reweight()", {
                "Length of `weights` \\(2\\) must match .* characters \\(4\\)")
   expect_error(Reweight(mat, 1:8),
                "Length of `weights` \\(8\\) must match .* characters \\(4\\)")
+  expect_error(Reweight(mat, c("-1" = 2, "999" = 911)),
+               "Indices in `names\\(weights\\)` .*ween 1 and 4. Found -1, 999")
   
   newWeights <- c(0, 1, 3, 1)
   expect_equal(
