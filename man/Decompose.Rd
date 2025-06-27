@@ -73,6 +73,7 @@ NumberOfChars(decomposed) # 116 characters in decomposed
 \seealso{
 Other phylogenetic matrix conversion functions: 
 \code{\link{MatrixToPhyDat}()},
+\code{\link{Reweight}()},
 \code{\link{StringToPhyDat}()}
 }
 \author{

@@ -1,5 +1,6 @@
-# TreeTools 1.14.0.9000 (development) #
+# TreeTools 1.14.0.9001 (development) #
 
+- `Reweight()` sets the weight of characters in a phylogenetic dataset.
 - `MatchStrings()` checks for mismatched tip labels, suggesting corrections.
 
 # TreeTools 1.14.0 (2025-05-13) #

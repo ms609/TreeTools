@@ -20,16 +20,12 @@ test_that("Reweight()", {
                  c("c2_1", "c3_1", "c3_2", "c3_3", "c4_1"))
   )
   
-  rwDat <- Reweight(dat, c("3" = 0, "2" = 3))
-  expect_equal(
-    PhyDatToMatrix(rwDat),
-    `mode<-`(`colnames<-`(mat[, c(1, 2, 2, 2)], NULL), "character")
-  )
+  rwDat <- Reweight(dat, c("3" = 3, "2" = 1, "1" = 0))
+  expect_equal(PhyDatToMatrix(rwDat), PhyDatToMatrix(dat))
   rwAtt <- attributes(rwDat)
-  sameAtt <- c("names", "nc", "levels", "allLevels", "contrast", "type", "class")
+  sameAtt <- c("names", "nc", "levels", "allLevels", "contrast", "type",
+               "nr", "index", "class")
   expect_equal(rwAtt[sameAtt], attributes(dat)[sameAtt])
-  expect_equal(rwAtt[["nr"]], sum(newWeights))
-  expect_equal(rwAtt[["weight"]], sum(newWeights))
-  expect_equal(rwAtt[["nr"]], sum(newWeights))
-  
+  expect_equal(sum(rwAtt[["weight"]]), sum(newWeights))
+  expect_equal(rwAtt[["weight"]], c(0, 2, 3))
 })
