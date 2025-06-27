@@ -15,7 +15,7 @@
 #' It can be useful to relax the criterion that all evolutionary steps are
 #' equivalent -- for example, implied weighting 
 #' \insertCite{Goloboff1997}{TreeTools} typically recovers better trees than
-#' equal-weights parsimony \insertCite{Smith2019}{TreeSearch}.
+#' equal-weights parsimony \insertCite{Smith2019}{TreeTools}.
 #' This said, assigning different weights to different characters tacitly
 #' imposes a model of evolution that differs from that implicit in equal-weights
 #' parsimony.  Whereas probabilistic models can be evaluated by various methods
