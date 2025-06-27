@@ -29,3 +29,16 @@ test_that("Reweight()", {
   expect_equal(sum(rwAtt[["weight"]]), sum(newWeights))
   expect_equal(rwAtt[["weight"]], c(0, 2, 3))
 })
+
+test_that("Reweight() okay with tree search", {
+  skip_if_not_installed("TreeSearch")
+  library("TreeSearch")
+  tree <- NJTree(Lobo.phy)
+  expect_equal(TreeLength(tree, Reweight(Lobo.phy,
+                                       rep_len(2, length(Lobo.data[[1]])))),
+               TreeLength(tree, Lobo.phy) * 2)
+  
+  expect_equal(TreeLength(tree, Reweight(Lobo.phy[, 9:12], c(0, 100, 1, 0))),
+               TreeLength(tree, Lobo.phy[, 10]) * 100 +
+                 TreeLength(tree, Lobo.phy[, 11]))
+})
