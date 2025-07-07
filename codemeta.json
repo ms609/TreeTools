@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.14.0.9000",
+  "version": "1.14.0.9002",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.5.0 (2025-04-11)",
+  "runtimePlatform": "R version 4.4.1 (2024-06-14 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -162,6 +162,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "TreeSearch",
+      "name": "TreeSearch",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=TreeSearch"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "vdiffr",
       "name": "vdiffr",
       "version": ">= 1.0.0",
@@ -299,7 +311,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1745.545KB",
+  "fileSize": "1780.492KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -314,7 +326,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.32614/CRAN.package.TreeTools",
-      "description": "R package version 1.14.0.9000",
+      "description": "R package version 1.14.0.9002",
       "@id": "https://doi.org/10.32614/CRAN.package.TreeTools",
       "sameAs": "https://doi.org/10.32614/CRAN.package.TreeTools"
     }

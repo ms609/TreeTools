@@ -535,6 +535,7 @@ MakeTreeBinary.phylo <- function(tree) {
   }
   tree[["edge"]] <- edge
   tree[["Nnode"]] <- nTip - 1L
+  attr(tree, "order") <- NULL
   tree
 }
 
