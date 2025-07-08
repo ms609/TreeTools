@@ -1,8 +1,9 @@
-# TreeTools 1.14.0.9002 (development) #
+# TreeTools 1.14.0.9003 (development) #
 
 - `Reweight()` sets the weight of characters in a phylogenetic dataset.
 - `MatchStrings()` checks for mismatched tip labels, suggesting corrections.
 - Fix `MakeTreeBinary()` labelling trees as in preorder.
+- Modernize aspects of C++ code.
 
 # TreeTools 1.14.0 (2025-05-13) #
 

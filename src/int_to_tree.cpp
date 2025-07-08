@@ -4,8 +4,8 @@
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
-const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
-const intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
+constexpr intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
+constexpr intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {

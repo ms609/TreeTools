@@ -4,7 +4,7 @@
 
 using namespace Rcpp;
 
-const unsigned int MAX_NEWICK_NODES = 8192;
+constexpr unsigned int MAX_NEWICK_NODES = 8192;
 
 void close_node (const unsigned int top_node,
                  const unsigned int bottom_node,
