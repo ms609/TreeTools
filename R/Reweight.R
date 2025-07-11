@@ -92,7 +92,6 @@ Reweight.matrix <- function(dataset, weights) {
                paste0(colnames(dataset), "_", 
                       unlist(sapply(weights, seq_len, USE.NAMES = FALSE),
                              recursive = FALSE, use.names = FALSE)))
-  
 }
 
 #' @export
