@@ -7,6 +7,9 @@ test_that("PhyToString() supports long levels", {
   
   expect_equal(PhyToString(longLevels, ps = ";"),
                "-?0123456789ABC;CBA9876543210-?;")
+  expect_equal(PhyToString(longLevels, ps = ";", useIndex = FALSE,
+                           byTaxon = TRUE, concatenate = TRUE),
+               "-?0123456789ABC;CBA9876543210-?;")
   
   # Two -s → error
   attr(longLevels, "allLevels")[1] <- "-"
