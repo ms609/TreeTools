@@ -309,9 +309,21 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
+    "12": {
+      "@type": "SoftwareApplication",
+      "identifier": "stringi",
+      "name": "stringi",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=stringi"
+    },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1758.898KB",
+  "fileSize": "1759.041KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
