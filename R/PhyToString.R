@@ -114,12 +114,12 @@ PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
                 character(length(phyIndex)))
   # Return:
   if (is.null(dim(ret))) {  # If only one row, don't need to apply
-    stri_paste(ret, collapse = "")
+    stri_paste(c(ret, ps), collapse = "")
   } else if (concatenate) {
     stri_paste(c(apply(ret, if (byTaxon) 2 else 1, stri_paste, collapse = ""),
                  ""), collapse = ps)
   } else {
-    stri_paste(apply(ret, if(byTaxon) 2 else 1, paste0, collapse = ""), ps)
+    stri_paste(apply(ret, if (byTaxon) 2 else 1, paste0, collapse = ""), ps)
   }
 }
 #' @rdname PhyToString
