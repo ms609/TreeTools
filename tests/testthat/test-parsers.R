@@ -115,7 +115,7 @@ test_that("PhyToString() supports long levels", {
   longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 0:12),
                                        y = c(12:0, "-", "?")),
                        type = "USER", levels = c(0:6, "-", 7:12))
-  expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
+  expect_equal(PhyToString(longLevels), "-?0123456789ABCCBA9876543210-?")
 
   # Two -s → error
   attr(longLevels, "allLevels")[1] <- "-"
@@ -130,16 +130,16 @@ test_that("PhyToString() supports long levels", {
   
 test_that("PhyToString() works", {
   phy <- StringToPhyDat("012[01]", letters[1:4])
-  expect_equal("012{01}", PhyToString(phy))
-  expect_equal("012<01>", PhyToString(phy, parentheses = "<"))
-  expect_equal("012<01>", PhyToString(phy, parentheses = ">"))
-  expect_equal("012(01)", PhyToString(phy, parentheses = "("))
-  expect_equal("012(01)", PhyToString(phy, parentheses = ")"))
-  expect_equal("012[01]", PhyToString(phy, parentheses = "]"))
-  expect_equal("012[01]", PhyToString(phy, parentheses = "["))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "}"))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "{"))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "!"))
+  expect_equal(PhyToString(phy), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "<"), "012<01>")
+  expect_equal(PhyToString(phy, parentheses = ">"), "012<01>")
+  expect_equal(PhyToString(phy, parentheses = "("), "012(01)")
+  expect_equal(PhyToString(phy, parentheses = ")"), "012(01)")
+  expect_equal(PhyToString(phy, parentheses = "]"), "012[01]")
+  expect_equal(PhyToString(phy, parentheses = "["), "012[01]")
+  expect_equal(PhyToString(phy, parentheses = "}"), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "{"), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "!"), "012{01}")
 
   str <- "012{01}0123"
   phy <- StringToPhyDat(str, letters[1:4])

@@ -49,6 +49,7 @@ Imports:
     RCurl,
     R.cache,
     Rdpack (>= 2.3),
+    stringi,
 Suggests:
     spelling,
     knitr,

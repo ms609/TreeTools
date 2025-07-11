@@ -935,6 +935,7 @@ StringToPhydat <- StringToPhyDat
 #'
 #' @family phylogenetic matrix conversion functions
 #' @template MRS
+#' @importFrom stringi stri_paste
 #' @export
 PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
                          useIndex = TRUE, byTaxon = TRUE, concatenate = TRUE) {
@@ -982,15 +983,15 @@ PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
   ret <- vapply(phy,
                 function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
-  ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
-    if (!byTaxon) ret <- t(ret)
-    paste0(c(ret, ps), collapse = "")
-  } else {
-    if (byTaxon) ret <- t(ret)
-    paste0(apply(ret, 1, paste0, collapse = ""), ps)
-  }
   # Return:
-  ret
+  if (is.null(dim(ret))) {  # If only one row, don't need to apply
+    stri_paste(ret, collapse = "")
+  } else if (concatenate) {
+    stri_paste(apply(ret, if (byTaxon) 2 else 1, stri_paste, collapse = ""),
+               collapse = "")
+  } else {
+    stri_paste(apply(ret, if(byTaxon) 2 else 1, paste0, collapse = ""), ps)
+  }
 }
 #' @rdname PhyToString
 #' @export
