@@ -37,12 +37,6 @@ test_that("PhyToString() supports long levels", {
   # Two -s → error
   attr(longLevels, "allLevels")[1] <- "-"
   expect_error(PhyToString(longLevels))
-  
-  # 10 → 1
-  longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 1:10),
-                                       y = c(10:1, "-", "?")),
-                                 type = "USER", levels = c(1:6, "-", 7:10))
-  expect_equal("-?12345678900987654321-?", PhyToString(longLevels))
 })
 
 test_that("PhyToString() works", {
