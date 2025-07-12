@@ -112,16 +112,18 @@ PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
   ret <- vapply(phy,
                 function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
-  # Return:
-  if (is.null(dim(ret))) {  # If only one row, don't need to apply
+  
+  ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
+    if (!byTaxon) ret <- t(ret)
     stri_paste(c(ret, ps), collapse = "")
-  } else if (concatenate) {
-    stri_paste(c(apply(ret, if (byTaxon) 2 else 1, stri_paste, collapse = ""),
-                 ""), collapse = ps)
   } else {
-    stri_paste(apply(ret, if (byTaxon) 2 else 1, paste0, collapse = ""), ps)
+    if (byTaxon) ret <- t(ret)
+    stri_paste(apply(ret, 1, stri_paste, collapse = ""), ps)
   }
+  # Return:
+  ret
 }
+
 #' @rdname PhyToString
 #' @export
 PhyDatToString <- PhyToString
