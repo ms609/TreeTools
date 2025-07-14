@@ -22,6 +22,7 @@ Unquote("'Hello World'")
 \seealso{
 Other string parsing functions: 
 \code{\link{EndSentence}()},
+\code{\link{MatchStrings}()},
 \code{\link{MorphoBankDecode}()},
 \code{\link{RightmostCharacter}()}
 }
