@@ -457,6 +457,9 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 ReadTNTCharacters <- ReadTntCharacters
 
 .UTFLines <- function(filepath, encoding) {
+  if (!file.exists(filepath)) {
+    stop("File '", filepath, "' not found.")
+  }
   con <- file(filepath, encoding = encoding)
   on.exit(close(con))
   

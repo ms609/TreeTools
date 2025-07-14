@@ -8,6 +8,11 @@ test_that("File time is read correctly", {
   expect_error(ApeTime(rep(fileName, 2)))
 })
 
+test_that("Missing files fail gracefully", {
+  expect_error(ReadAsPhyDat("non-existent.file"),
+               "'non-existent.file' not found")
+})
+
 test_that("Nexus file can be parsed", {
   # Errors as lists:
   expect_equal("MATRIX block not found in Nexus file.",
