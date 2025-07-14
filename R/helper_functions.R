@@ -105,6 +105,7 @@ replicate64 <- function(n, expr, simplify = "array") {
 #' 
 #' This function is now deprecated; it has been superseded by the more capable
 #' [`PlotTools::SpectrumLegend()`] and will be removed in a future release.
+# Deprecation notice added in TreeTools 1.9.2 (2023-04-25)
 #' 
 #' @param x0,y0,x1,y1 Coordinates of the bottom-left and top-right end of the
 #' bar.

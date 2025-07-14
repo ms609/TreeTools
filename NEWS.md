@@ -111,7 +111,7 @@
 - Support Nexus-escaped `''`s in `ReadCharacters()`.
 - Add `legend` parameter to `RoguePlot()`.
 - `RoguePlot()` now returns invisibly.
-- Deprecate `SpectrumLegend()` -- spun off to separate 
+- Deprecate `SpectrumLegend()` -- spun off to separate
   ["PlotTools"](https://ms609.github.io/PlotTools/) package.
 
 
