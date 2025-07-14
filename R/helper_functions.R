@@ -99,6 +99,7 @@ replicate64 <- function(n, expr, simplify = "array") {
            simplify = simplify)
 }
 
+#nocov start
 #' Produce a legend for continuous gradient scales
 #' 
 #' Prints an annotated vertical bar coloured according to a continuous palette.
@@ -185,3 +186,4 @@ SpectrumLegend <- function(x0 = 0.05, y0 = 0.05,
          ...)
   }
 }
+#nocov end
