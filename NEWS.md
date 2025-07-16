@@ -1,10 +1,13 @@
-# TreeTools 1.14.0.9004 (development) #
+# TreeTools 1.15.0 (2025-07-16) #
 
 - `Reweight()` sets the weight of characters in a phylogenetic dataset.
 - `MatchStrings()` checks for mismatched tip labels, suggesting corrections.
+- `RootTree()` gains `fallback` argument to handle outgroups that do not root a
+  tree.
 - Fix `MakeTreeBinary()` labelling trees as in preorder.
 - Fix `as.Splits.matrix(tipLabels != NULL)`.
 - Modernize aspects of C++ code.
+
 
 # TreeTools 1.14.0 (2025-05-13) #
 
