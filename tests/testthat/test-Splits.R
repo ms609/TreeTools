@@ -181,11 +181,14 @@ test_that("as.Splits.matrix()", {
     trees[[i]]$tip.label <- 1:8
   }
   expect_equal(as.Splits(trees), as.Splits(arr[-3, ]))
+  
+  exp <- as.Splits(BalancedTree(8))
+  expect_equal(as.Splits(BalancedTree(8)$edge, TipLabels(BalancedTree(8))), exp)
 
   exp <- as.Splits(BalancedTree(8))
   attr(exp, "tip.label") <- NULL
-  expect_equal("Tips not labelled.", capture.output(summary(exp))[9])
-  expect_equal(exp, as.Splits(BalancedTree(8)$edge))
+  expect_equal(capture.output(summary(exp))[[9]], "Tips not labelled.")
+  expect_equal(as.Splits(BalancedTree(8)$edge), exp)
 })
 
 test_that("as.Splits.edge()", {

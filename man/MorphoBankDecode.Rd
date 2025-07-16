@@ -19,6 +19,7 @@ Converts strings from MorphoBank notes into a Latex-compatible format.
 \seealso{
 Other string parsing functions: 
 \code{\link{EndSentence}()},
+\code{\link{MatchStrings}()},
 \code{\link{RightmostCharacter}()},
 \code{\link{Unquote}()}
 }

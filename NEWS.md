@@ -1,7 +1,15 @@
-# TreeTools 1.14.0.9000 (development) #
+# TreeTools 1.14.0.9005 (development) #
 
 - `RootTree()` gains `fallback` argument to handle outgroups that do not root a
   tree.
+
+# TreeTools 1.14.0.9004 (development) #
+
+- `Reweight()` sets the weight of characters in a phylogenetic dataset.
+- `MatchStrings()` checks for mismatched tip labels, suggesting corrections.
+- Fix `MakeTreeBinary()` labelling trees as in preorder.
+- Fix `as.Splits.matrix(tipLabels != NULL)`.
+- Modernize aspects of C++ code.
 
 
 # TreeTools 1.14.0 (2025-05-13) #
@@ -109,7 +117,7 @@
 - Support Nexus-escaped `''`s in `ReadCharacters()`.
 - Add `legend` parameter to `RoguePlot()`.
 - `RoguePlot()` now returns invisibly.
-- Deprecate `SpectrumLegend()` -- spun off to separate 
+- Deprecate `SpectrumLegend()` -- spun off to separate
   ["PlotTools"](https://ms609.github.io/PlotTools/) package.
 
 

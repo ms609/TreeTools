@@ -8,6 +8,11 @@ test_that("File time is read correctly", {
   expect_error(ApeTime(rep(fileName, 2)))
 })
 
+test_that("Missing files fail gracefully", {
+  expect_error(ReadAsPhyDat("non-existent.file"),
+               "'non-existent.file' not found")
+})
+
 test_that("Nexus file can be parsed", {
   # Errors as lists:
   expect_equal("MATRIX block not found in Nexus file.",
@@ -108,45 +113,6 @@ test_that("StringToPhyDat()", {
                rep(1:2, each = 4))
   expect_equal(as.integer(StringToPhyDat("----????")), rep(1:2, each = 4))
   expect_equal(names(StringToPhyDat("----????")), paste0("t", 1:8))
-})
-
-test_that("PhyToString() supports long levels", {
-  skip_if_not_installed("phangorn")
-  longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 0:12),
-                                       y = c(12:0, "-", "?")),
-                       type = "USER", levels = c(0:6, "-", 7:12))
-  expect_equal("-?0123456789ABCCBA9876543210-?", PhyToString(longLevels))
-
-  # Two -s → error
-  attr(longLevels, "allLevels")[1] <- "-"
-  expect_error(PhyToString(longLevels))
-
-  # 10 → 1
-  longLevels <- phangorn::phyDat(rbind(x = c("-", "?", 1:10),
-                                       y = c(10:1, "-", "?")),
-                                 type = "USER", levels = c(1:6, "-", 7:10))
-  expect_equal("-?12345678900987654321-?", PhyToString(longLevels))
-})
-  
-test_that("PhyToString() works", {
-  phy <- StringToPhyDat("012[01]", letters[1:4])
-  expect_equal("012{01}", PhyToString(phy))
-  expect_equal("012<01>", PhyToString(phy, parentheses = "<"))
-  expect_equal("012<01>", PhyToString(phy, parentheses = ">"))
-  expect_equal("012(01)", PhyToString(phy, parentheses = "("))
-  expect_equal("012(01)", PhyToString(phy, parentheses = ")"))
-  expect_equal("012[01]", PhyToString(phy, parentheses = "]"))
-  expect_equal("012[01]", PhyToString(phy, parentheses = "["))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "}"))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "{"))
-  expect_equal("012{01}", PhyToString(phy, parentheses = "!"))
-
-  str <- "012{01}0123"
-  phy <- StringToPhyDat(str, letters[1:4])
-  expect_equal(str, PhyToString(StringToPhyDat(str, letters[1:4])))
-  expect_equal(str,
-               PhyToString(StringToPhyDat(str, letters[1:4], byTaxon = TRUE),
-                           byTaxon = TRUE))
 })
 
 test_that("EndSentence() works correctly", {

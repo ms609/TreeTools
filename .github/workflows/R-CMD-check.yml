@@ -100,6 +100,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
+            gh@1.4.1
             svglite@2.1.3
             scales@1.3.0
             magick@2.8.5
@@ -120,6 +121,7 @@ jobs:
             Rfast@1.9.8
             rjson@0.2.20
             XML@3.99-0.3
+            TreeSearch=?ignore-before-r=4.0.0
           needs: |
             check
       

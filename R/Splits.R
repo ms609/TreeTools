@@ -205,7 +205,7 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
     }
   } else if (is.numeric(x) && dim(x)[2] == 2) {
     edge_to_splits(x, postorder_order(x),
-                   tipLabels = NULL, asSplits = TRUE, ...)
+                   tipLabels = tipLabels, asSplits = TRUE, ...)
   } else {
     NextMethod()
   }

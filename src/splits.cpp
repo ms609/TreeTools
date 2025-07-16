@@ -5,12 +5,12 @@
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
-const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
+constexpr uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
                                  2048, 4096, 8192, 16384, 32768};
-const uintx BIN_SIZE = 8;
-const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
+constexpr uintx BIN_SIZE = 8;
+constexpr uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
-#define NOT_TRIVIAL TreeTools::UINTX_MAX
+constexpr uintx NOT_TRIVIAL = TreeTools::UINTX_MAX;
 
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)
