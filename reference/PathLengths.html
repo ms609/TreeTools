@@ -15,7 +15,7 @@ from each vertex to each of its descendant vertices."><!-- Global site tag (gtag
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.15.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ from each vertex to each of its descendant vertices."><!-- Global site tag (gtag
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Calculate length of paths between each pair of vertices within tree</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.14.0/R/PathLengths.R" class="external-link"><code>R/PathLengths.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/master/R/PathLengths.R" class="external-link"><code>R/PathLengths.R</code></a></small>
       <div class="d-none name"><code>PathLengths.Rd</code></div>
     </div>
 
@@ -107,35 +107,29 @@ to the root); <code>end</code> lists the shallowest node (i.e. that closest to a
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">tiplabels</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="PathLengths-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">PathLengths</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    start end     length</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      7   1 2.13032582</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      8   1 2.00095347</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      9   1 1.52283544</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     10   1 0.59876097</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      7   2 2.50773555</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      8   2 2.37836320</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      9   2 1.90024516</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8     10   2 0.97617069</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      7   3 1.69600981</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     8   3 1.56663746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     9   3 1.08851942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12    11   3 0.35672691</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     7   4 1.77075658</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     8   4 1.64138424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     9   4 1.16326620</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16    11   4 0.43147369</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     7   5 0.27758391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     8   5 0.14821156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19     7   6 0.01307758</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20     7   8 0.12937235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21     7   9 0.60749038</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22     8   9 0.47811803</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23     7  10 1.53156485</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24     8  10 1.40219250</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25     9  10 0.92407447</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26     7  11 1.33928289</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 27     8  11 1.20991055</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 28     9  11 0.73179251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    start end    length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      7   1 1.0503595</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      8   1 0.2675082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      7   2 1.5182935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      8   2 0.7354421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      9   2 0.5167968</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      7   3 1.2704472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      8   3 0.4875959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      9   3 0.2689506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      7   4 1.2625274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10   4 1.0813591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11   4 0.5627829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     7   5 0.8289013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    10   5 0.6477330</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14    11   5 0.1291569</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     7   6 0.4375359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16    10   6 0.2563676</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     7   8 0.7828513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     7   9 1.0014966</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19     8   9 0.2186453</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20     7  10 0.1811683</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21     7  11 0.6997445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    10  11 0.5185761</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -147,7 +141,7 @@ to the root); <code>end</code> lists the shallowest node (i.e. that closest to a
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
     </footer></div>
