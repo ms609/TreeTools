@@ -27,12 +27,13 @@ when \code{outgroupTips} do not root a tree.
 Where the smallest clade that contains \code{outgroupTips} includes all taxa,
 \code{RootTree()} will not change the topology of a tree.
 If \code{fallback = NULL}, \code{RootTree()} will return \code{tree}.
-Otherwise, taxa will be dropped from \code{outgroupTips} in the sequence specified
-(\code{fallback[[1]]} first) by until the outgroup is smaller than \code{tree}.}
+Otherwise, taxa will be excluded from \code{outgroupTips} in the sequence
+specified (\code{fallback[1]} first) by until the clade containing all outgroup
+tips is smaller than \code{tree}.}
 
-\item{node}{integer specifying node (internal or tip) to set as the root.}
+\item{node}{Integer specifying node (internal or tip) to set as the root.}
 
-\item{resolveRoot}{logical specifying whether to resolve the root node.}
+\item{resolveRoot}{Logical specifying whether to resolve the root node.}
 }
 \value{
 \code{RootTree()} returns a tree of class \code{phylo}, rooted on the smallest

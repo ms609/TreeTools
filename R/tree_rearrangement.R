@@ -18,8 +18,9 @@
 #' Where the smallest clade that contains `outgroupTips` includes all taxa,
 #' `RootTree()` will not change the topology of a tree.
 #' If `fallback = NULL`, `RootTree()` will return `tree`.
-#' Otherwise, taxa will be dropped from `outgroupTips` in the sequence specified
-#' (`fallback[[1]]` first) by until the outgroup is smaller than `tree`.
+#' Otherwise, taxa will be excluded from `outgroupTips` in the sequence
+#' specified (`fallback[1]` first) by until the clade containing all outgroup
+#' tips is smaller than `tree`.
 #'
 #' @return `RootTree()` returns a tree of class `phylo`, rooted on the smallest
 #' clade that contains the specified tips, with edges and nodes numbered in
@@ -202,8 +203,8 @@ RootTree.multiPhylo <- function(tree, outgroupTips, fallback = NULL) {
 RootTree.NULL <- function(tree, outgroupTips, fallback = NULL) NULL
 
 #' @rdname RootTree
-#' @param node integer specifying node (internal or tip) to set as the root.
-#' @param resolveRoot logical specifying whether to resolve the root node.
+#' @param node Integer specifying node (internal or tip) to set as the root.
+#' @param resolveRoot Logical specifying whether to resolve the root node.
 #'
 #' @return `RootOnNode()` returns a tree of class `phylo`, rooted on the
 #' requested `node` and ordered in [`Preorder`].
