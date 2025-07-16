@@ -8,7 +8,7 @@
 #'
 #' * [ColourBrewer2.org](https://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=3)
 #'
-#' * [Martin Krzywinski](http://mkweb.bcgsc.ca/colorblind/)
+#' * [Martin Krzywinski](https://mk.bcgsc.ca/colorblind/)
 #' }
 #'
 #' @examples
