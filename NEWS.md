@@ -1,3 +1,8 @@
+# TreeTools 1.14.0.9005 (development) #
+
+- `RootTree()` gains `fallback` argument to handle outgroups that do not root a
+  tree.
+
 # TreeTools 1.14.0.9004 (development) #
 
 - `Reweight()` sets the weight of characters in a phylogenetic dataset.
@@ -5,6 +10,7 @@
 - Fix `MakeTreeBinary()` labelling trees as in preorder.
 - Fix `as.Splits.matrix(tipLabels != NULL)`.
 - Modernize aspects of C++ code.
+
 
 # TreeTools 1.14.0 (2025-05-13) #
 

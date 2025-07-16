@@ -230,6 +230,30 @@ test_that("RootTree() works", {
   expect_equal(RootTree(tree, 1:4), RootTree(tree, 5:6))
 })
 
+test_that("RootTree(fallback)", {
+  tangle <- ape::read.tree(text = "((a1, (a2, a3)), ((b4, (b5, b6)), (c7, (c8, c9))));")
+  outgroup <- c("a3", "b6", "c7", "c8", "c9")
+  fallback <- c("c7", "c8", "b4", "b5", "c9", "a1", "a2")
+  toN <- function(x) as.integer(substr(x, 2, 2))
+
+  expect_equal(
+    RootTree(tangle, outgroup, fallback),
+    RootTree(tangle, c("a3", "b6"))
+  )
+  expect_equal(
+    RootTree(tangle, outgroup, toN(fallback)),
+    RootTree(tangle, c("a3", "b6"))
+  )
+  expect_equal(
+    RootTree(tangle, toN(outgroup), fallback),
+    RootTree(tangle, c("a3", "b6"))
+  )
+  expect_equal(
+    RootTree(c(tangle, tangle), outgroup, fallback),
+    RootTree(c(tangle, tangle), c("a3", "b6"))
+  )
+})
+
 test_that("RootTree() & UnrootTree() retain edge lengths", {
   bal7 <- BalancedTree(7)
   bal7$edge.length <- 1:12 * 10
