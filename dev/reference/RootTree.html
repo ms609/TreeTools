@@ -23,7 +23,7 @@ preorder."><meta name="robots" content="noindex"><!-- Global site tag (gtag.js) 
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.14.0.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.14.0.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ preorder.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroupTips</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RootTree</span><span class="op">(</span><span class="va">tree</span>, <span class="va">outgroupTips</span>, fallback <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">RootOnNode</span><span class="op">(</span><span class="va">tree</span>, <span class="va">node</span>, resolveRoot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -89,12 +89,23 @@ If <code>outgroupTips</code> is a of type character, and a tree contains multipl
 with a matching label, the first will be used.</p></dd>
 
 
+<dt id="arg-fallback">fallback<a class="anchor" aria-label="anchor" href="#arg-fallback"></a></dt>
+<dd><p>Vector corresponding to <code>outgroupTips</code> determining behaviour
+when <code>outgroupTips</code> do not root a tree.</p>
+<p>Where the smallest clade that contains <code>outgroupTips</code> includes all taxa,
+<code>RootTree()</code> will not change the topology of a tree.
+If <code>fallback = NULL</code>, <code>RootTree()</code> will return <code>tree</code>.
+Otherwise, taxa will be excluded from <code>outgroupTips</code> in the sequence
+specified (<code>fallback[1]</code> first) by until the clade containing all outgroup
+tips is smaller than <code>tree</code>.</p></dd>
+
+
 <dt id="arg-node">node<a class="anchor" aria-label="anchor" href="#arg-node"></a></dt>
-<dd><p>integer specifying node (internal or tip) to set as the root.</p></dd>
+<dd><p>Integer specifying node (internal or tip) to set as the root.</p></dd>
 
 
 <dt id="arg-resolveroot">resolveRoot<a class="anchor" aria-label="anchor" href="#arg-resolveroot"></a></dt>
-<dd><p>logical specifying whether to resolve the root node.</p></dd>
+<dd><p>Logical specifying whether to resolve the root node.</p></dd>
 
 </dl></div>
     <div class="section level2">
