@@ -47,8 +47,8 @@ test_that("PectinateTree(lengths)", {
 })
 
 test_that("StarTree() works", {
-  expect_equal(StarTree(8L),
-               ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"))
+  expect_equal(ape::read.tree(text = "(t1, t2, t3, t4, t5, t6, t7, t8);"),
+               StarTree(8L))
   expect_true(is.integer(StarTree(8)$edge))
   expect_null(StarTree(8L)[["edge.length"]])
   expect_equal(StarTree(8L, 8:1)[["edge.length"]], 8:1)
