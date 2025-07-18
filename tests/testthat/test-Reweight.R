@@ -42,5 +42,5 @@ test_that("Reweight() okay with tree search", {
   
   expect_equal(TreeLength(tree, Reweight(Lobo.phy[, 9:12], c(0, 100, 1, 0))),
                TreeLength(tree, Lobo.phy[, 10]) * 100 +
-                 TreeLength(tree, Lobo.phy[, 11]))
+                 TreeLength(tree, Lobo.phy[, 11])) # = 105
 })
