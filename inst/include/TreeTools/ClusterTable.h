@@ -8,6 +8,8 @@
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
+#define UNINIT -999
+#define INF TreeTools::INTX_MAX
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
@@ -23,13 +25,11 @@
 
 #define CT_IS_LEAF(a) (a) <= n_tip
 
+
 namespace TreeTools {
 
-  constexpr int16 UNINIT = -999;
-  constexpr intx INF = TreeTools::INTX_MAX;
-  constexpr int_fast32_t CT_STACK_SIZE = 4;
-  constexpr int_fast32_t CT_MAX_LEAVES = 16383;
-
+  const int_fast32_t CT_STACK_SIZE = 4;
+  const int_fast32_t CT_MAX_LEAVES = 16383;
   class ClusterTable {
 
     const int16 L_COL = int16(0);
