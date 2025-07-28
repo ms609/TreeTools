@@ -488,11 +488,12 @@ CollapseEdge <- function(tree, edges) {
 #'
 #' `MakeTreeBinary()` resolves, at random, all polytomies in a tree or set of
 #' trees, such that all trees compatible with the input topology are drawn
-#' with equal probability.
+#' with equal probability. Edge lengths are not yet supported, so are removed.
 #'
 #' @seealso Since ape v5.5, this functionality is available through
 #' [`ape::multi2di()`]; previous versions of "ape" did not return topologies
-#' in equal frequencies.
+#' in equal frequencies.  `MakeTreeBinary()` is often somewhat faster;
+#' `multi2di()` retains edge lengths.
 #'
 #' @return `MakeTreeBinary()` returns a rooted binary tree of class `phylo`,
 #' corresponding to tree uniformly selected from all those compatible with
@@ -511,7 +512,7 @@ MakeTreeBinary <- function(tree) {
 
 #' @export
 MakeTreeBinary.phylo <- function(tree) {
-  tree <- Preorder(tree)
+  tree <- Preorder(`[[<-`(tree, "edge.length", NULL))
   degree <- NodeOrder(tree, internalOnly = TRUE)
   degree[[1]] <- degree[[1]] + 1L # Root node is degree 2
   polytomies <- degree > 3L
