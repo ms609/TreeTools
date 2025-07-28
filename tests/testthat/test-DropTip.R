@@ -154,7 +154,7 @@ test_that("DropTip.Splits()", {
   s9 <- as.Splits(bal9)
   s19 <- as.Splits(PectinateTree(19))
   
-  expect_error(DropTip(s9, c(T, F)), "each leaf\\b")
+  expect_error(DropTip(s9, c(TRUE, FALSE)), "each leaf\\b")
   expect_warning(
     expect_warning(
       expect_equal(DropTip(s9, c(0, 9:10)), DropTip(s9, !tabulate(1:8, 9))),
@@ -172,6 +172,8 @@ test_that("DropTip.Splits()", {
   expect_equal(unname(DropTip(s9, 4:5)), unname(as.Splits(DropTip(bal9, 4:5))))
   expect_equal(unname(KeepTip(s9, c(1:4, 7:9))),
                unname(as.Splits(DropTip(bal9, 6:5))))
+  expect_warning(expect_equal(KeepTip(s9, 1:10), s9),
+                 "`tip` must be between 1 and 9")
   
   expect_equal(DropTip(s9[[1:5]], 8:9),
                DropTip(s9, 8:9))
@@ -186,14 +188,11 @@ test_that("DropTip.Splits()", {
 })
 
 test_that("KeepTip() works", {
+  # Some of this now duplicates newer tests in DropTip() above -
+  # TODO identify and remove duplication.
   expect_warning(expect_true(all.equal(
     BalancedTree(paste0("t", 5:8)),
     KeepTip(BalancedTree(8), paste0("t", 5:9))
-  )))
-  
-  expect_warning(expect_true(all.equal(
-    BalancedTree(paste0("t", 5:8)),
-    KeepTip(BalancedTree(8), 5:9)
   )))
   
   expect_true(all.equal(
@@ -208,6 +207,7 @@ test_that("KeepTip() works", {
   
   s9 <- as.Splits(BalancedTree(9))
   expect_equal(KeepTip(s9, character(0)), DropTip(s9, TipLabels(s9)))
+  expect_equal(KeepTip(s9, TipLabels(s9)), DropTip(s9, character(0)))
 })
 
 test_that("KeepTip() retains edge lengths", {

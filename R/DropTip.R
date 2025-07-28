@@ -145,7 +145,11 @@ KeepTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
       setdiff(TipLabels(tree), MatchStrings(tip, TipLabels(tree), warning))
     }, "numeric" = {
       nTip <- NTip(tree)
-      nValid <- nTip + tree[["Nnode"]]
+      nValid <- if (inherits(tree, "phylo")) {
+        nTip + tree[["Nnode"]]
+      } else {
+        nTip
+      }
       badTips <- tip > nValid | tip < 1
       if (any(badTips)) {
         warning("`tip` must be between 1 and ", nValid)
