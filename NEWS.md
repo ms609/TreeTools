@@ -1,7 +1,7 @@
 # TreeTools 1.15.0.9003 (development) #
 
 - Add `KeepTip()` methods to correspond to `DropTip()`.
-- Add `splits_contradicted()` to calculate split disagreement.
+- Add `SplitConsistent()` to calculate split disagreement.
 - Fix `as.ClusterTable()` when leaf order varies.
 - `MakeTreeBinary()` explicitly removes edge lengths.
 - Fix regressions in `as.ClusterTable()` that caused downstream errors.

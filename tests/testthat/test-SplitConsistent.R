@@ -23,4 +23,8 @@ test_that("Split contradiction is calculated", {
                rep(TRUE, length(bal12)))
   expect_equal(split_consistent(pec12[[3]], list(bal12))[[1]],
                c(rep(TRUE, 3), FALSE, FALSE, rep(TRUE, 4)))
+  expect_equal(SplitConsistent(pec12[[5]], list(bal12, bal12))[[2]],
+               rep(TRUE, length(bal12)))
+  expect_equal(SplitConsistent(pec12[[5]], list(as.Splits(StarTree(12))))[[1]],
+               logical(0))
 })

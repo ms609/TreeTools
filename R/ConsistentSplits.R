@@ -3,13 +3,15 @@
 #' @param needle Splits object containing the single split to evaluate
 #' @param haystack Splits object, or list thereof, containing the splits to
 #' compare against `needle`.
+#' @returns `SplitConsistent()` returns a list of logical vectors specifying,
+#' for each entry in `haystack`, whether each split is consistent with `needle`.
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(8))
 #' splits2 <- as.Splits(PectinateTree(8))
 #' summary(splits1[[4]])
 #' SplitConsistent(splits1[[4]], splits2)
-#' 
 #' @template MRS
+#' @family split manipulation functions
 #' @export
 SplitConsistent <- function(needle, haystack) {
   if (inherits(haystack, "Splits")) {

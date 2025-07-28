@@ -38,6 +38,7 @@ summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 
 Other split manipulation functions: 
 \code{\link{DropTip}()},
+\code{\link{SplitConsistent}()},
 \code{\link{TrivialSplits}()}
 }
 \author{
