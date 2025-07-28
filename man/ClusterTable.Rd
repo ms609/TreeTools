@@ -23,10 +23,11 @@ as.ClusterTable(x, tipLabels = NULL, ...)
 \item{tipLabels}{Character vector specifying sequence in which to order
 tip labels.}
 
-\item{\dots}{Presently unused.}
+\item{\dots}{Unused.}
 }
 \value{
-\code{as.ClusterTable()} returns an object of class \code{ClusterTable}.
+\code{as.ClusterTable()} returns an object of class \code{ClusterTable},
+or a list thereof.
 }
 \description{
 \code{as.ClusterTable()} converts a phylogenetic tree to a \code{ClusterTable} object,
@@ -49,6 +50,10 @@ as.matrix(ct1)
 
 # Tip label order must match ct1 to allow comparison
 ct2 <- as.ClusterTable(tree2, tipLabels = LETTERS[1:5])
+
+# It can thus be safer to use
+ctList <- as.ClusterTable(c(tree1, tree2))
+ctList[[2]]
 }
 \references{
 \insertRef{Day1985}{TreeTools}

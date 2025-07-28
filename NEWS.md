@@ -1,6 +1,6 @@
 # TreeTools 1.15.0.9000 (development) #
 
-- No changes yet.
+- Fix `as.ClusterTable()` when leaf order varies.
 
 # TreeTools 1.15.0 (2025-07-16) #
 
