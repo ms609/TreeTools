@@ -1,6 +1,13 @@
 test_that("ClusterTable with complex trees", {
   skip_if_not_installed("TreeDist")
-  # Test failed when c++
+  library("TreeDist")
+  
+  # Test exposes failures in C++ - constexpr not playing nicely with Rcpp
+  # Specifically if replacing
+  # const int16 L_COL = int16(0);
+  # const int16 R_COL = int16(1);
+  # const int16 X_COLS = int16(2);
+  # hard-coding, using enum all fails.
   tr1 <- structure(list(
     edge = structure(c(8L, 8L, 9L, 10L, 10L, 9L, 11L, 11L, 8L, 12L, 12L,
                        1L, 9L, 10L, 2L, 3L, 11L, 4L, 5L, 12L, 6L, 7L),
@@ -16,7 +23,7 @@ test_that("ClusterTable with complex trees", {
   t4 <- list(a = tr1, b = tr2, c = tr1, d = tr2)
   r4 <- RootTree(t4, 1)
   
-  TreeDist::RobinsonFoulds(r4)
+  RobinsonFoulds(r4)
 })
 
 
