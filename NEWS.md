@@ -1,8 +1,10 @@
-# TreeTools 1.15.0.9000 (development) #
+# TreeTools 1.15.0.9001 (development) #
 
 - Add `KeepTip()` methods to correspond to `DropTip()`.
 - Fix `as.ClusterTable()` when leaf order varies.
 - `MakeTreeBinary()` explicitly removes edge lengths.
+- Fix regressions in `as.ClusterTable()` that caused downstream errors.
+
 
 # TreeTools 1.15.0 (2025-07-16) #
 

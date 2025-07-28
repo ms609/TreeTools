@@ -10,7 +10,7 @@
 
 #define RCOUT Rcpp::Rcout
 
-constexpr int RETAIN = 9000;
+#define RETAIN 9000
 
 #define GET_NEW_NO(n) if (!new_no[n]) new_no[n] = ++next_no
 

@@ -4,12 +4,12 @@
 using namespace Rcpp;
 using namespace std;
 
-constexpr intx
+const intx
   MAX_SHAPE_TIP = 55,
   MAX_SHAPE_NODE = MAX_SHAPE_TIP + MAX_SHAPE_TIP - 1
 ;
 
-constexpr uint64_t n_shapes_cache[MAX_SHAPE_TIP + 1] = {
+const uint64_t n_shapes_cache[MAX_SHAPE_TIP + 1] = {
   // https://oeis.org/A001190/b001190.txt
   0,
   1,

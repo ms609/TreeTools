@@ -9,8 +9,8 @@ using intx = int_fast32_t;
 using uintx = uint_fast32_t;
 
 namespace TreeTools {
-  constexpr intx INTX_MAX = intx(INT_FAST32_MAX);
-  constexpr uintx UINTX_MAX = uintx(UINT_FAST32_MAX);
+  const intx INTX_MAX = intx(INT_FAST32_MAX);
+  const uintx UINTX_MAX = uintx(UINT_FAST32_MAX);
 }
 
 #endif

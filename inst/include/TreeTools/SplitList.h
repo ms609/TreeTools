@@ -10,21 +10,22 @@
 
 using splitbit = uint_fast64_t;
 
-constexpr int16 R_BIN_SIZE = 8;
-constexpr int16 SL_BIN_SIZE = 64;
-constexpr int16 SL_MAX_BINS = 32;
+#define R_BIN_SIZE int16(8)
+#define SL_BIN_SIZE int16(64)
+#define SL_MAX_BINS int16(32)
 /* 64*32 is about the largest size for which two SplitList objects reliably fit
  * on the stack (as required in TreeDist; supporting more leaves would mean
  * refactoring to run on the heap (and, trivially, converting int16 to int32
  * for split*bin implicit calculation in state[split][bin]?) */
-constexpr int16 SL_MAX_TIPS = SL_BIN_SIZE * SL_MAX_BINS;
-constexpr int16 SL_MAX_SPLITS = SL_MAX_TIPS - 3; /* no slower than a power of two */
-constexpr splitbit right16bits = 65535U;
+#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
+#define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
 
 #define INLASTBIN(n, size) int16((size) - int16((size) - int16((n) % (size))) % (size))
 #define INSUBBIN(bin, offset)                                  \
   splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
+
+#define right16bits splitbit(65535U)
 
 #define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
   void _treetools_initialize_bitcounts() {                     \
