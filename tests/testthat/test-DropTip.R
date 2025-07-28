@@ -140,13 +140,20 @@ test_that("DropTip() root relocation", {
 test_that("DropTip.multiPhylo() with attributes", {
   multi <- c(bal8 = BalancedTree(8), pec8 = PectinateTree(8))
   attr(multi, "TipLabel") <- paste0("t", 1:8)
+  not6 <- setdiff(TipLabels(multi[[1]]), "t6")
+  not8 <- setdiff(TipLabels(multi[[1]]), "t8")
   
   expect_equal(DropTip(unclass(multi), "t6"), unclass(DropTip(multi, "t6")))
+  expect_equal(KeepTip(unclass(multi), not6), unclass(KeepTip(multi, not6)))
   
   expect_equal(attr(DropTip(multi, "t8"), "TipLabel"),
                paste0("t", 1:7))
+  expect_equal(attr(KeepTip(multi, not8), "TipLabel"),
+               paste0("t", 1:7))
   expect_equal(names(DropTip(multi, "t8")), names(multi))
+  expect_equal(names(KeepTip(multi, not8)), names(multi))
   expect_equal(DropTip(multi[1], "t1")[[1]], DropTip(multi[[1]], "t1"))
+  expect_equal(KeepTip(multi[1], not8)[[1]], KeepTip(multi[[1]], not8))
 })
 
 test_that("DropTip.Splits()", {

@@ -264,10 +264,10 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 #' @export
 KeepTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
   at <- attributes(tree)
-  tree <- lapply(tree, KeepTip, tip, preorder)
+  tree <- lapply(tree, KeepTip, tip = tip, preorder = preorder, check = check)
   attributes(tree) <- at
   if (!is.null(at[["TipLabel"]])) {
-    attr(tree, "TipLabel") <- setdiff(at[["TipLabel"]], tip)
+    attr(tree, "TipLabel") <- intersect(at[["TipLabel"]], tip)
   }
   tree
 }
