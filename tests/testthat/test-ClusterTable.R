@@ -75,6 +75,30 @@ test_that("ClusterTable class behaves", {
   
 })
 
+test_that("ClusterTable with multiple trees", {
+  tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");
+  tree2 <- ape::read.tree(text = "(E, (B, (D, (C, A))));");
+  ct <- as.ClusterTable(c(tree1, tree2))
+  expect_equal(
+    capture.output(print(ct)),
+    capture.output(print(list(as.ClusterTable(tree1),
+                              as.ClusterTable(tree2, TipLabels(tree1)))))
+  )
+  expect_equal(
+    capture.output(summary(ct)),
+    capture.output(summary(list(as.ClusterTable(tree1),
+                                as.ClusterTable(tree2, TipLabels(tree1)))))
+  )
+  
+  trees <- ape::read.tree(text = 
+                            "(A, (B, (C, (D, E))));(E, (B, (D, (C, A))));");
+  expect_equal(
+    capture.output(print(as.ClusterTable(trees))),
+    capture.output(print(list(as.ClusterTable(trees[[1]]),
+                              as.ClusterTable(trees[[2]], TipLabels(tree1)))))
+  )
+})
+
 test_that("Attributes are correct", {
   t6 <- as.ClusterTable(BalancedTree(6))
   t7 <- as.ClusterTable(PectinateTree(7))

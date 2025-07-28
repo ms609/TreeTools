@@ -53,6 +53,9 @@ namespace TreeTools {
     std::vector<int16> T;
     std::vector<int16> visited_nth;
     
+    // Using bitset; can obtain a ~1% speedup using vector of ULLs
+    // Retaining slower code as easier to read.
+    // See branch ct-xswitch for implementation
     std::bitset<TreeTools::CT_MAX_LEAVES + 1> Xswitch;
     Rcpp::IntegerMatrix Xarr;
 
@@ -323,7 +326,6 @@ namespace TreeTools {
     // BUILD Cluster table
     X_ROWS = n_leaves;
     Xarr = Rcpp::IntegerMatrix(X_COLS, X_ROWS);
-    // Xswitch = std::bitset<DAY_MAX_LEAVES>;
 
     // This procedure constructs in X descriptions of the clusters in a
     // rooted tree described by the postorder sequence T with weights,
