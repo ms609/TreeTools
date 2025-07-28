@@ -371,6 +371,104 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
   return ret;
 }
 
+// [[Rcpp::export]]
+Rcpp::List split_consistent(const RawMatrix needle,
+                            const Rcpp::List haystacks) {
+  
+  // Validate needle
+  if (needle.rows() != 1) {
+    Rcpp::stop("Needle must contain exactly one split (one row)");
+  }
+  if (!needle.hasAttribute("nTip")) {
+    Rcpp::stop("Needle lacks nTip attribute");
+  }
+  
+  const int16 n_tip = needle.attr("nTip");
+  const int16 n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
+  
+  if (needle.cols() != n_bin) {
+    Rcpp::stop("Needle has incorrect number of columns for nTip");
+  }
+  
+  const int n_haystacks = haystacks.size();
+  Rcpp::List results(n_haystacks);
+  
+  // Process each haystack
+  for (int h = 0; h < n_haystacks; h++) {
+    if (TYPEOF(haystacks[h]) != RAWSXP) {
+      Rcpp::stop("Haystack element %d is not a RawMatrix", h + 1);
+    }
+    
+    RawMatrix haystack = haystacks[h];
+    
+    // Validate haystack
+    if (!haystack.hasAttribute("nTip")) {
+      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1);
+    }
+    if (int16(haystack.attr("nTip")) != n_tip) {
+      Rcpp::stop("Haystack %d has different nTip than needle", h + 1);
+    }
+    if (haystack.cols() != n_bin) {
+      Rcpp::stop("Haystack %d has incorrect number of columns for nTip", h + 1);
+    }
+    
+    const int n_splits = haystack.rows();
+    Rcpp::LogicalVector consistency(n_splits);
+    
+    // Check each split in the haystack against the needle
+    for (int s = 0; s < n_splits; s++) {
+      
+      // Calculate the four intersections A∩C, A∩D, B∩C, B∩D
+      // Where needle defines A|B and haystack[s] defines C|D
+      // A = tips where needle bit = 1, B = tips where needle bit = 0
+      // C = tips where haystack bit = 1, D = tips where haystack bit = 0
+      
+      bool ac_nonempty = false; // A ∩ C (both bits = 1)
+      bool ad_nonempty = false; // A ∩ D (needle = 1, haystack = 0)
+      bool bc_nonempty = false; // B ∩ C (needle = 0, haystack = 1)
+      bool bd_nonempty = false; // B ∩ D (both bits = 0)
+      
+      // Check each tip by examining the appropriate bit
+      for (int tip = 0; tip < n_tip; tip++) {
+        const int bin_index = tip / 8;
+        const uint8_t bit_mask = 1 << (tip % 8);
+        
+        const bool needle_bit = (needle(0, bin_index) & bit_mask) != 0;
+        const bool haystack_bit = (haystack(s, bin_index) & bit_mask) != 0;
+        
+        // Update intersection flags based on bit combinations
+        if (needle_bit && haystack_bit) {
+          ac_nonempty = true;        // A ∩ C
+        } else if (needle_bit && !haystack_bit) {
+          ad_nonempty = true;        // A ∩ D
+        } else if (!needle_bit && haystack_bit) {
+          bc_nonempty = true;        // B ∩ C
+        } else { // !needle_bit && !haystack_bit
+          bd_nonempty = true;        // B ∩ D
+        }
+        
+        // Early termination: if all four intersections are non-empty,
+        // the splits are contradictory
+        if (ac_nonempty && ad_nonempty && bc_nonempty && bd_nonempty) {
+          break;
+        }
+      }
+      
+      // Two splits are contradictory if all four intersections are non-empty
+      // Otherwise they are consistent
+      if (ac_nonempty && ad_nonempty && bc_nonempty && bd_nonempty) {
+        consistency[s] = false; // Contradictory
+      } else {
+        consistency[s] = true;  // Consistent
+      }
+    }
+    
+    results[h] = consistency;
+  }
+  
+  return results;
+}
+
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {

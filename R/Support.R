@@ -6,7 +6,7 @@
 #' or bootstrap trees.
 #'
 #' If multiple calculations are required, some time can be saved by using the
-#' constituent functions (see examples)
+#' constituent functions (see examples).
 #'
 #' @param reference A tree of class `phylo`, a `Splits` object.
 #' @param forest a list of trees of class `phylo`, or a `multiPhylo` object; or a
@@ -146,7 +146,7 @@ ForestSplits <- function(forest, powersOf2) {
 #' @importFrom lifecycle deprecate_warn
 #' @export
 TreeSplits <- function(tree) {
-  deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
+  ?deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
 } # nocov end
 
 #' Colour for node support value
