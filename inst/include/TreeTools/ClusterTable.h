@@ -29,6 +29,7 @@ namespace TreeTools {
   constexpr intx INF = TreeTools::INTX_MAX;
   constexpr int_fast32_t CT_STACK_SIZE = 4;
   constexpr int_fast32_t CT_MAX_LEAVES = 16383;
+  constexpr int16 XSW_BITS_PER_WORD = 64;
 
   class ClusterTable {
 
@@ -53,7 +54,7 @@ namespace TreeTools {
     std::vector<int16> T;
     std::vector<int16> visited_nth;
     
-    std::bitset<TreeTools::CT_MAX_LEAVES + 1> Xswitch;
+    std::vector<uint64_t> Xswitch;
     Rcpp::IntegerMatrix Xarr;
 
   public:
@@ -198,19 +199,37 @@ namespace TreeTools {
       // Each cluster in X has an associated switch that is either cleared or
       // set.
       // This procedure clears every cluster switch in X.
-      Xswitch.reset();
+      std::fill(Xswitch.begin(), Xswitch.end(), 0ULL);
     }
 
     inline void SETSWX(int16* row) {
-      Xswitch[*row] = true;
+      std::size_t i = *row;
+      ASSERT(i < X_ROWS);
+      Xswitch[i / XSW_BITS_PER_WORD] |= (1ULL << (i % XSW_BITS_PER_WORD));
     }
 
     inline bool GETSWX(int16* row) {
-      return Xswitch[*row];
+      std::size_t i = *row;
+      ASSERT(i < X_ROWS);
+      return (Xswitch[i / XSW_BITS_PER_WORD] >> (i % XSW_BITS_PER_WORD)) & 1ULL;
     }
-
+    
+    // TODO when require C++20: replace w/ std::popcount
+    inline int popcount64(uint64_t x) {
+      int count = 0;
+      while (x) {
+        x &= (x - 1);
+        ++count;
+      }
+      return count;
+    }
+    
     inline bool NOSWX(const std::size_t& n) {
-      return Xswitch.count() == n;
+      std::size_t count = 0;
+      for (uint64_t word : Xswitch) {
+        count += popcount64(word); 
+      }
+      return count == n;
     }
 
     inline void SETSW(int16* L, int16* R) {
@@ -323,7 +342,6 @@ namespace TreeTools {
     // BUILD Cluster table
     X_ROWS = n_leaves;
     Xarr = Rcpp::IntegerMatrix(X_COLS, X_ROWS);
-    // Xswitch = std::bitset<DAY_MAX_LEAVES>;
 
     // This procedure constructs in X descriptions of the clusters in a
     // rooted tree described by the postorder sequence T with weights,
@@ -353,6 +371,11 @@ namespace TreeTools {
         setX(loc, R_COL, R);
       }
     }
+    
+    std::size_t n_switch_bits = X_ROWS;
+    std::size_t n_words = (n_switch_bits + XSW_BITS_PER_WORD - 1) /
+      XSW_BITS_PER_WORD;
+    Xswitch.resize(n_words, 0ULL);
   }
 }
 
