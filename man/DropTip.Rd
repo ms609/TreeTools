@@ -52,7 +52,8 @@ KeepTipPostorder(tree, tip)
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
 \item{tip}{Character vector specifying labels of leaves in tree to be
-dropped, or integer vector specifying the indices of leaves to be dropped.
+dropped or kept, or integer vector specifying the indices of leaves to be
+dropped or kept.
 Specifying the index of an internal node will drop all descendants of that
 node.}
 

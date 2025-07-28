@@ -62,7 +62,7 @@ surround ambiguous tokens.  Choose from: \code{\{} (default), \code{[}, \code{(}
 separate multiple tokens within parentheses.}
 
 \item{ps}{Character specifying text, perhaps \verb{;}, to append to the end of
-the string.}
+each string.}
 
 \item{useIndex}{Logical (default: \code{TRUE}) specifying whether to print
 duplicate characters multiple times, as they appeared in the original matrix.}
