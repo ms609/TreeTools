@@ -8,8 +8,6 @@
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
-constexpr int16 UNINIT = -999;
-constexpr intx INF = TreeTools::INTX_MAX;
 
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
@@ -25,10 +23,12 @@ constexpr intx INF = TreeTools::INTX_MAX;
 
 #define CT_IS_LEAF(a) (a) <= n_tip
 
-constexpr int_fast32_t CT_STACK_SIZE = 4;
-constexpr int_fast32_t CT_MAX_LEAVES = 16383;
-
 namespace TreeTools {
+
+  constexpr int16 UNINIT = -999;
+  constexpr intx INF = TreeTools::INTX_MAX;
+  constexpr int_fast32_t CT_STACK_SIZE = 4;
+  constexpr int_fast32_t CT_MAX_LEAVES = 16383;
 
   class ClusterTable {
 
@@ -36,26 +36,24 @@ namespace TreeTools {
     const int16 R_COL = int16(1);
     const int16 X_COLS = int16(2);
 
-    int16
-      n_edge,
-      n_internal,
-      n_leaves,
+    int16  n_edge;
+    int16  n_internal;
+    int16  n_leaves;
 
-      n_shared = 0,
-      enumeration = 0,
-      v_j,
-      Tlen,
-      Tlen_short,
-      Tpos = 0,
-      X_ROWS
+    int16  n_shared = 0;
+    int16  enumeration = 0;
+    int16  v_j;
+    int16  Tlen;
+    int16  Tlen_short;
+    int16  Tpos = 0;
+    int16  X_ROWS;
     ;
-    std::vector<int16>
-      internal_label,
-      leftmost_leaf,
-      T,
-      visited_nth
-    ;
-    std::bitset<CT_MAX_LEAVES + 1> Xswitch;
+    std::vector<int16> internal_label;
+    std::vector<int16> leftmost_leaf;
+    std::vector<int16> T;
+    std::vector<int16> visited_nth;
+    
+    std::bitset<TreeTools::CT_MAX_LEAVES + 1> Xswitch;
     Rcpp::IntegerMatrix Xarr;
 
   public:
@@ -273,11 +271,11 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
+    if (leaf_labels.length() > int(TreeTools::CT_MAX_LEAVES)) {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
-    ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
+    ASSERT(TreeTools::CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "
