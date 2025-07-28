@@ -31,34 +31,28 @@ const int_fast32_t
   CT_MAX_LEAVES = 16383
 ;
 
+
 namespace TreeTools {
 
   class ClusterTable {
 
-    const int16
-      L_COL = 0,
-      R_COL = 1,
-      X_COLS = 2
-    ;
-    int16
-      n_edge,
-      n_internal,
-      n_leaves,
-
-      n_shared = 0,
-      enumeration = 0,
-      v_j,
-      Tlen,
-      Tlen_short,
-      Tpos = 0,
-      X_ROWS
-    ;
-    std::vector<int16>
-      internal_label,
-      leftmost_leaf,
-      T,
-      visited_nth
-    ;
+    const int16 L_COL = 0;
+    const int16 R_COL = 1;
+    const int16 X_COLS = 2;
+    int16 n_edge;
+    int16 n_internal;
+    int16 n_leaves;
+    int16 n_shared = 0;
+    int16 enumeration = 0;
+    int16 v_j;
+    int16 Tlen;
+    int16 Tlen_short;
+    int16 Tpos = 0;
+    int16 X_ROWS;
+    std::vector<int16> internal_label;
+    std::vector<int16> leftmost_leaf;
+    std::vector<int16> T;
+    std::vector<int16> visited_nth;
     // Using bitset; can obtain a ~1% speedup using vector of ULLs
     // Retaining slower code as easier to read.
     // See branch ct-xswitch for implementation
