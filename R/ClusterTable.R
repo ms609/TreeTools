@@ -14,9 +14,10 @@
 #'  \code{\link[ape:read.tree]{phylo}}.
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.
-#' @param \dots Presently unused.
+#' @param \dots Unused.
 #'
-#' @return `as.ClusterTable()` returns an object of class `ClusterTable`.
+#' @return `as.ClusterTable()` returns an object of class `ClusterTable`,
+#' or a list thereof.
 #'
 #' @references \insertRef{Day1985}{TreeTools}
 #' @seealso [S3 methods][ClusterTable-methods] for `ClusterTable` objects.
@@ -29,6 +30,10 @@
 #' 
 #' # Tip label order must match ct1 to allow comparison
 #' ct2 <- as.ClusterTable(tree2, tipLabels = LETTERS[1:5])
+#' 
+#' # It can thus be safer to use
+#' ctList <- as.ClusterTable(c(tree1, tree2))
+#' ctList[[2]]
 #' @template MRS
 #' @family utility functions
 #' @name ClusterTable
@@ -58,8 +63,8 @@ as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
 #' @rdname ClusterTable
 #' @export
 as.ClusterTable.list <- function(x, tipLabels = NULL, ...) {
-  lapply(x, as.ClusterTable,
-         tipLabels = if (is.null(tipLabels)) TipLabels(x) else tipLabels, ...)
+  lapply(x, as.ClusterTable, ..., 
+         tipLabels = if (is.null(tipLabels)) TipLabels(x[[1]]) else tipLabels)
 }
 
 #' @rdname ClusterTable

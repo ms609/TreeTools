@@ -17,7 +17,7 @@ the input tree topologies.
 \description{
 \code{MakeTreeBinary()} resolves, at random, all polytomies in a tree or set of
 trees, such that all trees compatible with the input topology are drawn
-with equal probability.
+with equal probability. Edge lengths are not yet supported, so are removed.
 }
 \examples{
 MakeTreeBinary(CollapseNode(PectinateTree(7), c(9, 11, 13)))
@@ -26,7 +26,8 @@ UnrootTree(MakeTreeBinary(StarTree(5)))
 \seealso{
 Since ape v5.5, this functionality is available through
 \code{\link[ape:multi2di]{ape::multi2di()}}; previous versions of "ape" did not return topologies
-in equal frequencies.
+in equal frequencies.  \code{MakeTreeBinary()} is often somewhat faster;
+\code{multi2di()} retains edge lengths.
 
 Other tree manipulation: 
 \code{\link{AddTip}()},
