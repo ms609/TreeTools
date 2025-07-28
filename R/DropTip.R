@@ -8,7 +8,8 @@
 #'
 #' @template treeParam
 #' @param tip Character vector specifying labels of leaves in tree to be
-#' dropped, or integer vector specifying the indices of leaves to be dropped.
+#' dropped or kept, or integer vector specifying the indices of leaves to be
+#' dropped or kept.
 #' Specifying the index of an internal node will drop all descendants of that
 #' node.
 #' @param preorder Logical specifying whether to [Preorder] `tree` before
@@ -36,6 +37,14 @@
 #' @export
 DropTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
   UseMethod("DropTip")
+}
+
+#' @rdname DropTip
+#' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
+#' in preorder.
+#' @export
+KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  UseMethod("KeepTip")
 }
 
 #' @rdname DropTip
@@ -126,6 +135,42 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 }
 
 #' @rdname DropTip
+#' @export
+KeepTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  drop <- switch(
+    mode(tip),
+    "logical" = {
+      !tip
+    }, "character" = {
+      setdiff(TipLabels(tree), MatchStrings(tip, TipLabels(tree), warning))
+    }, "numeric" = {
+      nTip <- NTip(tree)
+      nValid <- nTip + tree[["Nnode"]]
+      if (any(tip > nValid | tip < 1)) {
+        warning("`tip` must be between 1 and ", nValid)
+      }
+      nodes <- tip > nTip
+      keep <- if (any(nodes)) {
+        edge <- tree[["edge"]]
+        theNodes <- tip[nodes]
+        nodeDesc <- DescendantTips(edge[, 1], edge[, 2], node = theNodes)
+        union(tip[!nodes], which(
+          if (is.null(dim(nodeDesc))) nodeDesc else colSums(nodeDesc) > 0))
+      } else {
+        tip
+      }
+      setdiff(seq_len(nTip), keep)
+    },
+    stop("`tip` in unexpected format")
+  )
+  DropTip(tree, drop, preorder, check)
+}
+
+#' @rdname DropTip
+#' @export
+KeepTip.Splits <- KeepTip.phylo
+
+#' @rdname DropTip
 #' @examples summary(DropTip(as.Splits(tree), 4:5))
 #' @family split manipulation functions
 #' @export
@@ -211,6 +256,18 @@ DropTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
 
 #' @rdname DropTip
 #' @export
+KeepTip.multiPhylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  at <- attributes(tree)
+  tree <- lapply(tree, KeepTip, tip, preorder)
+  attributes(tree) <- at
+  if (!is.null(at[["TipLabel"]])) {
+    attr(tree, "TipLabel") <- setdiff(at[["TipLabel"]], tip)
+  }
+  tree
+}
+
+#' @rdname DropTip
+#' @export
 DropTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (all(vapply(tree, inherits, logical(1), "phylo"))) {
     DropTip.multiPhylo(tree, tip, preorder, check)
@@ -221,7 +278,23 @@ DropTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
 
 #' @rdname DropTip
 #' @export
+KeepTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
+  if (all(vapply(tree, inherits, logical(1), "phylo"))) {
+    KeepTip.multiPhylo(tree, tip, preorder, check)
+  } else {
+    NextMethod()
+  }
+}
+
+#' @rdname DropTip
+#' @export
 DropTip.NULL <-  function(tree, tip, preorder = TRUE, check = TRUE) {
+  NULL
+}
+
+#' @rdname DropTip
+#' @export
+KeepTip.NULL <-  function(tree, tip, preorder = TRUE, check = TRUE) {
   NULL
 }
 
@@ -262,25 +335,4 @@ KeepTipPostorder <- function(tree, tip) {
     tree[["Nnode"]] <- dim(tree[["edge"]])[1] + 1L - sum(tip) 
     tree
   }
-}
-
-#' @rdname DropTip
-#' @return `KeepTip()` returns `tree` with all leaves not in `tip` removed,
-#' in preorder.
-#' @export
-KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
-  if (is.logical(tip)) {
-    keep <- !tip
-  } else {
-    labels <- if (is.character(tip)) {
-      TipLabels(tree)
-    } else {
-      seq_len(NTip(tree))
-    }
-    if (!all(tip %in% labels)) {
-      warning("Tips not in tree: ", paste0(setdiff(tip, labels), collapse = ", "))
-    }
-    keep <- setdiff(labels, tip)
-  }
-  DropTip(tree, keep, preorder, check)
 }

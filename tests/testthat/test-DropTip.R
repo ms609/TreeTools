@@ -50,15 +50,28 @@ test_that("keep_tip() works", {
                UnrootTree(BalancedTree(4))$edge)
 })
 
+test_that("KeepTip() handles unexpected input", {
+  expect_error(KeepTip(BalancedTree(6), raw(1)),
+               "unexpected format")
+})
+
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_equal(NTip(DropTip(bal8, 1:8, check = FALSE)), 0)
+  expect_equal(NTip(KeepTip(bal8, integer(0), check = FALSE)), 0)
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, -1))),
                  "`tip` must be > 0")
+  expect_warning(expect_true(all.equal(bal8, KeepTip(bal8, 0:8))),
+                 "`tip` must be between 1 and 15")
+  expect_warning(expect_true(all.equal(bal8, KeepTip(bal8, 9:16))),
+                 "`tip` must be between 1 and 15")
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, 99))),
                  "Tree only has 15 nodes")
   expect_warning(expect_true(all.equal(bal8, DropTip(bal8, "MissingTip"))),
                  "not present in tree")
+  expect_warning(expect_true(
+    all.equal(bal8, KeepTip(bal8, c(TipLabels(bal8), "MissingTip")))),
+                 "Could not find 'MissingTip'")
   expect_warning(expect_identical(
     DropTip(bal8, c("t8", "NotThere"), check = TRUE),
     DropTip(bal8, c("t8", "NotThere"), check = FALSE)), "not present in tree")
@@ -69,6 +82,11 @@ test_that("DropTip() works", {
   expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
   expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
   expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7))))
+  
+  expect_equal(KeepTip(bal8, 9), bal8)
+  expect_equal(KeepTip(bal8, c(9, 1)), bal8)
+  expect_equal(KeepTip(bal8, 10), BalancedTree(4))
+  expect_equal(KeepTip(bal8, c(6:8, 14)), KeepTip(bal8, 13))
   
   expect_equal(Preorder(DropTip(Preorder(nasty), c(1, 3))),
                Preorder(DropTip(nasty, c(1, 3))))
