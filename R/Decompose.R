@@ -96,8 +96,8 @@ Decompose <- function(dataset, indices) {
       maxLevel <- max(whichLevels)
       vapply(seq_len(maxLevel)[-1], function(i) {
         zero <- .RegExpEscape(appLevels[1:(i - 1)])
-        one <- .RegExpEscape(appLevels[(i):maxLevel])
-        gsub("(0)0+|(1)1+", "\\1",
+        one <- .RegExpEscape(appLevels[i:maxLevel])
+        gsub("(0)0+|(1)1+", "\\1\\2",
              gsub(paste0(c("[", one, "]"), collapse = ""), "1",
                   gsub(paste0(c("[", zero, "]"), collapse = ""), "0", char)
              )
