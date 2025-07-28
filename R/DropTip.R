@@ -146,8 +146,10 @@ KeepTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     }, "numeric" = {
       nTip <- NTip(tree)
       nValid <- nTip + tree[["Nnode"]]
-      if (any(tip > nValid | tip < 1)) {
+      badTips <- tip > nValid | tip < 1
+      if (any(badTips)) {
         warning("`tip` must be between 1 and ", nValid)
+        tip <- tip[!badTips]
       }
       nodes <- tip > nTip
       keep <- if (any(nodes)) {
@@ -161,7 +163,7 @@ KeepTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
       }
       setdiff(seq_len(nTip), keep)
     },
-    stop("`tip` in unexpected format")
+    stop("`tip` must be of type character, logical or numeric")
   )
   DropTip(tree, drop, preorder, check)
 }
@@ -209,7 +211,7 @@ DropTip.Splits <- function(tree, tip, preorder, check = TRUE) {
     }
     drop <- tip
   } else {
-    stop("`tip` must be of type character, numeric or logical")
+    stop("`tip` must be of type character, logical or numeric")
   }
   
   keep <- !drop

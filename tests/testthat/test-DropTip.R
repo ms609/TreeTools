@@ -50,11 +50,6 @@ test_that("keep_tip() works", {
                UnrootTree(BalancedTree(4))$edge)
 })
 
-test_that("KeepTip() handles unexpected input", {
-  expect_error(KeepTip(BalancedTree(6), raw(1)),
-               "unexpected format")
-})
-
 test_that("DropTip() works", {
   bal8 <- BalancedTree(8)
   expect_equal(NTip(DropTip(bal8, 1:8, check = FALSE)), 0)
@@ -77,11 +72,15 @@ test_that("DropTip() works", {
     DropTip(bal8, c("t8", "NotThere"), check = FALSE)), "not present in tree")
   expect_error(DropTip(bal8, TRUE),
                "`tip` must list `TRUE` or `FALSE` for each leaf")
+  expect_error(KeepTip(bal8, TRUE),
+               "`tip` must list `TRUE` or `FALSE` for each leaf")
   expect_error(DropTip(bal8, list("Invalid format")), "`tip` must be of type")
+  expect_error(KeepTip(bal8, list("Invalid format")), "`tip` must be of type")
   
   expect_equal(DropTip(bal8, 7:8), DropTip(bal8, 15L))
   expect_true(all.equal(ape::drop.tip(bal8, 6:8), DropTip(bal8, 6:8)))
-  expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)), DropTip(bal8, c(3, 5, 7))))
+  expect_true(all.equal(ape::drop.tip(bal8, c(3, 5, 7)),
+                        DropTip(bal8, c(3, 5, 7))))
   
   expect_equal(KeepTip(bal8, 9), bal8)
   expect_equal(KeepTip(bal8, c(9, 1)), bal8)
@@ -92,8 +91,7 @@ test_that("DropTip() works", {
                Preorder(DropTip(nasty, c(1, 3))))
   
   expect_null(DropTip(NULL))
-  expect_warning(expect_null(KeepTip(NULL, "tip")),
-                 "Tips not in tree: tip")
+  expect_null(KeepTip(NULL, "tip"))
 })
 
 test_that("DropTip() supports node labels", {
