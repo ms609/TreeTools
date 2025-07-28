@@ -513,17 +513,19 @@ MakeTreeBinary <- function(tree) {
 MakeTreeBinary.phylo <- function(tree) {
   tree <- Preorder(tree)
   degree <- NodeOrder(tree, internalOnly = TRUE)
-  degree[1] <- degree[1] + 1L # Root node
+  degree[[1]] <- degree[[1]] + 1L # Root node is degree 2
   polytomies <- degree > 3L
-  if (!any(polytomies)) return(tree)
+  if (!any(polytomies)) {
+    return(tree)
+  }
   edge <- tree[["edge"]]
 
-  nTip <- edge[1] - 1L
+  nTip <- edge[[1]] - 1L
   polytomyN <- which(polytomies) + nTip
   degree <- degree[polytomies]
   for (i in seq_len(sum(polytomies))) {
-    n <- polytomyN[i]
-    nKids <- degree[i] - 1L
+    n <- polytomyN[[i]]
+    nKids <- degree[[i]] - 1L
     newParent <- .RandomParent(nKids + 1L) # Tip 1 is the "root"
     newEdges <- RenumberEdges(newParent, seq_len(nKids + nKids))
 
@@ -553,7 +555,7 @@ MakeTreeBinary.phylo <- function(tree) {
   nodeLabel <- tree[["node.label"]]
   if (!is.null(nodeLabel)) {
     # Inefficient but pragmatic
-    tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree,  nodeLabel)
+    tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabel)
   }
   tree[["edge"]] <- edge
   tree[["Nnode"]] <- nTip - 1L

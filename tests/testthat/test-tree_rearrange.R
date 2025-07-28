@@ -362,7 +362,6 @@ test_that("Binarification is uniform", {
     counts <- table(replicate64(nSamples, as.TreeNumber(MakeTreeBinary(tree))))
     expect_equal(nTree, length(counts))
     expect_gt(chisq.test(counts)$p.value, 0.001)
-
   }
 
   Test(CollapseNode(PectinateTree(6), 8:9), NUnrooted(4))
