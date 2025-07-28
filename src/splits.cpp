@@ -373,7 +373,11 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
 
 // [[Rcpp::export]]
 Rcpp::List split_consistent(const RawMatrix needle,
-                            const Rcpp::List haystacks) {
+                            const Rcpp::List haystacks,
+                            const LogicalVector invert) {
+  
+  const bool CONTRADICTORY = invert[0] ? true : false;
+  const bool CONSISTENT = invert[0] ? false : true;
   
   // Validate needle
   if (needle.rows() != 1) {
@@ -457,9 +461,9 @@ Rcpp::List split_consistent(const RawMatrix needle,
       // Two splits are contradictory if all four intersections are non-empty
       // Otherwise they are consistent
       if (ac_nonempty && ad_nonempty && bc_nonempty && bd_nonempty) {
-        consistency[s] = false; // Contradictory
+        consistency[s] = CONTRADICTORY;
       } else {
-        consistency[s] = true;  // Consistent
+        consistency[s] = CONSISTENT;
       }
     }
     

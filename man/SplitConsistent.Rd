@@ -2,9 +2,12 @@
 % Please edit documentation in R/ConsistentSplits.R
 \name{SplitConsistent}
 \alias{SplitConsistent}
+\alias{SplitConflicts}
 \title{Are splits consistent?}
 \usage{
 SplitConsistent(needle, haystack)
+
+SplitConflicts(needle, haystack)
 }
 \arguments{
 \item{needle}{Splits object containing the single split to evaluate}
@@ -15,6 +18,7 @@ compare against \code{needle}.}
 \value{
 \code{SplitConsistent()} returns a list of logical vectors specifying,
 for each entry in \code{haystack}, whether each split is consistent with \code{needle}.
+\code{SplitConflicts()} returns the inverse.
 }
 \description{
 Are splits consistent?

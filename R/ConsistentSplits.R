@@ -5,6 +5,7 @@
 #' compare against `needle`.
 #' @returns `SplitConsistent()` returns a list of logical vectors specifying,
 #' for each entry in `haystack`, whether each split is consistent with `needle`.
+#' `SplitConflicts()` returns the inverse.
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(8))
 #' splits2 <- as.Splits(PectinateTree(8))
@@ -20,5 +21,17 @@ SplitConsistent <- function(needle, haystack) {
   if (!is.list(haystack)) {
     stop("`haystack` must be a Splits object, or a list thereof.")
   }
-  split_consistent(needle, haystack)
+  split_consistent(needle, haystack, FALSE)
+}
+
+#' @rdname SplitConsistent
+#' @export
+SplitConflicts <- function(needle, haystack) {
+  if (inherits(haystack, "Splits")) {
+    haystack <- list(haystack)
+  }
+  if (!is.list(haystack)) {
+    stop("`haystack` must be a Splits object, or a list thereof.")
+  }
+  split_consistent(needle, haystack, TRUE)
 }

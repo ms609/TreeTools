@@ -97,8 +97,8 @@ or_splits <- function(x, y) {
     .Call(`_TreeTools_or_splits`, x, y)
 }
 
-split_consistent <- function(needle, haystacks) {
-    .Call(`_TreeTools_split_consistent`, needle, haystacks)
+split_consistent <- function(needle, haystacks, invert) {
+    .Call(`_TreeTools_split_consistent`, needle, haystacks, invert)
 }
 
 thin_splits <- function(splits, drop) {
