@@ -46,7 +46,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.15.0.9000" id="treetools-11509000-development">TreeTools 1.15.0.9000 (development)<a class="anchor" aria-label="anchor" href="#treetools-11509000-development"></a></h2>
-<ul><li>No changes yet.</li>
+<ul><li>Add <code><a href="../reference/DropTip.html">KeepTip()</a></code> methods to correspond to <code><a href="../reference/DropTip.html">DropTip()</a></code>.</li>
+<li>Fix <code><a href="../reference/ClusterTable.html">as.ClusterTable()</a></code> when leaf order varies.</li>
+<li>
+<code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code> explicitly removes edge lengths.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.15.0" id="treetools-1150-2025-07-16">TreeTools 1.15.0 (2025-07-16)<a class="anchor" aria-label="anchor" href="#treetools-1150-2025-07-16"></a></h2><p class="text-muted">CRAN release: 2025-07-21</p>
@@ -222,7 +225,7 @@
 <div class="section level3">
 <h3 id="new-methods-and-functions-1-7-0">New methods and functions<a class="anchor" aria-label="anchor" href="#new-methods-and-functions-1-7-0"></a></h3>
 <ul><li><p><code>rev.Splits()</code> reverses order in which splits are listed.</p></li>
-<li><p><code>KeepTip.Splits()</code> is a faster alternative to <code>SubSplit()</code>.</p></li>
+<li><p><code><a href="../reference/DropTip.html">KeepTip.Splits()</a></code> is a faster alternative to <code>SubSplit()</code>.</p></li>
 <li><p><code>%in%.Splits()</code> retains names when comparing small splits (<a href="https://github.com/ms609/TreeTools/issues/40" class="external-link">#40</a>).</p></li>
 <li><p><code><a href="../reference/sort.multiPhylo.html">sort.multiPhylo()</a></code> sorts lists of trees according to their mixed base representation (<a href="https://github.com/ms609/TreeTools/issues/84" class="external-link">#84</a>).</p></li>
 <li><p>Bitwise manipulation of splits with <code>|</code>, <code>&amp;</code>, <code>xor</code>.</p></li>

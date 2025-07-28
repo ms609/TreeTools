@@ -56,8 +56,16 @@ incident branches.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'Splits'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'Splits'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, <span class="va">preorder</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -67,17 +75,24 @@ incident branches.</p>
 <span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class '`NULL`'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class '`NULL`'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">KeepTipPreorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
