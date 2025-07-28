@@ -23,7 +23,7 @@ test_that("ClusterTable with complex trees", {
   t4 <- list(a = tr1, b = tr2, c = tr1, d = tr2)
   r4 <- RootTree(t4, 1)
   
-  RobinsonFoulds(r4)
+  expect_equal(as.numeric(RobinsonFoulds(r4)), c(8, 0, 8, 8, 0, 8))
 })
 
 
