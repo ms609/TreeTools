@@ -32,11 +32,10 @@ namespace TreeTools {
 
   class ClusterTable {
 
-    static constexpr int16
-      L_COL = 0,
-      R_COL = 1,
-      X_COLS = 2
-    ;
+    const int16 L_COL = int16(0);
+    const int16 R_COL = int16(1);
+    const int16 X_COLS = int16(2);
+
     int16
       n_edge,
       n_internal,

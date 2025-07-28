@@ -1,5 +1,6 @@
 test_that("ClusterTable with complex trees", {
-  skip_if_not(interactive())
+  skip_if_not_installed("TreeDist")
+  # Test failed when c++
   tr1 <- structure(list(
     edge = structure(c(8L, 8L, 9L, 10L, 10L, 9L, 11L, 11L, 8L, 12L, 12L,
                        1L, 9L, 10L, 2L, 3L, 11L, 4L, 5L, 12L, 6L, 7L),
@@ -13,29 +14,9 @@ test_that("ClusterTable with complex trees", {
     Nnode = 5L, tip.label = c("t1", "t2", "t3", "t4", "t5", "t6", "t7")),
     class = "phylo", order = "preorder")
   t4 <- list(a = tr1, b = tr2, c = tr1, d = tr2)
-  
-  dput(t4)
-  plot(t4$a)
-  plot(t4$b)
-  plot(t4$c)
-  plot(t4$d)
-  
   r4 <- RootTree(t4, 1)
-  cr4 <- as.ClusterTable(r4)
-  plot(r4$a)
-  summary(as.ClusterTable(r4$a))
-  plot(r4$b)
-  summary(as.ClusterTable(r4$b))
-  plot(r4$c)
-  summary(as.ClusterTable(r4$c))
-  plot(r4$d)
-  summary(as.ClusterTable(r4$d))
   
-  
-  skip_if_not_installed("TreeDist")
-  TreeDist::RobinsonFoulds(r4$a, r4$b)
   TreeDist::RobinsonFoulds(r4)
-  TreeDist::RobinsonFoulds(RootTree(t4, 1))
 })
 
 
