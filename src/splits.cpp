@@ -407,13 +407,13 @@ Rcpp::List split_consistent(const RawMatrix needle,
     
     // Validate haystack
     if (!haystack.hasAttribute("nTip")) {
-      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1); // # nocov
+      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1);
     }
     if (int16(haystack.attr("nTip")) != n_tip) {
-      Rcpp::stop("Haystack %d has different nTip than needle", h + 1); // # nocov
+      Rcpp::stop("Haystack %d has different nTip than needle", h + 1);
     }
     if (haystack.cols() != n_bin) {
-      Rcpp::stop("Haystack %d has incorrect number of columns for nTip", h + 1);
+      Rcpp::stop("Haystack %d has incorrect number of columns for nTip", h + 1); // # nocov
     }
     
     const int n_splits = haystack.rows();

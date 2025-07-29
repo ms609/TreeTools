@@ -5,6 +5,8 @@ test_that("Split contradiction is calculated", {
   sp_cons <- function(n, h) split_consistent(n, h, FALSE)
   expect_error(sp_cons(pec12, list(bal12)),
                "must contain exactly one split")
+  expect_error(sp_cons(pec12[[1]], list(bal8)),
+               "Haystack 1 has different nTip than needle")
   expect_error(sp_cons(`attr<-`(pec12[[1]], "nTip", NULL), list(1)),
                "lacks nTip")
   
