@@ -85,6 +85,27 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// test_basic_simd_construction
+bool test_basic_simd_construction(const List trees);
+RcppExport SEXP _TreeTools_test_basic_simd_construction(SEXP treesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    rcpp_result_gen = Rcpp::wrap(test_basic_simd_construction(trees));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_pure_simd
+List test_pure_simd();
+RcppExport SEXP _TreeTools_test_pure_simd() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(test_pure_simd());
+    return rcpp_result_gen;
+END_RCPP
+}
 // consensus_tree
 LogicalMatrix consensus_tree(const List trees, const NumericVector p);
 RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
@@ -94,6 +115,43 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
     Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
     rcpp_result_gen = Rcpp::wrap(consensus_tree(trees, p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// consensus_tree_simd_minimal
+LogicalMatrix consensus_tree_simd_minimal(const List trees, const NumericVector p);
+RcppExport SEXP _TreeTools_consensus_tree_simd_minimal(SEXP treesSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(consensus_tree_simd_minimal(trees, p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// benchmark_consensus_simple
+List benchmark_consensus_simple(const List trees, const NumericVector p, int n_iterations);
+RcppExport SEXP _TreeTools_benchmark_consensus_simple(SEXP treesSEXP, SEXP pSEXP, SEXP n_iterationsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type n_iterations(n_iterationsSEXP);
+    rcpp_result_gen = Rcpp::wrap(benchmark_consensus_simple(trees, p, n_iterations));
+    return rcpp_result_gen;
+END_RCPP
+}
+// test_original_consensus
+bool test_original_consensus(const List trees, const NumericVector p);
+RcppExport SEXP _TreeTools_test_original_consensus(SEXP treesSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(test_original_consensus(trees, p));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -378,7 +436,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 5},
     {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 5},
     {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
+    {"_TreeTools_test_basic_simd_construction", (DL_FUNC) &_TreeTools_test_basic_simd_construction, 1},
+    {"_TreeTools_test_pure_simd", (DL_FUNC) &_TreeTools_test_pure_simd, 0},
     {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
+    {"_TreeTools_consensus_tree_simd_minimal", (DL_FUNC) &_TreeTools_consensus_tree_simd_minimal, 2},
+    {"_TreeTools_benchmark_consensus_simple", (DL_FUNC) &_TreeTools_benchmark_consensus_simple, 3},
+    {"_TreeTools_test_original_consensus", (DL_FUNC) &_TreeTools_test_original_consensus, 2},
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
     {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
