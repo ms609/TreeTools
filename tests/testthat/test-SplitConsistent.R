@@ -7,8 +7,6 @@ test_that("Split contradiction is calculated", {
                "must contain exactly one split")
   expect_error(sp_cons(`attr<-`(pec12[[1]], "nTip", NULL), list(1)),
                "lacks nTip")
-  expect_error(sp_cons(`attr<-`(pec12[[1]], "nTip", NULL), list(1)),
-               "lacks nTip")
   
   expect_equal(SplitConsistent(pec12[[2]], bal12),
                SplitConsistent(pec12[[2]], list(bal12)))
