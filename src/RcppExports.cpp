@@ -303,6 +303,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// split_consistent
+Rcpp::List split_consistent(const RawMatrix needle, const Rcpp::List haystacks, const LogicalVector invert);
+RcppExport SEXP _TreeTools_split_consistent(SEXP needleSEXP, SEXP haystacksSEXP, SEXP invertSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const RawMatrix >::type needle(needleSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List >::type haystacks(haystacksSEXP);
+    Rcpp::traits::input_parameter< const LogicalVector >::type invert(invertSEXP);
+    rcpp_result_gen = Rcpp::wrap(split_consistent(needle, haystacks, invert));
+    return rcpp_result_gen;
+END_RCPP
+}
 // thin_splits
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop);
 RcppExport SEXP _TreeTools_thin_splits(SEXP splitsSEXP, SEXP dropSEXP) {
@@ -396,6 +409,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_xor_splits", (DL_FUNC) &_TreeTools_xor_splits, 2},
     {"_TreeTools_and_splits", (DL_FUNC) &_TreeTools_and_splits, 2},
     {"_TreeTools_or_splits", (DL_FUNC) &_TreeTools_or_splits, 2},
+    {"_TreeTools_split_consistent", (DL_FUNC) &_TreeTools_split_consistent, 3},
     {"_TreeTools_thin_splits", (DL_FUNC) &_TreeTools_thin_splits, 2},
     {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
     {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},

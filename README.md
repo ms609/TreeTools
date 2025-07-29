@@ -43,4 +43,4 @@ devtools::install_github("ms609/TreeTools")
 
 Please note that the 'TreeTools' project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
-By contributing to this project, you agree to abide by its terms.
+By contributing to this project, you agree to its terms.

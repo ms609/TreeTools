@@ -129,6 +129,7 @@ Other tree manipulation:
 \code{\link{TrivialTree}}
 
 Other split manipulation functions: 
+\code{\link{SplitConsistent}()},
 \code{\link{Subsplit}()},
 \code{\link{TrivialSplits}()}
 }

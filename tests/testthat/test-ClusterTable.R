@@ -109,7 +109,7 @@ test_that("ClusterTable with multiple trees", {
 })
 
 test_that("ClusterTable with complex trees", {
-  skip_if_not_installed("TreeDist")
+  skip_if_not_installed("TreeDist", "2.9.2.9000")
   library("TreeDist")
   
   # Test exposes failures in C++ - constexpr not playing nicely with Rcpp
