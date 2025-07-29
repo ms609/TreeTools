@@ -1,10 +1,11 @@
-# TreeTools 1.15.0.9003 (development) #
+# TreeTools 1.15.0.9004 (development) #
 
 - Add `KeepTip()` methods to correspond to `DropTip()`.
 - Add `SplitConsistent()` to calculate split (dis)agreement.
 - Fix `as.ClusterTable()` when leaf order varies.
 - `MakeTreeBinary()` explicitly removes edge lengths.
 - Fix regressions in `as.ClusterTable()` that caused downstream errors.
+- Fix regressions in `PhyToString()`.
 - Fix handling of multiple ambiguities in `Reweight()`.
 
 
@@ -16,6 +17,7 @@
   tree.
 - Fix `MakeTreeBinary()` labelling trees as in preorder.
 - Fix `as.Splits.matrix(tipLabels != NULL)`.
+- Improve performance of `PhyToString()`.
 - Modernize aspects of C++ code.
 
 
