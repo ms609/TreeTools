@@ -31,6 +31,9 @@ const int_fast32_t CT_MAX_LEAVES = 16383;
 
 namespace TreeTools {
 
+  constexpr int_fast32_t ct_max_leaves = 16383;
+  constexpr int_fast32_t ct_stack_size = 4;
+
   class ClusterTable {
     
     struct alignas(4) ClusterRow {
