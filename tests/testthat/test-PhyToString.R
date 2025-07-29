@@ -1,3 +1,38 @@
+test_that("PhyToString() works", {
+  phy <- StringToPhyDat("012[01]", letters[1:4])
+  expect_equal(PhyToString(phy), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "<"), "012<01>")
+  expect_equal(PhyToString(phy, parentheses = ">"), "012<01>")
+  expect_equal(PhyToString(phy, parentheses = "("), "012(01)")
+  expect_equal(PhyToString(phy, parentheses = ")"), "012(01)")
+  expect_equal(PhyToString(phy, parentheses = "]"), "012[01]")
+  expect_equal(PhyToString(phy, parentheses = "["), "012[01]")
+  expect_equal(PhyToString(phy, parentheses = "}"), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "{"), "012{01}")
+  expect_equal(PhyToString(phy, parentheses = "!"), "012{01}")
+  
+  expect_equal(PhyToString(phy, concatenate = FALSE), c(0, 1, 2, "{01}"))
+  expect_equal(PhyToString(phy, concatenate = FALSE, ps = ";"),
+               paste0(c(0, 1, 2, "{01}"), ";"))
+  
+  str <- "012{01}0123"
+  phy <- StringToPhyDat(str, letters[1:4])
+  expect_equal(str, PhyToString(StringToPhyDat(str, letters[1:4])))
+  expect_equal(str,
+               PhyToString(StringToPhyDat(str, letters[1:4], byTaxon = TRUE),
+                           byTaxon = TRUE))
+  
+  singleChar <- structure(list(a = 1L, b = 1L, c = 2L, d = 2L),
+                          weight = 2L, nr = 1L, nc = 2L,
+                          index = c(1L, 1L), levels = c("0", "1"),
+                          allLevels = c("0", "1", "?"), type = "USER",
+                          contrast = structure(c(1, 0, 1, 0, 1, 1), dim = 3:2,
+                                               dimnames = list(NULL, c("0", "1"))),
+                          class = "phyDat")
+  expect_equal(PhyToString(singleChar, concatenate = FALSE, byTaxon = FALSE,
+                           useIndex = FALSE), "0011")
+})
+
 test_that("PhyToString() supports long levels", {
   ABC <- LETTERS[1:3]
   longLevels <- structure(
@@ -37,29 +72,4 @@ test_that("PhyToString() supports long levels", {
   # Two -s → error
   attr(longLevels, "allLevels")[1] <- "-"
   expect_error(PhyToString(longLevels))
-})
-
-test_that("PhyToString() works", {
-  phy <- StringToPhyDat("012[01]", letters[1:4])
-  expect_equal(PhyToString(phy), "012{01}")
-  expect_equal(PhyToString(phy, parentheses = "<"), "012<01>")
-  expect_equal(PhyToString(phy, parentheses = ">"), "012<01>")
-  expect_equal(PhyToString(phy, parentheses = "("), "012(01)")
-  expect_equal(PhyToString(phy, parentheses = ")"), "012(01)")
-  expect_equal(PhyToString(phy, parentheses = "]"), "012[01]")
-  expect_equal(PhyToString(phy, parentheses = "["), "012[01]")
-  expect_equal(PhyToString(phy, parentheses = "}"), "012{01}")
-  expect_equal(PhyToString(phy, parentheses = "{"), "012{01}")
-  expect_equal(PhyToString(phy, parentheses = "!"), "012{01}")
-  
-  expect_equal(PhyToString(phy, concatenate = FALSE), c(0, 1, 2, "{01}"))
-  expect_equal(PhyToString(phy, concatenate = FALSE, ps = ";"),
-               paste0(c(0, 1, 2, "{01}"), ";"))
-  
-  str <- "012{01}0123"
-  phy <- StringToPhyDat(str, letters[1:4])
-  expect_equal(str, PhyToString(StringToPhyDat(str, letters[1:4])))
-  expect_equal(str,
-               PhyToString(StringToPhyDat(str, letters[1:4], byTaxon = TRUE),
-                           byTaxon = TRUE))
 })

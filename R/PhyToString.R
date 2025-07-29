@@ -109,20 +109,26 @@ PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
   if (any(ambigToken <- apply(phyContrast, 1, all))) {
     levelTranslation[ambigToken] <- "?"
   }
-  ret <- vapply(phy,
+  ret <- vapply(phy, USE.NAMES = FALSE,
                 function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
   
   ret <- if (isTRUE(concatenate) || is.null(dim(ret))) 
     { # If only one row, don't need to apply
-    if (!byTaxon) ret <- t(ret)
+    if (!isTRUE(byTaxon)) {
+      ret <- t(ret)
+    }
     if (isTRUE(concatenate)) {
       stri_paste(c(ret, ps), collapse = "")
     } else {
-      stri_paste(stri_paste(ret, ps))
+      if (isTRUE(byTaxon)) {
+        stri_paste(stri_paste(ret, ps))
+      } else {
+        stri_paste(ret, ps, collapse = "")
+      }
     }
   } else {
-    if (byTaxon) ret <- t(ret)
+    if (isTRUE(byTaxon)) ret <- t(ret)
     stri_paste(apply(ret, 1, stri_paste, collapse = ""), ps)
   }
   # Return:
