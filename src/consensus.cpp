@@ -153,7 +153,7 @@ LogicalMatrix consensus_tree_simd(const List trees, const NumericVector p) {
       continue;
     }
     
-    tables[i].init_split_count_simd_aligned(n_tip);
+    tables[i].init_split_count_simd(n_tip);
     
     for (int32 j = i + 1; j != n_trees; j++) {
       tables[i].CLEAR();
@@ -188,11 +188,11 @@ LogicalMatrix consensus_tree_simd(const List trees, const NumericVector p) {
               if (tables[i].CLUSTONL(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
                 ASSERT(L > 0);
-                tables[i].increment_split_count_simd_aligned(L - 1);
+                tables[i].increment_split_count_simd(L - 1);
               } else if (tables[i].CLUSTONR(&L, &R)) {
                 tables[j].SETSWX(&j_pos);
                 ASSERT(R > 0);
-                tables[i].increment_split_count_simd_aligned(R - 1);
+                tables[i].increment_split_count_simd(R - 1);
               }
             }
           }

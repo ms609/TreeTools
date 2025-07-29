@@ -278,19 +278,25 @@ public:
   
   // SIMD-specific methods
   inline void init_split_count_simd(int32 n_elements) {
-    split_count_simd.clear();
-    split_count_simd.resize(n_elements, 1);  // Initialize to 1 like original
+    split_count_simd_aligned.clear();
+    // Round up to SIMD width for better vectorization
+    int32 aligned_size = ((n_elements + SIMD_WIDTH_32 - 1) / SIMD_WIDTH_32) *
+      SIMD_WIDTH_32;
+    split_count_simd_aligned.resize(aligned_size, 1);
+    cached_n_tip = n_elements;
+    cached_threshold = -1; // Invalidate cache
   }
   
   inline void increment_split_count_simd(int32 index) {
-    if (index >= 0 && index < static_cast<int32>(split_count_simd.size())) {
-      ++split_count_simd[index];
+    if (index >= 0 && index < cached_n_tip) {
+      ++split_count_simd_aligned[index];
+      cached_threshold = -1; // Invalidate cache
     }
   }
   
   inline int32 get_split_count_simd(int32 index) const {
-    if (index >= 0 && index < static_cast<int32>(split_count_simd.size())) {
-      return split_count_simd[index];
+    if (index >= 0 && index < cached_n_tip) {
+      return split_count_simd_aligned[index];
     }
     return 0;
   }
@@ -406,30 +412,6 @@ public:
     } catch (...) {
       return false;
     }
-  }
-  
-  // Initialize with proper alignment
-  inline void init_split_count_simd_aligned(int32 n_elements) {
-    split_count_simd_aligned.clear();
-    // Round up to SIMD width for better vectorization
-    int32 aligned_size = ((n_elements + SIMD_WIDTH_32 - 1) / SIMD_WIDTH_32) * SIMD_WIDTH_32;
-    split_count_simd_aligned.resize(aligned_size, 1);
-    cached_n_tip = n_elements;
-    cached_threshold = -1; // Invalidate cache
-  }
-  
-  inline void increment_split_count_simd_aligned(int32 index) {
-    if (index >= 0 && index < cached_n_tip) {
-      ++split_count_simd_aligned[index];
-      cached_threshold = -1; // Invalidate cache
-    }
-  }
-  
-  inline int32 get_split_count_simd_aligned(int32 index) const {
-    if (index >= 0 && index < cached_n_tip) {
-      return split_count_simd_aligned[index];
-    }
-    return 0;
   }
   
   // Cached threshold counting
