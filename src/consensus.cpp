@@ -105,8 +105,8 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       if (split_count[k] >= thresh) {
         // Rcout << splits_found << ": Found tree " << i << "'s split " << k
         //       << " in " << split_count[k] << " trees.\n";
-        for (int32 j = tables[i].X(k + 1, 0);
-             j != tables[i].X(k + 1, 1) + 1;
+        for (int32 j = tables[i].X_left(k + 1);
+             j != tables[i].X_right(k + 1) + 1;
              ++j) {
           // Rcout << ", " << tables[i].DECODE(j);
           ret(splits_found, tables[i].DECODE(j) - 1) = true;
