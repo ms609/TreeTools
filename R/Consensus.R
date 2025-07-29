@@ -54,6 +54,50 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   }
   trees <- Preorder(trees) # Per #168; could be dispensed with with further
                            # investigation of consensus_tree
+  splits <- as.Splits(consensus_tree_simd(trees, p),
+                      tipLabels = TipLabels(trees[[1]]))
+  tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()
+  edg <- tree1[["edge"]]
+  root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
+  root <- root[root <= NTip(tree1)]
+
+  # Return:
+  RootTree(as.phylo(splits), root)
+}
+
+#' @keywords internal
+#' @export
+ConsensusNonSimd <- function(trees, p = 1, check.labels = TRUE) {
+  if (length(trees) == 1L) {
+    return(trees[[1]])
+  }
+  if (inherits(trees, "phylo")) {
+    return(trees)
+  }
+  if (!is.list(trees) || is.data.frame(trees)) {
+    stop("Expecting `trees` to be a list.")
+  }
+  repeat {
+    nTip <- NTip(trees)
+    if (length(unique(nTip)) > 1) {
+      warning("Tree sizes differ; removing leaves not in smallest.")
+      trees <- lapply(trees, KeepTip, trees[[which.min(nTip)]][["tip.label"]])
+    } else {
+      nTip <- nTip[[1]]
+      break
+    }
+  }
+  if (nTip < 4L) {
+    return(trees[[1]])
+  }
+  if (check.labels) {
+    trees <- RenumberTips(trees, trees[[1]])
+  }
+  if (p < 0.5 || p > 1) {
+    stop("`p` must be between 0.5 and 1.")
+  }
+  trees <- Preorder(trees) # Per #168; could be dispensed with with further
+                           # investigation of consensus_tree
   splits <- as.Splits(consensus_tree(trees, p),
                       tipLabels = TipLabels(trees[[1]]))
   tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()

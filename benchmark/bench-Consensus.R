@@ -15,6 +15,10 @@ benchmark_consensus_v2(forest1, p, n_iterations = 10)
 benchmark_consensus_v2(forest2, p, n_iterations = 10)
 benchmark_consensus_v2(forest3, p, n_iterations = 10)
 
+ub(ConsensusNonSimd(forest1), Consensus(forest1),
+   ConsensusNonSimd(forest2), Consensus(forest2),
+   ConsensusNonSimd(forest3), Consensus(forest3), times = 50)
+
 # INSTALLED! With Xarr = Rcpp::IntegerMatrix
 Unit: milliseconds
                    expr     min       lq      mean  median       uq     max neval
