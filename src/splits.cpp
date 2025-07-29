@@ -391,7 +391,7 @@ Rcpp::List split_consistent(const RawMatrix needle,
   const int16 n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
   
   if (needle.cols() != n_bin) {
-    Rcpp::stop("Needle has incorrect number of columns for nTip"); // nocov
+    Rcpp::stop("Needle has incorrect number of columns for nTip"); // # nocov
   }
   
   const int n_haystacks = haystacks.size();
@@ -407,10 +407,10 @@ Rcpp::List split_consistent(const RawMatrix needle,
     
     // Validate haystack
     if (!haystack.hasAttribute("nTip")) {
-      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1); // nocov
+      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1); // # nocov
     }
     if (int16(haystack.attr("nTip")) != n_tip) {
-      Rcpp::stop("Haystack %d has different nTip than needle", h + 1); // nocov
+      Rcpp::stop("Haystack %d has different nTip than needle", h + 1); // # nocov
     }
     if (haystack.cols() != n_bin) {
       Rcpp::stop("Haystack %d has incorrect number of columns for nTip", h + 1);
