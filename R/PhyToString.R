@@ -44,7 +44,7 @@ StringToPhydat <- StringToPhyDat
 #' @param collapse Character specifying text, perhaps `,`, with which to
 #' separate multiple tokens within parentheses.
 #' @param ps Character specifying text, perhaps `;`, to append to the end of
-#' the string.
+#' each string.
 #' @param useIndex Logical (default: `TRUE`) specifying whether to print
 #' duplicate characters multiple times, as they appeared in the original matrix.
 #' @param byTaxon Logical. If `TRUE`, write one taxon followed by the next.
@@ -113,9 +113,14 @@ PhyToString <- function(phy, parentheses = "{", collapse = "", ps = "",
                 function(x) levelTranslation[x[phyIndex]],
                 character(length(phyIndex)))
   
-  ret <- if (concatenate || is.null(dim(ret))) { # If only one row, don't need to apply
+  ret <- if (isTRUE(concatenate) || is.null(dim(ret))) 
+    { # If only one row, don't need to apply
     if (!byTaxon) ret <- t(ret)
-    stri_paste(c(ret, ps), collapse = "")
+    if (isTRUE(concatenate)) {
+      stri_paste(c(ret, ps), collapse = "")
+    } else {
+      stri_paste(stri_paste(ret, ps))
+    }
   } else {
     if (byTaxon) ret <- t(ret)
     stri_paste(apply(ret, 1, stri_paste, collapse = ""), ps)

@@ -2,7 +2,7 @@
 #include <stdexcept> /* for errors */
 using namespace Rcpp;
 
-constexpr int R_TO_C = 1;
+#define R_TO_C 1
 
 // [[Rcpp::export]]
 LogicalMatrix descendant_edges(

@@ -52,6 +52,10 @@ test_that("PhyToString() works", {
   expect_equal(PhyToString(phy, parentheses = "{"), "012{01}")
   expect_equal(PhyToString(phy, parentheses = "!"), "012{01}")
   
+  expect_equal(PhyToString(phy, concatenate = FALSE), c(0, 1, 2, "{01}"))
+  expect_equal(PhyToString(phy, concatenate = FALSE, ps = ";"),
+               paste0(c(0, 1, 2, "{01}"), ";"))
+  
   str <- "012{01}0123"
   phy <- StringToPhyDat(str, letters[1:4])
   expect_equal(str, PhyToString(StringToPhyDat(str, letters[1:4])))

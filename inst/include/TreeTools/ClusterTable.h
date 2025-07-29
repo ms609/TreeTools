@@ -8,7 +8,6 @@
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
-
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
   S[Spos++] = (b);                                               \
@@ -21,6 +20,8 @@
   (b) = S[--Spos];                                               \
   (a) = S[--Spos]
 
+#define CT_STACK_SIZE 4
+
 #define CT_IS_LEAF(a) (a) <= n_tip
 
 namespace TreeTools {
@@ -31,33 +32,32 @@ namespace TreeTools {
   constexpr int_fast32_t CT_MAX_LEAVES = 16383;
 
   class ClusterTable {
-
-    const int16 L_COL = int16(0);
-    const int16 R_COL = int16(1);
-    const int16 X_COLS = int16(2);
-
-    int16  n_edge;
-    int16  n_internal;
-    int16  n_leaves;
-
-    int16  n_shared = 0;
-    int16  enumeration = 0;
-    int16  v_j;
-    int16  Tlen;
-    int16  Tlen_short;
-    int16  Tpos = 0;
-    int16  X_ROWS;
-    ;
+    
+    struct alignas(4) ClusterRow {
+      int16 L;
+      int16 R;
+    };
+    
+    int16 n_edge;
+    int16 n_internal;
+    int16 n_leaves;
+    int16 n_shared = 0;
+    int16 enumeration = 0;
+    int16 v_j;
+    int16 Tlen;
+    int16 Tlen_short;
+    int16 Tpos = 0;
+    int16 X_ROWS;
     std::vector<int16> internal_label;
     std::vector<int16> leftmost_leaf;
     std::vector<int16> T;
     std::vector<int16> visited_nth;
-    
+    std::vector<ClusterRow> x_rows;
     // Using bitset; can obtain a ~1% speedup using vector of ULLs
     // Retaining slower code as easier to read.
     // See branch ct-xswitch for implementation
-    std::bitset<TreeTools::CT_MAX_LEAVES + 1> Xswitch;
-    Rcpp::IntegerMatrix Xarr;
+    std::bitset<CT_MAX_LEAVES + 1> Xswitch;
+    
 
   public:
     ClusterTable(Rcpp::List); // i.e. PREPARE(T)
@@ -160,35 +160,48 @@ namespace TreeTools {
       }
       return ret;
     }
-
-    inline int16 X(int16 row, int16 col) {
+    
+    inline int16 X_left(int16 row) {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
-      ASSERT(Xarr(col, row - 1) < std::numeric_limits<int16>::max());
-      return int16(Xarr(col, row - 1));
+      ASSERT(x_rows[row - 1].L < std::numeric_limits<int16>::max());
+      return x_rows[row - 1].L;
     }
-
-    inline void setX(int16 row, int16 col, int16 value) {
+    
+    inline int16 X_right(int16 row) {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
-      Xarr(col, row - 1) = value;
+      ASSERT(x_rows[row - 1].R < std::numeric_limits<int16>::max());
+      return x_rows[row - 1].R;
     }
-
+    
+    inline void setX_left(int16 row, int16 value) {
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
+      x_rows[row - 1].L = value;
+    }
+    
+    inline void setX_right(int16 row, int16 value) {
+      ASSERT(row > 0);
+      ASSERT(row <= X_ROWS);
+      x_rows[row - 1].R = value;
+    }
+    
     Rcpp::IntegerMatrix X_contents() {
       Rcpp::IntegerMatrix ret(X_ROWS, 2);
       for (int16 i = X_ROWS; i--; ) {
-        ret(i, 0) = X(i + 1, L_COL);
-        ret(i, 1) = X(i + 1, R_COL);
+        ret(i, 0) = x_rows[i].L;
+        ret(i, 1) = x_rows[i].R;
       }
       return ret;
     }
 
     inline bool CLUSTONL(int16* L, int16* R) {
-      return X(*L, L_COL) == *L && X(*L, R_COL) == *R;
+      return X_left(*L) == *L && X_right(*L) == *R;
     }
 
     inline bool CLUSTONR(int16* L, int16* R) {
-      return X(*R, L_COL) == *L && X(*R, R_COL) == *R;
+      return X_left(*R) == *L && X_right(*R) == *R;
     }
 
     inline bool ISCLUST(int16* L, int16* R) {
@@ -228,14 +241,14 @@ namespace TreeTools {
       }
     }
 
-    inline void UPDATE(){
+    inline void UPDATE() {
       // This procedure inspects every cluster switch in X.
       // If the switch for cluster <L,R> is cleared, UPDATE deletes <L,R>
       // from X; thereafter ISCLUST(X,L,R) will return the value false.
       for (int16 i = X_ROWS; i--; ) {
         if (!(Xswitch[i])) {
-          Xarr(L_COL, i) = 0;
-          Xarr(R_COL, i) = 0;
+          x_rows[i].L = 0;
+          x_rows[i].R = 0;
         }
       }
     }
@@ -259,8 +272,8 @@ namespace TreeTools {
       // If m clusters are in X, they are returned by the first m invocations
       // of NCLUS after initialization by XRESET; thereafter NCLUS returns the
       // invalid cluster <0,0>.
-      *L = X(enumeration, 0);
-      *R = X(enumeration, 1);
+      *L = X_left(enumeration);
+      *R = X_right(enumeration);
       ++enumeration;
     }
 
@@ -325,7 +338,7 @@ namespace TreeTools {
 
     // BUILD Cluster table
     X_ROWS = n_leaves;
-    Xarr = Rcpp::IntegerMatrix(X_COLS, X_ROWS);
+    x_rows = std::vector<ClusterRow>(X_ROWS);
 
     // This procedure constructs in X descriptions of the clusters in a
     // rooted tree described by the postorder sequence T with weights,
@@ -335,8 +348,8 @@ namespace TreeTools {
 
     TRESET();
     for (int16 i = 1; i != N(); ++i) {
-      setX(i, L_COL, 0);
-      setX(i, R_COL, 0);
+      setX_left(i, 0);
+      setX_right(i, 0);
     }
     int16 leafcode = 0, v, w, L, R = UNINIT, loc;
 
@@ -351,8 +364,8 @@ namespace TreeTools {
         L = ENCODE(LEFTLEAF());
         NVERTEX(&v, &w);
         loc = w == 0 ? R : L;
-        setX(loc, L_COL, L);
-        setX(loc, R_COL, R);
+        setX_left(loc, L);
+        setX_right(loc, R);
       }
     }
   }
