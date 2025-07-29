@@ -22,14 +22,15 @@ split is consistent with (\code{TRUE}) or in conflict with (\code{FALSE}) \code{
 \code{SplitConflicts()} returns the inverse.
 }
 \description{
-Check whether a series of splits are consistent with or contradict a focal
-split.
+\code{SplitConsistent()} and \code{SplitConflict()} determine whether a series of
+splits \code{haystack} are consistent with or contradict the focal split \code{needle}.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(8))
 splits2 <- as.Splits(PectinateTree(8))
 summary(splits1[[4]])
 SplitConsistent(splits1[[4]], splits2)
+SplitConflicts(splits1[[4]], list(splits1, splits2))
 }
 \seealso{
 Other split manipulation functions: 

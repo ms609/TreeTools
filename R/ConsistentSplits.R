@@ -1,7 +1,7 @@
 #' Identify consistent / conflicting splits
 #' 
-#' Check whether a series of splits are consistent with or contradict a focal
-#' split.
+#' `SplitConsistent()` and `SplitConflict()` determine whether a series of
+#' splits `haystack` are consistent with or contradict the focal split `needle`.
 #' 
 #' @param needle Splits object containing the single split to evaluate
 #' @param haystack Splits object, or list thereof, containing the splits to
@@ -15,6 +15,7 @@
 #' splits2 <- as.Splits(PectinateTree(8))
 #' summary(splits1[[4]])
 #' SplitConsistent(splits1[[4]], splits2)
+#' SplitConflicts(splits1[[4]], list(splits1, splits2))
 #' @template MRS
 #' @family split manipulation functions
 #' @export
