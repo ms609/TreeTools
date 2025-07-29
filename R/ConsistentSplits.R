@@ -1,10 +1,14 @@
-#' Are splits consistent?
+#' Identify consistent / conflicting splits
+#' 
+#' Check whether a series of splits are consistent with or contradict a focal
+#' split.
 #' 
 #' @param needle Splits object containing the single split to evaluate
 #' @param haystack Splits object, or list thereof, containing the splits to
 #' compare against `needle`.
-#' @returns `SplitConsistent()` returns a list of logical vectors specifying,
-#' for each entry in `haystack`, whether each split is consistent with `needle`.
+#' @returns `SplitConsistent()` returns a list of logical vectors.
+#' Each list item corresponds to an entry in `haystack`, reporting whether each
+#' split is consistent with (`TRUE`) or in conflict with (`FALSE`) `needle`.
 #' `SplitConflicts()` returns the inverse.
 #' @examples
 #' splits1 <- as.Splits(BalancedTree(8))

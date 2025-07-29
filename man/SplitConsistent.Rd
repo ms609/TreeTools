@@ -3,7 +3,7 @@
 \name{SplitConsistent}
 \alias{SplitConsistent}
 \alias{SplitConflicts}
-\title{Are splits consistent?}
+\title{Identify consistent / conflicting splits}
 \usage{
 SplitConsistent(needle, haystack)
 
@@ -16,12 +16,14 @@ SplitConflicts(needle, haystack)
 compare against \code{needle}.}
 }
 \value{
-\code{SplitConsistent()} returns a list of logical vectors specifying,
-for each entry in \code{haystack}, whether each split is consistent with \code{needle}.
+\code{SplitConsistent()} returns a list of logical vectors.
+Each list item corresponds to an entry in \code{haystack}, reporting whether each
+split is consistent with (\code{TRUE}) or in conflict with (\code{FALSE}) \code{needle}.
 \code{SplitConflicts()} returns the inverse.
 }
 \description{
-Are splits consistent?
+Check whether a series of splits are consistent with or contradict a focal
+split.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(8))
