@@ -146,7 +146,7 @@ ForestSplits <- function(forest, powersOf2) {
 #' @importFrom lifecycle deprecate_warn
 #' @export
 TreeSplits <- function(tree) {
-  ?deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
+  deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
 } # nocov end
 
 #' Colour for node support value
