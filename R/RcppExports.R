@@ -29,6 +29,10 @@ consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
 
+consensus_tree_simd <- function(trees, p) {
+    .Call(`_TreeTools_consensus_tree_simd`, trees, p)
+}
+
 descendant_edges <- function(parent, child, postorder) {
     .Call(`_TreeTools_descendant_edges`, parent, child, postorder)
 }
