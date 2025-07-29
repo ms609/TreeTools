@@ -25,14 +25,6 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
-test_basic_simd_construction <- function(trees) {
-    .Call(`_TreeTools_test_basic_simd_construction`, trees)
-}
-
-test_pure_simd <- function() {
-    .Call(`_TreeTools_test_pure_simd`)
-}
-
 consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }
@@ -45,8 +37,12 @@ benchmark_consensus_simple <- function(trees, p, n_iterations = 10L) {
     .Call(`_TreeTools_benchmark_consensus_simple`, trees, p, n_iterations)
 }
 
-test_original_consensus <- function(trees, p) {
-    .Call(`_TreeTools_test_original_consensus`, trees, p)
+consensus_tree_simd_v2 <- function(trees, p) {
+    .Call(`_TreeTools_consensus_tree_simd_v2`, trees, p)
+}
+
+benchmark_consensus_v2 <- function(trees, p, n_iterations = 10L) {
+    .Call(`_TreeTools_benchmark_consensus_v2`, trees, p, n_iterations)
 }
 
 descendant_edges <- function(parent, child, postorder) {

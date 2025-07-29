@@ -9,8 +9,11 @@ ub(Consensus(forest1), Consensus(forest2),
    RobinsonFoulds(forest1), RobinsonFoulds(forest2))
 
 p <- 0.5
-benchmark_result <- benchmark_consensus_simple(trees, p, n_iterations = 5)
-print(benchmark_result$results_match)  # Sh
+forest3 <- as.phylo(0:200, 260)
+benchmark_consensus_simple(forest3, p, n_iterations = 10)
+benchmark_consensus_v2(forest1, p, n_iterations = 10)
+benchmark_consensus_v2(forest2, p, n_iterations = 10)
+benchmark_consensus_v2(forest3, p, n_iterations = 10)
 
 # INSTALLED! With Xarr = Rcpp::IntegerMatrix
 Unit: milliseconds
