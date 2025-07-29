@@ -237,81 +237,6 @@ LogicalMatrix consensus_tree_simd_minimal(const List trees, const NumericVector 
     LogicalMatrix(0, n_tip);
 }
 
-// Simple benchmark function with better error handling
-// [[Rcpp::export]]
-List benchmark_consensus_simple(const List trees, const NumericVector p, 
-                                int n_iterations = 10) {
-  
-  LogicalMatrix result_original, result_simd;
-  double time_original, time_simd;
-  bool results_match = false;
-  std::string error_msg = "";
-  
-  try {
-    // Test original function
-    auto start_original = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < n_iterations; ++i) {
-      result_original = consensus_tree(trees, p);
-    }
-    auto end_original = std::chrono::high_resolution_clock::now();
-    time_original = std::chrono::duration<double, std::milli>(
-      end_original - start_original).count();
-    
-    // Test SIMD function
-    auto start_simd = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < n_iterations; ++i) {
-      result_simd = consensus_tree_simd_minimal(trees, p);
-    }
-    auto end_simd = std::chrono::high_resolution_clock::now();
-    time_simd = std::chrono::duration<double, std::milli>(
-      end_simd - start_simd).count();
-    
-    // Check dimensions first
-    if (result_original.nrow() != result_simd.nrow() || 
-        result_original.ncol() != result_simd.ncol()) {
-      results_match = false;
-      error_msg = "Dimension mismatch: Original(" + 
-        std::to_string(result_original.nrow()) + "x" + 
-        std::to_string(result_original.ncol()) + ") vs SIMD(" +
-        std::to_string(result_simd.nrow()) + "x" + 
-        std::to_string(result_simd.ncol()) + ")";
-    } else {
-      // Compare element by element
-      results_match = true;
-      for (int i = 0; i < result_original.nrow() && results_match; ++i) {
-        for (int j = 0; j < result_original.ncol() && results_match; ++j) {
-          if (result_original(i, j) != result_simd(i, j)) {
-            results_match = false;
-            error_msg = "Element mismatch at (" + std::to_string(i) + "," + 
-              std::to_string(j) + "): " + 
-              std::to_string(result_original(i, j)) + " vs " + 
-              std::to_string(result_simd(i, j));
-          }
-        }
-      }
-    }
-    
-  } catch (const std::exception& e) {
-    error_msg = std::string("Exception: ") + e.what();
-    time_original = -1;
-    time_simd = -1;
-  }
-  
-  return List::create(
-    Named("time_original_ms") = time_original,
-    Named("time_simd_ms") = time_simd,
-    Named("speedup") = time_simd > 0 ? time_original / time_simd : -1,
-    Named("results_match") = results_match,
-    Named("error_message") = error_msg,
-    Named("original_dims") = IntegerVector::create(result_original.nrow(), result_original.ncol()),
-    Named("simd_dims") = IntegerVector::create(result_simd.nrow(), result_simd.ncol()),
-    Named("simd_features") = List::create(
-      Named("avx2") = TreeTools::simd_utils::has_avx2_support(),
-      Named("sse2") = TreeTools::simd_utils::has_sse2_support()
-    )
-  );
-}
-
 // Version 2: Add actual SIMD split counting
 // [[Rcpp::export]]
 LogicalMatrix consensus_tree_simd_v2(const List trees, const NumericVector p) {
@@ -348,7 +273,7 @@ LogicalMatrix consensus_tree_simd_v2(const List trees, const NumericVector p) {
     }
     
     // NOW USE SIMD split counting instead of std::array
-    tables[i].init_split_count_simd(n_tip);
+    tables[i].init_split_count_simd_aligned(n_tip);
     
     for (int32 j = i + 1; j != n_trees; j++) {
       tables[i].CLEAR();
@@ -418,6 +343,121 @@ LogicalMatrix consensus_tree_simd_v2(const List trees, const NumericVector p) {
   ret(Range(0, splits_found - 1), _) :
     LogicalMatrix(0, n_tip);
 }
+// Version 3: Vectorized threshold checking
+// [[Rcpp::export]]
+LogicalMatrix consensus_tree_simd_v3(const List trees, const NumericVector p) {
+  const int32
+  n_trees = trees.length(),
+    frac_thresh = int32(n_trees * p[0]) + 1,
+    thresh = frac_thresh > n_trees ? n_trees : frac_thresh
+  ;
+  
+  std::vector<TreeTools::ClusterTableSIMD> tables;
+  tables.reserve(n_trees);
+  
+  for (int32 i = 0; i < n_trees; ++i) {
+    const Rcpp::List& tree_i = Rcpp::List(trees(i));
+    tables.emplace_back(TreeTools::ClusterTableSIMD(tree_i));
+  }
+  
+  const int32
+  n_tip = tables[0].N(),
+    ntip_3 = n_tip - 3
+  ;
+  
+  std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
+  LogicalMatrix ret(ntip_3, n_tip);
+  
+  int32 i = 0;
+  int32 splits_found = 0;
+  
+  int16 v = 0, w = 0, L, R, N, W, L_j, R_j, N_j, W_j;
+  
+  do {
+    if (tables[i].NOSWX(ntip_3)) {
+      continue;
+    }
+    
+    tables[i].init_split_count_simd_aligned(n_tip);
+    
+    for (int32 j = i + 1; j != n_trees; j++) {
+      tables[i].CLEAR();
+      tables[j].TRESET();
+      tables[j].READT(&v, &w);
+      
+      int16 j_pos = 0;
+      int32 Spos = 0;
+      
+      do {
+        if (CT_IS_LEAF(v)) {
+          CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
+        } else {
+          CT_POP(L, R, N, W_j);
+          W = 1 + W_j;
+          w = w - W_j;
+          while (w) {
+            CT_POP(L_j, R_j, N_j, W_j);
+            if (L_j < L) L = L_j;
+            if (R_j > R) R = R_j;
+            N = N + N_j;
+            W = W + W_j;
+            w = w - W_j;
+          };
+          CT_PUSH(L, R, N, W);
+          
+          ++j_pos;
+          if (tables[j].GETSWX(&j_pos)) {
+            // Split has already been counted; next!
+          } else {
+            if (N == R - L + 1) { // L..R is contiguous, and must be tested
+              if (tables[i].CLUSTONL(&L, &R)) {
+                tables[j].SETSWX(&j_pos);
+                ASSERT(L > 0);
+                tables[i].increment_split_count_simd_aligned(L - 1);
+              } else if (tables[i].CLUSTONR(&L, &R)) {
+                tables[j].SETSWX(&j_pos);
+                ASSERT(R > 0);
+                tables[i].increment_split_count_simd_aligned(R - 1);
+              }
+            }
+          }
+        }
+        tables[j].NVERTEX_short(&v, &w);
+      } while (v);
+    }
+    
+    tables[i].prefetch_split_data();
+    // NEW: Vectorized threshold checking with early exit
+    std::vector<int32> qualifying_splits;
+    qualifying_splits.reserve(n_tip); // Pre-allocate
+    
+    tables[i].find_splits_above_threshold_simd(thresh, qualifying_splits);
+    
+    // Process qualifying splits
+    for (int32 k : qualifying_splits) {
+      int32 first_qualifying = TreeTools::simd_utils::find_first_above_threshold(
+        tables[i].get_split_count_data(), n_tip, thresh);
+      
+      if (first_qualifying >= 0) {
+        tables[i].find_splits_above_threshold_simd(thresh, qualifying_splits);
+        for (int32 j = tables[i].X_left(k + 1);
+             j != tables[i].X_right(k + 1) + 1;
+             ++j) {
+          ret(splits_found, tables[i].DECODE(j) - 1) = true;
+        }
+        ++splits_found;
+        if (splits_found == ntip_3) {
+          return ret;
+        }
+      }
+    }
+    
+  } while (i++ != n_trees - thresh);
+  
+  return splits_found ? 
+  ret(Range(0, splits_found - 1), _) :
+    LogicalMatrix(0, n_tip);
+}
 
 // Updated benchmark to test v2
 // [[Rcpp::export]]
@@ -439,7 +479,7 @@ List benchmark_consensus_v2(const List trees, const NumericVector p,
     // SIMD v1 (minimal changes)
     start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < n_iterations; ++i) {
-      result_simd_v1 = consensus_tree_simd_minimal(trees, p);
+      result_simd_v1 = consensus_tree_simd_v3(trees, p);
     }
     end = std::chrono::high_resolution_clock::now();
     time_simd_v1 = std::chrono::duration<double, std::milli>(end - start).count();
@@ -476,7 +516,7 @@ List benchmark_consensus_v2(const List trees, const NumericVector p,
     
     return List::create(
       Named("time_original_ms") = time_original,
-      Named("time_simd_v1_ms") = time_simd_v1,
+      Named("time_simd_v3_ms") = time_simd_v1,
       Named("time_simd_v2_ms") = time_simd_v2,
       Named("speedup_v1") = time_original / time_simd_v1,
       Named("speedup_v2") = time_original / time_simd_v2,

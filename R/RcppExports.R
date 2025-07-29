@@ -33,12 +33,12 @@ consensus_tree_simd_minimal <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree_simd_minimal`, trees, p)
 }
 
-benchmark_consensus_simple <- function(trees, p, n_iterations = 10L) {
-    .Call(`_TreeTools_benchmark_consensus_simple`, trees, p, n_iterations)
-}
-
 consensus_tree_simd_v2 <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree_simd_v2`, trees, p)
+}
+
+consensus_tree_simd_v3 <- function(trees, p) {
+    .Call(`_TreeTools_consensus_tree_simd_v3`, trees, p)
 }
 
 benchmark_consensus_v2 <- function(trees, p, n_iterations = 10L) {
