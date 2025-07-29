@@ -23,10 +23,14 @@
   (b) = S[--Spos];                                               \
   (a) = S[--Spos]
 
+// Required by TreeDist 2.9.2
+// TODO Remove in later version, to prefer ct_stack_size
 #define CT_STACK_SIZE 4
 
 #define CT_IS_LEAF(a) (a) <= n_tip
 
+// Required by TreeDist 2.9.2
+// TODO Remove in later version, to prefer ct_max_leaves
 const int_fast32_t CT_MAX_LEAVES = 16383;
 
 namespace TreeTools {
