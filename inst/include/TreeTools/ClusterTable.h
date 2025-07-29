@@ -33,10 +33,9 @@ namespace TreeTools {
 
   class ClusterTable {
     
-    alignas(4) struct ClusterRow {
-      // Use int32 to avoid casting in consensus_tree
-      int32 L;
-      int32 R;
+    struct alignas(4) ClusterRow {
+      int16 L;
+      int16 R;
     };
     
     int16 n_edge;
