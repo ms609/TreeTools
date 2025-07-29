@@ -241,7 +241,7 @@ namespace TreeTools {
       }
     }
 
-    inline void UPDATE(){
+    inline void UPDATE() {
       // This procedure inspects every cluster switch in X.
       // If the switch for cluster <L,R> is cleared, UPDATE deletes <L,R>
       // from X; thereafter ISCLUST(X,L,R) will return the value false.
