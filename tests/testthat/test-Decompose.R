@@ -9,7 +9,12 @@ test_that("Decompose()", {
   expect_warning(decomposed <- Decompose(Lobo.phy, c(1234:1235, 11)), 
                  "115 characters; .*1234, 1235 not found")
 
-  NumberOfChars <- function(x) sum(attr(x, "weight"))
+  NumberOfChars <- function(x) {
+    fromWeight <- sum(attr(x, "weight"))
+    fromIndex <- length(attr(x, "index"))
+    expect_equal(fromWeight, fromIndex)
+    fromWeight
+  }
   expect_equal(NumberOfChars(decomposed),
                NumberOfChars(Lobo.phy) + 1)
   
