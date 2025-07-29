@@ -6,7 +6,7 @@
 #' or bootstrap trees.
 #'
 #' If multiple calculations are required, some time can be saved by using the
-#' constituent functions (see examples)
+#' constituent functions (see examples).
 #'
 #' @param reference A tree of class `phylo`, a `Splits` object.
 #' @param forest a list of trees of class `phylo`, or a `multiPhylo` object; or a

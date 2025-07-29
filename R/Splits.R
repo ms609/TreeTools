@@ -398,14 +398,15 @@ names.Splits <- function(x) rownames(x)
 
 
 #' @family Splits operations
+#' @importFrom stringi stri_paste
 #' @export
 as.character.Splits <- function(x, ...) {
   tipLabels <- attr(x, "tip.label")
   nTip <- attr(x, "nTip")
 
   apply(as.logical(x), 1L, function(inSplit) {
-    paste0(paste(tipLabels[inSplit], collapse=" "), " | ",
-           paste(tipLabels[!inSplit], collapse=" "))
+    stri_paste(stri_paste(tipLabels[inSplit], collapse = " "), " | ",
+               stri_paste(tipLabels[!inSplit], collapse = " "))
   })
 
 }
