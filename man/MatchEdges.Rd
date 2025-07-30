@@ -49,6 +49,7 @@ Other tree navigation:
 
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},
