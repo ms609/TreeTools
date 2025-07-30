@@ -30,7 +30,8 @@ Other tree properties:
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()}
+\code{\link{TipLabels}()},
+\code{\link{Treeness}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

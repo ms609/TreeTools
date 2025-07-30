@@ -100,7 +100,8 @@ Other tree properties:
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
-\code{\link{TreeIsRooted}()}
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
 
 Other Splits operations: 
 \code{\link{LabelSplits}()},

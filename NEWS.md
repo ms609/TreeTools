@@ -1,5 +1,7 @@
-# TreeTools 1.15.0.9004 (development) #
+# TreeTools 1.15.0.9005 (development) #
 
+- `Treeness()` computes the treeness (=stemmines) of a tree, a proxy for its
+  phylogenetic signal.
 - Add `KeepTip()` methods to correspond to `DropTip()`.
 - Add `SplitConsistent()` to calculate split (dis)agreement.
 - Fix `as.ClusterTable()` when leaf order varies.
