@@ -2,6 +2,7 @@
 
 - `Treeness()` computes the treeness (=stemminess) of a tree, a proxy for its
   phylogenetic signal.
+- `LongBranch()` identifies long-branched taxa.
 - Add `KeepTip()` methods to correspond to `DropTip()`.
 - Add `SplitConsistent()` to calculate split (dis)agreement.
 - Fix `as.ClusterTable()` when leaf order varies.
