@@ -4,7 +4,7 @@ test_that("LongBranch() fails safely", {
   expect_null(LongBranch(NULL))
 })
 
-test_that("LongBranch() succees", {
+test_that("LongBranch() succeeds", {
   evenLength <- BalancedTree(8, rep(1, 14))
   expect_equal(unname(LongBranch(evenLength)), rep(0, 8))
   tree <- BalancedTree(8, lengths = c(rep(2, 4), 5:7, rep(2, 4), rep(1, 3)))
