@@ -40,6 +40,8 @@ jobs:
         with:
           dependencies: '"hard"'
           needs: benchmark
+          extra-packages: |
+            github::ms609/TreeTools
         
       - name: Install package
         run: R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-check --no-build-vignettes --no-multiarch
