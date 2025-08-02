@@ -1,5 +1,8 @@
 library("TreeTools")
 ub <- microbenchmark::microbenchmark
+
+set.seed(1337)
+
 Benchmark <- function(id, result) {
   if (interactive()) {
     print(result)

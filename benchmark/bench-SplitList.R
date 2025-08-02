@@ -11,5 +11,5 @@ someSplits <- as.Splits(someTrees)
 
 # Test: -3 or keep power of 2 for SL_MAX_SPLITS?
 # See: #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) in SplitList.h
-Benchmark("as.phylo.some", ub(lapply(someSplits, as.phylo), times = 100)) # 16.7
-Benchmark("as.phylo.big", ub(lapply(bigSplits, as.phylo), times = 100)) # 34.0
+Benchmark("as.phylo.some", ub(lapply(someSplits, as.phylo), times = 180)) # 16.7
+Benchmark("as.phylo.big", ub(lapply(bigSplits, as.phylo), times = 180)) # 34.0
