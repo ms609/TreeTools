@@ -25,20 +25,6 @@ using splitbit = uint_fast64_t;
   splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
 
-#define right16bits splitbit(65535U)
-
-#define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
-  void _treetools_initialize_bitcounts() {                     \
-  for (int i = 65536; i--; ) {                                 \
-    int16 n_bits = 0;                                          \
-    for (int j = 16; j--; ) {                                  \
-      if (i & (1 << j)) n_bits += 1;                           \
-    }                                                          \
-    TreeTools::bitcounts[i] = n_bits;                          \
-  }                                                            \
-}                                                              \
-
-
 namespace TreeTools {
 
   const splitbit powers_of_two[SL_BIN_SIZE] = {
@@ -60,20 +46,39 @@ namespace TreeTools {
     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
   };
 
-  // Static here means that each translation unit (i.e. file, resulting in an .o)
-  // will have its own copy of the variable (which it will initialize separately).
-  static int16 bitcounts[65536];
-
-  inline int16 count_bits (splitbit x) {
-    /* For 32-bit splitbits: */
-    /* return bitcounts[x & right16bits] + bitcounts[x >> 16]; */
-
-    /* For 64-bit splitbits: */
-    return int16(bitcounts[x & right16bits] + bitcounts[(x >> 16) & right16bits]
-    + bitcounts[(x >> 32) & right16bits]
-    + bitcounts[(x >> 48)]);
+#if __cplusplus >= 202002L
+#include <bit> // C++20 header for std::popcount
+  
+  inline int16 count_bits(splitbit x) {
+    return static_cast<int16>(std::popcount(x));
   }
-
+  
+  // Option 2: Fallback for C++17 and older
+#else
+#if defined(__GNUC__) || defined(__clang__)
+  // GCC and Clang support __builtin_popcountll for long long
+  inline int16 count_bits(splitbit x) {
+    return static_cast<int16>(__builtin_popcountll(x));
+  }
+#elif defined(_MSC_VER)
+#include <intrin.h>
+  inline int16 count_bits(splitbit x) {
+    return static_cast<int16>(__popcnt64(x));
+  }
+#else
+  // A slower, but safe and highly portable fallback for all other compilers
+  // This is a last resort if no built-in is available.
+  inline int16_t count_bits(splitbit x) {
+    int16_t count = 0;
+    while (x != 0) {
+      x &= (x - 1);
+      count++;
+    }
+    return count;
+  }
+#endif // Compiler check for builtins
+  
+#endif // C++20 check
 
   class SplitList {
   public:

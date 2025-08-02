@@ -1,3 +1,8 @@
+# TreeTools 1.15.0.9006 (development) #
+
+- Remove exported C++ object bitcounts; popcount intrinsics are preferable.
+
+
 # TreeTools 1.15.0.9005 (development) #
 
 - `Treeness()` computes the treeness (=stemminess) of a tree, a proxy for its
