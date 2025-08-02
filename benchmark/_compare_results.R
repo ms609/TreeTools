@@ -59,7 +59,6 @@ regressions <- vapply(pr_files, function(pr_file) {
   
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
-    cat(res$p_value)
     status <- ifelse(res$slower, "\U1F7E0 Slower", 
                      ifelse(res$faster, "\U1F7E2 Faster!",
                             ifelse(res$p_value < 0.05,
