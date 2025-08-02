@@ -62,7 +62,7 @@ Suggests:
     TreeDist,
     TreeSearch,
     vdiffr (>= 1.0.0),
-Config/Needs/benchmark: TreeDist
+Config/Needs/benchmark: microbenchmark, TreeDist
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools
