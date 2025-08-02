@@ -32,8 +32,6 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
 
-      - run: dir
-
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         
