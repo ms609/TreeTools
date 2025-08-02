@@ -7,7 +7,7 @@ outFiles <- gsub(regExp, "\\1.bench.Rds", perl = TRUE,
 for (rds in outFiles) {
   # Load the results
   pr_results <- readRDS(file.path("pr-benchmark-results", rds))
-  main_results <- readRDS(file.path("main-benchmark-results", rds)
+  main_results <- readRDS(file.path("main-benchmark-results", rds))
   
   # A simple comparison function using t-test
   # You can make this much more sophisticated.
