@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -33,7 +33,7 @@ jobs:
         shell: bash
 
       - name: Upload PR benchmark results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: pr-benchmark-results
           path: benchmark_results.rds
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: main
 
@@ -66,7 +66,7 @@ jobs:
         shell: bash
 
       - name: Upload main benchmark results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: main-benchmark-results
           path: benchmark_results.rds
@@ -76,7 +76,7 @@ jobs:
     needs: [benchmark_pr, benchmark_main]
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
@@ -87,13 +87,13 @@ jobs:
           Rscript -e 'install.packages("gh")'
 
       - name: Download PR benchmark results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: pr-benchmark-results
           path: .
 
       - name: Download main benchmark results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: main-benchmark-results
           path: .
