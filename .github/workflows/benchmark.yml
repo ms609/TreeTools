@@ -1,14 +1,32 @@
 name: Benchmark
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
       - master
+    paths-ignore:
+      - "Meta**"
+      - "memcheck**"
+      - "docs**"
+      - "**.git"
+      - "**.json"
+      - "**.md"
+      - "**.yaml"
+      - "**.yml"
+      - "!**benchmark.yml"
+      - "**.R[dD]ata"
+      - "**.Rpro*"
 
 jobs:
   benchmark_pr:
     runs-on: ubuntu-latest
+    
+    env:
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
@@ -36,11 +54,15 @@ jobs:
 
   benchmark_main:
     runs-on: ubuntu-latest
+    
+    env:
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: master
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
