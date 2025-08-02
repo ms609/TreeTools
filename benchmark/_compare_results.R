@@ -73,11 +73,11 @@ regressions <- vapply(pr_files, function(pr_file) {
     message <- paste0(
       message,
       "#### `", fn_name, "`\n",
-      "- **Status:** ", status, "\n",
-      "- **Mean time (PR):** ", round(res$mean_pr / 1e6, 2), " ms\n",
-      "- **Mean time (Main):** ", round(res$mean_main / 1e6, 2), " ms\n",
-      "- **Change:** ", round(res$change, 2), "%\n",
-      "- **p-value:** ", format.pval(res$p_value), "\n\n"
+      "- Status: ", status, "\n",
+      "- Mean time (PR): ", round(res$mean_pr / 1e6, 2), " ms\n",
+      "- Mean time (Main): ", round(res$mean_main / 1e6, 2), " ms\n",
+      "- Change: ", round(res$change, 2), "%\n",
+      "- p-value: ", format.pval(res$p_value), "\n\n"
     )
   }
   if (has_significant_regression) {
