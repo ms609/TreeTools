@@ -1,9 +1,9 @@
 library("TreeTools")
-Benchmark <- function(id, ...) {
-  results <- microbenchmark::microbenchmark(...)
+ub <- microbenchmark::microbenchmark
+Benchmark <- function(id, result) {
   if (interactive()) {
-    print(results)
+    print(result)
   } else {
-    saveRDS(results, paste0(id, ".bench.Rds"))
+    saveRDS(result, paste0(id, ".bench.Rds"))
   }
 }
