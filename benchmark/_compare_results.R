@@ -1,0 +1,95 @@
+benchLines <- unlist(lapply(list.files("benchmark", "^bench\\-.*\\.R$", full.names = TRUE), readLines), recursive = FALSE)
+
+regExp <- "^[^#]*\\bBenchmark\\(\\s*\"([\\w\\d\\.\\-]+)\".*"
+outFiles <- gsub(regExp, "\\1.bench.Rds", perl = TRUE,
+                 benchLines[grepl(regExp, benchLines, perl = TRUE)])
+
+for (rds in outFiles) {
+  # Load the results
+  pr_results <- readRDS(file.path("pr-benchmark-results", rds))
+  main_results <- readRDS(file.path("main-benchmark-results", rds)
+  
+  # A simple comparison function using t-test
+  # You can make this much more sophisticated.
+  compare_timings <- function(pr_results, main_results) {
+    # Get the data frames of timings
+    pr_df <- as.data.frame(pr_results)
+    main_df <- as.data.frame(main_results)
+    
+    # Prepare a report
+    report <- list()
+    
+    # Iterate over each function benchmarked
+    for (fn_name in unique(pr_df$expr)) {
+      pr_times <- pr_df[pr_df$expr == fn_name, "time"]
+      main_times <- main_df[main_df$expr == fn_name, "time"]
+      
+      # Perform a t-test to check for a significant difference
+      # Note: A t-test assumes normality. For highly skewed data, a non-parametric test
+      # like a Mann-Whitney U test might be more appropriate.
+      # The 'microbenchmark' package also provides a 't-test' method in its 'summary' function.
+      test_result <- t.test(pr_times, main_times, alternative = "greater")
+      
+      # The p-value tells us if the PR's performance is significantly slower
+      # A small p-value (e.g., < 0.05) suggests it is.
+      is_slower <- test_result$p.value < 0.05
+      mean_pr <- mean(pr_times)
+      mean_main <- mean(main_times)
+      percentage_change <- ((mean_pr - mean_main) / mean_main) * 100
+      
+      report[[fn_name]] <- list(
+        slower = is_slower,
+        p_value = test_result$p.value,
+        mean_pr = mean_pr,
+        mean_main = mean_main,
+        change = percentage_change
+      )
+    }
+    
+    return(report)
+  }
+  
+  # Generate the report
+  report <- compare_timings(pr_results, main_results)
+  
+  # Create a markdown-formatted message
+  message <- "### Performance Benchmark Results\n\n"
+  has_significant_regression <- FALSE
+  
+  for (fn_name in names(report)) {
+    res <- report[[fn_name]]
+    status <- ifelse(res$slower, "🔴 Slower", "🟢 No significant change")
+    if (res$slower) {
+      has_significant_regression <- TRUE
+    }
+    
+    message <- paste0(
+      message,
+      "#### `", fn_name, "`\n",
+      "- **Status:** ", status, "\n",
+      "- **Mean time (PR):** ", round(res$mean_pr / 1e6, 2), " ms\n",
+      "- **Mean time (Main):** ", round(res$mean_main / 1e6, 2), " ms\n",
+      "- **Change:** ", round(res$change, 2), "%\n",
+      "- **p-value:** ", format.pval(res$p_value), "\n\n"
+    )
+  }
+  if (has_significant_regression) {
+    message <- paste0(message, "\n\n**Performance regression detected!**")
+  }
+  cat(message)
+}
+
+# Fail the build if there is a significant regression
+if (has_significant_regression) {
+  stop("Significant performance regression detected.")
+} else {
+  cat(message)
+}
+
+install.packages("gh")
+gh::gh("POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
+  owner = "your-github-username",
+  repo = "your-repo-name",
+  issue_number = Sys.getenv("PR_NUMBER"),
+  body = message
+)
