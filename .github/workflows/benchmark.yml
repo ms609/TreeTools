@@ -114,6 +114,10 @@ jobs:
           name: main-benchmark-results
           path: .
 
+      - run: dir
+      - run: dir pr-benchmark-results
+      - run: dir main-benchmark-results
+
       - name: Compare benchmarks and comment on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
