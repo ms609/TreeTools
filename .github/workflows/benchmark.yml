@@ -38,7 +38,7 @@ jobs:
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: hard
+          dependencies: "hard"
           needs: benchmark
         
       - name: Install package
@@ -73,7 +73,7 @@ jobs:
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: hard
+          dependencies: "hard"
           needs: benchmark
 
       - name: Install package
@@ -116,7 +116,6 @@ jobs:
           name: main-benchmark-results
           path: main-benchmark-results
 
-      - run: dir
       - run: dir pr-benchmark-results
       - run: dir main-benchmark-results
 
