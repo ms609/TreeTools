@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - master
 
 jobs:
   benchmark_pr:
