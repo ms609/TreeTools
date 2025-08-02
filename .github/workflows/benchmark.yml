@@ -23,6 +23,10 @@ jobs:
       - name: Install package with -O3 flag
         run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch --no-resave-data -O3
 
+      - name: Install TreeDist
+        run: |
+          Rscript -e 'install.packages("TreeDist")'
+        
       - name: Run benchmarks for PR
         run: Rscript benchmark/_run_benchmarks.R
         shell: bash
@@ -51,6 +55,10 @@ jobs:
 
       - name: Install package with -O3 flag
         run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch --no-resave-data -O3
+
+      - name: Install TreeDist
+        run: |
+          Rscript -e 'install.packages("TreeDist")'
         
       - name: Run benchmarks for main branch
         run: Rscript benchmark/_run_benchmarks.R
