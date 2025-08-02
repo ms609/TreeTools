@@ -96,8 +96,8 @@ if (any(regressions)) {
 
 install.packages("gh")
 gh::gh("POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
-  owner = "your-github-username",
-  repo = "your-repo-name",
+  owner = "ms609",
+  repo = "TreeTools",
   issue_number = Sys.getenv("PR_NUMBER"),
   body = message
 )
