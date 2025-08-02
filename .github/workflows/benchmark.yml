@@ -24,8 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      R_COMPILE_OPT: "3"
       
     steps:
       - name: Checkout PR branch
@@ -36,9 +37,11 @@ jobs:
         
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: benchmark
         
-      - name: Install package with -O3 flag
-        run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch --no-resave-data -O3
+      - name: Install package
+        run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch
 
       - name: Run benchmarks for PR
         run: Rscript benchmark/_run_benchmarks.R
@@ -54,8 +57,9 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      R_COMPILE_OPT: "3"
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
@@ -67,9 +71,11 @@ jobs:
 
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: benchmark
 
-      - name: Install package with -O3 flag
-        run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch --no-resave-data -O3
+      - name: Install package
+        run: R CMD INSTALL . --preclean --clean --byte-compile --no-multiarch
         
       - name: Run benchmarks for main branch
         run: Rscript benchmark/_run_benchmarks.R
