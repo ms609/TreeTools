@@ -94,10 +94,5 @@ if (any(regressions)) {
   cat(message)
 }
 
-install.packages("gh")
-gh::gh("POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
-  owner = "ms609",
-  repo = "TreeTools",
-  issue_number = Sys.getenv("PR_NUMBER"),
-  body = message
-)
+cat(paste0("BENCHMARK_MESSAGE=", message, "\n"),
+    file = Sys.getenv("GITHUB_ENV"), append = TRUE)
