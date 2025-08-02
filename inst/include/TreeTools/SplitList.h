@@ -17,7 +17,7 @@ using splitbit = uint_fast64_t;
  * on the stack (as required in TreeDist; supporting more leaves would mean
  * refactoring to run on the heap (and, trivially, converting int16 to int32
  * for split*bin implicit calculation in state[split][bin]?) */
-#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS)
+#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 32 * 64 = 2048
 #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
 
 #define INLASTBIN(n, size) int16((size) - int16((size) - int16((n) % (size))) % (size))
