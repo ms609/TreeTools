@@ -108,7 +108,6 @@ jobs:
       - name: Install packages
         run: |
           Rscript -e 'install.packages("microbenchmark")'
-          Rscript -e 'install.packages("gh")'
 
       - name: Download PR benchmark results
         uses: actions/download-artifact@v4
@@ -134,7 +133,7 @@ jobs:
         shell: bash
         
       - name: Comment on PR
-        if: github.event_name == 'pull_request'
+        if:  always() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
