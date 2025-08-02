@@ -1,13 +1,15 @@
-benchLines <- unlist(lapply(list.files("benchmark", "^bench\\-.*\\.R$", full.names = TRUE), readLines), recursive = FALSE)
+pr_files <- list.files("pr-benchmark-results", pattern = "*-bench.Rds",
+                       full.names = TRUE)
 
-regExp <- "^[^#]*\\bBenchmark\\(\\s*\"([\\w\\d\\.\\-]+)\".*"
-outFiles <- gsub(regExp, "\\1.bench.Rds", perl = TRUE,
-                 benchLines[grepl(regExp, benchLines, perl = TRUE)])
-
-for (rds in outFiles) {
+for (pr_file in pr_files) {
+  file_name <- basename(pr_file)
+  main_file <- file.path("main-benchmark-results", file_name)
+  if (!file.exists(main_file)) next;
+  
   # Load the results
-  pr_results <- readRDS(file.path("pr-benchmark-results", rds))
-  main_results <- readRDS(file.path("main-benchmark-results", rds))
+  pr_results <- readRDS(pr_file)
+  main_results <- readRDS(main_file)
+  
   
   # A simple comparison function using t-test
   # You can make this much more sophisticated.
