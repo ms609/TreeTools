@@ -52,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pr-benchmark-results
-          path: benchmark_results.rds
+          path: '*.bench.Rds'
 
   benchmark_main:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: main-benchmark-results
-          path: benchmark_results.rds
+          path: '*.bench.Rds'
 
   compare_benchmarks:
     runs-on: ubuntu-latest
@@ -108,13 +108,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: pr-benchmark-results
-          path: .
+          path: pr-benchmark-results
 
       - name: Download main benchmark results
         uses: actions/download-artifact@v4
         with:
           name: main-benchmark-results
-          path: .
+          path: main-benchmark-results
+
+      - run: dir
+      - run: dir pr-benchmark-results
+      - run: dir main-benchmark-results
 
       - name: Compare benchmarks and comment on PR
         env:
