@@ -26,22 +26,21 @@ regressions <- vapply(pr_files, function(pr_file) {
       pr_times <- pr_df[pr_df$expr == fn_name, "time"]
       main_times <- main_df[main_df$expr == fn_name, "time"]
       
-      # Perform a t-test to check for a significant difference
-      # Note: A t-test assumes normality. For highly skewed data, a non-parametric test
-      # like a Mann-Whitney U test might be more appropriate.
-      # The 'microbenchmark' package also provides a 't-test' method in its 'summary' function.
-      test_result <- t.test(pr_times, main_times, alternative = "greater")
+      better_result <- t.test(pr_times, main_times, alternative = "less")
+      worse_result <- t.test(pr_times, main_times, alternative = "greater")
       
       # The p-value tells us if the PR's performance is significantly slower
       # A small p-value (e.g., < 0.05) suggests it is.
-      is_slower <- test_result$p.value < 0.05
+      is_faster <- better_result$p.value < 0.01
+      is_slower <- worse_result$p.value < 0.01
       mean_pr <- mean(pr_times)
       mean_main <- mean(main_times)
       percentage_change <- ((mean_pr - mean_main) / mean_main) * 100
       
       report[[fn_name]] <- list(
         slower = is_slower,
-        p_value = test_result$p.value,
+        faster = is_faster,
+        p_value = worse_result$p.value,
         mean_pr = mean_pr,
         mean_main = mean_main,
         change = percentage_change
@@ -60,7 +59,14 @@ regressions <- vapply(pr_files, function(pr_file) {
   
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
-    status <- ifelse(res$slower, "🔴 Slower", "🟢 No significant change")
+    cat(res$p_value)
+    status <- ifelse(res$slower, "\U1F7E0 Slower", 
+                     ifelse(res$faster, "\U1F7E2 Faster!",
+                            ifelse(res$p_value < 0.05,
+                                   "\U1F7E1 A little slower (0.01 < p < 0.05)",
+                                   "\U26AA No significant change")
+                     )
+    )
     if (res$slower) {
       has_significant_regression <- TRUE
     }
