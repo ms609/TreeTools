@@ -1,10 +1,10 @@
-pr_files <- list.files("pr-benchmark-results", pattern = "*-bench.Rds",
+pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
-for (pr_file in pr_files) {
+regressions <- vapply(pr_files, function(pr_file) {
   file_name <- basename(pr_file)
   main_file <- file.path("main-benchmark-results", file_name)
-  if (!file.exists(main_file)) next;
+  if (!file.exists(main_file)) return(NA);
   
   # Load the results
   pr_results <- readRDS(pr_file)
@@ -76,13 +76,14 @@ for (pr_file in pr_files) {
     )
   }
   if (has_significant_regression) {
-    message <- paste0(message, "\n\n**Performance regression detected!**")
+    message <- paste0(message, "**Performance regression detected!**\n\n\n\n")
   }
   cat(message)
-}
+  has_significant_regression
+}, FALSE)
 
 # Fail the build if there is a significant regression
-if (has_significant_regression) {
+if (any(regressions)) {
   stop("Significant performance regression detected.")
 } else {
   cat(message)
