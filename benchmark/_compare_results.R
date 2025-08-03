@@ -1,7 +1,7 @@
 pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
-output <- "report=\U2705 Benchmarks complete\n"
+output <- "report<<EOF\n\U2705 Benchmarks complete\n"
 regressions <- FALSE
 
 for (pr_file in pr_files) {
@@ -93,9 +93,9 @@ for (pr_file in pr_files) {
   output <- paste0(output, message)
 }
 
-cat(output, file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+cat(paste0(output, "\nEOF"), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
 
-cat(readLines(Sys.getenv("GITHUB_OUTPUT")))
+message(readLines(Sys.getenv("GITHUB_OUTPUT")))
 
 # Fail the build if there is a significant regression
 if (any(regressions)) {
