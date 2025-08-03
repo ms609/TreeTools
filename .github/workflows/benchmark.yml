@@ -37,106 +37,48 @@ jobs:
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v4
-
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        
-      - name: Set up R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          dependencies: '"hard"'
-          needs: benchmark
-        
-      - name: Install package
-        run: R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-
-      - name: Run benchmarks for PR
-        run: Rscript benchmark/_run_benchmarks.R
-        shell: bash
-
-      - name: Upload PR benchmark results
-        uses: actions/upload-artifact@v4
-        with:
-          name: pr-benchmark-results
-          path: '*.bench.Rds'
-
-  benchmark_main:
-    runs-on: ubuntu-latest
-    
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
-      R_COMPILE_OPT: "3"
-    steps:
+          path: pr
+          
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
           ref: master
+          path: main
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
-
-      - name: Set up R dependencies
+        
+      - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           dependencies: '"hard"'
           needs: benchmark
 
-      - name: Install package
-        run: R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-        
-      - name: Run benchmarks for main branch
-        run: Rscript benchmark/_run_benchmarks.R
-        shell: bash
-
-      - name: Upload main benchmark results
-        uses: actions/upload-artifact@v4
-        with:
-          name: main-benchmark-results
-          path: '*.bench.Rds'
-
-  compare_benchmarks:
-    runs-on: ubuntu-latest
-    needs: [benchmark_pr, benchmark_main]
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
-
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-
-      - name: Install packages
+      - name: Benchmark main
         run: |
-          Rscript -e 'install.packages("microbenchmark")'
-
-      - name: Download PR benchmark results
-        uses: actions/download-artifact@v4
-        with:
-          name: pr-benchmark-results
-          path: pr-benchmark-results
-
-      - name: Download main benchmark results
-        uses: actions/download-artifact@v4
-        with:
-          name: main-benchmark-results
-          path: main-benchmark-results
+          cd main
+          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          Rscript benchmark/_run_benchmarks.R
+          mv *.bench.Rds ../pr/main-benchmark-results/
+        shell: bash
+        
+      - name: Benchmark PR
+        run: |
+          cd ../pr
+          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          Rscript benchmark/_run_benchmarks.R
+          mv *.bench.Rds ./pr-benchmark-results/
+        shell: bash
 
       - run: dir pr-benchmark-results
       - run: dir main-benchmark-results
 
       - name: Compare benchmarks
         id: compare_results
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           Rscript benchmark/_compare_results.R
         shell: bash
-        
-      - name: Debug message
-        if:  always()
-        run: |
-          echo 'Message is: ${{ steps.compare_results.outputs.report }}'
         
       - name: Comment on PR
         if:  always() && github.event_name == 'pull_request'
