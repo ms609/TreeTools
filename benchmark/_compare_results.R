@@ -1,7 +1,7 @@
 pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
-output <- "report<<EOF\n\U2705 Benchmarks complete\n"
+output <- "report<<EOF\n ### Performance benchmark results\n"
 regressions <- FALSE
 
 for (pr_file in pr_files) {
@@ -36,16 +36,16 @@ for (pr_file in pr_files) {
       # A small p-value (e.g., < 0.05) suggests it is.
       is_faster <- better_result$p.value < 0.01
       is_slower <- worse_result$p.value < 0.01
-      mean_pr <- mean(pr_times)
-      mean_main <- mean(main_times)
-      percentage_change <- ((mean_pr - mean_main) / mean_main) * 100
+      median_pr <- median(pr_times)
+      median_main <- median(main_times)
+      percentage_change <- ((median_pr - median_main) / median_main) * 100
       
       report[[fn_name]] <- list(
         slower = is_slower,
         faster = is_faster,
         p_value = worse_result$p.value,
-        mean_pr = mean_pr,
-        mean_main = mean_main,
+        median_pr = median_pr,
+        median_main = median_main,
         change = percentage_change
       )
     }
@@ -57,7 +57,6 @@ for (pr_file in pr_files) {
   report <- compare_timings(pr_results, main_results)
   
   # Create a markdown-formatted message
-  message <- "### Performance Benchmark Results\n\n"
   has_significant_regression <- FALSE
   
   for (fn_name in names(report)) {
@@ -74,13 +73,11 @@ for (pr_file in pr_files) {
     }
     
     message <- paste0(
-      message,
-      "#### `", fn_name, "`\n",
-      "- ***Status:*** ", status, "\n",
-      "- ***Mean time (PR):*** ", round(res$mean_pr / 1e6, 2), " ms\n",
-      "- ***Mean time (Main):*** ", round(res$mean_main / 1e6, 2), " ms\n",
-      "- ***Change:*** ", round(res$change, 2), "%\n",
-      "- ***p-value:*** ", format.pval(res$p_value), "\n\n"
+      "#### `", fn_name, "`: ", status, "\n",
+      "- **Median time:** ", round(res$median_pr / 1e6, 2), " ms \U2192 ",
+      round(res$median_main / 1e6, 2), " ms\n",
+      "- **Change:** ", round(res$change, 2), "% (p = ",
+      format.pval(res$p_value), ")\n\n"
     )
   }
   
