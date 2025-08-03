@@ -15,6 +15,13 @@ const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 #define PO_PARENT(i) edge(order[i], 0)
 #define PO_CHILD(i) edge(order[i], 1)
 
+namespace TreeTools {
+  template<typename T>
+  constexpr void T set_bit(T& target, int bit_pos) noexcept {
+    target |= T(1) << bit_pos;
+  }
+}
+
 inline void check_16_bit(double x) {
   if (x > double(std::numeric_limits<int16>::max())) {
     Rcpp::stop("Cannot represent object this large in 16-bit register.");
@@ -498,8 +505,8 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
     for (uintx split = n_split; split--; ) {
       if (splits(split, uintx(tip / BIN_SIZE))
             & powers_of_two[tip % BIN_SIZE]) {
-        ret(split, uintx(kept_tip / BIN_SIZE)) |= 
-          decltype(ret(0, 0))(powers_of_two[kept_tip % BIN_SIZE]);
+        TreeTools::set_bit(ret(split, uintx(kept_tip / BIN_SIZE)),
+                           kept_tip % BIN_SIZE);
         ++in_split[split];
       }
     }
