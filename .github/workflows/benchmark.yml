@@ -134,7 +134,8 @@ jobs:
         shell: bash
         
       - name: Debug message
-        run: echo "Message is: ${{ steps.compare_results.outputs.report }}"
+        run: |
+          echo 'Message is: ${{ steps.compare_results.outputs.report }}'
         
       - name: Comment on PR
         if:  always() && github.event_name == 'pull_request'
