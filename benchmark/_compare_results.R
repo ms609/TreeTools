@@ -74,8 +74,8 @@ for (pr_file in pr_files) {
     
     message <- paste0(
       "#### `", fn_name, "`: ", status, "\n",
-      "- **Median time:** ", round(res$median_pr / 1e6, 2), " ms \U2192 ",
-      round(res$median_main / 1e6, 2), " ms\n",
+      "- **Median time:** ", round(res$median_main / 1e6, 2), " ms \U2192 ",
+      round(res$median_pr / 1e6, 2), " ms\n",
       "- **Change:** ", round(res$change, 2), "% (p = ",
       format.pval(res$p_value), ")\n\n"
     )
