@@ -56,6 +56,7 @@ jobs:
           needs: benchmark
 
       - name: Benchmark PR
+        working-directory: pr
         run: |
           cd pr
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
@@ -65,8 +66,8 @@ jobs:
         shell: bash
         
       - name: Benchmark main
+        working-directory: main
         run: |
-          cd ../main
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           Rscript benchmark/_run_benchmarks.R
           mkdir ../pr/main-benchmark-results/
@@ -74,8 +75,8 @@ jobs:
         shell: bash
         
       - name: Benchmark PR
+        working-directory: pr
         run: |
-          cd ../pr
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr2-benchmark-results/
@@ -83,10 +84,13 @@ jobs:
         shell: bash
 
       - run: dir pr-benchmark-results
+        working-directory: pr
       - run: dir main-benchmark-results
+        working-directory: pr
 
       - name: Compare benchmarks
         id: compare_results
+        working-directory: pr
         run: |
           Rscript benchmark/_compare_results.R
         shell: bash
