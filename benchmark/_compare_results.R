@@ -1,10 +1,10 @@
 pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
+output <- "report=\U2705 Benchmarks complete\n"
+regressions <- FALSE
 
-msgTxt <- "report=\U2705 Benchmarks complete\n"
-
-regressions <- vapply(pr_files, function(pr_file) {
+for (pr_file in pr_files) {
   file_name <- basename(pr_file)
   main_file <- file.path("main-benchmark-results", file_name)
   if (!file.exists(main_file)) return(NA);
@@ -76,29 +76,28 @@ regressions <- vapply(pr_files, function(pr_file) {
     message <- paste0(
       message,
       "#### `", fn_name, "`\n",
-      "- Status: ", status, "\n",
-      "- Mean time (PR): ", round(res$mean_pr / 1e6, 2), " ms\n",
-      "- Mean time (Main): ", round(res$mean_main / 1e6, 2), " ms\n",
-      "- Change: ", round(res$change, 2), "%\n",
-      "- p-value: ", format.pval(res$p_value), "\n\n"
+      "- ***Status:*** ", status, "\n",
+      "- ***Mean time (PR):*** ", round(res$mean_pr / 1e6, 2), " ms\n",
+      "- ***Mean time (Main):*** ", round(res$mean_main / 1e6, 2), " ms\n",
+      "- ***Change:*** ", round(res$change, 2), "%\n",
+      "- ***p-value:*** ", format.pval(res$p_value), "\n\n"
     )
   }
+  
   if (has_significant_regression) {
     message <- paste0(message, "**Performance regression detected!**\n\n\n\n")
+    regressions <- TRUE
   }
-  cat(message)
-  msgTxt <<- paste0(msgTxt, message)
   
-  has_significant_regression
-}, FALSE)
+  cat(message)
+  output <- paste0(output, message)
+}
 
-cat(paste0(msgTxt, file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE))
+cat(output, file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
 
 cat(readLines(Sys.getenv("GITHUB_OUTPUT")))
 
 # Fail the build if there is a significant regression
 if (any(regressions)) {
   stop("Significant performance regression detected.")
-} else {
-  cat(message)
 }
