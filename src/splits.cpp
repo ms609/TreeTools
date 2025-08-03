@@ -17,7 +17,7 @@ const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
 namespace TreeTools {
   template<typename T>
-  constexpr void T set_bit(T& target, int bit_pos) noexcept {
+  constexpr void set_bit(T& target, int bit_pos) noexcept {
     target |= T(1) << bit_pos;
   }
 }
