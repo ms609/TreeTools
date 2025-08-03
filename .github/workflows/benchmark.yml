@@ -81,7 +81,7 @@ jobs:
         shell: bash
         
       - name: Comment on PR
-        if:  github.event_name == 'pull_request' && steps.compare_results.outputs.report != ''
+        if: always() && github.event_name == 'pull_request' && steps.compare_results.outputs.report != ''
         uses: actions/github-script@v7
         env:
           BENCHMARK_MESSAGE: ${{ steps.compare_results.outputs.report }}
