@@ -134,6 +134,7 @@ jobs:
         shell: bash
         
       - name: Debug message
+        if:  always()
         run: |
           echo 'Message is: ${{ steps.compare_results.outputs.report }}'
         
@@ -149,5 +150,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `${{ steps.compare_results.outputs.report }} || '⚠️ No benchmark message retrieved.'`
+              body: `${{ steps.compare_results.outputs.report }}`
             });

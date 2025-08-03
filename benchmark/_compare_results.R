@@ -87,12 +87,14 @@ regressions <- vapply(pr_files, function(pr_file) {
   has_significant_regression
 }, FALSE)
 
+cat(paste0("report=✅ Benchmarks complete\n", message, "\n"),
+    file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+
+cat(readLines(Sys.getenv("GITHUB_OUTPUT")))
+
 # Fail the build if there is a significant regression
 if (any(regressions)) {
   stop("Significant performance regression detected.")
 } else {
   cat(message)
 }
-
-cat(paste0("report=", message, "\n"),
-    file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
