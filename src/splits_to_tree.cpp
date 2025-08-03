@@ -74,12 +74,13 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   int16 next_node = n_tip;
   for (int16 split = x.n_splits; split--; ) {
     for (int16 bin = x.n_bins; bin--; ) {
-      const splitbit chunk = x.state[split_order[split]][bin];
-      for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
-        const int16 tip = bin_tip + int16(bin * SL_BIN_SIZE);
-        if (chunk & (splitbit(1) << bin_tip)) {
-          insert_ancestor(tip, &next_node, parent, patriarch);
-        }
+      splitbit chunk = x.state[split_order[split]][bin];
+      const int16 base_tip = bin * SL_BIN_SIZE;
+      while (chunk) {
+        const int16 bin_tip = __builtin_ctzll(chunk); // count trailing zeros
+        const int16 tip = base_tip + bin_tip;
+        insert_ancestor(tip, &next_node, parent, patriarch);
+        chunk &= chunk - 1; // clear lowest set bit
       }
     }
     ++next_node;
