@@ -2,9 +2,7 @@ pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
 
-
-cat(paste0("report=\U2705 Benchmarks complete\n",
-           file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE))
+msgTxt <- "report=\U2705 Benchmarks complete\n"
 
 regressions <- vapply(pr_files, function(pr_file) {
   file_name <- basename(pr_file)
@@ -89,10 +87,12 @@ regressions <- vapply(pr_files, function(pr_file) {
     message <- paste0(message, "**Performance regression detected!**\n\n\n\n")
   }
   cat(message)
-  cat(message, file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+  msgTxt <<- paste0(msgTxt, message)
   
   has_significant_regression
 }, FALSE)
+
+cat(paste0(msgTxt, file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE))
 
 cat(readLines(Sys.getenv("GITHUB_OUTPUT")))
 
