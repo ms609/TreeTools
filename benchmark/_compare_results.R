@@ -1,9 +1,11 @@
 pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
-output <- "report<<EOF\n### Performance benchmark results\n\n"
-output <- paste0(output, "| Function | Status | Change | P-value | Before (ms) | After (ms) |\n")
-output <- paste0(output, "|----------|--------|--------|---------|-------------|------------|\n")
+output <- paste0(
+  "report<<EOF\n### Performance benchmark results\n\n",
+  "| Function | Status | Change | P-value | Before (ms) | After (ms) |\n",
+  "|----------|--------|--------|---------|-------------|------------|\n"
+  )
 
 regressions <- FALSE
 
