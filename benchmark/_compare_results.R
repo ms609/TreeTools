@@ -4,7 +4,7 @@ pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
 
 
 cat(paste0("report=\U2705 Benchmarks complete\n",
-           file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
+           file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE))
 
 regressions <- vapply(pr_files, function(pr_file) {
   file_name <- basename(pr_file)
