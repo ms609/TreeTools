@@ -1,6 +1,6 @@
 # TreeTools 1.15.0.9006 (development) #
 
-- Remove exported C++ object bitcounts; popcount intrinsics are preferable.
+- Remove exported C++ cache objects to prefer calculation with intrinsics.
 
 
 # TreeTools 1.15.0.9005 (development) #
