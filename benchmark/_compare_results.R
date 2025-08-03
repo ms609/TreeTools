@@ -16,57 +16,48 @@ for (pr_file in pr_files) {
     pr_results
   main_results <- readRDS(main_file)
   
+
+  # Get the data frames of timings
+  pr_df <- as.data.frame(pr_results)
+  cf_df <- as.data.frame(pr_replicate)
+  main_df <- as.data.frame(main_results)
   
-  # A simple comparison function using t-test
-  # You can make this much more sophisticated.
-  compare_timings <- function(pr_results, main_results, pr_replicate) {
-    # Get the data frames of timings
-    pr_df <- as.data.frame(pr_results)
-    cf_df <- as.data.frame(pr_replicate)
-    main_df <- as.data.frame(main_results)
+  # Prepare a report
+  report <- list()
+  
+  # Iterate over each function benchmarked
+  for (fn_name in unique(pr_df$expr)) {
+    pr_times <- pr_df[pr_df$expr == fn_name, "time"]
+    cf_times <- cf_df[cf_df$expr == fn_name, "time"]
+    main_times <- main_df[main_df$expr == fn_name, "time"]
     
-    # Prepare a report
-    report <- list()
+    better_result <- t.test(pr_times, main_times, alternative = "less")
+    worse_result <- t.test(pr_times, main_times, alternative = "greater")
     
-    # Iterate over each function benchmarked
-    for (fn_name in unique(pr_df$expr)) {
-      pr_times <- pr_df[pr_df$expr == fn_name, "time"]
-      cf_times <- cf_df[cf_df$expr == fn_name, "time"]
-      main_times <- main_df[main_df$expr == fn_name, "time"]
-      
-      better_result <- t.test(pr_times, main_times, alternative = "less")
-      worse_result <- t.test(pr_times, main_times, alternative = "greater")
-      
-      # The p-value tells us if the PR's performance is significantly slower
-      # A small p-value (e.g., < 0.05) suggests it is.
-      median_pr <- median(pr_times)
-      median_cf <- median(cf_times)
-      median_main <- median(main_times)
-      percentage_change <- ((median_pr - median_main) / median_main) * 100
-      
-      delta <- abs(median_pr - median_main)
-      df_delta <- abs(median_pr - median_cf)
-      not_noise <- delta > (df_delta * 2)
-      
-      is_faster <- better_result$p.value < 0.01 && not_noise
-      is_slower <- worse_result$p.value < 0.01 && not_noise
-      
-      report[[fn_name]] <- list(
-        slower = is_slower,
-        faster = is_faster,
-        p_value = worse_result$p.value,
-        median_pr = median_pr,
-        median_cf = median_cf,
-        median_main = median_main,
-        change = percentage_change
-      )
-    }
+    # The p-value tells us if the PR's performance is significantly slower
+    # A small p-value (e.g., < 0.05) suggests it is.
+    median_pr <- median(pr_times)
+    median_cf <- median(cf_times)
+    median_main <- median(main_times)
+    percentage_change <- ((median_pr - median_main) / median_main) * 100
     
-    return(report)
+    delta <- abs(median_pr - median_main)
+    df_delta <- abs(median_pr - median_cf)
+    not_noise <- delta > (df_delta * 2)
+    
+    is_faster <- better_result$p.value < 0.01 && not_noise
+    is_slower <- worse_result$p.value < 0.01 && not_noise
+    
+    report[[fn_name]] <- list(
+      slower = is_slower,
+      faster = is_faster,
+      p_value = worse_result$p.value,
+      median_pr = median_pr,
+      median_cf = median_cf,
+      median_main = median_main,
+      change = percentage_change
+    )
   }
-  
-  # Generate the report
-  report <- compare_timings(pr_results, main_results)
   
   # Create a markdown-formatted message
   has_significant_regression <- FALSE
