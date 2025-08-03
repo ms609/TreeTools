@@ -22,7 +22,7 @@ for (pr_file in pr_files) {
   compare_timings <- function(pr_results, main_results, pr_replicate) {
     # Get the data frames of timings
     pr_df <- as.data.frame(pr_results)
-    cf_df <- as.data.frame(pr_duplicate)
+    cf_df <- as.data.frame(pr_replicate)
     main_df <- as.data.frame(main_results)
     
     # Prepare a report
