@@ -40,10 +40,10 @@ jobs:
         with:
           path: pr
           
-      - name: Checkout main branch
+      - name: Checkout target branch
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: ${{ github.event.pull_request.base.ref || 'master' }}
           path: main
 
       - name: Set up R
