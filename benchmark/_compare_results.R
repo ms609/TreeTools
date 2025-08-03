@@ -7,7 +7,7 @@ regressions <- FALSE
 for (pr_file in pr_files) {
   file_name <- basename(pr_file)
   main_file <- file.path("main-benchmark-results", file_name)
-  if (!file.exists(main_file)) return(NA);
+  if (!file.exists(main_file)) next;
   
   # Load the results
   pr_results <- readRDS(pr_file)
