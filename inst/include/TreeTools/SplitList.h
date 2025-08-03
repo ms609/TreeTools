@@ -99,30 +99,38 @@ namespace TreeTools {
                    "Please contact the TreeTools maintainer if "
                    "you need to use more!");
       }
-
-      for (int16 split = 0; split != n_splits; split++) {
-        int16 last_bin = n_bins - 1;
-        const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
-        state[split][last_bin] = INSUBBIN(last_bin, 0);
+      
+      for (int16 split = 0; split < n_splits; ++split) {
+        in_split[split] = 0;
+      }
+      
+      for (int16 bin = 0; bin < n_bins - 1; ++bin) {
+        const int16 bin_offset = bin * input_bins_per_bin;
         
-        for (int16 input_bin = 1; input_bin != raggedy_bins; input_bin++) {
-          state[split][last_bin] += INBIN(input_bin, last_bin);
-        }
-        
-        in_split[split] = count_bits(state[split][last_bin]);
-        for (int16 bin = 0; bin != n_bins - 1; bin++) {
-          const int16 bin_offset = bin * input_bins_per_bin;
+        for (int16 split = 0; split < n_splits; ++split) {
           splitbit combined = splitbit(x(split, bin_offset));
           
-          for (int16 input_bin = 1; input_bin != input_bins_per_bin; input_bin++) {
+          for (int16 input_bin = 1; input_bin < input_bins_per_bin; ++input_bin) {
             combined |= splitbit(x(split, bin_offset + input_bin)) <<
               (R_BIN_SIZE * input_bin);
           }
           
           state[split][bin] = combined;
-          
           in_split[split] += count_bits(combined);
         }
+      }
+      
+      const int16 last_bin = n_bins - 1;
+      const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
+      
+      for (int16 split = 0; split < n_splits; ++split) {
+        state[split][last_bin] = INSUBBIN(last_bin, 0);
+        
+        for (int16 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
+          state[split][last_bin] += INBIN(input_bin, last_bin);
+        }
+        
+        in_split[split] += count_bits(state[split][last_bin]);
       }
     }
   };
