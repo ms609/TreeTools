@@ -64,11 +64,11 @@ for (pr_file in pr_files) {
   
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
-    status <- ifelse(res$slower, "\U1F7E0 Slower", 
+    status <- ifelse(res$slower, "\U1F7E0 Slower \U1F641",
                      ifelse(res$faster, "\U1F7E2 Faster!",
                             ifelse(res$p_value < 0.05,
-                                   "\U1F7E1 A little slower (0.01 < p < 0.05)",
-                                   "\U26AA No significant change")
+                                   "\U1F7E1 Potential slowdown (p < 0.05)",
+                                   "\U26AA No significant change.")
                      )
     )
     if (res$slower) {
@@ -76,8 +76,8 @@ for (pr_file in pr_files) {
     }
     
     message <- paste0(
-      "#### `", fn_name, "`: ", status, "\n",
-      "Change: **", round(res$change, 2), "%** (p = ", 
+      "#### `", fn_name, "`\n ", status,
+      " Change: **", round(res$change, 2), "%** (p = ", 
       format.pval(res$p_value), "): ",
       round(res$median_main / 1e6, 2), " \U2192 ",
       round(res$median_pr / 1e6, 2), " ms, ",
