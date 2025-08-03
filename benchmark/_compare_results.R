@@ -79,9 +79,9 @@ for (pr_file in pr_files) {
       "#### `", fn_name, "`\n ", status,
       " Change: **", round(res$change, 2), "%** (p = ", 
       format.pval(res$p_value), "): ",
-      round(res$median_main / 1e6, 2), " \U2192 ",
-      round(res$median_pr / 1e6, 2), " ms, ",
-      round(res$median_cf / 1e6, 2), "ms\n\n"
+      signif(res$median_main / 1e6, 3), " \U2192 ",
+      signif(res$median_pr / 1e6, 3), " ms, ",
+      signif(res$median_cf / 1e6, 3), "ms\n\n"
     )
   }
   
