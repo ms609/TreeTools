@@ -77,7 +77,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
       const splitbit chunk = x.state[split_order[split]][bin];
       for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
         const int16 tip = bin_tip + int16(bin * SL_BIN_SIZE);
-        if (chunk & powers_of_two[bin_tip]) {
+        if (chunk & (splitbit(1) << bin_tip)) {
           insert_ancestor(tip, &next_node, parent, patriarch);
         }
       }
