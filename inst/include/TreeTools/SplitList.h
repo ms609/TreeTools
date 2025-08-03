@@ -111,11 +111,17 @@ namespace TreeTools {
         
         in_split[split] = count_bits(state[split][last_bin]);
         for (int16 bin = 0; bin != n_bins - 1; bin++) {
-          state[split][bin] = INSUBBIN(bin, 0);
+          const int16 bin_offset = bin * input_bins_per_bin;
+          splitbit combined = splitbit(x(split, bin_offset));
+          
           for (int16 input_bin = 1; input_bin != input_bins_per_bin; input_bin++) {
-            state[split][bin] += INBIN(input_bin, bin);
+            combined |= splitbit(x(split, bin_offset + input_bin)) <<
+              (R_BIN_SIZE * input_bin);
           }
-          in_split[split] += count_bits(state[split][bin]);
+          
+          state[split][bin] = combined;
+          
+          in_split[split] += count_bits(combined);
         }
       }
     }
