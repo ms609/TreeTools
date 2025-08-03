@@ -58,7 +58,6 @@ jobs:
       - name: Benchmark PR
         working-directory: pr
         run: |
-          cd pr
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr-benchmark-results/
