@@ -27,24 +27,7 @@ using splitbit = uint_fast64_t;
 
 namespace TreeTools {
 
-  const splitbit powers_of_two[SL_BIN_SIZE] = {
-    0x1, 0x2, 0x4, 0x8,
-    0x10, 0x20, 0x40, 0x80,
-    0x100, 0x200, 0x400, 0x800,
-    0x1000, 0x2000, 0x4000, 0x8000,
-    0x10000, 0x20000, 0x40000, 0x80000,
-    0x100000, 0x200000, 0x400000, 0x800000,
-    0x1000000, 0x2000000, 0x4000000, 0x8000000,
-    0x10000000, 0x20000000, 0x40000000, 0x80000000,
-    0x100000000, 0x200000000, 0x400000000, 0x800000000,
-    0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000,
-    0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000,
-    0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000,
-    0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000,
-    0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000,
-    0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
-    0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
-  };
+  constexpr int input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;
 
   template<typename T>
   [[nodiscard]] constexpr T power_of_two(int bit_pos) noexcept {
@@ -107,8 +90,7 @@ namespace TreeTools {
       n_splits = int16(x.rows());
       ASSERT(n_splits >= 0);
       
-      const int16 n_input_bins = int16(x.cols()),
-        input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;
+      const int16 n_input_bins = int16(x.cols());
 
       n_bins = int16(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
 
@@ -121,24 +103,16 @@ namespace TreeTools {
       for (int16 split = 0; split != n_splits; split++) {
         int16 last_bin = n_bins - 1;
         const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
-        /*Rcout << n_input_bins << " bins in; " << raggedy_bins << " raggedy bins\n";*/
         state[split][last_bin] = INSUBBIN(last_bin, 0);
-        /*Rcout << " State[" << split << "][" << bin << "] = " << state[split][bin] << ".\n";*/
+        
         for (int16 input_bin = 1; input_bin != raggedy_bins; input_bin++) {
-          /*Rcout << "Adding " << (splitbit (x(split, (bin * input_bins_per_bin) + input_bin))) << " << "
-                  << (R_BIN_SIZE * input_bin) << " to state [" << split << "][" << bin
-                  << "], was " << state[split][bin] << "\n";*/
           state[split][last_bin] += INBIN(input_bin, last_bin);
         }
+        
         in_split[split] = count_bits(state[split][last_bin]);
-
         for (int16 bin = 0; bin != n_bins - 1; bin++) {
-          /*Rcout << "Split " << split << ", bin << " << bin << ".\n";*/
           state[split][bin] = INSUBBIN(bin, 0);
           for (int16 input_bin = 1; input_bin != input_bins_per_bin; input_bin++) {
-            /*Rcout << "Adding " << (splitbit (x(split, (bin * input_bins_per_bin) + input_bin))) << " << "
-                    << (R_BIN_SIZE * input_bin) << " to state [" << split << "]["
-                    << bin << "], was " << state[split][bin] << "\n";*/
             state[split][bin] += INBIN(input_bin, bin);
           }
           in_split[split] += count_bits(state[split][bin]);
