@@ -94,5 +94,5 @@ if (any(regressions)) {
   cat(message)
 }
 
-cat(paste0("BENCHMARK_MESSAGE=", message, "\n"),
-    file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+cat(paste0("report=", message, "\n"),
+    file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)

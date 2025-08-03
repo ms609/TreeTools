@@ -124,7 +124,8 @@ jobs:
       - run: dir pr-benchmark-results
       - run: dir main-benchmark-results
 
-      - name: Compare benchmarks and comment on PR
+      - name: Compare benchmarks
+        id: compare_results
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
@@ -133,9 +134,7 @@ jobs:
         shell: bash
         
       - name: Debug message
-        run: echo "Message is: $BENCHMARK_MESSAGE"
-        env:
-          BENCHMARK_MESSAGE: ${{ env.BENCHMARK_MESSAGE }} || 'NULL'
+        run: echo "Message is: ${{ steps.compare_results.outputs.report }}"
         
       - name: Comment on PR
         if:  always() && github.event_name == 'pull_request'
@@ -149,5 +148,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: process.env.BENCHMARK_MESSAGE || '⚠️ No benchmark message retrieved.'
+              body: `${{ steps.compare_results.outputs.report }} || '⚠️ No benchmark message retrieved.'`
             });
