@@ -1,7 +1,10 @@
 pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
                        full.names = TRUE)
 
-output <- "report<<EOF\n ### Performance benchmark results\n"
+output <- "report<<EOF\n### Performance benchmark results\n\n"
+output <- paste0(output, "| Function | Status | Change | P-value | Before (ms) | After (ms) |\n")
+output <- paste0(output, "|----------|--------|--------|---------|-------------|------------|\n")
+
 regressions <- FALSE
 
 for (pr_file in pr_files) {
@@ -76,12 +79,12 @@ for (pr_file in pr_files) {
     }
     
     message <- paste0(
-      "#### `", fn_name, "`\n ", status,
-      " Change: **", round(res$change, 2), "%** (p = ", 
-      format.pval(res$p_value), "): ",
-      signif(res$median_main / 1e6, 3), " \U2192 ",
-      signif(res$median_pr / 1e6, 3), " ms, ",
-      signif(res$median_cf / 1e6, 3), "ms\n\n"
+      "| `", fn_name, "` | ", status, " | **", 
+      round(res$change, 2), "%** | ", 
+      format.pval(res$p_value), " | ",
+      signif(res$median_main / 1e6, 3), " | ",
+      signif(res$median_pr / 1e6, 3), ",  ",
+      signif(res$median_cf / 1e6, 3), " |\n"
     )
   }
   
