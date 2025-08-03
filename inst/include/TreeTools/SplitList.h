@@ -46,6 +46,13 @@ namespace TreeTools {
     0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
   };
 
+  template<typename T>
+  [[nodiscard]] constexpr T power_of_two(int bit_pos) noexcept {
+    static_assert(std::is_unsigned_v<T>, "Use unsigned types for bit operations");
+    assert(bit_pos >= 0 && bit_pos < int(sizeof(T) * 8));
+    return T(1) << bit_pos;
+  }
+  
 #if __cplusplus >= 202002L
 #include <bit> // C++20 header for std::popcount
   

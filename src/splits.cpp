@@ -3,10 +3,9 @@
 #include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
+
 using namespace Rcpp;
 
-const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
-                                 2048, 4096, 8192, 16384, 32768};
 const uintx BIN_SIZE = 8;
 const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
@@ -20,7 +19,12 @@ namespace TreeTools {
   constexpr void set_bit(T& target, int bit_pos) noexcept {
     target |= T(1) << bit_pos;
   }
+
+  [[nodiscard]] constexpr uintx power_of_two(int bit_pos) noexcept {
+    return uintx(1) << bit_pos;
+  }
 }
+using TreeTools::power_of_two;
 
 inline void check_16_bit(double x) {
   if (x > double(std::numeric_limits<int16>::max())) {
@@ -79,7 +83,7 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
 
   // Populate splits
   for (uintx i = n_tip; i--; ) {
-    splits[i][uintx(i / BIN_SIZE)] = powers_of_two[i % BIN_SIZE];
+    splits[i][uintx(i / BIN_SIZE)] = power_of_two(i % BIN_SIZE);
   }
 
   uintx root_child = PO_CHILD(n_edge - 1);
@@ -246,7 +250,7 @@ RawMatrix mask_splits(RawMatrix x) {
   if (unset_tips == 0) {
     return x;
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       x(i, last_bin) &= decltype(x(0, 0))(unset_mask);
     }
@@ -273,7 +277,7 @@ RawMatrix not_splits(const RawMatrix x) {
       ret[i] = ~ret[i];
     }
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       ret(i, last_bin) = ~ret(i, last_bin) & decltype(ret(0, 0))(unset_mask);
     }
@@ -314,7 +318,7 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
       ret[i] ^= y[i];
     }
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & 
         decltype(ret(0, 0))(unset_mask);
@@ -504,7 +508,7 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
     }
     for (uintx split = n_split; split--; ) {
       if (splits(split, uintx(tip / BIN_SIZE))
-            & powers_of_two[tip % BIN_SIZE]) {
+            & power_of_two(tip % BIN_SIZE)) {
         TreeTools::set_bit(ret(split, uintx(kept_tip / BIN_SIZE)),
                            kept_tip % BIN_SIZE);
         ++in_split[split];
