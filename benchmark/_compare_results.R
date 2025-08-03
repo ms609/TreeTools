@@ -74,15 +74,14 @@ for (pr_file in pr_files) {
     
     message <- paste0(
       "#### `", fn_name, "`: ", status, "\n",
-      "- **Median time:** ", round(res$median_main / 1e6, 2), " ms \U2192 ",
-      round(res$median_pr / 1e6, 2), " ms\n",
-      "- **Change:** ", round(res$change, 2), "% (p = ",
-      format.pval(res$p_value), ")\n\n"
+      "Change: **", round(res$change, 2), "%** (p = ", 
+      format.pval(res$p_value), "): "
+      round(res$median_main / 1e6, 2), " \U2192 ",
+      round(res$median_pr / 1e6, 2), " ms\n\n", 
     )
   }
   
   if (has_significant_regression) {
-    message <- paste0(message, "**Performance regression detected!**\n\n\n\n")
     regressions <- TRUE
   }
   
