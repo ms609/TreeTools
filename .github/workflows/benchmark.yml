@@ -55,11 +55,17 @@ jobs:
           dependencies: '"hard"'
           needs: benchmark
 
+      - name: Benchmark PR
+        run: |
+          cd pr
+          mkdir ./pr-benchmark-results/
+        shell: bash
       - name: Benchmark main
         run: |
-          cd main
+          cd ../main
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           Rscript benchmark/_run_benchmarks.R
+          mkdir ../pr/main-benchmark-results/
           mv *.bench.Rds ../pr/main-benchmark-results/
         shell: bash
         
@@ -69,6 +75,7 @@ jobs:
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           Rscript benchmark/_run_benchmarks.R
           mv *.bench.Rds ./pr-benchmark-results/
+          mkdir ./pr2-benchmark-results/
         shell: bash
 
       - run: dir pr-benchmark-results
