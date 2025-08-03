@@ -65,16 +65,15 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   int16 patriarch[SL_MAX_TIPS]{};
 
   int16 split_order[SL_MAX_SPLITS];
-  for (int16 i = x.n_splits; i--; ) {
+  for (int16 i = 0; i < x.n_splits; ++i) {
     split_order[i] = i;
   }
-  // Rcout << "\n\nsplits_to_edge: " << x.n_splits << " splits loaded.\n";
   insertion_sort_by_largest(split_order, x.n_splits, x.in_split);
 
   int16 next_node = n_tip;
   for (int16 split = x.n_splits; split--; ) {
     if (split > 0) {
-      __builtin_prefetch(&x.state[split_order[split-1]][0], 0, 3);
+      __builtin_prefetch(&x.state[split_order[split - 1]][0], 0, 3);
     }
     
     for (int16 bin = x.n_bins; bin--; ) {
