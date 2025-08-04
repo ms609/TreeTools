@@ -6,8 +6,6 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/renumber_tree.h"
 using namespace TreeTools;
 
-TREETOOLS_SPLITLIST_INIT
-
 inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
                                       const int16* sort_by) {
   ASSERT(arr_len > 0);
@@ -40,6 +38,8 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
                             int16 (&parent)[SL_MAX_TIPS + SL_MAX_SPLITS],
                             int16 (&patriarch)[SL_MAX_TIPS]) {
+  __builtin_prefetch(&patriarch[tip], 0, 1);  // Shaves off a gnat's whisker
+  
   if (patriarch[tip]) {
     parent[patriarch[tip]] = *next_node;
   } else {
@@ -67,21 +67,25 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   int16 patriarch[SL_MAX_TIPS]{};
 
   int16 split_order[SL_MAX_SPLITS];
-  for (int16 i = x.n_splits; i--; ) {
+  for (int16 i = 0; i < x.n_splits; ++i) {
     split_order[i] = i;
   }
-  // Rcout << "\n\nsplits_to_edge: " << x.n_splits << " splits loaded.\n";
   insertion_sort_by_largest(split_order, x.n_splits, x.in_split);
 
   int16 next_node = n_tip;
   for (int16 split = x.n_splits; split--; ) {
+    if (split > 0) {
+      __builtin_prefetch(&x.state[split_order[split - 1]][0], 0, 3);
+    }
+    
     for (int16 bin = x.n_bins; bin--; ) {
-      const splitbit chunk = x.state[split_order[split]][bin];
-      for (int16 bin_tip = SL_BIN_SIZE; bin_tip--; ) {
-        const int16 tip = bin_tip + int16(bin * SL_BIN_SIZE);
-        if (chunk & powers_of_two[bin_tip]) {
-          insert_ancestor(tip, &next_node, parent, patriarch);
-        }
+      splitbit chunk = x.state[split_order[split]][bin];
+      const int16 base_tip = bin * SL_BIN_SIZE;
+      while (chunk) {
+        const int16 bin_tip = __builtin_ctzll(chunk); // count trailing zeros
+        const int16 tip = base_tip + bin_tip;
+        insert_ancestor(tip, &next_node, parent, patriarch);
+        chunk &= chunk - 1; // clear lowest set bit
       }
     }
     ++next_node;
