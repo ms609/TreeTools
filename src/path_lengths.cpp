@@ -50,23 +50,15 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
     }
     // span = number of nodes spanned; i.e. edges included - 1
     for (intx span = 1; span < path_len - 1; ++span) {
-      for (intx i = 0; i != path_len - span - 1; ++i) {
-        const intx start = this_path[i + span + 1];
-        const intx add_to = this_path[i + span];
-        const intx end = this_path[i];
-        double left = ret[RTOC(add_to) * data_dim + RTOC(start)];
-        double right = ret[RTOC(end) * data_dim + RTOC(add_to)];
+      for (intx i = 0; i < path_len - span - 1; ++i) {
+        const intx* path_i = this_path.get() + i;
+        const intx start = RTOC(path_i[span + 1]);
+        const intx add_to = RTOC(path_i[span]);
+        const intx end = RTOC(path_i[0]);
         
-        if (Rcpp::NumericVector::is_na(left) || Rcpp::NumericVector::is_na(right)) {
-          Rcpp::Rcout << "Warning: reading uninitialized ret at tip " << tip
-                      << ", span " << span << ", i " << i
-                      << " indices (end=" << RTOC(end)
-                      << ", add_to=" << RTOC(add_to)
-                      << ", start=" << RTOC(start) << ")\n";
-        }
-        ret[RTOC(end) * data_dim + RTOC(start)] =
-          ret[RTOC(add_to) * data_dim + RTOC(start)] + 
-          ret[RTOC(end) * data_dim + RTOC(add_to)];
+        ret[end * data_dim + start] =
+          ret[add_to * data_dim + start] + 
+          ret[end * data_dim + add_to];
       }
     }
   }
