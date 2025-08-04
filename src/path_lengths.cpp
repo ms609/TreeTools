@@ -15,7 +15,7 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
   const intx n_edge = edge.nrow();
   const intx n_vert = n_edge + 1;
   const intx data_dim = n_vert + 1;
-  const intx r_to_c = 1;
+  constexpr intx r_to_c = 1;
   
   std::vector<double> data(data_dim * data_dim, NumericVector::get_na());
   
@@ -42,11 +42,10 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
     // span = number of nodes spanned; i.e. edges included - 1
     for (intx span = 1; span < path_len - 1; ++span) {
       for (intx i = 0; i != path_len - span - 1; ++i) {
-        const intx
-          start = this_path[i + span + 1],
-          add_to = this_path[i + span],
-          end = this_path[i]
-        ;
+        const intx start = this_path[i + span + 1];
+        const intx add_to = this_path[i + span];
+        const intx end = this_path[i];
+        
         data[end * data_dim + start] = data[add_to * data_dim + start] + 
           data[end * data_dim + add_to];
       }
