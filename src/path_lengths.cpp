@@ -6,9 +6,77 @@ using namespace Rcpp;
 #define PARENT(i) edge(i, 0)
 #define CHILD(i) edge(i, 1)
 
+#define RTOC(i) (i - 1)
+
 // edge must be a two-column edge matrix in preorder
 // [[Rcpp::export]]
-NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) {
+NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
+                           const LogicalVector init_nas) {
+  
+  const intx root_node = edge[0];
+  const intx n_tip = root_node - 1;
+  const intx n_edge = edge.nrow();
+  const intx n_vert = n_edge + 1;
+  const intx data_dim = RTOC(n_vert) + 1;
+  constexpr intx r_to_c = 1;
+  
+  Rcpp::NumericMatrix ret = Rcpp::NumericMatrix(Rcpp::no_init(n_vert, n_vert));
+  if (init_nas[0]) {
+    ret.fill(Rcpp::NumericVector::get_na());
+  }
+  
+  auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
+  auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
+  for (intx i = 0; i < n_edge; ++i) {
+    const int child_i = CHILD(i);
+    const int parent_i = PARENT(i);
+    parent_of[child_i] = parent_i;
+    parent_edge[child_i] = i;
+    ret[RTOC(child_i) * data_dim + RTOC(parent_i)] = weight[i];
+  }
+  
+  auto this_path = std::make_unique<intx[]>(n_tip);
+  for (intx tip = 1; tip <= n_tip; ++tip) {
+    this_path[0] = tip;
+    intx path_len = 1;
+    for(;;) {
+      intx this_parent = parent_of[this_path[path_len - 1]];
+      if (this_parent) {
+        this_path[path_len] = this_parent;
+      } else {
+        break;
+      }
+      ++path_len;
+    }
+    // span = number of nodes spanned; i.e. edges included - 1
+    for (intx span = 1; span < path_len - 1; ++span) {
+      for (intx i = 0; i != path_len - span - 1; ++i) {
+        const intx start = this_path[i + span + 1];
+        const intx add_to = this_path[i + span];
+        const intx end = this_path[i];
+        double left = ret[RTOC(add_to) * data_dim + RTOC(start)];
+        double right = ret[RTOC(end) * data_dim + RTOC(add_to)];
+        
+        if (Rcpp::NumericVector::is_na(left) || Rcpp::NumericVector::is_na(right)) {
+          Rcpp::Rcout << "Warning: reading uninitialized ret at tip " << tip
+                      << ", span " << span << ", i " << i
+                      << " indices (end=" << RTOC(end)
+                      << ", add_to=" << RTOC(add_to)
+                      << ", start=" << RTOC(start) << ")\n";
+        }
+        ret[RTOC(end) * data_dim + RTOC(start)] =
+          ret[RTOC(add_to) * data_dim + RTOC(start)] + 
+          ret[RTOC(end) * data_dim + RTOC(add_to)];
+      }
+    }
+  }
+  
+  return ret;
+}
+
+// edge must be a two-column edge matrix in preorder
+// [[Rcpp::export]]
+NumericMatrix path_lengths_0(const IntegerMatrix edge, const DoubleVector weight) {
   
   const intx root_node = edge[0];
   const intx n_tip = root_node - 1;
@@ -17,7 +85,7 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
   const intx data_dim = n_vert + 1;
   constexpr intx r_to_c = 1;
   
-  std::vector<double> data(data_dim * data_dim, NumericVector::get_na());
+  std::vector<double> data(data_dim * data_dim, Rcpp::NumericVector::get_na());
   
   auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
   auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
