@@ -69,10 +69,6 @@ path_lengths <- function(edge, weight, init_nas) {
     .Call(`_TreeTools_path_lengths`, edge, weight, init_nas)
 }
 
-path_lengths_0 <- function(edge, weight) {
-    .Call(`_TreeTools_path_lengths_0`, edge, weight)
-}
-
 cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
