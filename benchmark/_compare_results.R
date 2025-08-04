@@ -80,9 +80,11 @@ for (pr_file in pr_files) {
       has_significant_regression <- TRUE
     }
     
+    bold <- ifelse(res$faster | res$slower, "**", "")
+    
     message <- paste0(
-      "| `", fn_name, "` | ", status, " | **", 
-      round(res$change, 2), "%** <br />(p: ", 
+      "| `", fn_name, "` | ", status, " | ", 
+      bold, round(res$change, 2), "%", bold, "<br />(p: ", 
       format.pval(res$p_value), ") | ",
       signif(res$median_main / 1e6, 3), " \u2192<br />",
       signif(res$median_pr / 1e6, 3), ",  ",
