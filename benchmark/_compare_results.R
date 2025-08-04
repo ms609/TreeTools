@@ -3,7 +3,7 @@ pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
 
 output <- paste0(
   "report<<EOF\n### Performance benchmark results\n\n",
-  "| Call     | Status | Change | Time (ms) |\n",
+  "| Call     | Status | Change | Time (µs) |\n",
   "|----------|--------|--------|-----------|\n"
   )
 
@@ -86,9 +86,9 @@ for (pr_file in pr_files) {
       "| `", fn_name, "` | ", status, " | ", 
       bold, round(res$change, 2), "%", bold, "<br />(p: ", 
       format.pval(res$p_value), ") | ",
-      signif(res$median_main / 1e6, 3), " \u2192<br />",
-      signif(res$median_pr / 1e6, 3), ",  ",
-      signif(res$median_cf / 1e6, 3), " |\n"
+      signif(res$median_main / 1e3, 3), " \u2192<br />",
+      signif(res$median_pr / 1e3, 3), ",  ",
+      signif(res$median_cf / 1e3, 3), " |\n"
     )
   }
   
