@@ -10,21 +10,22 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) {
   
-  NumericMatrix ret(n_vert + 1, n_vert + 1);
-  ret.fill(NumericVector::get_na());
   const intx root_node = edge[0];
   const intx n_tip = root_node - 1;
   const intx n_edge = edge.nrow();
   const intx n_vert = n_edge + 1;
-  const intx ret_dim = n_vert + 1;
+  const intx data_dim = n_vert + 1;
   const intx r_to_c = 1;
+  
+  NumericMatrix data(data_dim, data_dim);
+  data.fill(NumericVector::get_na());
   
   auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
   auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
   for (intx i = n_edge; i--; ) {
     parent_of[CHILD(i)] = PARENT(i);
     parent_edge[CHILD(i)] = i;
-    ret(PARENT(i), CHILD(i)) = weight[i];
+    data[CHILD(i) * data_dim + PARENT(i)] = weight[i];
   }
   auto this_path = std::make_unique<intx[]>(n_tip);
   for (intx tip = 1; tip <= n_tip; ++tip) {
@@ -47,9 +48,11 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
           add_to = this_path[i + span],
           end = this_path[i]
         ;
-        ret(start, end) = ret(start, add_to) + ret(add_to, end);
+        data[end * data_dim + start] = data[add_to * data_dim + start] + 
+          data[end * data_dim + add_to];
       }
     }
   }
+  NumericMatrix ret(data);
   return ret(Range(1, n_vert), Range(1, n_vert));
 }
