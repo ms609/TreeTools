@@ -35,7 +35,7 @@ PathLengths <- function(tree, fullMatrix = FALSE, use.na = TRUE) {
     weights <- rep_len(1L, dim(tree[["edge"]])[1])
   }
   mat <- path_lengths(tree[["edge"]], weights,
-                      init_nas =TRUE)#isTRUE(fullMatrix) && isTRUE(use.na))
+                      init_nas = isFALSE(fullMatrix) || isTRUE(use.na))
   
   # Return:
   if (fullMatrix) {
