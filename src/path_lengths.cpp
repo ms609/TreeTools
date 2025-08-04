@@ -35,12 +35,12 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
   
   auto this_path = std::make_unique<intx[]>(n_tip);
   for (intx tip = 1; tip <= n_tip; ++tip) {
-    this_path[0] = tip;
+    this_path[0] = RTOC(tip);
     intx path_len = 1;
     for(;;) {
-      intx this_parent = parent_of[RTOC(this_path[path_len - 1])];
+      intx this_parent = parent_of[this_path[path_len - 1]];
       if (this_parent) {
-        this_path[path_len] = this_parent;
+        this_path[path_len] = RTOC(this_parent);
       } else {
         break;
       }
@@ -52,9 +52,9 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
       for (intx i = 0; i < path_len - span - 1; ++i) {
         const intx* path_i = this_path.get() + i;
         
-        const intx start = RTOC(path_i[span + 1]);
-        const intx add_to = RTOC(path_i[span]);
-        const intx end = RTOC(path_i[0]);
+        const intx start = path_i[span + 1];
+        const intx add_to = path_i[span];
+        const intx end = path_i[0];
         
         double* ret_ptr = ret.begin();
         
