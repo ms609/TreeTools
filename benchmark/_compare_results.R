@@ -3,8 +3,8 @@ pr_files <- list.files("pr-benchmark-results", pattern = "*.bench.Rds",
 
 output <- paste0(
   "report<<EOF\n### Performance benchmark results\n\n",
-  "| Function | Status | Change | P-value | Before (ms) | After (ms) |\n",
-  "|----------|--------|--------|---------|-------------|------------|\n"
+  "| Call     | Status | Change | Time (ms) |\n",
+  "|----------|--------|--------|-----------|\n"
   )
 
 regressions <- FALSE
@@ -72,8 +72,8 @@ for (pr_file in pr_files) {
     status <- ifelse(res$slower, "\U1F7E0 Slower \U1F641",
                      ifelse(res$faster, "\U1F7E2 Faster!",
                             ifelse(res$p_value < 0.05,
-                                   "\U1F7E1 Potential slowdown (p < 0.05)",
-                                   "\U26AA No significant change.")
+                                   "\U1F7E1 Slowdown?",
+                                   "\U26AA NSD.")
                      )
     )
     if (res$slower) {
@@ -82,9 +82,9 @@ for (pr_file in pr_files) {
     
     message <- paste0(
       "| `", fn_name, "` | ", status, " | **", 
-      round(res$change, 2), "%** | ", 
-      format.pval(res$p_value), " | ",
-      signif(res$median_main / 1e6, 3), " | ",
+      round(res$change, 2), "%** (p = ", 
+      format.pval(res$p_value), ") | ",
+      signif(res$median_main / 1e6, 3), " \u2192 ",
       signif(res$median_pr / 1e6, 3), ",  ",
       signif(res$median_cf / 1e6, 3), " |\n"
     )
