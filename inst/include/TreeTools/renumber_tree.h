@@ -417,23 +417,39 @@ namespace TreeTools {
   // [[Rcpp::export]]
   inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
-    const int32
-      n_edge = edge.nrow(),
-      node_limit = n_edge + 1;
-    
+    const int32 n_edge = edge.nrow();
+    const int32 node_limit = n_edge + 1;
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
       Rcpp::stop("Tree too large for postorder_order. "            // # nocov
                               "Try running 64-bit R?");            // # nocov
     }
     
-    int32 * missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
+    constexpr int32 STACK_THRESHOLD = 2048;
+    const bool use_stack = node_limit < STACK_THRESHOLD;
+    
+    int32 stack_missing_children[STACK_THRESHOLD];
+    bool stack_matched[STACK_THRESHOLD];
+    
+    int32 * missing_children;
+    bool* matched;
+    
+    if (use_stack) {
+      missing_children = stack_missing_children;
+      matched = stack_matched;
+      
+      std::memset(missing_children, 0, (node_limit + 1) * sizeof(int32));
+      std::memset(matched, false, n_edge * sizeof(bool));
+    } else {
+      missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
+      matched = (bool*) std::calloc(node_limit, sizeof(bool));
+    }
+      
     for (int32 i = n_edge; i--; ) {
       ++missing_children[PARENT(i)];
     }
     
     int32 found = 0;
-    bool * matched = (bool*) std::calloc(node_limit, sizeof(bool));
     Rcpp::IntegerVector ret(n_edge);
     do {
       for (int32 i = n_edge; i--; ) {
@@ -446,8 +462,11 @@ namespace TreeTools {
         }
       }
     } while (found != n_edge);
-    std::free(missing_children);
-    std::free(matched);
+    
+    if (!use_stack) {
+      std::free(missing_children);
+      std::free(matched);
+    }
     
     return ret;
   }
