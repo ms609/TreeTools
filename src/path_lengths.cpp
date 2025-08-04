@@ -17,8 +17,7 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
   const intx data_dim = n_vert + 1;
   const intx r_to_c = 1;
   
-  NumericMatrix data(data_dim, data_dim);
-  data.fill(NumericVector::get_na());
+  std::vector<double> data(data_dim * data_dim, NumericVector::get_na());
   
   auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
   auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
@@ -53,6 +52,6 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) 
       }
     }
   }
-  NumericMatrix ret(data);
+  NumericMatrix ret(data_dim, data_dim, data.begin());
   return ret(Range(1, n_vert), Range(1, n_vert));
 }
