@@ -10,6 +10,8 @@ using namespace Rcpp;
 #define CTOR(i) (i + 1)
 
 // edge must be a two-column edge matrix in preorder
+// (although seemingly the preorder requirement is not strict;
+// see expect_equal(PathLengths(Postorder(bal9)), PathLengths(bal9)))
 // [[Rcpp::export]]
 NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
                            const LogicalVector init_nas) {
