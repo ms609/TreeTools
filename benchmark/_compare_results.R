@@ -44,7 +44,7 @@ for (pr_file in pr_files) {
     median_pr <- median(pr_times)
     median_cf <- median(cf_times)
     median_main <- median(main_times)
-    percentage_change <- ((median_pr - median_main) / median_main) * 100
+    percentage_change <- ((median_main - median_pr) / median_main) * 100
     
     delta <- abs(median_pr - median_main)
     df_delta <- abs(median_pr - median_cf)
