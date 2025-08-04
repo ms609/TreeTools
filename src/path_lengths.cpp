@@ -7,6 +7,7 @@ using namespace Rcpp;
 #define CHILD(i) edge(i, 1)
 
 #define RTOC(i) (i - 1)
+#define CTOR(i) (i + 1)
 
 // edge must be a two-column edge matrix in preorder
 // [[Rcpp::export]]
@@ -17,7 +18,7 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
   const intx n_tip = root_node - 1;
   const intx n_edge = edge.nrow();
   const intx n_vert = n_edge + 1;
-  const intx data_dim = RTOC(n_vert) + 1;
+  const intx data_dim = n_vert;
   
   Rcpp::NumericMatrix ret = Rcpp::NumericMatrix(Rcpp::no_init(n_vert, n_vert));
   if (init_nas[0]) {
@@ -27,9 +28,9 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
   auto parent_of = std::make_unique<intx[]>(n_vert);
   for (intx i = 0; i < n_edge; ++i) {
     const int child_i = RTOC(CHILD(i));
-    const int parent_i = PARENT(i);
-    parent_of[child_i] = parent_i;
-    ret[child_i * data_dim + RTOC(parent_i)] = weight[i];
+    const int parent_i = RTOC(PARENT(i));
+    parent_of[child_i] = CTOR(parent_i); // reserves 0 for not-yet-filled
+    ret[child_i * data_dim + parent_i] = weight[i];
   }
   
   auto this_path = std::make_unique<intx[]>(n_tip);
@@ -45,17 +46,22 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
       }
       ++path_len;
     }
+    
     // span = number of nodes spanned; i.e. edges included - 1
     for (intx span = 1; span < path_len - 1; ++span) {
       for (intx i = 0; i < path_len - span - 1; ++i) {
         const intx* path_i = this_path.get() + i;
+        
         const intx start = RTOC(path_i[span + 1]);
         const intx add_to = RTOC(path_i[span]);
         const intx end = RTOC(path_i[0]);
         
-        ret[end * data_dim + start] =
-          ret[add_to * data_dim + start] + 
-          ret[end * data_dim + add_to];
+        double* ret_ptr = ret.begin();
+        
+        double* row_end_ptr    = ret_ptr + end    * data_dim;
+        double* row_add_to_ptr = ret_ptr + add_to * data_dim;
+        
+        row_end_ptr[start] = row_add_to_ptr[start] + row_end_ptr[add_to];
       }
     }
   }
