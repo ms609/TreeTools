@@ -28,9 +28,9 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
   auto parent_of = std::make_unique<intx[]>(n_vert);
   for (intx i = 0; i < n_edge; ++i) {
     const int child_i = RTOC(CHILD(i));
-    const int parent_i = RTOC(PARENT(i));
-    parent_of[child_i] = CTOR(parent_i); // reserves 0 for not-yet-filled
-    ret[child_i * data_dim + parent_i] = weight[i];
+    const int parent_i = PARENT(i);
+    parent_of[child_i] = parent_i;
+    ret[child_i * data_dim + RTOC(parent_i)] = weight[i];
   }
   
   auto this_path = std::make_unique<intx[]>(n_tip);
