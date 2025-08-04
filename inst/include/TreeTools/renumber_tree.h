@@ -430,46 +430,119 @@ namespace TreeTools {
     
     int32 stack_missing_children[STACK_THRESHOLD];
     bool stack_matched[STACK_THRESHOLD];
+    int32 stack_ready_edges[STACK_THRESHOLD];
+    int32 stack_child_edges_start[STACK_THRESHOLD];
+    int32 stack_child_edges[STACK_THRESHOLD];
+    int32 stack_child_edge_counts[STACK_THRESHOLD];
     
     int32 * missing_children;
     bool* matched;
+    int32* ready_edges;
+    int32* child_edges_start;  // Start index for each node's child edges
+    int32* child_edges;        // Flat array of child edges
+    int32* child_edge_counts;  // Count of edges ending at each node
     
     if (use_stack) {
       missing_children = stack_missing_children;
       matched = stack_matched;
+      ready_edges = stack_ready_edges;
+      child_edges_start = stack_child_edges_start;
+      child_edges = stack_child_edges;
+      child_edge_counts = stack_child_edge_counts;
       
       std::memset(missing_children, 0, (node_limit + 1) * sizeof(int32));
       std::memset(matched, false, n_edge * sizeof(bool));
+      std::memset(child_edges_start, 0, (node_limit + 1) * sizeof(int32));
+      std::memset(child_edge_counts, 0, (node_limit + 1) * sizeof(int32));
     } else {
       missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-      matched = (bool*) std::calloc(node_limit, sizeof(bool));
-    }
-      
-    for (int32 i = n_edge; i--; ) {
-      ++missing_children[PARENT(i)];
+      matched = (bool*) std::calloc(n_edge, sizeof(bool));
+      ready_edges = (int32*) std::malloc(n_edge * sizeof(int32));
+      child_edges_start = (int32*) std::calloc(node_limit + 1, sizeof(int32));
+      child_edges = (int32*) std::malloc(n_edge * sizeof(int32));
+      child_edge_counts = (int32*) std::calloc(node_limit + 1, sizeof(int32));
     }
     
+    // Count children for each node AND count edges ending at each node
+    for (int32 i = n_edge; i--; ) {
+      ++missing_children[PARENT(i)];
+      ++child_edge_counts[CHILD(i)];
+    }
+    
+    // Build start indices for child_edges array
+    int32 total = 0;
+    for (int32 node = 1; node <= node_limit; ++node) {
+      child_edges_start[node] = total;
+      total += child_edge_counts[node];
+    }
+    
+    // Populate child_edges array
+    if (use_stack) {
+      int32 fill_pos[STACK_THRESHOLD];
+      for (int32 node = 1; node <= node_limit; ++node) {
+        fill_pos[node] = child_edges_start[node];
+      }
+      
+      for (int32 i = 0; i < n_edge; ++i) {
+        const int32 child = CHILD(i);
+        child_edges[fill_pos[child]++] = i;
+      }
+    } else {
+      int32* fill_pos = (int32*) std::malloc((node_limit + 1) * sizeof(int32));
+      for (int32 node = 1; node <= node_limit; ++node) {
+        fill_pos[node] = child_edges_start[node];
+      }
+      
+      for (int32 i = 0; i < n_edge; ++i) {
+        const int32 child = CHILD(i);
+        child_edges[fill_pos[child]++] = i;
+      }
+      std::free(fill_pos);
+    }
+    
+    // Find initial ready edges (leaves)
+    int32 ready_count = 0;
+    for (int32 i = n_edge; i--; ) {
+      if (!missing_children[CHILD(i)]) {
+        ready_edges[ready_count++] = i;
+      }
+    }
+    
+    // Process ready edges
     int32 found = 0;
+    int32 ready_pos = 0;
     Rcpp::IntegerVector ret(n_edge);
-    do {
-      for (int32 i = n_edge; i--; ) {
-        if (!matched[i]) {
-          if (!missing_children[CHILD(i)]) {
-            matched[i] = true;
-            --missing_children[PARENT(i)];
-            ret[found++] = i + 1;
+    
+    while (ready_pos < ready_count) {
+      const int32 edge_idx = ready_edges[ready_pos++];
+      matched[edge_idx] = true;
+      ret[found++] = edge_idx + 1;
+      
+      const int32 parent = PARENT(edge_idx);
+      if (--missing_children[parent] == 0) {
+        // Parent node is now ready - add all edges ending at parent
+        const int32 start = child_edges_start[parent];
+        const int32 end = (parent == node_limit) ? n_edge : child_edges_start[parent + 1];
+        
+        for (int32 j = start; j < end; ++j) {
+          const int32 candidate_edge = child_edges[j];
+          if (!matched[candidate_edge]) {
+            ready_edges[ready_count++] = candidate_edge;
           }
         }
       }
-    } while (found != n_edge);
+    }
     
     if (!use_stack) {
       std::free(missing_children);
       std::free(matched);
+      std::free(ready_edges);
+      std::free(child_edges_start);
+      std::free(child_edges);
+      std::free(child_edge_counts);
     }
     
     return ret;
   }
 }
-
 #endif
