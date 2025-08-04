@@ -422,7 +422,7 @@ namespace TreeTools {
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
       Rcpp::stop("Tree too large for postorder_order. "            // # nocov
-                              "Try running 64-bit R?");            // # nocov
+                   "Try running 64-bit R?");                       // # nocov
     }
     
     constexpr int32 STACK_THRESHOLD = 2048;
