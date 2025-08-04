@@ -72,8 +72,8 @@ for (pr_file in pr_files) {
     status <- ifelse(res$slower, "\U1F7E0 Slower \U1F641",
                      ifelse(res$faster, "\U1F7E2 Faster!",
                             ifelse(res$p_value < 0.05,
-                                   "\U1F7E1 Slowdown?",
-                                   "\U26AA NSD.")
+                                   "\U1F7E1 ?Slower",
+                                   "\U26AA NSD")
                      )
     )
     if (res$slower) {
@@ -82,9 +82,9 @@ for (pr_file in pr_files) {
     
     message <- paste0(
       "| `", fn_name, "` | ", status, " | **", 
-      round(res$change, 2), "%** (p = ", 
+      round(res$change, 2), "%** <br />(p: ", 
       format.pval(res$p_value), ") | ",
-      signif(res$median_main / 1e6, 3), " \u2192 ",
+      signif(res$median_main / 1e6, 3), " \u2192<br />",
       signif(res$median_pr / 1e6, 3), ",  ",
       signif(res$median_cf / 1e6, 3), " |\n"
     )
