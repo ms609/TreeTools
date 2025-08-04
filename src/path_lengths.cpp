@@ -18,21 +18,18 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
   const intx n_edge = edge.nrow();
   const intx n_vert = n_edge + 1;
   const intx data_dim = RTOC(n_vert) + 1;
-  constexpr intx r_to_c = 1;
   
   Rcpp::NumericMatrix ret = Rcpp::NumericMatrix(Rcpp::no_init(n_vert, n_vert));
   if (init_nas[0]) {
     ret.fill(Rcpp::NumericVector::get_na());
   }
   
-  auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
-  auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
+  auto parent_of = std::make_unique<intx[]>(n_vert);
   for (intx i = 0; i < n_edge; ++i) {
-    const int child_i = CHILD(i);
+    const int child_i = RTOC(CHILD(i));
     const int parent_i = PARENT(i);
     parent_of[child_i] = parent_i;
-    parent_edge[child_i] = i;
-    ret[RTOC(child_i) * data_dim + RTOC(parent_i)] = weight[i];
+    ret[child_i * data_dim + RTOC(parent_i)] = weight[i];
   }
   
   auto this_path = std::make_unique<intx[]>(n_tip);
@@ -40,7 +37,7 @@ NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight,
     this_path[0] = tip;
     intx path_len = 1;
     for(;;) {
-      intx this_parent = parent_of[this_path[path_len - 1]];
+      intx this_parent = parent_of[RTOC(this_path[path_len - 1])];
       if (this_parent) {
         this_path[path_len] = this_parent;
       } else {
@@ -80,10 +77,8 @@ NumericMatrix path_lengths_0(const IntegerMatrix edge, const DoubleVector weight
   std::vector<double> data(data_dim * data_dim, Rcpp::NumericVector::get_na());
   
   auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
-  auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
   for (intx i = n_edge; i--; ) {
     parent_of[CHILD(i)] = PARENT(i);
-    parent_edge[CHILD(i)] = i;
     data[CHILD(i) * data_dim + PARENT(i)] = weight[i];
   }
   auto this_path = std::make_unique<intx[]>(n_tip);
