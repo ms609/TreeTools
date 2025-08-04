@@ -94,6 +94,20 @@ jobs:
           Rscript benchmark/_compare_results.R
         shell: bash
         
+      - name: Upload PR benchmark results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pr-benchmark-results
+          path: pr/pr-benchmark-results/
+          
+      - name: Upload main branch benchmark results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-benchmark-results
+          path: pr/main-benchmark-results/
+          
       - name: Comment on PR
         if: always() && github.event_name == 'pull_request' && steps.compare_results.outputs.report != ''
         uses: actions/github-script@v7
