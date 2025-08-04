@@ -9,20 +9,18 @@ using namespace Rcpp;
 // edge must be a two-column edge matrix in preorder
 // [[Rcpp::export]]
 NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight) {
-  const intx
-    root_node = edge[0],
-    n_tip = root_node - 1,
-    n_edge = edge.nrow(),
-    n_vert = n_edge + 1,
-    r_to_c = 1
-  ;
   
   NumericMatrix ret(n_vert + 1, n_vert + 1);
   ret.fill(NumericVector::get_na());
-  auto
-    parent_of = std::make_unique<intx[]>(n_vert + r_to_c),
-    parent_edge = std::make_unique<intx[]>(n_vert + r_to_c)
-  ;
+  const intx root_node = edge[0];
+  const intx n_tip = root_node - 1;
+  const intx n_edge = edge.nrow();
+  const intx n_vert = n_edge + 1;
+  const intx ret_dim = n_vert + 1;
+  const intx r_to_c = 1;
+  
+  auto parent_of = std::make_unique<intx[]>(n_vert + r_to_c);
+  auto parent_edge = std::make_unique<intx[]>(n_vert + r_to_c);
   for (intx i = n_edge; i--; ) {
     parent_of[CHILD(i)] = PARENT(i);
     parent_edge[CHILD(i)] = i;
