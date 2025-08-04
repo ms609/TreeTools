@@ -47,11 +47,11 @@ Benchmark("postorder-pec40k",
           ub(TreeTools:::postorder_order(pec40k), times = 5,
              TreeTools:::postorder_order(dpec40k),
              TreeTools:::postorder_order(npec40k)))
-
-rnd80 <- RandomTree(80)$edge
-drnd80 <- Disorder(rnd80)
-nrnd80 <- NodeNumber(drnd80)
-Benchmark("postorder-rnd80",
-          ub(TreeTools:::postorder_order(rnd80),
-             TreeTools:::postorder_order(drnd80),
-             TreeTools:::postorder_order(nrnd80)))
+# 
+# rnd80 <- RandomTree(80)$edge
+# drnd80 <- Disorder(rnd80)
+# nrnd80 <- NodeNumber(drnd80)
+# Benchmark("postorder-rnd80",
+#           ub(TreeTools:::postorder_order(rnd80),
+#              TreeTools:::postorder_order(drnd80),
+#              TreeTools:::postorder_order(nrnd80)))
