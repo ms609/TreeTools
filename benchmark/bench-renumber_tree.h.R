@@ -27,7 +27,7 @@ Benchmark("postorder-npec40", ub(TreeTools:::postorder_order(npec40)))
 
 pec40k <- BalancedTree(40000)$edge
 dpec40k <- Disorder(pec40k)
-npec40kk <- NodeNumber(dpec40kk)
+npec40kk <- NodeNumber(dpec40k)
 Benchmark("postorder-pec40k", ub(TreeTools:::postorder_order(pec40k)))
 Benchmark("postorder-dpec40k", ub(TreeTools:::postorder_order(dpec40k)))
 Benchmark("postorder-npec40k", ub(TreeTools:::postorder_order(npec40k)))
