@@ -66,7 +66,7 @@ jobs:
         run: |
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           # Kill any R processes and clear R temp files
-          pkill -f "R --" || true
+          pkill -f 'R --' || true
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr-benchmark-results/
@@ -84,7 +84,7 @@ jobs:
         run: |
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           # Kill any R processes and clear R temp files
-          pkill -f "R --" || true
+          pkill -f 'R --' || true
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr2-benchmark-results/
@@ -102,7 +102,7 @@ jobs:
         run: |
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           # Kill any R processes and clear R temp files
-          pkill -f "R --" || true
+          pkill -f 'R --' || true
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ../pr/main-benchmark-results/
