@@ -35,6 +35,12 @@ for (pr_file in pr_files) {
     pr_times <- pr_df[pr_df$expr == fn_name, "time"]
     cf_times <- cf_df[cf_df$expr == fn_name, "time"]
     main_times <- main_df[main_df$expr == fn_name, "time"]
+    matched <- if (length(main_times)) {
+      TRUE
+    } else {
+      main_times <- main_df[, "time"]
+      FALSE
+    }
     
     better_result <- t.test(pr_times, main_times, alternative = "less")
     worse_result <- t.test(pr_times, main_times, alternative = "greater")
@@ -48,12 +54,13 @@ for (pr_file in pr_files) {
     
     delta <- abs(median_pr - median_main)
     df_delta <- abs(median_pr - median_cf)
-    not_noise <- delta > (df_delta * 2)
+    noise <- delta < (df_delta * 2)
     
-    is_faster <- better_result$p.value < 0.01 && not_noise
-    is_slower <- worse_result$p.value < 0.01 && not_noise
+    is_faster <- better_result$p.value < 0.01 && !noise && matched
+    is_slower <- worse_result$p.value < 0.01 && !noise && matched
     
     report[[fn_name]] <- list(
+      matched = matched,
       slower = is_slower,
       faster = is_faster,
       p_value = worse_result$p.value,
@@ -69,13 +76,16 @@ for (pr_file in pr_files) {
   
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
-    status <- ifelse(res$slower, "\U1F7E0 Slower \U1F641",
-                     ifelse(res$faster, "\U1F7E2 Faster!",
-                            ifelse(res$p_value < 0.05,
-                                   "\U1F7E1 ?Slower",
-                                   "\U26AA NSD")
-                     )
-    )
+    status <- ifelse(res$matched,
+                     ifelse(res$slower, "\U1F7E0 Slower \U1F641",
+                            ifelse(res$faster, "\U1F7E2 Faster!",
+                                   ifelse(res$p_value < 0.05,
+                                          "\U1F7E1 ?Slower",
+                                          "\U26AA NSD")
+                            )
+                     ),
+                     "\U1F7E4 ?Mismatch")
+    
     if (res$slower) {
       has_significant_regression <- TRUE
     }
