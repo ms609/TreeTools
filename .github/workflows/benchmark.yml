@@ -65,8 +65,10 @@ jobs:
         working-directory: pr
         run: |
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          # Kill any R processes and clear R temp files
-          pkill -f 'R --' || true
+          echo 1234
+          pkill -f Rscript || true
+          pkill R || true
+          echo 5678
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr-benchmark-results/
