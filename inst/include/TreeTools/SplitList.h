@@ -25,10 +25,44 @@ using splitbit = uint_fast64_t;
   splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
 
+// Retained for backward compatibility; not required since 1.15.0.9006
+#define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
+void _treetools_initialize_bitcounts() {                       \
+  for (int i = 65536; i--; ) {                                 \
+    int16 n_bits = 0;                                          \
+    for (int j = 16; j--; ) {                                  \
+      if (i & (1 << j)) n_bits += 1;                           \
+    }                                                          \
+    TreeTools::bitcounts[i] = n_bits;                          \
+  }                                                            \
+}                                                              \
+  
 namespace TreeTools {
 
   constexpr int input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;
 
+// Retained for backward compatibility; not required since 1.15.0.9006
+  static int16 bitcounts[65536];
+  
+// Retained for backward compatibility; not required since 1.15.0.9006
+  const splitbit powers_of_two[SL_BIN_SIZE] = {
+    0x1, 0x2, 0x4, 0x8,
+    0x10, 0x20, 0x40, 0x80,
+    0x100, 0x200, 0x400, 0x800,
+    0x1000, 0x2000, 0x4000, 0x8000,
+    0x10000, 0x20000, 0x40000, 0x80000,
+    0x100000, 0x200000, 0x400000, 0x800000,
+    0x1000000, 0x2000000, 0x4000000, 0x8000000,
+    0x10000000, 0x20000000, 0x40000000, 0x80000000,
+    0x100000000, 0x200000000, 0x400000000, 0x800000000,
+    0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000,
+    0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000,
+    0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000,
+    0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000,
+    0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000,
+    0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000,
+    0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000
+  };
   template<typename T>
   [[nodiscard]] constexpr T power_of_two(int bit_pos) noexcept {
     static_assert(std::is_unsigned_v<T>, "Use unsigned types for bit operations");
