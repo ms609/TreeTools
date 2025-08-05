@@ -65,12 +65,11 @@ jobs:
         working-directory: pr
         run: |
           R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          echo 1234
-          pkill -f Rscript || true
-          pkill R || true
-          echo 5678
           rm -rf /tmp/R* || true
+          rm -rf /tmp/R_sess* || true
+          echo 'Start benchmark run'
           Rscript benchmark/_run_benchmarks.R
+          echo 'Benchmark run complete'
           mkdir ./pr-benchmark-results/
           mv *.bench.Rds ./pr-benchmark-results/
         shell: bash
