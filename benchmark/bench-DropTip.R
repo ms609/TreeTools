@@ -1,8 +1,13 @@
 source("benchmark/_init.R") # sets seed
 
-tree <- rtree(100)
-Benchmark("DropTip", ub(DropTip(tree, 5)))
+tr80 <- rtree(80)
+tr2000 <- rtree(2000)
+Benchmark("DropTip.80", ub(DropTip(tr80, 5)))
+Benchmark("DropTip.2000", ub(DropTip(tr2000, 5), times = 25))
 
-unif <- tree
-unif$edge.length <- NULL
-Benchmark("DropTipUnlen", ub(DropTip(unif, 5)))
+unlen80 <- tr80
+unlen80$edge.length <- NULL
+unlen2k <- tr2000
+unlen2k$edge.length <- NULL
+Benchmark("DropTipUnlen", ub(DropTip(unlen80, 5)))
+Benchmark("DropTipUnlen2k", ub(DropTip(unlen2k, 5)))
