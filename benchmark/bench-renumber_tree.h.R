@@ -28,9 +28,9 @@ Benchmark("postorder-npec40", ub(TreeTools:::postorder_order(npec40)))
 pec40k <- BalancedTree(40000)$edge
 dpec40k <- Disorder(pec40k)
 npec40k <- NodeNumber(dpec40k)
-Benchmark("postorder-pec40k", ub(TreeTools:::postorder_order(pec40k), times = 25))
-Benchmark("postorder-dpec40k", ub(TreeTools:::postorder_order(dpec40k), times = 25))
-Benchmark("postorder-npec40k", ub(TreeTools:::postorder_order(npec40k), times = 25))
+Benchmark("postorder-pec40k", ub(TreeTools:::postorder_order(pec40k)))
+Benchmark("postorder-dpec40k", ub(TreeTools:::postorder_order(dpec40k)))
+Benchmark("postorder-npec40k", ub(TreeTools:::postorder_order(npec40k)))
 
 pec40 <- PectinateTree(40)$edge
 dpec40 <- Disorder(pec40)
@@ -41,9 +41,9 @@ Benchmark("postorder-npec40", ub(TreeTools:::postorder_order(npec40)))
 pec40k <- PectinateTree(40000)$edge
 dpec40k <- Disorder(pec40k)
 npec40k <- NodeNumber(dpec40k)
-Benchmark("postorder-pec40k", ub(TreeTools:::postorder_order(pec40k), times = 25))
-Benchmark("postorder-dpec40k", ub(TreeTools:::postorder_order(dpec40k), times = 25))
-Benchmark("postorder-npec40k", ub(TreeTools:::postorder_order(npec40k), times = 25))
+Benchmark("postorder-pec40k", ub(TreeTools:::postorder_order(pec40k)))
+Benchmark("postorder-dpec40k", ub(TreeTools:::postorder_order(dpec40k)))
+Benchmark("postorder-npec40k", ub(TreeTools:::postorder_order(npec40k)))
 
 r80 <- RandomTree(80, root = TRUE)
 rnd80 <- r80$edge

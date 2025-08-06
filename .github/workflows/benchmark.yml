@@ -54,12 +54,16 @@ jobs:
         with:
           dependencies: '"hard"'
           needs: benchmark
-
+          
       - name: Benchmark PR
         working-directory: pr
         run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          rm -rf /tmp/R* || true
+          rm -rf /tmp/R_sess* || true
+          echo 'Start benchmark run'
           Rscript benchmark/_run_benchmarks.R
+          echo 'Benchmark run complete'
           mkdir ./pr-benchmark-results/
           mv *.bench.Rds ./pr-benchmark-results/
         shell: bash
@@ -67,7 +71,10 @@ jobs:
       - name: Benchmark main
         working-directory: main
         run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          # Kill any R processes and clear R temp files
+          pkill -f 'R --' || true
+          rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ../pr/main-benchmark-results/
           mv *.bench.Rds ../pr/main-benchmark-results/
@@ -76,12 +83,15 @@ jobs:
       - name: Benchmark PR
         working-directory: pr
         run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          # Kill any R processes and clear R temp files
+          pkill -f 'R --' || true
+          rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
           mkdir ./pr2-benchmark-results/
           mv *.bench.Rds ./pr2-benchmark-results/
         shell: bash
-
+        
       - run: dir pr-benchmark-results
         working-directory: pr
       - run: dir main-benchmark-results
@@ -97,19 +107,16 @@ jobs:
       - name: Upload PR benchmark results
         if: failure()
         uses: actions/upload-artifact@v4
-        working-directory: pr
         with:
           name: pr-benchmark-results
-          path: |
-            pr-benchmark-results/*.bench.Rds
+          path: pr/pr-benchmark-results/*.bench.Rds
             
       - name: Upload main benchmark results
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: main-benchmark-results
-          path: |
-            main-benchmark-results/*.bench.Rds
+          path: pr/main-benchmark-results/*.bench.Rds
             
         
       - name: Comment on PR
