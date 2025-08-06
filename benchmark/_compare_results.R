@@ -79,7 +79,7 @@ for (pr_file in pr_files) {
                                    ifelse(res$faster, "\U1F7E2 Faster!",
                                           "\U26AA NSD"),
                                    ),
-                            "\U1F7E3 Trivial")
+                            "\U1F7E3 ~Unchanged"),
                      "\U1F7E4 ?Mismatch")
     
     if (res$slower) {
