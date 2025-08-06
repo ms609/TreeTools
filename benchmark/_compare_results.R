@@ -32,9 +32,9 @@ for (pr_file in pr_files) {
   
   # Iterate over each function benchmarked
   for (fn_name in unique(pr_df$expr)) {
-    pr_times <- pr_df[pr_df$expr == fn_name, "time"]
-    cf_times <- cf_df[cf_df$expr == fn_name, "time"]
-    main_times <- main_df[main_df$expr == fn_name, "time"]
+    pr_times <- as.numeric(pr_df$`itr_time`, units = "us")
+    cf_times <- as.numeric(cf_df$`itr_time`, units = "us")
+    main_times <- as.numeric(main_df$`itr_time`, units = "us")
     matched <- if (length(main_times)) {
       TRUE
     } else {

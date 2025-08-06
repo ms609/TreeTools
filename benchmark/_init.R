@@ -1,5 +1,5 @@
 library("TreeTools")
-ub <- microbenchmark::microbenchmark
+ub <- bench::mark
 
 set.seed(1337)
 
