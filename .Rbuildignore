@@ -21,6 +21,7 @@ vignettes/.RData
 ^\.?R+prof.*$
 ^\.zenodo\.json$
 /^benchmark/
+/^*.benchmark-results/
 /^src\-/
 ^CODE_OF_CONDUCT\.md$
 ^codemeta\.json$

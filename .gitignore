@@ -25,3 +25,4 @@ vignettes/*_cache*
 !TreeTools.Rproj
 *.site
 *.bak
+/*-benchmark-results
