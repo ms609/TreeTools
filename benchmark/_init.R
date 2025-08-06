@@ -1,7 +1,8 @@
 library("TreeTools")
 
 Benchmark <- function(..., min_iterations = NULL) {
-  result <- bench::mark(..., min_iterations = min_iterations %||% 3)
+  result <- bench::mark(..., min_iterations = min_iterations %||% 3,
+                        time_unit = "us")
   if (interactive()) {
     print(result)
   } else {
