@@ -26,3 +26,4 @@ vignettes/*_cache*
 *.site
 *.bak
 /*-benchmark-results
+*.bench.Rds

@@ -16,56 +16,53 @@ for (pr_file in pr_files) {
   if (!file.exists(main_file)) next;
   
   # Load the results
-  pr_results <- readRDS(pr_file)
-  pr_replicate <- if (file.exists(replicate_file)) readRDS(replicate_file) else
-    pr_results
-  main_results <- readRDS(main_file)
-  
-
-  # Get the data frames of timings
-  pr_df <- pr_results
-  cf_df <- pr_replicate
-  main_df <- main_results
+  rep_exists <- file.exists(replicate_file)
+  pr1 <- readRDS(pr_file)
+  pr2 <- if (rep_exists) readRDS(replicate_file) else pr1
+  main <- readRDS(main_file)
   
   # Prepare a report
   report <- list()
   
   # Iterate over each function benchmarked
-  for (fn_name in unique(as.character(pr_df$expr))) {
-    pr_times <-  as.numeric(   pr_df[["time"]][[1]] * 1e9)
-    cf_times <-  as.numeric(   cf_df[["time"]][[1]] * 1e9)
-    main_times <- as.numeric(main_df[["time"]][[1]] * 1e9)
+  for (fn_name in unique(as.character(unlist(pr1[["expression"]])))) {
+    pr1_times <-  as.numeric(pr1[["time"]][[1]])
+    pr2_times <-  as.numeric(pr2[["time"]][[1]])
+    pr_times <- if (rep_exists) c(pr1_times, pr2_times) else pr1_times
+    main_times <- as.numeric(main[["time"]][[1]])
     matched <- if (length(main_times)) {
       TRUE
     } else {
-      main_times <- main_df[, "time"]
+      main_times <- main[, "time"]
       FALSE
     }
     
-    better_result <- t.test(pr_times, main_times, alternative = "less")
-    worse_result <- t.test(pr_times, main_times, alternative = "greater")
-    
-    # The p-value tells us if the PR's performance is significantly slower
-    # A small p-value (e.g., < 0.05) suggests it is.
     median_pr <- median(pr_times)
-    median_cf <- median(cf_times)
     median_main <- median(main_times)
     percentage_change <- ((median_main - median_pr) / median_main) * 100
     
-    delta <- abs(median_pr - median_main)
-    df_delta <- abs(median_pr - median_cf)
-    noise <- delta < (df_delta * 2)
+    q <- 0.2
+    main_iqr <- quantile(main_times, c(q, 1 - q))
+    noise_magnitude <- max(abs(c(
+      median(pr1_times) - median(pr2_times),
+      main_iqr - median(main_times))))
     
-    is_faster <- better_result$p.value < 0.01 && !noise && matched
-    is_slower <- worse_result$p.value < 0.01 && !noise && matched
+    threshold_percent <- 10 / 3
+    
+    is_faster <- matched &&
+      median_pr < main_iqr[[1]] &&
+      median_pr < median_main - noise_magnitude
+    
+    is_slower <- matched &&
+      median_pr > main_iqr[[2]] &&
+      median_pr > median_main + noise_magnitude
     
     report[[fn_name]] <- list(
       matched = matched,
       slower = is_slower,
       faster = is_faster,
-      p_value = worse_result$p.value,
-      median_pr = median_pr,
-      median_cf = median_cf,
+      median_pr = median(pr1_times),
+      median_cf = median(pr2_times),
       median_main = median_main,
       change = percentage_change
     )
@@ -76,15 +73,21 @@ for (pr_file in pr_files) {
   
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
-    status <- ifelse(res$matched,
-                     ifelse(res$slower, "\U1F7E0 Slower \U1F641",
-                            ifelse(res$faster, "\U1F7E2 Faster!",
-                                   ifelse(res$p_value < 0.05,
-                                          "\U1F7E1 ?Slower",
-                                          "\U26AA NSD")
-                            )
-                     ),
-                     "\U1F7E4 ?Mismatch")
+    status <- if (res$matched) {
+      if (abs(percentage_change) > threshold_percent) {
+        if (res$slower) {
+          "\U1F7E0 Slower \U1F641"
+        } else if (res$faster) {
+          "\U1F7E2 Faster!"
+        } else {
+          "\U26AA NSD"
+        }
+      } else {
+        "\U1F7E3 ~Unchanged"
+      }
+    } else {
+      "\U1F7E4 ?Mismatch"
+    }
     
     if (res$slower) {
       has_significant_regression <- TRUE
@@ -94,11 +97,10 @@ for (pr_file in pr_files) {
     
     message <- paste0(
       "| `", fn_name, "` | ", status, " | ", 
-      bold, round(res$change, 2), "%", bold, "<br />(p: ", 
-      format.pval(res$p_value), ") | ",
-      signif(res$median_main * 1e-6, 3), " \u2192<br />",
-      signif(res$median_pr   * 1e-6, 3), ",  ",
-      signif(res$median_cf   * 1e-6, 3), " |\n"
+      bold, round(res$change, 2), "%", bold, " | ", 
+      signif(res$median_main * 1e3, 3), " \u2192<br />",
+      signif(res$median_pr   * 1e3, 3), ",  ",
+      signif(res$median_cf   * 1e3, 3), " |\n"
     )
   }
   
@@ -116,3 +118,4 @@ cat(paste0(output, "\nEOF"), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
 if (any(regressions)) {
   stop("Significant performance regression detected.")
 }
+
