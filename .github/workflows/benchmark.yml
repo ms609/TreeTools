@@ -77,8 +77,8 @@ jobs:
           rm -rf /tmp/R* || true
           cd ../pr
           Rscript benchmark/_run_benchmarks.R
-          mkdir ../pr/main-benchmark-results/
-          mv *.bench.Rds ../pr/main-benchmark-results/
+          mkdir ./main-benchmark-results/
+          mv *.bench.Rds ./main-benchmark-results/
         shell: bash
         
       - name: Benchmark PR
