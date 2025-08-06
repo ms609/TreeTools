@@ -55,58 +55,42 @@ jobs:
           dependencies: '"hard"'
           needs: benchmark
           
-      - name: Check system state before main
-        run: |
-          cat /proc/cpuinfo | grep "cpu MHz" | head -4
-          free -h
-          uptime
-        
-      - name: Benchmark main
-        working-directory: main
-        run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          # Kill any R processes and clear R temp files
-          pkill -f 'R --' || true
-          rm -rf /tmp/R* || true
-          Rscript benchmark/_run_benchmarks.R
-          mkdir ../pr/main-benchmark-results/
-          mv *.bench.Rds ../pr/main-benchmark-results/
-        shell: bash
-        
-      - name: Check system state before PR1
-        run: |
-          cat /proc/cpuinfo | grep "cpu MHz" | head -4
-          free -h
-          uptime
-          
       - name: Benchmark PR
         working-directory: pr
         run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           rm -rf /tmp/R* || true
           rm -rf /tmp/R_sess* || true
           echo 'Start benchmark run'
+          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
           Rscript benchmark/_run_benchmarks.R
           echo 'Benchmark run complete'
           mkdir ./pr-benchmark-results/
           mv *.bench.Rds ./pr-benchmark-results/
         shell: bash
         
-        
-      - name: Check system state before PR2
+      - name: Benchmark main
+        working-directory: main
         run: |
-          cat /proc/cpuinfo | grep "cpu MHz" | head -4
-          free -h
-          uptime
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          # Kill any R processes and clear R temp files
+          pkill -f 'R --' || true
+          rm -rf /tmp/R* || true
+          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
+          Rscript benchmark/_run_benchmarks.R
+          mkdir ../pr/main-benchmark-results/
+          mv *.bench.Rds ../pr/main-benchmark-results/
+        shell: bash
         
       - name: Benchmark PR
         working-directory: pr
         run: |
-          R CMD INSTALL . --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
+          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
           # Kill any R processes and clear R temp files
           pkill -f 'R --' || true
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
+          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
           mkdir ./pr2-benchmark-results/
           mv *.bench.Rds ./pr2-benchmark-results/
         shell: bash
