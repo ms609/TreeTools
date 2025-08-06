@@ -74,8 +74,9 @@ for (pr_file in pr_files) {
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
     status <- if (res$matched) {
-      if (abs(percentage_change) > threshold_percent) {
-        if (res$slower) {
+      if (res$slower) {
+        if (abs(percentage_change) > threshold_percent) {
+          has_significant_regression <- TRUE
           "\U1F7E0 Slower \U1F641"
         } else if (res$faster) {
           "\U1F7E2 Faster!"
@@ -87,10 +88,6 @@ for (pr_file in pr_files) {
       }
     } else {
       "\U1F7E4 ?Mismatch"
-    }
-    
-    if (res$slower) {
-      has_significant_regression <- TRUE
     }
     
     bold <- ifelse(res$faster | res$slower, "**", "")
