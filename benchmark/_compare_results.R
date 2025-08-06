@@ -18,7 +18,7 @@ for (pr_file in pr_files) {
   # Load the results
   rep_exists <- file.exists(replicate_file)
   pr1 <- readRDS(pr_file)
-  pr2 <- if (rep_exists) readRDS(replicate_file) else pr_results
+  pr2 <- if (rep_exists) readRDS(replicate_file) else pr1
   main <- readRDS(main_file)
   
   # Prepare a report
