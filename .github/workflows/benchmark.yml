@@ -107,11 +107,10 @@ jobs:
       - name: Upload PR benchmark results
         if: failure()
         uses: actions/upload-artifact@v4
-        working-directory: pr
         with:
           name: pr-benchmark-results
           path: |
-            pr-benchmark-results/*.bench.Rds
+            pr/pr-benchmark-results/*.bench.Rds
             
       - name: Upload main benchmark results
         if: failure()
@@ -120,7 +119,7 @@ jobs:
         with:
           name: main-benchmark-results
           path: |
-            main-benchmark-results/*.bench.Rds
+            pr/main-benchmark-results/*.bench.Rds
             
         
       - name: Comment on PR
