@@ -115,7 +115,6 @@ jobs:
       - name: Upload main benchmark results
         if: failure()
         uses: actions/upload-artifact@v4
-        working-directory: pr
         with:
           name: main-benchmark-results
           path: |
