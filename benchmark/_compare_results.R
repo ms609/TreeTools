@@ -43,9 +43,17 @@ for (pr_file in pr_files) {
     
     q <- 0.2
     main_iqr <- quantile(main_times, c(q, 1 - q))
+    noise_magnitude <- max(abs(c(
+      median(pr1_times) - median(pr2_times),
+      main_iqr - median(main_times))))
+                           
     
-    is_faster <- median_pr < main_iqr[[1]] && matched
-    is_slower <- median_pr > main_iqr[[2]] && matched
+    is_faster <- matched &&
+      median_pr < main_iqr[[1]] &&
+      median_pr < median_main - noise_magnitude
+    is_slower <- matched &&
+      median_pr > main_iqr[[2]] &&
+      median_pr > median_main + noise_magnitude
     
     report[[fn_name]] <- list(
       matched = matched,
@@ -66,10 +74,7 @@ for (pr_file in pr_files) {
     status <- ifelse(res$matched,
                      ifelse(res$slower, "\U1F7E0 Slower \U1F641",
                             ifelse(res$faster, "\U1F7E2 Faster!",
-                                   ifelse(res$p_value < 0.05,
-                                          "\U1F7E1 ?Slower",
-                                          "\U26AA NSD")
-                            )
+                                   "\U26AA NSD")
                      ),
                      "\U1F7E4 ?Mismatch")
     
