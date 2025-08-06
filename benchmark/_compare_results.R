@@ -46,12 +46,16 @@ for (pr_file in pr_files) {
     noise_magnitude <- max(abs(c(
       median(pr1_times) - median(pr2_times),
       main_iqr - median(main_times))))
-                           
+    
+    threshold_percent <- 3
     
     is_faster <- matched &&
+      abs(percentage_change) > threshold_percent &&
       median_pr < main_iqr[[1]] &&
       median_pr < median_main - noise_magnitude
+    
     is_slower <- matched &&
+      abs(percentage_change) > threshold_percent &&
       median_pr > main_iqr[[2]] &&
       median_pr > median_main + noise_magnitude
     
