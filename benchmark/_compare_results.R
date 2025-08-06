@@ -23,18 +23,18 @@ for (pr_file in pr_files) {
   
 
   # Get the data frames of timings
-  pr_df <- as.data.frame(pr_results)
-  cf_df <- as.data.frame(pr_replicate)
-  main_df <- as.data.frame(main_results)
+  pr_df <- pr_results
+  cf_df <- pr_replicate
+  main_df <- main_results
   
   # Prepare a report
   report <- list()
   
   # Iterate over each function benchmarked
   for (fn_name in unique(as.character(pr_df$expr))) {
-    pr_times <-  as.numeric(   pr_df[["time"]][[1]])
-    cf_times <-  as.numeric(   cf_df[["time"]][[1]])
-    main_times <- as.numeric(main_df[["time"]][[1]])
+    pr_times <-  as.numeric(   pr_df[["time"]][[1]] * 1e9)
+    cf_times <-  as.numeric(   cf_df[["time"]][[1]] * 1e9)
+    main_times <- as.numeric(main_df[["time"]][[1]] * 1e9)
     matched <- if (length(main_times)) {
       TRUE
     } else {
@@ -96,9 +96,9 @@ for (pr_file in pr_files) {
       "| `", fn_name, "` | ", status, " | ", 
       bold, round(res$change, 2), "%", bold, "<br />(p: ", 
       format.pval(res$p_value), ") | ",
-      signif(res$median_main * 1e3, 3), " \u2192<br />",
-      signif(res$median_pr   * 1e3, 3), ",  ",
-      signif(res$median_cf   * 1e3, 3), " |\n"
+      signif(res$median_main * 1e-6, 3), " \u2192<br />",
+      signif(res$median_pr   * 1e-6, 3), ",  ",
+      signif(res$median_cf   * 1e-6, 3), " |\n"
     )
   }
   
@@ -111,8 +111,6 @@ for (pr_file in pr_files) {
 }
 
 cat(paste0(output, "\nEOF"), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
-
-message(readLines(Sys.getenv("GITHUB_OUTPUT")))
 
 # Fail the build if there is a significant regression
 if (any(regressions)) {
