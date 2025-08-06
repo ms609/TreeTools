@@ -56,42 +56,22 @@ jobs:
           needs: benchmark
           
       - name: Benchmark PR
-        working-directory: pr
-        run: |
-          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          rm -rf /tmp/R* || true
-          rm -rf /tmp/R_sess* || true
-          echo 'Start benchmark run'
-          Rscript benchmark/_run_benchmarks.R
-          echo 'Benchmark run complete'
-          mkdir ./pr-benchmark-results/
-          mv *.bench.Rds ./pr-benchmark-results/
-        shell: bash
+        uses: ms609/actions/benchmark-step
+        with: 
+          path: pr
+          output: pr
         
-      - name: Benchmark main
-        working-directory: main
-        run: |
-          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          # Kill any R processes and clear R temp files
-          pkill -f 'R --' || true
-          rm -rf /tmp/R* || true
-          cd ../pr
-          Rscript benchmark/_run_benchmarks.R
-          mkdir ./main-benchmark-results/
-          mv *.bench.Rds ./main-benchmark-results/
-        shell: bash
-        
-      - name: Benchmark PR
-        working-directory: pr
-        run: |
-          R CMD INSTALL . --library=$(mktemp -d) --preclean --clean --byte-compile --no-docs --no-help --no-test-load --no-multiarch
-          # Kill any R processes and clear R temp files
-          pkill -f 'R --' || true
-          rm -rf /tmp/R* || true
-          Rscript benchmark/_run_benchmarks.R
-          mkdir ./pr2-benchmark-results/
-          mv *.bench.Rds ./pr2-benchmark-results/
-        shell: bash
+      - name: Benchmark target
+        uses: ms609/actions/benchmark-step
+        with: 
+          path: main
+          output: main
+          
+      - name: Benchmark PR again
+        uses: ms609/actions/benchmark-step
+        with: 
+          path: pr
+          output: pr2
         
       - run: dir pr-benchmark-results
         working-directory: pr
