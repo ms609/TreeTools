@@ -11,7 +11,7 @@ if (!file.exists("benchmark/tr80.rds")) {
 tr80 <- readRDS("benchmark/tr80.rds")
 tr2000 <- readRDS("benchmark/tr2000.rds")
 
-Benchmark(replicate(50, DropTip(tr80, 5)))
+Benchmark(DropTip(tr80, 5))
 Benchmark(DropTip(tr2000, 5))
 
 unlen80 <- tr80
