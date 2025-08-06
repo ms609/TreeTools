@@ -6,7 +6,7 @@ Benchmark <- function(..., min_iterations = NULL) {
   if (interactive()) {
     print(result)
   } else {
-    fileroot <- gsub("[\\(\\):]", "_", as.character(result$expression))
+    fileroot <- gsub("[\\(\\):, /]", "_", as.character(result$expression))
     .FileName <- function(fileRoot, i) {
       paste0(c(fileroot, i, "bench.Rds"), collapse = ".")
     }
