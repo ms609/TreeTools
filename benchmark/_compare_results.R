@@ -51,9 +51,8 @@ for (pr_file in pr_files) {
       matched = matched,
       slower = is_slower,
       faster = is_faster,
-      p_value = worse_result$p.value,
-      median_pr = median_pr1,
-      median_cf = median_pr2,
+      median_pr = median(pr1_times),
+      median_cf = median(pr2_times),
       median_main = median_main,
       change = percentage_change
     )
