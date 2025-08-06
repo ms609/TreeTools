@@ -62,7 +62,6 @@ jobs:
           rm -rf /tmp/R* || true
           rm -rf /tmp/R_sess* || true
           echo 'Start benchmark run'
-          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
           Rscript benchmark/_run_benchmarks.R
           echo 'Benchmark run complete'
           mkdir ./pr-benchmark-results/
@@ -76,7 +75,6 @@ jobs:
           # Kill any R processes and clear R temp files
           pkill -f 'R --' || true
           rm -rf /tmp/R* || true
-          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
           Rscript benchmark/_run_benchmarks.R
           mkdir ../pr/main-benchmark-results/
           mv *.bench.Rds ../pr/main-benchmark-results/
@@ -90,7 +88,6 @@ jobs:
           pkill -f 'R --' || true
           rm -rf /tmp/R* || true
           Rscript benchmark/_run_benchmarks.R
-          lsof -p $(pgrep R) | grep '\.so'  # check what shared objects are loaded
           mkdir ./pr2-benchmark-results/
           mv *.bench.Rds ./pr2-benchmark-results/
         shell: bash
