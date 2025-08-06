@@ -25,7 +25,7 @@ for (pr_file in pr_files) {
   report <- list()
   
   # Iterate over each function benchmarked
-  for (fn_name in unique(as.character(unlist(pr_df[["expression"]])))) {
+  for (fn_name in unique(as.character(unlist(pr1[["expression"]])))) {
     pr1_times <-  as.numeric(pr1[["time"]][[1]] * 1e9)
     pr2_times <-  as.numeric(pr2[["time"]][[1]] * 1e9)
     pr_times <- if (rep_exists) c(pr1_times, pr2_times) else pr1_times
@@ -33,7 +33,7 @@ for (pr_file in pr_files) {
     matched <- if (length(main_times)) {
       TRUE
     } else {
-      main_times <- main_df[, "time"]
+      main_times <- main[, "time"]
       FALSE
     }
     
