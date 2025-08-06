@@ -1,7 +1,9 @@
 source("benchmark/_init.R") # sets seed
 
 tr80 <- rtree(80)
+cat("Tree hash 80:", digest::digest(tr80), "\n")
 tr2000 <- rtree(2000)
+cat("Tree hash 2000:", digest::digest(tr2000), "\n")
 Benchmark("DropTip.80", ub(DropTip(tr80, 5)))
 Benchmark("DropTip.2000", ub(DropTip(tr2000, 5), times = 25))
 
