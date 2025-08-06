@@ -56,19 +56,19 @@ jobs:
           needs: benchmark
           
       - name: Benchmark PR
-        uses: ms609/actions/benchmark-step
+        uses: ms609/actions/benchmark-step@main
         with: 
           path: pr
           output: pr
         
       - name: Benchmark target
-        uses: ms609/actions/benchmark-step
+        uses: ms609/actions/benchmark-step@main
         with: 
           path: main
           output: main
           
       - name: Benchmark PR again
-        uses: ms609/actions/benchmark-step
+        uses: ms609/actions/benchmark-step@main
         with: 
           path: pr
           output: pr2
