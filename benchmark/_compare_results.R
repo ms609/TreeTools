@@ -31,10 +31,10 @@ for (pr_file in pr_files) {
   report <- list()
   
   # Iterate over each function benchmarked
-  for (fn_name in unique(pr_df$expr)) {
-    pr_times <- as.numeric(pr_df$`itr_time`, units = "us")
-    cf_times <- as.numeric(cf_df$`itr_time`, units = "us")
-    main_times <- as.numeric(main_df$`itr_time`, units = "us")
+  for (fn_name in unique(as.character(pr_df$expr))) {
+    pr_times <-  as.numeric(   pr_df[["time"]][[1]])
+    cf_times <-  as.numeric(   cf_df[["time"]][[1]])
+    main_times <- as.numeric(main_df[["time"]][[1]])
     matched <- if (length(main_times)) {
       TRUE
     } else {
@@ -96,9 +96,9 @@ for (pr_file in pr_files) {
       "| `", fn_name, "` | ", status, " | ", 
       bold, round(res$change, 2), "%", bold, "<br />(p: ", 
       format.pval(res$p_value), ") | ",
-      signif(res$median_main / 1e6, 3), " \u2192<br />",
-      signif(res$median_pr / 1e6, 3), ",  ",
-      signif(res$median_cf / 1e6, 3), " |\n"
+      signif(res$median_main * 1e3, 3), " \u2192<br />",
+      signif(res$median_pr   * 1e3, 3), ",  ",
+      signif(res$median_cf   * 1e3, 3), " |\n"
     )
   }
   
