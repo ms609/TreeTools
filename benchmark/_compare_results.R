@@ -50,12 +50,10 @@ for (pr_file in pr_files) {
     threshold_percent <- 3
     
     is_faster <- matched &&
-      abs(percentage_change) > threshold_percent &&
       median_pr < main_iqr[[1]] &&
       median_pr < median_main - noise_magnitude
     
     is_slower <- matched &&
-      abs(percentage_change) > threshold_percent &&
       median_pr > main_iqr[[2]] &&
       median_pr > median_main + noise_magnitude
     
@@ -76,10 +74,12 @@ for (pr_file in pr_files) {
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
     status <- ifelse(res$matched,
-                     ifelse(res$slower, "\U1F7E0 Slower \U1F641",
-                            ifelse(res$faster, "\U1F7E2 Faster!",
-                                   "\U26AA NSD")
-                     ),
+                     ifelse(abs(percentage_change) > threshold_percent,
+                            ifelse(res$slower, "\U1F7E0 Slower \U1F641",
+                                   ifelse(res$faster, "\U1F7E2 Faster!",
+                                          "\U26AA NSD"),
+                                   ),
+                            "\U1F7E3 Trivial")
                      "\U1F7E4 ?Mismatch")
     
     if (res$slower) {
