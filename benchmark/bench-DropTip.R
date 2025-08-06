@@ -1,9 +1,16 @@
 source("benchmark/_init.R") # sets seed
 
-tr80 <- rtree(80)
-cat("Tree hash 80:", digest::digest(tr80), "\n")
-tr2000 <- rtree(2000)
-cat("Tree hash 2000:", digest::digest(tr2000), "\n")
+if (!file.exists("benchmark/tr80.rds")) {
+  set.seed(1337)
+  tr80 <- rtree(80)
+  tr2000 <- rtree(2000)
+  saveRDS(tr80, "benchmark/tr80.rds")
+  saveRDS(tr2000, "benchmark/tr2000.rds")
+}
+
+tr80 <- readRDS("benchmark/tr80.rds")
+tr2000 <- readRDS("benchmark/tr2000.rds")
+
 Benchmark("DropTip.80", ub(DropTip(tr80, 5)))
 Benchmark("DropTip.2000", ub(DropTip(tr2000, 5), times = 25))
 
