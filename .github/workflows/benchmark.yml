@@ -75,6 +75,7 @@ jobs:
           # Kill any R processes and clear R temp files
           pkill -f 'R --' || true
           rm -rf /tmp/R* || true
+          cd ../pr
           Rscript benchmark/_run_benchmarks.R
           mkdir ../pr/main-benchmark-results/
           mv *.bench.Rds ../pr/main-benchmark-results/
