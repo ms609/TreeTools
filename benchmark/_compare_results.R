@@ -39,23 +39,25 @@ for (pr_file in pr_files) {
     
     median_pr <- median(pr_times)
     median_main <- median(main_times)
+    mad_main <- mad(main_times)
     percentage_change <- ((median_main - median_pr) / median_main) * 100
     
     q <- 0.2
     main_iqr <- quantile(main_times, c(q, 1 - q))
-    noise_magnitude <- max(abs(c(
-      median(pr1_times) - median(pr2_times),
-      main_iqr - median(main_times))))
+    interrun_var <- median(pr1_times) - median(pr2_times)
+    noise_range <- range(
+      median(main_times) + c(1, -1) * interrun_var,
+      main_iqr)
     
     threshold_percent <- 10 / 3
     
     is_faster <- matched &&
-      median_pr < main_iqr[[1]] &&
-      median_pr < median_main - noise_magnitude
+      median_pr < median_main - 2 * mad_main &&
+      median_pr < noise_range[[1]]
     
     is_slower <- matched &&
-      median_pr > main_iqr[[2]] &&
-      median_pr > median_main + noise_magnitude
+      median_pr > median_main + 2 * mad_main &&
+      median_pr > noise_range[[2]]
     
     report[[fn_name]] <- list(
       matched = matched,
@@ -74,17 +76,21 @@ for (pr_file in pr_files) {
   for (fn_name in names(report)) {
     res <- report[[fn_name]]
     status <- if (res$matched) {
-      if (abs(percentage_change) > threshold_percent) {
-        if (res$slower) {
+      if (res$slower) {
+        if (abs(percentage_change) > threshold_percent) {
           "\U1F7E0 Slower \U1F641"
-        } else if (res$faster) {
+        } else {
+          "\U1F7E3 ~same"
+        }
+      } else if (res$faster) {
+        if (abs(percentage_change) > threshold_percent) {
           "\U1F7E2 Faster!"
         } else {
-          "\U26AA NSD"
+          "\U1F7E3 ~same"
         }
       } else {
-        "\U1F7E3 ~Unchanged"
-      }
+        "\U26AA NSD"
+       }
     } else {
       "\U1F7E4 ?Mismatch"
     }
