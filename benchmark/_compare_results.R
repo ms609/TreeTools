@@ -87,9 +87,9 @@ for (pr_file in pr_files) {
     message <- paste0(
       "| `", fn_name, "` | ", status, " | ", 
       bold, round(res$change, 2), "%", bold, " | ", 
-      signif(res$median_main * 1e-3, 3), " \u2192<br />",
-      signif(res$median_pr   * 1e-3, 3), ",  ",
-      signif(res$median_cf   * 1e-3, 3), " |\n"
+      signif(res$median_main * 1e3, 3), " \u2192<br />",
+      signif(res$median_pr   * 1e3, 3), ",  ",
+      signif(res$median_cf   * 1e3, 3), " |\n"
     )
   }
   
