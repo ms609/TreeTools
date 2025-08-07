@@ -111,14 +111,26 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   IntegerVector names(n_return);
   uintx n_trivial = 0;
   
+  // Temporary buffer for fast block copy
+  std::vector<Rbyte> temp(n_bin);
+  
   for (uintx i = n_tip; i < n_node; ++i) {
     if (i == trivial_origin || i == trivial_two) {
       ++n_trivial;
     } else {
+      
+      const uintx row = i - n_tip - n_trivial;
+      const uintx offset = i * n_bin;
+      const uintx name = i + 1;
+      
+      // Load current split_row and convert to Rbyte
       for (uintx j = 0; j < n_bin; ++j) {
-        ret(i - n_tip - n_trivial, j) = static_cast<Rbyte>(split(i, j));
+        temp[j] = static_cast<Rbyte>(splits[offset + j]);
       }
-      names[i - n_tip - n_trivial] = i + 1;
+      
+      // Copy whole row into RawMatrix
+      std::memcpy(&ret(row, 0), temp.data(), n_bin * sizeof(Rbyte));
+      names[row] = name;
     }
   }
   
