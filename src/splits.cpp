@@ -90,14 +90,19 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     const int order_i = order[i];
     const uintx parent = edge(order_i, 0);
     const uintx child  = edge(order_i, 1);
+    
     if (parent == root_node) {
       ++root_children;
       if (child > n_tip) {
         root_child = child;
       }
     }
-    for (uintx j = 0; j != n_bin; ++j) {
-      split(parent - 1, j) |= split(child - 1, j);
+    
+    uintx* parent_split = &splits[(parent - 1) * n_bin];
+    const uintx* child_split = &splits[(child - 1) * n_bin];
+    
+    for (uintx j = 0; j < n_bin; ++j) {
+      parent_split[j] |= child_split[j];
     }
   }
   
