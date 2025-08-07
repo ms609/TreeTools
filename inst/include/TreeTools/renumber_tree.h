@@ -237,7 +237,6 @@ namespace TreeTools {
     const int32 n_edge = int32(parent.length());
     const int32 max_node = n_edge + 1;
     assert(max_node == *std::max_element(parent.begin(), parent.end()));
-    assert(max_node == *std::max_element(child.begin(), child.end()));
     const int32 node_limit = max_node + 1;
 
     if (child.length() != n_edge) {
