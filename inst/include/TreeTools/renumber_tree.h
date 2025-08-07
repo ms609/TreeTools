@@ -448,7 +448,7 @@ namespace TreeTools {
     }
     return subtree_size[node];
   }
-
+  
   // [[Rcpp::export]]
   inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
@@ -463,37 +463,41 @@ namespace TreeTools {
     constexpr int32 STACK_THRESHOLD = 2048;
     const bool use_stack = node_limit < STACK_THRESHOLD;
     
-    std::array<int32, STACK_THRESHOLD> stack_missing_children;
-    std::array<char, STACK_THRESHOLD>  stack_matched;
+    // Stack-allocated buffers
+    std::array<int32, STACK_THRESHOLD> stack_missing_children{};
+    std::array<char, STACK_THRESHOLD>  stack_matched{};
     
-    int32* missing_children = nullptr;
-    char* matched = nullptr;
+    // Pointers to active buffers
+    int32* missing_children;
+    char* matched;
+    
+    // Heap-allocated fallback using std::vector
+    std::vector<int32> heap_missing_children;
+    std::vector<char>  heap_matched;
     
     if (use_stack) {
       missing_children = stack_missing_children.data();
-      matched = stack_matched.data();
-      
-      std::fill(missing_children, missing_children + node_limit + 1, 0);
-      std::fill(matched, matched + n_edge, false);
+      matched          = stack_matched.data();
     } else {
-      missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-      matched = (char*) std::calloc(node_limit, sizeof(char));
+      heap_missing_children.assign(node_limit + 1, 0);
+      heap_matched.assign(n_edge, false);
+      missing_children = heap_missing_children.data();
+      matched          = heap_matched.data();
     }
-      
+    
     for (int32 i = 0; i < n_edge; ++i) {
       ++missing_children[edge[i]];
     }
     
     int32 found = 0;
     Rcpp::IntegerVector ret(n_edge);
+    
     do {
-      for (int32 i = n_edge; i--; ) { // Reverse iteration necessary
-        if (!matched[i]) {
-          if (!missing_children[edge[i + n_edge]]) {
-            matched[i] = true;
-            --missing_children[edge[i]];
-            ret[found++] = i + 1;
-          }
+      for (int32 i = n_edge; i--;) { // Reverse iteration necessary
+        if (!matched[i] && !missing_children[edge[i + n_edge]]) {
+          matched[i] = true;
+          --missing_children[edge[i]];
+          ret[found++] = i + 1;
         }
       }
     } while (found != n_edge);
