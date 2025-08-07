@@ -10,7 +10,6 @@
 #include "assert.h" /* for ASSERT */
 #include "types.h"
 
-#define MIN(a, b) ((a) < (b)) ? (a) : (b);
 #define PARENT(i) edge[(i)]
 #define CHILD(i) edge[(i) + n_edge]
 
@@ -108,82 +107,6 @@ namespace TreeTools {
         --j;
       }
       arr[j] = tmp;
-    }
-  }
-
-  // Modified from: https://www.geeksforgeeks.org/timsort/
-  inline void merge(int32* arr, int32 l, int32 m, int32 r,
-                    int32* sort_by) {
-
-    const int32
-      left_len = m - l + 1,
-      right_len = r - m
-    ;
-
-    auto
-      left = new int32[left_len],
-      right = new int32[right_len]
-    ;
-    for (int32 i = left_len; i--; ) {
-      left[i] = arr[l + i];
-    }
-    for (int32 i = right_len; i--; ) {
-      right[i] = arr[m + 1 + i];
-    }
-
-    int32
-      i = 0,
-      j = 0,
-      k = l
-    ;
-
-    while (i != left_len && j != right_len) {
-      if (sort_by[left[i]] <= sort_by[right[j]]) {
-        arr[k] = left[i];
-        i++;
-      } else {
-        arr[k] = right[j];
-        j++;
-      }
-      k++;
-    }
-
-    // Copy remaining elements of left, if any
-    while (i != left_len) {
-      arr[k] = left[i];
-      ++k;
-      ++i;
-    }
-    delete[] left;
-
-    // Copy remaining element of right, if any
-    while (j != right_len) {
-      arr[k] = right[j];
-      ++k;
-      ++j;
-    }
-    delete[] right;
-  }
-
-  inline void timsort_by_smallest(int32* arr, int32 arr_len, int32* sort_by) {
-    int32 run_length = arr_len;
-    while (run_length > 64) ++run_length /= 2;
-
-    // Sort individual subarrays of size run_length
-    for (int32 i = 0; i < arr_len; i += run_length) {
-      tim_insertion_sort_by_smallest(arr + i,
-                                 i + run_length > arr_len ?
-                                   arr_len % run_length : run_length,
-                                 sort_by);
-    }
-
-    // Merge sorted subarrays
-    for (int32 size = run_length; size < arr_len; size *= 2) {
-      for (int32 left = 0; left < arr_len; left += 2 * size) {
-        int32 mid = left + size - 1;
-        int32 right = MIN(left + (2 * size) - 1, arr_len - 1);
-        if (mid < right) merge(arr, left, mid, right, sort_by);
-      }
     }
   }
 
