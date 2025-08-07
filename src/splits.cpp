@@ -34,17 +34,21 @@ inline void check_16_bit(double x) {
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
-RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
-                             const IntegerVector order,
-                             const IntegerVector nTip) {
+Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
+                                   const Rcpp::IntegerVector& order,
+                                   const Rcpp::IntegerVector& nTip) {
+  
   // Check input is valid
   if (edge.cols() != 2) {
     Rcpp::stop("Edge matrix must contain two columns");
   }
-  if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
+  
+  const uintx n_edge = edge.rows();
+  if (n_edge + 1 >= NOT_TRIVIAL) {
     Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
-                            "Contact maintainer for advice");                   // # nocov
+                 "Contact maintainer for advice");                   // # nocov
   }
+  
   if (nTip[0] < 1) {
     if (nTip[0] == 0) {
       return RawMatrix(0, 0);
@@ -53,83 +57,72 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     }
   }
   
-  const uintx n_edge = edge.rows();
-  if (!n_edge) {
-    return RawMatrix(0, 0);
-  }
-  if (n_edge != uintx(order.length())) {
+  if (n_edge != static_cast<uintx>(order.length())) {
     Rcpp::stop("Length of `order` must equal number of edges");
   }
   
-  // Initialize
-  const uintx n_node = n_edge + 1,
-              root_node = PO_PARENT(n_edge - 1),
-              n_tip = nTip[0],
-              n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
-
-  if (n_edge == n_tip  /* No internal nodes resolved */
-        || n_tip < 4) { /* Need four tips to split non-trivially */
+  const uintx n_node = n_edge + 1;
+  const uintx n_tip = nTip[0];
+  const uintx n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
+  
+  if (n_edge == n_tip || n_tip < 4) {
     return RawMatrix(0, n_bin);
   }
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
     Rcpp::stop("Not enough edges in tree for edge_to_splits.");
   }
-
-  uintx** splits = new uintx*[n_node];
-  for (uintx i = n_node; i--; ) {
-    splits[i] = new uintx[n_bin](); // () zero-initializes
+  
+  std::vector<uintx> splits(n_node * n_bin, 0);
+  
+  auto split = [&](uintx i, uintx j) -> uintx& {
+    return splits[i * n_bin + j];
+  };
+  
+  // Tip initialization
+  for (uintx i = 0; i < n_tip; ++i) {
+    split(i, i / BIN_SIZE) = power_of_two(i % BIN_SIZE);
   }
-
-  // Populate splits
-  for (uintx i = n_tip; i--; ) {
-    splits[i][uintx(i / BIN_SIZE)] = power_of_two(i % BIN_SIZE);
-  }
-
+  
+  const uintx root_node = PO_PARENT(n_edge - 1);
   uintx root_child = PO_CHILD(n_edge - 1);
   int32 root_children = 1;
+  
   for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
     const uintx parent = PO_PARENT(i);
-    const uintx child = PO_CHILD(i);
+    const uintx child  = PO_CHILD(i);
     if (parent == root_node) {
       ++root_children;
       if (child > n_tip) {
-        root_child = uintx(child);
+        root_child = child;
       }
     }
     for (uintx j = 0; j != n_bin; ++j) {
-      splits[parent - 1][j] |= splits[child - 1][j];
+      split(parent - 1, j) |= split(child - 1, j);
     }
   }
-
-  for (uintx i = n_tip; i --; ) {
-    delete[] splits[i];
-  }
-
-  // Only return non-trivial splits
-  uintx n_trivial = 0;
-  const uintx trivial_origin = root_node - 1,
-              trivial_two = (root_children == 2 ? root_child - 1 : NOT_TRIVIAL),
-              n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
+  
+  const uintx trivial_origin = root_node - 1;
+  const uintx trivial_two = (root_children == 2 ? root_child - 1 : NOT_TRIVIAL);
+  const uintx n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
+  
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
-
-  for (uintx i = n_tip; i != n_node; ++i) {
+  uintx n_trivial = 0;
+  
+  for (uintx i = n_tip; i < n_node; ++i) {
     if (i == trivial_origin || i == trivial_two) {
       ++n_trivial;
     } else {
-      for (uintx j = 0; j != n_bin; j++) {
-        ret(i - n_tip - n_trivial, j) = decltype(ret(0, 0))(splits[i][j]);
-        names[i - n_tip - n_trivial] = (i + 1);
+      for (uintx j = 0; j < n_bin; ++j) {
+        ret(i - n_tip - n_trivial, j) = static_cast<Rbyte>(split(i, j));
       }
+      names[i - n_tip - n_trivial] = i + 1;
     }
-    delete[] splits[i];
   }
-
-  delete[] splits;
-
+  
   rownames(ret) = names;
-  return(ret);
+  return ret;
 }
 
 // [[Rcpp::export]]
