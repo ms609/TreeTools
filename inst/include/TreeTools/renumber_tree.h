@@ -464,10 +464,10 @@ namespace TreeTools {
     const bool use_stack = node_limit < STACK_THRESHOLD;
     
     std::array<int32, STACK_THRESHOLD> stack_missing_children;
-    std::array<bool, STACK_THRESHOLD>  stack_matched;
+    std::array<char, STACK_THRESHOLD>  stack_matched;
     
-    int32 * missing_children;
-    bool* matched;
+    int32* missing_children = nullptr;
+    char* matched = nullptr;
     
     if (use_stack) {
       missing_children = stack_missing_children.data();
@@ -477,7 +477,7 @@ namespace TreeTools {
       std::fill(matched, matched + n_edge, false);
     } else {
       missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-      matched = (bool*) std::calloc(node_limit, sizeof(bool));
+      matched = (char*) std::calloc(node_limit, sizeof(char));
     }
       
     for (int32 i = 0; i < n_edge; ++i) {
