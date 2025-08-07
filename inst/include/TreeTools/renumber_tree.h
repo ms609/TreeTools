@@ -235,13 +235,13 @@ namespace TreeTools {
     
     ASSERT(parent.length() < INT_FAST32_MAX - 2);
     const int32 n_edge = int32(parent.length());
+    if (child.length() != n_edge) {
+      Rcpp::stop("Length of parent and child must match");
+    }
     const int32 max_node = n_edge + 1;
     assert(max_node == *std::max_element(parent.begin(), parent.end()));
     const int32 node_limit = max_node + 1;
 
-    if (child.length() != n_edge) {
-      Rcpp::stop("Length of parent and child must match");
-    }
 
     int32 next_edge = 0;
     int32 root_node = n_edge * 2; /* Initialize with too-big value */
