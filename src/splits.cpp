@@ -114,7 +114,6 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   // Temporary buffer for fast block copy
   std::vector<Rbyte> temp(n_bin);
   
-  
   for (uintx i = n_tip; i < n_node; ++i) {
     if (i == trivial_origin || i == trivial_two) {
       ++n_trivial;
