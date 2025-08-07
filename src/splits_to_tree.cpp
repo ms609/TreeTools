@@ -6,35 +6,6 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/renumber_tree.h"
 using namespace TreeTools;
 
-inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
-                                      const int16* sort_by) {
-  ASSERT(arr_len > 0);
-  switch (arr_len) {
-  // case 0: return;
-  case 1: return;
-  case 2:
-    if (sort_by[arr[0]] < sort_by[arr[1]]) {
-      const int16 tmp = arr[0];
-      arr[0] = arr[1];
-      arr[1] = tmp;
-    }
-    return;
-  }
-
-  for (int16 i = 1; i != arr_len; ++i) {
-    const int16
-      tmp = arr[i],
-      key = sort_by[tmp]
-    ;
-    int16 j = i;
-    while (j && sort_by[arr[j - 1]] < key) {
-      arr[j] = arr[j - 1];
-      --j;
-    }
-    arr[j] = tmp;
-  }
-}
-
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
                             std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS>& parent,
                             std::array<int16, SL_MAX_TIPS>& patriarch) {
@@ -64,14 +35,15 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   alignas(64) std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS> parent{};
   alignas(64) std::array<int16, SL_MAX_TIPS> patriarch{};
 
-  int16 split_order[SL_MAX_SPLITS];
-  for (int16 i = 0; i < x.n_splits; ++i) {
-    split_order[i] = i;
-  }
-  insertion_sort_by_largest(split_order, x.n_splits, x.in_split);
+  std::array<int16, SL_MAX_SPLITS> split_order;
+  std::iota(split_order.begin(), split_order.begin() + x.n_splits, 0);
+  std::sort(split_order.begin(), split_order.begin() + x.n_splits,
+            [&in_split = x.in_split](int16 a, int16 b) {
+              return in_split[a] > in_split[b];
+            });
 
   int16 next_node = n_tip;
-  for (int16 split = x.n_splits; split--; ) {
+  for (int16 split = x.n_splits; split--; ) { // Work back through splits
     if (split > 0) {
       __builtin_prefetch(&x.state[split_order[split - 1]][0], 0, 3);
     }
