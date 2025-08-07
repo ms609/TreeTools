@@ -13,10 +13,11 @@ namespace TreeTools {
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child);
 
-  extern inline Rcpp::List preorder_weighted(
-    const Rcpp::IntegerVector parent,
-    const Rcpp::IntegerVector child,
-    const Rcpp::DoubleVector weight);
+  extern inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>
+    preorder_weighted_pair(
+      const Rcpp::IntegerVector& parent,
+      const Rcpp::IntegerVector& child,
+      const Rcpp::DoubleVector& weight);
 
   // edge must be BINARY
   // edge must be in preorder
@@ -109,13 +110,11 @@ namespace TreeTools {
 
     const bool weighted = phy.containsElementNamed("edge.length");
     if (weighted) {
-      Rcpp::List reweighted = preorder_weighted(
+      std::tie(edge, weight) = preorder_weighted_pair(
         edge(Rcpp::_, 0),
         edge(Rcpp::_, 1),
         phy["edge.length"]
       );
-      edge = Rcpp::IntegerMatrix(reweighted[0]);
-      weight = Rcpp::NumericVector(reweighted[1]);
     } else {
       edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
     }
@@ -177,11 +176,11 @@ namespace TreeTools {
       new_edge(root_edges[spare_edge], 1) = outgroup;
       if (weighted) {
         Rcpp::List preorder_res;
-        preorder_res = preorder_weighted(new_edge(Rcpp::_, 0),
-                                         new_edge(Rcpp::_, 1),
-                                         weight);
-        ret["edge"] = preorder_res[0];
-        ret["edge.length"] = preorder_res[1];
+        auto [edge, edge_weight] = preorder_weighted_pair(new_edge(Rcpp::_, 0),
+                                                          new_edge(Rcpp::_, 1),
+                                                          weight);
+        ret["edge"] = edge;
+        ret["edge.length"] = edge_weight;
       } else {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
@@ -218,12 +217,12 @@ namespace TreeTools {
       ret["Nnode"] = n_node + 1;
       if (weighted) {
         Rcpp::List preorder_res;
-        preorder_res = preorder_weighted(
+        auto [edge, weight] = preorder_weighted_pair(
           new_edge(Rcpp::_, 0),
           new_edge(Rcpp::_, 1),
           new_wt);
-        ret["edge"] = preorder_res[0];
-        ret["edge.length"] = preorder_res[1];
+        ret["edge"] = edge;
+        ret["edge.length"] = weight;
       } else {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
