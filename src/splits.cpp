@@ -11,9 +11,6 @@ const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
 #define NOT_TRIVIAL TreeTools::UINTX_MAX
 
-#define PO_PARENT(i) edge(order[i], 0)
-#define PO_CHILD(i) edge(order[i], 1)
-
 namespace TreeTools {
   template<typename T>
   constexpr void set_bit(T& target, int bit_pos) noexcept {
@@ -84,13 +81,15 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     split(i, i / BIN_SIZE) = power_of_two(i % BIN_SIZE);
   }
   
-  const uintx root_node = PO_PARENT(n_edge - 1);
-  uintx root_child = PO_CHILD(n_edge - 1);
+  const int order_root = order[n_edge - 1];
+  const uintx root_node = edge(order_root, 0);
+  uintx root_child = edge(order_root, 1);
   int32 root_children = 1;
   
   for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
-    const uintx parent = PO_PARENT(i);
-    const uintx child  = PO_CHILD(i);
+    const int order_i = order[i];
+    const uintx parent = edge(order_i, 0);
+    const uintx child  = edge(order_i, 1);
     if (parent == root_node) {
       ++root_children;
       if (child > n_tip) {
