@@ -123,11 +123,14 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     }
   }
   
+  Rbyte* __restrict__ ret_data = RAW(ret);
+  const uintx* __restrict__ splits_data = splits.data();
+  
   for (uintx j = 0; j < n_bin; ++j) {
-    Rbyte* dest_col = RAW(ret) + j * n_return;
+    Rbyte* __restrict__ dest_col = ret_data + j * n_return;
     
     for (uintx r = 0; r < n_return; ++r) {
-      dest_col[r] = static_cast<Rbyte>(splits[valid_rows[r] * n_bin + j]);
+      dest_col[r] = static_cast<Rbyte>(splits_data[valid_rows[r] * n_bin + j]);
     }
   }
   
