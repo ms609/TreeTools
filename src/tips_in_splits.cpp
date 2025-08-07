@@ -1,10 +1,9 @@
 #include <Rcpp/Lightest>
 
 #include "../inst/include/TreeTools.h"
-using namespace Rcpp;
 
 // [[Rcpp::export]]
-IntegerVector tips_in_splits(RawMatrix splits) {
+Rcpp::IntegerVector tips_in_splits(Rcpp::RawMatrix splits) {
   
   const int32 n_tip = splits.attr("nTip");
   const int32 n_split = splits.nrow();
@@ -18,10 +17,12 @@ IntegerVector tips_in_splits(RawMatrix splits) {
     Rcpp::stop("nTip does not match split size");
   }
 
-  IntegerVector ret(n_split);
+  Rcpp::IntegerVector ret(n_split);
   for (int32 i = 0; i < n_split; ++i) {
+    const unsigned char* splits_i = splits.begin() + i; 
     for (int32 bin = 0; bin < n_bin; ++bin) {
-      ret[i] += static_cast<int>(__builtin_popcount(splits(i, bin)));
+      const unsigned char* in_bin = splits_i + bin * n_split;
+      ret[i] += static_cast<int>(__builtin_popcount(*in_bin));
     }
   }
 

@@ -341,12 +341,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // tips_in_splits
-IntegerVector tips_in_splits(RawMatrix splits);
+Rcpp::IntegerVector tips_in_splits(Rcpp::RawMatrix splits);
 RcppExport SEXP _TreeTools_tips_in_splits(SEXP splitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::RawMatrix >::type splits(splitsSEXP);
     rcpp_result_gen = Rcpp::wrap(tips_in_splits(splits));
     return rcpp_result_gen;
 END_RCPP
