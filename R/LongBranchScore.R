@@ -37,6 +37,7 @@ LongBranch <- function(tree) {
 }
 
 #' @importFrom ape cophenetic.phylo
+#' @importFrom stats cophenetic
 #' @export
 LongBranch.phylo <- function(tree) {
   if (is.null(tree[["edge.length"]])) {
