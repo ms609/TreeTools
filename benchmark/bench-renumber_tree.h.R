@@ -18,19 +18,19 @@ NodeNumber <- function(edge) {
   edge
 }
 
-pec40 <- BalancedTree(40)$edge
-dpec40 <- Disorder(pec40)
-npec40 <- NodeNumber(dpec40)
-Benchmark(TreeTools:::postorder_order(pec40))
-Benchmark(TreeTools:::postorder_order(dpec40))
-Benchmark(TreeTools:::postorder_order(npec40))
+bal40 <- BalancedTree(40)$edge
+dbal40 <- Disorder(bal40)
+nbal40 <- NodeNumber(dbal40)
+Benchmark(TreeTools:::postorder_order(bal40))
+Benchmark(TreeTools:::postorder_order(dbal40))
+Benchmark(TreeTools:::postorder_order(nbal40))
 
-pec40k <- BalancedTree(40000)$edge
-dpec40k <- Disorder(pec40k)
-npec40k <- NodeNumber(dpec40k)
-Benchmark(TreeTools:::postorder_order(pec40k))
-Benchmark(TreeTools:::postorder_order(dpec40k))
-Benchmark(TreeTools:::postorder_order(npec40k))
+bal40k <- BalancedTree(40000)$edge
+dbal40k <- Disorder(bal40k)
+nbal40k <- NodeNumber(dbal40k)
+Benchmark(TreeTools:::postorder_order(bal40k))
+Benchmark(TreeTools:::postorder_order(dbal40k))
+Benchmark(TreeTools:::postorder_order(nbal40k))
 
 pec40 <- PectinateTree(40)$edge
 dpec40 <- Disorder(pec40)

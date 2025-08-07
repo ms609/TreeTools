@@ -1,12 +1,12 @@
 source("benchmark/_init.R")
 
-forest1 <- as.phylo(0:200, 80)
-forest2 <- as.phylo(0:20, 260)
-forest3 <- as.phylo(0:1000, 888)
+forest201.80 <- as.phylo(0:200, 80)
+forest21.260 <- as.phylo(0:20, 260)
+forest1k.888 <- as.phylo(0:1000, 888)
 
-Benchmark(Consensus(forest1))
-Benchmark(Consensus(forest2))
-Benchmark(Consensus(forest3))
+Benchmark(Consensus(forest21.260))
+Benchmark(Consensus(forest201.80))
+Benchmark(Consensus(forest1k.888))
 
 
 # library("TreeDist")
