@@ -10,9 +10,6 @@
 #include "assert.h" /* for ASSERT */
 #include "types.h"
 
-#define PARENT(i) edge[(i)]
-#define CHILD(i) edge[(i) + n_edge]
-
 namespace TreeTools {
   inline void swap(int32 *a, int32 *b) {
     const int32 temp = *a;
@@ -480,18 +477,18 @@ namespace TreeTools {
       matched = (bool*) std::calloc(node_limit, sizeof(bool));
     }
       
-    for (int32 i = n_edge; i--; ) {
-      ++missing_children[PARENT(i)];
+    for (int32 i = 0; i < n_edge; ++i) {
+      ++missing_children[edge[i]];
     }
     
     int32 found = 0;
     Rcpp::IntegerVector ret(n_edge);
     do {
-      for (int32 i = n_edge; i--; ) {
+      for (int32 i = 0; i < n_edge; ++i) {
         if (!matched[i]) {
-          if (!missing_children[CHILD(i)]) {
+          if (!missing_children[edge[i + n_edge]]) {
             matched[i] = true;
-            --missing_children[PARENT(i)];
+            --missing_children[edge[i]];
             ret[found++] = i + 1;
           }
         }
