@@ -484,7 +484,7 @@ namespace TreeTools {
     int32 found = 0;
     Rcpp::IntegerVector ret(n_edge);
     do {
-      for (int32 i = 0; i < n_edge; ++i) {
+      for (int32 i = n_edge; i--; ) { // Reverse iteration necessary
         if (!matched[i]) {
           if (!missing_children[edge[i + n_edge]]) {
             matched[i] = true;
