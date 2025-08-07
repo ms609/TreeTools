@@ -397,7 +397,7 @@ namespace TreeTools {
       found_children[parent[i]] += 1;
     }
 
-    for (int32 node = n_tip + 1; node != node_limit; node++) {
+    for (int32 node = n_tip + 1; node != node_limit; ++node) {
       insertion_sort_by_smallest(children_of[node], n_children[node], smallest_desc);
     }
     
