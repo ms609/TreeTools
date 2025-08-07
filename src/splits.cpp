@@ -120,10 +120,13 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
       continue;
     }
     
+    const uintx row = i - n_tip - n_trivial;
+    const uintx name = i + 1;
+    
     for (uintx j = 0; j < n_bin; ++j) {
-      ret(i - n_tip - n_trivial, j) = static_cast<Rbyte>(split(i, j));
+      ret(row, j) = static_cast<Rbyte>(split(i, j));
     }
-    names[i - n_tip - n_trivial] = i + 1;
+    names[row] = name;
   }
   
   rownames(ret) = names;
