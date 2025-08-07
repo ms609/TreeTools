@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <cstdlib> /* for calloc */
+#include <memory> /* for unique_ptr */
 #include <stack> /* for stack */
 #include <stdexcept> /* for errors */
 #include <utility> /* for pair */
@@ -449,6 +450,24 @@ namespace TreeTools {
     return subtree_size[node];
   }
   
+  template <typename T, std::size_t StackSize>
+  struct SmallBuffer {
+    bool use_stack;
+    std::array<T, StackSize> stack{};
+    std::unique_ptr<T[], decltype(&std::free)> heap{nullptr, &std::free};
+    
+    SmallBuffer(std::size_t needed) {
+      use_stack = (needed <= StackSize);
+      if (!use_stack) {
+        // calloc = allocate + zero-fill
+        heap.reset(static_cast<T*>(std::calloc(needed, sizeof(T))));
+        if (!heap) throw std::bad_alloc{};
+      }
+    }
+    
+    T* data() { return use_stack ? stack.data() : heap.get(); }
+  };
+  
   // [[Rcpp::export]]
   inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
@@ -456,37 +475,15 @@ namespace TreeTools {
     const int32 node_limit = n_edge + 1;
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
-      Rcpp::stop("Tree too large for postorder_order. "            // # nocov
-                   "Try running 64-bit R?");                       // # nocov
+      Rcpp::stop("Tree too large for postorder_order. Try running 64-bit R?");
     }
     
     constexpr int32 STACK_THRESHOLD = 2048;
-    const bool use_stack = node_limit < STACK_THRESHOLD;
-    
-    // Stack-allocated buffers
-    std::array<int32, STACK_THRESHOLD> stack_missing_children{};
-    std::array<char, STACK_THRESHOLD>  stack_matched{};
-    
-    // Pointers to active buffers
-    int32* missing_children;
-    char* matched;
-    
-    // Heap-allocated fallback using std::vector
-    std::vector<int32> heap_missing_children;
-    std::vector<char>  heap_matched;
-    
-    if (use_stack) {
-      missing_children = stack_missing_children.data();
-      matched          = stack_matched.data();
-    } else {
-      heap_missing_children.assign(node_limit + 1, 0);
-      heap_matched.assign(n_edge, false);
-      missing_children = heap_missing_children.data();
-      matched          = heap_matched.data();
-    }
+    SmallBuffer<int32, STACK_THRESHOLD> missing_children(node_limit + 1);
+    SmallBuffer<char, STACK_THRESHOLD> matched(n_edge);
     
     for (int32 i = 0; i < n_edge; ++i) {
-      ++missing_children[edge[i]];
+      ++missing_children.data()[edge[i]];
     }
     
     int32 found = 0;
@@ -494,9 +491,9 @@ namespace TreeTools {
     
     do {
       for (int32 i = n_edge; i--;) { // Reverse iteration necessary
-        if (!matched[i] && !missing_children[edge[i + n_edge]]) {
-          matched[i] = true;
-          --missing_children[edge[i]];
+        if (!matched.data()[i] && !missing_children.data()[edge[i + n_edge]]) {
+          matched.data()[i] = true;
+          --missing_children.data()[edge[i]];
           ret[found++] = i + 1;
         }
       }
