@@ -369,7 +369,7 @@ namespace TreeTools {
 
     for (int32 i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
-      n_children[parent[i]] += 1;
+      ++(n_children[parent[i]]);
     }
 
     for (int32 i = 1; i != node_limit; i++) {
