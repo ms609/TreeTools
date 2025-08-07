@@ -332,20 +332,16 @@ namespace TreeTools {
     }
     
     ASSERT(parent.length() < INT_FAST32_MAX - 2);
-    const int32
-      n_edge = int32(parent.length()),
-      node_limit = n_edge + 2
-    ;
+    const int32 n_edge = int32(parent.length());
+    const int32 node_limit = n_edge + 2;
 
     if (child.length() != n_edge) {
       Rcpp::stop("Length of parent and child must match");
     }
 
-    int32
-      next_edge = 0,
-      root_node = n_edge * 2, /* Initialize with too-big value */
-      n_tip = 0
-    ;
+    int32 next_edge = 0;
+    int32 root_node = n_edge * 2; /* Initialize with too-big value */
+    int32 n_tip = 0;
     
     // Single large allocation instead of many small ones
     const size_t total_ints_needed = 
