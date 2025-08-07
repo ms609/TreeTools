@@ -109,7 +109,7 @@ namespace TreeTools {
     int16 n_splits, n_bins;
     int16 in_split[SL_MAX_SPLITS];
     splitbit state[SL_MAX_SPLITS][SL_MAX_BINS];
-    SplitList(Rcpp::RawMatrix x) {
+    SplitList(const Rcpp::RawMatrix &x) {
       if (double(x.rows()) > double(std::numeric_limits<int16>::max())) {
         Rcpp::stop("This many splits cannot be supported. "
                    "Please contact the TreeTools maintainer if "
