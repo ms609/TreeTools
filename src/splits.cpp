@@ -112,33 +112,28 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
-  uintx n_trivial = 0;
+  
+  std::vector<uintx> valid_rows;
+  valid_rows.reserve(n_return);
   
   for (uintx i = n_tip; i < n_node; ++i) {
-    if (i == trivial_origin || i == trivial_two) {
-      ++n_trivial;
-      continue;
+    if (i != trivial_origin && i != trivial_two) {
+      valid_rows.push_back(i);
+      names[valid_rows.size() - 1] = static_cast<int>(i + 1);
     }
-    
-    const uintx row = i - n_tip - n_trivial;
-    names[row] = i + 1;
   }
   
   std::vector<Rbyte> tmp(n_return);
   
   for (uintx j = 0; j < n_bin; ++j) {
     Rbyte* dest_col = RAW(ret) + j * n_return;
-    uintx out = 0;
     
-    for (uintx i = n_tip; i < n_node; ++i) {
-      if (i == trivial_origin || i == trivial_two) {
-        continue;
-      }
-      tmp[out++] = static_cast<Rbyte>(splits[i * n_bin + j]);
+    for (uintx r = 0; r < n_return; ++r) {
+      tmp[r] = static_cast<Rbyte>(splits[valid_rows[r] * n_bin + j]);
     }
     
-    assert(out == n_return);
-    std::memcpy(dest_col, tmp.data(), out * sizeof(Rbyte));
+    assert(valid_rows.size() == n_return);
+    std::memcpy(dest_col, tmp.data(), n_return * sizeof(Rbyte));
   }
   
   rownames(ret) = names;
