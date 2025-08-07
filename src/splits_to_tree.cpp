@@ -78,6 +78,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     
     for (int16 bin = x.n_bins; bin--; ) {
       splitbit chunk = x.state[split_order[split]][bin];
+      if (!chunk) continue;
       const int16 base_tip = bin * SL_BIN_SIZE;
       while (chunk) {
         const int16 bin_tip = __builtin_ctzll(chunk); // count trailing zeros
