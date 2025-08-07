@@ -38,8 +38,6 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
                             int16 (&parent)[SL_MAX_TIPS + SL_MAX_SPLITS],
                             int16 (&patriarch)[SL_MAX_TIPS]) {
-  __builtin_prefetch(&patriarch[tip], 0, 1);  // Shaves off a gnat's whisker
-  
   if (patriarch[tip]) {
     parent[patriarch[tip]] = *next_node;
   } else {
