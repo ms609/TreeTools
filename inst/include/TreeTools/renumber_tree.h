@@ -453,19 +453,28 @@ namespace TreeTools {
   template <typename T, std::size_t StackSize>
   struct SmallBuffer {
     bool use_stack;
-    std::array<T, StackSize> stack{};
-    std::unique_ptr<T[], decltype(&std::free)> heap{nullptr, &std::free};
-    
-    SmallBuffer(std::size_t needed) {
-      use_stack = (needed <= StackSize);
+    T* ptr;
+    std::array<T, StackSize> stack;
+    T* heap;
+
+    SmallBuffer(std::size_t needed) : use_stack(needed <= StackSize),
+                                      ptr(use_stack ? stack.data() : nullptr),
+                                      stack{}  // zero-initialise stack
+    {
       if (!use_stack) {
-        // calloc = allocate + zero-fill
-        heap.reset(static_cast<T*>(std::calloc(needed, sizeof(T))));
+        heap = static_cast<T*>(std::calloc(needed, sizeof(T)));
         if (!heap) throw std::bad_alloc{};
+        ptr = heap;
+      } else {
+        heap = nullptr;
       }
     }
     
-    T* data() { return use_stack ? stack.data() : heap.get(); }
+    ~SmallBuffer() {
+      if (!use_stack) std::free(heap);
+    }
+    
+    inline T* data() noexcept { return ptr; }
   };
   
   // [[Rcpp::export]]
@@ -482,18 +491,21 @@ namespace TreeTools {
     SmallBuffer<int32, STACK_THRESHOLD> missing_children(node_limit + 1);
     SmallBuffer<char, STACK_THRESHOLD> matched(n_edge);
     
+    // Count children
+    int32* mc = missing_children.data();
+    char*   m = matched.data();
     for (int32 i = 0; i < n_edge; ++i) {
-      ++missing_children.data()[edge[i]];
+      ++mc[edge[i]];
     }
     
     int32 found = 0;
     Rcpp::IntegerVector ret(n_edge);
     
     do {
-      for (int32 i = n_edge; i--;) { // Reverse iteration necessary
-        if (!matched.data()[i] && !missing_children.data()[edge[i + n_edge]]) {
-          matched.data()[i] = true;
-          --missing_children.data()[edge[i]];
+      for (int32 i = n_edge; i--;) {
+        if (!m[i] && !mc[edge[i + n_edge]]) {
+          m[i] = true;
+          --mc[edge[i]];
           ret[found++] = i + 1;
         }
       }
