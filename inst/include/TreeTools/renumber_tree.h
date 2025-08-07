@@ -192,7 +192,9 @@ namespace TreeTools {
                             Rcpp::IntegerMatrix& final_edges,
                             int32 *next_edge, int32 *next_label) {
 
-    for (int32 child = 0; child != n_children[node]; ++child) {
+    int32 child_count = n_children[node];
+    assert(child_count > 0);
+    for (int32 child = 0; child != child_count; ++child) {
 
       final_edges(*next_edge, 0) = node_label;
       const int32 this_child = children_of[node][child];
@@ -218,14 +220,14 @@ namespace TreeTools {
   }
 
   inline void add_child_edges(const int32 node, const int32 parent_label,
-                            const int32* children_data,
-                            const int32* children_start_idx,
-                            const int32 *n_children,
-                            Rcpp::IntegerMatrix& ret,
-                            int32 *next_edge, int32 *next_label) {
+                              const int32* children_data,
+                              const int32* children_start_idx,
+                              const int32 *n_children,
+                              Rcpp::IntegerMatrix& ret,
+                              int32 *next_edge, int32 *next_label) {
     
     int32 child_count = n_children[node];
-    if (child_count == 0) return;
+    assert(child_count > 0);
 
     const int32* node_children = children_data + children_start_idx[node];
 
@@ -251,12 +253,12 @@ namespace TreeTools {
   }
 
   inline void add_child_edges(const int32 node, const int32 node_label,
-                            int32 const* const* children_of,
-                            const int32 *n_children,
-                            const double *wt_above,
-                            Rcpp::IntegerMatrix& final_edges,
-                            Rcpp::NumericVector& final_weight,
-                            int32 *next_edge, int32 *next_label) {
+                              int32 const* const* children_of,
+                              const int32 *n_children,
+                              const double *wt_above,
+                              Rcpp::IntegerMatrix& final_edges,
+                              Rcpp::NumericVector& final_weight,
+                              int32 *next_edge, int32 *next_label) {
 
     for (int32 child = 0; child != n_children[node]; ++child) {
 
@@ -296,7 +298,7 @@ namespace TreeTools {
                               int32 *next_edge, int32 *next_label) {
     
     int32 child_count = n_children[node];
-    if (child_count == 0) return;
+    assert(child_count > 0);
     
     const int32* node_children = children_data + children_start_idx[node];
     
