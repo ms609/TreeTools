@@ -187,39 +187,6 @@ namespace TreeTools {
     }
   }
 
-  inline void add_child_edges(const int32 node, const int32 parent_label,
-                              const int32* children_data,
-                              const int32* children_start_idx,
-                              const int32 *n_children,
-                              Rcpp::IntegerMatrix& ret,
-                              int32 *next_edge, int32 *next_label) {
-    
-    int32 child_count = n_children[node];
-    assert(child_count > 0);
-
-    const int32* node_children = children_data + children_start_idx[node];
-
-    for (int32 i = 0; i < child_count; ++i) {
-      const int32 child = node_children[i];
-      ret(*next_edge, 0) = parent_label;
-      
-      if (n_children[child] == 0) {
-        ret(*next_edge, 1) = child;
-      } else {
-        ret(*next_edge, 1) = *next_label;
-        ++(*next_label);
-      }
-      
-      ++(*next_edge);
-      
-      if (n_children[child] > 0) {
-        add_child_edges(child, ret(*next_edge - 1, 1), children_data,
-                        children_start_idx, n_children, ret, next_edge,
-                        next_label);
-      }
-    }
-  }
-
   struct Frame {
     int32 node;
     int32 parent_label;
@@ -227,6 +194,58 @@ namespace TreeTools {
     int32 child_count;
     const int32* node_children;
   };
+
+  inline void add_child_edges(
+      const int32 root_node,
+      const int32 root_label,
+      const int32* children_data,
+      const int32* children_start_idx,
+      const int32* n_children,
+      Rcpp::IntegerMatrix& ret,
+      int32* next_edge,
+      int32* next_label) {
+    
+    std::stack<Frame> stack;
+    
+    // Initialize with root node
+    {
+      int32 child_count = n_children[root_node];
+      assert(child_count > 0);
+      stack.push(Frame{root_node, root_label, 0, child_count, children_data + children_start_idx[root_node]});
+    }
+    
+    while (!stack.empty()) {
+      Frame& top = stack.top();
+      
+      if (top.child_index == top.child_count) {
+        // All children processed for this node, pop stack
+        stack.pop();
+        continue;
+      }
+      
+      int32 child = top.node_children[top.child_index];
+      
+      // Write edge info
+      ret(*next_edge, 0) = top.parent_label;
+      
+      if (n_children[child] == 0) {
+        ret(*next_edge, 1) = child;
+        ++(*next_edge);
+        ++top.child_index;
+      } else {
+        int32 child_label = *next_label;
+        ret(*next_edge, 1) = child_label;
+        ++(*next_label);
+        ++(*next_edge);
+        ++top.child_index;
+        
+        // Push child frame on stack to process its children next
+        int32 child_count = n_children[child];
+        const int32* child_children = children_data + children_start_idx[child];
+        stack.push(Frame{child, child_label, 0, child_count, child_children});
+      }
+    }
+  }
 
   inline void add_child_edges(
       const int32 root_node,
@@ -265,15 +284,12 @@ namespace TreeTools {
       weight[*next_edge] = wt_above[child];
       
       if (n_children[child] == 0) {
-        // Leaf child: assign label = child itself
         ret(*next_edge, 1) = child;
         ++(*next_edge);
         ++top.child_index;
-        // Continue processing next child of current node
       } else {
-        // Internal node: assign new label
-        ret(*next_edge, 1) = *next_label;
         int32 child_label = *next_label;
+        ret(*next_edge, 1) = child_label;
         ++(*next_label);
         ++(*next_edge);
         ++top.child_index;
@@ -285,42 +301,7 @@ namespace TreeTools {
       }
     }
   }
-  inline void add_child_edges_recursive(const int32 node, const int32 parent_label,
-                              const int32* children_data,
-                              const int32* children_start_idx,
-                              const int32 *n_children,
-                              std::vector<double>& wt_above,
-                              Rcpp::IntegerMatrix& ret,
-                              Rcpp::NumericVector& weight,
-                              int32 *next_edge, int32 *next_label) {
-    
-    int32 child_count = n_children[node];
-    assert(child_count > 0);
-    
-    const int32* node_children = children_data + children_start_idx[node];
-    
-    for (int32 i = 0; i < child_count; ++i) {
-      const int32 child = node_children[i];
-      ret(*next_edge, 0) = parent_label;
-      weight[*next_edge] = wt_above[child];
-      
-      if (n_children[child] == 0) {
-        ret(*next_edge, 1) = child;
-      } else {
-        ret(*next_edge, 1) = *next_label;
-        ++(*next_label);
-      }
-      
-      ++(*next_edge);
-      
-      if (n_children[child] > 0) {
-        add_child_edges(child, ret(*next_edge - 1, 1), children_data,
-                        children_start_idx, n_children, wt_above, ret, weight,
-                        next_edge, next_label);
-      }
-    }
-  }
-
+  
   // [[Rcpp::export]]
   inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
       const Rcpp::IntegerVector parent,
