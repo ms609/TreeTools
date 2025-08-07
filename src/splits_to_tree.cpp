@@ -76,7 +76,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
       __builtin_prefetch(&x.state[split_order[split - 1]][0], 0, 3);
     }
     
-    for (int16 bin = x.n_bins; bin--; ) {
+    for (int16 bin = 0; bin < x.n_bins; ++bin) {
       splitbit chunk = x.state[split_order[split]][bin];
       if (!chunk) continue;
       const int16 base_tip = bin * SL_BIN_SIZE;
@@ -89,7 +89,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     }
     ++next_node;
   }
-  for (int16 tip = n_tip; tip--; ) {
+  for (int16 tip = 0; tip < n_tip; ++tip) {
     insert_ancestor(tip, &next_node, parent, patriarch);
   }
 
@@ -98,7 +98,6 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   for (int16 i = 0; i < n_edge; ++i) {
     edge1[i] = parent[i] + 1;
     edge2[i] = i + 1;
-    // Rcout << "   Edge " << i << ": " << edge1[i] << " - " << edge2[i] << ".\n";
   }
 
   return preorder_edges_and_nodes(edge1, edge2);
