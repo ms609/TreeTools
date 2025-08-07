@@ -117,12 +117,13 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   for (uintx i = n_tip; i < n_node; ++i) {
     if (i == trivial_origin || i == trivial_two) {
       ++n_trivial;
-    } else {
-      for (uintx j = 0; j < n_bin; ++j) {
-        ret(i - n_tip - n_trivial, j) = static_cast<Rbyte>(split(i, j));
-      }
-      names[i - n_tip - n_trivial] = i + 1;
+      continue;
     }
+    
+    for (uintx j = 0; j < n_bin; ++j) {
+      ret(i - n_tip - n_trivial, j) = static_cast<Rbyte>(split(i, j));
+    }
+    names[i - n_tip - n_trivial] = i + 1;
   }
   
   rownames(ret) = names;
