@@ -36,8 +36,8 @@ inline void insertion_sort_by_largest(int16* arr, const int16 arr_len,
 }
 
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
-                            int16 (&parent)[SL_MAX_TIPS + SL_MAX_SPLITS],
-                            int16 (&patriarch)[SL_MAX_TIPS]) {
+                            std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS>& parent,
+                            std::array<int16, SL_MAX_TIPS>& patriarch) {
   if (patriarch[tip]) {
     parent[patriarch[tip]] = *next_node;
   } else {
@@ -61,8 +61,8 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     return ret;
   }
   const SplitList x(splits);
-  int16 parent[SL_MAX_TIPS + SL_MAX_SPLITS]{};
-  int16 patriarch[SL_MAX_TIPS]{};
+  alignas(64) std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS> parent{};
+  alignas(64) std::array<int16, SL_MAX_TIPS> patriarch{};
 
   int16 split_order[SL_MAX_SPLITS];
   for (int16 i = 0; i < x.n_splits; ++i) {
