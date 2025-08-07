@@ -56,7 +56,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   const int16 n_tip = int16(nTip[0]);
   if (splits.nrow() == 0) {
     IntegerMatrix ret(n_tip, 2);
-    for (int i = n_tip; i--; ) {
+    for (int i = 0; i < n_tip; ++i) {
       ret(i, 0) = n_tip + 1;
       ret(i, 1) = i + 1;
     }
@@ -96,7 +96,7 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
 
   const int16 n_edge = n_tip + x.n_splits;
   IntegerVector edge1(n_edge), edge2(n_edge);
-  for (int16 i = n_edge; i--; ) {
+  for (int16 i = 0; i < n_edge; ++i) {
     edge1[i] = parent[i] + 1;
     edge2[i] = i + 1;
     // Rcout << "   Edge " << i << ": " << edge1[i] << " - " << edge2[i] << ".\n";
