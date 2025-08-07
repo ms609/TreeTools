@@ -96,8 +96,17 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
         root_child = child;
       }
     }
-    for (uintx j = 0; j != n_bin; ++j) {
-      split(parent - 1, j) |= split(child - 1, j);
+    uintx* parent_split = &splits[(parent - 1) * n_bin];
+    uintx* child_split = &splits[(child - 1) * n_bin];
+    uintx j_limit = n_bin - 3;
+    for (uintx j = 0; j < j_limit; j += 4) {
+      parent_split[j]     |= child_split[j];
+      parent_split[j + 1] |= child_split[j + 1];
+      parent_split[j + 2] |= child_split[j + 2];
+      parent_split[j + 3] |= child_split[j + 3];
+    }
+    for (uintx j = j_limit; j < n_bin; ++j) {
+      parent_split[j] |= child_split[j];
     }
   }
   
