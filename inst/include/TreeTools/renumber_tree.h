@@ -216,6 +216,39 @@ namespace TreeTools {
     }
   }
 
+inline void add_child_edges(const int32 node, const int32 parent_label,
+                            const int32* children_data,
+                            const int32* children_start_idx,
+                            const int32 *n_children,
+                            Rcpp::IntegerMatrix& ret,
+                            int32 *next_edge, int32 *next_label) {
+    
+    int32 child_count = n_children[node];
+    if (child_count == 0) return;
+
+    const int32* node_children = children_data + children_start_idx[node];
+
+    for (int32 i = 0; i < child_count; ++i) {
+      const int32 child = node_children[i];
+      ret(*next_edge, 0) = parent_label;
+      
+      if (n_children[child] == 0) {
+        ret(*next_edge, 1) = child;
+      } else {
+        ret(*next_edge, 1) = *next_label;
+        ++(*next_label);
+      }
+      
+      ++(*next_edge);
+      
+      if (n_children[child] > 0) {
+        add_child_edges(child, ret(*next_edge - 1, 1), children_data,
+                        children_start_idx, n_children, ret, next_edge,
+                        next_label);
+      }
+    }
+  }
+
   inline void add_child_edges(const int32 node, const int32 node_label,
                             std::vector<std::vector<int32>>& children_of,
                             int32* n_children,
@@ -348,7 +381,8 @@ namespace TreeTools {
       node_limit +                    // parent_of
       node_limit +                    // n_children  
       node_limit +                    // smallest_desc
-      node_limit;                         // estimated total children storage
+      node_limit +                    // children_start_idx
+      n_edge;                         // children_data
     
     std::vector<int32> memory_block(total_ints_needed, 0);
     
@@ -359,15 +393,16 @@ namespace TreeTools {
     it += node_limit;
     int32* smallest_desc = &*it;
     it += node_limit;
-    int32* found_children = &*it;
+    int32* children_start_idx = &*it;
+    it += node_limit;
+    int32* children_data = &*it;
     
-    std::vector<std::vector<int32>> children_of(node_limit);
-
     for (int32 i = n_edge; i--; ) {
       parent_of[child[i]] = parent[i];
-      ++(n_children[parent[i]]);
+      ++n_children[parent[i]];
     }
-
+    
+    int32 current_idx = 0;
     for (int32 i = 1; i != node_limit; i++) {
       if (!parent_of[i]) {
         root_node = i;
@@ -375,7 +410,8 @@ namespace TreeTools {
       if (!n_children[i]) {
         ++n_tip;
       } else {
-        children_of[i].reserve(n_children[i]);
+        children_start_idx[i] = current_idx;
+        current_idx += n_children[i];
       }
     }
 
@@ -387,20 +423,25 @@ namespace TreeTools {
         parent = parent_of[parent];
       }
     }
-
-    for (int32 i = n_edge; i--; ) {
-      children_of[parent[i]][found_children[parent[i]]] = child[i];
-      found_children[parent[i]] += 1;
+    
+    // Reset n_children - use as insertion counter
+    std::fill(n_children, n_children + node_limit, 0);
+    for (int32 i = 0; i < n_edge; ++i) {
+      int32 p = parent[i];
+      int32 insert_pos = children_start_idx[p] + n_children[p];
+      children_data[insert_pos] = child[i];
+      ++n_children[p];
     }
 
     for (int32 node = n_tip + 1; node != node_limit; ++node) {
-      insertion_sort_by_smallest(children_of[node], n_children[node], smallest_desc);
+      int32* node_children = children_data + children_start_idx[node];
+      insertion_sort_by_smallest(node_children, n_children[node], smallest_desc);
     }
     
     int32 next_label = n_tip + 2;
     Rcpp::IntegerMatrix ret(n_edge, 2);
-    add_child_edges(root_node, n_tip + 1, children_of, n_children, ret,
-                    &next_edge, &next_label);
+    add_child_edges(root_node, n_tip + 1, children_data, children_start_idx,
+                    n_children, ret, &next_edge, &next_label);
 
     return ret;
   }
