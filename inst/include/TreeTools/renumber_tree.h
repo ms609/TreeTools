@@ -186,39 +186,6 @@ namespace TreeTools {
     }
   }
 
-  inline void add_child_edges(const int32 node, const int32 node_label,
-                            int32 const* const* children_of,
-                            const int32 *n_children,
-                            Rcpp::IntegerMatrix& final_edges,
-                            int32 *next_edge, int32 *next_label) {
-
-    int32 child_count = n_children[node];
-    assert(child_count > 0);
-    for (int32 child = 0; child != child_count; ++child) {
-
-      final_edges(*next_edge, 0) = node_label;
-      const int32 this_child = children_of[node][child];
-
-      if (n_children[this_child]) {
-
-        const int32 child_label = *next_label;
-        *next_label += 1;
-
-        final_edges(*next_edge, 1) = child_label;
-        *next_edge += 1;
-
-        add_child_edges(this_child, child_label, children_of, n_children,
-                        final_edges, next_edge, next_label);
-
-      } else {
-
-        final_edges(*next_edge, 1) = this_child;
-        *next_edge += 1;
-
-      }
-    }
-  }
-
   inline void add_child_edges(const int32 node, const int32 parent_label,
                               const int32* children_data,
                               const int32* children_start_idx,
@@ -248,42 +215,6 @@ namespace TreeTools {
         add_child_edges(child, ret(*next_edge - 1, 1), children_data,
                         children_start_idx, n_children, ret, next_edge,
                         next_label);
-      }
-    }
-  }
-
-  inline void add_child_edges(const int32 node, const int32 node_label,
-                              int32 const* const* children_of,
-                              const int32 *n_children,
-                              const double *wt_above,
-                              Rcpp::IntegerMatrix& final_edges,
-                              Rcpp::NumericVector& final_weight,
-                              int32 *next_edge, int32 *next_label) {
-
-    for (int32 child = 0; child != n_children[node]; ++child) {
-
-      final_edges(*next_edge, 0) = node_label;
-      
-      const int32 this_child = children_of[node][child];
-      final_weight[*next_edge] = wt_above[this_child];
-      
-      if (n_children[this_child]) {
-
-        const int32 child_label = *next_label;
-        *next_label += 1;
-
-        final_edges(*next_edge, 1) = child_label;
-        *next_edge += 1;
-
-        add_child_edges(this_child, child_label, children_of, n_children,
-                        wt_above,
-                        final_edges, final_weight, next_edge, next_label);
-
-      } else {
-
-        final_edges(*next_edge, 1) = this_child;
-        *next_edge += 1;
-
       }
     }
   }
