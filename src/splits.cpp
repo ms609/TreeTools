@@ -121,12 +121,24 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     }
     
     const uintx row = i - n_tip - n_trivial;
-    const uintx name = i + 1;
+    names[row] = i + 1;
+  }
+  
+  std::vector<Rbyte> tmp(n_return);
+  
+  for (uintx j = 0; j < n_bin; ++j) {
+    Rbyte* dest_col = RAW(ret) + j * n_return;
+    uintx out = 0;
     
-    for (uintx j = 0; j < n_bin; ++j) {
-      ret(row, j) = static_cast<Rbyte>(split(i, j));
+    for (uintx i = n_tip; i < n_node; ++i) {
+      if (i == trivial_origin || i == trivial_two) {
+        continue;
+      }
+      tmp[out++] = static_cast<Rbyte>(splits[i * n_bin + j]);
     }
-    names[row] = name;
+    
+    assert(out == n_return);
+    std::memcpy(dest_col, tmp.data(), out * sizeof(Rbyte));
   }
   
   rownames(ret) = names;
