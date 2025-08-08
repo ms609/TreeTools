@@ -181,7 +181,7 @@ namespace TreeTools {
       new_child[root_edges[spare_edge]] = outgroup;
       
       if (weighted) {
-        std::tie(edge, weight) = preorder_core(new_parent, new_child, weight);
+        std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(new_parent, new_child, weight);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
@@ -211,7 +211,7 @@ namespace TreeTools {
         Rcpp::NumericVector new_wt(n_edge + 1);
         std::copy(weight.begin(), weight.end(), new_wt.begin());
         new_wt[n_edge] = 0;
-        std::tie(edge, weight) = preorder_core(new_parent, new_child, new_wt);
+        std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(new_parent, new_child, new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
