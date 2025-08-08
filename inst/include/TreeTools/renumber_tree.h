@@ -58,17 +58,9 @@ namespace TreeTools {
       }
       return;
     default:
-      size_t i_max = static_cast<size_t>(arr_len);
-      for (size_t i = 1; i < i_max; ++i) {
-        const int32 tmp = arr[i];
-        const int32 key = sort_by[tmp];
-        size_t j = i;
-        while (j > 0 && sort_by[arr[j - 1]] > key) {
-          arr[j] = arr[j - 1];
-          --j;
-        }
-        arr[j] = tmp;
-      }
+      std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
+        return sort_by[a] < sort_by[b];
+      });
     }
   }
 
