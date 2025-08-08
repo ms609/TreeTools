@@ -158,33 +158,38 @@ namespace TreeTools {
         return phy;
       }
       // #TODO work in situ without clone?
-      Rcpp::IntegerMatrix new_edge = clone(edge);
-
+      
+      Rcpp::IntegerVector new_parent(n_edge);
+      Rcpp::IntegerVector new_child(n_edge);
+      
+      // Copy unchanged edges
+      for (intx i = 0; i < n_edge; ++i) {
+        new_parent[i] = edge(i, 0);
+        new_child[i] = edge(i, 1);
+      }
+      
       // We'll later add an edge from the now-unallocated root node to the outgroup.
-      new_edge(invert_next, 0) = root_node;
-      new_edge(invert_next, 1) = edge(invert_next, 0);
-
+      new_parent[invert_next] = root_node;
+      new_child[invert_next] = edge(invert_next, 0);
+      
       do {
         invert_next = edge_above[edge(invert_next, 0)];
-        new_edge(invert_next, 0) = edge(invert_next, 1);
-        new_edge(invert_next, 1) = edge(invert_next, 0);
+        new_parent[invert_next] = edge(invert_next, 1);
+        new_child[invert_next] = edge(invert_next, 0);
       } while (edge(invert_next, 0) != root_node);
-
-      // Further root edges must be replaced with root -> outgroup.
-      intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
-      new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
-      new_edge(root_edges[spare_edge], 1) = outgroup;
+      
+      // Further root edges must be replaced with root -> outgroup
+      intx spare_edge = (new_parent[root_edges[0]] == root_node ? 0 : 1);
+      new_child[invert_next] = edge(root_edges[spare_edge], 1);
+      new_child[root_edges[spare_edge]] = outgroup;
+      
       if (weighted) {
-        std::tie(edge, weight) = preorder_weighted_pair(new_edge(Rcpp::_, 0),
-                                                          new_edge(Rcpp::_, 1),
-                                                          weight);
+        std::tie(edge, weight) = preorder_weighted_pair(new_parent, new_child, weight);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
+        ret["edge"] = preorder_edges_and_nodes(new_parent, new_child);
       }
-
     } else { // Root node will be retained; we need a new root edge
 
       Rcpp::IntegerVector new_parent(n_edge + 1);
