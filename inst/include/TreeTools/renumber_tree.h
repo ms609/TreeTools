@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <cstdlib> /* for calloc */
+#include <memory> /* for unique_ptr */
 #include <stack> /* for stack */
 #include <stdexcept> /* for errors */
 #include <utility> /* for pair */
@@ -15,22 +16,6 @@ namespace TreeTools {
     const int32 temp = *a;
     *a = *b;
     *b = temp;
-  }
-
-  inline void quicksort_by_smallest(int32 *left, const int32 *right,
-                                    const int32 *sort_by) {
-    if (left >= right) return;
-
-    const int32 pivot = sort_by[*right];
-    int32 *centre = left;
-    for (int32 *i = left; i <= right; i++) {
-      if (sort_by[*i] <= pivot) {
-        swap(centre, i);
-        ++centre;
-      }
-    }
-    quicksort_by_smallest(left, centre - 2, sort_by);
-    quicksort_by_smallest(centre, right, sort_by);
   }
 
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
@@ -73,38 +58,9 @@ namespace TreeTools {
       }
       return;
     default:
-      for (size_t i = 1; i < size_t(arr_len); ++i) {
-        const int32 tmp = arr[i];
-        ASSERT(tmp >= 0 && tmp < ARR_LEN(sort_by));
-        const int32 key = sort_by[tmp];
-        size_t j = i;
-        while (j > 0 && sort_by[arr[j - 1]] > key) {
-          arr[j] = arr[j - 1];
-          --j;
-        }
-        arr[j] = tmp;
-      }
-      
-      // std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
-      //   return sort_by[a] < sort_by[b];
-      // });
-    }
-  }
-
-  inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
-                                             int32* sort_by) {
-    ASSERT(arr_len > 0);
-    for (int32 i = 1; i != arr_len; ++i) {
-      const int32
-        tmp = arr[i],
-        key = sort_by[tmp]
-      ;
-      int32 j = i;
-      while (j && sort_by[arr[j - 1]] > key) {
-        arr[j] = arr[j - 1];
-        --j;
-      }
-      arr[j] = tmp;
+      std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
+        return sort_by[a] < sort_by[b];
+      });
     }
   }
 
@@ -448,7 +404,37 @@ namespace TreeTools {
     }
     return subtree_size[node];
   }
-
+  
+  template <typename T, std::size_t StackSize>
+  struct SmallBuffer {
+    static_assert(std::is_trivial<T>::value,
+                  "SmallBuffer requires a trivial type T");
+    
+    bool use_stack;
+    std::array<T, StackSize> stack;
+    T* heap;
+    
+    SmallBuffer(std::size_t needed)
+      : use_stack(needed <= StackSize), heap(nullptr)
+    {
+      if (use_stack) {
+        // zero only the number of elements we'll actually use
+        std::memset(stack.data(), 0, needed * sizeof(T));
+      } else {
+        heap = static_cast<T*>(std::calloc(needed, sizeof(T)));
+        if (!heap) throw std::bad_alloc{};
+      }
+    }
+    
+    ~SmallBuffer() {
+      if (!use_stack) std::free(heap);
+    }
+    
+    inline T* data() noexcept {
+      return use_stack ? stack.data() : heap;
+    }
+  };
+  
   // [[Rcpp::export]]
   inline Rcpp::IntegerVector postorder_order(const Rcpp::IntegerMatrix edge)
   {
@@ -456,124 +442,33 @@ namespace TreeTools {
     const int32 node_limit = n_edge + 1;
     
     if (long(6 * node_limit * sizeof(int32)) > 0.9999L * INTPTR_MAX) {
-      Rcpp::stop("Tree too large for postorder_order. "            // # nocov
-                   "Try running 64-bit R?");                       // # nocov
+      Rcpp::stop("Tree too large for postorder_order. Try running 64-bit R?");
     }
     
     constexpr int32 STACK_THRESHOLD = 2048;
-    const bool use_stack = node_limit < STACK_THRESHOLD;
-    std::array<int32, STACK_THRESHOLD> stack_missing_children;
-    std::array<bool, STACK_THRESHOLD>  stack_matched;
+    SmallBuffer<int32, STACK_THRESHOLD> missing_children(node_limit + 1);
+    SmallBuffer<char, STACK_THRESHOLD> matched(n_edge);
     
-    int32 stack_ready_edges[STACK_THRESHOLD];
-    int32 stack_child_edges_start[STACK_THRESHOLD];
-    int32 stack_child_edges[STACK_THRESHOLD];
-    int32 stack_child_edge_counts[STACK_THRESHOLD];
-    
-    int32 * missing_children;
-    bool* matched;
-    int32* ready_edges;
-    int32* child_edges_start;  // Start index for each node's child edges
-    int32* child_edges;        // Flat array of child edges
-    int32* child_edge_counts;  // Count of edges ending at each node
-    
-    if (use_stack) {
-      missing_children = stack_missing_children.data();
-      matched = stack_matched.data();
-      ready_edges = stack_ready_edges;
-      child_edges_start = stack_child_edges_start;
-      child_edges = stack_child_edges;
-      child_edge_counts = stack_child_edge_counts;
-      
-      std::fill(missing_children, missing_children + node_limit + 1, 0);
-      std::fill(matched, matched + n_edge, false);
-      std::memset(child_edges_start, 0, (node_limit + 1) * sizeof(int32));
-      std::memset(child_edge_counts, 0, (node_limit + 1) * sizeof(int32));
-    } else {
-      missing_children = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-      matched = (bool*) std::calloc(n_edge, sizeof(bool));
-      ready_edges = (int32*) std::malloc(n_edge * sizeof(int32));
-      child_edges_start = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-      child_edges = (int32*) std::malloc(n_edge * sizeof(int32));
-      child_edge_counts = (int32*) std::calloc(node_limit + 1, sizeof(int32));
-    }
-    
-    // Count children for each node AND count edges ending at each node
+    // Count children
+    int32* mc = missing_children.data();
+    char*   m = matched.data();
     for (int32 i = 0; i < n_edge; ++i) {
-      ++missing_children[edge[i]];
-      ++child_edge_counts[edge[i + n_edge]];
+      ++mc[edge[i]];
     }
     
-    // Build start indices for child_edges array
-    int32 total = 0;
-    for (int32 node = 1; node <= node_limit; ++node) {
-      child_edges_start[node] = total;
-      total += child_edge_counts[node];
-    }
-    
-    // Populate child_edges array
-    if (use_stack) {
-      int32 fill_pos[STACK_THRESHOLD];
-      for (int32 node = 1; node <= node_limit; ++node) {
-        fill_pos[node] = child_edges_start[node];
-      }
-      
-      for (int32 i = 0; i < n_edge; ++i) {
-        const int32 child = edge[i];
-        child_edges[fill_pos[child]++] = i;
-      }
-    } else {
-      int32* fill_pos = (int32*) std::malloc((node_limit + 1) * sizeof(int32));
-      for (int32 node = 1; node <= node_limit; ++node) {
-        fill_pos[node] = child_edges_start[node];
-      }
-      
-      for (int32 i = 0; i < n_edge; ++i) {
-        const int32 child = edge[i];
-        child_edges[fill_pos[child]++] = i;
-      }
-      std::free(fill_pos);
-    }
-    
-    // Find initial ready edges (leaves)
-    int32 ready_count = 0;
-    for (int32 i = n_edge; i--; ) {
-      if (!missing_children[edge[i]]) {
-        ready_edges[ready_count++] = i;
-      }
-    }
-    
-    // Process ready edges
     int32 found = 0;
-    int32 ready_pos = 0;
     Rcpp::IntegerVector ret(n_edge);
-
-    while (ready_pos < ready_count) {
-      const int32 edge_idx = ready_edges[ready_pos++];
-      matched[edge_idx] = true;
-      ret[found++] = edge_idx + 1;
-      
-      const int32 parent = edge[edge_idx + n_edge];
-      if (--missing_children[parent] == 0) {
-        // Parent node is now ready - add all edges ending at parent
-        const int32 start = child_edges_start[parent];
-        const int32 end = (parent == node_limit) ? n_edge : child_edges_start[parent + 1];
-        
-        for (int32 j = start; j < end; ++j) {
-          const int32 candidate_edge = child_edges[j];
-          if (!matched[candidate_edge]) {
-            ready_edges[ready_count++] = candidate_edge;
-          }
+    
+    do {
+      for (int32 i = n_edge; i--;) {
+        if (!m[i] && !mc[edge[i + n_edge]]) {
+          m[i] = 1;
+          --mc[edge[i]];
+          ret[found++] = i + 1;
         }
       }
-    }
-
-    if (!use_stack) {
-      std::free(ready_edges);
-      std::free(child_edges_start);
-      std::free(child_edges);
-      std::free(child_edge_counts);
-    }
+    } while (found != n_edge);
+    
     return ret;
   }
 }
