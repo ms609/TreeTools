@@ -392,18 +392,6 @@ namespace TreeTools {
     
     return ret;
   }
-
-  inline int32 get_subtree_size(int32 node, int32 *subtree_size,
-                                int32 *n_children, int32 **children_of,
-                                int32 n_edge) {
-    if (!subtree_size[node]) {
-      for (int32 i = n_children[node]; i--; ) {
-        subtree_size[node] += get_subtree_size(children_of[node][i],
-                                subtree_size, n_children, children_of, n_edge);
-      }
-    }
-    return subtree_size[node];
-  }
   
   template <typename T, std::size_t StackSize>
   struct SmallBuffer {
