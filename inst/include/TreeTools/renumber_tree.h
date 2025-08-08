@@ -453,20 +453,17 @@ namespace TreeTools {
   template <typename T, std::size_t StackSize>
   struct SmallBuffer {
     bool use_stack;
-    T* ptr;
     std::array<T, StackSize> stack;
     T* heap;
 
-    SmallBuffer(std::size_t needed) : use_stack(needed <= StackSize),
-                                      ptr(use_stack ? stack.data() : nullptr),
-                                      stack{}  // zero-initialise stack
+    SmallBuffer(std::size_t needed)
+      : use_stack(needed <= StackSize),
+        stack{},  // zero-initialise stack
+        heap(nullptr)
     {
       if (!use_stack) {
         heap = static_cast<T*>(std::calloc(needed, sizeof(T)));
         if (!heap) throw std::bad_alloc{};
-        ptr = heap;
-      } else {
-        heap = nullptr;
       }
     }
     
@@ -474,7 +471,9 @@ namespace TreeTools {
       if (!use_stack) std::free(heap);
     }
     
-    inline T* data() noexcept { return ptr; }
+    inline T* data() noexcept {
+      return use_stack ? stack.data() : heap;
+    }
   };
   
   // [[Rcpp::export]]
