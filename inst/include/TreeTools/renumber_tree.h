@@ -7,6 +7,7 @@
 #include <stack> /* for stack */
 #include <stdexcept> /* for errors */
 #include <utility> /* for pair */
+#include <vector>
 #include <Rcpp/Lightest>
 #include "assert.h" /* for ASSERT */
 #include "types.h"
