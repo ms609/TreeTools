@@ -18,22 +18,6 @@ namespace TreeTools {
     *b = temp;
   }
 
-  inline void quicksort_by_smallest(int32 *left, const int32 *right,
-                                    const int32 *sort_by) {
-    if (left >= right) return;
-
-    const int32 pivot = sort_by[*right];
-    int32 *centre = left;
-    for (int32 *i = left; i <= right; i++) {
-      if (sort_by[*i] <= pivot) {
-        swap(centre, i);
-        ++centre;
-      }
-    }
-    quicksort_by_smallest(left, centre - 2, sort_by);
-    quicksort_by_smallest(centre, right, sort_by);
-  }
-
   inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                          const int32* sort_by) {
     ASSERT(arr_len > 0);
@@ -77,23 +61,6 @@ namespace TreeTools {
       std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
         return sort_by[a] < sort_by[b];
       });
-    }
-  }
-
-  inline void tim_insertion_sort_by_smallest(int32* arr, const int32 arr_len,
-                                             int32* sort_by) {
-    ASSERT(arr_len > 0);
-    for (int32 i = 1; i != arr_len; ++i) {
-      const int32
-        tmp = arr[i],
-        key = sort_by[tmp]
-      ;
-      int32 j = i;
-      while (j && sort_by[arr[j - 1]] > key) {
-        arr[j] = arr[j - 1];
-        --j;
-      }
-      arr[j] = tmp;
     }
   }
 
