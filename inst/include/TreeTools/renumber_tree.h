@@ -75,6 +75,7 @@ namespace TreeTools {
     default:
       for (size_t i = 1; i < size_t(arr_len); ++i) {
         const int32 tmp = arr[i];
+        ASSERT(tmp >= 0 && tmp < ARR_LEN(sort_by));
         const int32 key = sort_by[tmp];
         size_t j = i;
         while (j > 0 && sort_by[arr[j - 1]] > key) {
@@ -234,11 +235,13 @@ namespace TreeTools {
     
     ASSERT(parent.length() < INT_FAST32_MAX - 2);
     const int32 n_edge = int32(parent.length());
-    const int32 node_limit = n_edge + 2;
-
     if (child.length() != n_edge) {
       Rcpp::stop("Length of parent and child must match");
     }
+    const int32 max_node = n_edge + 1;
+    assert(max_node == *std::max_element(parent.begin(), parent.end()));
+    const int32 node_limit = max_node + 1;
+
 
     int32 next_edge = 0;
     int32 root_node = n_edge * 2; /* Initialize with too-big value */
