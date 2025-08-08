@@ -187,7 +187,8 @@ namespace TreeTools {
 
     } else { // Root node will be retained; we need a new root edge
 
-      Rcpp::IntegerMatrix new_edge(n_edge + 1, 2);
+      Rcpp::IntegerVector new_parent(n_edge + 1);
+      Rcpp::IntegerVector new_child(n_edge + 1);
       Rcpp::NumericVector new_wt(n_edge + 1);
       if (weighted) {
         for (int i = n_edge; i--; ) {
@@ -196,33 +197,33 @@ namespace TreeTools {
         ASSERT(new_wt(n_edge) == 0);
       }
       for (int i = n_edge; i--; ) {
-        new_edge(i, 0) = edge(i, 0);
-        new_edge(i, 1) = edge(i, 1);
+        new_parent(i) = edge(i, 0);
+        new_child(i) = edge(i, 1);
       }
       const intx new_root = max_node + 1;
-      new_edge(n_edge, 0) = new_root;
-      new_edge(n_edge, 1) = outgroup;
+      new_parent(n_edge) = new_root;
+      new_child(n_edge) = outgroup;
 
-      new_edge(invert_next, 0) = new_root;
-      new_edge(invert_next, 1) = edge(invert_next, 0);
+      new_parent(invert_next) = new_root;
+      new_child(invert_next) = edge(invert_next, 0);
 
       while (edge(invert_next, 0) != root_node) {
         invert_next = edge_above[edge(invert_next, 0)];
-        new_edge(invert_next, 0) = edge(invert_next, 1);
-        new_edge(invert_next, 1) = edge(invert_next, 0);
+        new_parent(invert_next) = edge(invert_next, 1);
+        new_child(invert_next) = edge(invert_next, 0);
       }
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
         auto [edge, weight] = preorder_weighted_pair(
-          new_edge(Rcpp::_, 0),
-          new_edge(Rcpp::_, 1),
+          new_parent,
+          new_child,
           new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
+        ret["edge"] = preorder_edges_and_nodes(new_parent,
+                                               new_child);
       }
       
       ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
