@@ -189,12 +189,6 @@ namespace TreeTools {
 
       Rcpp::IntegerVector new_parent(n_edge + 1);
       Rcpp::IntegerVector new_child(n_edge + 1);
-      Rcpp::NumericVector new_wt(n_edge + 1);
-      
-      if (weighted) {
-        std::copy(weight.begin(), weight.end(), new_wt.begin());
-        ASSERT(new_wt(n_edge) == 0);
-      }
       
       for (int i = n_edge; i--; ) {
         new_parent(i) = edge(i, 0);
@@ -216,6 +210,8 @@ namespace TreeTools {
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
+        Rcpp::NumericVector new_wt = Rcpp::clone<Rcpp::NumericVector>(weight);
+        new_wt.push_back(0);
         auto [edge, weight] = preorder_weighted_pair(new_parent, new_child,
                                                      new_wt);
         ret["edge"] = edge;
