@@ -99,13 +99,12 @@ namespace TreeTools {
     Rcpp::IntegerMatrix edge = phy["edge"];
     Rcpp::NumericVector weight;
 
-    const intx
-      n_edge = edge.nrow(),
-      n_node = phy["Nnode"],
-      max_node = n_edge + 1,
-      n_tip = max_node - n_node,
-      root_node = n_tip + 1
-    ;
+    const intx n_edge = edge.nrow();
+    const intx n_node = phy["Nnode"];
+    const intx max_node = n_edge + 1;
+    const intx n_tip = max_node - n_node;
+    const intx root_node = n_tip + 1;
+    
     if (!n_edge || !n_node || n_tip < 2) return phy;
 
     const bool weighted = phy.containsElementNamed("edge.length");
@@ -150,86 +149,74 @@ namespace TreeTools {
     }
 
     intx invert_next = edge_above[outgroup];
-
+    
+    
     if (root_edges_found == 2) { // Root node is vapour, and can be repurposed
-
+      
       if (edge(root_edges[0], 1) == outgroup ||
           edge(root_edges[1], 1) == outgroup) {
         return phy;
       }
-      // #TODO work in situ without clone?
-      Rcpp::IntegerMatrix new_edge = clone(edge);
-
+      
+      Rcpp::IntegerVector new_parent = edge(Rcpp::_, 0);
+      Rcpp::IntegerVector new_child = edge(Rcpp::_, 1);
+      
       // We'll later add an edge from the now-unallocated root node to the outgroup.
-      new_edge(invert_next, 0) = root_node;
-      new_edge(invert_next, 1) = edge(invert_next, 0);
-
+      new_parent[invert_next] = root_node;
+      new_child[invert_next] = edge(invert_next, 0);
+      
       do {
         invert_next = edge_above[edge(invert_next, 0)];
-        new_edge(invert_next, 0) = edge(invert_next, 1);
-        new_edge(invert_next, 1) = edge(invert_next, 0);
+        new_parent[invert_next] = edge(invert_next, 1);
+        new_child[invert_next] = edge(invert_next, 0);
       } while (edge(invert_next, 0) != root_node);
-
-      // Further root edges must be replaced with root -> outgroup.
-      intx spare_edge = (new_edge(root_edges[0], 0) == root_node ? 0 : 1);
-      new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
-      new_edge(root_edges[spare_edge], 1) = outgroup;
+      
+      // Further root edges must be replaced with root -> outgroup
+      intx spare_edge = (new_parent[root_edges[0]] == root_node ? 0 : 1);
+      new_child[invert_next] = edge(root_edges[spare_edge], 1);
+      new_child[root_edges[spare_edge]] = outgroup;
+      
       if (weighted) {
-        Rcpp::List preorder_res;
-        auto [edge, edge_weight] = preorder_weighted_pair(new_edge(Rcpp::_, 0),
-                                                          new_edge(Rcpp::_, 1),
-                                                          weight);
+        std::tie(edge, weight) = preorder_weighted_pair(new_parent, new_child, weight);
         ret["edge"] = edge;
-        ret["edge.length"] = edge_weight;
+        ret["edge.length"] = weight;
       } else {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
+        ret["edge"] = preorder_edges_and_nodes(new_parent, new_child);
       }
-      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
-
     } else { // Root node will be retained; we need a new root edge
-
-      Rcpp::IntegerMatrix new_edge(n_edge + 1, 2);
-      Rcpp::NumericVector new_wt(n_edge + 1);
-      if (weighted) {
-        for (int i = n_edge; i--; ) {
-          new_wt[i] = weight[i];
-        }
-        ASSERT(new_wt(n_edge) == 0);
-      }
-      for (int i = n_edge; i--; ) {
-        new_edge(i, 0) = edge(i, 0);
-        new_edge(i, 1) = edge(i, 1);
-      }
+      
+      Rcpp::IntegerVector new_parent = edge(Rcpp::_, 0);
+      Rcpp::IntegerVector new_child = edge(Rcpp::_, 1);
+      
       const intx new_root = max_node + 1;
-      new_edge(n_edge, 0) = new_root;
-      new_edge(n_edge, 1) = outgroup;
+      
+      new_parent.push_back(new_root);
+      new_child.push_back(outgroup);
 
-      new_edge(invert_next, 0) = new_root;
-      new_edge(invert_next, 1) = edge(invert_next, 0);
+      new_parent[invert_next] = new_root;
+      new_child[invert_next] = edge(invert_next, 0);
 
       while (edge(invert_next, 0) != root_node) {
         invert_next = edge_above[edge(invert_next, 0)];
-        new_edge(invert_next, 0) = edge(invert_next, 1);
-        new_edge(invert_next, 1) = edge(invert_next, 0);
+        new_parent[invert_next] = edge(invert_next, 1);
+        new_child[invert_next] = edge(invert_next, 0);
       }
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
-        Rcpp::List preorder_res;
-        auto [edge, weight] = preorder_weighted_pair(
-          new_edge(Rcpp::_, 0),
-          new_edge(Rcpp::_, 1),
-          new_wt);
+        Rcpp::NumericVector new_wt(n_edge + 1);
+        std::copy(weight.begin(), weight.end(), new_wt.begin());
+        new_wt[n_edge] = 0;
+        std::tie(edge, weight) = preorder_weighted_pair(new_parent, new_child,
+                                                        new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
-        ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
-                                               new_edge(Rcpp::_, 1));
+        ret["edge"] = preorder_edges_and_nodes(new_parent, new_child);
       }
       
-      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
     }
+    ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
   }
