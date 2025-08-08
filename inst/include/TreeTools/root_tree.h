@@ -99,13 +99,12 @@ namespace TreeTools {
     Rcpp::IntegerMatrix edge = phy["edge"];
     Rcpp::NumericVector weight;
 
-    const intx
-      n_edge = edge.nrow(),
-      n_node = phy["Nnode"],
-      max_node = n_edge + 1,
-      n_tip = max_node - n_node,
-      root_node = n_tip + 1
-    ;
+    const intx n_edge = edge.nrow();
+    const intx n_node = phy["Nnode"];
+    const intx max_node = n_edge + 1;
+    const intx n_tip = max_node - n_node;
+    const intx root_node = n_tip + 1;
+    
     if (!n_edge || !n_node || n_tip < 2) return phy;
 
     const bool weighted = phy.containsElementNamed("edge.length");
