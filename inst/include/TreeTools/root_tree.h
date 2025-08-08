@@ -190,17 +190,18 @@ namespace TreeTools {
       Rcpp::IntegerVector new_parent(n_edge + 1);
       Rcpp::IntegerVector new_child(n_edge + 1);
       
-      for (int i = n_edge; i--; ) {
-        new_parent(i) = edge(i, 0);
-        new_child(i) = edge(i, 1);
-      }
+      Rcpp::IntegerVector parent_column = edge.column(0);
+      std::copy(parent_column.begin(), parent_column.end(), new_parent.begin());
+      
+      Rcpp::IntegerVector child_column = edge.column(1);
+      std::copy(child_column.begin(), child_column.end(), new_child.begin());
       
       const intx new_root = max_node + 1;
-      new_parent(n_edge) = new_root;
-      new_child(n_edge) = outgroup;
+      new_parent[n_edge] = new_root;
+      new_child[n_edge] = outgroup;
 
-      new_parent(invert_next) = new_root;
-      new_child(invert_next) = edge(invert_next, 0);
+      new_parent[invert_next] = new_root;
+      new_child[invert_next] = edge(invert_next, 0);
 
       while (edge(invert_next, 0) != root_node) {
         invert_next = edge_above[edge(invert_next, 0)];
