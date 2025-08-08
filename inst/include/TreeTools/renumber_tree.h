@@ -69,7 +69,6 @@ namespace TreeTools {
         }
         arr[j] = tmp;
       }
-      
     }
   }
 
