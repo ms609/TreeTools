@@ -13,6 +13,36 @@
 #include "types.h"
 
 namespace TreeTools {
+inline void swap(int32 *a, int32 *b) {
+  const int32 temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
+                                       const int32* sort_by) {
+  ASSERT(arr_len > 0);
+  switch (arr_len) {
+  // case 0: return;
+  case 1: return;
+  case 2:
+    if (sort_by[arr[0]] > sort_by[arr[1]]) {
+      swap(&arr[0], &arr[1]);
+    }
+    return;
+  }
+  
+  for (int32 i = 1; i != arr_len; ++i) {
+    const int32 tmp = arr[i];
+    const int32 key = sort_by[tmp];
+    int32 j = i;
+    while (j && sort_by[arr[j - 1]] > key) {
+      arr[j] = arr[j - 1];
+      --j;
+    }
+    arr[j] = tmp;
+  }
+}
 
 // We'll use this a sentinel type to handle the unweighted case
 struct NoWeights {};
@@ -131,10 +161,8 @@ RetType preorder_core(
 
   for (int32_t node = n_tip + 1; node < data.node_limit; ++node) {
     int32_t* node_children = data.children_data + data.children_start_idx[node];
-    std::sort(node_children, node_children + data.n_children[node],
-              [&](int32_t a, int32_t b) {
-                return data.smallest_desc[a] < data.smallest_desc[b];
-              });
+    insertion_sort_by_smallest(node_children, data.n_children[node],
+                               data.smallest_desc);
   }
   
   int32_t next_edge = 0;
