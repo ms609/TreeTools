@@ -157,16 +157,10 @@ namespace TreeTools {
           edge(root_edges[1], 1) == outgroup) {
         return phy;
       }
+      
       // #TODO work in situ without clone?
-      
-      Rcpp::IntegerVector new_parent(n_edge);
-      Rcpp::IntegerVector new_child(n_edge);
-      
-      // Copy unchanged edges
-      for (intx i = 0; i < n_edge; ++i) {
-        new_parent[i] = edge(i, 0);
-        new_child[i] = edge(i, 1);
-      }
+      Rcpp::IntegerVector new_parent = edge(Rcpp::_, 0);
+      Rcpp::IntegerVector new_child = edge(Rcpp::_, 1);
       
       // We'll later add an edge from the now-unallocated root node to the outgroup.
       new_parent[invert_next] = root_node;
