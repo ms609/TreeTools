@@ -128,8 +128,7 @@ RetType preorder_core(
     data.children_data[insert_pos] = child[i];
     ++data.n_children[p];
   }
-HEAD
-  
+
   for (int32_t node = n_tip + 1; node < data.node_limit; ++node) {
     int32_t* node_children = data.children_data + data.children_start_idx[node];
     std::sort(node_children, node_children + data.n_children[node],
