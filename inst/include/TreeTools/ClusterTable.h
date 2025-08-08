@@ -8,9 +8,6 @@
 #include "types.h" /* for int16 */
 #include "root_tree.h" /* for root_on_node */
 
-#define UNINIT -999
-#define INF TreeTools::INTX_MAX
-
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
   S[Spos++] = (b);                                               \
@@ -35,6 +32,8 @@ const int_fast32_t CT_MAX_LEAVES = 16383;
 
 namespace TreeTools {
 
+  constexpr int16 UNINIT = -999;
+  constexpr intx INF = TreeTools::INTX_MAX;
   constexpr int_fast32_t ct_max_leaves = 16383;
   constexpr int_fast32_t ct_stack_size = 4;
 
@@ -294,11 +293,11 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
+    if (leaf_labels.length() > int(TreeTools::CT_MAX_LEAVES)) {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
-    ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
+    ASSERT(TreeTools::CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "

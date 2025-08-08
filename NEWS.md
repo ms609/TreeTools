@@ -12,7 +12,7 @@
 - Add `SplitConsistent()` to calculate split (dis)agreement.
 - Fix `as.ClusterTable()` when leaf order varies.
 - `MakeTreeBinary()` explicitly removes edge lengths.
-- Fix regressions in `as.ClusterTable()` that caused downstream errors.
+- Fix regression in `as.ClusterTable()` that caused downstream crashes.
 - Fix regressions in `PhyToString()`.
 - Fix handling of multiple ambiguities in `Reweight()`.
 
