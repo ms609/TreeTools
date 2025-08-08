@@ -13,11 +13,11 @@ namespace TreeTools {
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child);
 
-  extern inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>
-    preorder_weighted_pair(
+  template <typename W, typename RetType>
+  extern inline RetType preorder_core(
       const Rcpp::IntegerVector& parent,
       const Rcpp::IntegerVector& child,
-      const Rcpp::DoubleVector& weight);
+      const W& weights);
 
   // edge must be BINARY
   // edge must be in preorder
@@ -110,10 +110,14 @@ namespace TreeTools {
 
     const bool weighted = phy.containsElementNamed("edge.length");
     if (weighted) {
-      std::tie(edge, weight) = preorder_weighted_pair(
-        edge(Rcpp::_, 0),
-        edge(Rcpp::_, 1),
-        phy["edge.length"]
+      
+      Rcpp::IntegerVector parent_col(edge(Rcpp::_, 0));
+      Rcpp::IntegerVector child_col(edge(Rcpp::_, 1));
+      Rcpp::NumericVector edge_len = phy["edge.length"];
+      std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(
+        parent_col,
+        child_col,
+        edge_len
       );
     } else {
       edge = preorder_edges_and_nodes(edge(Rcpp::_, 0), edge(Rcpp::_, 1));
@@ -176,7 +180,7 @@ namespace TreeTools {
       new_edge(root_edges[spare_edge], 1) = outgroup;
       if (weighted) {
         Rcpp::List preorder_res;
-        auto [edge, edge_weight] = preorder_weighted_pair(new_edge(Rcpp::_, 0),
+        auto [edge, edge_weight] = preorder_core(new_edge(Rcpp::_, 0),
                                                           new_edge(Rcpp::_, 1),
                                                           weight);
         ret["edge"] = edge;
@@ -217,7 +221,7 @@ namespace TreeTools {
       ret["Nnode"] = n_node + 1;
       if (weighted) {
         Rcpp::List preorder_res;
-        auto [edge, weight] = preorder_weighted_pair(
+        auto [edge, weight] = preorder_core(
           new_edge(Rcpp::_, 0),
           new_edge(Rcpp::_, 1),
           new_wt);
