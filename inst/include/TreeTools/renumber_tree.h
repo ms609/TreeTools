@@ -32,17 +32,9 @@ inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
     }
     return;
   }
-  
-  for (int32 i = 1; i != arr_len; ++i) {
-    const int32 tmp = arr[i];
-    const int32 key = sort_by[tmp];
-    int32 j = i;
-    while (j && sort_by[arr[j - 1]] > key) {
-      arr[j] = arr[j - 1];
-      --j;
-    }
-    arr[j] = tmp;
-  }
+  std::sort(arr, arr + arr_len, [&](int32 a, int32 b) {
+    return sort_by[a] < sort_by[b];
+  });
 }
 
 // Sentinel type to handle the unweighted case
