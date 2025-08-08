@@ -149,12 +149,13 @@ RetType preorder_core(
   }
   
   std::stack<Frame> stack;
+  int32_t root_label = n_tip + 1;
   
   // Initialize with root node children
   {
     int32_t child_count = data.n_children[root_node];
     if (child_count > 0) {
-      stack.push(Frame{root_node, n_tip + 1, 0, child_count, data.children_data + data.children_start_idx[root_node]});
+      stack.push(Frame{root_node, root_label, 0, child_count, data.children_data + data.children_start_idx[root_node]});
     }
   }
   
@@ -195,7 +196,6 @@ RetType preorder_core(
     return std::make_pair(ret_edges, ret_weights);
   }
 }
-
 // === PUBLIC EXPORTED FUNCTIONS ===
 
 // [[Rcpp::export]]
