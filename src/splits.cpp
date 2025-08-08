@@ -3,17 +3,25 @@
 #include <stdexcept> /* for errors */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
+
 using namespace Rcpp;
 
-const uintx powers_of_two[16] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024,
-                                 2048, 4096, 8192, 16384, 32768};
 const uintx BIN_SIZE = 8;
 const uintx bin_mask[BIN_SIZE + 1] = {255, 1, 3, 7, 15, 31, 63, 127, 255};
 
 #define NOT_TRIVIAL TreeTools::UINTX_MAX
 
-#define PO_PARENT(i) edge(order[i], 0)
-#define PO_CHILD(i) edge(order[i], 1)
+namespace TreeTools {
+  template<typename T>
+  constexpr void set_bit(T& target, int bit_pos) noexcept {
+    target |= T(1) << bit_pos;
+  }
+
+  [[nodiscard]] constexpr uintx power_of_two(int bit_pos) noexcept {
+    return uintx(1) << bit_pos;
+  }
+}
+using TreeTools::power_of_two;
 
 inline void check_16_bit(double x) {
   if (x > double(std::numeric_limits<int16>::max())) {
@@ -23,17 +31,21 @@ inline void check_16_bit(double x) {
 
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
-RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
-                             const IntegerVector order,
-                             const IntegerVector nTip) {
+Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
+                                   const Rcpp::IntegerVector& order,
+                                   const Rcpp::IntegerVector& nTip) {
+  
   // Check input is valid
   if (edge.cols() != 2) {
     Rcpp::stop("Edge matrix must contain two columns");
   }
-  if (1UL + edge.rows() > NOT_TRIVIAL - 1U) {
+  
+  const uintx n_edge = edge.rows();
+  if (n_edge + 1 >= NOT_TRIVIAL) {
     Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
-                            "Contact maintainer for advice");                   // # nocov
+                 "Contact maintainer for advice");                   // # nocov
   }
+  
   if (nTip[0] < 1) {
     if (nTip[0] == 0) {
       return RawMatrix(0, 0);
@@ -42,83 +54,88 @@ RawMatrix cpp_edge_to_splits(const IntegerMatrix edge,
     }
   }
   
-  const uintx n_edge = edge.rows();
-  if (!n_edge) {
-    return RawMatrix(0, 0);
-  }
-  if (n_edge != uintx(order.length())) {
+  if (n_edge != static_cast<uintx>(order.length())) {
     Rcpp::stop("Length of `order` must equal number of edges");
   }
   
-  // Initialize
-  const uintx n_node = n_edge + 1,
-              root_node = PO_PARENT(n_edge - 1),
-              n_tip = nTip[0],
-              n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
-
-  if (n_edge == n_tip  /* No internal nodes resolved */
-        || n_tip < 4) { /* Need four tips to split non-trivially */
+  const uintx n_node = n_edge + 1;
+  const uintx n_tip = nTip[0];
+  const uintx n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
+  
+  if (n_edge == n_tip || n_tip < 4) {
     return RawMatrix(0, n_bin);
   }
   if (n_edge < 3) {
     /* Cannot calculate trivial_two below. */
     Rcpp::stop("Not enough edges in tree for edge_to_splits.");
   }
-
-  uintx** splits = new uintx*[n_node];
-  for (uintx i = n_node; i--; ) {
-    splits[i] = new uintx[n_bin](); // () zero-initializes
+  
+  std::vector<uintx> splits(n_node * n_bin, 0);
+  
+  auto split = [&](uintx i, uintx j) -> uintx& {
+    return splits[i * n_bin + j];
+  };
+  
+  // Tip initialization
+  for (uintx i = 0; i < n_tip; ++i) {
+    split(i, i / BIN_SIZE) = power_of_two(i % BIN_SIZE);
   }
-
-  // Populate splits
-  for (uintx i = n_tip; i--; ) {
-    splits[i][uintx(i / BIN_SIZE)] = powers_of_two[i % BIN_SIZE];
-  }
-
-  uintx root_child = PO_CHILD(n_edge - 1);
+  
+  const int order_root = order[n_edge - 1];
+  const uintx root_node = edge(order_root, 0);
+  uintx root_child = edge(order_root, 1);
   int32 root_children = 1;
+  
   for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
-    const uintx parent = PO_PARENT(i);
-    const uintx child = PO_CHILD(i);
+    const int order_i = order[i];
+    const uintx parent = edge(order_i, 0);
+    const uintx child  = edge(order_i, 1);
+    
     if (parent == root_node) {
       ++root_children;
       if (child > n_tip) {
-        root_child = uintx(child);
+        root_child = child;
       }
     }
-    for (uintx j = 0; j != n_bin; ++j) {
-      splits[parent - 1][j] |= splits[child - 1][j];
+    
+    uintx* parent_split = &splits[(parent - 1) * n_bin];
+    const uintx* child_split = &splits[(child - 1) * n_bin];
+    
+    for (uintx j = 0; j < n_bin; ++j) {
+      parent_split[j] |= child_split[j];
     }
   }
-
-  for (uintx i = n_tip; i --; ) {
-    delete[] splits[i];
-  }
-
-  // Only return non-trivial splits
-  uintx n_trivial = 0;
-  const uintx trivial_origin = root_node - 1,
-              trivial_two = (root_children == 2 ? root_child - 1 : NOT_TRIVIAL),
-              n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
+  
+  const uintx trivial_origin = root_node - 1;
+  const uintx trivial_two = (root_children == 2 ? root_child - 1 : NOT_TRIVIAL);
+  const uintx n_return = n_edge - n_tip - (trivial_two != NOT_TRIVIAL ? 1 : 0);
+  
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
-
-  for (uintx i = n_tip; i != n_node; ++i) {
-    if (i == trivial_origin || i == trivial_two) {
-      ++n_trivial;
-    } else {
-      for (uintx j = 0; j != n_bin; j++) {
-        ret(i - n_tip - n_trivial, j) = decltype(ret(0, 0))(splits[i][j]);
-        names[i - n_tip - n_trivial] = (i + 1);
-      }
+  
+  std::vector<uintx> valid_rows;
+  valid_rows.reserve(n_return);
+  
+  for (uintx i = n_tip; i < n_node; ++i) {
+    if (i != trivial_origin && i != trivial_two) {
+      valid_rows.push_back(i);
+      names[valid_rows.size() - 1] = static_cast<int>(i + 1);
     }
-    delete[] splits[i];
   }
-
-  delete[] splits;
-
+  
+  Rbyte* __restrict__ ret_data = RAW(ret);
+  const uintx* __restrict__ splits_data = splits.data();
+  
+  for (uintx j = 0; j < n_bin; ++j) {
+    Rbyte* __restrict__ dest_col = ret_data + j * n_return;
+    
+    for (uintx r = 0; r < n_return; ++r) {
+      dest_col[r] = static_cast<Rbyte>(splits_data[valid_rows[r] * n_bin + j]);
+    }
+  }
+  
   rownames(ret) = names;
-  return(ret);
+  return ret;
 }
 
 // [[Rcpp::export]]
@@ -239,7 +256,7 @@ RawMatrix mask_splits(RawMatrix x) {
   if (unset_tips == 0) {
     return x;
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       x(i, last_bin) &= decltype(x(0, 0))(unset_mask);
     }
@@ -266,7 +283,7 @@ RawMatrix not_splits(const RawMatrix x) {
       ret[i] = ~ret[i];
     }
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       ret(i, last_bin) = ~ret(i, last_bin) & decltype(ret(0, 0))(unset_mask);
     }
@@ -307,7 +324,7 @@ RawMatrix xor_splits(const RawMatrix x, const RawMatrix y) {
       ret[i] ^= y[i];
     }
   } else {
-    const uintx unset_mask = powers_of_two[BIN_SIZE - unset_tips] - 1;
+    const uintx unset_mask = power_of_two(BIN_SIZE - unset_tips) - 1;
     for (int16 i = int16(x.rows()); i--; ) {
       ret(i, last_bin) = (ret(i, last_bin) ^ y(i, last_bin)) & 
         decltype(ret(0, 0))(unset_mask);
@@ -371,6 +388,108 @@ RawMatrix or_splits(const RawMatrix x, const RawMatrix y) {
   return ret;
 }
 
+// [[Rcpp::export]]
+Rcpp::List split_consistent(const RawMatrix needle,
+                            const Rcpp::List haystacks,
+                            const LogicalVector invert) {
+  
+  const bool CONTRADICTORY = invert[0] ? true : false;
+  const bool CONSISTENT = invert[0] ? false : true;
+  
+  // Validate needle
+  if (needle.rows() != 1) {
+    Rcpp::stop("Needle must contain exactly one split (one row)");
+  }
+  if (!needle.hasAttribute("nTip")) {
+    Rcpp::stop("Needle lacks nTip attribute");
+  }
+  
+  const int16 n_tip = needle.attr("nTip");
+  const int16 n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
+  
+  if (needle.cols() != n_bin) {
+    Rcpp::stop("Needle has incorrect number of columns for nTip"); // # nocov
+  }
+  
+  const int n_haystacks = haystacks.size();
+  Rcpp::List results(n_haystacks);
+  
+  // Process each haystack
+  for (int h = 0; h < n_haystacks; h++) {
+    if (TYPEOF(haystacks[h]) != RAWSXP) {
+      Rcpp::stop("Haystack element %d is not a RawMatrix", h + 1);
+    }
+    
+    RawMatrix haystack = haystacks[h];
+    
+    // Validate haystack
+    if (!haystack.hasAttribute("nTip")) {
+      Rcpp::stop("Haystack %d lacks nTip attribute", h + 1);
+    }
+    if (int16(haystack.attr("nTip")) != n_tip) {
+      Rcpp::stop("Haystack %d has different nTip than needle", h + 1);
+    }
+    if (haystack.cols() != n_bin) {
+      Rcpp::stop("Haystack %d has incorrect number of columns for nTip", h + 1); // # nocov
+    }
+    
+    const int n_splits = haystack.rows();
+    Rcpp::LogicalVector consistency(n_splits);
+    
+    // Check each split in the haystack against the needle
+    for (int s = 0; s < n_splits; s++) {
+      
+      // Calculate the four intersections A∩C, A∩D, B∩C, B∩D
+      // Where needle defines A|B and haystack[s] defines C|D
+      // A = tips where needle bit = 1, B = tips where needle bit = 0
+      // C = tips where haystack bit = 1, D = tips where haystack bit = 0
+      
+      bool ac_nonempty = false; // A ∩ C (both bits = 1)
+      bool ad_nonempty = false; // A ∩ D (needle = 1, haystack = 0)
+      bool bc_nonempty = false; // B ∩ C (needle = 0, haystack = 1)
+      bool bd_nonempty = false; // B ∩ D (both bits = 0)
+      
+      // Check each tip by examining the appropriate bit
+      for (int tip = 0; tip < n_tip; tip++) {
+        const int bin_index = tip / 8;
+        const uint8_t bit_mask = 1 << (tip % 8);
+        
+        const bool needle_bit = (needle(0, bin_index) & bit_mask) != 0;
+        const bool haystack_bit = (haystack(s, bin_index) & bit_mask) != 0;
+        
+        // Update intersection flags based on bit combinations
+        if (needle_bit && haystack_bit) {
+          ac_nonempty = true;        // A ∩ C
+        } else if (needle_bit && !haystack_bit) {
+          ad_nonempty = true;        // A ∩ D
+        } else if (!needle_bit && haystack_bit) {
+          bc_nonempty = true;        // B ∩ C
+        } else { // !needle_bit && !haystack_bit
+          bd_nonempty = true;        // B ∩ D
+        }
+        
+        // Early termination: if all four intersections are non-empty,
+        // the splits are contradictory
+        if (ac_nonempty && ad_nonempty && bc_nonempty && bd_nonempty) {
+          break;
+        }
+      }
+      
+      // Two splits are contradictory if all four intersections are non-empty
+      // Otherwise they are consistent
+      if (ac_nonempty && ad_nonempty && bc_nonempty && bd_nonempty) {
+        consistency[s] = CONTRADICTORY;
+      } else {
+        consistency[s] = CONSISTENT;
+      }
+    }
+    
+    results[h] = consistency;
+  }
+  
+  return results;
+}
+
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
 // [[Rcpp::export]]
 RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
@@ -395,9 +514,9 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
     }
     for (uintx split = n_split; split--; ) {
       if (splits(split, uintx(tip / BIN_SIZE))
-            & powers_of_two[tip % BIN_SIZE]) {
-        ret(split, uintx(kept_tip / BIN_SIZE)) |= 
-          decltype(ret(0, 0))(powers_of_two[kept_tip % BIN_SIZE]);
+            & power_of_two(tip % BIN_SIZE)) {
+        TreeTools::set_bit(ret(split, uintx(kept_tip / BIN_SIZE)),
+                           kept_tip % BIN_SIZE);
         ++in_split[split];
       }
     }

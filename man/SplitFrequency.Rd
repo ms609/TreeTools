@@ -49,7 +49,7 @@ or bootstrap trees.
 }
 \details{
 If multiple calculations are required, some time can be saved by using the
-constituent functions (see examples)
+constituent functions (see examples).
 }
 \section{Functions}{
 \itemize{

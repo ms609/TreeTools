@@ -38,6 +38,7 @@ summary(WithoutTrivialSplits(efgh))
 \seealso{
 Other split manipulation functions: 
 \code{\link{DropTip}()},
+\code{\link{SplitConsistent}()},
 \code{\link{Subsplit}()}
 }
 \author{

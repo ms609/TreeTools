@@ -94,13 +94,15 @@ AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
-\code{\link{TreeIsRooted}()}
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
 
 Other Splits operations: 
 \code{\link{LabelSplits}()},

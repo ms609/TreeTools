@@ -69,8 +69,8 @@ minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
 
-path_lengths <- function(edge, weight) {
-    .Call(`_TreeTools_path_lengths`, edge, weight)
+path_lengths <- function(edge, weight, init_nas) {
+    .Call(`_TreeTools_path_lengths`, edge, weight, init_nas)
 }
 
 cpp_edge_to_splits <- function(edge, order, nTip) {
@@ -99,6 +99,10 @@ and_splits <- function(x, y) {
 
 or_splits <- function(x, y) {
     .Call(`_TreeTools_or_splits`, x, y)
+}
+
+split_consistent <- function(needle, haystacks, invert) {
+    .Call(`_TreeTools_split_consistent`, needle, haystacks, invert)
 }
 
 thin_splits <- function(splits, drop) {

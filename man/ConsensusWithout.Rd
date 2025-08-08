@@ -81,6 +81,7 @@ Other tree manipulation:
 \code{\link{TrivialTree}}
 
 Other tree properties: 
+\code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
@@ -88,7 +89,8 @@ Other tree properties:
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()}
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
 
 Other consensus tree functions: 
 \code{\link{Consensus}()},

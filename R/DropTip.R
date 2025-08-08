@@ -115,8 +115,10 @@ DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
     weights <- tree[["edge.length"]]
     keep <- !drop
     nodeLabel <- tree[["node.label"]]
-    if (!is.null(weights) || !is.null(nodeLabel)) {
+    if (!is.null(weights)) {
       original <- PathLengths(tree, fullMatrix = TRUE)
+    }
+    if (!is.null(weights) || !is.null(nodeLabel)) {
       verts <- KeptVerts(tree, keep)
       tree[["node.label"]] <- nodeLabel[verts[-seq_len(nTip)]]
     }

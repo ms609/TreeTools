@@ -1,9 +1,19 @@
-# TreeTools 1.15.0.9002 (development) #
+# TreeTools 1.15.0.9006 (development) #
 
+- Remove exported C++ cache objects to prefer calculation with intrinsics.
+
+
+# TreeTools 1.15.0.9005 (development) #
+
+- `Treeness()` computes the treeness (=stemminess) of a tree, a proxy for its
+  phylogenetic signal.
+- `LongBranch()` identifies long-branched taxa.
 - Add `KeepTip()` methods to correspond to `DropTip()`.
+- Add `SplitConsistent()` to calculate split (dis)agreement.
 - Fix `as.ClusterTable()` when leaf order varies.
 - `MakeTreeBinary()` explicitly removes edge lengths.
 - Fix regressions in `as.ClusterTable()` that caused downstream errors.
+- Fix regressions in `PhyToString()`.
 - Fix handling of multiple ambiguities in `Reweight()`.
 
 
@@ -15,6 +25,7 @@
   tree.
 - Fix `MakeTreeBinary()` labelling trees as in preorder.
 - Fix `as.Splits.matrix(tipLabels != NULL)`.
+- Improve performance of `PhyToString()`.
 - Modernize aspects of C++ code.
 
 

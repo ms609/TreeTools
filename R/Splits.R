@@ -65,7 +65,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
     postorder_order(edge)
   } else {
     switch(order,
-           "preorder" = nEdge:1,
+           "preorder" = rev(seq_len(nEdge)),
            "postorder" = seq_len(nEdge),
            postorder_order(edge))
   }
@@ -398,14 +398,15 @@ names.Splits <- function(x) rownames(x)
 
 
 #' @family Splits operations
+#' @importFrom stringi stri_paste
 #' @export
 as.character.Splits <- function(x, ...) {
   tipLabels <- attr(x, "tip.label")
   nTip <- attr(x, "nTip")
 
   apply(as.logical(x), 1L, function(inSplit) {
-    paste0(paste(tipLabels[inSplit], collapse=" "), " | ",
-           paste(tipLabels[!inSplit], collapse=" "))
+    stri_paste(stri_paste(tipLabels[inSplit], collapse = " "), " | ",
+               stri_paste(tipLabels[!inSplit], collapse = " "))
   })
 
 }
