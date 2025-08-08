@@ -90,14 +90,17 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     const int order_i = order[i];
     const uintx parent = edge(order_i, 0);
     const uintx child  = edge(order_i, 1);
+    
     if (parent == root_node) {
       ++root_children;
       if (child > n_tip) {
         root_child = child;
       }
     }
+    
     uintx* parent_split = &splits[(parent - 1) * n_bin];
-    uintx* child_split = &splits[(child - 1) * n_bin];
+    const uintx* child_split = &splits[(child - 1) * n_bin];
+    
     for (uintx j = 0; j < n_bin; ++j) {
       parent_split[j] |= child_split[j];
     }
@@ -109,30 +112,26 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   
   RawMatrix ret(n_return, n_bin);
   IntegerVector names(n_return);
-  uintx n_trivial = 0;
   
-  // Temporary buffer for fast block copy
-  std::vector<Rbyte> temp(n_bin);
+  std::vector<uintx> valid_rows;
+  valid_rows.reserve(n_return);
   
   for (uintx i = n_tip; i < n_node; ++i) {
-    if (i == trivial_origin || i == trivial_two) {
-      ++n_trivial;
-      continue;
+    if (i != trivial_origin && i != trivial_two) {
+      valid_rows.push_back(i);
+      names[valid_rows.size() - 1] = static_cast<int>(i + 1);
     }
+  }
+  
+  Rbyte* __restrict__ ret_data = RAW(ret);
+  const uintx* __restrict__ splits_data = splits.data();
+  
+  for (uintx j = 0; j < n_bin; ++j) {
+    Rbyte* __restrict__ dest_col = ret_data + j * n_return;
     
-    const uintx row = i - n_tip - n_trivial;
-    const uintx offset = i * n_bin;
-    const uintx name = i + 1;
-    
-    std::transform(
-      splits.begin() + offset,
-      splits.begin() + offset + n_bin,
-      temp.begin(),
-      [](uintx x) { return static_cast<Rbyte>(x); }
-    );
-    
-    std::memcpy(&ret(row, 0), temp.data(), n_bin * sizeof(Rbyte));
-    names[row] = name;
+    for (uintx r = 0; r < n_return; ++r) {
+      dest_col[r] = static_cast<Rbyte>(splits_data[valid_rows[r] * n_bin + j]);
+    }
   }
   
   rownames(ret) = names;
