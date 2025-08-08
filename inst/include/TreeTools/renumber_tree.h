@@ -37,10 +37,6 @@ inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
   });
 }
 
-// Sentinel type to handle the unweighted case
-struct NoWeights {};
-// Used to conditionally create a type
-struct DummyDoubleVector {};
 
 struct TreeData {
   int32 n_edge;
