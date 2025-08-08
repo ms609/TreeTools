@@ -210,10 +210,10 @@ namespace TreeTools {
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
-        Rcpp::NumericVector new_wt = Rcpp::clone<Rcpp::NumericVector>(weight);
-        new_wt.push_back(0);
-        auto [edge, weight] = preorder_weighted_pair(new_parent, new_child,
-                                                     new_wt);
+        Rcpp::NumericVector new_wt(n_edge + 1);
+        std::copy(weight.begin(), weight.end(), new_wt.begin());
+        new_wt[n_edge] = 0;
+                                                        new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
