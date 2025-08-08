@@ -54,7 +54,7 @@ from each vertex to each of its descendant vertices.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">PathLengths</span><span class="op">(</span><span class="va">tree</span>, fullMatrix <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">PathLengths</span><span class="op">(</span><span class="va">tree</span>, fullMatrix <span class="op">=</span> <span class="cn">FALSE</span>, use.na <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,13 +68,19 @@ from each vertex to each of its descendant vertices.</p>
 <dt id="arg-fullmatrix">fullMatrix<a class="anchor" aria-label="anchor" href="#arg-fullmatrix"></a></dt>
 <dd><p>Logical specifying return format; see "value" section`.</p></dd>
 
+
+<dt id="arg-use-na">use.na<a class="anchor" aria-label="anchor" href="#arg-use-na"></a></dt>
+<dd><p>Logical specifying whether to set non-existent paths to <code>NA</code>,
+or to leave uninitialized.  Set to <code>FALSE</code> to maximize performance.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>If <code>fullMatrix = TRUE</code>, <code>PathLengths()</code> returns a square matrix in
 which entry <code>[i, j]</code> denotes the distance from internal node <code>i</code> to the
 descendant vertex <code>j</code>.
-Vertex pairs without a continuous directed path are denoted <code>NA</code>.
+Vertex pairs without a continuous directed path are denoted <code>NA</code> if <code>use.na</code>
+is <code>TRUE</code>.
 If <code>fullMatrix = FALSE</code>, <code>PathLengths()</code> returns a <code>data.frame</code> with three
 columns: <code>start</code> lists the deepest node in each path (i.e. that closest
 to the root); <code>end</code> lists the shallowest node (i.e. that closest to a leaf);
