@@ -149,9 +149,10 @@ namespace TreeTools {
     }
 
     intx invert_next = edge_above[outgroup];
-
+    
+    
     if (root_edges_found == 2) { // Root node is vapour, and can be repurposed
-
+      
       if (edge(root_edges[0], 1) == outgroup ||
           edge(root_edges[1], 1) == outgroup) {
         return phy;
@@ -174,16 +175,15 @@ namespace TreeTools {
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
       if (weighted) {
-        auto [edge, edge_weight] = preorder_weighted_pair(new_edge(Rcpp::_, 0),
+        std::tie(edge, weight) = preorder_weighted_pair(new_edge(Rcpp::_, 0),
                                                           new_edge(Rcpp::_, 1),
                                                           weight);
         ret["edge"] = edge;
-        ret["edge.length"] = edge_weight;
+        ret["edge.length"] = weight;
       } else {
         ret["edge"] = preorder_edges_and_nodes(new_edge(Rcpp::_, 0),
                                                new_edge(Rcpp::_, 1));
       }
-      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
 
     } else { // Root node will be retained; we need a new root edge
 
@@ -222,8 +222,8 @@ namespace TreeTools {
         ret["edge"] = preorder_edges_and_nodes(new_parent, new_child);
       }
       
-      ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
     }
+    ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
     // #TODO there is probably a clever way to avoid doing a full preorder rewriting.
     return ret;
   }
