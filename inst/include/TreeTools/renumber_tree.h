@@ -7,391 +7,251 @@
 #include <stack> /* for stack */
 #include <stdexcept> /* for errors */
 #include <utility> /* for pair */
+#include <vector>
 #include <Rcpp/Lightest>
 #include "assert.h" /* for ASSERT */
 #include "types.h"
 
 namespace TreeTools {
-  inline void swap(int32 *a, int32 *b) {
-    const int32 temp = *a;
-    *a = *b;
-    *b = temp;
+
+// We'll use this a sentinel type to handle the unweighted case
+struct NoWeights {};
+// Used to conditionally create a type
+struct DummyDoubleVector {};
+
+struct TreeData {
+  int32_t n_edge;
+  int32_t node_limit;
+  
+  std::vector<int32_t> memory_block;
+  
+  int32_t* parent_of;
+  int32_t* n_children;
+  int32_t* smallest_desc;
+  int32_t* children_start_idx;
+  int32_t* children_data;
+  
+  TreeData(int32_t num_edges)
+    : n_edge(num_edges),
+      node_limit(num_edges + 2),
+      memory_block(
+        node_limit + // parent_of
+          node_limit + // n_children
+          node_limit + // smallest_desc
+          node_limit + // children_start_idx
+          n_edge,      // children_data
+          0)
+  {
+    auto it = memory_block.begin();
+    parent_of = &*it; it += node_limit;
+    n_children = &*it; it += node_limit;
+    smallest_desc = &*it; it += node_limit;
+    children_start_idx = &*it; it += node_limit;
+    children_data = &*it;
   }
+};
 
-  inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
-                                         const int32* sort_by) {
-    ASSERT(arr_len > 0);
-    switch (arr_len) {
-    // case 0: return;
-    case 1: return;
-    case 2:
-      if (sort_by[arr[0]] > sort_by[arr[1]]) {
-        swap(&arr[0], &arr[1]);
-      }
-      return;
-    }
+struct Frame {
+  int32_t node;
+  int32_t parent_label;
+  int32_t child_index;
+  int32_t child_count;
+  const int32_t* node_children;
+};
 
-    for (int32 i = 1; i != arr_len; ++i) {
-      const int32
-        tmp = arr[i],
-        key = sort_by[tmp]
-      ;
-      int32 j = i;
-      while (j && sort_by[arr[j - 1]] > key) {
-        arr[j] = arr[j - 1];
-        --j;
-      }
-      arr[j] = tmp;
-    }
+template <typename W, typename RetType>
+inline RetType preorder_core(
+    const Rcpp::IntegerVector& parent,
+    const Rcpp::IntegerVector& child,
+    const W& weights)
+{
+  const int32_t n_edge = parent.length();
+  if (R_xlen_t(2LL + child.length() + 2LL + child.length()) > R_xlen_t(INT_FAST32_MAX)) {
+    Rcpp::stop("Too many edges in tree: Contact 'TreeTools' maintainer for support.");
   }
-
-  inline void insertion_sort_by_smallest(std::vector<int32>& arr,
-                                         const int32 arr_len,
-                                         const int32* sort_by) {
-    ASSERT(arr_len > 0);
-    switch (arr_len) {
-    // case 0:
-    case 1: return;
-    case 2:
-      if (sort_by[arr[0]] > sort_by[arr[1]]) {
-        std::swap(arr[0], arr[1]);
-      }
-      return;
-    default:
-      std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
-        return sort_by[a] < sort_by[b];
-      });
-    }
+  
+  if (child.length() != n_edge) {
+    Rcpp::stop("Length of parent and child must match");
   }
-
-  struct Frame {
-    int32 node;
-    int32 parent_label;
-    int32 child_index; // which child to process next
-    int32 child_count;
-    const int32* node_children;
-  };
-
-  inline void add_child_edges(
-      const int32 root_node,
-      const int32 root_label,
-      const int32* children_data,
-      const int32* children_start_idx,
-      const int32* n_children,
-      Rcpp::IntegerMatrix& ret,
-      int32* next_edge,
-      int32* next_label) {
-    
-    std::stack<Frame> stack;
-    
-    // Initialize with root node
-    {
-      int32 child_count = n_children[root_node];
-      assert(child_count > 0);
-      stack.push(Frame{root_node, root_label, 0, child_count, children_data + children_start_idx[root_node]});
+  
+  TreeData data(n_edge);
+  int32_t root_node = n_edge * 2;
+  int32_t n_tip = 0;
+  
+  std::conditional_t<std::is_same_v<W, NoWeights>, DummyDoubleVector, std::vector<double>> wt_above_storage;
+  const std::vector<double>* wt_above_ptr = nullptr;
+  
+  if constexpr (!std::is_same_v<W, NoWeights>) {
+    if (weights.length() != n_edge) {
+      Rcpp::stop("weights must match number of edges");
     }
-    
-    while (!stack.empty()) {
-      Frame& top = stack.top();
-      
-      if (top.child_index == top.child_count) {
-        // All children processed for this node, pop stack
-        stack.pop();
-        continue;
-      }
-      
-      int32 child = top.node_children[top.child_index];
-      
-      // Write edge info
-      ret(*next_edge, 0) = top.parent_label;
-      
-      if (n_children[child] == 0) {
-        ret(*next_edge, 1) = child;
-        ++(*next_edge);
-        ++top.child_index;
-      } else {
-        int32 child_label = *next_label;
-        ret(*next_edge, 1) = child_label;
-        ++(*next_label);
-        ++(*next_edge);
-        ++top.child_index;
-        
-        // Push child frame on stack to process its children next
-        int32 child_count = n_children[child];
-        const int32* child_children = children_data + children_start_idx[child];
-        stack.push(Frame{child, child_label, 0, child_count, child_children});
-      }
-    }
+    wt_above_storage.resize(data.node_limit);
+    wt_above_ptr = &wt_above_storage;
   }
-
-  inline void add_child_edges(
-      const int32 root_node,
-      const int32 root_label,
-      const int32* children_data,
-      const int32* children_start_idx,
-      const int32* n_children,
-      const std::vector<double>& wt_above,
-      Rcpp::IntegerMatrix& ret,
-      Rcpp::NumericVector& weight,
-      int32* next_edge,
-      int32* next_label) {
-    
-    std::stack<Frame> stack;
-    
-    // Initialize with root node
-    {
-      int32 child_count = n_children[root_node];
-      assert(child_count > 0);
-      stack.push(Frame{root_node, root_label, 0, child_count, children_data + children_start_idx[root_node]});
-    }
-    
-    while (!stack.empty()) {
-      Frame& top = stack.top();
-      
-      if (top.child_index == top.child_count) {
-        // All children processed for this node, pop stack
-        stack.pop();
-        continue;
-      }
-      
-      int32 child = top.node_children[top.child_index];
-      
-      // Write edge info
-      ret(*next_edge, 0) = top.parent_label;
-      weight[*next_edge] = wt_above[child];
-      
-      if (n_children[child] == 0) {
-        ret(*next_edge, 1) = child;
-        ++(*next_edge);
-        ++top.child_index;
-      } else {
-        int32 child_label = *next_label;
-        ret(*next_edge, 1) = child_label;
-        ++(*next_label);
-        ++(*next_edge);
-        ++top.child_index;
-        
-        // Push child frame on stack to process its children next
-        int32 child_count = n_children[child];
-        const int32* child_children = children_data + children_start_idx[child];
-        stack.push(Frame{child, child_label, 0, child_count, child_children});
-      }
+  
+  for (int32_t i = 0; i < n_edge; ++i) {
+    const int32_t child_i = child[i];
+    const int32_t parent_i = parent[i];
+    data.parent_of[child_i] = parent_i;
+    ++data.n_children[parent_i];
+    if constexpr (!std::is_same_v<W, NoWeights>) {
+      wt_above_storage[child_i] = weights[i];
     }
   }
   
-  // [[Rcpp::export]]
-  inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
-      const Rcpp::IntegerVector parent,
-      const Rcpp::IntegerVector child)
-  {
-    if (R_xlen_t(2LL + child.length() + 2LL + child.length()) > R_xlen_t(INT_FAST32_MAX)) {
-      Rcpp::stop("Too many edges in tree: "                        // #nocov
-                 "Contact 'TreeTools' maintainer for support.");   // #nocov
+  int32_t current_idx = 0;
+  for (int32_t i = 1; i < data.node_limit; i++) {
+    if (!data.parent_of[i]) {
+      root_node = i;
     }
-    
-    ASSERT(parent.length() < INT_FAST32_MAX - 2);
-    const int32 n_edge = int32(parent.length());
-    if (child.length() != n_edge) {
-      Rcpp::stop("Length of parent and child must match");
+    if (!data.n_children[i]) {
+      ++n_tip;
+    } else {
+      data.children_start_idx[i] = current_idx;
+      current_idx += data.n_children[i];
     }
-    const int32 max_node = n_edge + 1;
-    assert(max_node == *std::max_element(parent.begin(), parent.end()));
-    const int32 node_limit = max_node + 1;
-
-
-    int32 next_edge = 0;
-    int32 root_node = n_edge * 2; /* Initialize with too-big value */
-    int32 n_tip = 0;
-    
-    // Single large allocation instead of many small ones
-    const size_t total_ints_needed = 
-      node_limit +                    // parent_of
-      node_limit +                    // n_children  
-      node_limit +                    // smallest_desc
-      node_limit +                    // children_start_idx
-      n_edge;                         // children_data
-    
-    std::vector<int32> memory_block(total_ints_needed, 0);
-    
-    auto it = memory_block.begin();
-    int32* parent_of = &*it;
-    it += node_limit;
-    int32* n_children = &*it;
-    it += node_limit;
-    int32* smallest_desc = &*it;
-    it += node_limit;
-    int32* children_start_idx = &*it;
-    it += node_limit;
-    int32* children_data = &*it;
-    
-    for (int32 i = n_edge; i--; ) {
-      const int32 parent_i = parent[i];
-      parent_of[child[i]] = parent_i;
-      ++n_children[parent_i];
+  }
+  
+  for (int32_t tip = 1; tip < n_tip + 1; ++tip) {
+    data.smallest_desc[tip] = tip;
+    int32_t parent_node = data.parent_of[tip];
+    while (parent_node && !data.smallest_desc[parent_node]) {
+      data.smallest_desc[parent_node] = tip;
+      parent_node = data.parent_of[parent_node];
     }
-    
-    int32 current_idx = 0;
-    for (int32 i = 1; i < node_limit; i++) {
-      if (!parent_of[i]) {
-        root_node = i;
-      }
-      if (!n_children[i]) {
-        ++n_tip;
-      } else {
-        children_start_idx[i] = current_idx;
-        current_idx += n_children[i];
-      }
-    }
-
-    for (int32 tip = 1; tip < n_tip + 1; ++tip) {
-      smallest_desc[tip] = tip;
-      int32 parent = parent_of[tip];
-      while (!smallest_desc[parent]) {
-        smallest_desc[parent] = tip;
-        parent = parent_of[parent];
-      }
-    }
-    
-    // Reset n_children - use as insertion counter
-    std::fill(n_children, n_children + node_limit, 0);
-    for (int32 i = 0; i < n_edge; ++i) {
-      int32 p = parent[i];
-      int32 insert_pos = children_start_idx[p] + n_children[p];
-      children_data[insert_pos] = child[i];
-      ++n_children[p];
-    }
-
-    for (int32 node = n_tip + 1; node < node_limit; ++node) {
-      int32* node_children = children_data + children_start_idx[node];
-      insertion_sort_by_smallest(node_children, n_children[node], smallest_desc);
-    }
-    
-    int32 next_label = n_tip + 2;
-    Rcpp::IntegerMatrix ret(n_edge, 2);
-    add_child_edges(root_node, n_tip + 1, children_data, children_start_idx,
-                    n_children, ret, &next_edge, &next_label);
-
-    return ret;
+  }
+  
+  std::fill(data.n_children, data.n_children + data.node_limit, 0);
+  for (int32_t i = 0; i < n_edge; ++i) {
+    int32_t p = parent[i];
+    int32_t insert_pos = data.children_start_idx[p] + data.n_children[p];
+    data.children_data[insert_pos] = child[i];
+    ++data.n_children[p];
   }
 
-  inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pair(
-        const Rcpp::IntegerVector& parent,
-        const Rcpp::IntegerVector& child,
-        const Rcpp::DoubleVector& weight)
+  for (int32_t node = n_tip + 1; node < data.node_limit; ++node) {
+    int32_t* node_children = data.children_data + data.children_start_idx[node];
+    std::sort(node_children, node_children + data.n_children[node],
+              [&](int32_t a, int32_t b) {
+                return data.smallest_desc[a] < data.smallest_desc[b];
+              });
+  }
+  
+  int32_t next_edge = 0;
+  int32_t next_label = n_tip + 2;
+  
+  Rcpp::IntegerMatrix ret_edges(n_edge, 2);
+  
+  std::conditional_t<std::is_same_v<W, NoWeights>, DummyDoubleVector, Rcpp::NumericVector> ret_weights;
+  
+  if constexpr (!std::is_same_v<W, NoWeights>) {
+    ret_weights = Rcpp::NumericVector(n_edge);
+  }
+  
+  std::stack<Frame> stack;
+  int32_t root_label = n_tip + 1;
+  
+  // Initialize with root node children
   {
-    if (R_xlen_t(2LL + child.length() + 2LL + child.length()) >
-          R_xlen_t(INT_FAST32_MAX)) {
-      Rcpp::stop("Too many edges in tree: "                        // #nocov
-                 "Contact 'TreeTools' maintainer for support.");   // #nocov
+    int32_t child_count = data.n_children[root_node];
+    if (child_count > 0) {
+      stack.push(Frame{root_node, root_label, 0, child_count, data.children_data + data.children_start_idx[root_node]});
+    }
+  }
+  
+  while (!stack.empty()) {
+    Frame& top = stack.top();
+    
+    if (top.child_index == top.child_count) {
+      stack.pop();
+      continue;
     }
     
-    ASSERT(parent.length() < INT_FAST32_MAX - 2);
-    const int32 n_edge = int32(parent.length());
-    const int32 node_limit = n_edge + 2;
+    int32_t child_node = top.node_children[top.child_index];
     
-    if (child.length() != n_edge) {
-      Rcpp::stop("Length of parent and child must match");
-    }
-    if (weight.length() != n_edge) {
-      Rcpp::stop("weights must match number of edges");
+    ret_edges(next_edge, 0) = top.parent_label;
+    if constexpr (!std::is_same_v<W, NoWeights>) {
+      ret_weights[next_edge] = (*wt_above_ptr)[child_node];
     }
     
-    int32 next_edge = 0;
-    int32 root_node = n_edge * 2; /* Initialize with too-big value */
-    int32 n_tip = 0;
-    
-    const size_t total_ints_needed = 
-      node_limit +                    // parent_of
-      node_limit +                    // n_children  
-      node_limit +                    // smallest_desc
-      node_limit +                    // children_start_idx
-      n_edge;                         // children_data
-    
-    std::vector<int32> memory_block(total_ints_needed, 0);
-    
-    auto it = memory_block.begin();
-    int32* parent_of = &*it;
-    it += node_limit;
-    int32* n_children = &*it;
-    it += node_limit;
-    int32* smallest_desc = &*it;
-    it += node_limit;
-    int32* children_start_idx = &*it;
-    it += node_limit;
-    int32* children_data = &*it;
-    
-    std::vector<double> wt_above(node_limit);
-    
-    for (int32 i = 0; i < n_edge; ++i) {
-      const int32 child_i = child[i];
-      const int32 parent_i = parent[i];
-      wt_above[child_i] = weight[i];
-      parent_of[child_i] = parent_i;
-      ++n_children[parent_i];
+    if (data.n_children[child_node] == 0) {
+      ret_edges(next_edge, 1) = child_node;
+      ++next_edge;
+      ++top.child_index;
+    } else {
+      int32_t child_label = next_label++;
+      ret_edges(next_edge, 1) = child_label;
+      ++next_edge;
+      ++top.child_index;
+      
+      int32_t child_count = data.n_children[child_node];
+      const int32_t* child_children = data.children_data + data.children_start_idx[child_node];
+      stack.push(Frame{child_node, child_label, 0, child_count, child_children});
     }
-    
-    int32 current_idx = 0;
-    for (int32 i = 1; i < node_limit; i++) {
-      if (!parent_of[i]) {
-        root_node = i;
+  }
+  
+  if constexpr (std::is_same_v<RetType, Rcpp::IntegerMatrix>) {
+    return ret_edges;
+  } else {
+    return std::make_pair(ret_edges, ret_weights);
+  }
+}
+// === PUBLIC EXPORTED FUNCTIONS ===
+
+// [[Rcpp::export]]
+inline Rcpp::IntegerMatrix preorder_edges_and_nodes(
+    const Rcpp::IntegerVector parent,
+    const Rcpp::IntegerVector child)
+{
+  return preorder_core<NoWeights, Rcpp::IntegerMatrix>(parent, child, NoWeights{});
+}
+
+// [[Rcpp::export]]
+inline Rcpp::List preorder_weighted(
+    const Rcpp::IntegerVector& parent,
+    const Rcpp::IntegerVector& child,
+    const Rcpp::DoubleVector& weight)
+{
+  std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> result =
+    preorder_core<Rcpp::DoubleVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(parent, child, weight);
+  
+  Rcpp::List ret = Rcpp::List::create(
+    Rcpp::Named("edge") = result.first,
+    Rcpp::Named("edge.length") = result.second
+  );
+  
+  return ret;
+}
+
+
+
+
+
+
+
+
+  inline int32 get_subtree_size(int32 node, int32 *subtree_size,
+                                int32 *n_children, int32 **children_of,
+                                int32 n_edge) {
+    if (!subtree_size[node]) {
+      for (int32 i = n_children[node]; i--; ) {
+        subtree_size[node] += get_subtree_size(children_of[node][i],
+                                subtree_size, n_children, children_of, n_edge);
       }
-      if (!n_children[i]) {
-        ++n_tip;
-      } else {
-        children_start_idx[i] = current_idx;
-        current_idx += n_children[i];
-      }
     }
-    
-    for (int32 tip = 1; tip < n_tip + 1; ++tip) {
-      smallest_desc[tip] = tip;
-      int32 parent = parent_of[tip];
-      while (!smallest_desc[parent]) {
-        smallest_desc[parent] = tip;
-        parent = parent_of[parent];
-      }
-    }
-    
-    // Reset n_children - use as insertion counter
-    std::fill(n_children, n_children + node_limit, 0);
-    for (int32 i = 0; i < n_edge; ++i) {
-      int32 p = parent[i];
-      int32 insert_pos = children_start_idx[p] + n_children[p];
-      children_data[insert_pos] = child[i];
-      ++n_children[p];
-    }
-    
-    for (int32 node = n_tip + 1; node < node_limit; ++node) {
-      int32* node_children = children_data + children_start_idx[node];
-      insertion_sort_by_smallest(node_children, n_children[node], smallest_desc);
-    }
-    
-    int32 next_label = n_tip + 2;
-    Rcpp::IntegerMatrix ret(n_edge, 2);
-    Rcpp::NumericVector ret_wt(n_edge);
-    add_child_edges(root_node, n_tip + 1, children_data, children_start_idx,
-                    n_children, wt_above, ret, ret_wt, &next_edge, &next_label);
-    
-    return std::make_pair(ret, ret_wt);
+    return subtree_size[node];
   }
 
-  inline Rcpp::List preorder_weighted(
-      const Rcpp::IntegerVector& parent,
-      const Rcpp::IntegerVector& child,
-      const Rcpp::DoubleVector& weight)
-  {
-    // Call the core function to get the pair
-    std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> result = 
-      preorder_weighted_pair(parent, child, weight);
-    
-    // Manually create an Rcpp::List and populate it
-    Rcpp::List ret = Rcpp::List::create(
-      Rcpp::Named("edge") = result.first,
-      Rcpp::Named("edge.length") = result.second
-    );
-    
-    return ret;
-  }
+
+
+
+
+
+
+
+
+
+
   
   template <typename T, std::size_t StackSize>
   struct SmallBuffer {
