@@ -12,58 +12,7 @@
 #include "types.h"
 
 namespace TreeTools {
-  inline void swap(int32 *a, int32 *b) {
-    const int32 temp = *a;
-    *a = *b;
-    *b = temp;
-  }
-
-  inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
-                                         const int32* sort_by) {
-    ASSERT(arr_len > 0);
-    switch (arr_len) {
-    // case 0: return;
-    case 1: return;
-    case 2:
-      if (sort_by[arr[0]] > sort_by[arr[1]]) {
-        swap(&arr[0], &arr[1]);
-      }
-      return;
-    }
-
-    for (int32 i = 1; i != arr_len; ++i) {
-      const int32
-        tmp = arr[i],
-        key = sort_by[tmp]
-      ;
-      int32 j = i;
-      while (j && sort_by[arr[j - 1]] > key) {
-        arr[j] = arr[j - 1];
-        --j;
-      }
-      arr[j] = tmp;
-    }
-  }
-
-  inline void insertion_sort_by_smallest(std::vector<int32>& arr,
-                                         const int32 arr_len,
-                                         const int32* sort_by) {
-    ASSERT(arr_len > 0);
-    switch (arr_len) {
-    // case 0:
-    case 1: return;
-    case 2:
-      if (sort_by[arr[0]] > sort_by[arr[1]]) {
-        std::swap(arr[0], arr[1]);
-      }
-      return;
-    default:
-      std::sort(arr.begin(), arr.end(), [&sort_by](int32 a, int32 b) {
-        return sort_by[a] < sort_by[b];
-      });
-    }
-  }
-
+  
   struct Frame {
     int32 node;
     int32 parent_label;
@@ -263,7 +212,10 @@ namespace TreeTools {
 
     for (int32 node = n_tip + 1; node < node_limit; ++node) {
       int32* node_children = children_data + children_start_idx[node];
-      insertion_sort_by_smallest(node_children, n_children[node], smallest_desc);
+      std::sort(node_children, node_children + n_children[node],
+                [&smallest_desc](int32 a, int32 b) {
+                  return smallest_desc[a] < smallest_desc[b];
+                });
     }
     
     int32 next_label = n_tip + 2;
@@ -363,7 +315,10 @@ namespace TreeTools {
     
     for (int32 node = n_tip + 1; node < node_limit; ++node) {
       int32* node_children = children_data + children_start_idx[node];
-      insertion_sort_by_smallest(node_children, n_children[node], smallest_desc);
+      std::sort(node_children, node_children + n_children[node],
+                [&smallest_desc](int32 a, int32 b) {
+                  return smallest_desc[a] < smallest_desc[b];
+                });
     }
     
     int32 next_label = n_tip + 2;
