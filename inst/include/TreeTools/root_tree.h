@@ -190,16 +190,17 @@ namespace TreeTools {
       Rcpp::IntegerVector new_parent(n_edge + 1);
       Rcpp::IntegerVector new_child(n_edge + 1);
       Rcpp::NumericVector new_wt(n_edge + 1);
+      
       if (weighted) {
-        for (int i = n_edge; i--; ) {
-          new_wt[i] = weight[i];
-        }
+        std::copy(weight.begin(), weight.end(), new_wt.begin());
         ASSERT(new_wt(n_edge) == 0);
       }
+      
       for (int i = n_edge; i--; ) {
         new_parent(i) = edge(i, 0);
         new_child(i) = edge(i, 1);
       }
+      
       const intx new_root = max_node + 1;
       new_parent(n_edge) = new_root;
       new_child(n_edge) = outgroup;
@@ -215,15 +216,12 @@ namespace TreeTools {
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
-        auto [edge, weight] = preorder_weighted_pair(
-          new_parent,
-          new_child,
-          new_wt);
+        auto [edge, weight] = preorder_weighted_pair(new_parent, new_child,
+                                                     new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
-        ret["edge"] = preorder_edges_and_nodes(new_parent,
-                                               new_child);
+        ret["edge"] = preorder_edges_and_nodes(new_parent, new_child);
       }
       
       ret.attr("order") = "preorder"; /* by preorder_weighted or _edges_&_nodes */
