@@ -245,7 +245,7 @@ inline Rcpp::IntegerMatrix preorder_unweighted_impl(
   return ret_edges;
 }
 
-inline Rcpp::List preorder_weighted_impl(
+inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_impl(
     const Rcpp::IntegerVector& parent,
     const Rcpp::IntegerVector& child,
     const Rcpp::DoubleVector& weights) {
@@ -312,10 +312,7 @@ inline Rcpp::List preorder_weighted_impl(
   
   traverse_preorder<true>(state, wt_above_storage.data(), &ret_weights);
   
-  return Rcpp::List::create(
-    Rcpp::Named("edge") = ret_edges,
-    Rcpp::Named("edge.length") = ret_weights
-  );
+  return std::make_pair(ret_edges, ret_weights);
 }
 
 // [[Rcpp::export]]
@@ -330,7 +327,12 @@ inline Rcpp::List preorder_weighted(
     const Rcpp::IntegerVector& parent,
     const Rcpp::IntegerVector& child,
     const Rcpp::DoubleVector& weight) {
-  return preorder_weighted_impl(parent, child, weight);
+  
+  auto result = preorder_weighted_impl(parent, child, weight);
+  return Rcpp::List::create(
+    Rcpp::Named("edge") = result.first,
+    Rcpp::Named("edge.length") = result.second
+  );
 }
 
 inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pair(
@@ -338,11 +340,7 @@ inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pai
     const Rcpp::IntegerVector& child,
     const Rcpp::DoubleVector& weights) {
   
-  Rcpp::List result = preorder_weighted_impl(parent, child, weights);
-  return std::make_pair(
-    Rcpp::as<Rcpp::IntegerMatrix>(result["edge"]),
-    Rcpp::as<Rcpp::NumericVector>(result["edge.length"])
-  );
+  return preorder_weighted_impl(parent, child, weights);
 }
 
 
