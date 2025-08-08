@@ -19,7 +19,6 @@ struct NoWeights {};
 // Used to conditionally create a type
 struct DummyDoubleVector {};
 
-// Struct to encapsulate memory allocation and pointers
 struct TreeData {
   int32_t n_edge;
   int32_t node_limit;
@@ -52,7 +51,14 @@ struct TreeData {
   }
 };
 
-// The core templated function that handles all logic
+struct Frame {
+  int32_t node;
+  int32_t parent_label;
+  int32_t child_index;
+  int32_t child_count;
+  const int32_t* node_children;
+};
+
 template <typename W, typename RetType>
 RetType preorder_core(
     const Rcpp::IntegerVector& parent,
@@ -64,7 +70,6 @@ RetType preorder_core(
     Rcpp::stop("Too many edges in tree: Contact 'TreeTools' maintainer for support.");
   }
   
-  // Check if parent and child lengths match
   if (child.length() != n_edge) {
     Rcpp::stop("Length of parent and child must match");
   }
@@ -73,9 +78,7 @@ RetType preorder_core(
   int32_t root_node = n_edge * 2;
   int32_t n_tip = 0;
   
-  // Store edge weights if provided
-  std::conditional_t<std::is_same_v<W, NoWeights>,
-                     DummyDoubleVector, std::vector<double>> wt_above_storage;
+  std::conditional_t<std::is_same_v<W, NoWeights>, DummyDoubleVector, std::vector<double>> wt_above_storage;
   const std::vector<double>* wt_above_ptr = nullptr;
   
   if constexpr (!std::is_same_v<W, NoWeights>) {
@@ -134,41 +137,63 @@ RetType preorder_core(
               });
   }
   
-  // Now for the traversal and output generation
   int32_t next_edge = 0;
+  int32_t next_label = n_tip + 2;
+  
   Rcpp::IntegerMatrix ret_edges(n_edge, 2);
   
-  std::conditional_t<std::is_same_v<W, NoWeights>,
-                     DummyDoubleVector, Rcpp::NumericVector> ret_weights;
+  std::conditional_t<std::is_same_v<W, NoWeights>, DummyDoubleVector, Rcpp::NumericVector> ret_weights;
   
   if constexpr (!std::is_same_v<W, NoWeights>) {
     ret_weights = Rcpp::NumericVector(n_edge);
   }
   
-  std::function<void(int32_t, int32_t)> add_child_edges =
-    [&](int32_t node, int32_t current_node_label) {
-      ret_edges(next_edge, 0) = current_node_label;
-      ret_edges(next_edge, 1) = node;
-      
-      if constexpr (!std::is_same_v<W, NoWeights>) {
-        ret_weights[next_edge] = (*wt_above_ptr)[node];
-      }
-      
-      ++next_edge;
-      
-      const int32_t* node_children = data.children_data + data.children_start_idx[node];
-      for (int32_t i = 0; i < data.n_children[node]; ++i) {
-        add_child_edges(node_children[i], node);
-      }
-    };
-    
-    add_child_edges(root_node, n_tip + 1);
-    
-    if constexpr (std::is_same_v<RetType, Rcpp::IntegerMatrix>) {
-      return ret_edges;
-    } else {
-      return std::make_pair(ret_edges, ret_weights);
+  std::stack<Frame> stack;
+  
+  // Initialize with root node children
+  {
+    int32_t child_count = data.n_children[root_node];
+    if (child_count > 0) {
+      stack.push(Frame{root_node, n_tip + 1, 0, child_count, data.children_data + data.children_start_idx[root_node]});
     }
+  }
+  
+  while (!stack.empty()) {
+    Frame& top = stack.top();
+    
+    if (top.child_index == top.child_count) {
+      stack.pop();
+      continue;
+    }
+    
+    int32_t child_node = top.node_children[top.child_index];
+    
+    ret_edges(next_edge, 0) = top.parent_label;
+    if constexpr (!std::is_same_v<W, NoWeights>) {
+      ret_weights[next_edge] = (*wt_above_ptr)[child_node];
+    }
+    
+    if (data.n_children[child_node] == 0) {
+      ret_edges(next_edge, 1) = child_node;
+      ++next_edge;
+      ++top.child_index;
+    } else {
+      int32_t child_label = next_label++;
+      ret_edges(next_edge, 1) = child_label;
+      ++next_edge;
+      ++top.child_index;
+      
+      int32_t child_count = data.n_children[child_node];
+      const int32_t* child_children = data.children_data + data.children_start_idx[child_node];
+      stack.push(Frame{child_node, child_label, 0, child_count, child_children});
+    }
+  }
+  
+  if constexpr (std::is_same_v<RetType, Rcpp::IntegerMatrix>) {
+    return ret_edges;
+  } else {
+    return std::make_pair(ret_edges, ret_weights);
+  }
 }
 
 // === PUBLIC EXPORTED FUNCTIONS ===
@@ -197,7 +222,6 @@ inline Rcpp::List preorder_weighted(
   
   return ret;
 }
-
 
 
 
