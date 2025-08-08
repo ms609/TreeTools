@@ -90,7 +90,7 @@ struct Frame {
 };
 
 template <typename W, typename RetType>
-RetType preorder_core(
+inline RetType preorder_core(
     const Rcpp::IntegerVector& parent,
     const Rcpp::IntegerVector& child,
     const W& weights)
