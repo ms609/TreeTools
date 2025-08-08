@@ -175,7 +175,6 @@ namespace TreeTools {
       new_edge(invert_next, 1) = edge(root_edges[spare_edge], 1);
       new_edge(root_edges[spare_edge], 1) = outgroup;
       if (weighted) {
-        Rcpp::List preorder_res;
         auto [edge, edge_weight] = preorder_weighted_pair(new_edge(Rcpp::_, 0),
                                                           new_edge(Rcpp::_, 1),
                                                           weight);
@@ -216,7 +215,6 @@ namespace TreeTools {
 
       ret["Nnode"] = n_node + 1;
       if (weighted) {
-        Rcpp::List preorder_res;
         auto [edge, weight] = preorder_weighted_pair(
           new_edge(Rcpp::_, 0),
           new_edge(Rcpp::_, 1),
