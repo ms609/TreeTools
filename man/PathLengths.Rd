@@ -4,18 +4,22 @@
 \alias{PathLengths}
 \title{Calculate length of paths between each pair of vertices within tree}
 \usage{
-PathLengths(tree, fullMatrix = FALSE)
+PathLengths(tree, fullMatrix = FALSE, use.na = TRUE)
 }
 \arguments{
 \item{tree}{Original tree of class \code{phylo}, in \code{\link{Preorder}}.}
 
 \item{fullMatrix}{Logical specifying return format; see "value" section`.}
+
+\item{use.na}{Logical specifying whether to set non-existent paths to \code{NA},
+or to leave uninitialized.  Set to \code{FALSE} to maximize performance.}
 }
 \value{
 If \code{fullMatrix = TRUE}, \code{PathLengths()} returns a square matrix in
 which entry \verb{[i, j]} denotes the distance from internal node \code{i} to the
 descendant vertex \code{j}.
-Vertex pairs without a continuous directed path are denoted \code{NA}.
+Vertex pairs without a continuous directed path are denoted \code{NA} if \code{use.na}
+is \code{TRUE}.
 If \code{fullMatrix = FALSE}, \code{PathLengths()} returns a \code{data.frame} with three
 columns: \code{start} lists the deepest node in each path (i.e. that closest
 to the root); \code{end} lists the shallowest node (i.e. that closest to a leaf);

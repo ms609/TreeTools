@@ -5,6 +5,9 @@ test_that("PathLengths() works", {
   bal9$edge.length <- 1:16
   pl <- PathLengths(bal9, fullMatrix = TRUE)
   expect_equal(dim(pl), rep(17L, 2))
+  
+  expect_equal(PathLengths(Postorder(bal9)), PathLengths(bal9))
+  
   Test <- function(tr) {
     calculated <- PathLengths(tr, full = TRUE)
     edge <- tr$edge
