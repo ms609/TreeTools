@@ -452,16 +452,20 @@ namespace TreeTools {
   
   template <typename T, std::size_t StackSize>
   struct SmallBuffer {
+    static_assert(std::is_trivial<T>::value,
+                  "SmallBuffer requires a trivial type T");
+    
     bool use_stack;
     std::array<T, StackSize> stack;
     T* heap;
 
     SmallBuffer(std::size_t needed)
-      : use_stack(needed <= StackSize),
-        stack{},  // zero-initialise stack
-        heap(nullptr)
+      : use_stack(needed <= StackSize), heap(nullptr)
     {
-      if (!use_stack) {
+      if (use_stack) {
+        // zero only the number of elements we'll actually use
+        std::memset(stack.data(), 0, needed * sizeof(T));
+      } else {
         heap = static_cast<T*>(std::calloc(needed, sizeof(T)));
         if (!heap) throw std::bad_alloc{};
       }
