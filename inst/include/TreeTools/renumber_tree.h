@@ -14,7 +14,7 @@
 
 namespace TreeTools {
 
-// We'll use this a sentinel type to handle the unweighted case
+// Sentinel type to handle the unweighted case
 struct NoWeights {};
 // Used to conditionally create a type
 struct DummyDoubleVector {};
@@ -59,8 +59,6 @@ struct Frame {
   const int32_t* node_children;
 };
 
-
-// Separate the core logic to avoid template bloat
 struct PreorderState {
   TreeData& data;
   int32_t next_edge;
@@ -74,7 +72,6 @@ struct PreorderState {
       root_node(rn), ret_edges(edges) {}
 };
 
-// Hot path - inline everything
 template<bool HasWeights>
 inline void traverse_preorder(PreorderState& state, 
                               const double* wt_above = nullptr,
@@ -178,7 +175,6 @@ inline Rcpp::IntegerMatrix preorder_unweighted_impl(
   int32_t root_node = 0;
   int32_t n_tip = 0;
   
-  // Setup phase - same as before but without weight handling
   for (int32_t i = n_edge; i--; ) {
     const int32_t child_i = child[i];
     const int32_t parent_i = parent[i];
@@ -199,7 +195,6 @@ inline Rcpp::IntegerMatrix preorder_unweighted_impl(
     }
   }
   
-  // Rest of setup...
   for (int32_t tip = 1; tip < n_tip + 1; ++tip) {
     data.smallest_desc[tip] = tip;
     int32_t parent_node = data.parent_of[tip];
@@ -334,15 +329,6 @@ inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pai
     Rcpp::as<Rcpp::NumericVector>(result["edge.length"])
   );
 }
-
-
-
-
-
-
-
-
-
 
 
   
