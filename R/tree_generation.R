@@ -553,7 +553,7 @@ EnforceOutgroup.character <- function(tree, outgroup) {
 
 .PreorderTree <- function(edge,
                           tip.label,
-                          Nnode =  dim(edge)[1] + 1 - length(tip.label)) {
+                          Nnode =  dim(edge)[[1]] + 1 - length(tip.label)) {
   structure(
     list(
       # Order is consistent with ape::read.tree (but not ape::rtree...)

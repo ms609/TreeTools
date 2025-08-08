@@ -23,13 +23,15 @@ Numeric index of each node in a tree
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
 \code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()}
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
 
 Other tree navigation: 
 \code{\link{AncestorEdge}()},

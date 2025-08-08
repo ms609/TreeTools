@@ -65,7 +65,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
     postorder_order(edge)
   } else {
     switch(order,
-           "preorder" = nEdge:1,
+           "preorder" = rev(seq_len(nEdge)),
            "postorder" = seq_len(nEdge),
            postorder_order(edge))
   }

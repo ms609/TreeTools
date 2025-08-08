@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 1.15.0.9003
+Version: 1.15.0.9006
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -62,6 +62,7 @@ Suggests:
     TreeDist,
     TreeSearch,
     vdiffr (>= 1.0.0),
+Config/Needs/benchmark: bench, TreeDist
 Config/Needs/check: rcmdcheck
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools

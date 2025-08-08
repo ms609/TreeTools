@@ -24,13 +24,15 @@ TreeIsRooted(UnrootTree(BalancedTree(6)))
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()}
+\code{\link{TipLabels}()},
+\code{\link{Treeness}()}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

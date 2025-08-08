@@ -55,6 +55,7 @@ Stemwardness
 TNT's
 TreeDist
 TreeDistData
+Treeness
 TreeNumber
 TreeSearch
 Tromp
@@ -105,6 +106,7 @@ reweights
 reweighting
 sensu
 ss
+stemminess
 stemwardness
 syab
 syac
@@ -114,6 +116,7 @@ tci
 testthat
 tnt
 tre
+treeness
 uk
 un
 unroot

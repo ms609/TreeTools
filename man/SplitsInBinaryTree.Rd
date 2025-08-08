@@ -49,13 +49,15 @@ SplitsInBinaryTree(list(tree, tree))
 \seealso{
 Other tree properties: 
 \code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},
 \code{\link{NodeNumbers}()},
 \code{\link{PathLengths}()},
 \code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()}
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
 
 Other Splits operations: 
 \code{\link{LabelSplits}()},
