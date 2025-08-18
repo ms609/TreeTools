@@ -155,9 +155,9 @@ namespace TreeTools {
       return visited_nth[internal_relabeling - 1];
     }
 
-    inline void VISIT_LEAF (const int16* leaf, int16* n_visited) {
-      visited_nth[(*n_visited)++] = *leaf;
-      internal_label[*leaf] = *n_visited;
+    inline void VISIT_LEAF(const int16 leaf, int16& n_visited) noexcept {
+      visited_nth[n_visited++] = leaf;
+      internal_label[leaf] = n_visited;
     }
 
     Rcpp::IntegerVector X_decode() {
@@ -203,15 +203,30 @@ namespace TreeTools {
       return ret;
     }
 
+    // TODO DELETE once TreeDist updated
     [[nodiscard]] inline bool CLUSTONL(int16* L, int16* R) noexcept {
       return X_left(*L) == *L && X_right(*L) == *R;
     }
 
+    // TODO DELETE once TreeDist updated
     [[nodiscard]] inline bool CLUSTONR(int16* L, int16* R) noexcept {
       return X_left(*R) == *L && X_right(*R) == *R;
     }
 
+    [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
+      return X_left(L) == L && X_right(L) == R;
+    }
+
+    [[nodiscard]] inline bool CLUSTONR(int16 L, int16 R) noexcept {
+      return X_left(R) == L && X_right(R) == R;
+    }
+
+    // TODO DELETE once TreeDist updated
     [[nodiscard]] inline bool ISCLUST(int16* L, int16* R) noexcept {
+      return CLUSTONL(L, R) || CLUSTONR(L, R);
+    }
+    
+    [[nodiscard]] inline bool ISCLUST(int16 L, int16 R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
       return CLUSTONL(L, R) || CLUSTONR(L, R);
@@ -223,9 +238,14 @@ namespace TreeTools {
       // This procedure clears every cluster switch in X.
       Xswitch.reset();
     }
-
+    
+    // TODO DELETE once TreeDist updated
     inline void SETSWX(int16* row) noexcept {
       Xswitch[*row] = true;
+    }
+    
+    inline void SETSWX(int16 row) noexcept {
+      Xswitch[row] = true;
     }
 
     [[nodiscard]] inline bool GETSWX(int16* row) noexcept {
@@ -236,7 +256,20 @@ namespace TreeTools {
       return Xswitch.count() == n;
     }
 
+    // TODO DELETE once TreeDist updated
     inline void SETSW(int16* L, int16* R) noexcept {
+      // If <L,R> is a cluster in X, 
+      // this procedure sets the cluster switch for <L,R>.
+      if (CLUSTONL(L, R)) {
+        ++n_shared;
+        SETSWX(L);
+      } else if (CLUSTONR(L, R)) {
+        ++n_shared;
+        SETSWX(R);
+      }
+    }
+
+    inline void SETSW(int16 L, int16 R) noexcept {
       // If <L,R> is a cluster in X, 
       // this procedure sets the cluster switch for <L,R>.
       if (CLUSTONL(L, R)) {
@@ -334,7 +367,7 @@ namespace TreeTools {
         SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
       }
       if (is_leaf(&child_i)) {
-        VISIT_LEAF(&child_i, &n_visited);
+        VISIT_LEAF(child_i, n_visited);
         ++weights[parent_i];
         ENTER(child_i, 0);
       } else {
