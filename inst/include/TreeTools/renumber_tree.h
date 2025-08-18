@@ -135,7 +135,8 @@ inline void traverse_preorder(PreorderState& state,
   int32 child_count = state.data.n_children[state.root_node];
   if (child_count > 0) {
     push_frame({state.root_node, state.n_tip + 1, 0, child_count,
-               state.data.children_data + state.data.children_start_idx[state.root_node]});
+               state.data.children_data + 
+                 state.data.children_start_idx[state.root_node]});
   }
   
   while (!empty()) {
