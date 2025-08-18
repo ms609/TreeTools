@@ -54,21 +54,24 @@ jobs:
           
       - name: Benchmark PR
         uses: ms609/actions/benchmark-step@main
-        with: 
+        with:
           path: pr
           output: pr
+          reinstall-packages: TreeDist
         
       - name: Benchmark target
         uses: ms609/actions/benchmark-step@main
         with: 
           path: main
           output: main
+          reinstall-packages: TreeDist
           
       - name: Benchmark PR again
         uses: ms609/actions/benchmark-step@main
         with: 
           path: pr
           output: pr2
+          reinstall-packages: TreeDist
         
       - run: dir pr-benchmark-results
         working-directory: pr
