@@ -119,11 +119,7 @@ inline void traverse_preorder(PreorderState& state,
   };
   
   auto pop_frame = [&]() -> Frame& {
-    if (use_heap) {
-      return heap_stack[heap_stack.size() - 1];
-    } else {
-      return fast_stack[stack_pos - 1];
-    }
+    return use_heap ? heap_stack.back() : fast_stack[stack_pos - 1];
   };
   
   auto pop = [&]() {
