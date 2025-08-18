@@ -37,7 +37,6 @@ inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
   });
 }
 
-
 struct TreeData {
   int32 n_edge;
   int32 node_limit;
@@ -87,12 +86,12 @@ struct PreorderState {
   Rcpp::IntegerMatrix& ret_edges;
   
   PreorderState(TreeData& d, int32 nt, int32 rn, Rcpp::IntegerMatrix& edges)
-    : data(d), next_edge(0), next_label(nt + 2), n_tip(nt), 
+    : data(d), next_edge(0), next_label(nt + 2), n_tip(nt),
       root_node(rn), ret_edges(edges) {}
 };
 
 template<bool HasWeights>
-inline void traverse_preorder(PreorderState& state, 
+inline void traverse_preorder(PreorderState& state,
                               const double* wt_above = nullptr,
                               Rcpp::NumericVector* ret_weights = nullptr) {
   // Use a fixed-size stack for most trees to avoid heap allocation
@@ -142,8 +141,9 @@ inline void traverse_preorder(PreorderState& state,
   // Initialize with root
   int32 child_count = state.data.n_children[state.root_node];
   if (child_count > 0) {
-    push_frame({state.root_node, state.n_tip + 1, 0, child_count, 
-               state.data.children_data + state.data.children_start_idx[state.root_node]});
+    push_frame({state.root_node, state.n_tip + 1, 0, child_count,
+               state.data.children_data + 
+                 state.data.children_start_idx[state.root_node]});
   }
   
   while (!empty()) {
