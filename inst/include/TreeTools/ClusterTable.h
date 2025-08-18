@@ -69,8 +69,8 @@ namespace TreeTools {
   public:
     ClusterTable(Rcpp::List); // i.e. PREPARE(T)
 
-    [[nodiscard]] inline bool is_leaf(const int16 *v) noexcept {
-      return *v <= n_leaves;
+    [[nodiscard]] inline bool is_leaf(const int16 v) noexcept {
+      return v <= n_leaves;
     }
 
     [[nodiscard]] inline const int16 edges() noexcept {
@@ -333,7 +333,7 @@ namespace TreeTools {
       if (!GET_LEFTMOST(parent_i)) {
         SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
       }
-      if (is_leaf(&child_i)) {
+      if (is_leaf(child_i)) {
         VISIT_LEAF(&child_i, &n_visited);
         ++weights[parent_i];
         ENTER(child_i, 0);
@@ -363,7 +363,7 @@ namespace TreeTools {
 
     NVERTEX(&v, &w);
     while (v) {
-      if (is_leaf(&v)) {
+      if (is_leaf(v)) {
         ++leafcode;
         // We prepared the encoder in an earlier step, so need no X[v, 3] <- leafcode
         R = leafcode;
