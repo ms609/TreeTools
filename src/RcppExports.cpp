@@ -209,26 +209,27 @@ BEGIN_RCPP
 END_RCPP
 }
 // path_lengths
-NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight);
-RcppExport SEXP _TreeTools_path_lengths(SEXP edgeSEXP, SEXP weightSEXP) {
+NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight, const LogicalVector init_nas);
+RcppExport SEXP _TreeTools_path_lengths(SEXP edgeSEXP, SEXP weightSEXP, SEXP init_nasSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
     Rcpp::traits::input_parameter< const DoubleVector >::type weight(weightSEXP);
-    rcpp_result_gen = Rcpp::wrap(path_lengths(edge, weight));
+    Rcpp::traits::input_parameter< const LogicalVector >::type init_nas(init_nasSEXP);
+    rcpp_result_gen = Rcpp::wrap(path_lengths(edge, weight, init_nas));
     return rcpp_result_gen;
 END_RCPP
 }
 // cpp_edge_to_splits
-RawMatrix cpp_edge_to_splits(const IntegerMatrix edge, const IntegerVector order, const IntegerVector nTip);
+Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge, const Rcpp::IntegerVector& order, const Rcpp::IntegerVector& nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP orderSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const IntegerMatrix >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector >::type order(orderSEXP);
-    Rcpp::traits::input_parameter< const IntegerVector >::type nTip(nTipSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type order(orderSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector& >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits(edge, order, nTip));
     return rcpp_result_gen;
 END_RCPP
@@ -341,12 +342,12 @@ BEGIN_RCPP
 END_RCPP
 }
 // tips_in_splits
-IntegerVector tips_in_splits(RawMatrix splits);
+Rcpp::IntegerVector tips_in_splits(Rcpp::RawMatrix splits);
 RcppExport SEXP _TreeTools_tips_in_splits(SEXP splitsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RawMatrix >::type splits(splitsSEXP);
+    Rcpp::traits::input_parameter< Rcpp::RawMatrix >::type splits(splitsSEXP);
     rcpp_result_gen = Rcpp::wrap(tips_in_splits(splits));
     return rcpp_result_gen;
 END_RCPP
@@ -401,7 +402,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_mixed_base_to_parent", (DL_FUNC) &_TreeTools_mixed_base_to_parent, 2},
     {"_TreeTools_kept_vertices", (DL_FUNC) &_TreeTools_kept_vertices, 2},
     {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
-    {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 2},
+    {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 3},
     {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
     {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},
     {"_TreeTools_mask_splits", (DL_FUNC) &_TreeTools_mask_splits, 1},

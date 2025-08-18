@@ -49,7 +49,7 @@ for (pr_file in pr_files) {
       median(main_times) + c(1, -1) * interrun_var,
       main_iqr)
     
-    threshold_percent <- 10 / 3
+    threshold_percent <- 4
     
     is_faster <- matched &&
       median_pr < median_main - 2 * mad_main &&
@@ -78,6 +78,7 @@ for (pr_file in pr_files) {
     status <- if (res$matched) {
       if (res$slower) {
         if (abs(percentage_change) > threshold_percent) {
+          has_significant_regression <- TRUE
           "\U1F7E0 Slower \U1F641"
         } else {
           "\U1F7E3 ~same"
@@ -93,10 +94,6 @@ for (pr_file in pr_files) {
        }
     } else {
       "\U1F7E4 ?Mismatch"
-    }
-    
-    if (res$slower) {
-      has_significant_regression <- TRUE
     }
     
     bold <- ifelse(res$faster | res$slower, "**", "")
