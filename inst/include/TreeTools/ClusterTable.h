@@ -239,10 +239,12 @@ namespace TreeTools {
     inline void SETSW(int16* L, int16* R) noexcept {
       // If <L,R> is a cluster in X, 
       // this procedure sets the cluster switch for <L,R>.
-      if (CLUSTONL(L, R)) {
+      const int16 l = *L;
+      const int16 r = *R;
+      if (X_left(l) == l && X_right(l) == r) { // CLUSTONL(L, R)
         ++n_shared;
         SETSWX(L);
-      } else if (CLUSTONR(L, R)) {
+      } else if (X_left(r) == l && X_right(r) == r) { //CLUSTONR(L, R))
         ++n_shared;
         SETSWX(R);
       }
