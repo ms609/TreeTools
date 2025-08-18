@@ -24,7 +24,6 @@ inline void insertion_sort_by_smallest(int32* arr, const int32 arr_len,
                                        const int32* sort_by) {
   ASSERT(arr_len > 0);
   switch (arr_len) {
-  // case 0: return;
   case 1: return;
   case 2:
     if (sort_by[arr[0]] > sort_by[arr[1]]) {
@@ -177,6 +176,8 @@ inline void traverse_preorder(PreorderState& state,
 }
 
 // Separate functions to avoid template bloat in the setup code
+// There's scope for less repetition, but not, it seems, without incurring
+// a slowdown -- see https://github.com/ms609/TreeTools/pull/205
 inline Rcpp::IntegerMatrix preorder_unweighted_impl(
     const Rcpp::IntegerVector& parent,
     const Rcpp::IntegerVector& child) {
