@@ -50,6 +50,8 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
     std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
 
     for (int32 j = i + 1; j < n_trees; ++j) {
+      
+      if (n_trees - i < thresh) break;  // not enough trees left to matter
 
       tables[i].CLEAR();
 
