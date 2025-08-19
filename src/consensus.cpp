@@ -15,45 +15,41 @@ using namespace Rcpp;
 // the function to preorder trees only.
 // [[Rcpp::export]]
 LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
-  int16
-    v = 0, w = 0,
-    L, R, N, W,
-    L_j, R_j, N_j, W_j
-  ;
-  const int32
-    n_trees = trees.length(),
-    frac_thresh = int32(n_trees * p[0]) + 1,
-    thresh = frac_thresh > n_trees ? n_trees : frac_thresh
-  ;
+  int16 v = 0;
+  int16 w = 0;
+  int16 L, R, N, W;
+  int16 L_j, R_j, N_j, W_j;
+  
+  const int32 n_trees = trees.length();
+  const int32 frac_thresh = int32(n_trees * p[0]) + 1;
+  const int32 thresh = frac_thresh > n_trees ? n_trees : frac_thresh;
 
   std::vector<TreeTools::ClusterTable> tables;
   tables.reserve(n_trees);
-  for (int32 i = n_trees; i--; ) {
+  for (int32 i = 0; i < n_trees; ++i) {
     tables.emplace_back(TreeTools::ClusterTable(Rcpp::List(trees(i))));
   }
 
-  const int32
-    n_tip = tables[0].N(),
-    ntip_3 = n_tip - 3
-  ;
+  const int32 n_tip = tables[0].N();
+  const int32 ntip_3 = n_tip - 3;
 
   std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
   std::array<int32, CT_MAX_LEAVES> split_count;
 
   LogicalMatrix ret(ntip_3, n_tip);
 
-  int32
-    i = 0,
-    splits_found = 0
-  ;
+  int32 i = 0;
+  int32 splits_found = 0;
+  
   do {
+    
     if (tables[i].NOSWX(ntip_3)) {
       continue;
     }
 
     std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
 
-    for (int32 j = i + 1; j != n_trees; j++) {
+    for (int32 j = i + 1; j < n_trees; ++j) {
 
       tables[i].CLEAR();
 
@@ -67,9 +63,12 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
         if (CT_IS_LEAF(v)) {
           CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
         } else {
+          
           CT_POP(L, R, N, W_j);
+          
           W = 1 + W_j;
           w = w - W_j;
+          
           while (w) {
             CT_POP(L_j, R_j, N_j, W_j);
             if (L_j < L) L = L_j;
@@ -78,9 +77,11 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
             W = W + W_j;
             w = w - W_j;
           };
+          
           CT_PUSH(L, R, N, W);
 
           ++j_pos;
+          
           if (tables[j].GETSWX(&j_pos)) {
             // Split has already been counted; next!
           } else {
@@ -101,17 +102,13 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       } while (v);
     }
 
-    for (int32 k = n_tip; k--; ) {
+    for (int32 k = 0; k < n_tip; ++k) {
       if (split_count[k] >= thresh) {
-        // Rcout << splits_found << ": Found tree " << i << "'s split " << k
-        //       << " in " << split_count[k] << " trees.\n";
         for (int32 j = tables[i].X_left(k + 1);
              j != tables[i].X_right(k + 1) + 1;
              ++j) {
-          // Rcout << ", " << tables[i].DECODE(j);
           ret(splits_found, tables[i].DECODE(j) - 1) = true;
         }
-        // Rcout << "\n\n";
         ++splits_found;
         // If we have a perfectly resolved tree, break.
         if (splits_found == ntip_3) {
