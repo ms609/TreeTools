@@ -34,7 +34,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
   const int32 ntip_3 = n_tip - 3;
 
   std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
-  std::array<int32, CT_MAX_LEAVES> split_count;
+  std::vector<int32> split_count(n_tip, 1);
 
   LogicalMatrix ret(ntip_3, n_tip);
 
@@ -47,7 +47,7 @@ LogicalMatrix consensus_tree(const List trees, const NumericVector p) {
       continue;
     }
 
-    std::fill(split_count.begin(), split_count.begin() + n_tip, 1);
+    std::fill(split_count.begin(), split_count.end(), 1);
 
     for (int32 j = i + 1; j < n_trees; ++j) {
 
