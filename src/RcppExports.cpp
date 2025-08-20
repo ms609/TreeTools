@@ -110,6 +110,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// descendant_edges_single
+LogicalVector descendant_edges_single(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder, const int edge_index, const bool include_self);
+RcppExport SEXP _TreeTools_descendant_edges_single(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP, SEXP edge_indexSEXP, SEXP include_selfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
+    Rcpp::traits::input_parameter< const int >::type edge_index(edge_indexSEXP);
+    Rcpp::traits::input_parameter< const bool >::type include_self(include_selfSEXP);
+    rcpp_result_gen = Rcpp::wrap(descendant_edges_single(parent, child, postorder, edge_index, include_self));
+    return rcpp_result_gen;
+END_RCPP
+}
 // descendant_tips
 LogicalMatrix descendant_tips(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder);
 RcppExport SEXP _TreeTools_descendant_tips(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP) {
@@ -416,6 +431,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
     {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
+    {"_TreeTools_descendant_edges_single", (DL_FUNC) &_TreeTools_descendant_edges_single, 5},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
     {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
     {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
