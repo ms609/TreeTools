@@ -582,45 +582,64 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
 RawMatrix pack_splits_logical(LogicalMatrix x) {
   const int nrow = x.nrow();
   const int ncol = x.ncol();
-  const int pad = (8 - (ncol % 8)) % 8;
-  const int nbin = (ncol + pad) / 8;
   
+  // Handle zero columns up-front (produces nrow x 0 matrix)
+  if (ncol == 0) {
+    return RawMatrix(nrow, 0);
+  }
+  
+  const int nbin = (ncol + 7) / 8;  // ceil(ncol / 8)
   RawMatrix out(nrow, nbin);
+  
+  const int* xp = LOGICAL(x);       // column-major storage
   
   for (int r = 0; r < nrow; ++r) {
     for (int b = 0; b < nbin; ++b) {
+      const int start_col = b * 8;
+      int limit = ncol - start_col;
+      if (limit > 8) limit = 8;
+      
+      // Pointer to (r, start_col) in column-major order
+      const int* p = xp + r + start_col * nrow;
+      
       unsigned char byte = 0;
-      for (int k = 0; k < 8; ++k) {
-        int c = b * 8 + k;
-        if (c < ncol && x(r, c) == TRUE) {
-          byte |= (1u << k);
-        }
+      // Walk across columns in this bin by stepping one column = +nrow
+      for (int k = 0; k < limit; ++k) {
+        if (*p == TRUE) byte |= (1u << k);
+        p += nrow;
       }
       out(r, b) = byte;
     }
   }
-  
   return out;
 }
 
 // [[Rcpp::export]]
 RawMatrix pack_splits_logical_vec(LogicalVector x) {
   const int ncol = x.size();
-  const int pad = (8 - (ncol % 8)) % 8;
-  const int nbin = (ncol + pad) / 8;
   
+  // 1 x 0 for a length-0 vector
+  if (ncol == 0) {
+    return RawMatrix(1, 0);
+  }
+  
+  const int nbin = (ncol + 7) / 8;
   RawMatrix out(1, nbin);
   
+  const int* xp = LOGICAL(x);  // contiguous
+  
   for (int b = 0; b < nbin; ++b) {
+    const int start = b * 8;
+    int limit = ncol - start;
+    if (limit > 8) limit = 8;
+    
+    const int* p = xp + start;
+    
     unsigned char byte = 0;
-    for (int k = 0; k < 8; ++k) {
-      int c = b * 8 + k;
-      if (c < ncol && x[c] == TRUE) {
-        byte |= (1u << k);
-      }
+    for (int k = 0; k < limit; ++k) {
+      if (p[k] == TRUE) byte |= (1u << k);
     }
     out(0, b) = byte;
   }
-  
   return out;
 }
