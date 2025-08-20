@@ -33,6 +33,14 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (!is.list(trees) || is.data.frame(trees)) {
     stop("Expecting `trees` to be a list.")
   }
+  
+  # Remove irrelevant metadata so we don't waste time processing it
+  trees <- lapply(c(trees), function(tr) {
+    tr[["edge.length"]] <- NULL
+    tr[["node.label"]] <- NULL
+    tr
+  })
+  
   repeat {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
