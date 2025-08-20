@@ -1,6 +1,5 @@
 #include <Rcpp/Lightest>
 #include <cstdint> /* for uint64_t */
-#include <Rinternals.h> /* for 
 #include <stdexcept> /* for errors */
 using namespace Rcpp;
 
@@ -50,9 +49,8 @@ LogicalMatrix descendant_edges(
   }
   
   // Convert back to LogicalMatrix for R (column-major fill)
-  SEXP retSEXP = Rf_allocMatrix(LGLSXP, n_row, n_edge);
-  LogicalMatrix ret(retSEXP);
-  int* ret_ptr = LOGICAL(retSEXP);  // direct pointer to logical storage (0/1/NA as ints)
+  LogicalMatrix ret(n_row, n_edge);
+  int* ret_ptr = INTEGER(ret);  // direct pointer to memory (0 = FALSE, 1 = TRUE)
   
   for (int j = 0; j < n_edge; j++) {
     const int word = j / 64;
