@@ -67,6 +67,57 @@ LogicalMatrix descendant_edges(
 }
 
 // [[Rcpp::export]]
+LogicalVector descendant_edges_single(
+    const IntegerVector parent,
+    const IntegerVector child,
+    const IntegerVector postorder,
+    const int edge_index,          // 1-based edge index from R
+    const bool include_self = true // mimic DescendantEdges behaviour
+) {
+  const int n_edge = parent.size();
+  if (child.size() != n_edge) {
+    Rcpp::stop("`parent` and `child` must be the same length");
+  }
+  if (postorder.size() != n_edge) {
+    Rcpp::stop("`postorder` must list each edge once");
+  }
+  if (edge_index < 1 || edge_index > n_edge) {
+    Rcpp::stop("`edge_index` out of range");
+  }
+  
+  LogicalVector ret(n_edge, false);
+  std::vector<int> stack;
+  stack.reserve(n_edge);
+  
+  // Start from the chosen edge
+  const int start_child = child[edge_index - 1];
+  if (include_self) {
+    ret[edge_index - 1] = true;
+  }
+  stack.push_back(start_child);
+  
+  const int root = Rcpp::algorithm::min(parent.begin(), parent.end());
+  const int n_tip = root - 1;
+  
+  // Depth-first traversal
+  while (!stack.empty()) {
+    int node = stack.back();
+    stack.pop_back();
+    
+    if (node > n_tip) { // internal node
+      for (int e = 0; e < n_edge; e++) {
+        if (parent[e] == node) {
+          ret[e] = true;
+          stack.push_back(child[e]);
+        }
+      }
+    }
+  }
+  
+  return ret;
+}
+
+// [[Rcpp::export]]
 LogicalMatrix descendant_tips(
     const IntegerVector parent,
     const IntegerVector child,

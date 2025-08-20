@@ -33,6 +33,10 @@ descendant_edges <- function(parent, child, postorder) {
     .Call(`_TreeTools_descendant_edges`, parent, child, postorder)
 }
 
+descendant_edges_single <- function(parent, child, postorder, edge_index, include_self = TRUE) {
+    .Call(`_TreeTools_descendant_edges_single`, parent, child, postorder, edge_index, include_self)
+}
+
 descendant_tips <- function(parent, child, postorder) {
     .Call(`_TreeTools_descendant_tips`, parent, child, postorder)
 }
