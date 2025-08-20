@@ -10,4 +10,4 @@ tr80Unif[["edge.length"]] <- NULL
 Benchmark(PathLengths(tr80Unif, full = TRUE))
 
 tr2000 <- rtree(2000)
-Benchmark(PathLengths(tr2000, full = TRUE), times = 42)
+Benchmark(PathLengths(tr2000, full = TRUE))
