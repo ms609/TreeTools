@@ -64,6 +64,8 @@ namespace TreeTools {
     // Retaining slower code as easier to read.
     // See branch ct-xswitch for implementation
     std::bitset<CT_MAX_LEAVES + 1> Xswitch;
+    // Track number of set switches (excluding index 0)
+    std::size_t xswitch_set_count = 0;
     
 
   public:
@@ -217,15 +219,21 @@ namespace TreeTools {
       return CLUSTONL(L, R) || CLUSTONR(L, R);
     }
 
-    inline void CLEAR() {
+    inline void CLEAR() noexcept {
       // Each cluster in X has an associated switch that is either cleared or
       // set.
       // This procedure clears every cluster switch in X.
       Xswitch.reset();
+      xswitch_set_count = 0;
     }
 
     inline void SETSWX(int16* row) noexcept {
-      Xswitch[*row] = true;
+      // Only increment our counter on a 0 -> 1 transition
+      const auto idx = static_cast<std::size_t>(*row);
+      if (!Xswitch[idx]) {
+        Xswitch[idx] = true;
+        ++xswitch_set_count;
+      }
     }
 
     [[nodiscard]] inline bool GETSWX(int16* row) noexcept {
@@ -233,7 +241,7 @@ namespace TreeTools {
     }
 
     [[nodiscard]] inline bool NOSWX(const std::size_t& n) noexcept {
-      return Xswitch.count() == n;
+      return xswitch_set_count == n;
     }
 
     inline void SETSW(int16* L, int16* R) noexcept {
