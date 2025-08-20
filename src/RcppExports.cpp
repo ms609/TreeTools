@@ -86,7 +86,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // consensus_tree
-LogicalMatrix consensus_tree(const List trees, const NumericVector p);
+RawMatrix consensus_tree(const List trees, const NumericVector p);
 RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
