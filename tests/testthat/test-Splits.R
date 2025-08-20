@@ -347,10 +347,10 @@ test_that("Renaming splits", {
                as.Splits(tree1, tipLabel = tree2))
 
   expect_equal(as.Splits(tree1, tipLabel = tree2),
-               as.Splits(as.Splits(tree1), tipLabel = tree2))
+               as.Splits(splits1, tipLabel = tree2))
 
   as.Splits(tree1, tipLabel = tree2)[]
-  as.Splits(as.Splits(tree1), tipLabel = tree2)[]
+  as.Splits(splits1, tipLabel = tree2)[]
 
 })
 

@@ -109,6 +109,14 @@ thin_splits <- function(splits, drop) {
     .Call(`_TreeTools_thin_splits`, splits, drop)
 }
 
+pack_splits_logical <- function(x) {
+    .Call(`_TreeTools_pack_splits_logical`, x)
+}
+
+pack_splits_logical_vec <- function(x) {
+    .Call(`_TreeTools_pack_splits_logical_vec`, x)
+}
+
 splits_to_edge <- function(splits, nTip) {
     .Call(`_TreeTools_splits_to_edge`, splits, nTip)
 }
