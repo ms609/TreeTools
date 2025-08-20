@@ -102,23 +102,21 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
     
     for (int32 k = 0; k < n_tip; ++k) {
       if (split_count[k] >= thresh) {
-        // We are about to write a new row `splits_found`
-        // (RawMatrix is freshly allocated => bytes are zeroed by R)
-        for (int32 j = tables[i].X_left(k + 1);
-             j != tables[i].X_right(k + 1) + 1;
-             ++j) {
-          const int32 leaf_idx = tables[i].DECODE(j) - 1; // 0-based column
-          const int32 byte_idx = leaf_idx >> 3;           // /8
-          const int32 bit_idx  = leaf_idx & 7;            // %8
-          
-          // Set bit bit_idx in byte byte_idx of row splits_found
-          Rbyte vbyte = ret(splits_found, byte_idx);
-          vbyte = static_cast<Rbyte>(vbyte | (Rbyte(1) << bit_idx));
-          ret(splits_found, byte_idx) = vbyte;
-        }
-        ++splits_found;
+        const int32 start = tables[i].X_left(k + 1);
+        const int32 end   = tables[i].X_right(k + 1);
         
-        // If we have a perfectly resolved tree, break.
+        for (int32 j = start; j <= end; ++j) {
+          const int32 leaf_idx = tables[i].DECODE(j) - 1; // 0-based
+          const int32 byte_idx = leaf_idx >> 3;           // column index
+          const int32 bit_idx  = leaf_idx & 7;            // bit within byte
+          
+          // pointer to the first row of this column
+          Rbyte* col_ptr = &ret(0, byte_idx);
+          col_ptr[splits_found] |= (Rbyte(1) << bit_idx); // set bit in row
+        }
+        
+        ++splits_found;
+        // If we have a perfectly resolved tree, exit early.
         if (splits_found == ntip_3) {
           return ret;
         }
