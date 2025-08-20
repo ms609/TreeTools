@@ -105,7 +105,6 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
         const int32 start = tables[i].X_left(k + 1);
         const int32 end   = tables[i].X_right(k + 1);
         
-        // Precompute column pointers once per row update
         for (int32 j = start; j <= end; ++j) {
           const int32 leaf_idx = tables[i].DECODE(j) - 1; // 0-based
           const int32 byte_idx = leaf_idx >> 3;           // column index
@@ -115,9 +114,9 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
           Rbyte* col_ptr = &ret(0, byte_idx);
           col_ptr[splits_found] |= (Rbyte(1) << bit_idx); // set bit in row
         }
-        ++splits_found;
         
-        // If we have a perfectly resolved tree, break.
+        ++splits_found;
+        // If we have a perfectly resolved tree, exit early.
         if (splits_found == ntip_3) {
           return ret;
         }
