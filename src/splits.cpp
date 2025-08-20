@@ -577,3 +577,50 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
   return ret;
   
 }
+
+// [[Rcpp::export]]
+RawMatrix pack_splits_logical(LogicalMatrix x) {
+  const int nrow = x.nrow();
+  const int ncol = x.ncol();
+  const int pad = (8 - (ncol % 8)) % 8;
+  const int nbin = (ncol + pad) / 8;
+  
+  RawMatrix out(nrow, nbin);
+  
+  for (int r = 0; r < nrow; ++r) {
+    for (int b = 0; b < nbin; ++b) {
+      unsigned char byte = 0;
+      for (int k = 0; k < 8; ++k) {
+        int c = b * 8 + k;
+        if (c < ncol && x(r, c) == TRUE) {
+          byte |= (1u << k);
+        }
+      }
+      out(r, b) = byte;
+    }
+  }
+  
+  return out;
+}
+
+// [[Rcpp::export]]
+RawMatrix pack_splits_logical_vec(LogicalVector x) {
+  const int ncol = x.size();
+  const int pad = (8 - (ncol % 8)) % 8;
+  const int nbin = (ncol + pad) / 8;
+  
+  RawMatrix out(1, nbin);
+  
+  for (int b = 0; b < nbin; ++b) {
+    unsigned char byte = 0;
+    for (int k = 0; k < 8; ++k) {
+      int c = b * 8 + k;
+      if (c < ncol && x[c] == TRUE) {
+        byte |= (1u << k);
+      }
+    }
+    out(0, b) = byte;
+  }
+  
+  return out;
+}
