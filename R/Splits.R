@@ -214,53 +214,37 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
 #' @rdname Splits
 #' @export
 as.Splits.logical <- function(x, tipLabels = NULL, ...) {
-  powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
+  
   if (is.null(dimX)) {
     nTip <- length(x)
-    if (nTip == 0) {
-      structure(
-        matrix(raw(0), 0, 0),
-        nTip = 0,
-        tip.label = TipLabels(0),
-        class = "Splits"
-      )
+    ret <- if (nTip == 0L) {
+      matrix(raw(0), 0, 0)
     } else {
-      if (is.null(tipLabels)) {
-        tipLabels <- TipLabels(x)
-        if (is.null(tipLabels)) {
-          tipLabels <- TipLabels(nTip)
-        }
-      } else {
-        tipLabels <- TipLabels(tipLabels)
-      }
-  
-      structure(
-        matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
-        nTip = nTip,
-        tip.label = tipLabels,
-        class = "Splits"
-      )
+      pack_splits_logical_vec(x)
     }
   } else {
-    if (is.null(tipLabels)) {
-      tipLabels <- TipLabels(x)
-    }
-    nTip <- dimX[2]
+    nTip <- dimX[2L]
+    ret <- `rownames<-`(pack_splits_logical(x), dimnames(x)[[1]])
+  }
+  
+  if (is.null(tipLabels)) {
+    # TODO when require R 4.1
+    # tipLabels <- TipLabels(x) %||% TipLabels(nTip)
+    tipLabels <- TipLabels(x)
     if (is.null(tipLabels)) {
       tipLabels <- TipLabels(nTip)
     }
-
-    nBin <- (nTip %% 8 != 0) + (nTip / 8)
-    structure(
-      matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
-             nrow = dimX[1], ncol = nBin,
-             byrow = TRUE, dimnames = list(rownames(x), NULL)),
-      nTip = nTip,
-      tip.label = tipLabels,
-      class = "Splits"
-    )
+  } else {
+    tipLabels <- TipLabels(tipLabels)
   }
+  
+  structure(
+    ret,
+    nTip = nTip,
+    tip.label = tipLabels,
+    class = "Splits"
+  )
 }
 
 #' @rdname Splits
