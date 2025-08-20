@@ -319,9 +319,9 @@ namespace TreeTools {
     Tlen_short = Tlen - (2 * 3);
     T = std::vector<int16> (Tlen);
 
-    leftmost_leaf = std::vector<int16> (n_vertex);
-    visited_nth = std::vector<int16> (n_leaves);
-    internal_label = std::vector<int16>(1 + n_leaves); // We're not using -1.
+    leftmost_leaf.resize(n_vertex);
+    visited_nth.resize(n_leaves);
+    internal_label.resize(1 + n_leaves); // We're not using -1.
     int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
 

@@ -33,6 +33,14 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (!is.list(trees) || is.data.frame(trees)) {
     stop("Expecting `trees` to be a list.")
   }
+  
+  # Remove irrelevant metadata so we don't waste time processing it
+  trees <- lapply(c(trees), function(tr) {
+    tr[["edge.length"]] <- NULL
+    tr[["node.label"]] <- NULL
+    tr
+  })
+  
   repeat {
     nTip <- NTip(trees)
     if (length(unique(nTip)) > 1) {
@@ -54,15 +62,16 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   }
   trees <- Preorder(trees) # Per #168; could be dispensed with with further
                            # investigation of consensus_tree
-  splits <- as.Splits(consensus_tree(trees, p),
-                      tipLabels = TipLabels(trees[[1]]))
   tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
   root <- root[root <= NTip(tree1)]
 
   # Return:
-  RootTree(as.phylo(splits), root)
+  RootTree(.PreorderTree(
+    edge = splits_to_edge(consensus_tree(trees, p), nTip),
+    tip.label = TipLabels(trees[[1]])
+  ), root)
 }
 
 #' Reduced consensus, omitting specified taxa
