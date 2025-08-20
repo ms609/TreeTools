@@ -1,4 +1,6 @@
 #include <Rcpp/Lightest>
+#include <cstdint> /* for uint64_t */
+#include <Rinternals.h> /* for 
 #include <stdexcept> /* for errors */
 using namespace Rcpp;
 
@@ -11,7 +13,7 @@ LogicalMatrix descendant_edges(
     const IntegerVector postorder) {
   
   const int n_edge = parent.size();
-    
+  
   if (child.size() != n_edge) {
     Rcpp::stop("`parent` and `child` must be the same length");
   }
@@ -19,30 +21,50 @@ LogicalMatrix descendant_edges(
     Rcpp::stop("`postorder` must list each edge once");
   }
   
-  const int 
-    root = Rcpp::algorithm::min(parent.begin(), parent.end()),
-    n_tip = root - 1,
-    n_node = n_edge + 1
-  ;
-  LogicalMatrix ret(n_node - n_tip, n_edge);
-
-  for (int i = 0; i != n_edge; i++) {
-    const int
-      edge_i = postorder[i] - R_TO_C,
-      parent_i = parent[edge_i],
-      child_i = child[edge_i],
-      offset = R_TO_C + n_tip
-    ;
+  const int root   = Rcpp::algorithm::min(parent.begin(), parent.end());
+  const int n_tip  = root - 1;
+  const int n_node = n_edge + 1;
+  const int n_row  = n_node - n_tip;
+  
+  // Word-based storage (bitset) for intermediate computation
+  const int n_words = (n_edge + 63) / 64;
+  std::vector<std::vector<uint64_t>> bitmat(n_row, std::vector<uint64_t>(n_words, 0ULL));
+  
+  const int offset = R_TO_C + n_tip;
+  
+  // Traverse in postorder
+  for (int i = 0; i < n_edge; i++) {
+    const int edge_i   = postorder[i] - R_TO_C;
+    const int parent_i = parent[edge_i] - offset;
+    const int child_i  = child[edge_i]  - offset;
     
-    ret(parent_i - offset, edge_i) = true;
-    if (child_i > n_tip) {
-      for (int j = n_edge; j--; ) {
-        if (ret(child_i - offset, j)) {
-          ret(parent_i - offset, j) = true;
-        }
+    // Mark edge itself
+    bitmat[parent_i][edge_i / 64] |= (1ULL << (edge_i % 64));
+    
+    // Union child's descendants (if internal node)
+    if (child_i >= 0) {
+      for (int w = 0; w < n_words; w++) {
+        bitmat[parent_i][w] |= bitmat[child_i][w];
       }
     }
   }
+  
+  // Convert back to LogicalMatrix for R (column-major fill)
+  SEXP retSEXP = Rf_allocMatrix(LGLSXP, n_row, n_edge);
+  LogicalMatrix ret(retSEXP);
+  int* ret_ptr = LOGICAL(retSEXP);  // direct pointer to logical storage (0/1/NA as ints)
+  
+  for (int j = 0; j < n_edge; j++) {
+    const int word = j / 64;
+    const int bit  = j % 64;
+    const uint64_t mask = (1ULL << bit);
+    
+    for (int r = 0; r < n_row; r++) {
+      ret_ptr[r + j * n_row] = (bitmat[r][word] & mask) ? 1 : 0;
+    }
+  }
+  
+  
   return ret;
 }
 
