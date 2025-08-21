@@ -1,7 +1,6 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
 #include <stdexcept> /* for errors */
-#include <set> /* for std::set */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
 
@@ -646,7 +645,6 @@ RawMatrix pack_splits_logical_vec(LogicalVector x) {
 }
 
 // Fast count of unique splits in a phylogenetic tree
-// Optimized replacement for collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
 // [[Rcpp::export]]
 int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip) {
   if (edge.ncol() != 2) {
@@ -658,58 +656,61 @@ int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip) {
     return 0;
   }
   
-  // Get all unique parent and child nodes that are internal nodes (> nTip)
-  std::set<int> internal_nodes;
+  // Find max node number to size our vectors
+  int max_node = nTip;  // Start with nTip as minimum
+  for (int i = 0; i < n_edge; ++i) {
+    max_node = std::max(max_node, std::max(edge(i, 0), edge(i, 1)));
+  }
   
-  // Count occurrences of each node as parent and child
-  std::map<int, int> parent_count;
-  std::map<int, int> child_count;
+  // Use vectors instead of maps - much faster O(1) access
+  std::vector<int> parent_count(max_node + 1, 0);
+  std::vector<int> child_count(max_node + 1, 0);
+  std::vector<bool> is_internal(max_node + 1, false);
   
+  // Single pass to count occurrences and mark internal nodes
   for (int i = 0; i < n_edge; ++i) {
     const int parent = edge(i, 0);
     const int child = edge(i, 1);
     
-    // Track all internal nodes (> nTip) and count their occurrences
-    if (parent > nTip) {
-      internal_nodes.insert(parent);
-    }
-    if (child > nTip) {
-      internal_nodes.insert(child);
-    }
-    
-    // Count all occurrences (including tips for child counting)
     parent_count[parent]++;
     child_count[child]++;
+    
+    // Mark internal nodes (> nTip)
+    if (parent > nTip) {
+      is_internal[parent] = true;
+    }
+    if (child > nTip) {
+      is_internal[child] = true;
+    }
   }
   
-  const int n_internal = internal_nodes.size();
+  // Count internal nodes and singletons in single pass
+  int n_internal = 0;
+  int n_singles = 0;
+  int root_node = 0;
+  
+  for (int node = nTip + 1; node <= max_node; ++node) {
+    if (is_internal[node]) {
+      n_internal++;
+      
+      // Check if singleton (degree 2: appears once as parent AND once as child)
+      if (parent_count[node] == 1 && child_count[node] == 1) {
+        n_singles++;
+      }
+      
+      // Check if root (appears as parent but not as child)
+      if (child_count[node] == 0) {
+        root_node = node;
+      }
+    }
+  }
+  
   if (n_internal == 0) {
     return 0;
   }
   
-  // Count singleton nodes (internal nodes with degree 2: parent_count=1 AND child_count=1)
-  int n_singles = 0;
-  for (const int node : internal_nodes) {
-    if (parent_count[node] == 1 && child_count[node] == 1) {
-      n_singles++;
-    }
-  }
-  
-  // Find root node: appears as parent but not as child
-  int root_node = 0;
-  for (const int node : internal_nodes) {
-    if (child_count[node] == 0) {
-      root_node = node;
-      break;
-    }
-  }
-  
-  // Count children of root to determine if rooted  
-  int root_children = parent_count[root_node];
-  
   // TreeIsRooted: root has < 3 children
-  const bool is_rooted = root_children < 3;
+  const bool is_rooted = parent_count[root_node] < 3;
   
-  // Return: (n_internal - n_singles) - 1 - is_rooted
   return (n_internal - n_singles) - 1 - (is_rooted ? 1 : 0);
 }
