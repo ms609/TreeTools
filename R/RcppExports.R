@@ -117,6 +117,10 @@ pack_splits_logical_vec <- function(x) {
     .Call(`_TreeTools_pack_splits_logical_vec`, x)
 }
 
+cpp_count_splits <- function(edge, nTip) {
+    .Call(`_TreeTools_cpp_count_splits`, edge, nTip)
+}
+
 splits_to_edge <- function(splits, nTip) {
     .Call(`_TreeTools_splits_to_edge`, splits, nTip)
 }

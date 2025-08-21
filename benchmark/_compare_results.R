@@ -121,4 +121,3 @@ cat(paste0(output, "\nEOF"), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
 if (any(regressions)) {
   stop("Significant performance regression detected.")
 }
-
