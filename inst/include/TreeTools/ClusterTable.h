@@ -409,14 +409,60 @@ namespace TreeTools {
     internal_label_ptr = internal_label.data();
     int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
-
+    
+    // Stack-based postorder traversal
+    std::vector<int16> stack;
+    std::vector<bool> visited(1 + n_vertex, false);
+    std::vector<std::vector<int16>> children(1 + n_vertex);
+    
+    // Build children lists
+    for (int16 i = 0; i < n_edge; ++i) {
+      children[int16(edge(i, 0))].push_back(int16(edge(i, 1)));
+    }
+    
+    // Initialize weights for leaves
+    for (int16 i = 1; i <= n_leaves; ++i) {
+      weights[i] = 0;
+      visited[i] = true;
+    }
+    
+    // Process internal nodes in postorder
+    int16 root = int16(edge(0, 0));
+    stack.push_back(root);
+    
+    while (!stack.empty()) {
+      int16 node = stack.back();
+      
+      if (visited[node]) {
+        stack.pop_back();
+        continue;
+      }
+      
+      // Check if all children are processed
+      bool all_children_ready = true;
+      for (int16 child : children[node]) {
+        if (!visited[child]) {
+          all_children_ready = false;
+          stack.push_back(child);
+        }
+      }
+      
+      if (all_children_ready) {
+        // Calculate weight for this node
+        int16 total_weight = 0;
+        for (int16 child : children[node]) {
+          total_weight += 1 + weights[child];
+        }
+        weights[node] = total_weight;
+        visited[node] = true;
+        stack.pop_back();
+      }
+    }
     for (int16 i = 1; i != n_leaves + 1; ++i) {
       SET_LEFTMOST(i, i);
-      weights[i] = 0;
     }
     for (int16 i = 1 + n_leaves; i != 1 + n_vertex; ++i) {
       SET_LEFTMOST(i, 0);
-      weights[i] = 0;
     }
     for (int16 i = n_edge; i--; ) {
       const int16
@@ -428,10 +474,8 @@ namespace TreeTools {
       }
       if (is_leaf(child_i)) {
         VISIT_LEAF(&child_i, &n_visited);
-        ++weights[parent_i];
         ENTER(child_i, 0);
       } else {
-        weights[parent_i] += 1 + weights[child_i];
         ENTER(child_i, weights[child_i]);
       }
     }
