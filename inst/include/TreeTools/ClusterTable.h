@@ -190,7 +190,7 @@ namespace TreeTools {
       leftmost_leaf[index - 1] = val;
     }
 
-    inline int16 GET_LEFTMOST(int16 index) noexcept {
+    [[nodiscard]] inline int16 GET_LEFTMOST(int16 index) noexcept {
       return leftmost_leaf[index - 1];
     }
 
@@ -403,9 +403,9 @@ namespace TreeTools {
     T = std::vector<int16>(Tlen);
     T_ptr = T.data();
 
-    leftmost_leaf.resize(n_vertex);
-    visited_nth.resize(n_leaves);
-    internal_label.resize(1 + n_leaves); // We're not using -1.
+    leftmost_leaf.reserve(n_vertex);
+    visited_nth.reserve(n_leaves);
+    internal_label.reserve(1 + n_leaves); // We're not using -1.
     internal_label_ptr = internal_label.data();
     int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
