@@ -49,7 +49,7 @@ namespace TreeTools {
   static inline void ct_push(std::array<CTEntry, ct_max_leaves>& S_e,
                              int16 &Spos,
                              int16 a, int16 b, int16 c, int16 d) noexcept {
-    if (Spos >= static_cast<int16>(ct_max_leaves)) return; // Bounds check
+    ASSERT(Spos < static_cast<int16>(ct_max_leaves));
     CTEntry &e = S_e[Spos++];
     e.L = a;
     e.R = b;
@@ -60,7 +60,7 @@ namespace TreeTools {
   static inline void ct_pop(std::array<CTEntry, ct_max_leaves>& S_e,
                             int16 &Spos,
                             int16 &a, int16 &b, int16 &c, int16 &d) noexcept {
-    if (Spos <= 0) return; // Bounds check
+    ASSERT(Spos > 0);
     CTEntry &e = S_e[--Spos];
     a = e.L;
     b = e.R;
@@ -70,14 +70,12 @@ namespace TreeTools {
   
   static inline void ct_push(CTEntry*& st, int16 a, int16 b, int16 c,
                              int16 d) noexcept {
-    if (st == nullptr) return; // Basic null check
     CTEntry &e = *st++;
     e.L = a; e.R = b; e.N = c; e.W = d;
   }
   
   static inline void ct_pop(CTEntry*& st, int16 &a, int16 &b, int16 &c, 
                             int16 &d) noexcept {
-    if (st == nullptr) return; // Basic null check
     CTEntry &e = *--st;
     a = e.L; b = e.R; c = e.N; d = e.W;
   }
@@ -277,13 +275,13 @@ namespace TreeTools {
     }
 
     [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
-      if (L <= 0 || L > X_ROWS) return false;
+      ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r = x_rows[L - 1];
       return r.L == L && r.R == R;
     }
     
     [[nodiscard]] inline bool CLUSTONR(int16 L, int16 R) noexcept {
-      if (R <= 0 || R > X_ROWS) return false;
+      ASSERT(R > 0 && R <= X_ROWS);
       const ClusterRow &r = x_rows[R - 1];
       return r.L == L && r.R == R;
     }
@@ -291,16 +289,14 @@ namespace TreeTools {
     [[nodiscard]] inline bool ISCLUST(int16 L, int16 R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
-      if (L <= 0 || L > X_ROWS) return false;
+      ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r_L = x_rows[L - 1];
       if (r_L.L == L && r_L.R == R) return true;
       
-      // Only check R row if different from L and R is valid
-      if (L != R && R > 0 && R <= X_ROWS) {
-        const ClusterRow &r_R = x_rows[R - 1];
-        return r_R.L == L && r_R.R == R;
-      }
-      return false;
+      ASSERT(L != R);
+      ASSERT(R > 0 && R <= X_ROWS);
+      const ClusterRow &r_R = x_rows[R - 1];
+      return r_R.L == L && r_R.R == R;
     }
 
     inline void CLEAR() noexcept {
