@@ -178,14 +178,14 @@ namespace TreeTools {
       return ret;
     }
     
-    inline int16 X_left(int16 row) noexcept {
+    [[nodiscard]] inline int16 X_left(int16 row) noexcept {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
       ASSERT(x_rows[row - 1].L < std::numeric_limits<int16>::max());
       return x_rows[row - 1].L;
     }
     
-    inline int16 X_right(int16 row) noexcept {
+    [[nodiscard]] inline int16 X_right(int16 row) noexcept {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
       ASSERT(x_rows[row - 1].R < std::numeric_limits<int16>::max());
