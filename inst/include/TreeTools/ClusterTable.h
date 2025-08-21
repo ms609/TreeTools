@@ -53,11 +53,11 @@ namespace TreeTools {
     int16 v_j;
     int16 Tlen;
     int16 Tlen_short;
-    int16 Tpos = 0;
     int16 X_ROWS;
     std::vector<int16> internal_label;
     std::vector<int16> leftmost_leaf;
     std::vector<int16> T;
+    int16* T_ptr = nullptr;
     std::vector<int16> visited_nth;
     std::vector<ClusterRow> x_rows;
     // Using bitset; can obtain a ~1% speedup using vector of ULLs
@@ -90,8 +90,10 @@ namespace TreeTools {
     }
 
     inline void ENTER(int16 v, int16 w) noexcept {
-      T[Tpos++] = v;
-      T[Tpos++] = w;
+      *T_ptr = v;
+      ++T_ptr;
+      *T_ptr = w;
+      ++T_ptr;
     }
 
     [[nodiscard]] inline int16 N() noexcept {
@@ -105,17 +107,17 @@ namespace TreeTools {
     inline void TRESET() noexcept {
       // This procedure prepares T for an enumeration of its entries,
       // beginning with the first entry.
-      Tpos = 0;
+      T_ptr = T.data();
     }
 
     inline void READT(int16 *v, int16 *w) {
-      *v = T[Tpos++];
-      *w = T[Tpos++];
+      *v = *T_ptr++;
+      *w = *T_ptr++;
     }
 
     inline void NVERTEX(int16 *v, int16 *w) noexcept {
-      if (Tpos != Tlen) {
         READT(v, w);
+      if (T_ptr != T.data() + Tlen) {
         v_j = *v;
       } else {
         *v = 0;
@@ -125,8 +127,8 @@ namespace TreeTools {
 
     inline void NVERTEX_short(int16 *v, int16 *w) noexcept {
       // Don't count all-tips or all-ingroup: vertices 0, ROOT, Ingp.
-      if (Tpos != Tlen_short) {
         READT(v, w);
+      if (T_ptr != T.data() + Tlen_short) {
         // v_j = *v; // Unneeded unless we go on to call LEFTLEAF
       } else {
         *v = 0;
@@ -323,7 +325,7 @@ namespace TreeTools {
     const int16 n_vertex = M() + N();
     Tlen = 2 * n_vertex;
     Tlen_short = Tlen - (2 * 3);
-    T = std::vector<int16> (Tlen);
+    T = std::vector<int16>(Tlen);
 
     leftmost_leaf.resize(n_vertex);
     visited_nth.resize(n_leaves);
