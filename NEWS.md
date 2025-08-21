@@ -1,6 +1,6 @@
 # TreeTools 1.15.0.9008 (development) #
 
-- Optimize ClusterTable.
+- Optimize `ClusterTable` class.
 
 # TreeTools 1.15.0.9007 (development) #
 
