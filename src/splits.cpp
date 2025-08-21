@@ -638,6 +638,7 @@ RawMatrix pack_splits_logical_vec(LogicalVector x) {
     
     unsigned char byte = 0;
     for (int k = 0; k < limit; ++k) {
+      if (p[k] == TRUE) byte |= (1u << k);
     }
     out(0, b) = byte;
   }
