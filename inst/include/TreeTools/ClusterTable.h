@@ -1,6 +1,7 @@
 #ifndef _TREETOOLS_CLUSTERTABLE_H
 #define _TREETOOLS_CLUSTERTABLE_H
 
+#include <array> /* for array */
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
 #include <Rcpp/Lightest>
@@ -48,6 +49,7 @@ namespace TreeTools {
   static inline void ct_push(std::array<CTEntry, ct_max_leaves>& S_e,
                              int16 &Spos,
                              int16 a, int16 b, int16 c, int16 d) noexcept {
+    ASSERT(Spos < static_cast<int16>(ct_max_leaves));
     CTEntry &e = S_e[Spos++];
     e.L = a;
     e.R = b;
@@ -58,6 +60,7 @@ namespace TreeTools {
   static inline void ct_pop(std::array<CTEntry, ct_max_leaves>& S_e,
                             int16 &Spos,
                             int16 &a, int16 &b, int16 &c, int16 &d) noexcept {
+    ASSERT(Spos > 0);
     CTEntry &e = S_e[--Spos];
     a = e.L;
     b = e.R;
@@ -268,15 +271,17 @@ namespace TreeTools {
     [[nodiscard]] inline bool ISCLUST(int16* L, int16* R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
-      return CLUSTONL(L, R) || CLUSTONR(L, R);
+      return CLUSTONL(*L, *R) || CLUSTONR(*L, *R);
     }
 
     [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
+      ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r = x_rows[L - 1];
       return r.L == L && r.R == R;
     }
     
     [[nodiscard]] inline bool CLUSTONR(int16 L, int16 R) noexcept {
+      ASSERT(R > 0 && R <= X_ROWS);
       const ClusterRow &r = x_rows[R - 1];
       return r.L == L && r.R == R;
     }
@@ -284,15 +289,14 @@ namespace TreeTools {
     [[nodiscard]] inline bool ISCLUST(int16 L, int16 R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
+      ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r_L = x_rows[L - 1];
       if (r_L.L == L && r_L.R == R) return true;
       
-      assert(L != R);
-      if (L != R) { // Only check R row if different from L
-        const ClusterRow &r_R = x_rows[R - 1];
-        return r_R.L == L && r_R.R == R;
-      }
-      return false;
+      ASSERT(L != R);
+      ASSERT(R > 0 && R <= X_ROWS);
+      const ClusterRow &r_R = x_rows[R - 1];
+      return r_R.L == L && r_R.R == R;
     }
 
     inline void CLEAR() noexcept {
@@ -323,10 +327,10 @@ namespace TreeTools {
     inline void SETSW(int16* L, int16* R) noexcept {
       // If <L,R> is a cluster in X, 
       // this procedure sets the cluster switch for <L,R>.
-      if (CLUSTONL(L, R)) {
+      if (CLUSTONL(*L, *R)) {
         ++n_shared;
         SETSWX(L);
-      } else if (CLUSTONR(L, R)) {
+      } else if (CLUSTONR(*L, *R)) {
         ++n_shared;
         SETSWX(R);
       }
