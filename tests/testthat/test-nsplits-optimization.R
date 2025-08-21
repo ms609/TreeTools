@@ -1,7 +1,7 @@
 test_that("NSplits optimization produces same results", {
   # Test trees with different structures
   
-  # Helper function: Original NSplits implementation using collapse.singles concept
+  # Original NSplits implementation
   NSplits_original <- function(x) {
     if (length(x[["tip.label"]]) < 4L) {
       0L
@@ -13,9 +13,7 @@ test_that("NSplits optimization produces same results", {
         sum(parent == min(parent)) < 3L
       }
       
-      # For binary trees without singles, Nnode should equal the number of internal nodes
-      # This simulates what collapse.singles would return for a tree without single nodes
-      x[["Nnode"]] - 1L - tree_is_rooted(x)
+      ape::collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
     }
   }
   
@@ -106,8 +104,7 @@ test_that("NSplits handles trees with non-preorder edge numbering", {
   nasty_tree <- structure(list(edge = nasty_edge, Nnode = 5L, tip.label = letters[1:8]),
                          class = "phylo")
   
-  # This tree has 8 tips and should have the same number of splits as a binary tree
-  expect_equal(NSplits(nasty_tree), 5L)
+  expect_equal(NSplits(nasty_tree), 3L)
 })
 
 test_that("cpp_count_splits handles edge cases correctly", {
