@@ -1,3 +1,7 @@
+# TreeTools 1.15.0.9008 (development) #
+
+- Optimize ClusterTable.
+
 # TreeTools 1.15.0.9007 (development) #
 
 - Optimize `NSplits()`.
