@@ -56,7 +56,25 @@ test_that("NSplits optimization produces same results", {
     Nnode = 7L
   ), class = "phylo")
   
-  # Test our optimized version against the original logic
+  # Test case 5: Tree with singleton nodes (degree-2 nodes)
+  # Represents tree equivalent to (a, (b, (c), (d, e))) after parsing
+  # but with an extra internal node (singleton) connecting to c
+  tree_with_singles <- structure(list(
+    edge = matrix(c(
+      6, 1,   # root -> a
+      6, 7,   # root -> internal
+      7, 2,   # internal -> b  
+      7, 8,   # internal -> singleton node
+      8, 3,   # singleton -> c (this makes node 8 a singleton)
+      7, 9,   # internal -> another internal
+      9, 4,   # internal -> d
+      9, 5    # internal -> e
+    ), ncol = 2, byrow = TRUE),
+    tip.label = c("a", "b", "c", "d", "e"),
+    Nnode = 4L  # 4 internal nodes total: 6 (root), 7, 8 (singleton), 9
+  ), class = "phylo")
+  
+  # Test our optimized version against the original logic for binary trees
   expect_equal(NSplits(tree4), NSplits_original(tree4))
   expect_equal(NSplits(tree6), NSplits_original(tree6))
   expect_equal(NSplits(tree8), NSplits_original(tree8))
@@ -65,13 +83,31 @@ test_that("NSplits optimization produces same results", {
   expect_equal(NSplits(tree2), 0L)
   expect_equal(NSplits(tree3), 0L)
   
-  # Specific expected values based on the formula: Nnode - 1 - TreeIsRooted
-  # tree4: 3 - 1 - 1 = 1 (rooted)
-  # tree6: 5 - 1 - 1 = 3 (rooted) 
-  # tree8: 7 - 1 - 1 = 5 (rooted)
+  # Tree with singleton nodes should have fewer splits after collapsing singletons
+  # Expected: node 8 is singleton (appears once as parent [8->3], once as child [7->8])
+  # After collapsing: we have 3 remaining internal nodes (6, 7, 9)
+  # Formula: (3 internal - 0 remaining singleton) - 1 - 1(rooted) = 1 split
+  expect_equal(NSplits(tree_with_singles), 1L)
+  
+  # Specific expected values based on the formula: (Nnode - n_singles) - 1 - TreeIsRooted
+  # tree4: (3 - 0) - 1 - 1 = 1 (rooted, no singletons)
+  # tree6: (5 - 0) - 1 - 1 = 3 (rooted, no singletons) 
+  # tree8: (7 - 0) - 1 - 1 = 5 (rooted, no singletons)
   expect_equal(NSplits(tree4), 1L)
   expect_equal(NSplits(tree6), 3L)
   expect_equal(NSplits(tree8), 5L)
+})
+
+test_that("NSplits handles trees with non-preorder edge numbering", {
+  # Test tree with "nasty" edge order (not preorder)
+  nasty_edge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
+                           5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
+                         .Dim = c(12, 2))
+  nasty_tree <- structure(list(edge = nasty_edge, Nnode = 5L, tip.label = letters[1:8]),
+                         class = "phylo")
+  
+  # This tree has 8 tips and should have the same number of splits as a binary tree
+  expect_equal(NSplits(nasty_tree), 5L)
 })
 
 test_that("cpp_count_splits handles edge cases correctly", {
@@ -88,6 +124,22 @@ test_that("cpp_count_splits handles edge cases correctly", {
   # 3 tips tree
   edge_3tips <- matrix(c(4, 1, 4, 2, 4, 3), ncol = 2, byrow = TRUE)
   expect_equal(cpp_count_splits(edge_3tips, 3L), 0L)
+  
+  # Test tree with singleton: 4 tips but with singleton node
+  # Tree: (a, (b, (c), d)) - node connecting just c is singleton
+  edge_singleton <- matrix(c(
+    5, 1,   # root -> a
+    5, 6,   # root -> internal 
+    6, 2,   # internal -> b
+    6, 7,   # internal -> singleton
+    7, 3,   # singleton -> c (node 7 is singleton)
+    6, 4    # internal -> d
+  ), ncol = 2, byrow = TRUE)
+  
+  # After collapsing singleton node 7: we get (a, (b, c, d))
+  # This should have 2 internal nodes (5=root, 6=internal)
+  # Result: (2 - 0) - 1 - 1 = 0 splits
+  expect_equal(cpp_count_splits(edge_singleton, 4L), 0L)
   
   # Invalid edge matrix (wrong number of columns)
   invalid_edge <- matrix(c(1, 2, 3), ncol = 3)

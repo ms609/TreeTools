@@ -647,49 +647,68 @@ RawMatrix pack_splits_logical_vec(LogicalVector x) {
 // Fast count of unique splits in a phylogenetic tree
 // Optimized replacement for collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
 // [[Rcpp::export]]
-int cpp_count_splits(const Rcpp::IntegerMatrix& edge, int nTip) {
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip) {
   if (edge.ncol() != 2) {
     Rcpp::stop("Edge matrix must contain two columns");
   }
   
   const int n_edge = edge.nrow();
-  if (n_edge == 0 || nTip < 4) {
+  if (n_edge <= nTip || nTip < 4) {
     return 0;
   }
   
-  // Get all unique parent nodes - these represent internal nodes
+  // Get all unique parent and child nodes that are internal nodes (> nTip)
   std::set<int> internal_nodes;
+  
+  // Count occurrences of each node as parent and child
+  std::map<int, int> parent_count;
+  std::map<int, int> child_count;
   
   for (int i = 0; i < n_edge; ++i) {
     const int parent = edge(i, 0);
     const int child = edge(i, 1);
     
-    // Parent must be an internal node (> nTip)
+    // Track all internal nodes (> nTip) and count their occurrences
     if (parent > nTip) {
       internal_nodes.insert(parent);
     }
+    if (child > nTip) {
+      internal_nodes.insert(child);
+    }
+    
+    // Count all occurrences (including tips for child counting)
+    parent_count[parent]++;
+    child_count[child]++;
   }
   
   const int n_internal = internal_nodes.size();
-  
-  // Check if tree is rooted: count children of root node
-  // Root is the minimum parent node
   if (n_internal == 0) {
     return 0;
   }
   
-  const int root_node = *std::min_element(internal_nodes.begin(), internal_nodes.end());
-  int root_children = 0;
-  
-  for (int i = 0; i < n_edge; ++i) {
-    if (edge(i, 0) == root_node) {
-      ++root_children;
+  // Count singleton nodes (internal nodes with degree 2: parent_count=1 AND child_count=1)
+  int n_singles = 0;
+  for (const int node : internal_nodes) {
+    if (parent_count[node] == 1 && child_count[node] == 1) {
+      n_singles++;
     }
   }
+  
+  // Find root node: appears as parent but not as child
+  int root_node = 0;
+  for (const int node : internal_nodes) {
+    if (child_count[node] == 0) {
+      root_node = node;
+      break;
+    }
+  }
+  
+  // Count children of root to determine if rooted  
+  int root_children = parent_count[root_node];
   
   // TreeIsRooted: root has < 3 children
   const bool is_rooted = root_children < 3;
   
-  // Return: n_internal - 1 - is_rooted
-  return n_internal - 1 - (is_rooted ? 1 : 0);
+  // Return: (n_internal - n_singles) - 1 - is_rooted
+  return (n_internal - n_singles) - 1 - (is_rooted ? 1 : 0);
 }
