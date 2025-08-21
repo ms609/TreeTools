@@ -56,6 +56,7 @@ namespace TreeTools {
     int16 Tpos = 0;
     int16 X_ROWS;
     std::vector<int16> internal_label;
+    int16 *internal_label_ptr = nullptr;
     std::vector<int16> leftmost_leaf;
     std::vector<int16> T;
     std::vector<int16> visited_nth;
@@ -151,11 +152,11 @@ namespace TreeTools {
 
     // Procedures to manipulate cluster tables, per Table 4 of Day 1985.
 
-    inline int16 ENCODE(const int16 v) noexcept {
+    inline int16 ENCODE(const int v) noexcept {
       // This function procedure returns as its value the internal label
       // assigned to leaf v
       // MS note: input = v; output = X[v, 3]
-      return internal_label[v];
+      return internal_label_ptr[v];
     }
 
     inline int16 DECODE(const int16 internal_relabeling) noexcept {
@@ -328,6 +329,7 @@ namespace TreeTools {
     leftmost_leaf.resize(n_vertex);
     visited_nth.resize(n_leaves);
     internal_label.resize(1 + n_leaves); // We're not using -1.
+    internal_label_ptr = internal_label.data();
     int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
 
