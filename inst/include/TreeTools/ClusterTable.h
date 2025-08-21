@@ -326,6 +326,7 @@ namespace TreeTools {
     Tlen = 2 * n_vertex;
     Tlen_short = Tlen - (2 * 3);
     T = std::vector<int16>(Tlen);
+    T_ptr = T.data();
 
     leftmost_leaf.resize(n_vertex);
     visited_nth.resize(n_leaves);
