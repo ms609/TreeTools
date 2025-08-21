@@ -367,13 +367,13 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_count_splits
-int cpp_count_splits(const Rcpp::IntegerMatrix& edge, int nTip);
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip);
 RcppExport SEXP _TreeTools_cpp_count_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type edge(edgeSEXP);
-    Rcpp::traits::input_parameter< int >::type nTip(nTipSEXP);
+    Rcpp::traits::input_parameter< const int >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(cpp_count_splits(edge, nTip));
     return rcpp_result_gen;
 END_RCPP
