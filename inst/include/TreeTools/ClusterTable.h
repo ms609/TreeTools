@@ -382,7 +382,7 @@ namespace TreeTools {
     const Rcpp::List rooted = TreeTools::root_on_node(phylo, 1);
     const Rcpp::IntegerMatrix edge = rooted["edge"];
     
-    // Initialize basic properties
+    // BEGIN
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
     if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
@@ -401,69 +401,64 @@ namespace TreeTools {
     Tlen_short = Tlen - (2 * 3);
     T = std::vector<int16>(Tlen);
     T_ptr = T.data();
-
+    
     leftmost_leaf.reserve(n_vertex);
     visited_nth.reserve(n_leaves);
-    internal_label.reserve(1 + n_leaves);
+    internal_label.reserve(1 + n_leaves); // We're not using -1.
     internal_label_ptr = internal_label.data();
-    
-    // Single-pass weight calculation and tree processing
+    int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
+    
+    // Stack-based postorder traversal
+    std::vector<int16> stack;
+    std::vector<bool> visited(1 + n_vertex, false);
     std::vector<std::vector<int16>> children(1 + n_vertex);
     
-    // Build children lists in single pass
-    children.reserve(1 + n_vertex);
+    // Build children lists
     for (int16 i = 0; i < n_edge; ++i) {
-      const int16 parent = int16(edge(i, 0));
-      const int16 child = int16(edge(i, 1));
-      children[parent].push_back(child);
+      children[int16(edge(i, 0))].push_back(int16(edge(i, 1)));
     }
     
-    // Initialize leaf weights (leaves have weight 0)
+    // Initialize weights for leaves
     for (int16 i = 1; i <= n_leaves; ++i) {
       weights[i] = 0;
+      visited[i] = true;
     }
     
-    // Single-pass postorder weight calculation
-    std::vector<int16> stack;
-    std::vector<bool> processed(1 + n_vertex, false);
-    
-    const int16 root = int16(edge(0, 0));
+    // Process internal nodes in postorder
+    int16 root = int16(edge(0, 0));
     stack.push_back(root);
     
     while (!stack.empty()) {
-      const int16 node = stack.back();
+      int16 node = stack.back();
       
-      if (processed[node]) {
+      if (visited[node]) {
         stack.pop_back();
         continue;
       }
       
       // Check if all children are processed
-      bool ready = true;
-      for (const int16 child : children[node]) {
-        if (!processed[child]) {
-          ready = false;
+      bool all_children_ready = true;
+      for (int16 child : children[node]) {
+        if (!visited[child]) {
+          all_children_ready = false;
           stack.push_back(child);
         }
       }
       
-      if (ready) {
-        // Process internal nodes only (leaves already have weight 0)
-        if (node > n_leaves) {
-          int16 total_weight = 0;
-          for (const int16 child : children[node]) {
-            total_weight += 1 + weights[child];
-          }
-          weights[node] = total_weight;
+      if (all_children_ready) {
+        // Calculate weight for this node
+        int16 total_weight = 0;
+        for (int16 child : children[node]) {
+          total_weight += 1 + weights[child];
         }
-        processed[node] = true;
+        weights[node] = total_weight;
+        visited[node] = true;
         stack.pop_back();
       }
     }
     
-    // Initialize leftmost leaves efficiently
-    // Leaves map to themselves, internal nodes start at 0
+    // Initialize leftmost leaves
     for (int16 i = 1; i <= n_leaves; ++i) {
       SET_LEFTMOST(i, i);
     }
@@ -471,30 +466,24 @@ namespace TreeTools {
       SET_LEFTMOST(i, 0);
     }
     
-    // Process edges in reverse order for correct postorder sequence
-    int16 n_visited = 0;
+    // Process edges in reverse order
     for (int16 i = n_edge; i--; ) {
-      const int16 parent = int16(edge(i, 0));
-      const int16 child = int16(edge(i, 1));
+      const int16 parent_i = int16(edge(i, 0));
+      const int16 child_i = int16(edge(i, 1));
       
-      // Update parent's leftmost if not set
-      if (!GET_LEFTMOST(parent)) {
-        SET_LEFTMOST(parent, GET_LEFTMOST(child));
+      if (!GET_LEFTMOST(parent_i)) {
+        SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
       }
-      
-      // Enter child into tree structure
-      if (child <= n_leaves) {
-        VISIT_LEAF(&child, &n_visited);
-        ENTER(child, 0);
+      if (child_i <= n_leaves) {
+        VISIT_LEAF(&child_i, &n_visited);
+        ENTER(child_i, 0);
       } else {
-        ENTER(child, weights[child]);
+        ENTER(child_i, weights[child_i]);
       }
     }
-    
-    // Enter root
     ENTER(root, weights[root]);
     
-    // Build cluster table
+    // BUILD Cluster table
     X_ROWS = n_leaves;
     x_rows = std::vector<ClusterRow>(X_ROWS);
 
