@@ -1,3 +1,8 @@
+# TreeTools 1.15.0.9007 (development) #
+
+- Optimize `NSplits()`.
+
+
 # TreeTools 1.15.0.9006 (development) #
 
 - Remove exported C++ cache objects to prefer calculation with intrinsics.
