@@ -74,6 +74,12 @@ namespace TreeTools {
     [[nodiscard]] inline bool is_leaf(const int16 v) noexcept {
       return v <= n_leaves;
     }
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer is_leaf(int16 v)
+    [[nodiscard]] inline bool is_leaf(const int16 *v) noexcept {
+      return *v <= n_leaves;
+    }
 
     [[nodiscard]] inline const int16 edges() noexcept {
       return n_edge;
