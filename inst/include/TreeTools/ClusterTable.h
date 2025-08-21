@@ -377,24 +377,23 @@ namespace TreeTools {
     }
 
   };
-
   inline ClusterTable::ClusterTable(Rcpp::List phylo) {
-
+    
     const Rcpp::List rooted = TreeTools::root_on_node(phylo, 1);
     const Rcpp::IntegerMatrix edge = rooted["edge"];
-
-    // BEGIN
+    
+    // Initialize basic properties
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
     if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
       Rcpp::stop("Tree has too many leaves. "
-                 "Contact the 'TreeTools' maintainer.");
+                   "Contact the 'TreeTools' maintainer.");
     }
     ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "
-                 "Contact the 'TreeTools' maintainer.");
+                   "Contact the 'TreeTools' maintainer.");
     }
     n_edge = int16(edge.nrow());
     const int16 n_vertex = M() + N();
@@ -405,83 +404,97 @@ namespace TreeTools {
 
     leftmost_leaf.reserve(n_vertex);
     visited_nth.reserve(n_leaves);
-    internal_label.reserve(1 + n_leaves); // We're not using -1.
+    internal_label.reserve(1 + n_leaves);
     internal_label_ptr = internal_label.data();
-    int16 n_visited = 0;
-    std::vector<int16> weights(1 + n_vertex);
     
-    // Stack-based postorder traversal
-    std::vector<int16> stack;
-    std::vector<bool> visited(1 + n_vertex, false);
+    // Single-pass weight calculation and tree processing
+    std::vector<int16> weights(1 + n_vertex);
     std::vector<std::vector<int16>> children(1 + n_vertex);
     
-    // Build children lists
+    // Build children lists in single pass
+    children.reserve(1 + n_vertex);
     for (int16 i = 0; i < n_edge; ++i) {
-      children[int16(edge(i, 0))].push_back(int16(edge(i, 1)));
+      const int16 parent = int16(edge(i, 0));
+      const int16 child = int16(edge(i, 1));
+      children[parent].push_back(child);
     }
     
-    // Initialize weights for leaves
+    // Initialize leaf weights (leaves have weight 0)
     for (int16 i = 1; i <= n_leaves; ++i) {
       weights[i] = 0;
-      visited[i] = true;
     }
     
-    // Process internal nodes in postorder
-    int16 root = int16(edge(0, 0));
+    // Single-pass postorder weight calculation
+    std::vector<int16> stack;
+    std::vector<bool> processed(1 + n_vertex, false);
+    
+    const int16 root = int16(edge(0, 0));
     stack.push_back(root);
     
     while (!stack.empty()) {
-      int16 node = stack.back();
+      const int16 node = stack.back();
       
-      if (visited[node]) {
+      if (processed[node]) {
         stack.pop_back();
         continue;
       }
       
       // Check if all children are processed
-      bool all_children_ready = true;
-      for (int16 child : children[node]) {
-        if (!visited[child]) {
-          all_children_ready = false;
+      bool ready = true;
+      for (const int16 child : children[node]) {
+        if (!processed[child]) {
+          ready = false;
           stack.push_back(child);
         }
       }
       
-      if (all_children_ready) {
-        // Calculate weight for this node
-        int16 total_weight = 0;
-        for (int16 child : children[node]) {
-          total_weight += 1 + weights[child];
+      if (ready) {
+        // Process internal nodes only (leaves already have weight 0)
+        if (node > n_leaves) {
+          int16 total_weight = 0;
+          for (const int16 child : children[node]) {
+            total_weight += 1 + weights[child];
+          }
+          weights[node] = total_weight;
         }
-        weights[node] = total_weight;
-        visited[node] = true;
+        processed[node] = true;
         stack.pop_back();
       }
     }
-    for (int16 i = 1; i != n_leaves + 1; ++i) {
+    
+    // Initialize leftmost leaves efficiently
+    // Leaves map to themselves, internal nodes start at 0
+    for (int16 i = 1; i <= n_leaves; ++i) {
       SET_LEFTMOST(i, i);
     }
-    for (int16 i = 1 + n_leaves; i != 1 + n_vertex; ++i) {
+    for (int16 i = n_leaves + 1; i <= n_vertex; ++i) {
       SET_LEFTMOST(i, 0);
     }
+    
+    // Process edges in reverse order for correct postorder sequence
+    int16 n_visited = 0;
     for (int16 i = n_edge; i--; ) {
-      const int16
-        parent_i = int16(edge(i, 0)),
-        child_i = int16(edge(i, 1))
-      ;
-      if (!GET_LEFTMOST(parent_i)) {
-        SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
+      const int16 parent = int16(edge(i, 0));
+      const int16 child = int16(edge(i, 1));
+      
+      // Update parent's leftmost if not set
+      if (!GET_LEFTMOST(parent)) {
+        SET_LEFTMOST(parent, GET_LEFTMOST(child));
       }
-      if (is_leaf(child_i)) {
-        VISIT_LEAF(&child_i, &n_visited);
-        ENTER(child_i, 0);
+      
+      // Enter child into tree structure
+      if (child <= n_leaves) {
+        VISIT_LEAF(&child, &n_visited);
+        ENTER(child, 0);
       } else {
-        ENTER(child_i, weights[child_i]);
+        ENTER(child, weights[child]);
       }
     }
-    ENTER(int16(edge(0, 0)), weights[edge(0, 0)]);
-
-    // BUILD Cluster table
+    
+    // Enter root
+    ENTER(root, weights[root]);
+    
+    // Build cluster table
     X_ROWS = n_leaves;
     x_rows = std::vector<ClusterRow>(X_ROWS);
 
@@ -490,25 +503,27 @@ namespace TreeTools {
     // BUILD assigns each leaf an internal label so that every cluster
     // is a set {i : L ~ i ~ R] of internal labels; thus each cluster is
     // simply described by a pair <L,R> of internal labels.
-
+    
+    // Initialize cluster table entries
     TRESET();
-    for (int16 i = 1; i != N(); ++i) {
+    for (int16 i = 1; i < N(); ++i) {
       setX_left(i, 0);
       setX_right(i, 0);
     }
+    
+    // Build cluster descriptions
     int16 leafcode = 0, v, w, L, R = UNINIT, loc;
-
+    
     NVERTEX(&v, &w);
     while (v) {
       if (is_leaf(v)) {
         ++leafcode;
-        // We prepared the encoder in an earlier step, so need no X[v, 3] <- leafcode
         R = leafcode;
         NVERTEX(&v, &w);
       } else {
         L = ENCODE(LEFTLEAF());
         NVERTEX(&v, &w);
-        loc = w == 0 ? R : L;
+        loc = (w == 0) ? R : L;
         setX_left(loc, L);
         setX_right(loc, R);
       }
