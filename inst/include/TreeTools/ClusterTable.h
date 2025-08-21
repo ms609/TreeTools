@@ -271,7 +271,7 @@ namespace TreeTools {
     [[nodiscard]] inline bool ISCLUST(int16* L, int16* R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
-      return CLUSTONL(L, R) || CLUSTONR(L, R);
+      return CLUSTONL(*L, *R) || CLUSTONR(*L, *R);
     }
 
     [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
@@ -327,10 +327,10 @@ namespace TreeTools {
     inline void SETSW(int16* L, int16* R) noexcept {
       // If <L,R> is a cluster in X, 
       // this procedure sets the cluster switch for <L,R>.
-      if (CLUSTONL(L, R)) {
+      if (CLUSTONL(*L, *R)) {
         ++n_shared;
         SETSWX(L);
-      } else if (CLUSTONR(L, R)) {
+      } else if (CLUSTONR(*L, *R)) {
         ++n_shared;
         SETSWX(R);
       }
