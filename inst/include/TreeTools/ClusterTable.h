@@ -116,8 +116,8 @@ namespace TreeTools {
     }
 
     inline void NVERTEX(int16 *v, int16 *w) noexcept {
-        READT(v, w);
       if (T_ptr != T.data() + Tlen) {
+        READT(v, w);
         v_j = *v;
       } else {
         *v = 0;
@@ -127,8 +127,8 @@ namespace TreeTools {
 
     inline void NVERTEX_short(int16 *v, int16 *w) noexcept {
       // Don't count all-tips or all-ingroup: vertices 0, ROOT, Ingp.
-        READT(v, w);
       if (T_ptr != T.data() + Tlen_short) {
+        READT(v, w);
         // v_j = *v; // Unneeded unless we go on to call LEFTLEAF
       } else {
         *v = 0;
