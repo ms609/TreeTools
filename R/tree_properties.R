@@ -383,7 +383,6 @@ NTip.matrix <- function(phy) {
 #'
 #' @family tree properties
 #' @family Splits operations
-#' @importFrom ape collapse.singles
 #' @export
 NSplits <- function(x) UseMethod("NSplits")
 
@@ -394,11 +393,8 @@ NPartitions <- NSplits
 #' @rdname NSplits
 #' @export
 NSplits.phylo <- function(x) {
-  if (length(x[["tip.label"]]) < 4L) {
-    0L
-  } else {
-    collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
-  }
+  # Use optimized C++ function that replaces collapse.singles bottleneck
+  cpp_count_splits(x[["edge"]], length(x[["tip.label"]]))
 }
 
 #' @rdname NSplits

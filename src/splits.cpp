@@ -1,6 +1,7 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
 #include <stdexcept> /* for errors */
+#include <set> /* for std::set */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
 
@@ -637,9 +638,58 @@ RawMatrix pack_splits_logical_vec(LogicalVector x) {
     
     unsigned char byte = 0;
     for (int k = 0; k < limit; ++k) {
-      if (p[k] == TRUE) byte |= (1u << k);
     }
     out(0, b) = byte;
   }
   return out;
+}
+
+// Fast count of unique splits in a phylogenetic tree
+// Optimized replacement for collapse.singles(x)[["Nnode"]] - 1L - TreeIsRooted(x)
+// [[Rcpp::export]]
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, int nTip) {
+  if (edge.ncol() != 2) {
+    Rcpp::stop("Edge matrix must contain two columns");
+  }
+  
+  const int n_edge = edge.nrow();
+  if (n_edge == 0 || nTip < 4) {
+    return 0;
+  }
+  
+  // Get all unique parent nodes - these represent internal nodes
+  std::set<int> internal_nodes;
+  
+  for (int i = 0; i < n_edge; ++i) {
+    const int parent = edge(i, 0);
+    const int child = edge(i, 1);
+    
+    // Parent must be an internal node (> nTip)
+    if (parent > nTip) {
+      internal_nodes.insert(parent);
+    }
+  }
+  
+  const int n_internal = internal_nodes.size();
+  
+  // Check if tree is rooted: count children of root node
+  // Root is the minimum parent node
+  if (n_internal == 0) {
+    return 0;
+  }
+  
+  const int root_node = *std::min_element(internal_nodes.begin(), internal_nodes.end());
+  int root_children = 0;
+  
+  for (int i = 0; i < n_edge; ++i) {
+    if (edge(i, 0) == root_node) {
+      ++root_children;
+    }
+  }
+  
+  // TreeIsRooted: root has < 3 children
+  const bool is_rooted = root_children < 3;
+  
+  // Return: n_internal - 1 - is_rooted
+  return n_internal - 1 - (is_rooted ? 1 : 0);
 }

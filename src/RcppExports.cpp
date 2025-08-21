@@ -366,6 +366,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_count_splits
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, int nTip);
+RcppExport SEXP _TreeTools_cpp_count_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< int >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_count_splits(edge, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // splits_to_edge
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_splits_to_edge(SEXP splitsSEXP, SEXP nTipSEXP) {
@@ -452,6 +464,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_thin_splits", (DL_FUNC) &_TreeTools_thin_splits, 2},
     {"_TreeTools_pack_splits_logical", (DL_FUNC) &_TreeTools_pack_splits_logical, 1},
     {"_TreeTools_pack_splits_logical_vec", (DL_FUNC) &_TreeTools_pack_splits_logical_vec, 1},
+    {"_TreeTools_cpp_count_splits", (DL_FUNC) &_TreeTools_cpp_count_splits, 2},
     {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
     {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
     {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
