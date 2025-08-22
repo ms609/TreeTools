@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.15.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,42 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/1.15.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.15.0" id="treetools-1150-2025-07-16">TreeTools 1.15.0 (2025-07-16)<a class="anchor" aria-label="anchor" href="#treetools-1150-2025-07-16"></a></h2>
+<h2 class="pkg-version" data-toc-text="1.16.0" id="treetools-1160-2025-08-22">TreeTools 1.16.0 (2025-08-22)<a class="anchor" aria-label="anchor" href="#treetools-1160-2025-08-22"></a></h2>
+<div class="section level3">
+<h3 id="new-functionality-1-16-0">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-1-16-0"></a></h3>
+<ul><li>
+<code><a href="../reference/SplitConsistent.html">SplitConsistent()</a></code> calculates split (dis)agreement.</li>
+<li>
+<code><a href="../reference/LongBranch.html">LongBranch()</a></code> identifies long-branched taxa.</li>
+<li>
+<code><a href="../reference/Treeness.html">Treeness()</a></code> computes the treeness (=stemminess) of a tree, a proxy for its phylogenetic signal.</li>
+<li>Add <code><a href="../reference/DropTip.html">KeepTip()</a></code> methods to correspond to <code><a href="../reference/DropTip.html">DropTip()</a></code>.</li>
+<li>
+<code><a href="../reference/Reorder.html">Preorder()</a></code> gains <code>topologyOnly</code> argument.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="enhancements-1-16-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-1-16-0"></a></h3>
+<ul><li>
+<code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code> explicitly removes edge lengths.</li>
+<li>Optimize <code>ClusterTable</code> class.</li>
+<li>Optimize <code><a href="../reference/NSplits.html">NSplits()</a></code>.</li>
+<li>Remove exported C++ cache objects to prefer calculation with intrinsics.</li>
+<li>Other performance improvements.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="fixes-1-16-0">Fixes<a class="anchor" aria-label="anchor" href="#fixes-1-16-0"></a></h3>
+<ul><li>Fix <code><a href="../reference/ClusterTable.html">as.ClusterTable()</a></code> when leaf order varies.</li>
+<li>Fix regressions in <code><a href="../reference/ClusterTable.html">as.ClusterTable()</a></code> that caused downstream errors.</li>
+<li>Fix regressions in <code><a href="../reference/PhyToString.html">PhyToString()</a></code>.</li>
+<li>Fix handling of multiple ambiguities in <code><a href="../reference/Reweight.html">Reweight()</a></code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.15.0" id="treetools-1150-2025-07-16">TreeTools 1.15.0 (2025-07-16)<a class="anchor" aria-label="anchor" href="#treetools-1150-2025-07-16"></a></h2><p class="text-muted">CRAN release: 2025-07-21</p>
 <ul><li>
 <code><a href="../reference/Reweight.html">Reweight()</a></code> sets the weight of characters in a phylogenetic dataset.</li>
 <li>
@@ -54,6 +85,7 @@
 <code><a href="../reference/RootTree.html">RootTree()</a></code> gains <code>fallback</code> argument to handle outgroups that do not root a tree.</li>
 <li>Fix <code><a href="../reference/MakeTreeBinary.html">MakeTreeBinary()</a></code> labelling trees as in preorder.</li>
 <li>Fix <code>as.Splits.matrix(tipLabels != NULL)</code>.</li>
+<li>Improve performance of <code><a href="../reference/PhyToString.html">PhyToString()</a></code>.</li>
 <li>Modernize aspects of C++ code.</li>
 </ul></div>
     <div class="section level2">
@@ -218,7 +250,7 @@
 <div class="section level3">
 <h3 id="new-methods-and-functions-1-7-0">New methods and functions<a class="anchor" aria-label="anchor" href="#new-methods-and-functions-1-7-0"></a></h3>
 <ul><li><p><code>rev.Splits()</code> reverses order in which splits are listed.</p></li>
-<li><p><code>KeepTip.Splits()</code> is a faster alternative to <code>SubSplit()</code>.</p></li>
+<li><p><code><a href="../reference/DropTip.html">KeepTip.Splits()</a></code> is a faster alternative to <code>SubSplit()</code>.</p></li>
 <li><p><code>%in%.Splits()</code> retains names when comparing small splits (<a href="https://github.com/ms609/TreeTools/issues/40" class="external-link">#40</a>).</p></li>
 <li><p><code><a href="../reference/sort.multiPhylo.html">sort.multiPhylo()</a></code> sorts lists of trees according to their mixed base representation (<a href="https://github.com/ms609/TreeTools/issues/84" class="external-link">#84</a>).</p></li>
 <li><p>Bitwise manipulation of splits with <code>|</code>, <code>&amp;</code>, <code>xor</code>.</p></li>

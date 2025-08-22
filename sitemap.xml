@@ -7,6 +7,7 @@
 <url><loc>https://ms609.github.io/TreeTools/articles/load-data.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/articles/load-trees.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/authors.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/copilot-instructions.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/index.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/news/index.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/AddTip.html</loc></url>
@@ -42,6 +43,7 @@
 <url><loc>https://ms609.github.io/TreeTools/reference/LeafLabelInterchange.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/ListAncestors.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/Lobo.data.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/LongBranch.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/MRCA.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/MSTEdges.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/MakeTreeBinary.html</loc></url>
@@ -79,6 +81,7 @@
 <url><loc>https://ms609.github.io/TreeTools/reference/SampleOne.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/SortTree.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/SpectrumLegend.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/SplitConsistent.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/SplitFrequency.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/SplitInformation.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/SplitMatchProbability.html</loc></url>
@@ -97,6 +100,7 @@
 <url><loc>https://ms609.github.io/TreeTools/reference/TreeNumber.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/TreeShape.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/TreeTools-package.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/Treeness.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/TreesMatchingSplit.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/TreesMatchingTree.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/TrivialSplits.html</loc></url>

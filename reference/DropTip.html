@@ -15,7 +15,7 @@ incident branches."><!-- Global site tag (gtag.js) - Google Analytics --><script
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.15.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ incident branches."><!-- Global site tag (gtag.js) - Google Analytics --><script
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Drop leaves from tree</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.15.0/R/DropTip.R" class="external-link"><code>R/DropTip.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/DropTip.R" class="external-link"><code>R/DropTip.R</code></a></small>
       <div class="d-none name"><code>DropTip.Rd</code></div>
     </div>
 
@@ -56,8 +56,16 @@ incident branches.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'phylo'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'phylo'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'Splits'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'Splits'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, <span class="va">preorder</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -67,17 +75,24 @@ incident branches.</p>
 <span><span class="co"># S3 method for class 'multiPhylo'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'multiPhylo'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'list'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'list'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class '`NULL`'</span></span>
 <span><span class="fu">DropTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class '`NULL`'</span></span>
+<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">KeepTipPreorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">KeepTip</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span>, preorder <span class="op">=</span> <span class="cn">TRUE</span>, check <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">KeepTipPostorder</span><span class="op">(</span><span class="va">tree</span>, <span class="va">tip</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,7 +105,8 @@ incident branches.</p>
 
 <dt id="arg-tip">tip<a class="anchor" aria-label="anchor" href="#arg-tip"></a></dt>
 <dd><p>Character vector specifying labels of leaves in tree to be
-dropped, or integer vector specifying the indices of leaves to be dropped.
+dropped or kept, or integer vector specifying the indices of leaves to be
+dropped or kept.
 Specifying the index of an internal node will drop all descendants of that
 node.</p></dd>
 
@@ -155,6 +171,7 @@ May crash if improper input is specified.</p></li>
 <code><a href="TipTimedTree.html">TipTimedTree</a>()</code>,
 <code><a href="TrivialTree.html">TrivialTree</a></code></p>
 <p>Other split manipulation functions:
+<code><a href="SplitConsistent.html">SplitConsistent</a>()</code>,
 <code><a href="Subsplit.html">Subsplit</a>()</code>,
 <code><a href="TrivialSplits.html">TrivialSplits</a>()</code></p></div>
     </div>
