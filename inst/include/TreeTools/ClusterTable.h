@@ -357,8 +357,10 @@ namespace TreeTools {
       // If m clusters are in X, they are returned by the first m invocations
       // of NCLUS after initialization by XRESET; thereafter NCLUS returns the
       // invalid cluster <0,0>.
-      *L = X_left(enumeration);
-      *R = X_right(enumeration);
+      ASSERT(enumeration < X_ROWS);
+      const int16 row = static_cast<int16>(enumeration + 1); // rows are 1-based
+      *L = X_left(row);
+      *R = X_right(row);
       ++enumeration;
     }
 
