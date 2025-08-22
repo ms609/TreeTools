@@ -218,19 +218,19 @@ namespace TreeTools {
 
     
     // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer is_leaf(int16 v)
+    // TODO Remove in later version, to prefer CLUSTONL(int16 L, R)
     [[nodiscard]] inline bool CLUSTONL(int16* L, int16* R) noexcept {
       return X_left(*L) == *L && X_right(*L) == *R;
     }
     
     // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer is_leaf(int16 v)
+    // TODO Remove in later version, to prefer CLUSTONR(int16 L, R)
     [[nodiscard]] inline bool CLUSTONR(int16* L, int16* R) noexcept {
       return X_left(*R) == *L && X_right(*R) == *R;
     }
     
     // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer is_leaf(int16 v)
+    // TODO Remove in later version, to prefer ISCLUST(int16 L, R)
     [[nodiscard]] inline bool ISCLUST(int16* L, int16* R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
@@ -269,12 +269,22 @@ namespace TreeTools {
       Xswitch.reset();
       xswitch_set_count = 0;
     }
-
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer SETSWX(int16 row)
     inline void SETSWX(int16* row) noexcept {
       // Only increment our counter on a 0 -> 1 transition
       const auto idx = static_cast<std::size_t>(*row);
       if (!Xswitch[idx]) {
         Xswitch[idx] = true;
+        ++xswitch_set_count;
+      }
+    }
+    
+    inline void SETSWX(std::size_t row) noexcept {
+      // Only increment our counter on a 0 -> 1 transition
+      if (!Xswitch[row]) {
+        Xswitch[row] = true;
         ++xswitch_set_count;
       }
     }
@@ -286,16 +296,30 @@ namespace TreeTools {
     [[nodiscard]] inline bool NOSWX(const std::size_t& n) noexcept {
       return xswitch_set_count == n;
     }
-
-    inline void SETSW(int16* L, int16* R) noexcept {
-      // If <L,R> is a cluster in X, 
-      // this procedure sets the cluster switch for <L,R>.
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer SETSW(int16 L, R)
+    inline void SETSW(int16 *L, int16 *R) noexcept {
       const int16 l = *L;
       const int16 r = *R;
-      if (X_left(l) == l && X_right(l) == r) { // CLUSTONL(L, R)
+      // If <L,R> is a cluster in X, 
+      // this procedure sets the cluster switch for <L,R>.
+      if (CLUSTONL(l, r)) {
+        ++n_shared;
+        SETSWX(l);
+      } else if (CLUSTONR(l, r)) {
+        ++n_shared;
+        SETSWX(r);
+      }
+    }
+    
+    inline void SETSW(int16 L, int16 R) noexcept {
+      // If <L,R> is a cluster in X, 
+      // this procedure sets the cluster switch for <L,R>.
+      if (CLUSTONL(L, R)) {
         ++n_shared;
         SETSWX(L);
-      } else if (X_left(r) == l && X_right(r) == r) { //CLUSTONR(L, R))
+      } else if (CLUSTONR(L, R)) {
         ++n_shared;
         SETSWX(R);
       }
