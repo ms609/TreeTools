@@ -55,13 +55,15 @@ as.Splits <- function(x, tipLabels = NULL, ...) UseMethod("as.Splits")
 #'   paramount).
 #' @export
 as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (!is.null(tipLabels)) {
+  
+  if (length(tipLabels) && !identical(x[["tip.label"]], tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
+  
   edge <- x[["edge"]]
-  nEdge <- dim(edge)[1]
+  nEdge <- dim(edge)[[1]]
   order <- attr(x, "order")[[1]]
-  edgeOrder <- if (is.null(order)) {
+  edgeOrder <- if (length(order) == 0) {
     postorder_order(edge)
   } else {
     switch(order,
