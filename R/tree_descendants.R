@@ -27,31 +27,38 @@
 #' @export
 DescendantEdges <- function(parent, child, edge = NULL, node = NULL,
                             nEdge = length(parent),
-                            includeSelf = TRUE
-) {
-  nodeDescendants <- descendant_edges(parent, child,
-                                      PostorderOrder(cbind(parent, child)))
+                            includeSelf = TRUE) {
+  postorder <- PostorderOrder(cbind(parent, child))
+  
   if (is.null(node)) {
     if (is.null(edge)) {
+      # Dense full matrix path
+      nodeDescendants <- descendant_edges(parent, child, postorder)
       entries <- pmax(0, child - min(parent) + 1)
       ret <- matrix(FALSE, nEdge, nEdge)
       ret[entries > 0, ] <- nodeDescendants[entries, ]
       if (includeSelf) {
         diag(ret) <- TRUE
       }
+      ret
     } else {
-      entry <- child[edge] - min(parent) + 1
-      ret <- if (entry > 0) {
-        nodeDescendants[entry, ]
+      if (length(edge) == 1L) {
+        descendant_edges_single(parent, child, postorder, edge,
+                                include_self = includeSelf)
       } else {
-        logical(nEdge)
-      }
-      if (includeSelf) {
-        ret[edge] <- TRUE
+        nodeDescendants <- descendant_edges(parent, child, postorder)
+        entry <- child[edge] - min(parent) + 1
+        ret <- ifelse(entry > 0,
+                      nodeDescendants[entry, ],
+                      logical(nEdge))
+        if (includeSelf) {
+          ret[edge] <- TRUE
+        }
+        ret
       }
     }
-    ret
   } else {
+    nodeDescendants <- descendant_edges(parent, child, postorder)
     if (length(node) == 1 && node == 0) {
       nodeDescendants
     } else {

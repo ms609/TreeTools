@@ -23,9 +23,9 @@ test_that("Subsplits", {
   splits <- as.Splits(PectinateTree(32 + 32 + 10))
   fourTips <- c("t32", "t33", "t64", "t65")
   sub <- Subsplit(splits, tips = fourTips)
-  expect_equal(as.Splits(c("t32" = FALSE, "t33" = FALSE, "t64" = TRUE,
-                           "t65" = TRUE)),
-               unname(sub), ignore_attr = TRUE)
+  expect_equal(unname(sub),
+               as.Splits(c("t32" = FALSE, "t33" = FALSE, "t64" = TRUE,
+                           "t65" = TRUE)), ignore_attr = TRUE)
 
 })
 

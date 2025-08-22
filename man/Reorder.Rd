@@ -98,17 +98,17 @@ Pruningwise(tree, nTip, edge)
 
 \method{Pruningwise}{`NULL`}(tree, nTip, edge)
 
-Preorder(tree)
+Preorder(tree, topologyOnly = FALSE)
 
-\method{Preorder}{phylo}(tree)
+\method{Preorder}{phylo}(tree, topologyOnly = FALSE)
 
-\method{Preorder}{numeric}(tree)
+\method{Preorder}{numeric}(tree, topologyOnly = FALSE)
 
-\method{Preorder}{multiPhylo}(tree)
+\method{Preorder}{multiPhylo}(tree, topologyOnly = FALSE)
 
-\method{Preorder}{list}(tree)
+\method{Preorder}{list}(tree, topologyOnly = FALSE)
 
-\method{Preorder}{`NULL`}(tree)
+\method{Preorder}{`NULL`}(tree, topologyOnly = FALSE)
 
 TntOrder(tree)
 
@@ -147,6 +147,8 @@ tree, corresponding to \code{tree[["edge"]]}. Optional in \code{Cladewise()}.}
 
 \item{force}{Logical specifying whether to rearrange trees already in
 postorder, in order to ensure edges are ordered in the "TreeTools" fashion.}
+
+\item{topologyOnly}{Logical; if \code{TRUE}, edge weights may not be retained.}
 }
 \value{
 \code{RenumberTree()} returns an edge matrix for a tree of class \code{phylo}

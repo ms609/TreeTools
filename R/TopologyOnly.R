@@ -1,8 +1,7 @@
 #' Remove metadata from trees
 #' 
 #' `TopologyOnly()` removes all information from trees except for their
-#' topologies and leaf labels.  This allows other functions to process
-#' trees more rapidly, as they do not need to process unneeded metadata.
+#' topologies and leaf labels.
 #' 
 #' @inheritParams Preorder
 #' @return Returns `tree`, with each tree in [`Preorder`], with edge lengths,
@@ -13,11 +12,17 @@ TopologyOnly <- function(tree) UseMethod("TopologyOnly")
 
 #' @export
 TopologyOnly.phylo <- function(tree) {
-  Preorder(structure(list(edge = tree[["edge"]],
-                          Nnode = tree[["Nnode"]],
-                          tip.label = tree[["tip.label"]]),
-                     order = attr(tree, "order"),
-                     class = "phylo"))
+  startOrder <- attr(tree, "order")
+  ret <- structure(list(edge = tree[["edge"]],
+                        Nnode = tree[["Nnode"]],
+                        tip.label = tree[["tip.label"]]),
+                   order = startOrder,
+                   class = "phylo")
+  if (length(startOrder) && startOrder == "preorder") {
+    ret
+  } else {
+    Preorder(ret)
+  }
 }
 
 #' @export

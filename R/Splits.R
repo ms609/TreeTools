@@ -55,13 +55,15 @@ as.Splits <- function(x, tipLabels = NULL, ...) UseMethod("as.Splits")
 #'   paramount).
 #' @export
 as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (!is.null(tipLabels)) {
+  
+  if (length(tipLabels) && !identical(x[["tip.label"]], tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
+  
   edge <- x[["edge"]]
-  nEdge <- dim(edge)[1]
+  nEdge <- dim(edge)[[1]]
   order <- attr(x, "order")[[1]]
-  edgeOrder <- if (is.null(order)) {
+  edgeOrder <- if (length(order) == 0) {
     postorder_order(edge)
   } else {
     switch(order,
@@ -97,7 +99,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
 edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
                            nTip = NTip(edge), ...) {
   splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
-  nSplits <- dim(splits)[1]
+  nSplits <- dim(splits)[[1]]
 
   # Return:
   if (asSplits) {
@@ -105,8 +107,7 @@ edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
               nTip = nTip,
               tip.label = tipLabels,
               class = "Splits")
-  }
-  else {
+  } else {
     splits
   }
 }
@@ -214,59 +215,43 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
 #' @rdname Splits
 #' @export
 as.Splits.logical <- function(x, tipLabels = NULL, ...) {
-  powersOf2 <- as.raw(c(1L, 2L, 4L, 8L, 16L, 32L, 64L, 128L))
   dimX <- dim(x)
+  
   if (is.null(dimX)) {
     nTip <- length(x)
-    if (nTip == 0) {
-      structure(
-        matrix(raw(0), 0, 0),
-        nTip = 0,
-        tip.label = TipLabels(0),
-        class = "Splits"
-      )
+    ret <- if (nTip == 0L) {
+      matrix(raw(0), 0, 0)
     } else {
-      if (is.null(tipLabels)) {
-        tipLabels <- TipLabels(x)
-        if (is.null(tipLabels)) {
-          tipLabels <- TipLabels(nTip)
-        }
-      } else {
-        tipLabels <- TipLabels(tipLabels)
-      }
-  
-      structure(
-        matrix(packBits(c(x, logical((8L - nTip) %% 8))), nrow = 1L),
-        nTip = nTip,
-        tip.label = tipLabels,
-        class = "Splits"
-      )
+      pack_splits_logical_vec(x)
     }
   } else {
-    if (is.null(tipLabels)) {
-      tipLabels <- TipLabels(x)
-    }
-    nTip <- dimX[2]
+    nTip <- dimX[2L]
+    ret <- `rownames<-`(pack_splits_logical(x), dimnames(x)[[1]])
+  }
+  
+  if (is.null(tipLabels)) {
+    # TODO when require R 4.1
+    # tipLabels <- TipLabels(x) %||% TipLabels(nTip)
+    tipLabels <- TipLabels(x)
     if (is.null(tipLabels)) {
       tipLabels <- TipLabels(nTip)
     }
-
-    nBin <- (nTip %% 8 != 0) + (nTip / 8)
-    structure(
-      matrix(packBits(t(cbind(x, matrix(F, dimX[1], (8L - nTip) %% 8)))),
-             nrow = dimX[1], ncol = nBin,
-             byrow = TRUE, dimnames = list(rownames(x), NULL)),
-      nTip = nTip,
-      tip.label = tipLabels,
-      class = "Splits"
-    )
+  } else {
+    tipLabels <- TipLabels(tipLabels)
   }
+  
+  structure(
+    ret,
+    nTip = nTip,
+    tip.label = tipLabels,
+    class = "Splits"
+  )
 }
 
 #' @rdname Splits
 #' @export
 as.Splits.character <- function(x, tipLabels = NULL, ...) {
-  nTip <- nchar(x[1])
+  nTip <- nchar(x[[1]])
   
   if (is.null(tipLabels)) {
     tipLabels <- TipLabels(x)
@@ -277,7 +262,8 @@ as.Splits.character <- function(x, tipLabels = NULL, ...) {
     tipLabels <- TipLabels(tipLabels)
   }
   
-  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip), nTip) > 0
+  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip),
+                nTip) > 0
   structure(t(.apply(sp, 2, as.Splits.logical)),
     nTip = nTip,
     tip.label = tipLabels,

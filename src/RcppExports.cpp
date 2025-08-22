@@ -86,7 +86,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // consensus_tree
-LogicalMatrix consensus_tree(const List trees, const NumericVector p);
+RawMatrix consensus_tree(const List trees, const NumericVector p);
 RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -107,6 +107,21 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
     Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
     rcpp_result_gen = Rcpp::wrap(descendant_edges(parent, child, postorder));
+    return rcpp_result_gen;
+END_RCPP
+}
+// descendant_edges_single
+LogicalVector descendant_edges_single(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder, const int edge_index, const bool include_self);
+RcppExport SEXP _TreeTools_descendant_edges_single(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP, SEXP edge_indexSEXP, SEXP include_selfSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
+    Rcpp::traits::input_parameter< const int >::type edge_index(edge_indexSEXP);
+    Rcpp::traits::input_parameter< const bool >::type include_self(include_selfSEXP);
+    rcpp_result_gen = Rcpp::wrap(descendant_edges_single(parent, child, postorder, edge_index, include_self));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -329,6 +344,40 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pack_splits_logical
+RawMatrix pack_splits_logical(LogicalMatrix x);
+RcppExport SEXP _TreeTools_pack_splits_logical(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pack_splits_logical(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// pack_splits_logical_vec
+RawMatrix pack_splits_logical_vec(LogicalVector x);
+RcppExport SEXP _TreeTools_pack_splits_logical_vec(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< LogicalVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(pack_splits_logical_vec(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// cpp_count_splits
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip);
+RcppExport SEXP _TreeTools_cpp_count_splits(SEXP edgeSEXP, SEXP nTipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::IntegerMatrix& >::type edge(edgeSEXP);
+    Rcpp::traits::input_parameter< const int >::type nTip(nTipSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_count_splits(edge, nTip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // splits_to_edge
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_splits_to_edge(SEXP splitsSEXP, SEXP nTipSEXP) {
@@ -394,6 +443,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
     {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
+    {"_TreeTools_descendant_edges_single", (DL_FUNC) &_TreeTools_descendant_edges_single, 5},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
     {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
     {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
@@ -412,6 +462,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_or_splits", (DL_FUNC) &_TreeTools_or_splits, 2},
     {"_TreeTools_split_consistent", (DL_FUNC) &_TreeTools_split_consistent, 3},
     {"_TreeTools_thin_splits", (DL_FUNC) &_TreeTools_thin_splits, 2},
+    {"_TreeTools_pack_splits_logical", (DL_FUNC) &_TreeTools_pack_splits_logical, 1},
+    {"_TreeTools_pack_splits_logical_vec", (DL_FUNC) &_TreeTools_pack_splits_logical_vec, 1},
+    {"_TreeTools_cpp_count_splits", (DL_FUNC) &_TreeTools_cpp_count_splits, 2},
     {"_TreeTools_splits_to_edge", (DL_FUNC) &_TreeTools_splits_to_edge, 2},
     {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
     {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},

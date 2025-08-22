@@ -577,3 +577,140 @@ RawMatrix thin_splits(const RawMatrix splits, const LogicalVector drop) {
   return ret;
   
 }
+
+// [[Rcpp::export]]
+RawMatrix pack_splits_logical(LogicalMatrix x) {
+  const int nrow = x.nrow();
+  const int ncol = x.ncol();
+  
+  // Handle zero columns up-front (produces nrow x 0 matrix)
+  if (ncol == 0) {
+    return RawMatrix(nrow, 0);
+  }
+  
+  const int nbin = (ncol + 7) / 8;  // ceil(ncol / 8)
+  RawMatrix out(nrow, nbin);
+  
+  const int* xp = LOGICAL(x);       // column-major storage
+  
+  for (int r = 0; r < nrow; ++r) {
+    for (int b = 0; b < nbin; ++b) {
+      const int start_col = b * 8;
+      int limit = ncol - start_col;
+      if (limit > 8) limit = 8;
+      
+      // Pointer to (r, start_col) in column-major order
+      const int* p = xp + r + start_col * nrow;
+      
+      unsigned char byte = 0;
+      // Walk across columns in this bin by stepping one column = +nrow
+      for (int k = 0; k < limit; ++k) {
+        if (*p == TRUE) byte |= (1u << k);
+        p += nrow;
+      }
+      out(r, b) = byte;
+    }
+  }
+  return out;
+}
+
+// [[Rcpp::export]]
+RawMatrix pack_splits_logical_vec(LogicalVector x) {
+  const int ncol = x.size();
+  
+  // 1 x 0 for a length-0 vector
+  if (ncol == 0) {
+    return RawMatrix(1, 0);
+  }
+  
+  const int nbin = (ncol + 7) / 8;
+  RawMatrix out(1, nbin);
+  
+  const int* xp = LOGICAL(x);  // contiguous
+  
+  for (int b = 0; b < nbin; ++b) {
+    const int start = b * 8;
+    int limit = ncol - start;
+    if (limit > 8) limit = 8;
+    
+    const int* p = xp + start;
+    
+    unsigned char byte = 0;
+    for (int k = 0; k < limit; ++k) {
+      if (p[k] == TRUE) byte |= (1u << k);
+    }
+    out(0, b) = byte;
+  }
+  return out;
+}
+
+// Fast count of unique splits in a phylogenetic tree
+// [[Rcpp::export]]
+int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip) {
+  if (edge.ncol() != 2) {
+    Rcpp::stop("Edge matrix must contain two columns");
+  }
+  
+  const int n_edge = edge.nrow();
+  if (n_edge <= nTip || nTip < 4) {
+    return 0;
+  }
+  
+  // Find max node number to size our vectors
+  int max_node = nTip;  // Start with nTip as minimum
+  for (int i = 0; i < n_edge; ++i) {
+    max_node = std::max(max_node, std::max(edge(i, 0), edge(i, 1)));
+  }
+  
+  // Use vectors instead of maps - much faster O(1) access
+  std::vector<int> parent_count(max_node + 1, 0);
+  std::vector<int> child_count(max_node + 1, 0);
+  std::vector<bool> is_internal(max_node + 1, false);
+  
+  // Single pass to count occurrences and mark internal nodes
+  for (int i = 0; i < n_edge; ++i) {
+    const int parent = edge(i, 0);
+    const int child = edge(i, 1);
+    
+    parent_count[parent]++;
+    child_count[child]++;
+    
+    // Mark internal nodes (> nTip)
+    if (parent > nTip) {
+      is_internal[parent] = true;
+    }
+    if (child > nTip) {
+      is_internal[child] = true;
+    }
+  }
+  
+  // Count internal nodes and singletons in single pass
+  int n_internal = 0;
+  int n_singles = 0;
+  int root_node = 0;
+  
+  for (int node = nTip + 1; node <= max_node; ++node) {
+    if (is_internal[node]) {
+      n_internal++;
+      
+      // Check if singleton (degree 2: appears once as parent AND once as child)
+      if (parent_count[node] == 1 && child_count[node] == 1) {
+        n_singles++;
+      }
+      
+      // Check if root (appears as parent but not as child)
+      if (child_count[node] == 0) {
+        root_node = node;
+      }
+    }
+  }
+  
+  if (n_internal == 0) {
+    return 0;
+  }
+  
+  // TreeIsRooted: root has < 3 children
+  const bool is_rooted = parent_count[root_node] < 3;
+  
+  return (n_internal - n_singles) - 1 - (is_rooted ? 1 : 0);
+}
