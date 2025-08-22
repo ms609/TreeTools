@@ -614,36 +614,38 @@ RenumberTips <- function(tree, tipOrder) UseMethod("RenumberTips")
 RenumberTips.phylo <- function(tree, tipOrder) {
   startOrder <- tree[["tip.label"]]
   newOrder <- TipLabels(tipOrder, single = TRUE)
-  if (identical(startOrder, newOrder)) {
-    return(tree)
-  }
-  if (length(startOrder) != length(newOrder)) {
-    startOnly <- setdiff(startOrder, newOrder)
-    newOnly <- setdiff(newOrder, startOrder)
-    if (length(startOnly)) {
-      stop("Tree labels and tipOrder must match.",
-           if (length(newOnly)) "\n  Missing in `tree`: ",
-           paste0(newOnly, collapse = ", "),
-           if (length(startOnly)) "\n  Missing in `tipOrder`: ",
-           paste0(startOnly, collapse = ", ")
-           )
+  if (!identical(startOrder, newOrder)) {
+    if (length(startOrder) != length(newOrder)) {
+      startOnly <- setdiff(startOrder, newOrder)
+      newOnly <- setdiff(newOrder, startOrder)
+      if (length(startOnly)) {
+        stop("Tree labels and tipOrder must match.",
+             if (length(newOnly)) "\n  Missing in `tree`: ",
+             paste0(newOnly, collapse = ", "),
+             if (length(startOnly)) "\n  Missing in `tipOrder`: ",
+             paste0(startOnly, collapse = ", ")
+             )
+      }
+      newOrder <- intersect(newOrder, startOrder)
     }
-    newOrder <- intersect(newOrder, startOrder)
-  }
-
-  nTip <- length(startOrder)
-  child <- tree[["edge"]][, 2]
-  tips <- child <= nTip
-
-  matchOrder <- match(startOrder, newOrder)
-  if (any(is.na(matchOrder))) {
-    stop("Tree labels ", paste0(startOrder[is.na(matchOrder)], collapse = ", "),
-         " missing from `tipOrder`")
-  }
-  tree[["edge"]][tips, 2] <- matchOrder[tree[["edge"]][tips, 2]]
-  tree[["tip.label"]] <- newOrder
   
-  .LapsePreorder(tree)
+    nTip <- length(startOrder)
+    child <- tree[["edge"]][, 2]
+    tips <- child <= nTip
+  
+    matchOrder <- match(startOrder, newOrder)
+    if (any(is.na(matchOrder))) {
+      stop("Tree labels ", paste0(startOrder[is.na(matchOrder)], collapse = ", "),
+           " missing from `tipOrder`")
+    }
+    tree[["edge"]][tips, 2] <- matchOrder[tree[["edge"]][tips, 2]]
+    tree[["tip.label"]] <- newOrder
+    
+    if (attr(tree, "order") == "preorder") {
+      attr(tree, "order") <- "cladewise"
+    }
+  }
+  tree
 }
 
 #' @rdname RenumberTips
