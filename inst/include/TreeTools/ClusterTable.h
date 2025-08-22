@@ -240,13 +240,13 @@ namespace TreeTools {
     [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
       ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r = x_rows[L - 1];
-      return r.L == L && r.R == R;
+      return (r.L == L) & (r.R == R);
     }
     
     [[nodiscard]] inline bool CLUSTONR(int16 L, int16 R) noexcept {
       ASSERT(R > 0 && R <= X_ROWS);
       const ClusterRow &r = x_rows[R - 1];
-      return r.L == L && r.R == R;
+      return (r.L == L) & (r.R == R);
     }
     
     [[nodiscard]] inline bool ISCLUST(int16 L, int16 R) noexcept {
@@ -254,12 +254,12 @@ namespace TreeTools {
       // otherwise it returns value false
       ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r_L = x_rows[L - 1];
-      if (r_L.L == L && r_L.R == R) return true;
+      if ((r_L.L == L) & (r_L.R == R)) return true;
       
       ASSERT(L != R);
       ASSERT(R > 0 && R <= X_ROWS);
       const ClusterRow &r_R = x_rows[R - 1];
-      return r_R.L == L && r_R.R == R;
+      return (r_R.L == L) & (r_R.R == R);
     }
 
     inline void CLEAR() noexcept {
