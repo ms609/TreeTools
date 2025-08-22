@@ -48,7 +48,10 @@ as.ClusterTable <- function(x, tipLabels = NULL, ...) {
 #' @rdname ClusterTable
 #' @export
 as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
-  x <- Preorder(x)
+  startOrder <- attr(x, "order")
+  if (length(startOrder) == 0 || startOrder != "preorder") {
+    x <- Preorder(x, topologyOnly = TRUE)
+  }
   if (is.null(tipLabels)) {
     tipLabels <- x[["tip.label"]]
   } else {

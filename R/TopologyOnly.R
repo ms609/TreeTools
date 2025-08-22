@@ -12,12 +12,13 @@ TopologyOnly <- function(tree) UseMethod("TopologyOnly")
 
 #' @export
 TopologyOnly.phylo <- function(tree) {
+  startOrder <- attr(tree, "order")
   ret <- structure(list(edge = tree[["edge"]],
                         Nnode = tree[["Nnode"]],
                         tip.label = tree[["tip.label"]]),
-                   order = attr(tree, "order"),
+                   order = startOrder,
                    class = "phylo")
-  if (attr(tree, "order") == "preorder") {
+  if (length(startOrder) && startOrder == "preorder") {
     ret
   } else {
     Preorder(ret)

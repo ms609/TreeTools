@@ -440,12 +440,13 @@ Pruningwise.NULL <- function(tree, nTip, edge) NULL
 }
 
 #' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
+#' @param topologyOnly Logical; if `TRUE`, edge weights may not be retained.
 #' @export
-Preorder <- function(tree) UseMethod("Preorder")
+Preorder <- function(tree, topologyOnly = FALSE) UseMethod("Preorder")
 
 #' @rdname Reorder
 #' @export
-Preorder.phylo <- function(tree) {
+Preorder.phylo <- function(tree, topologyOnly = FALSE) {
   startOrder <- attr(tree, "order")
   if (length(startOrder) && startOrder == "preorder") {
     # length(x) is twice as fast as !is.null(x)
@@ -454,21 +455,27 @@ Preorder.phylo <- function(tree) {
     edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
-    lengths <- tree[["edge.length"]]
-    if (is.null(lengths)) {
+    if (topologyOnly) {
       tree[["edge"]] <- RenumberTree(parent, child)
+      tree[["edge.length"]] <- NULL
+      tree[["node.label"]] <- NULL
     } else {
-      newEdge <- RenumberTree(parent, child, lengths)
-      tree[["edge"]] <- newEdge[[1]]
-      tree[["edge.length"]] <- newEdge[[2]]
-    }
-    nodeLabels <- tree[["node.label"]]
-    if (!is.null(nodeLabels)) {
-      tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
+      lengths <- tree[["edge.length"]]
+      if (topologyOnly || length(lengths) == 0) {
+        tree[["edge"]] <- RenumberTree(parent, child)
+      } else {
+        newEdge <- RenumberTree(parent, child, lengths)
+        tree[["edge"]] <- newEdge[[1]]
+        tree[["edge.length"]] <- newEdge[[2]]
+      }
+      nodeLabels <- tree[["node.label"]]
+      if (length(nodeLabels)) {
+        tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
+      }
     }
     attr(tree, "order") <- "preorder"
     attr(tree, "suborder") <- NULL
-
+    
     # Return:
     tree
   }
@@ -476,14 +483,14 @@ Preorder.phylo <- function(tree) {
 
 #' @rdname Reorder
 #' @export
-Preorder.numeric <- function(tree) {
+Preorder.numeric <- function(tree, topologyOnly = FALSE) {
   RenumberTree(tree[, 1], tree[, 2])
 }
 
 #' @rdname Reorder
 #' @export
-Preorder.multiPhylo <- function(tree) {
-  tree[] <- lapply(tree, Preorder)
+Preorder.multiPhylo <- function(tree, topologyOnly = FALSE) {
+  tree[] <- lapply(tree, Preorder, topologyOnly)
   attr(tree, "order") <- "preorder"
   attr(tree, "suborder") <- NULL
   tree
@@ -491,13 +498,13 @@ Preorder.multiPhylo <- function(tree) {
 
 #' @rdname Reorder
 #' @export
-Preorder.list <- function(tree) {
-  lapply(tree, Preorder)
+Preorder.list <- function(tree, topologyOnly = FALSE) {
+  lapply(tree, Preorder, topologyOnly)
 }
 
 #' @rdname Reorder
 #' @export
-Preorder.NULL <- function(tree) NULL
+Preorder.NULL <- function(tree, topologyOnly = FALSE) NULL
 
 #' @describeIn Reorder Reorder tree in postorder, numbering internal nodes
 #' according to [TNT's rules](https://stackoverflow.com/a/54296100/3438001),
