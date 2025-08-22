@@ -1,6 +1,7 @@
 #ifndef _TREETOOLS_CLUSTERTABLE_H
 #define _TREETOOLS_CLUSTERTABLE_H
 
+#include <array> /* for array */
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
 #include <Rcpp/Lightest>
@@ -37,7 +38,8 @@ namespace TreeTools {
 
   constexpr int_fast32_t ct_max_leaves = 16383;
   constexpr int_fast32_t ct_stack_size = 4;
-
+  
+  
   class ClusterTable {
     
     struct alignas(4) ClusterRow {
@@ -53,22 +55,31 @@ namespace TreeTools {
     int16 v_j;
     int16 Tlen;
     int16 Tlen_short;
-    int16 Tpos = 0;
     int16 X_ROWS;
     std::vector<int16> internal_label;
+    int16 *internal_label_ptr = nullptr;
     std::vector<int16> leftmost_leaf;
     std::vector<int16> T;
+    int16* T_ptr = nullptr;
     std::vector<int16> visited_nth;
     std::vector<ClusterRow> x_rows;
     // Using bitset; can obtain a ~1% speedup using vector of ULLs
     // Retaining slower code as easier to read.
     // See branch ct-xswitch for implementation
     std::bitset<CT_MAX_LEAVES + 1> Xswitch;
+    // Track number of set switches (excluding index 0)
+    std::size_t xswitch_set_count = 0;
     
 
   public:
     ClusterTable(Rcpp::List); // i.e. PREPARE(T)
 
+    [[nodiscard]] inline bool is_leaf(const int16 v) noexcept {
+      return v <= n_leaves;
+    }
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer is_leaf(int16 v)
     [[nodiscard]] inline bool is_leaf(const int16 *v) noexcept {
       return *v <= n_leaves;
     }
@@ -82,8 +93,10 @@ namespace TreeTools {
     }
 
     inline void ENTER(int16 v, int16 w) noexcept {
-      T[Tpos++] = v;
-      T[Tpos++] = w;
+      *T_ptr = v;
+      ++T_ptr;
+      *T_ptr = w;
+      ++T_ptr;
     }
 
     [[nodiscard]] inline int16 N() noexcept {
@@ -97,16 +110,16 @@ namespace TreeTools {
     inline void TRESET() noexcept {
       // This procedure prepares T for an enumeration of its entries,
       // beginning with the first entry.
-      Tpos = 0;
+      T_ptr = T.data();
     }
 
     inline void READT(int16 *v, int16 *w) {
-      *v = T[Tpos++];
-      *w = T[Tpos++];
+      *v = *T_ptr++;
+      *w = *T_ptr++;
     }
 
     inline void NVERTEX(int16 *v, int16 *w) noexcept {
-      if (Tpos != Tlen) {
+      if (T_ptr != T.data() + Tlen) {
         READT(v, w);
         v_j = *v;
       } else {
@@ -117,7 +130,7 @@ namespace TreeTools {
 
     inline void NVERTEX_short(int16 *v, int16 *w) noexcept {
       // Don't count all-tips or all-ingroup: vertices 0, ROOT, Ingp.
-      if (Tpos != Tlen_short) {
+      if (T_ptr != T.data() + Tlen_short) {
         READT(v, w);
         // v_j = *v; // Unneeded unless we go on to call LEFTLEAF
       } else {
@@ -137,17 +150,17 @@ namespace TreeTools {
       leftmost_leaf[index - 1] = val;
     }
 
-    inline int16 GET_LEFTMOST(int16 index) noexcept {
+    [[nodiscard]] inline int16 GET_LEFTMOST(int16 index) noexcept {
       return leftmost_leaf[index - 1];
     }
 
     // Procedures to manipulate cluster tables, per Table 4 of Day 1985.
 
-    inline int16 ENCODE(const int16 v) noexcept {
+    inline int16 ENCODE(const int v) noexcept {
       // This function procedure returns as its value the internal label
       // assigned to leaf v
       // MS note: input = v; output = X[v, 3]
-      return internal_label[v];
+      return internal_label_ptr[v];
     }
 
     inline int16 DECODE(const int16 internal_relabeling) noexcept {
@@ -168,14 +181,14 @@ namespace TreeTools {
       return ret;
     }
     
-    inline int16 X_left(int16 row) noexcept {
+    [[nodiscard]] inline int16 X_left(int16 row) noexcept {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
       ASSERT(x_rows[row - 1].L < std::numeric_limits<int16>::max());
       return x_rows[row - 1].L;
     }
     
-    inline int16 X_right(int16 row) noexcept {
+    [[nodiscard]] inline int16 X_right(int16 row) noexcept {
       ASSERT(row > 0);
       ASSERT(row <= X_ROWS);
       ASSERT(x_rows[row - 1].R < std::numeric_limits<int16>::max());
@@ -203,29 +216,67 @@ namespace TreeTools {
       return ret;
     }
 
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer is_leaf(int16 v)
     [[nodiscard]] inline bool CLUSTONL(int16* L, int16* R) noexcept {
       return X_left(*L) == *L && X_right(*L) == *R;
     }
-
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer is_leaf(int16 v)
     [[nodiscard]] inline bool CLUSTONR(int16* L, int16* R) noexcept {
       return X_left(*R) == *L && X_right(*R) == *R;
     }
-
+    
+    // Required by TreeDist 2.9.2
+    // TODO Remove in later version, to prefer is_leaf(int16 v)
     [[nodiscard]] inline bool ISCLUST(int16* L, int16* R) noexcept {
       // This function procedure returns value true if cluster <L,R> is in X;
       // otherwise it returns value false
-      return CLUSTONL(L, R) || CLUSTONR(L, R);
+      return CLUSTONL(*L, *R) || CLUSTONR(*L, *R);
     }
 
-    inline void CLEAR() {
+    [[nodiscard]] inline bool CLUSTONL(int16 L, int16 R) noexcept {
+      ASSERT(L > 0 && L <= X_ROWS);
+      const ClusterRow &r = x_rows[L - 1];
+      return (r.L == L) & (r.R == R);
+    }
+    
+    [[nodiscard]] inline bool CLUSTONR(int16 L, int16 R) noexcept {
+      ASSERT(R > 0 && R <= X_ROWS);
+      const ClusterRow &r = x_rows[R - 1];
+      return (r.L == L) & (r.R == R);
+    }
+    
+    [[nodiscard]] inline bool ISCLUST(int16 L, int16 R) noexcept {
+      // This function procedure returns value true if cluster <L,R> is in X;
+      // otherwise it returns value false
+      ASSERT(L > 0 && L <= X_ROWS);
+      const ClusterRow &r_L = x_rows[L - 1];
+      if ((r_L.L == L) & (r_L.R == R)) return true;
+      
+      ASSERT(L != R);
+      ASSERT(R > 0 && R <= X_ROWS);
+      const ClusterRow &r_R = x_rows[R - 1];
+      return (r_R.L == L) & (r_R.R == R);
+    }
+
+    inline void CLEAR() noexcept {
       // Each cluster in X has an associated switch that is either cleared or
       // set.
       // This procedure clears every cluster switch in X.
       Xswitch.reset();
+      xswitch_set_count = 0;
     }
 
     inline void SETSWX(int16* row) noexcept {
-      Xswitch[*row] = true;
+      // Only increment our counter on a 0 -> 1 transition
+      const auto idx = static_cast<std::size_t>(*row);
+      if (!Xswitch[idx]) {
+        Xswitch[idx] = true;
+        ++xswitch_set_count;
+      }
     }
 
     [[nodiscard]] inline bool GETSWX(int16* row) noexcept {
@@ -233,7 +284,7 @@ namespace TreeTools {
     }
 
     [[nodiscard]] inline bool NOSWX(const std::size_t& n) noexcept {
-      return Xswitch.count() == n;
+      return xswitch_set_count == n;
     }
 
     inline void SETSW(int16* L, int16* R) noexcept {
@@ -311,11 +362,13 @@ namespace TreeTools {
     const int16 n_vertex = M() + N();
     Tlen = 2 * n_vertex;
     Tlen_short = Tlen - (2 * 3);
-    T = std::vector<int16> (Tlen);
+    T = std::vector<int16>(Tlen);
+    T_ptr = T.data();
 
-    leftmost_leaf.resize(n_vertex);
-    visited_nth.resize(n_leaves);
-    internal_label.resize(1 + n_leaves); // We're not using -1.
+    leftmost_leaf.reserve(n_vertex);
+    visited_nth.reserve(n_leaves);
+    internal_label.reserve(1 + n_leaves); // We're not using -1.
+    internal_label_ptr = internal_label.data();
     int16 n_visited = 0;
     std::vector<int16> weights(1 + n_vertex);
 
@@ -335,7 +388,7 @@ namespace TreeTools {
       if (!GET_LEFTMOST(parent_i)) {
         SET_LEFTMOST(parent_i, GET_LEFTMOST(child_i));
       }
-      if (is_leaf(&child_i)) {
+      if (is_leaf(child_i)) {
         VISIT_LEAF(&child_i, &n_visited);
         ++weights[parent_i];
         ENTER(child_i, 0);
@@ -365,7 +418,7 @@ namespace TreeTools {
 
     NVERTEX(&v, &w);
     while (v) {
-      if (is_leaf(&v)) {
+      if (is_leaf(v)) {
         ++leafcode;
         // We prepared the encoder in an earlier step, so need no X[v, 3] <- leafcode
         R = leafcode;

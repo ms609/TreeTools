@@ -48,14 +48,17 @@ as.ClusterTable <- function(x, tipLabels = NULL, ...) {
 #' @rdname ClusterTable
 #' @export
 as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
-  x <- Preorder(x)
+  startOrder <- attr(x, "order")
+  if (length(startOrder) == 0 || startOrder != "preorder") {
+    x <- Preorder(x, topologyOnly = TRUE)
+  }
   if (is.null(tipLabels)) {
     tipLabels <- x[["tip.label"]]
-  } else {
+  } else if (!identical(x[["tip.label"]], tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
   structure(ClusterTable_new(x),
-            nTip = NTip(x),
+            nTip = length(tipLabels),
             tip.label = tipLabels,
             class = "ClusterTable")
 }

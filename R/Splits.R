@@ -55,13 +55,15 @@ as.Splits <- function(x, tipLabels = NULL, ...) UseMethod("as.Splits")
 #'   paramount).
 #' @export
 as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
-  if (!is.null(tipLabels)) {
+  
+  if (length(tipLabels) && !identical(x[["tip.label"]], tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
+  
   edge <- x[["edge"]]
-  nEdge <- dim(edge)[1]
+  nEdge <- dim(edge)[[1]]
   order <- attr(x, "order")[[1]]
-  edgeOrder <- if (is.null(order)) {
+  edgeOrder <- if (length(order) == 0) {
     postorder_order(edge)
   } else {
     switch(order,
@@ -97,7 +99,7 @@ as.Splits.phylo <- function(x, tipLabels = NULL, asSplits = TRUE, ...) {
 edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
                            nTip = NTip(edge), ...) {
   splits <- cpp_edge_to_splits(edge, edgeOrder - 1L, nTip)
-  nSplits <- dim(splits)[1]
+  nSplits <- dim(splits)[[1]]
 
   # Return:
   if (asSplits) {
@@ -105,8 +107,7 @@ edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
               nTip = nTip,
               tip.label = tipLabels,
               class = "Splits")
-  }
-  else {
+  } else {
     splits
   }
 }
@@ -250,7 +251,7 @@ as.Splits.logical <- function(x, tipLabels = NULL, ...) {
 #' @rdname Splits
 #' @export
 as.Splits.character <- function(x, tipLabels = NULL, ...) {
-  nTip <- nchar(x[1])
+  nTip <- nchar(x[[1]])
   
   if (is.null(tipLabels)) {
     tipLabels <- TipLabels(x)
@@ -261,7 +262,8 @@ as.Splits.character <- function(x, tipLabels = NULL, ...) {
     tipLabels <- TipLabels(tipLabels)
   }
   
-  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip), nTip) > 0
+  sp <- .vapply(gregexpr("*", x, fixed = TRUE), tabulate, integer(nTip),
+                nTip) > 0
   structure(t(.apply(sp, 2, as.Splits.logical)),
     nTip = nTip,
     tip.label = tipLabels,

@@ -2,7 +2,7 @@
 #define TreeTools_assert_
 #include <sstream>
 
-#ifdef DEBUG
+#if defined(DEBUG) && !defined(PROFILE)
 #define ASSERT(x) if (!(x)) {                                  \
 std::ostringstream oss;                                        \
 oss << "Assertion failed: " << #x;                             \

@@ -1,3 +1,16 @@
+# TreeTools 1.15.0.9009 (development) #
+
+- `Preorder()` gains `topologyOnly` argument.
+
+# TreeTools 1.15.0.9008 (development) #
+
+- Optimize `ClusterTable` class.
+
+# TreeTools 1.15.0.9007 (development) #
+
+- Optimize `NSplits()`.
+
+
 # TreeTools 1.15.0.9006 (development) #
 
 - Remove exported C++ cache objects to prefer calculation with intrinsics.
