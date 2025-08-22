@@ -54,11 +54,11 @@ as.ClusterTable.phylo <- function(x, tipLabels = NULL, ...) {
   }
   if (is.null(tipLabels)) {
     tipLabels <- x[["tip.label"]]
-  } else {
+  } else if (!identical(x[["tip.label"]], tipLabels)) {
     x <- RenumberTips(x, tipLabels)
   }
   structure(ClusterTable_new(x),
-            nTip = NTip(x),
+            nTip = length(tipLabels),
             tip.label = tipLabels,
             class = "ClusterTable")
 }
