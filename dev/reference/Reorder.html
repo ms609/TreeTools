@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.15.0.9008</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.15.0.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,22 +125,22 @@
 <span><span class="co"># S3 method for class '`NULL`'</span></span>
 <span><span class="fu">Pruningwise</span><span class="op">(</span><span class="va">tree</span>, <span class="va">nTip</span>, <span class="va">edge</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'phylo'</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'numeric'</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'multiPhylo'</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'list'</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class '`NULL`'</span></span>
-<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
+<span><span class="fu">Preorder</span><span class="op">(</span><span class="va">tree</span>, topologyOnly <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">TntOrder</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span>
 <span></span>
@@ -203,6 +203,10 @@ tree, corresponding to <code>tree[["edge"]]</code>. Optional in <code>Cladewise(
 <dt id="arg-force">force<a class="anchor" aria-label="anchor" href="#arg-force"></a></dt>
 <dd><p>Logical specifying whether to rearrange trees already in
 postorder, in order to ensure edges are ordered in the "TreeTools" fashion.</p></dd>
+
+
+<dt id="arg-topologyonly">topologyOnly<a class="anchor" aria-label="anchor" href="#arg-topologyonly"></a></dt>
+<dd><p>Logical; if <code>TRUE</code>, edge weights may not be retained.</p></dd>
 
 </dl></div>
     <div class="section level2">
