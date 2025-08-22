@@ -50,7 +50,8 @@ KeepTip <- function(tree, tip, preorder = TRUE, check = TRUE) {
 #' @rdname DropTip
 #' @export
 DropTip.phylo <- function(tree, tip, preorder = TRUE, check = TRUE) {
-  if (preorder) {
+  if (preorder && (length(attr(tree, "order")) == 0 || 
+                   attr(tree, "order")[[1]] != "preorder")) {
     tree <- Preorder(tree)
   }
   labels <- tree[["tip.label"]]

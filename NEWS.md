@@ -1,3 +1,7 @@
+# TreeTools 1.15.0.9009 (development) #
+
+- `Preorder()` gains `topologyOnly` argument.
+
 # TreeTools 1.15.0.9008 (development) #
 
 - Optimize `ClusterTable` class.

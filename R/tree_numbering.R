@@ -427,25 +427,14 @@ Pruningwise.multiPhylo <- function(tree, nTip, edge) {
 #' @export
 Pruningwise.NULL <- function(tree, nTip, edge) NULL
 
-# If the labels of a tree are modified, then it will no longer be in "strict" 
-# preorder. Degenerate to "cladewise".
-# TODO in a future release, we may wish to distinguish "strict" preorder
-# with a relaxed version that is still "preorder" but doesn't guarantee
-# identical edge matrices.
-.LapsePreorder <- function (tree) {
-  if (attr(tree, "order") == "preorder") {
-    attr(tree, "order") <- "cladewise"
-  }
-  tree
-}
-
 #' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
+#' @param topologyOnly Logical; if `TRUE`, edge weights may not be retained.
 #' @export
-Preorder <- function(tree) UseMethod("Preorder")
+Preorder <- function(tree, topologyOnly = FALSE) UseMethod("Preorder")
 
 #' @rdname Reorder
 #' @export
-Preorder.phylo <- function(tree) {
+Preorder.phylo <- function(tree, topologyOnly = FALSE) {
   startOrder <- attr(tree, "order")
   if (length(startOrder) && startOrder == "preorder") {
     # length(x) is twice as fast as !is.null(x)
@@ -454,21 +443,27 @@ Preorder.phylo <- function(tree) {
     edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
-    lengths <- tree[["edge.length"]]
-    if (is.null(lengths)) {
+    if (topologyOnly) {
       tree[["edge"]] <- RenumberTree(parent, child)
+      tree[["edge.length"]] <- NULL
+      tree[["node.label"]] <- NULL
     } else {
-      newEdge <- RenumberTree(parent, child, lengths)
-      tree[["edge"]] <- newEdge[[1]]
-      tree[["edge.length"]] <- newEdge[[2]]
-    }
-    nodeLabels <- tree[["node.label"]]
-    if (!is.null(nodeLabels)) {
-      tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
+      lengths <- tree[["edge.length"]]
+      if (topologyOnly || length(lengths) == 0) {
+        tree[["edge"]] <- RenumberTree(parent, child)
+      } else {
+        newEdge <- RenumberTree(parent, child, lengths)
+        tree[["edge"]] <- newEdge[[1]]
+        tree[["edge.length"]] <- newEdge[[2]]
+      }
+      nodeLabels <- tree[["node.label"]]
+      if (length(nodeLabels)) {
+        tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
+      }
     }
     attr(tree, "order") <- "preorder"
     attr(tree, "suborder") <- NULL
-
+    
     # Return:
     tree
   }
@@ -476,14 +471,14 @@ Preorder.phylo <- function(tree) {
 
 #' @rdname Reorder
 #' @export
-Preorder.numeric <- function(tree) {
+Preorder.numeric <- function(tree, topologyOnly = FALSE) {
   RenumberTree(tree[, 1], tree[, 2])
 }
 
 #' @rdname Reorder
 #' @export
-Preorder.multiPhylo <- function(tree) {
-  tree[] <- lapply(tree, Preorder)
+Preorder.multiPhylo <- function(tree, topologyOnly = FALSE) {
+  tree[] <- lapply(tree, Preorder, topologyOnly)
   attr(tree, "order") <- "preorder"
   attr(tree, "suborder") <- NULL
   tree
@@ -491,13 +486,13 @@ Preorder.multiPhylo <- function(tree) {
 
 #' @rdname Reorder
 #' @export
-Preorder.list <- function(tree) {
-  lapply(tree, Preorder)
+Preorder.list <- function(tree, topologyOnly = FALSE) {
+  lapply(tree, Preorder, topologyOnly)
 }
 
 #' @rdname Reorder
 #' @export
-Preorder.NULL <- function(tree) NULL
+Preorder.NULL <- function(tree, topologyOnly = FALSE) NULL
 
 #' @describeIn Reorder Reorder tree in postorder, numbering internal nodes
 #' according to [TNT's rules](https://stackoverflow.com/a/54296100/3438001),
@@ -607,36 +602,38 @@ RenumberTips <- function(tree, tipOrder) UseMethod("RenumberTips")
 RenumberTips.phylo <- function(tree, tipOrder) {
   startOrder <- tree[["tip.label"]]
   newOrder <- TipLabels(tipOrder, single = TRUE)
-  if (identical(startOrder, newOrder)) {
-    return(tree)
-  }
-  if (length(startOrder) != length(newOrder)) {
-    startOnly <- setdiff(startOrder, newOrder)
-    newOnly <- setdiff(newOrder, startOrder)
-    if (length(startOnly)) {
-      stop("Tree labels and tipOrder must match.",
-           if (length(newOnly)) "\n  Missing in `tree`: ",
-           paste0(newOnly, collapse = ", "),
-           if (length(startOnly)) "\n  Missing in `tipOrder`: ",
-           paste0(startOnly, collapse = ", ")
-           )
+  if (!identical(startOrder, newOrder)) {
+    if (length(startOrder) != length(newOrder)) {
+      startOnly <- setdiff(startOrder, newOrder)
+      newOnly <- setdiff(newOrder, startOrder)
+      if (length(startOnly)) {
+        stop("Tree labels and tipOrder must match.",
+             if (length(newOnly)) "\n  Missing in `tree`: ",
+             paste0(newOnly, collapse = ", "),
+             if (length(startOnly)) "\n  Missing in `tipOrder`: ",
+             paste0(startOnly, collapse = ", ")
+             )
+      }
+      newOrder <- intersect(newOrder, startOrder)
     }
-    newOrder <- intersect(newOrder, startOrder)
-  }
-
-  nTip <- length(startOrder)
-  child <- tree[["edge"]][, 2]
-  tips <- child <= nTip
-
-  matchOrder <- match(startOrder, newOrder)
-  if (any(is.na(matchOrder))) {
-    stop("Tree labels ", paste0(startOrder[is.na(matchOrder)], collapse = ", "),
-         " missing from `tipOrder`")
-  }
-  tree[["edge"]][tips, 2] <- matchOrder[tree[["edge"]][tips, 2]]
-  tree[["tip.label"]] <- newOrder
   
-  .LapsePreorder(tree)
+    nTip <- length(startOrder)
+    child <- tree[["edge"]][, 2]
+    tips <- child <= nTip
+  
+    matchOrder <- match(startOrder, newOrder)
+    if (any(is.na(matchOrder))) {
+      stop("Tree labels ", paste0(startOrder[is.na(matchOrder)], collapse = ", "),
+           " missing from `tipOrder`")
+    }
+    tree[["edge"]][tips, 2] <- matchOrder[tree[["edge"]][tips, 2]]
+    tree[["tip.label"]] <- newOrder
+    
+    if (attr(tree, "order") == "preorder") {
+      attr(tree, "order") <- "cladewise"
+    }
+  }
+  tree
 }
 
 #' @rdname RenumberTips

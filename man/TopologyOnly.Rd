@@ -15,8 +15,7 @@ node labels and other attributes removed.
 }
 \description{
 \code{TopologyOnly()} removes all information from trees except for their
-topologies and leaf labels.  This allows other functions to process
-trees more rapidly, as they do not need to process unneeded metadata.
+topologies and leaf labels.
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

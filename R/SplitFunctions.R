@@ -258,12 +258,16 @@ TipLabels <- function(x, single = TRUE) UseMethod("TipLabels")
 #' @export
 TipLabels.default <- function(x, single = TRUE) {
   tla <- attr(x, "tip.label")
-  if (!is.null(tla)) {
+  # TODO when require R4.1, tla %||% names(x) %||% x
+  if (length(tla) > 0) {
     tla
-  } else if (is.null(names(x))) {
-    x
   } else {
-    names(x)
+    nom <- names(x)
+    if (length(nom) == 0) {
+      x
+    } else {
+      nom
+    }
   }
 }
 
