@@ -42,7 +42,7 @@ namespace TreeTools {
   
   class ClusterTable {
     
-    struct alignas(4) ClusterRow {
+    struct ClusterRow {
       int16 L;
       int16 R;
     };
