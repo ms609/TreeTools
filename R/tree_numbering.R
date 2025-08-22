@@ -427,18 +427,6 @@ Pruningwise.multiPhylo <- function(tree, nTip, edge) {
 #' @export
 Pruningwise.NULL <- function(tree, nTip, edge) NULL
 
-# If the labels of a tree are modified, then it will no longer be in "strict" 
-# preorder. Degenerate to "cladewise".
-# TODO in a future release, we may wish to distinguish "strict" preorder
-# with a relaxed version that is still "preorder" but doesn't guarantee
-# identical edge matrices.
-.LapsePreorder <- function (tree) {
-  if (attr(tree, "order") == "preorder") {
-    attr(tree, "order") <- "cladewise"
-  }
-  tree
-}
-
 #' @describeIn Reorder Reorder tree in Preorder (special case of cladewise).
 #' @param topologyOnly Logical; if `TRUE`, edge weights may not be retained.
 #' @export
