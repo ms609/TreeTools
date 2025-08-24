@@ -1,6 +1,7 @@
 #ifndef TreeTools_renumber_tree_
 #define TreeTools_renumber_tree_
 
+#include <array>
 #include <cstdio>
 #include <cstdlib> /* for calloc */
 #include <memory> /* for unique_ptr */
