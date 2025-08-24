@@ -1,3 +1,8 @@
+# TreeTools 1.16.1 (2025-08-24) #
+
+- Compiler-safe vector initialization, resolving M1-SAN warnings.
+
+
 # TreeTools 1.16.0 (2025-08-22) #
 
 ## New functionality
