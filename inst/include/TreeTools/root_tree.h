@@ -13,10 +13,11 @@ namespace TreeTools {
       const Rcpp::IntegerVector parent,
       const Rcpp::IntegerVector child);
 
-  extern inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pair(
-    const Rcpp::IntegerVector& parent,
-    const Rcpp::IntegerVector& child,
-    const Rcpp::DoubleVector& weights);
+  template <typename W, typename RetType>
+  extern inline RetType preorder_core(
+      const Rcpp::IntegerVector& parent,
+      const Rcpp::IntegerVector& child,
+      const W& weights);
 
   // edge must be BINARY
   // edge must be in preorder
@@ -112,7 +113,7 @@ namespace TreeTools {
       Rcpp::IntegerVector parent_col(edge(Rcpp::_, 0));
       Rcpp::IntegerVector child_col(edge(Rcpp::_, 1));
       Rcpp::NumericVector edge_len = phy["edge.length"];
-      std::tie(edge, weight) = preorder_weighted_pair(
+      std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(
         parent_col,
         child_col,
         edge_len
@@ -180,7 +181,7 @@ namespace TreeTools {
       new_child[root_edges[spare_edge]] = outgroup;
       
       if (weighted) {
-        std::tie(edge, weight) = preorder_weighted_pair(new_parent, new_child, weight);
+        std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(new_parent, new_child, weight);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
@@ -210,7 +211,7 @@ namespace TreeTools {
         Rcpp::NumericVector new_wt(n_edge + 1);
         std::copy(weight.begin(), weight.end(), new_wt.begin());
         new_wt[n_edge] = 0;
-        std::tie(edge, weight) = preorder_weighted_pair(new_parent, new_child, new_wt);
+        std::tie(edge, weight) = preorder_core<Rcpp::NumericVector, std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector>>(new_parent, new_child, new_wt);
         ret["edge"] = edge;
         ret["edge.length"] = weight;
       } else {
