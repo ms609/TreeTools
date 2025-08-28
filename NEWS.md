@@ -1,6 +1,7 @@
 # TreeTools 1.16.1.9000 (development) #
 
-No changes yet.
+- Fix `RoguePlot(sort = TRUE)`
+  [Rogue#33](https://github.com/ms609/Rogue/issues/33).
 
 
 # TreeTools 1.16.1 (2025-08-24) #

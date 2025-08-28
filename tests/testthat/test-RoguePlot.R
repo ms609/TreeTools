@@ -55,6 +55,19 @@ test_that("RoguePlot(sort = TRUE)", {
   rp <- RoguePlot(trees, "t5", sort = TRUE, plot = FALSE)
   expect_equal(rp[["atNode"]], rep(0, 5))
   expect_equal(rp[["onEdge"]], `[<-`(double(10), 4, 2))
+  
+  
+  trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, (e, f))))));"),
+                read.tree(text = "(rogue, (a, (b, (c, (d, (e, f))))));"),
+                read.tree(text = "((rogue, a), (b, (c, (d, (e, f)))));"),
+                read.tree(text = "(a, (b, ((c, d), (rogue, (e, f)))));"),
+                read.tree(text = "(a, (b, ((c, (rogue, d)), (e, f))));"),
+                read.tree(text = "(a, (b, (c, (d, (rogue, (e, f))))));"))[
+                  c(1, 1, 1, 1:6)]
+  unsorted <- RoguePlot(trees, "rogue", plot = FALSE)
+  sorted <- RoguePlot(trees, "rogue", plot = FALSE, sort = TRUE)
+  expect_equal(sorted$onEdge, unsorted$onEdge[c(2, 4, 7, 9, 8, 6, 5, 3, 1)])
+  expect_equal(sorted$atNode, unsorted$atNode)
 })
 
 test_that("polytomy id", {
