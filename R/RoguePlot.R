@@ -96,8 +96,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   class(noRogue) <- "multiPhylo"
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
-  if (sort) {
-    cons <- SortTree(cons)
+  if (isTRUE(sort)) {
+    cons <- RenumberTips(SortTree(cons), c(tipLabels, dummyRoot))
   }
   consTip <- NTip(cons)
 
