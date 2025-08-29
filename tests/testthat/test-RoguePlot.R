@@ -35,9 +35,9 @@ test_that("Simple rogue plot", {
   )
   expect_equal(
     RoguePlot(trees, tip = "rogue", plot = FALSE, sort = TRUE)[["cons"]],
-    Preorder(RenumberTips(
+    RenumberTips(
       SortTree(RoguePlot(trees, tip = "rogue", plot = FALSE)[["cons"]]),
-      TipLabels(trees[[1]])))
+      TipLabels(trees[[1]]))
   )
 
   skip_if_not_installed("vdiffr", "1.0")

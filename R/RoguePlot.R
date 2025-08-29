@@ -32,7 +32,8 @@
 #' by which the legend's position should be inset.
 #'
 #' @return `RoguePlot()` invisibly returns a list whose elements are:
-#' - `cons`: The reduced consensus tree, in preorder;
+#' - `cons`: The reduced consensus tree, sorted if `sort = TRUE`, otherwise 
+#' in preorder;
 #' - `onEdge`: a vector of integers specifying the number of
 #' trees in `trees` in which the rogue leaf is attached to each edge in turn
 #' of the consensus tree;

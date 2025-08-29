@@ -66,7 +66,8 @@ by which the legend's position should be inset.}
 \value{
 \code{RoguePlot()} invisibly returns a list whose elements are:
 \itemize{
-\item \code{cons}: The reduced consensus tree, in preorder;
+\item \code{cons}: The reduced consensus tree, sorted if \code{sort = TRUE}, otherwise
+in preorder;
 \item \code{onEdge}: a vector of integers specifying the number of
 trees in \code{trees} in which the rogue leaf is attached to each edge in turn
 of the consensus tree;
