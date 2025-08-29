@@ -151,7 +151,8 @@ by which the legend's position should be inset.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>RoguePlot()</code> invisibly returns a list whose elements are:</p><ul><li><p><code>cons</code>: The reduced consensus tree, in preorder;</p></li>
+    <p><code>RoguePlot()</code> invisibly returns a list whose elements are:</p><ul><li><p><code>cons</code>: The reduced consensus tree, sorted if <code>sort = TRUE</code>, otherwise
+in preorder;</p></li>
 <li><p><code>onEdge</code>: a vector of integers specifying the number of
 trees in <code>trees</code> in which the rogue leaf is attached to each edge in turn
 of the consensus tree;</p></li>
