@@ -97,14 +97,26 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   class(noRogue) <- "multiPhylo"
   cons <- RootTree(Consensus(noRogue, p = p, check.labels = FALSE),
                    dummyRoot) # RootTree gives Preorder
+  
   if (isTRUE(sort)) {
-    cons <- RenumberTips(SortTree(cons), c(tipLabels, dummyRoot))
+    cons <- SortTree(cons)
   }
-  consTip <- NTip(cons)
-
+  
   if (is.character(tip)) {
     tip <- fmatch(tip, tipLabels)
   }
+  
+  keptTips <- c(tipLabels[-tip], dummyRoot)
+  
+  cons <- RenumberTips(cons, keptTips)
+  if (!isTRUE(sort)) {
+    # RenumberTips does not guarantee preorder output:
+    # Preorder now to avoid renumbering of edges in `DropTip()` later.
+    cons <- Preorder(cons)
+  }
+  
+  consTip <- NTip(cons)
+
   pole <- nTip
 
   #allTips <- logical(ceiling((nTip) / 8) * 8L + 2L) # Multiple of 8 for packBits
@@ -147,9 +159,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   tab <- tabulate(as.integer(tipMatches))
   nAtTip[seq_along(tab)] <- tab
 
-  consSplits <- PolarizeSplits(as.Splits(
-    cons, tipLabels = c(tipLabels[-tip], dummyRoot)), pole)
   unmatchedTrees <- !(tipsBesideRogue %fin% c(0L, 1L, nTip - 1L))
+  consSplits <- PolarizeSplits(as.Splits(cons, tipLabels = keptTips), pole)
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   # Had previously used fmatch here, but encountered unexpected error
@@ -164,7 +175,8 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   nAtSplit[which(as.logical(tab))] <- tab[as.logical(tab)]
   
   decipher <- c(nAtTip, rep.int(NA, cons[["Nnode"]]))
-  decipher[as.integer(names(consSplits))] <- nAtSplit
+  consNodes <- as.integer(names(consSplits))
+  decipher[consNodes] <- nAtSplit
   nOnEdge <- decipher[cons[["edge"]][, 2]]
 
 
@@ -192,11 +204,18 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     nAtNode[as.integer(names(atNode))] <- atNode
 
   }
-
-  cons <- DropTip(cons, dummyRoot)
-  if (!is.null(edgeLength)) {
-    cons[["edge.length"]] <- rep_len(edgeLength, dim(cons[["edge"]])[1])
+  
+  if (isTRUE(sort)) {
+    cons <- DropTip(cons, dummyRoot, preorder = FALSE, check = FALSE)
+  } else {
+    stopifnot(attr(cons, "order") == "preorder")
+    # We promise to return `cons` in preorder
+    cons <- DropTip(cons, dummyRoot, preorder = TRUE, check = FALSE)
   }
+  if (!is.null(edgeLength)) {
+    cons[["edge.length"]] <- rep_len(edgeLength, dim(cons[["edge"]])[[1]])
+  }
+  # We've deleted the edge to the dummy root
   nOnEdge <- nOnEdge[2:(length(nOnEdge) - 1L)]
   maxVal <- max(c(nOnEdge, nAtNode)) + 1L
 

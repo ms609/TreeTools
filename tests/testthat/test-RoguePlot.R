@@ -122,6 +122,14 @@ test_that("Complex rogue plot", {
          legendLabels = LegendLabels(6))
     )
 
+  expect_equal(
+    RoguePlot(trees = trees1, tip = "rogue", plot = FALSE, sort = TRUE),
+    list(cons = RenumberTips(SortTree(ExpectedCons("(a, (b, (c, d, (e, f))));")), trees1),
+         onEdge = c(2, 1, 0, 0, 0, 1, 2, 0, 0)[c(2, 4, 7, 9, 8, 6, 5, 3, 1)],
+         atNode = c(1, 0, 5, 0),
+         legendLabels = LegendLabels(6))
+    )
+
   expectedCons <- Preorder(
     RenumberTips(read.tree(text = "(f, (e, (d, c, (b, a))));"), letters[1:6])
   )
