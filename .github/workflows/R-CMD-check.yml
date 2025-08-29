@@ -120,6 +120,7 @@ jobs:
             phangorn@2.7.1
             Rfast@1.9.8
             rjson@0.2.20
+            usethis@3.1.0
             XML@3.99-0.3
             TreeDist=?ignore-before-r=4.0.0
             TreeSearch=?ignore-before-r=4.0.0
