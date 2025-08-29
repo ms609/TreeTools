@@ -55,6 +55,9 @@ test_that("Simple rogue plot", {
 test_that("RoguePlot(sort = TRUE)", {
   trees <- c(PectinateTree(7), PectinateTree(7))
   rp <- RoguePlot(trees, "t5", sort = TRUE, plot = FALSE)
+  expect_equal(rp[["cons"]],
+               RenumberTips(SortTree(ConsensusWithout(trees, "t5")),
+                            PectinateTree(7)))
   expect_equal(rp[["atNode"]], rep(0, 5))
   expect_equal(rp[["onEdge"]], `[<-`(double(10), 4, 2))
   
