@@ -109,18 +109,19 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
 
   #allTips <- logical(ceiling((nTip) / 8) * 8L + 2L) # Multiple of 8 for packBits
   allTips <- logical(nTip + 1L) # including dummy
+  # Identify whether each leaf is in the sister clade to the rogue taxon
   # dummyRoot is, by definition, always below rogue.
-  aboveRogue <- .vapply(trees, function(tr) {
+  besideRogue <- .vapply(trees, function(tr) {
     edge <- AddTip(tr, 0, dummyRoot)[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
     rogueEdge <- fmatch(tip, child)
     rogueParent <- parent[[rogueEdge]]
-    aboveRogue <- fmatch(rogueParent, child) # edge above parent of rogue tip
+    beside <- fmatch(rogueParent, child) # edge above parent of rogue tip
     splitTips <- allTips
-    stopifnot(!is.na(aboveRogue))
+    stopifnot(!is.na(beside))
     edgeInSplit <- DescendantEdges(parent = parent, child = child,
-                                   edge = aboveRogue)
+                                   edge = beside)
     splitKids <- child[edgeInSplit]
     splitTips[splitKids[splitKids <= nTip + 1L]] <- TRUE
     splitTips <- splitTips[-tip]
@@ -133,34 +134,35 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     splitTips[-pole]
   #}, raw((length(allTips) - 2L)  / 8L))
   }, logical((length(allTips) - 2L)))
-
+  
   # Vector, each entry corresponds to a tree
-  tipsAboveRogue <- colSums(aboveRogue) # includes dummy root
+  tipsBesideRogue <- colSums(besideRogue) # includes dummy root
   
   # Initialize count of trees where rogue occurs alongside a leaf
   nAtTip <- c(double(nTip - 1L),
-              sum(tipsAboveRogue == nTip - 1L)) # At pole
+              sum(tipsBesideRogue == nTip - 1L)) # At pole
   # Populate nAtTip
-  atTip <- tipsAboveRogue == 1L
-  tipMatches <- apply(aboveRogue[, atTip, drop = FALSE], 2, which)
+  atTip <- tipsBesideRogue == 1L
+  tipMatches <- apply(besideRogue[, atTip, drop = FALSE], 2, which)
   tab <- tabulate(as.integer(tipMatches))
   nAtTip[seq_along(tab)] <- tab
 
-  unmatchedTrees <- !(tipsAboveRogue %fin% c(0L, 1L, nTip - 1L))
   consSplits <- PolarizeSplits(as.Splits(
     cons, tipLabels = c(tipLabels[-tip], dummyRoot)), pole)
+  unmatchedTrees <- !(tipsBesideRogue %fin% c(0L, 1L, nTip - 1L))
   splits <- !as.logical(consSplits)
   nSplits <- nrow(splits)
   # Had previously used fmatch here, but encountered unexpected error
   # Error in fmatch: cannot take a writable DATAPTR of an ALTLIST
   #  [class: wrap_list, pkg: base]
   # Replaced with match for safety (?)
-  edgeMatches <- match(data.frame(aboveRogue[, unmatchedTrees, drop = FALSE]),
+  edgeMatches <- match(data.frame(besideRogue[, unmatchedTrees, drop = FALSE]),
                        data.frame(t(splits[, -pole, drop = FALSE])))
 
   nAtSplit <- double(nSplits)
   tab <- tabulate(edgeMatches)
   nAtSplit[which(as.logical(tab))] <- tab[as.logical(tab)]
+  
   decipher <- c(nAtTip, rep.int(NA, cons[["Nnode"]]))
   decipher[as.integer(names(consSplits))] <- nAtSplit
   nOnEdge <- decipher[cons[["edge"]][, 2]]
@@ -172,7 +174,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     nodeDescs <- .NodeDescendants(cons, nTip, pole)
     nNode <- nrow(nodeDescs)
 
-    unmatchedGroup <- aboveRogue[, unmatchedTrees, drop = FALSE]
+    unmatchedGroup <- besideRogue[, unmatchedTrees, drop = FALSE]
     nUnmatched <- sum(unmatchedTrees)
 
     # nodeOverlapsGroup <- apply(unmatchedGroup, 2, function(gp) {
