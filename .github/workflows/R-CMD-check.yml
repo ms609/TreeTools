@@ -115,6 +115,7 @@ jobs:
         with:
           extra-packages: |
             rvest@1.0.4
+            readr@2.1.5
             tzdb@0.4.0
             gh@1.4.1
             svglite@2.1.3
