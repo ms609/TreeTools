@@ -220,9 +220,9 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
 as.Splits.integer <- function(x, tipLabels = NULL, ...) {
   membership <- t(vapply(sort(unique(x)), `==`, logical(length(x)), x))
   if (dim(membership)[[1]] == 2) {
-    as.Splits.logical(membership[1, ])
+    as.Splits.logical(membership[1, ], tipLabels = tipLabels, ...)
   } else {
-    as.Splits.logical(membership)
+    as.Splits.logical(membership, tipLabels = tipLabels, ...)
   }
 }
 

@@ -243,8 +243,8 @@ test_that("as.Splits.logical()", {
 test_that("as.Splits.integer()", {
   . <- FALSE
   X <- TRUE
-  expect_splits_equal(as.Splits(c(rep(1L, 4))),
-                      as.Splits(c(., ., ., .)))
+  expect_splits_equal(as.Splits(c(rep(1L, 4)), tipLabels = letters[2:5]),
+                      as.Splits(c(., ., ., .), tipLabels = letters[2:5]))
   expect_splits_equal(as.Splits(c(rep(1L, 4), rep(2L, 4))),
                       as.Splits(c(., ., ., ., X, X, X, X)))
   expect_splits_equal(as.Splits(c(rep(1L, 4), rep(2L, 4), 3L)),
