@@ -114,7 +114,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            RcppArnadillo@14.6.3-1
+            RcppArmadillo@14.6.3-1
             rvest@1.0.4
             readr@2.1.5
             tzdb@0.4.0
