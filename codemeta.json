@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.16.1.9000",
+  "version": "1.16.1.9001",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -335,7 +335,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1767.617KB",
+  "fileSize": "1771.583KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -350,7 +350,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.32614/CRAN.package.TreeTools",
-      "description": "R package version 1.16.1.9000",
+      "description": "R package version 1.16.1.9001",
       "@id": "https://doi.org/10.32614/CRAN.package.TreeTools",
       "sameAs": "https://doi.org/10.32614/CRAN.package.TreeTools"
     }
