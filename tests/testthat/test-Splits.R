@@ -172,7 +172,6 @@ test_that("as.Splits.Splits()", {
 })
 
 test_that("as.Splits.matrix()", {
-  expect_error(as.Splits(matrix(1, 3, 3)))
   expect_error(as.Splits(matrix(1, 2, 2,
                                 dimnames = list(c("edge", "Nnode"), NULL))))
   trees <- list(BalancedTree(8), PectinateTree(8),
@@ -240,6 +239,26 @@ test_that("as.Splits.logical()", {
   expect_splits_equal(as.Splits(FFTT, a..d), as.Splits(t(matrix(FFTT)), a..d))
   expect_splits_equal(as.Splits(FFTT), as.Splits(t(matrix(FFTT))))
 })
+
+test_that("as.Splits.integer()", {
+  . <- FALSE
+  X <- TRUE
+  expect_splits_equal(as.Splits(c(rep(1L, 4))),
+                      as.Splits(c(., ., ., .)))
+  expect_splits_equal(as.Splits(c(rep(1L, 4), rep(2L, 4))),
+                      as.Splits(c(., ., ., ., X, X, X, X)))
+  expect_splits_equal(as.Splits(c(rep(1L, 4), rep(2L, 4), 3L)),
+                      as.Splits(rbind(c(X, X, X, X, ., ., ., ., .),
+                                      c(., ., ., ., X, X, X, X, .),
+                                      c(., ., ., ., ., ., ., ., X))))
+  expect_splits_equal(as.Splits(c(rep(33, 4), 0, rep(-1, 3), 0)),
+                      as.Splits(rbind(c(., ., ., ., ., X, X, X, .),
+                                      c(., ., ., ., X, ., ., ., X),
+                                      c(X, X, X, X, ., ., ., ., .))))
+  expect_error(as.Splits(c(rep(1.45, 4), rep(sqrt(2), 3))), 
+               "no applicable method")
+})
+
 
 test_that("as.Splits.character()", {
   a..f <- letters[1:6]

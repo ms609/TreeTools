@@ -8,6 +8,8 @@
 \alias{as.Splits.Splits}
 \alias{as.Splits.list}
 \alias{as.Splits.matrix}
+\alias{as.Splits.integer}
+\alias{as.Splits.numeric}
 \alias{as.Splits.logical}
 \alias{as.Splits.character}
 \alias{as.logical.Splits}
@@ -25,6 +27,10 @@ as.Splits(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{matrix}(x, tipLabels = NULL, ...)
 
+\method{as.Splits}{integer}(x, tipLabels = NULL, ...)
+
+\method{as.Splits}{numeric}(x, tipLabels = NULL, ...)
+
 \method{as.Splits}{logical}(x, tipLabels = NULL, ...)
 
 \method{as.Splits}{character}(x, tipLabels = NULL, ...)
@@ -34,8 +40,10 @@ as.Splits(x, tipLabels = NULL, ...)
 \arguments{
 \item{x}{Object to convert into splits: perhaps a tree of class
 \code{\link[ape:read.tree]{phylo}}.
-If a logical matrix is provided, each row will be considered as a
-separate split.}
+If a logical matrix is provided, each row will be considered as a separate
+split.
+If an integer matrix is provided, entries assigned the same integer will
+be assigned to the same split.}
 
 \item{tipLabels}{Character vector specifying sequence in which to order
 tip labels.  Label order must (currently) match to combine or compare separate
