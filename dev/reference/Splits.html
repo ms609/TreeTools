@@ -15,7 +15,7 @@ its constituent bipartition splits."><meta name="robots" content="noindex"><!-- 
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.16.1.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,12 @@ its constituent bipartition splits.</p>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'integer'</span></span>
+<span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'numeric'</span></span>
+<span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'logical'</span></span>
 <span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -88,8 +94,10 @@ its constituent bipartition splits.</p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>Object to convert into splits: perhaps a tree of class
 <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.
-If a logical matrix is provided, each row will be considered as a
-separate split.</p></dd>
+If a logical matrix is provided, each row will be considered as a separate
+split.
+If an integer matrix is provided, entries assigned the same integer will
+be assigned to the same split.</p></dd>
 
 
 <dt id="arg-tiplabels">tipLabels<a class="anchor" aria-label="anchor" href="#arg-tiplabels"></a></dt>
