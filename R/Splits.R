@@ -7,9 +7,12 @@ setClass("Splits", representation("raw"))
 #' its constituent bipartition splits.
 #'
 #' @param x Object to convert into splits: perhaps a tree of class
-#'  \code{\link[ape:read.tree]{phylo}}.
-#'  If a logical matrix is provided, each row will be considered as a
-#'  separate split.
+#' \code{\link[ape:read.tree]{phylo}}.
+#' If a logical matrix is provided, each row will be considered as a separate
+#' split.
+#' If an integer matrix is provided, entries assigned the same integer will
+#' be assigned to the same split.
+#'  
 #' @param tipLabels Character vector specifying sequence in which to order
 #' tip labels.  Label order must (currently) match to combine or compare separate
 #' `Splits` objects.
@@ -209,6 +212,28 @@ as.Splits.matrix <- function(x, tipLabels = NULL, ...) {
                    tipLabels = tipLabels, asSplits = TRUE, ...)
   } else {
     NextMethod()
+  }
+}
+
+#' @rdname Splits
+#' @export
+as.Splits.integer <- function(x, tipLabels = NULL, ...) {
+  membership <- t(vapply(sort(unique(x)), `==`, logical(length(x)), x))
+  if (dim(membership)[[1]] == 2) {
+    as.Splits.logical(membership[1, ])
+  } else {
+    as.Splits.logical(membership)
+  }
+}
+
+#' @rdname Splits
+#' @export
+as.Splits.numeric <- function(x, tipLabels = NULL, ...) {
+  if (all(x == as.integer(x))) {
+    as.Splits.integer(as.integer(x))
+  } else {
+    stop("no applicable method for 'as.Splits' applied to an object of class \"",
+         class(x), "\"")
   }
 }
 
