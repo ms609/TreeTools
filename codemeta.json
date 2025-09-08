@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R Under development (unstable) (2025-04-08 r88126 ucrt)",
+  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -323,7 +323,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1806.2KB",
+  "fileSize": "1772KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
