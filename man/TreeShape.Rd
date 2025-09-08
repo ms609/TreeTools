@@ -37,7 +37,7 @@ UnrootedTreeKey(tree, asInteger = FALSE)
 
 .UnrootedKeys(nTip)
 
-UnrootedKeys(..., envir = parent.frame())
+UnrootedKeys(nTip, ..., envir = NULL)
 
 NUnrootedShapes(nTip)
 
@@ -62,7 +62,7 @@ If \code{FALSE}, values will have class \code{integer64}.}
 
 \item{\dots}{Value of \code{nTip}, to pass to memoized \code{.UnrootedKeys}.}
 
-\item{envir}{Unused; passed to \code{\link[R.cache]{addMemoization}()}.}
+\item{envir}{Unused; retained for backwards compatibility.}
 }
 \value{
 \code{TreeShape()} returns an integer specifying the shape of a tree,
