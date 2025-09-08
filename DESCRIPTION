@@ -54,7 +54,6 @@ Suggests:
     knitr,
     phangorn (>= 2.2.1),
     Rcpp (>= 1.0.8),
-    rlang,
     rmarkdown,
     testthat (>= 3.0),
     TreeDist,

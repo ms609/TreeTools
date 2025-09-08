@@ -198,26 +198,18 @@ test_that("as.Splits.matrix()", {
 test_that("as.Splits.edge()", {
   
   expect_one_of <- function(object, options) {
-    
-    # 1. Capture object and label
-    act <- quasi_label(rlang::enquo(object), arg = "object")
-    
-    # 2. Compare against options
-    compResults <- vapply(options, function(opt) identical(act$val, opt), 
-                          logical(1L))
+    val <- object
+    ok  <- vapply(options, function(opt) identical(val, opt), logical(1L))
     
     expect(
-      any(compResults),
+      any(ok),
       sprintf(
-        "Input (%s) is not one of the accepted options: %s",
-        toString(act$val),
+        "Result is not one of the accepted options: %s",
         paste(vapply(options, toString, character(1L)), collapse = ", ")
       )
     )
     
-    # 3. Invisibly return the value
-    invisible(act$val)
-    
+    invisible(val)
   }
   
   # Test expect_one_of
