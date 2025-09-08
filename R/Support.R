@@ -131,7 +131,8 @@ LabelSplits <- function(tree, labels = NULL, unit = "", ...) {
 #' @export
 SupportColour <- function(support,
                           show1 = TRUE,
-                          # Equivalent to hcl.colors(101, "Blue-Red 2", rev = TRUE)
+                          # Equivalent to hcl.colors(101, "Blue-Red 2", rev = TRUE),
+                          # but works safely on macOS
                           scale = colorRampPalette(c("#D33F6A", "#e2e2e2", "#4A6FE3"))(101),
                           outOfRange = "red") {
   sanitized <- support
