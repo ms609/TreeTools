@@ -8,14 +8,14 @@
 SupportColour(
   support,
   show1 = TRUE,
-  scale = hcl.colors(101, "Blue-Red 2", rev = TRUE),
+  scale = colorRampPalette(c("#D33F6A", "#e2e2e2", "#4A6FE3"))(101),
   outOfRange = "red"
 )
 
 SupportColor(
   support,
   show1 = TRUE,
-  scale = hcl.colors(101, "Blue-Red 2", rev = TRUE),
+  scale = colorRampPalette(c("#D33F6A", "#e2e2e2", "#4A6FE3"))(101),
   outOfRange = "red"
 )
 }
