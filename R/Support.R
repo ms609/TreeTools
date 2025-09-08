@@ -107,40 +107,6 @@ LabelSplits <- function(tree, labels = NULL, unit = "", ...) {
   invisible()
 }
 
-#' @describeIn SplitFrequency Assign a unique integer to each split
-#' @param tips Integer vector specifying the tips of the tree within the chosen
-#' split.
-#' @template treeParam
-#' @param tipIndex Character vector of tip names, in a fixed order.
-#' @param powersOf2 Integer vector of same length as `tipIndex`, specifying a
-#' power of 2 to be associated with each tip in turn.
-#' @export
-SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
-  .Deprecated("SplitFrequency")
-  included <- tipIndex %in% tree[["tip.label"]][tips]
-  as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
-}
-
-#' @describeIn SplitFrequency Frequency of splits in a given forest of trees
-#' @export
-ForestSplits <- function(forest, powersOf2) {
-  .Deprecated("SplitFrequency")
-  if (inherits(forest, "phylo")) forest <- c(forest)
-  tipIndex <- sort(forest[[1]][["tip.label"]])
-  nTip <- length(tipIndex)
-
-  # Return:
-  table(vapply(forest, function(tr) {
-    edge <- tr[["edge"]]
-    parent <- edge[, 1]
-    child <- edge[, 2]
-    # +2: Don't consider root node (not a node) or first node (duplicated)
-    vapply(.DescendantTips(parent, child, nTip,
-                           nodes = nTip + 2L + seq_len(nTip - 3L)),
-           SplitNumber, character(1), tr, tipIndex, powersOf2)
-  }, character(nTip - 3L)))
-}
-
 #' Colour for node support value
 #'
 #' Colour value with which to display node support.
