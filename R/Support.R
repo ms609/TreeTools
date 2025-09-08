@@ -135,11 +135,14 @@ SupportColour <- function(support,
                           outOfRange = "red") {
   sanitized <- support
   sanitized[!is.numeric(support) | support < 0 | support > 1] <- NA
-  ifelse(is.na(support) | support < 0 | support > 1 | support == "",
-         outOfRange,
-         ifelse(support == 1 & !show1,
-                "#ffffff00",
-                scale[(sanitized * 100) + 1L]))
+  inRange <- !is.na(support) & support >= 0 & support <= 1 & support != ""
+  ret <- character(length(support))
+  ret[!inRange] <- outOfRange
+  ret[inRange] <- scale[(sanitized[inRange] * 100) + 1L]
+  if (!isTRUE(show1)) {
+    ret[support == 1] <- "#ffffff00"
+  }
+  ret
 }
 
 #' @rdname SupportColour
