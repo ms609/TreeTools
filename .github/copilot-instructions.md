@@ -71,6 +71,12 @@ Always reference these instructions first and fallback to search or bash command
   R -e "devtools::build_vignettes(install = FALSE)"
   ```
 
+### Key Dependencies
+**Critical**: TreeTools requires these packages to build successfully:
+- `ape` (>= 5.0) - Phylogenetic analysis package
+- `Rcpp` (>= 1.0.8) - C++ integration
+- `Rdpack` (>= 0.7) - Bibliography and citation support  
+
 ## Validation
 - Always run R CMD check for complete validation before finalizing changes.
 - ALWAYS run the full test suite when modifying C++ code in src/ directory.
@@ -83,6 +89,9 @@ Always reference these instructions first and fallback to search or bash command
   ```bash
   R -d "valgrind --tool=memcheck --leak-check=full" --vanilla < memcheck/tests.R
   ```
+  **Note**: Memory check scripts available in `memcheck/` directory:
+  - `memcheck/tests.R` - Run test suite with valgrind
+  - `memcheck/all.R` - Run tests, examples, and build vignettes with memory checking
 
 ## Validation Scenarios
 After making code changes, validate functionality by testing core phylogenetic tree operations:
@@ -157,6 +166,8 @@ print(length(result))  # Should be 100x100 matrix
 - `.lintr` - Code style configuration (follows Google R style guide)
 - `NEWS.md` - Version history (update for user-facing changes)
 - `tests/testthat.R` - Test runner entry point
+- `inst/_pkgdown.yml` - template for online documentation.
+    (Check that new functions are registered here, ideally using `@family`)
 
 ## Common Tasks
 ### After Making Changes
@@ -183,6 +194,14 @@ print(length(result))  # Should be 100x100 matrix
 - Use Oxford ending 'ize' (not 'ise') and UK spelling where applicable
 - Document functions with roxygen2 comments
 - Include test cases for new functionality
+
+### CI/CD Workflows Available
+- **R-CMD-check.yml**: Comprehensive checks on Windows, macOS, Ubuntu across R versions
+- **benchmark.yml**: Performance regression testing triggered on PRs
+- **memcheck.yml**: Memory checking with valgrind (runs `tests`, `examples`, `vignettes`)
+- **ASan.yml**: Address sanitizer checks
+- **pkgdown.yml**: Documentation site generation.
+- **revdepcheck.yml**: Downstream dependency validation
 
 ### CI Will Fail If
 - R CMD check fails
