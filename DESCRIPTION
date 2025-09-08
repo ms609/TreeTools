@@ -53,7 +53,6 @@ Suggests:
     spelling,
     knitr,
     phangorn (>= 2.2.1),
-    purrr,
     Rcpp (>= 1.0.8),
     rlang,
     rmarkdown,

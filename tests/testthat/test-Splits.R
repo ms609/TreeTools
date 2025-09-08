@@ -196,21 +196,22 @@ test_that("as.Splits.matrix()", {
 })
 
 test_that("as.Splits.edge()", {
-    
-  # From https://stackoverflow.com/questions/71082379
+  
   expect_one_of <- function(object, options) {
     
     # 1. Capture object and label
     act <- quasi_label(rlang::enquo(object), arg = "object")
     
-    # 2. Call expect()
-    compResults <- purrr::map_lgl(options, ~identical(act$val, .x))
+    # 2. Compare against options
+    compResults <- vapply(options, function(opt) identical(act$val, opt), 
+                          logical(1L))
+    
     expect(
       any(compResults),
       sprintf(
         "Input (%s) is not one of the accepted options: %s",
         toString(act$val),
-        paste(purrr::map_chr(options, toString), collapse = ", ")
+        paste(vapply(options, toString, character(1L)), collapse = ", ")
       )
     )
     
@@ -218,6 +219,7 @@ test_that("as.Splits.edge()", {
     invisible(act$val)
     
   }
+  
   # Test expect_one_of
   expect_success(expect_one_of(1, list(1, 2)))
   expect_failure(expect_one_of(0, list(1, 2)), "not one of")
