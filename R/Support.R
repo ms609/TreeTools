@@ -119,11 +119,11 @@ SplitNumber <- function(tips, tree, tipIndex, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
   included <- tipIndex %in% tree[["tip.label"]][tips]
   as.character(min(c(sum(powersOf2[included]), sum(powersOf2[!included]))))
-}
+} # nocov end
 
 #' @describeIn SplitFrequency Frequency of splits in a given forest of trees
 #' @export
-ForestSplits <- function(forest, powersOf2) {
+ForestSplits <- function(forest, powersOf2) { # nocov start
   .Deprecated("SplitFrequency")
   if (inherits(forest, "phylo")) forest <- c(forest)
   tipIndex <- sort(forest[[1]][["tip.label"]])
@@ -139,7 +139,7 @@ ForestSplits <- function(forest, powersOf2) {
                            nodes = nTip + 2L + seq_len(nTip - 3L)),
            SplitNumber, character(1), tr, tipIndex, powersOf2)
   }, character(nTip - 3L)))
-}
+} # nocov end
 
 #' Colour for node support value
 #'
