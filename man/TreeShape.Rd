@@ -37,7 +37,7 @@ UnrootedTreeKey(tree, asInteger = FALSE)
 
 .UnrootedKeys(nTip)
 
-UnrootedKeys(..., envir = parent.frame())
+UnrootedKeys(nTip, ...)
 
 NUnrootedShapes(nTip)
 
@@ -60,9 +60,7 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 mode \code{integer}: only possible for values < 2^31.
 If \code{FALSE}, values will have class \code{integer64}.}
 
-\item{\dots}{Value of \code{nTip}, to pass to memoized \code{.UnrootedKeys}.}
-
-\item{envir}{Unused; passed to \code{\link[R.cache]{addMemoization}()}.}
+\item{\dots}{Depreciated (2025-09); retained for backward compatibility.}
 }
 \value{
 \code{TreeShape()} returns an integer specifying the shape of a tree,

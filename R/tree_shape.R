@@ -237,15 +237,14 @@ UnrootedTreeKey <- function(tree, asInteger = FALSE) {
 .unrooted_keys_cache <- new.env(parent = emptyenv())
 
 #' @rdname TreeShape
-#' @param \dots Value of `nTip`, to pass to memoized `.UnrootedKeys`.
-#' @param envir Unused; retained for backwards compatibility.
+#' @param \dots Depreciated (2025-09); retained for backward compatibility.
 #' @return `UnrootedKeys()` returns a vector of integers corresponding to the
 #' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
 #' It is a wrapper to `.UnrootedKeys()`, with memoization, meaning that results
 #' once calculated are cached and need not be calculated on future calls to
 #' the function.
 #' @export
-UnrootedKeys <- function(nTip, ..., envir = NULL) {
+UnrootedKeys <- function(nTip, ...) {
   # Convert nTip to character for use as environment key
   key <- as.character(nTip)
   
