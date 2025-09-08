@@ -1,0 +1,67 @@
+name: "Copilot Setup Steps"
+
+# Automatically run the setup steps when they are changed to allow for easy validation, and
+# allow manual testing through the repository's "Actions" tab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Set the permissions to the lowest permissions possible needed for your steps.
+    # Copilot will be given its own token for its operations.
+    permissions:
+      # If you want to clone the repository as part of your setup steps, for example to install dependencies, you'll need the `contents: read` permission. If you don't clone the repository in your setup steps, Copilot will do this for you automatically after the steps complete.
+      contents: read
+
+    # Environment variables for R package development
+    env:
+      _R_CHECK_CRAN_INCOMING_: true
+      _R_CHECK_FORCE_SUGGESTS_: false
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      _R_CHECK_THINGS_IN_CHECK_DIR_: false
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_REALLY_FORCE_SYMBOLS: true
+      _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
+      RSPM: "https://packagemanager.rstudio.com/cran/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    # You can define any steps you want, and they will run before the agent starts.
+    # If you do not check out your code, Copilot will do this for you.
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+        
+      - name: Install apt packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-fonts-recommended
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          pandoc-version: "latest"
+          needs: |
+            check
+            coverage
+          extra-packages: |
+            any::devtools
+            any::testthat
+            any::roxygen2
+            any::lintr
+            any::rcmdcheck
+            phangorn=?ignore-before-r=4.1.0
