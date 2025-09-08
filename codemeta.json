@@ -208,18 +208,6 @@
     },
     "4": {
       "@type": "SoftwareApplication",
-      "identifier": "lifecycle",
-      "name": "lifecycle",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=lifecycle"
-    },
-    "5": {
-      "@type": "SoftwareApplication",
       "identifier": "colorspace",
       "name": "colorspace",
       "provider": {
@@ -230,7 +218,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=colorspace"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "fastmatch",
       "name": "fastmatch",
@@ -243,12 +231,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=fastmatch"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "PlotTools",
       "name": "PlotTools",
@@ -260,7 +248,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=PlotTools"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "RCurl",
       "name": "RCurl",
@@ -272,7 +260,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=RCurl"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
@@ -285,7 +273,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
-    "11": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
@@ -299,7 +287,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1805.614KB",
+  "fileSize": "1805.18KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",

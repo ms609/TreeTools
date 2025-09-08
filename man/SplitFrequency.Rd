@@ -4,7 +4,6 @@
 \alias{SplitFrequency}
 \alias{SplitNumber}
 \alias{ForestSplits}
-\alias{TreeSplits}
 \title{Frequency of splits}
 \usage{
 SplitFrequency(reference, forest)
@@ -12,8 +11,6 @@ SplitFrequency(reference, forest)
 SplitNumber(tips, tree, tipIndex, powersOf2)
 
 ForestSplits(forest, powersOf2)
-
-TreeSplits(tree)
 }
 \arguments{
 \item{reference}{A tree of class \code{phylo}, a \code{Splits} object.}
@@ -56,9 +53,6 @@ constituent functions (see examples).
 \item \code{SplitNumber()}: Assign a unique integer to each split
 
 \item \code{ForestSplits()}: Frequency of splits in a given forest of trees
-
-\item \code{TreeSplits()}: Deprecated. Listed the splits in a given tree.
-Use as.Splits instead.
 
 }}
 \examples{

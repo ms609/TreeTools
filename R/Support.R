@@ -141,14 +141,6 @@ ForestSplits <- function(forest, powersOf2) {
   }, character(nTip - 3L)))
 }
 
-#' @describeIn SplitFrequency Deprecated. Listed the splits in a given tree.
-#' Use as.Splits instead.
-#' @importFrom lifecycle deprecate_warn
-#' @export
-TreeSplits <- function(tree) {
-  deprecate_warn("1.0.0", "TreeSplits()", "as.Splits()")
-} # nocov end
-
 #' Colour for node support value
 #'
 #' Colour value with which to display node support.
