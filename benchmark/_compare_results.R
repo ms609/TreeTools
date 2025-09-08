@@ -49,7 +49,7 @@ for (pr_file in pr_files) {
       median(main_times) + c(1, -1) * interrun_var,
       main_iqr)
     
-    threshold_percent <- 4
+    threshold_percent <- 6 #  Changes of ~5% are frequent
     
     is_faster <- matched &&
       median_pr < median_main - 2 * mad_main &&
