@@ -3,6 +3,7 @@
 - New method `as.Splits.integer()`.
 - Fix `RoguePlot(sort = TRUE)`
   [Rogue#33](https://github.com/ms609/Rogue/issues/33).
+- Require R 3.6
 - Remove R.cache dependency: `UnrootedKeys()` now uses a native cache implementation.
 - Remove deprecated function `TreeSplits()`.
 

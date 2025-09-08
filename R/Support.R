@@ -161,18 +161,12 @@ ForestSplits <- function(forest, powersOf2) {
 #' @seealso Use in conjunction with [`LabelSplits()`] to colour split labels,
 #' possibly calculated using [`SplitFrequency()`].
 #'
-# TODO replace with grDevices palette when require R>3.6.0
-#' @importFrom colorspace diverge_hcl
+#' @importFrom grDevices hcl.colors
 #' @export
 SupportColour <- function(support,
-                           show1 = TRUE,
-                           scale = rev(diverge_hcl(101, h = c(260, 0), c = 100,
-                                                   l = c(50, 90),
-                                                   power = 1.0)),
-                           outOfRange = "red") {
-  # continuousScale <- rev(colorspace::heat_hcl(101, h=c(300, 75), c.=c(35, 95),
-  #  l=c(15, 90), power=c(0.8, 1.2))) # Viridis prefered
-
+                          show1 = TRUE,
+                          scale = hcl.colors(101, "Blue-Red 2", rev = TRUE),
+                          outOfRange = "red") {
   sanitized <- support
   sanitized[!is.numeric(support) | support < 0 | support > 1] <- NA
   ifelse(is.na(support) | support < 0 | support > 1 | support == "",
