@@ -18,7 +18,7 @@ Always reference these instructions first and fallback to search or bash command
   ```
 - Install TreeTools dependencies:
   ```bash
-  sudo R -e "install.packages(c('ape', 'bit64', 'lifecycle', 'colorspace', 'fastmatch', 'RCurl', 'R.cache', 'Rdpack', 'stringi', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"
+  sudo R -e "install.packages(c('ape', 'bit64', 'lifecycle', 'colorspace', 'fastmatch', 'RCurl', 'Rdpack', 'stringi', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"
   ```
 
 ### Building and Checking
