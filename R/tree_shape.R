@@ -233,17 +233,33 @@ UnrootedTreeKey <- function(tree, asInteger = FALSE) {
   sort(uniqueShapes)
 }
 
+# Create a cache environment for UnrootedKeys
+.unrooted_keys_cache <- new.env(parent = emptyenv())
+
 #' @rdname TreeShape
 #' @param \dots Value of `nTip`, to pass to memoized `.UnrootedKeys`.
-#' @param envir Unused; passed to \code{\link[R.cache]{addMemoization}()}.
+#' @param envir Unused; retained for backwards compatibility.
 #' @return `UnrootedKeys()` returns a vector of integers corresponding to the
 #' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
 #' It is a wrapper to `.UnrootedKeys()`, with memoization, meaning that results
 #' once calculated are cached and need not be calculated on future calls to
 #' the function.
-#' @importFrom R.cache addMemoization
 #' @export
-UnrootedKeys <- addMemoization(.UnrootedKeys, envir = "package:TreeTools")
+UnrootedKeys <- function(nTip, ..., envir = NULL) {
+  # Convert nTip to character for use as environment key
+  key <- as.character(nTip)
+  
+  # Check if result is already cached
+  if (exists(key, envir = .unrooted_keys_cache, inherits = FALSE)) {
+    return(get(key, envir = .unrooted_keys_cache, inherits = FALSE))
+  }
+  
+  # Calculate result and cache it
+  result <- .UnrootedKeys(nTip)
+  assign(key, result, envir = .unrooted_keys_cache)
+  
+  return(result)
+}
 
 #' @rdname TreeShape
 #' @return `NUnrootedShapes()` returns an object of class `integer64` specifying
