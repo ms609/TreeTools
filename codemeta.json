@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.5.1 (2025-06-13)",
+  "runtimePlatform": "R Under development (unstable) (2025-04-08 r88126 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -298,18 +298,6 @@
     },
     "10": {
       "@type": "SoftwareApplication",
-      "identifier": "R.cache",
-      "name": "R.cache",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=R.cache"
-    },
-    "11": {
-      "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
       "version": ">= 2.3",
@@ -321,7 +309,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
@@ -335,7 +323,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1771.583KB",
+  "fileSize": "1806.2KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",

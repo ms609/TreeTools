@@ -47,7 +47,6 @@ Imports:
     methods,
     PlotTools,
     RCurl,
-    R.cache,
     Rdpack (>= 2.3),
     stringi,
 Suggests:
@@ -78,5 +77,5 @@ ByteCompile: true
 Encoding: UTF-8
 Language: en-GB
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
