@@ -8,14 +8,14 @@
 SupportColour(
   support,
   show1 = TRUE,
-  scale = rev(diverge_hcl(101, h = c(260, 0), c = 100, l = c(50, 90), power = 1)),
+  scale = colorRampPalette(c("#D33F6A", "#e2e2e2", "#4A6FE3"))(101),
   outOfRange = "red"
 )
 
 SupportColor(
   support,
   show1 = TRUE,
-  scale = rev(diverge_hcl(101, h = c(260, 0), c = 100, l = c(50, 90), power = 1)),
+  scale = colorRampPalette(c("#D33F6A", "#e2e2e2", "#4A6FE3"))(101),
   outOfRange = "red"
 )
 }
