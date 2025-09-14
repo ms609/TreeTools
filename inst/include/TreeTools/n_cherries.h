@@ -1,6 +1,7 @@
 #ifndef TreeTools_n_cherries_
 #define TreeTools_n_cherries_
 
+#include <memory>    /* for std::unique_ptr */
 #include <stdexcept> /* for errors */
 #include <vector>
 
@@ -15,11 +16,11 @@ inline int n_cherries(const int* parent,
                       const int n_tip) {
   
   const size_t n_node = n_edge / 2;
-  std::vector<bool> internal(n_node);
+  std::unique_ptr<bool[]> internal(new bool[n_node]());
   
   const bool unrooted = n_edge % 2;
   if (unrooted) {
-    std::vector<bool> is_child(n_node + n_tip + 1);
+    std::unique_ptr<bool[]> is_child(new bool[n_node + n_tip + 1]());
 
     for (size_t ed = 0; ed < n_edge; ++ed) {
       is_child[child[ed]] = true;
@@ -58,8 +59,8 @@ inline int n_cherries(const int* parent,
   }
   
   int n_cherries = 0;
-  for (const auto& is_internal : internal) {
-    if (!is_internal) ++n_cherries;
+  for (size_t i = 0; i < n_node; ++i) {
+    if (!internal[i]) ++n_cherries;
   }
   return n_cherries;
 }
