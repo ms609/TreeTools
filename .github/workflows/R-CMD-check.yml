@@ -114,6 +114,7 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
+            Hmisc@5.0-0
             ggplot2@3.5.2
             pkgKitten@0.2.3
             Matrix@1.6-4
