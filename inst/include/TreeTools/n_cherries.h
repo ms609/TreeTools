@@ -35,7 +35,7 @@ inline int n_cherries(const int* parent,
       throw std::runtime_error("Tree must be acyclic");
     }
     
-    bool root_internal_found;
+    bool root_internal_found = false;
     for (size_t ed = 0; ed < n_edge; ++ed) {
       const int child_i = child[ed];
       if (child_i > n_tip) {
