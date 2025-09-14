@@ -33,7 +33,7 @@ inline int n_cherries(const int* parent,
     }
     
     if (root_node == i_limit) {
-      throw std::runtime_error("Tree must be acyclic");
+      throw std::runtime_error("Tree must be acyclic"); // nocov
     }
     
     bool root_internal_found = false;

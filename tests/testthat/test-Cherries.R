@@ -5,5 +5,7 @@ test_that("Cherries works", {
   expect_error(Cherries(matrix(4, 4, 4)), "edge matrix")
   expect_error(Cherries(1:3), "edge matrix")
   
+  expect_error(n_cherries_wrapper(1:2, 1:3, 4), "same length")
+  
   expect_no_error(Cherries(BalancedTree(144)))
 })
