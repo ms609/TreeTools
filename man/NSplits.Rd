@@ -53,6 +53,7 @@ NSplits(as.Splits(BalancedTree(8)))
 }
 \seealso{
 Other tree properties: 
+\code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},

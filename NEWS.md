@@ -1,5 +1,6 @@
-# TreeTools 1.16.1.9001` (development) #
+# TreeTools 1.16.1.9002` (development) #
 
+- `Cherries()` counts the cherries in a binary tree.
 - New method `as.Splits.integer()`.
 - Fix `RoguePlot(sort = TRUE)`
   [Rogue#33](https://github.com/ms609/Rogue/issues/33).
