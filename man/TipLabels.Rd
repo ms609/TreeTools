@@ -93,6 +93,7 @@ AllTipLabels(c(BalancedTree(4), PectinateTree(8)))
 }
 \seealso{
 Other tree properties: 
+\code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},

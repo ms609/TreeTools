@@ -69,6 +69,10 @@ minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
 
+n_cherries_wrapper <- function(parent, child, nTip) {
+    .Call(`_TreeTools_n_cherries_wrapper`, parent, child, nTip)
+}
+
 path_lengths <- function(edge, weight, init_nas) {
     .Call(`_TreeTools_path_lengths`, edge, weight, init_nas)
 }
