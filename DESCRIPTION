@@ -58,7 +58,7 @@ Suggests:
     TreeSearch,
     vdiffr (>= 1.0.0),
 Config/Needs/benchmark: bench, TreeDist
-Config/Needs/check: rcmdcheck
+Config/Needs/check: rcmdcheck, testthat
 Config/Needs/coverage: covr
 Config/Needs/memcheck: devtools
 Config/Needs/metadata: codemeta
