@@ -141,6 +141,7 @@ jobs:
             knitr@1.33
             rmarkdown@2.10
             sp@1.4-5
+            phangorn?ignore-before-r=4.1.0
 
       - name: Set up R dependencies (Windows)
         if: runner.os == 'Windows'
