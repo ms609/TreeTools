@@ -136,6 +136,7 @@ jobs:
           dependencies: '"hard"'
           extra-packages:
             R6@2.5.1
+            pkgload@1.2.4
             rlang@1.0.2
             testthat@3.0.4
             waldo@0.4.0
