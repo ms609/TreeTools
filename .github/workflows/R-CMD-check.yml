@@ -153,6 +153,11 @@ jobs:
           needs: |
             check
             coverage
+            
+      - name: Show installed R packages
+        run: |
+          Rscript -e 'sessionInfo()'
+          Rscript -e 'installed.packages()[, c("Package", "Version")]'
 
       - name: Set up R dependencies (Non-Windows)
         if: ${{runner.os != 'Windows' && matrix.config.r >= '4.0' }}
@@ -163,6 +168,17 @@ jobs:
           extra-packages:
             phangorn=?ignore-before-r=4.1.0
       
+      - name: Show installed R packages
+        run: |
+          Rscript -e 'sessionInfo()'
+          Rscript -e 'installed.packages()[, c("Package", "Version")]'
+          
+      - name: Debug package requirements
+        run: |
+          Rscript -e 'ip <- as.data.frame(installed.packages()[, c("Package","Version")]); print(ip[ip$Package %in% c("rmarkdown","knitr","xfun","htmltools","tinytex"), ])'
+          Rscript -e 'deps <- tools::package_dependencies("htmltools", db = available.packages(), which = c("Depends","Imports","LinkingTo")); print(deps)'
+          Rscript -e 'cat("rmarkdown DESCRIPTION:\n"); cat(readLines(system.file("DESCRIPTION", package = "rmarkdown")), sep="\n")'
+          
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
 
