@@ -114,8 +114,11 @@ jobs:
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
         run: |
           sudo apt-get install libgsl-dev
-          
-
+      
+      - name: Force CRAN snapshot
+        run: |
+          echo 'options(repos = c(CRAN = "${{ matrix.config.rspm }}"))' >> ~/.Rprofile
+    
       - name: Install vdiffr dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
