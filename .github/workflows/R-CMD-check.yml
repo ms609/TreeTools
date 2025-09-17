@@ -116,6 +116,7 @@ jobs:
           sudo apt-get install libgsl-dev
       
       - name: Force CRAN snapshot
+        if: matrix.config.r < '4.0'
         run: |
           echo 'options(repos = c(CRAN = "${{ matrix.config.rspm }}"))' >> ~/.Rprofile
     
@@ -148,7 +149,7 @@ jobs:
         with:
           dependencies: '"hard"'
           extra-packages:
-            PlotTools=?ignore
+            PlotTools@*?ignore
             waldo@0.4.0
             testthat@3.0.4
             pkgload@1.2.4
