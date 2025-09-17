@@ -138,13 +138,13 @@ jobs:
             pkgload=?ignore
             testthat=?ignore
             waldo?=ignore
-            phangorn=?ignore
             R6@2.5.1
             xfun@0.28
             knitr@1.33
             tinytex@0.33
             rmarkdown@2.10
             sp@1.4-5
+            phangorn=?ignore-before-r=4.1.0
           repos: https://packagemanager.posit.co/cran/2022-04-01
 
       - name: Set up R dependencies (Windows)
@@ -164,22 +164,6 @@ jobs:
           extra-packages:
             phangorn=?ignore-before-r=4.1.0
       
-      - name: Set up R dependencies (Windows)
-        if: runner.os == 'Windows'
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          needs: |
-            check
-            coverage
-                  
-      - name: Set up R dependencies
-        if: runner.os != 'Windows'
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          pandoc-version: "latest"
-          needs: |
-            check
-
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
 
