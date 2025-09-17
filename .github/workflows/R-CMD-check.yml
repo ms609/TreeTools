@@ -115,11 +115,6 @@ jobs:
         run: |
           sudo apt-get install libgsl-dev
       
-      - name: Force CRAN snapshot
-        if: matrix.config.r < '4.0'
-        run: |
-          echo 'options(repos = c(CRAN = "${{ matrix.config.rspm }}"))' >> ~/.Rprofile
-    
       - name: Install vdiffr dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
@@ -133,11 +128,6 @@ jobs:
           R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
           rm -rf vdiffr-src
           
-      - name: Install recent packages (R3.x)
-        if: matrix.config.r < '4.0'
-        run: |
-          Rscript -e "install.packages('PlotTools', repos = 'https://packagemanager.posit.co/cran/__linux__/noble/latest')"
-
       - name: Show installed R packages
         run: |
           Rscript -e 'sessionInfo()'
@@ -149,7 +139,7 @@ jobs:
         with:
           dependencies: '"hard"'
           extra-packages:
-            PlotTools@*?ignore
+            PlotTools=?ignore
             waldo@0.4.0
             testthat@3.0.4
             pkgload@1.2.4
