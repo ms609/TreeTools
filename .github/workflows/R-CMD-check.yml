@@ -119,7 +119,7 @@ jobs:
       - name: Install vdiffr dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
-          Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','waldo','testthat','xml2','cpp11', 'rcmdcheck', 'pkgload'), repos = 'https://packagemanager.posit.co/cran/2021-08-02')"
+          Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','testthat','xml2','cpp11', 'rcmdcheck'), repos = 'https://packagemanager.posit.co/cran/2021-08-02')"
 
       - name: Install vdiffr patched (R 3.x)
         if: matrix.config.r < '4.0'
@@ -145,7 +145,6 @@ jobs:
             rmarkdown@2.10
             sp@1.4-5
             phangorn=?ignore-before-r=4.1.0
-          repos: https://packagemanager.posit.co/cran/2022-04-01
 
       - name: Set up R dependencies (Windows)
         if: runner.os == 'Windows'
