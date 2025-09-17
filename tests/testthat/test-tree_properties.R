@@ -65,7 +65,7 @@ test_that("Rooting and partition counting", {
   expect_equal(NPartitions(list(tree8, UnrootTree(tree8))), c(5L, 5L))
   expect_equal(NPartitions(c(8, 8)), c(5L, 5L))
   expect_equal(NSplits("((a, b), (c, (d, e)));"), 2L)
-  expect_equal(NSplits("a;"), 0L)
+  
   emptyTree <- structure(
     list(edge = structure(numeric(0), dim = c(0L, 2L)),
          tip.label = character(0), Nnode = 0),
@@ -76,6 +76,8 @@ test_that("Rooting and partition counting", {
   expect_equal(NSplits(letters[1:6]), 3L)
   expect_error(NPartitions(raw(1)),
                "no applicable method")
+  skip_if_not_installed("ape", "5.6-3")
+  expect_equal(NSplits("a;"), 0L)
 })
 
 test_that("NTip() works", {
