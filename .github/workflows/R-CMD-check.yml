@@ -144,6 +144,8 @@ jobs:
             waldo@0.4.0
             testthat@3.0.4
             pkgload@1.2.4
+            pkgdown@2.0.1
+            bslib@0.3.1
             R6@2.5.1
             xfun@0.28
             knitr@1.33
