@@ -61,6 +61,9 @@ MSTLength <- function(distances, mst = NULL) {
 MinimumSpanningTree <- function(distances) UseMethod("MinimumSpanningTree")
 
 #' @export
+MinimumSpanningTree.NULL <- function(distances) NULL
+
+#' @export
 MinimumSpanningTree.dist <- function(distances) {
   minimum_spanning_tree(order(distances, decreasing = TRUE) - 1L)
 }

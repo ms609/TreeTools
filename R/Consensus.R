@@ -120,6 +120,9 @@ ConsensusWithout.phylo <- function(trees, tip = character(0), ...) {
   DropTip(trees, tip = tip)
 }
 
+#' @export
+ConsensusWithout.NULL <- function(trees, tip, ...) NULL
+
 #' @rdname ConsensusWithout
 #' @export
 ConsensusWithout.multiPhylo <- function(trees, tip = character(0), ...) {

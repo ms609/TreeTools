@@ -57,6 +57,9 @@ NodeDepth <- function(x, shortest = FALSE, includeTips = TRUE) {
 }
 
 #' @export
+NodeDepth.NULL <- function(x, shortest = FALSE, includeTips = TRUE) NULL
+
+#' @export
 NodeDepth.list <- function(x, shortest = FALSE, includeTips = TRUE) {
   lapply(x, NodeDepth, shortest = shortest, includeTips = includeTips)
 }
@@ -209,6 +212,8 @@ NodeOrder <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
   UseMethod("NodeOrder")
 }
 
+#' @export
+NodeOrder.NULL <- function(x, includeAncestor = TRUE, internalOnly = FALSE) NULL
 
 #' @export
 NodeOrder.list <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
@@ -537,6 +542,9 @@ TreeIsRooted <- function(tree) {
 #'
 #' @export
 RootNode <- function(x) UseMethod("RootNode")
+
+#' @export
+RootNode.NULL <- function(x) NULL
 
 #' @export
 RootNode.phylo <- function(x) {

@@ -140,6 +140,9 @@ as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 
 .TTBases <- function (n) .TT_BASE[length(.TT_BASE) - n + seq_len(n)]
 
+#' @export
+as.TreeNumber.NULL <- function(x, ...) NULL
+
 #' @rdname TreeNumber
 #' @export
 as.TreeNumber.phylo <- function(x, ...) {
@@ -412,6 +415,9 @@ as.MixedBase <- function(x, ...) UseMethod("as.MixedBase")
 #' @rdname TreeNumber
 #' @export
 as.MixedBase.MixedBase <- function(x, ...) x
+
+#' @export
+as.MixedBase.NULL <- function(x, ...) NULL
 
 #' @rdname TreeNumber
 #' @export

@@ -367,6 +367,10 @@ PostorderOrder.phylo <- function(tree) {
          postorder_order(edge))
 }
 
+#' @export
+PostorderOrder.NULL <- function(tree) NULL
+  
+  
 #' @rdname Reorder
 #' @export
 PostorderOrder.numeric <- function(tree) {
