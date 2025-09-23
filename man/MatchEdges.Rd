@@ -48,6 +48,7 @@ Other tree navigation:
 \code{\link{RootNode}()}
 
 Other tree properties: 
+\code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{LongBranch}()},
 \code{\link{NSplits}()},

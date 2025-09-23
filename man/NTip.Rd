@@ -41,6 +41,7 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 }
 \seealso{
 Other tree properties: 
+\code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
