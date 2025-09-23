@@ -6,9 +6,6 @@
 #' a logical vector indicating whether there is a match or not for each
 #' split in its left operand.
 #'
-#' `in.Splits()` is an alias for `%in%`, included for backwards compatibility.
-#' It is deprecated and will be removed in a future release.
-#'
 #' @param x,table Object of class `Splits`.
 #' @param nomatch Integer value that will be used in place of `NA` in the case
 #' where no match is found.

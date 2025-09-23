@@ -247,7 +247,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
                              fat, thin),
          ...)
     if (legend != "none") {
-      PlotTools::SpectrumLegend(
+      SpectrumLegend(
         legend,
         bty = "n",
         palette = pal,

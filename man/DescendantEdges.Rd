@@ -3,7 +3,6 @@
 \name{DescendantEdges}
 \alias{DescendantEdges}
 \alias{DescendantTips}
-\alias{AllDescendantEdges}
 \title{Identify descendant edges}
 \usage{
 DescendantEdges(
@@ -16,8 +15,6 @@ DescendantEdges(
 )
 
 DescendantTips(parent, child, edge = NULL, node = NULL, nEdge = length(parent))
-
-AllDescendantEdges(parent, child, nEdge = length(parent))
 }
 \arguments{
 \item{parent}{Integer vector corresponding to the first column of the edge
@@ -48,11 +45,6 @@ or one of its descendants.
 
 \code{DescendantTips()} returns a logical vector stating whether each
 leaf in turn is a descendant of the specified edge.
-
-\code{AllDescendantEdges()} is deprecated; use \code{DescendantEdges()}
-instead.
-It returns a matrix of class logical, with row \emph{N} specifying whether each
-edge is a descendant of edge \emph{N} (or the edge itself).
 }
 \description{
 \code{DescendantEdges()} efficiently identifies edges that are "descended" from

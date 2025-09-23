@@ -237,7 +237,7 @@ UnrootedTreeKey <- function(tree, asInteger = FALSE) {
 .unrooted_keys_cache <- new.env(parent = emptyenv())
 
 #' @rdname TreeShape
-#' @param \dots Depreciated (2025-09); retained for backward compatibility.
+#' @param \dots Deprecated (2025-09); retained for backward compatibility.
 #' @return `UnrootedKeys()` returns a vector of integers corresponding to the
 #' keys (not shape numbers) of unrooted tree shapes with `nTip` tips.
 #' It is a wrapper to `.UnrootedKeys()`, with memoization, meaning that results
