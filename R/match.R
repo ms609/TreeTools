@@ -55,16 +55,6 @@ setMethod("match",
             }, integer(1))
           })
 
-# Replaces a previous approach (TreeTools <= 1.6.0) that followed
-# https://github.com/cran/bit64/blob/master/R/patch64.R
-
-
-#' @rdname match.Splits
-in.Splits <- function(x, table) {
-  .Deprecated("%in%")
-  .in.Splits(x, table)
-}
-
 .in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]
 }

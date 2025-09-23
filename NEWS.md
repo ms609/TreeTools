@@ -6,7 +6,8 @@
 - Add methods for `NULL` objects.
 - Require R 3.6
 - Remove R.cache dependency: `UnrootedKeys()` now uses a native cache implementation.
-- Remove deprecated functions `TreeSplits()`, `ForestSplits()`, `SplitNumber()`.
+- Remove deprecated functions `TreeSplits()`, `ForestSplits()`, `SplitNumber()`,
+  `in.Splits()`.
 
 
 # TreeTools 1.16.1 (2025-08-24) #
