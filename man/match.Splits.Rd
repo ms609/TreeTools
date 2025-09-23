@@ -31,10 +31,6 @@ its first argument in its second.
 a logical vector indicating whether there is a match or not for each
 split in its left operand.
 }
-\details{
-\code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatibility.
-It is deprecated and will be removed in a future release.
-}
 \examples{
 splits1 <- as.Splits(BalancedTree(7))
 splits2 <- as.Splits(PectinateTree(7))
