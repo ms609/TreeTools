@@ -40,9 +40,58 @@ on:
 name: R-CMD-check
 
 jobs:
-  R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
+  check-release:
+    runs-on: ubuntu-24.04
+    name: ubuntu (R release)
 
+    env:
+      _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
+      _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      _R_CHECK_THINGS_IN_CHECK_DIR_: false
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: "https://packagemanager.posit.co/cran/__linux__/noble/latest"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v5
+
+      - name: Temporarily bump package version
+        run: |
+          old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
+          if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
+            new_version="${old_version}.9999"
+            if [[ "$RUNNER_OS" == "macOS" ]]; then
+              sed -i "" "s/Version: .*/Version: ${new_version}/" DESCRIPTION
+            else
+              sed -i "s/Version: .*/Version: ${new_version}/" DESCRIPTION
+            fi
+          fi
+          echo "Current package version is now: $(grep "Version:" DESCRIPTION | awk '{print $2}')"
+        shell: bash
+        
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+        
+      - name: Install apt packages
+        run: |
+          sudo apt-get install texlive-latex-base texlive-fonts-recommended
+
+      - name: Set up R dependencies (Non-Windows)
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: |
+            check
+
+      - name: Check package
+        uses: r-lib/actions/check-r-package@v2
+
+  check-all:
+    runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
     strategy:
@@ -53,7 +102,6 @@ jobs:
           - {os: macOS-latest, r: 'release'}
           - {os: ubuntu-24.04, r: '3.6', rspm: "https://packagemanager.posit.co/cran/2022-10-11"}
           - {os: ubuntu-24.04, r: '4.0', rspm: "https://packagemanager.posit.co/cran/2022-10-11"}
-          - {os: ubuntu-24.04, r: 'release', rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
           - {os: ubuntu-24.04, r: 'devel', rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
 
     env:
@@ -71,7 +119,7 @@ jobs:
 
     steps:
       - name: Checkout git repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Temporarily bump package version
         run: |
@@ -188,3 +236,33 @@ jobs:
               issue_number: 170,
               body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             });
+
+  rev-dep-check:
+    runs-on: ubuntu-latest
+    needs: check-release
+
+    name: revdepcheck
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {deps: '"Depends"'}
+          - {deps: '"Suggests"'}
+          - {deps: '"Imports"'}
+          - {deps: '"LinkingTo"'}
+
+    env:
+      _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
+      _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      _R_CHECK_THINGS_IN_CHECK_DIR_: false
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: ms609/actions/revdepcheck@main
+        with:
+          deps: ${{ matrix.config.deps }}
