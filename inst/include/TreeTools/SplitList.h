@@ -25,18 +25,6 @@ using splitbit = uint_fast64_t;
   splitbit(x(split, ((bin) * input_bins_per_bin) + (offset)))
 #define INBIN(r_bin, bin) ((INSUBBIN((bin), (r_bin))) << (R_BIN_SIZE * (r_bin)))
 
-// Retained for backward compatibility; not required since 1.15.0.9006
-#define TREETOOLS_SPLITLIST_INIT __attribute__((constructor))  \
-void _treetools_initialize_bitcounts() {                       \
-  for (int i = 65536; i--; ) {                                 \
-    int16 n_bits = 0;                                          \
-    for (int j = 16; j--; ) {                                  \
-      if (i & (1 << j)) n_bits += 1;                           \
-    }                                                          \
-    TreeTools::bitcounts[i] = n_bits;                          \
-  }                                                            \
-}                                                              \
-  
 namespace TreeTools {
 
   constexpr int input_bins_per_bin = SL_BIN_SIZE / R_BIN_SIZE;

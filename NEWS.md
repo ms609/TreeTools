@@ -9,6 +9,7 @@
 - Remove deprecated functions `TreeSplits()`, `ForestSplits()`, `SplitNumber()`,
   `in.Splits()`, `AllDescendantEdges()`, `PhylogeneticInfo()`,
   `.EnforceOutgroup()`, `SpectrumLegend()`.
+- Remove deprecated C++ macro `TREETOOLS_SPLITLIST_INIT`.
 
 
 # TreeTools 1.16.1 (2025-08-24) #
