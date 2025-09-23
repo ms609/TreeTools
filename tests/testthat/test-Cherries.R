@@ -7,5 +7,6 @@ test_that("Cherries works", {
   
   expect_error(n_cherries_wrapper(1:2, 1:3, 4), "same length")
   
+  skip_if_not_installed("testthat", "3.1.5") # for expect_no_error
   expect_no_error(Cherries(BalancedTree(144)))
 })
