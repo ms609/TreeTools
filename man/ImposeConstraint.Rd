@@ -54,7 +54,6 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
-\code{\link{EnforceOutgroup}()},
 \code{\link{KeptPaths}()},
 \code{\link{KeptVerts}()},
 \code{\link{LeafLabelInterchange}()},

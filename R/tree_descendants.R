@@ -100,19 +100,6 @@ DescendantTips <- function(parent, child, edge = NULL,
   }
 }
 
-#' @rdname DescendantEdges
-#'
-#' @return `AllDescendantEdges()` is deprecated; use `DescendantEdges()`
-#' instead.
-#' It returns a matrix of class logical, with row _N_ specifying whether each
-#' edge is a descendant of edge _N_ (or the edge itself).
-#'
-#' @export
-AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
-  .Deprecated("DescendantEdges")
-  .AllDescendantEdges(parent, child, nEdge)
-}
-
 .AllDescendantEdges <- function(parent, child, nEdge = length(parent)) {
   ret <- diag(nEdge) == 1
   blankLogical <- logical(nEdge)

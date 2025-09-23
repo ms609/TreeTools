@@ -482,75 +482,7 @@ ConstrainedNJ <- function(dataset, constraint, weight = 1L,
   tree
 }
 
-#nocov begin
-#' Generate a tree with a specified outgroup
-#'
-#' **Deprecated.** This function will be removed in a future version of
-#' \pkg{TreeTools}.
-#' Use `RootTree()` instead.
-#'
-#' Given a tree or a list of taxa, `EnforceOutgroup()` rearranged the ingroup
-#' and outgroup taxa such that the two are sister taxa across the root, without
-#' changing the relationships within the ingroup or within the outgroup.
-#'
-#' @param tree Either a tree of class \code{phylo}; or (for `EnforceOutgroup()`)
-#' a character vector listing the names of all the taxa in the tree, from which
-#' a random tree will be generated.
-#' @param outgroup Character vector containing the names of taxa to include in
-#' the outgroup.
-#'
-#' @return `EnforceOutgroup()` returned a tree of class `phylo` where all
-#' outgroup taxa are sister to all remaining taxa, without modifying the
-#' ingroup topology.
-#'
-# @examples
-# tree <- EnforceOutgroup(letters[1:9], letters[1:3])
-# plot(tree)
-#
-#' @seealso For a more robust implementation, see [`RootTree()`], which will
-#' eventually replace this function
-#' ([#30](https://github.com/ms609/TreeTools/issues/30)).
-#'
-#' @template MRS
-#' @family tree manipulation
-#' @export
-EnforceOutgroup <- function(tree, outgroup) UseMethod("EnforceOutgroup")
-
-#' @importFrom ape bind.tree
-.EnforceOutgroup <- function(tree, outgroup, taxa) {
-  .Deprecated("RootTree")
-  if (length(outgroup) == 1L) {
-    return(RootTree(tree, outgroup))
-  }
-
-  ingroup <- taxa[!(taxa %fin% outgroup)]
-  if (!all(outgroup %fin% taxa) ||
-      length(ingroup) + length(outgroup) != length(taxa)) {
-    stop("All outgroup taxa must occur in tree")
-  }
-
-  ingroup.branch <- DropTip(tree, outgroup)
-  outgroup.branch <- DropTip(tree, ingroup)
-
-  result <- RootTree(bind.tree(outgroup.branch, ingroup.branch, 0, 1),
-                     outgroup)
-  RenumberTips(Renumber(result), taxa)
-}
-
-#' @rdname EnforceOutgroup
-#' @export
-EnforceOutgroup.phylo <- function(tree, outgroup) {
-  .EnforceOutgroup(tree, outgroup, tree[["tip.label"]])
-}
-
-#' @rdname EnforceOutgroup
-#' @export
-EnforceOutgroup.character <- function(tree, outgroup) {
-  taxa <- tree
-  .EnforceOutgroup(RandomTree(taxa, taxa[1]), outgroup, taxa)
-}
-#nocov end
-
+# Wrap an edge matrix as a tree in preorder
 .PreorderTree <- function(edge,
                           tip.label,
                           Nnode =  dim(edge)[[1]] + 1 - length(tip.label)) {

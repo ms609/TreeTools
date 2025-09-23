@@ -7,7 +7,8 @@
 - Require R 3.6
 - Remove R.cache dependency: `UnrootedKeys()` now uses a native cache implementation.
 - Remove deprecated functions `TreeSplits()`, `ForestSplits()`, `SplitNumber()`,
-  `in.Splits()`.
+  `in.Splits()`, `AllDescendantEdges()`, `PhylogeneticInfo()`,
+  `.EnforceOutgroup()`.
 
 
 # TreeTools 1.16.1 (2025-08-24) #

@@ -2,14 +2,11 @@
 % Please edit documentation in R/match.R
 \name{match,Splits,Splits-method}
 \alias{match,Splits,Splits-method}
-\alias{in.Splits}
 \alias{match}
 \alias{\%in\%,Splits,Splits-method}
 \title{Split matching}
 \usage{
 \S4method{match}{Splits,Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
-
-in.Splits(x, table)
 
 match(x, table, nomatch = NA_integer_, incomparables = NULL)
 

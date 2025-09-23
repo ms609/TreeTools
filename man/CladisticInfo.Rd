@@ -2,18 +2,14 @@
 % Please edit documentation in R/tree_information.R
 \name{CladisticInfo}
 \alias{CladisticInfo}
-\alias{PhylogeneticInfo}
 \alias{CladisticInfo.phylo}
 \alias{CladisticInfo.Splits}
 \alias{CladisticInfo.list}
 \alias{CladisticInfo.multiPhylo}
-\alias{PhylogeneticInformation}
 \alias{CladisticInformation}
 \title{Cladistic information content of a tree}
 \usage{
 CladisticInfo(x)
-
-PhylogeneticInfo(x)
 
 \method{CladisticInfo}{phylo}(x)
 
@@ -22,8 +18,6 @@ PhylogeneticInfo(x)
 \method{CladisticInfo}{list}(x)
 
 \method{CladisticInfo}{multiPhylo}(x)
-
-PhylogeneticInformation(x)
 
 CladisticInformation(x)
 }
