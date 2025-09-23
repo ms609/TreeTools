@@ -19,7 +19,7 @@ edge, after Klopfstein and Spasojevic (2019)
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ edge, after Klopfstein and Spasojevic (2019)
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Visualize position of rogue taxa</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.16.1/R/RoguePlot.R" class="external-link"><code>R/RoguePlot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/RoguePlot.R" class="external-link"><code>R/RoguePlot.R</code></a></small>
       <div class="d-none name"><code>RoguePlot.Rd</code></div>
     </div>
 
@@ -151,7 +151,8 @@ by which the legend's position should be inset.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>RoguePlot()</code> invisibly returns a list whose elements are:</p><ul><li><p><code>cons</code>: The reduced consensus tree, in preorder;</p></li>
+    <p><code>RoguePlot()</code> invisibly returns a list whose elements are:</p><ul><li><p><code>cons</code>: The reduced consensus tree, sorted if <code>sort = TRUE</code>, otherwise
+in preorder;</p></li>
 <li><p><code>onEdge</code>: a vector of integers specifying the number of
 trees in <code>trees</code> in which the rogue leaf is attached to each edge in turn
 of the consensus tree;</p></li>

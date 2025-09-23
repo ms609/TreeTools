@@ -19,7 +19,7 @@ DescendantTips() efficiently identifies leaves (external nodes) that are
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ DescendantTips() efficiently identifies leaves (external nodes) that are
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Identify descendant edges</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.16.1/R/tree_descendants.R" class="external-link"><code>R/tree_descendants.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/tree_descendants.R" class="external-link"><code>R/tree_descendants.R</code></a></small>
       <div class="d-none name"><code>DescendantEdges.Rd</code></div>
     </div>
 
@@ -69,9 +69,7 @@ edges in a tree.</p>
 <span>  includeSelf <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">DescendantTips</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, edge <span class="op">=</span> <span class="cn">NULL</span>, node <span class="op">=</span> <span class="cn">NULL</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">AllDescendantEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">DescendantTips</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, edge <span class="op">=</span> <span class="cn">NULL</span>, node <span class="op">=</span> <span class="cn">NULL</span>, nEdge <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">parent</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -118,10 +116,6 @@ edge in turn is the specified edge (if <code>includeSelf = TRUE</code>)
 or one of its descendants.</p>
 <p><code>DescendantTips()</code> returns a logical vector stating whether each
 leaf in turn is a descendant of the specified edge.</p>
-<p><code>AllDescendantEdges()</code> is deprecated; use <code>DescendantEdges()</code>
-instead.
-It returns a matrix of class logical, with row <em>N</em> specifying whether each
-edge is a descendant of edge <em>N</em> (or the edge itself).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

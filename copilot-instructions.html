@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>TreeTools R Package Development</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.16.1/.github/copilot-instructions.md" class="external-link"><code>.github/copilot-instructions.md</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/.github/copilot-instructions.md" class="external-link"><code>.github/copilot-instructions.md</code></a></small>
     </div>
 
 <div id="treetools-r-package-development" class="section level1">
@@ -63,7 +63,7 @@
 </li>
 <li>
 <p>Install TreeTools dependencies:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">sudo</span> R <span class="at">-e</span> <span class="st">"install.packages(c('ape', 'bit64', 'lifecycle', 'colorspace', 'fastmatch', 'RCurl', 'R.cache', 'Rdpack', 'stringi', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">sudo</span> R <span class="at">-e</span> <span class="st">"install.packages(c('ape', 'bit64', 'lifecycle', 'fastmatch', 'RCurl', 'Rdpack', 'stringi', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"</span></span></code></pre></div>
 </li>
 </ul></div>
 <div class="section level3">
@@ -119,6 +119,10 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">R</span> <span class="at">-e</span> <span class="st">"devtools::build_vignettes(install = FALSE)"</span></span></code></pre></div>
 </li>
 </ul></div>
+<div class="section level3">
+<h3 id="key-dependencies">Key Dependencies<a class="anchor" aria-label="anchor" href="#key-dependencies"></a></h3>
+<p><strong>Critical</strong>: TreeTools requires these packages to build successfully: - <code>ape</code> (&gt;= 5.0) - Phylogenetic analysis package - <code>Rcpp</code> (&gt;= 1.0.8) - C++ integration - <code>Rdpack</code> (&gt;= 0.7) - Bibliography and citation support</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a></h2>
@@ -132,7 +136,12 @@
 <li>
 <p>Memory checking is available but optional (takes significant time):</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="ex">R</span> <span class="at">-d</span> <span class="st">"valgrind --tool=memcheck --leak-check=full"</span> <span class="at">--vanilla</span> <span class="op">&lt;</span> memcheck/tests.R</span></code></pre></div>
-</li>
+<p><strong>Note</strong>: Memory check scripts available in <code>memcheck/</code> directory:</p>
+<ul><li>
+<code>memcheck/tests.R</code> - Run test suite with valgrind</li>
+<li>
+<code>memcheck/all.R</code> - Run tests, examples, and build vignettes with memory checking</li>
+</ul></li>
 </ul></div>
 <div class="section level2">
 <h2 id="validation-scenarios">Validation Scenarios<a class="anchor" aria-label="anchor" href="#validation-scenarios"></a></h2>
@@ -231,6 +240,8 @@
 <code>NEWS.md</code> - Version history (update for user-facing changes)</li>
 <li>
 <code>tests/testthat.R</code> - Test runner entry point</li>
+<li>
+<code>inst/_pkgdown.yml</code> - template for online documentation. (Check that new functions are registered here, ideally using <code>@family</code>)</li>
 </ul></div>
 </div>
 <div class="section level2">
@@ -261,6 +272,21 @@
 <li>Use Oxford ending ‘ize’ (not ‘ise’) and UK spelling where applicable</li>
 <li>Document functions with roxygen2 comments</li>
 <li>Include test cases for new functionality</li>
+</ul></div>
+<div class="section level3">
+<h3 id="cicd-workflows-available">CI/CD Workflows Available<a class="anchor" aria-label="anchor" href="#cicd-workflows-available"></a></h3>
+<ul><li>
+<strong>R-CMD-check.yml</strong>: Comprehensive checks on Windows, macOS, Ubuntu across R versions</li>
+<li>
+<strong>benchmark.yml</strong>: Performance regression testing triggered on PRs</li>
+<li>
+<strong>memcheck.yml</strong>: Memory checking with valgrind (runs <code>tests</code>, <code>examples</code>, <code>vignettes</code>)</li>
+<li>
+<strong>ASan.yml</strong>: Address sanitizer checks</li>
+<li>
+<strong>pkgdown.yml</strong>: Documentation site generation.</li>
+<li>
+<strong>revdepcheck.yml</strong>: Downstream dependency validation</li>
 </ul></div>
 <div class="section level3">
 <h3 id="ci-will-fail-if">CI Will Fail If<a class="anchor" aria-label="anchor" href="#ci-will-fail-if"></a></h3>

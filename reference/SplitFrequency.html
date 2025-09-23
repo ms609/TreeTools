@@ -19,7 +19,7 @@ or bootstrap trees.'><!-- Global site tag (gtag.js) - Google Analytics --><scrip
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ or bootstrap trees.'><!-- Global site tag (gtag.js) - Google Analytics --><scrip
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Frequency of splits</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.16.1/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/Support.R" class="external-link"><code>R/Support.R</code></a></small>
       <div class="d-none name"><code>SplitFrequency.Rd</code></div>
     </div>
 
@@ -60,13 +60,7 @@ or bootstrap trees.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, <span class="va">forest</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">SplitNumber</span><span class="op">(</span><span class="va">tips</span>, <span class="va">tree</span>, <span class="va">tipIndex</span>, <span class="va">powersOf2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">ForestSplits</span><span class="op">(</span><span class="va">forest</span>, <span class="va">powersOf2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">TreeSplits</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, <span class="va">forest</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,24 +77,6 @@ or bootstrap trees.</p>
 <a href="https://ms609.github.io/TreeTools/articles/load-trees.html">vignette</a> for
 possible methods of loading trees into R.</p></dd>
 
-
-<dt id="arg-tips">tips<a class="anchor" aria-label="anchor" href="#arg-tips"></a></dt>
-<dd><p>Integer vector specifying the tips of the tree within the chosen
-split.</p></dd>
-
-
-<dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
-<dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
-
-
-<dt id="arg-tipindex">tipIndex<a class="anchor" aria-label="anchor" href="#arg-tipindex"></a></dt>
-<dd><p>Character vector of tip names, in a fixed order.</p></dd>
-
-
-<dt id="arg-powersof-">powersOf2<a class="anchor" aria-label="anchor" href="#arg-powersof-"></a></dt>
-<dd><p>Integer vector of same length as <code>tipIndex</code>, specifying a
-power of 2 to be associated with each tip in turn.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -116,14 +92,6 @@ split; see the example for how these might be plotted on a tree.</p>
     <p>If multiple calculations are required, some time can be saved by using the
 constituent functions (see examples).</p>
     </div>
-    <div class="section level2">
-    <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
-
-<ul><li><p><code>SplitNumber()</code>: Assign a unique integer to each split</p></li>
-<li><p><code>ForestSplits()</code>: Frequency of splits in a given forest of trees</p></li>
-<li><p><code>TreeSplits()</code>: Deprecated. Listed the splits in a given tree.
-Use as.Splits instead.</p></li>
-</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Splits operations:

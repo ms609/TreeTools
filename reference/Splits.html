@@ -15,7 +15,7 @@ its constituent bipartition splits."><!-- Global site tag (gtag.js) - Google Ana
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.16.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ its constituent bipartition splits."><!-- Global site tag (gtag.js) - Google Ana
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Convert object to <code>Splits</code></h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/1.16.1/R/Splits.R" class="external-link"><code>R/Splits.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/Splits.R" class="external-link"><code>R/Splits.R</code></a></small>
       <div class="d-none name"><code>Splits.Rd</code></div>
     </div>
 
@@ -71,6 +71,12 @@ its constituent bipartition splits.</p>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
 <span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for class 'integer'</span></span>
+<span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'numeric'</span></span>
+<span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># S3 method for class 'logical'</span></span>
 <span><span class="fu">as.Splits</span><span class="op">(</span><span class="va">x</span>, tipLabels <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -88,8 +94,10 @@ its constituent bipartition splits.</p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>Object to convert into splits: perhaps a tree of class
 <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.
-If a logical matrix is provided, each row will be considered as a
-separate split.</p></dd>
+If a logical matrix is provided, each row will be considered as a separate
+split.
+If an integer matrix is provided, entries assigned the same integer will
+be assigned to the same split.</p></dd>
 
 
 <dt id="arg-tiplabels">tipLabels<a class="anchor" aria-label="anchor" href="#arg-tiplabels"></a></dt>
