@@ -62,6 +62,9 @@ TipsInSplits.phylo <- function(splits, keep.names = TRUE, smallest = FALSE,
 #' @export
 SplitImbalance <- function(splits, keep.names = TRUE, ...) UseMethod("SplitImbalance")
 
+#' @export
+SplitImbalance.NULL <- function(splits, keep.names, ...) NULL
+  
 #' @rdname TipsInSplits
 #' @export
 SplitImbalance.Splits <- function(splits, keep.names = TRUE, ...) {

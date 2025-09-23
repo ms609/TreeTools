@@ -367,6 +367,9 @@ TipLabels.phyDat <- function(x, single = TRUE) names(x)
 #' @export
 AllTipLabels <- function(x) UseMethod("AllTipLabels")
 
+#' @export
+AllTipLabels.NULL <- function(x) NULL
+
 #' @rdname TipLabels
 #' @export
 AllTipLabels.list <- function(x) {

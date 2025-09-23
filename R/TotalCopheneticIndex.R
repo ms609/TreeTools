@@ -79,6 +79,9 @@ TotalCopheneticIndex <- function(x) UseMethod("TotalCopheneticIndex")
   depth
 }
 
+#' @export
+TotalCopheneticIndex.NULL <- function(x) NULL
+
 #' @importFrom fastmatch %fin%
 #' @export
 TotalCopheneticIndex.phylo <- function(x) {

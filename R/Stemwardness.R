@@ -58,6 +58,9 @@
 #' @export
 SisterSize <- function(tree, tip) UseMethod("SisterSize", tip)
 
+#' @export
+SisterSize.NULL <- function(tree, tip) NULL
+
 #' @rdname Stemwardness
 #' @export
 SisterSize.numeric <- function(tree, tip) {
@@ -78,6 +81,9 @@ SisterSize.character <- function(tree, tip) {
 #' @rdname Stemwardness
 #' @export
 RootNodeDistance <- function(tree, tip) UseMethod("RootNodeDistance", tip)
+
+#' @export
+RootNodeDistance.NULL <- function(tree, tip) NULL
 
 #' @rdname Stemwardness
 #' @export

@@ -511,6 +511,9 @@ MakeTreeBinary <- function(tree) {
 }
 
 #' @export
+MakeTreeBinary.NULL <- function(tree) NULL
+
+#' @export
 MakeTreeBinary.phylo <- function(tree) {
   tree <- Preorder(`[[<-`(tree, "edge.length", NULL))
   degree <- NodeOrder(tree, internalOnly = TRUE)

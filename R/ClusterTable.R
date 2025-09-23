@@ -74,6 +74,10 @@ as.ClusterTable.list <- function(x, tipLabels = NULL, ...) {
 #' @export
 as.ClusterTable.multiPhylo <- as.ClusterTable.list
 
+#' @keywords internal
+#' @export
+as.ClusterTable.NULL <- function(x, tipLabels = NULL, ...) NULL
+
 #' S3 methods for `ClusterTable` objects
 #' 
 #' S3 methods for [`ClusterTable`] objects.

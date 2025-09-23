@@ -50,6 +50,10 @@ SortTree <- function(tree, how = "cladesize", order = TipLabels(tree)) {
   UseMethod("SortTree")
 }
 
+
+#' @export
+SortTree.NULL <- function(tree, how, order) NULL
+
 #' @export
 #' @rdname SortTree
 SortTree.phylo <- function(tree, how = "cladesize", order = TipLabels(tree)) {
