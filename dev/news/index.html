@@ -51,7 +51,8 @@
 <li>Add methods for <code>NULL</code> objects.</li>
 <li>Require R 3.6</li>
 <li>Remove R.cache dependency: <code><a href="../reference/TreeShape.html">UnrootedKeys()</a></code> now uses a native cache implementation.</li>
-<li>Remove deprecated functions <code>TreeSplits()</code>, <code>ForestSplits()</code>, <code>SplitNumber()</code>, <code><a href="../reference/match.Splits.html">in.Splits()</a></code>.</li>
+<li>Remove deprecated functions <code>TreeSplits()</code>, <code>ForestSplits()</code>, <code>SplitNumber()</code>, <code>in.Splits()</code>, <code>AllDescendantEdges()</code>, <code>PhylogeneticInfo()</code>, <code>.EnforceOutgroup()</code>, <code>SpectrumLegend()</code>.</li>
+<li>Remove deprecated C++ macro <code>TREETOOLS_SPLITLIST_INIT</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.16.1" id="treetools-1161-2025-08-24">TreeTools 1.16.1 (2025-08-24)<a class="anchor" aria-label="anchor" href="#treetools-1161-2025-08-24"></a></h2><p class="text-muted">CRAN release: 2025-08-24</p>
@@ -187,9 +188,9 @@
 <h3 id="deprecations-and-breaking-changes-1-10-0">Deprecations and breaking changes<a class="anchor" aria-label="anchor" href="#deprecations-and-breaking-changes-1-10-0"></a></h3>
 <ul><li>Change order of parameters in <code><a href="../reference/DescendantEdges.html">DescendantEdges()</a></code>
 </li>
-<li>Deprecate <code><a href="../reference/DescendantEdges.html">AllDescendantEdges()</a></code>; use <code><a href="../reference/DescendantEdges.html">DescendantEdges()</a></code> instead.</li>
-<li>Deprecate <code><a href="../reference/EnforceOutgroup.html">EnforceOutgroup()</a></code>; use <code><a href="../reference/RootTree.html">RootTree()</a></code> instead.</li>
-<li>Remove <code>NonDuplicateRoot()</code> and <code><a href="../reference/match.Splits.html">in.Splits()</a></code>.</li>
+<li>Deprecate <code>AllDescendantEdges()</code>; use <code><a href="../reference/DescendantEdges.html">DescendantEdges()</a></code> instead.</li>
+<li>Deprecate <code>EnforceOutgroup()</code>; use <code><a href="../reference/RootTree.html">RootTree()</a></code> instead.</li>
+<li>Remove <code>NonDuplicateRoot()</code> and <code>in.Splits()</code>.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -199,7 +200,7 @@
 <li>Add <code>legend</code> parameter to <code><a href="../reference/RoguePlot.html">RoguePlot()</a></code>.</li>
 <li>
 <code><a href="../reference/RoguePlot.html">RoguePlot()</a></code> now returns invisibly.</li>
-<li>Deprecate <code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> – spun off to separate <a href="https://ms609.github.io/PlotTools/" class="external-link">“PlotTools”</a> package.</li>
+<li>Deprecate <code>SpectrumLegend()</code> – spun off to separate <a href="https://ms609.github.io/PlotTools/" class="external-link">“PlotTools”</a> package.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.9.1" id="treetools-191-2023-03-21">TreeTools 1.9.1 (2023-03-21)<a class="anchor" aria-label="anchor" href="#treetools-191-2023-03-21"></a></h2><p class="text-muted">CRAN release: 2023-03-20</p>
@@ -236,7 +237,7 @@
 <div class="section level3">
 <h3 id="improvements-1-8-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-8-0"></a></h3>
 <ul><li><p><code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code> reads tree tags and follows TNT node numbering conventions.</p></li>
-<li><p><code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> gains <code>title</code> parameter and more styling options.</p></li>
+<li><p><code>SpectrumLegend()</code> gains <code>title</code> parameter and more styling options.</p></li>
 <li><p>Support &gt; 32767 trees in <code><a href="../reference/Consensus.html">Consensus()</a></code> (<a href="https://github.com/ms609/TreeTools/issues/127" class="external-link">#127</a>).</p></li>
 <li><p><code><a href="../reference/DropTip.html">DropTip()</a></code> speed improved when branch lengths are present.</p></li>
 </ul></div>
@@ -245,7 +246,7 @@
 <h2 class="pkg-version" data-toc-text="1.7.3" id="treetools-173-2022-07-20">TreeTools 1.7.3 (2022-07-20)<a class="anchor" aria-label="anchor" href="#treetools-173-2022-07-20"></a></h2><p class="text-muted">CRAN release: 2022-07-20</p>
 <ul><li><p><code><a href="../reference/ReadTntTree.html">ReadTntTree()</a></code> supports multi-line trees.</p></li>
 <li><p><code><a href="../reference/TreeNumber.html">as.MixedBase()</a></code> supports larger trees (44-32767 tips).</p></li>
-<li><p>Add deprecation warning to <code><a href="../reference/match.Splits.html">in.Splits()</a></code>.</p></li>
+<li><p>Add deprecation warning to <code>in.Splits()</code>.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.7.2" id="treetools-172-2022-05-24">TreeTools 1.7.2 (2022-05-24)<a class="anchor" aria-label="anchor" href="#treetools-172-2022-05-24"></a></h2><p class="text-muted">CRAN release: 2022-05-24</p>
@@ -271,7 +272,7 @@
 <li><p><code><a href="../reference/PathLengths.html">PathLengths()</a></code> describes all paths within a tree.</p></li>
 <li><p><code><a href="../reference/KeptVerts.html">KeptVerts()</a></code> and <code><a href="../reference/KeptPaths.html">KeptPaths()</a></code> identify elements in reduced trees.</p></li>
 <li><p><code><a href="../reference/Reorder.html">PostorderOrder()</a></code> describes a sequence of edges corresponding to a postorder traversal of a tree.</p></li>
-<li><p><code><a href="../reference/SpectrumLegend.html">SpectrumLegend()</a></code> adds gradients to plot legends.</p></li>
+<li><p><code>SpectrumLegend()</code> adds gradients to plot legends.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-1-7-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-1-7-0"></a></h3>
@@ -506,7 +507,7 @@
 <li>
 <code>match.Splits()</code>: use <code><a href="../reference/match.Splits.html">match()</a></code> instead.</li>
 <li>
-<code><a href="../reference/match.Splits.html">in.Splits()</a></code>: use <code>%in%.Splits()</code> instead.</li>
+<code>in.Splits()</code>: use <code>%in%.Splits()</code> instead.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="enhancements-1-0-0">Enhancements<a class="anchor" aria-label="anchor" href="#enhancements-1-0-0"></a></h3>

@@ -53,7 +53,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">RenumberTree</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, <span class="va">weight</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">RenumberEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">RenumberEdges</span><span class="op">(</span><span class="va">parent</span>, <span class="va">child</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">Cladewise</span><span class="op">(</span><span class="va">tree</span>, <span class="va">nTip</span>, <span class="va">edge</span><span class="op">)</span></span>
 <span></span>
@@ -183,10 +183,6 @@ matrix of a tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.h
 corresponding to the <code>edge.length</code> property of a <code>phylo</code> object.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Deprecated; included for compatibility with previous versions.</p></dd>
-
-
 <dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p>A tree of class <code><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">phylo</a></code>.</p></dd>
 
@@ -291,7 +287,6 @@ each tip in sequence.</p></li>
 <code><a href="CollapseNode.html">CollapseNode</a>()</code>,
 <code><a href="ConsensusWithout.html">ConsensusWithout</a>()</code>,
 <code><a href="DropTip.html">DropTip</a>()</code>,
-<code><a href="EnforceOutgroup.html">EnforceOutgroup</a>()</code>,
 <code><a href="ImposeConstraint.html">ImposeConstraint</a>()</code>,
 <code><a href="KeptPaths.html">KeptPaths</a>()</code>,
 <code><a href="KeptVerts.html">KeptVerts</a>()</code>,

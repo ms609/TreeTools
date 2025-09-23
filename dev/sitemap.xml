@@ -30,7 +30,6 @@
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/EdgeAncestry.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/EdgeDistances.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/EndSentence.html</loc></url>
-<url><loc>https://ms609.github.io/TreeTools/dev/reference/EnforceOutgroup.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/ExtractTaxa.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/GenerateTree.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/Hamming.html</loc></url>
@@ -79,7 +78,6 @@
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/RootTree.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/SampleOne.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/SortTree.html</loc></url>
-<url><loc>https://ms609.github.io/TreeTools/dev/reference/SpectrumLegend.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/SplitConsistent.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/SplitFrequency.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/dev/reference/SplitInformation.html</loc></url>
