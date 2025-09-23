@@ -1,7 +1,10 @@
-#' Number of cherries in a phylogenetic tree
+#' Count cherries in a tree
 #' 
-#' @param tree A binary phylogenetic tree, of class `phylo`; or a matrix
-#' corresponding to its edge matrix.
+#' `Cherries()` counts the number of vertices in a binary tree whose children
+#' are both leaves.
+#' 
+#' @param tree A binary tree, of class `phylo`; or a matrix corresponding to its
+#' edge matrix.
 #' @param nTip Number of leaves in tree.
 #' @return `Cherries()` returns an integer specifying the number of nodes whose
 #' children are both leaves.

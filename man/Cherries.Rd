@@ -4,7 +4,7 @@
 \alias{Cherries}
 \alias{Cherries.phylo}
 \alias{Cherries.numeric}
-\title{Number of cherries in a phylogenetic tree}
+\title{Count cherries in a tree}
 \usage{
 Cherries(tree, nTip)
 
@@ -13,8 +13,8 @@ Cherries(tree, nTip)
 \method{Cherries}{numeric}(tree, nTip)
 }
 \arguments{
-\item{tree}{A binary phylogenetic tree, of class \code{phylo}; or a matrix
-corresponding to its edge matrix.}
+\item{tree}{A binary tree, of class \code{phylo}; or a matrix corresponding to its
+edge matrix.}
 
 \item{nTip}{Number of leaves in tree.}
 }
@@ -23,7 +23,8 @@ corresponding to its edge matrix.}
 children are both leaves.
 }
 \description{
-Number of cherries in a phylogenetic tree
+\code{Cherries()} counts the number of vertices in a binary tree whose children
+are both leaves.
 }
 \seealso{
 Other tree properties: 
