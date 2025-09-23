@@ -7,7 +7,7 @@
 
 ## Fixes and enhancements
 - Fix `RoguePlot(sort = TRUE)`
-  [Rogue#33](https://github.com/ms609/Rogue/issues/33).
+  ([Rogue#33](https://github.com/ms609/Rogue/issues/33)).
 - Remove R.cache dependency: `UnrootedKeys()` now uses a native cache
   implementation.
   
