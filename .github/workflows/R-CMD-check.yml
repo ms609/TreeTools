@@ -86,7 +86,7 @@ jobs:
           fi
           echo "Current package version is now: $(grep "Version:" DESCRIPTION | awk '{print $2}')"
         shell: bash
-
+        
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
@@ -97,7 +97,6 @@ jobs:
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended
           
-      
       - name: Install system dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
@@ -127,11 +126,6 @@ jobs:
           sed -i '1i#include <cstdint>' vdiffr-src/src/devSVG.cpp
           R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
           rm -rf vdiffr-src
-          
-      - name: Show installed R packages
-        run: |
-          Rscript -e 'sessionInfo()'
-          Rscript -e 'installed.packages()[, c("Package", "Version")]'
 
       - name: Set up R dependencies (R 3.x)
         if: matrix.config.r < '4.0'
@@ -161,11 +155,6 @@ jobs:
           needs: |
             check
             coverage
-            
-      - name: Show installed R packages
-        run: |
-          Rscript -e 'sessionInfo()'
-          Rscript -e 'installed.packages()[, c("Package", "Version")]'
 
       - name: Set up R dependencies (Non-Windows)
         if: ${{runner.os != 'Windows' && matrix.config.r >= '4.0' }}
