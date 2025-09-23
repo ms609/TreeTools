@@ -1,17 +1,16 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R 4.6.0 devel
+  - Windows 10, R devel
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu latest
-    - R 3.6
+    - R 3.6, 4.0
     - R release (tests, examples & vignettes run with valgrind)
     - R devel
   - Mac OS X latest, R release
   - Microsoft Windows Server latest, R release
   - RHub checks
-  
 
 ## R CMD check results
 
