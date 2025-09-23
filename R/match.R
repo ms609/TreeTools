@@ -6,9 +6,6 @@
 #' a logical vector indicating whether there is a match or not for each
 #' split in its left operand.
 #'
-#' `in.Splits()` is an alias for `%in%`, included for backwards compatibility.
-#' It is deprecated and will be removed in a future release.
-#'
 #' @param x,table Object of class `Splits`.
 #' @param nomatch Integer value that will be used in place of `NA` in the case
 #' where no match is found.
@@ -54,16 +51,6 @@ setMethod("match",
               ret
             }, integer(1))
           })
-
-# Replaces a previous approach (TreeTools <= 1.6.0) that followed
-# https://github.com/cran/bit64/blob/master/R/patch64.R
-
-
-#' @rdname match.Splits
-in.Splits <- function(x, table) {
-  .Deprecated("%in%")
-  .in.Splits(x, table)
-}
 
 .in.Splits <- function(x, table) {
   duplicated(c(x, table), fromLast = TRUE)[seq_along(x)]

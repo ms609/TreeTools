@@ -60,7 +60,7 @@ in a tree, perhaps obtained using \code{\link[=TipLabels]{TipLabels()}}.}
 mode \code{integer}: only possible for values < 2^31.
 If \code{FALSE}, values will have class \code{integer64}.}
 
-\item{\dots}{Depreciated (2025-09); retained for backward compatibility.}
+\item{\dots}{Deprecated (2025-09); retained for backward compatibility.}
 }
 \value{
 \code{TreeShape()} returns an integer specifying the shape of a tree,

@@ -65,7 +65,6 @@ Other tree manipulation:
 \code{\link{AddTip}()},
 \code{\link{CollapseNode}()},
 \code{\link{DropTip}()},
-\code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
 \code{\link{KeptPaths}()},
 \code{\link{KeptVerts}()},

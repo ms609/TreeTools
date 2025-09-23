@@ -46,7 +46,7 @@
 \usage{
 RenumberTree(parent, child, weight)
 
-RenumberEdges(parent, child, ...)
+RenumberEdges(parent, child)
 
 Cladewise(tree, nTip, edge)
 
@@ -135,8 +135,6 @@ matrix of a tree of class \code{\link[ape]{phylo}}, i.e.
 
 \item{weight}{Optional vector specifying the weight of each edge,
 corresponding to the \code{edge.length} property of a \code{phylo} object.}
-
-\item{\dots}{Deprecated; included for compatibility with previous versions.}
 
 \item{tree}{A tree of class \code{\link[ape:read.tree]{phylo}}.}
 
@@ -250,7 +248,6 @@ Other tree manipulation:
 \code{\link{CollapseNode}()},
 \code{\link{ConsensusWithout}()},
 \code{\link{DropTip}()},
-\code{\link{EnforceOutgroup}()},
 \code{\link{ImposeConstraint}()},
 \code{\link{KeptPaths}()},
 \code{\link{KeptVerts}()},

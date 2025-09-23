@@ -2,14 +2,11 @@
 % Please edit documentation in R/match.R
 \name{match,Splits,Splits-method}
 \alias{match,Splits,Splits-method}
-\alias{in.Splits}
 \alias{match}
 \alias{\%in\%,Splits,Splits-method}
 \title{Split matching}
 \usage{
 \S4method{match}{Splits,Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
-
-in.Splits(x, table)
 
 match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
@@ -33,10 +30,6 @@ its first argument in its second.
 \code{\%in\%} is a more intuitive interface as a binary operator, which returns
 a logical vector indicating whether there is a match or not for each
 split in its left operand.
-}
-\details{
-\code{in.Splits()} is an alias for \code{\%in\%}, included for backwards compatibility.
-It is deprecated and will be removed in a future release.
 }
 \examples{
 splits1 <- as.Splits(BalancedTree(7))
