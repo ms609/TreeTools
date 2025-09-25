@@ -213,6 +213,7 @@ jobs:
             check
           extra-packages: |
             TreeDist=?ignore-before-r=4.0.0
+            TreeSearch=?ignore-before-r=4.1.0
             vdiffr=?ignore-before-r=4.0.0
             phangorn=?ignore-before-r=4.1.0
 
