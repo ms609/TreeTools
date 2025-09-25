@@ -5,6 +5,9 @@ using namespace Rcpp;
 #include "../inst/include/TreeTools/ClusterTable.h" /* for ClusterTable */
 
 #include <algorithm> /* for fill */
+#include <chrono>
+#include <thread>
+using namespace std::chrono_literals;
 #include <array> /* for array */
 #include <vector> /* for vector */
 
@@ -19,7 +22,7 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   int16 w = 0;
   int16 L, R, N, W;
   int16 L_j, R_j, N_j, W_j;
-  
+  std::this_thread::sleep_for(10ms);
   const int32 n_trees = trees.length();
   const int32 frac_thresh = int32(n_trees * p[0]) + 1;
   const int32 thresh = frac_thresh > n_trees ? n_trees : frac_thresh;
