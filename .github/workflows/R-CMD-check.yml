@@ -155,7 +155,14 @@ jobs:
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
         run: |
           sudo apt-get install libgsl-dev
-      
+          
+      - name: Force C++17 (R 4.0)
+        if: matrix.config.r == '4.0' && runner.os == 'Linux'
+        run: |
+          mkdir -p ~/.R
+          echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
+          echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
+          
       - name: Install vdiffr dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
