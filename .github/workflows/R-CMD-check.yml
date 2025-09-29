@@ -62,7 +62,7 @@ jobs:
         run: |
           old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
           if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
-            new_version="${old_version}.9999"
+            new_version="${old_version}.8888"
             if [[ "$RUNNER_OS" == "macOS" ]]; then
               sed -i "" "s/Version: .*/Version: ${new_version}/" DESCRIPTION
             else
@@ -99,7 +99,7 @@ jobs:
           - {os: ubuntu-24.04, r: 'devel', rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
 
     env:
-      _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
+      _R_CHECK_CRAN_INCOMING_: ${{ github.event_name == 'pull_request' }}
       _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
       R_COMPILE_AND_INSTALL_PACKAGES: 'never'
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
@@ -262,7 +262,7 @@ jobs:
           - {deps: '"LinkingTo"'}
 
     env:
-      _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
+      _R_CHECK_CRAN_INCOMING_: false
       _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
       R_COMPILE_AND_INSTALL_PACKAGES: 'never'
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
