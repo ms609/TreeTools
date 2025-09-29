@@ -6,9 +6,9 @@ Authors@R: c(
          email = "martin.smith@durham.ac.uk",
          comment = c(ORCID = "0000-0001-5660-1727")),
   person(given = "Emmanuel", family = "Paradis", role = c("cph"),
-         comment = c(ORCID = "0000-0003-3092-2199")),
+         comment = c(ORCID = "0000-0003-3092-2199", "ape library")),
   person(given = "Robert", family = "Noble", role = c("cph"),
-         comment = c(ORCID = "0000-0002-8057-4252"))
+         comment = c(ORCID = "0000-0002-8057-4252", "RUtreebalance"))
   )
 License: GPL (>= 3)
 Copyright: Incorporates C/C++ code from 'ape' by Emmanuel Paradis
