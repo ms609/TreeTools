@@ -1,0 +1,39 @@
+# Polarize splits on a single taxon
+
+Polarize splits on a single taxon
+
+## Usage
+
+``` r
+PolarizeSplits(x, pole = 1L)
+```
+
+## Arguments
+
+- x:
+
+  Object of class
+  [`Splits`](https://ms609.github.io/TreeTools/reference/Splits.md).
+
+- pole:
+
+  Numeric or character identifying tip that should polarize each split.
+
+## Value
+
+`PolarizeSplits()` returns a `Splits` object in which `pole` is
+represented by a zero bit
+
+## See also
+
+Other Splits operations:
+[`LabelSplits()`](https://ms609.github.io/TreeTools/reference/LabelSplits.md),
+[`NSplits()`](https://ms609.github.io/TreeTools/reference/NSplits.md),
+[`NTip()`](https://ms609.github.io/TreeTools/reference/NTip.md),
+[`SplitFrequency()`](https://ms609.github.io/TreeTools/reference/SplitFrequency.md),
+[`Splits`](https://ms609.github.io/TreeTools/reference/Splits.md),
+[`SplitsInBinaryTree()`](https://ms609.github.io/TreeTools/reference/SplitsInBinaryTree.md),
+[`TipLabels()`](https://ms609.github.io/TreeTools/reference/TipLabels.md),
+[`TipsInSplits()`](https://ms609.github.io/TreeTools/reference/TipsInSplits.md),
+[`match,Splits,Splits-method`](https://ms609.github.io/TreeTools/reference/match.Splits.md),
+[`xor()`](https://ms609.github.io/TreeTools/reference/xor.md)
