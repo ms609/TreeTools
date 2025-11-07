@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.16.1.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,17 +45,30 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.16.1.9002" id="treetools-11619002-development">TreeTools 1.16.1.9002` (development)<a class="anchor" aria-label="anchor" href="#treetools-11619002-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.0.0.9000" id="treetools-2009000-development">TreeTools 2.0.0.9000 (development)<a class="anchor" aria-label="anchor" href="#treetools-2009000-development"></a></h2>
+<ul><li>(miscellaneous tidying)</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.0" id="treetools-200-2025-09-23">TreeTools 2.0.0 (2025-09-23)<a class="anchor" aria-label="anchor" href="#treetools-200-2025-09-23"></a></h2><p class="text-muted">CRAN release: 2025-09-23</p>
+<div class="section level3">
+<h3 id="new-functionality-2-0-0">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-2-0-0"></a></h3>
 <ul><li>
 <code><a href="../reference/Cherries.html">Cherries()</a></code> counts the cherries in a binary tree.</li>
 <li>New method <code><a href="../reference/Splits.html">as.Splits.integer()</a></code>.</li>
-<li>Fix <code>RoguePlot(sort = TRUE)</code> <a href="https://github.com/ms609/Rogue/issues/33" class="external-link">Rogue#33</a>.</li>
 <li>Add methods for <code>NULL</code> objects.</li>
-<li>Require R 3.6</li>
+</ul></div>
+<div class="section level3">
+<h3 id="fixes-and-enhancements-2-0-0">Fixes and enhancements<a class="anchor" aria-label="anchor" href="#fixes-and-enhancements-2-0-0"></a></h3>
+<ul><li>Fix <code>RoguePlot(sort = TRUE)</code> (<a href="https://github.com/ms609/Rogue/issues/33" class="external-link">Rogue#33</a>).</li>
 <li>Remove R.cache dependency: <code><a href="../reference/TreeShape.html">UnrootedKeys()</a></code> now uses a native cache implementation.</li>
-<li>Remove deprecated functions <code>TreeSplits()</code>, <code>ForestSplits()</code>, <code>SplitNumber()</code>, <code>in.Splits()</code>, <code>AllDescendantEdges()</code>, <code>PhylogeneticInfo()</code>, <code>.EnforceOutgroup()</code>, <code>SpectrumLegend()</code>.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="backward-incompatible-changes-2-0-0">Backward incompatible changes<a class="anchor" aria-label="anchor" href="#backward-incompatible-changes-2-0-0"></a></h3>
+<ul><li>Require R 3.6.</li>
+<li>Remove deprecated functions <code>AllDescendantEdges()</code>, <code>.EnforceOutgroup()</code>, <code>ForestSplits()</code>, <code>in.Splits()</code>, <code>PhylogeneticInfo()</code>, <code>SpectrumLegend()</code>, <code>SplitNumber()</code>, <code>TreeSplits()</code>.</li>
 <li>Remove deprecated C++ macro <code>TREETOOLS_SPLITLIST_INIT</code>.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.16.1" id="treetools-1161-2025-08-24">TreeTools 1.16.1 (2025-08-24)<a class="anchor" aria-label="anchor" href="#treetools-1161-2025-08-24"></a></h2><p class="text-muted">CRAN release: 2025-08-24</p>
 <ul><li>Compiler-safe vector initialization, resolving M1-SAN warnings.</li>
@@ -564,7 +577,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
