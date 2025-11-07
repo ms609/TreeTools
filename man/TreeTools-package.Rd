@@ -32,8 +32,8 @@ Useful links:
 
 Other contributors:
 \itemize{
-  \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) [copyright holder]
-  \item Robert Noble (\href{https://orcid.org/0000-0002-8057-4252}{ORCID}) [copyright holder]
+  \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) (ape library) [copyright holder]
+  \item Robert Noble (\href{https://orcid.org/0000-0002-8057-4252}{ORCID}) (RUtreebalance) [copyright holder]
 }
 
 }

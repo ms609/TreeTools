@@ -49,7 +49,7 @@ ordered characters fail this test, as larger changes are treated as less
 probable than smaller ones.
 On the other hand, ordered characters allow more opportunities for homology
 of different character states, and might thus be defended under the auspices
-of Hennig’s Auxiliary Principle \insertCite{Wilkinson1992}{TreeTools}.
+of Hennig's Auxiliary Principle \insertCite{Wilkinson1992}{TreeTools}.
 
 For a case study of how ordering phylogenetic characters can affect
 phylogenetic outcomes in practice, see
