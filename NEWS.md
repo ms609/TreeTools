@@ -1,5 +1,5 @@
 # TreeTools 2.0.0.9000 (development) #
-- (miscellaneous tidying)
+- `MatrixToPhyDat()` gains `tipLabels` parameter.
 
 # TreeTools 2.0.0 (2025-09-23) #
 

@@ -5,7 +5,7 @@
 \alias{PhyDatToMatrix}
 \title{Convert between matrices and \code{phyDat} objects}
 \usage{
-MatrixToPhyDat(tokens)
+MatrixToPhyDat(tokens, tipLabels = rownames(tokens))
 
 PhyDatToMatrix(
   dataset,
@@ -20,6 +20,9 @@ PhyDatToMatrix(
 or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}.
 Row names should correspond to leaf labels; column names may optionally
 correspond to character labels.}
+
+\item{tipLabels}{Optionally, labels for leaves; will override rownames, if
+specified.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
 

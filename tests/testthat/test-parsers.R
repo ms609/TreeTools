@@ -106,6 +106,12 @@ test_that("MatrixToPhyDat() returns phyDat if passed", {
                  "phyDat")
 })
 
+test_that("MatrixToPhyDat() with tipLabels", {
+  mat <- rbind(1, 1, 2, 2, 3, 3)
+  expect_equal(MatrixToPhyDat(mat, tipLabels = letters[1:6]),
+               MatrixToPhyDat(`rownames<-`(mat, letters[1:6])))
+})
+
 test_that("StringToPhyDat()", {
   expect_equal(as.integer(StringToPhyDat("1111????", letters[1:8])),
                rep(1:2, each = 4))
