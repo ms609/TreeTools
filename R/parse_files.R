@@ -672,8 +672,8 @@ MorphoBankDecode <- function(string) {
 #' or [`ReadTntCharacters()`].
 #' Row names should correspond to leaf labels; column names may optionally
 #' correspond to character labels.
-#' @param tipLabels Optionally, labels for leaves; will override rownames, if
-#' specified.
+#' @param tipLabels Optionally, an object providing labels for leaves, via
+#' [TipLabels()]; will override `rownames(tokens)`.
 #'
 #' @return `MatrixToPhyDat()` returns an object of class `phyDat`.
 #'
@@ -719,7 +719,7 @@ MatrixToPhyDat <- function(tokens, tipLabels = rownames(tokens)) {
   } else {
     t(contrast)
   }
-  rownames(tokens) <- tipLabels
+  rownames(tokens) <- TipLabels(tipLabels)
   dimnames(contrast) <- list(allTokens, levels)
   dat <- .PhyDatWithContrast(tokens, contrast = contrast)
 

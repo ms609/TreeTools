@@ -21,8 +21,8 @@ or \code{\link[=ReadTntCharacters]{ReadTntCharacters()}}.
 Row names should correspond to leaf labels; column names may optionally
 correspond to character labels.}
 
-\item{tipLabels}{Optionally, labels for leaves; will override rownames, if
-specified.}
+\item{tipLabels}{Optionally, an object providing labels for leaves, via
+\code{\link[=TipLabels]{TipLabels()}}; will override \code{rownames(tokens)}.}
 
 \item{dataset}{A dataset of class \code{phyDat}.}
 

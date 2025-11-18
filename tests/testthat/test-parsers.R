@@ -110,6 +110,8 @@ test_that("MatrixToPhyDat() with tipLabels", {
   mat <- rbind(1, 1, 2, 2, 3, 3)
   expect_equal(MatrixToPhyDat(mat, tipLabels = letters[1:6]),
                MatrixToPhyDat(`rownames<-`(mat, letters[1:6])))
+  expect_equal(MatrixToPhyDat(mat, tipLabels = StarTree(6)),
+               MatrixToPhyDat(`rownames<-`(mat, TipLabels(6))))
 })
 
 test_that("StringToPhyDat()", {
