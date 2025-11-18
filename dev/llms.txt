@@ -1,0 +1,591 @@
+# TreeTools
+
+[![codecov](https://codecov.io/gh/ms609/TreeTools/branch/master/graph/badge.svg)](https://codecov.io/gh/ms609/TreeTools)
+[![CRAN Status
+Badge](https://www.r-pkg.org/badges/version/TreeTools)](https://cran.r-project.org/package=TreeTools)
+[![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/TreeTools)](https://ms609.github.io/usage/#treetools)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3522726.svg)](https://doi.org/10.5281/zenodo.3522725)
+[![Project Status: Active – – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
+‘TreeTools’ is an R package that provides efficient implementations of
+functions for the creation, modification and analysis of phylogenetic
+trees.
+
+Applications include: generation of trees with specified shapes;
+analysis of tree shape; rooting of trees and extraction of subtrees;
+calculation and depiction of node support; calculation of
+ancestor-descendant relationships; import and export of trees from
+Newick, Nexus and [TNT](https://www.lillo.org.ar/phylogeny/tnt/)
+formats; and analysis of partitions and cladistic information.
+
+It complements packages such as
+[‘ape’](https://cran.r-project.org/package=ape),
+[‘phangorn’](https://cran.r-project.org/package=phangorn) and
+[‘phytools’](https://cran.r-project.org/package=phytools), aiming for
+efficient and robust implementations of functions, typically applied to
+unweighted trees (i.e. those without edge lengths).
+
+# Installation
+
+Install and load the library from CRAN as follows:
+
+``` r
+install.packages("TreeTools")
+library("TreeTools")
+```
+
+Install the very latest version, which may be under development, with:
+
+``` r
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("ms609/TreeTools")
+```
+
+Please note that the ‘TreeTools’ project is released with a [Contributor
+Code of
+Conduct](https://ms609.github.io/TreeTools/dev/CODE_OF_CONDUCT.md). By
+contributing to this project, you agree to its terms.
+
+# Package index
+
+## Tree manipulation
+
+Functions for editing phylogenetic trees.
+
+- [`AddTip()`](https://ms609.github.io/TreeTools/dev/reference/AddTip.md)
+  [`AddTipEverywhere()`](https://ms609.github.io/TreeTools/dev/reference/AddTip.md)
+  : Add a tip to a phylogenetic tree
+- [`CollapseNode()`](https://ms609.github.io/TreeTools/dev/reference/CollapseNode.md)
+  [`CollapseEdge()`](https://ms609.github.io/TreeTools/dev/reference/CollapseNode.md)
+  : Collapse nodes on a phylogenetic tree
+- [`ConsensusWithout()`](https://ms609.github.io/TreeTools/dev/reference/ConsensusWithout.md)
+  [`MarkMissing()`](https://ms609.github.io/TreeTools/dev/reference/ConsensusWithout.md)
+  : Reduced consensus, omitting specified taxa
+- [`DropTip()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTip()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`DropTipPhylo()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTipPreorder()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTipPostorder()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  : Drop leaves from tree
+- [`ImposeConstraint()`](https://ms609.github.io/TreeTools/dev/reference/ImposeConstraint.md)
+  [`AddUnconstrained()`](https://ms609.github.io/TreeTools/dev/reference/ImposeConstraint.md)
+  : Force a tree to match a constraint
+- [`KeptPaths()`](https://ms609.github.io/TreeTools/dev/reference/KeptPaths.md)
+  : Paths present in reduced tree
+- [`KeptVerts()`](https://ms609.github.io/TreeTools/dev/reference/KeptVerts.md)
+  : Identify vertices retained when leaves are dropped
+- [`LeafLabelInterchange()`](https://ms609.github.io/TreeTools/dev/reference/LeafLabelInterchange.md)
+  : Leaf label interchange
+- [`MakeTreeBinary()`](https://ms609.github.io/TreeTools/dev/reference/MakeTreeBinary.md)
+  : Generate binary tree by collapsing polytomies
+- [`Renumber()`](https://ms609.github.io/TreeTools/dev/reference/Renumber.md)
+  : Renumber a tree's nodes and tips
+- [`RenumberTips()`](https://ms609.github.io/TreeTools/dev/reference/RenumberTips.md)
+  : Renumber a tree's tips
+- [`RootTree()`](https://ms609.github.io/TreeTools/dev/reference/RootTree.md)
+  [`RootOnNode()`](https://ms609.github.io/TreeTools/dev/reference/RootTree.md)
+  [`UnrootTree()`](https://ms609.github.io/TreeTools/dev/reference/RootTree.md)
+  : Root or unroot a phylogenetic tree
+- [`SortTree()`](https://ms609.github.io/TreeTools/dev/reference/SortTree.md)
+  : Sort tree
+- [`Subtree()`](https://ms609.github.io/TreeTools/dev/reference/Subtree.md)
+  : Extract a subtree
+- [`TipTimedTree()`](https://ms609.github.io/TreeTools/dev/reference/TipTimedTree.md)
+  : Display time-calibrated tree using tip information only
+- [`SingleTaxonTree()`](https://ms609.github.io/TreeTools/dev/reference/TrivialTree.md)
+  [`ZeroTaxonTree()`](https://ms609.github.io/TreeTools/dev/reference/TrivialTree.md)
+  : Generate trivial trees
+
+## Tree navigation
+
+Functions to navigate phylogenetic trees.
+
+- [`CladeSizes()`](https://ms609.github.io/TreeTools/dev/reference/CladeSizes.md)
+  : Clade sizes
+
+- [`DescendantEdges()`](https://ms609.github.io/TreeTools/dev/reference/DescendantEdges.md)
+  [`DescendantTips()`](https://ms609.github.io/TreeTools/dev/reference/DescendantEdges.md)
+  : Identify descendant edges
+
+- [`EdgeAncestry()`](https://ms609.github.io/TreeTools/dev/reference/EdgeAncestry.md)
+  : Ancestors of an edge
+
+- [`EdgeDistances()`](https://ms609.github.io/TreeTools/dev/reference/EdgeDistances.md)
+  : Distance between edges
+
+- [`ListAncestors()`](https://ms609.github.io/TreeTools/dev/reference/ListAncestors.md)
+  [`AllAncestors()`](https://ms609.github.io/TreeTools/dev/reference/ListAncestors.md)
+  : List ancestors
+
+- [`MRCA()`](https://ms609.github.io/TreeTools/dev/reference/MRCA.md) :
+  Most recent common ancestor
+
+- [`MatchEdges()`](https://ms609.github.io/TreeTools/dev/reference/MatchEdges.md)
+  [`MatchNodes()`](https://ms609.github.io/TreeTools/dev/reference/MatchEdges.md)
+  : Match nodes and edges between trees
+
+- [`NDescendants()`](https://ms609.github.io/TreeTools/dev/reference/NDescendants.md)
+  : Count descendants for each node in a tree
+
+- [`NodeDepth()`](https://ms609.github.io/TreeTools/dev/reference/NodeDepth.md)
+  : Distance of each node from tree exterior
+
+- [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md)
+  :
+
+  Numeric index of each node in a tree
+  [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md)
+  returns a sequence corresponding to the nodes in a tree
+
+- [`NodeOrder()`](https://ms609.github.io/TreeTools/dev/reference/NodeOrder.md)
+  : Number of edges incident to each node in a tree
+
+- [`RootNode()`](https://ms609.github.io/TreeTools/dev/reference/RootNode.md)
+  : Which node is a tree's root?
+
+## Tree creation
+
+Functions to generate phylogenetic trees.
+
+- [`ConstrainedNJ()`](https://ms609.github.io/TreeTools/dev/reference/ConstrainedNJ.md)
+  : Constrained neighbour-joining tree
+
+- [`RandomTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md)
+  [`YuleTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md)
+  [`PectinateTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md)
+  [`BalancedTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md)
+  [`StarTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md)
+  : Generate pectinate, balanced or random trees
+
+- [`NJTree()`](https://ms609.github.io/TreeTools/dev/reference/NJTree.md)
+  : Generate a neighbour joining tree
+
+- [`as.TreeNumber()`](https://ms609.github.io/TreeTools/dev/reference/TreeNumber.md)
+  [`as.phylo(`*`<numeric>`*`)`](https://ms609.github.io/TreeTools/dev/reference/TreeNumber.md)
+  [`as.phylo(`*`<TreeNumber>`*`)`](https://ms609.github.io/TreeTools/dev/reference/TreeNumber.md)
+  [`as.MixedBase()`](https://ms609.github.io/TreeTools/dev/reference/TreeNumber.md)
+  [`as.phylo(`*`<MixedBase>`*`)`](https://ms609.github.io/TreeTools/dev/reference/TreeNumber.md)
+  : Unique integer indices for bifurcating tree topologies
+
+- [`SingleTaxonTree()`](https://ms609.github.io/TreeTools/dev/reference/TrivialTree.md)
+  [`ZeroTaxonTree()`](https://ms609.github.io/TreeTools/dev/reference/TrivialTree.md)
+  : Generate trivial trees
+
+- [`is.TreeNumber()`](https://ms609.github.io/TreeTools/dev/reference/is.TreeNumber.md)
+  :
+
+  Is an object a `TreeNumber` object?
+
+- [`print(`*`<TreeNumber>`*`)`](https://ms609.github.io/TreeTools/dev/reference/print.TreeNumber.md)
+  :
+
+  Print `TreeNumber` object
+
+## Tree properties
+
+Functions describing properties of trees.
+
+- [`CladisticInfo()`](https://ms609.github.io/TreeTools/dev/reference/CladisticInfo.md)
+  [`CladisticInformation()`](https://ms609.github.io/TreeTools/dev/reference/CladisticInfo.md)
+  : Cladistic information content of a tree
+
+- [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
+  : Construct consensus trees
+
+- [`J1Index()`](https://ms609.github.io/TreeTools/dev/reference/J1Index.md)
+  [`JQIndex()`](https://ms609.github.io/TreeTools/dev/reference/J1Index.md)
+  : Robust universal tree balance index
+
+- [`SisterSize()`](https://ms609.github.io/TreeTools/dev/reference/Stemwardness.md)
+  [`RootNodeDistance()`](https://ms609.github.io/TreeTools/dev/reference/Stemwardness.md)
+  [`RootNodeDist()`](https://ms609.github.io/TreeTools/dev/reference/Stemwardness.md)
+  : "Stemwardness" of a leaf
+
+- [`TotalCopheneticIndex()`](https://ms609.github.io/TreeTools/dev/reference/TotalCopheneticIndex.md)
+  [`TCIContext()`](https://ms609.github.io/TreeTools/dev/reference/TotalCopheneticIndex.md)
+  : Total Cophenetic Index
+
+- [`Cherries()`](https://ms609.github.io/TreeTools/dev/reference/Cherries.md)
+  : Count cherries in a tree
+
+- [`ConsensusWithout()`](https://ms609.github.io/TreeTools/dev/reference/ConsensusWithout.md)
+  [`MarkMissing()`](https://ms609.github.io/TreeTools/dev/reference/ConsensusWithout.md)
+  : Reduced consensus, omitting specified taxa
+
+- [`LongBranch()`](https://ms609.github.io/TreeTools/dev/reference/LongBranch.md)
+  : Identify taxa with long branches
+
+- [`MatchEdges()`](https://ms609.github.io/TreeTools/dev/reference/MatchEdges.md)
+  [`MatchNodes()`](https://ms609.github.io/TreeTools/dev/reference/MatchEdges.md)
+  : Match nodes and edges between trees
+
+- [`NSplits()`](https://ms609.github.io/TreeTools/dev/reference/NSplits.md)
+  [`NPartitions()`](https://ms609.github.io/TreeTools/dev/reference/NSplits.md)
+  : Number of distinct splits
+
+- [`NTip()`](https://ms609.github.io/TreeTools/dev/reference/NTip.md) :
+  Number of leaves in a phylogenetic tree
+
+- [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md)
+  :
+
+  Numeric index of each node in a tree
+  [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md)
+  returns a sequence corresponding to the nodes in a tree
+
+- [`PathLengths()`](https://ms609.github.io/TreeTools/dev/reference/PathLengths.md)
+  : Calculate length of paths between each pair of vertices within tree
+
+- [`SplitsInBinaryTree()`](https://ms609.github.io/TreeTools/dev/reference/SplitsInBinaryTree.md)
+  :
+
+  Maximum splits in an *n*-leaf tree
+
+- [`TipLabels()`](https://ms609.github.io/TreeTools/dev/reference/TipLabels.md)
+  [`AllTipLabels()`](https://ms609.github.io/TreeTools/dev/reference/TipLabels.md)
+  : Extract tip labels
+
+- [`TreeIsRooted()`](https://ms609.github.io/TreeTools/dev/reference/TreeIsRooted.md)
+  : Is tree rooted?
+
+- [`Treeness()`](https://ms609.github.io/TreeTools/dev/reference/Treeness.md)
+  [`Stemminess()`](https://ms609.github.io/TreeTools/dev/reference/Treeness.md)
+  : Relative length of internal branches
+
+- [`RoguePlot()`](https://ms609.github.io/TreeTools/dev/reference/RoguePlot.md)
+  : Visualize position of rogue taxa
+
+- [`PairwiseDistances()`](https://ms609.github.io/TreeTools/dev/reference/PairwiseDistances.md)
+  : Distances between each pair of trees
+
+- [`TopologyOnly()`](https://ms609.github.io/TreeTools/dev/reference/TopologyOnly.md)
+  : Remove metadata from trees
+
+## Phylogenetic data
+
+Functions for modifying and evaluating datasets.
+
+- [`Decompose()`](https://ms609.github.io/TreeTools/dev/reference/Decompose.md)
+  : Decompose additive (ordered) phylogenetic characters
+
+- [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
+  [`PhyDatToMatrix()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
+  :
+
+  Convert between matrices and `phyDat` objects
+
+- [`StringToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`StringToPhydat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhyToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhyDatToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhydatToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  :
+
+  Convert between strings and `phyDat` objects
+
+- [`Reweight()`](https://ms609.github.io/TreeTools/dev/reference/Reweight.md)
+  : Reweight phylogenetic characters
+
+- [`ArtificialExtinction()`](https://ms609.github.io/TreeTools/dev/reference/ArtificialExtinction.md)
+  [`ArtEx()`](https://ms609.github.io/TreeTools/dev/reference/ArtificialExtinction.md)
+  : Artificial Extinction
+
+## Parsers
+
+Functions to parse or write files.
+
+- [`as.Newick()`](https://ms609.github.io/TreeTools/dev/reference/as.Newick.md)
+  : Write a phylogenetic tree in Newick format
+
+- [`ApeTime()`](https://ms609.github.io/TreeTools/dev/reference/ApeTime.md)
+  : Read modification time from "ape" Nexus file
+
+- [`ExtractTaxa()`](https://ms609.github.io/TreeTools/dev/reference/ExtractTaxa.md)
+  [`NexusTokens()`](https://ms609.github.io/TreeTools/dev/reference/ExtractTaxa.md)
+  : Extract taxa from a matrix block
+
+- [`NewickTree()`](https://ms609.github.io/TreeTools/dev/reference/NewickTree.md)
+  : Write Newick Tree
+
+- [`ReadCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadTNTCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadNotes()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadAsPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadTntAsPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`ReadTNTAsPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  [`PhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  : Read phylogenetic characters from file
+
+- [`StringToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`StringToPhydat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhyToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhyDatToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  [`PhydatToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
+  :
+
+  Convert between strings and `phyDat` objects
+
+- [`ReadTntTree()`](https://ms609.github.io/TreeTools/dev/reference/ReadTntTree.md)
+  [`TntText2Tree()`](https://ms609.github.io/TreeTools/dev/reference/ReadTntTree.md)
+  [`TNTText2Tree()`](https://ms609.github.io/TreeTools/dev/reference/ReadTntTree.md)
+  : Parse TNT Tree
+
+- [`WriteTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/WriteTntCharacters.md)
+  : Write morphological character matrix to TNT file
+
+- [`EndSentence()`](https://ms609.github.io/TreeTools/dev/reference/EndSentence.md)
+  : Add full stop to end of a sentence
+
+- [`MatchStrings()`](https://ms609.github.io/TreeTools/dev/reference/MatchStrings.md)
+  : Check for mismatch between character vectors
+
+- [`MorphoBankDecode()`](https://ms609.github.io/TreeTools/dev/reference/MorphoBankDecode.md)
+  : Decode MorphoBank text
+
+- [`RightmostCharacter()`](https://ms609.github.io/TreeTools/dev/reference/RightmostCharacter.md)
+  : Rightmost character of string
+
+- [`Unquote()`](https://ms609.github.io/TreeTools/dev/reference/Unquote.md)
+  : Remove quotation marks from a string
+
+- [`ReadMrBayesTrees()`](https://ms609.github.io/TreeTools/dev/reference/ReadMrBayesTrees.md)
+  [`ReadMrBayes()`](https://ms609.github.io/TreeTools/dev/reference/ReadMrBayesTrees.md)
+  [`MrBayesTrees()`](https://ms609.github.io/TreeTools/dev/reference/ReadMrBayesTrees.md)
+  : Read posterior tree sample produced by MrBayes
+
+## Split manipulation
+
+Functions that manipulate bipartition splits.
+
+- [`DropTip()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTip()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`DropTipPhylo()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTipPreorder()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  [`KeepTipPostorder()`](https://ms609.github.io/TreeTools/dev/reference/DropTip.md)
+  : Drop leaves from tree
+
+- [`SplitConsistent()`](https://ms609.github.io/TreeTools/dev/reference/SplitConsistent.md)
+  [`SplitConflicts()`](https://ms609.github.io/TreeTools/dev/reference/SplitConsistent.md)
+  : Identify consistent / conflicting splits
+
+- [`Subsplit()`](https://ms609.github.io/TreeTools/dev/reference/Subsplit.md)
+  : Subset of a split on fewer leaves
+
+- [`TrivialSplits()`](https://ms609.github.io/TreeTools/dev/reference/TrivialSplits.md)
+  [`WithoutTrivialSplits()`](https://ms609.github.io/TreeTools/dev/reference/TrivialSplits.md)
+  : Identify and remove trivial splits
+
+- [`LabelSplits()`](https://ms609.github.io/TreeTools/dev/reference/LabelSplits.md)
+  : Label splits
+
+- [`NSplits()`](https://ms609.github.io/TreeTools/dev/reference/NSplits.md)
+  [`NPartitions()`](https://ms609.github.io/TreeTools/dev/reference/NSplits.md)
+  : Number of distinct splits
+
+- [`NTip()`](https://ms609.github.io/TreeTools/dev/reference/NTip.md) :
+  Number of leaves in a phylogenetic tree
+
+- [`PolarizeSplits()`](https://ms609.github.io/TreeTools/dev/reference/PolarizeSplits.md)
+  : Polarize splits on a single taxon
+
+- [`SplitFrequency()`](https://ms609.github.io/TreeTools/dev/reference/SplitFrequency.md)
+  : Frequency of splits
+
+- [`as.Splits()`](https://ms609.github.io/TreeTools/dev/reference/Splits.md)
+  [`as.logical(`*`<Splits>`*`)`](https://ms609.github.io/TreeTools/dev/reference/Splits.md)
+  :
+
+  Convert object to `Splits`
+
+- [`SplitsInBinaryTree()`](https://ms609.github.io/TreeTools/dev/reference/SplitsInBinaryTree.md)
+  :
+
+  Maximum splits in an *n*-leaf tree
+
+- [`TipLabels()`](https://ms609.github.io/TreeTools/dev/reference/TipLabels.md)
+  [`AllTipLabels()`](https://ms609.github.io/TreeTools/dev/reference/TipLabels.md)
+  : Extract tip labels
+
+- [`TipsInSplits()`](https://ms609.github.io/TreeTools/dev/reference/TipsInSplits.md)
+  [`SplitImbalance()`](https://ms609.github.io/TreeTools/dev/reference/TipsInSplits.md)
+  : Tips contained within splits
+
+- [`match()`](https://ms609.github.io/TreeTools/dev/reference/match.Splits.md)
+  [`` `%in%`( ``*`<Splits>`*`,`*`<Splits>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.Splits.md)
+  : Split matching
+
+- [`xor()`](https://ms609.github.io/TreeTools/dev/reference/xor.md) :
+  Exclusive OR operation
+
+## Information and combinatorics
+
+Functions to calculate factorial quantities.
+
+- [`N1Spr()`](https://ms609.github.io/TreeTools/dev/reference/N1Spr.md)
+  [`IC1Spr()`](https://ms609.github.io/TreeTools/dev/reference/N1Spr.md)
+  : Number of trees one SPR step away
+- [`DoubleFactorial()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`DoubleFactorial64()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`LnDoubleFactorial()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`Log2DoubleFactorial()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`LogDoubleFactorial()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`LnDoubleFactorial.int()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  [`LogDoubleFactorial.int()`](https://ms609.github.io/TreeTools/dev/reference/DoubleFactorial.md)
+  : Double factorial
+- [`NPartitionPairs()`](https://ms609.github.io/TreeTools/dev/reference/NPartitionPairs.md)
+  : Distributions of tips consistent with a partition pair
+- [`CladisticInfo()`](https://ms609.github.io/TreeTools/dev/reference/CladisticInfo.md)
+  [`CladisticInformation()`](https://ms609.github.io/TreeTools/dev/reference/CladisticInfo.md)
+  : Cladistic information content of a tree
+- [`NRooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`NUnrooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`NRooted64()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`NUnrooted64()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnUnrooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnUnrooted.int()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2Unrooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2Unrooted.int()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnRooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnRooted.int()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2Rooted()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2Rooted.int()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnUnrootedSplits()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2UnrootedSplits()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`NUnrootedSplits()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`LnUnrootedMult()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`Log2UnrootedMult()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  [`NUnrootedMult()`](https://ms609.github.io/TreeTools/dev/reference/NRooted.md)
+  : Number of trees
+- [`TreesMatchingTree()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingTree.md)
+  [`LnTreesMatchingTree()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingTree.md)
+  [`Log2TreesMatchingTree()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingTree.md)
+  : Number of trees containing a tree
+- [`CharacterInformation()`](https://ms609.github.io/TreeTools/dev/reference/CharacterInformation.md)
+  : Character information content
+- [`SplitInformation()`](https://ms609.github.io/TreeTools/dev/reference/SplitInformation.md)
+  [`MultiSplitInformation()`](https://ms609.github.io/TreeTools/dev/reference/SplitInformation.md)
+  : Phylogenetic information content of splitting leaves into two
+  partitions
+- [`SplitMatchProbability()`](https://ms609.github.io/TreeTools/dev/reference/SplitMatchProbability.md)
+  [`LnSplitMatchProbability()`](https://ms609.github.io/TreeTools/dev/reference/SplitMatchProbability.md)
+  : Probability of matching this well
+- [`TreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingSplit.md)
+  [`LnTreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingSplit.md)
+  [`Log2TreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/TreesMatchingSplit.md)
+  : Number of trees matching a bipartition split
+- [`UnrootedTreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/UnrootedTreesMatchingSplit.md)
+  [`LnUnrootedTreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/UnrootedTreesMatchingSplit.md)
+  [`Log2UnrootedTreesMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/UnrootedTreesMatchingSplit.md)
+  : Number of trees consistent with split
+
+## Split support
+
+Calculate and depict support for splits (‘edges’ / ‘nodes’) in trees.
+
+- [`LabelSplits()`](https://ms609.github.io/TreeTools/dev/reference/LabelSplits.md)
+  : Label splits
+- [`SplitFrequency()`](https://ms609.github.io/TreeTools/dev/reference/SplitFrequency.md)
+  : Frequency of splits
+- [`SupportColour()`](https://ms609.github.io/TreeTools/dev/reference/SupportColour.md)
+  [`SupportColor()`](https://ms609.github.io/TreeTools/dev/reference/SupportColour.md)
+  : Colour for node support value
+
+## Datasets
+
+Data that accompanies the package.
+
+- [`brewer`](https://ms609.github.io/TreeTools/dev/reference/brewer.md)
+  : Brewer palettes
+- [`doubleFactorials`](https://ms609.github.io/TreeTools/dev/reference/doubleFactorials.md)
+  : Double factorials
+- [`Lobo.data`](https://ms609.github.io/TreeTools/dev/reference/Lobo.data.md)
+  [`Lobo.phy`](https://ms609.github.io/TreeTools/dev/reference/Lobo.data.md)
+  : Data from Zhang et al. 2016
+- [`logDoubleFactorials`](https://ms609.github.io/TreeTools/dev/reference/logDoubleFactorials.md)
+  : Natural logarithms of double factorials
+- [`nRootedShapes`](https://ms609.github.io/TreeTools/dev/reference/nRootedShapes.md)
+  [`nUnrootedShapes`](https://ms609.github.io/TreeTools/dev/reference/nRootedShapes.md)
+  : Number of rooted / unrooted tree shapes
+
+## Utility functions
+
+Miscellaneous functions to simplify or expedite basic functionality.
+
+- [`as.matrix(`*`<ClusterTable>`*`)`](https://ms609.github.io/TreeTools/dev/reference/ClusterTable-methods.md)
+  [`print(`*`<ClusterTable>`*`)`](https://ms609.github.io/TreeTools/dev/reference/ClusterTable-methods.md)
+  [`summary(`*`<ClusterTable>`*`)`](https://ms609.github.io/TreeTools/dev/reference/ClusterTable-methods.md)
+  :
+
+  S3 methods for `ClusterTable` objects
+
+- [`as.ClusterTable()`](https://ms609.github.io/TreeTools/dev/reference/ClusterTable.md)
+  :
+
+  Convert phylogenetic tree to `ClusterTable`
+
+- [`Hamming()`](https://ms609.github.io/TreeTools/dev/reference/Hamming.md)
+  : Hamming distance between taxa in a phylogenetic dataset
+
+- [`MSTEdges()`](https://ms609.github.io/TreeTools/dev/reference/MSTEdges.md)
+  [`MSTLength()`](https://ms609.github.io/TreeTools/dev/reference/MSTEdges.md)
+  : Minimum spanning tree
+
+- [`SampleOne()`](https://ms609.github.io/TreeTools/dev/reference/SampleOne.md)
+  : Select element at random
+
+- [`TipTimedTree()`](https://ms609.github.io/TreeTools/dev/reference/TipTimedTree.md)
+  : Display time-calibrated tree using tip information only
+
+- [`UnshiftTree()`](https://ms609.github.io/TreeTools/dev/reference/UnshiftTree.md)
+  : Add tree to start of list
+
+- [`as.multiPhylo()`](https://ms609.github.io/TreeTools/dev/reference/as.multiPhylo.md)
+  :
+
+  Convert object to `multiPhylo` class
+
+- [`match(`*`<phylo>`*`,`*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`match(`*`<multiPhylo>`*`,`*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`match(`*`<phylo>`*`,`*`<multiPhylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`match(`*`<multiPhylo>`*`,`*`<multiPhylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`` `%in%`( ``*`<multiPhylo>`*`,`*`<multiPhylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`` `%in%`( ``*`<multiPhylo>`*`,`*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`` `%in%`( ``*`<phylo>`*`,`*`<multiPhylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  [`` `%in%`( ``*`<phylo>`*`,`*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/match.multiPhylo.md)
+  : Tree matching
+
+- [`sapply64()`](https://ms609.github.io/TreeTools/dev/reference/sapply64.md)
+  [`vapply64()`](https://ms609.github.io/TreeTools/dev/reference/sapply64.md)
+  [`replicate64()`](https://ms609.github.io/TreeTools/dev/reference/sapply64.md)
+  : Apply a function that returns 64-bit integers over a list or vector
+
+- [`sort(`*`<multiPhylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `==`( ``*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `<`( ``*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `>`( ``*`<phylo>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `==`( ``*`<MixedBase>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `<`( ``*`<MixedBase>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  [`` `>`( ``*`<MixedBase>`*`)`](https://ms609.github.io/TreeTools/dev/reference/sort.multiPhylo.md)
+  : Sort a list of phylogenetic trees
+
+## Developer functions
+
+Efficient functions without input checks, for developers
+
+- [`edge_to_splits()`](https://ms609.github.io/TreeTools/dev/reference/edge_to_splits.md)
+  : Efficiently convert edge matrix to splits
+
+# Articles
+
+### All vignettes
+
+- [File system navigation in
+  R](https://ms609.github.io/TreeTools/dev/articles/filesystem-navigation.md):
+- [Loading phylogenetic data into
+  R](https://ms609.github.io/TreeTools/dev/articles/load-data.md):
+- [Loading phylogenetic trees into
+  R](https://ms609.github.io/TreeTools/dev/articles/load-trees.md):
