@@ -30,7 +30,9 @@ PhyDatToMatrix(
 
 - tipLabels:
 
-  Optionally, labels for leaves; will override rownames, if specified.
+  Optionally, an object providing labels for leaves, via
+  [`TipLabels()`](https://ms609.github.io/TreeTools/dev/reference/TipLabels.md);
+  will override `rownames(tokens)`.
 
 - dataset:
 
