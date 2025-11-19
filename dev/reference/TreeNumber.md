@@ -1,8 +1,8 @@
 # Unique integer indices for bifurcating tree topologies
 
 Functions converting between phylogenetic trees and their unique decimal
-representation, based on a concept by John Tromp, employed in (Li et al.
-1996) .
+representation, based on a concept by John Tromp, employed in Li et al.
+(1996) .
 
 ## Usage
 
