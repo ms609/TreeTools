@@ -76,7 +76,7 @@ then \code{as.TreeNumber()} returns a corresponding list of \code{TreeNumber} ob
 \description{
 Functions converting between phylogenetic trees and their unique decimal
 representation, based on a concept by John Tromp, employed in
-\insertCite{Li1996}{TreeTools}.
+\insertCite{Li1996;textual}{TreeTools}.
 }
 \details{
 There are \code{NUnrooted(n)} unrooted trees with \emph{n} leaves.

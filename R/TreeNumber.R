@@ -2,7 +2,7 @@
 #'
 #' Functions converting between phylogenetic trees and their unique decimal
 #' representation, based on a concept by John Tromp, employed in 
-#' \insertCite{Li1996}{TreeTools}.
+#' \insertCite{Li1996;textual}{TreeTools}.
 #'
 #' There are `NUnrooted(n)` unrooted trees with _n_ leaves.
 #' As such, each _n_-leaf tree can be uniquely identified by a non-negative
