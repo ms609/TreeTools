@@ -164,6 +164,14 @@ jobs:
           echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
           echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
           
+      - name: Install vdiffr patched (R 4.0)
+        if: matrix.config.r == '4.0' && runner.os == 'Linux'
+        run: |
+          git clone --branch v1.0.4 https://github.com/r-lib/vdiffr.git vdiffr-src
+          sed -i '1i#include <cstdint>' vdiffr-src/src/devSVG.cpp
+          R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
+          rm -rf vdiffr-src
+
       - name: Install vdiffr dependencies (R 3.x)
         if: matrix.config.r < '4.0'
         run: |
@@ -215,7 +223,7 @@ jobs:
           extra-packages: |
             TreeDist=?ignore-before-r=4.0.0
             TreeSearch=?ignore-before-r=4.1.0
-            vdiffr=?ignore-before-r=4.1.0
+            vdiffr=?ignore-before-r=4.0.0
             phangorn=?ignore-before-r=4.1.0
 
       - name: Check package
