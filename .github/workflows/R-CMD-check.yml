@@ -164,6 +164,11 @@ jobs:
           echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
           echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
           
+      - name: Install vdiffr dependencies (R 4.0)
+        if: matrix.config.r == '4.0' && runner.os == 'Linux'
+        run: |
+          Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','testthat','xml2','cpp11'), repos = 'https://packagemanager.posit.co/cran/2022-10-11')"
+
       - name: Install vdiffr patched (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
         run: |
