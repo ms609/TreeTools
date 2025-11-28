@@ -155,7 +155,15 @@ jobs:
       - name: Install system dependencies (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
         run: |
-          sudo apt-get install libgsl-dev
+          sudo apt-get update
+          sudo apt-get install -y \
+          libgsl-dev \
+          libpng-dev \
+          libfreetype6-dev \
+          libjpeg-dev \
+          libxml2-dev \
+          libharfbuzz-dev \
+          libfribidi-dev
           
       - name: Force C++17 (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
