@@ -80,7 +80,7 @@ CharacterInformation <- function(tokens) {
 #'
 #' Calculate the phylogenetic information content (_sensu_ 
 #' \insertCite{Steel2006;nobrackets}{TreeTools}) of a split, which
-#' reflects the probability that a uniformly selected random tree will contain#
+#' reflects the probability that a uniformly selected random tree will contain
 #' the split: a split that is consistent with a smaller number of trees will
 #' have a higher information content.
 #'
