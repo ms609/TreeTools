@@ -27,11 +27,17 @@ index - based on generalized entropy - will be returned; see
 \item{nonRootDominance}{Logical specifying whether to use non-root dominance
 factor.}
 }
+\value{
+\code{J1Index()} returns a numeric specifying the
+\ifelse{html}{\out{J<sup>1</sup>}}{\eqn{J^1}} index of \code{tree}.
+\eqn{J^1(T) = 1} for a perfectly balanced tree;
+\eqn{J^1(T) = 0} for a pectinate (linear / caterpillar) tree.
+}
 \description{
 Calculate tree balance index \ifelse{html}{\out{J<sup>1</sup>}}{\eqn{J^1}}
 (when \code{nonRootDominance = FALSE}) or
 \ifelse{html}{\out{J<sup>1c</sup>}}{\eqn{J^{1c}}}
-(when \code{nonRootDominance = TRUE}) from \insertRef{Lemant2022}{TreeTools}.
+(when \code{nonRootDominance = TRUE}) from \insertCite{Lemant2022}{TreeTools}.
 }
 \details{
 If population sizes are not provided, then the function assigns size 0 to

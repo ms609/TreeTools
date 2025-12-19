@@ -1,5 +1,6 @@
 # TreeTools 2.0.0.9000 (development) #
 - `MatrixToPhyDat()` gains `tipLabels` parameter.
+- Document return parameter for `J1Index()`.
 
 # TreeTools 2.0.0 (2025-09-23) #
 
