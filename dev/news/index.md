@@ -4,6 +4,8 @@
 
 - [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
   gains `tipLabels` parameter.
+- Document return value for
+  [`J1Index()`](https://ms609.github.io/TreeTools/dev/reference/J1Index.md).
 
 ## TreeTools 2.0.0 (2025-09-23)
 

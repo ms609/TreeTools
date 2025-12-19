@@ -1,10 +1,7 @@
 # Robust universal tree balance index
 
 Calculate tree balance index J¹ (when `nonRootDominance = FALSE`) or
-J^(1c) (when `nonRootDominance = TRUE`) from Lemant J, Le Sueur C,
-Manojlović V, Noble R (2022). “Robust, Universal Tree Balance Indices.”
-*Systematic Biology*, **71**(5), 1210–1224.
-[doi:10.1093/sysbio/syac027](https://doi.org/10.1093/sysbio/syac027) . .
+J^(1c) (when `nonRootDominance = TRUE`) from (Lemant et al. 2022) .
 
 ## Usage
 
@@ -35,6 +32,12 @@ JQIndex(tree, q = 1, nonRootDominance = FALSE)
 - nonRootDominance:
 
   Logical specifying whether to use non-root dominance factor.
+
+## Value
+
+`J1Index()` returns a numeric specifying the J¹ index of `tree`.
+\\J^1(T) = 1\\ for a perfectly balanced tree; \\J^1(T) = 0\\ for a
+pectinate (linear / caterpillar) tree.
 
 ## Details
 
