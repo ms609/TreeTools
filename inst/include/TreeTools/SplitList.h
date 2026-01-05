@@ -2,23 +2,25 @@
 #define _TREETOOLS_SPLITLIST_H
 
 #include <Rcpp/Lightest>
-
 #include <stdexcept> /* for errors */
+#include <vector>    /* for heap allocation */
+#include <algorithm> /* for std::fill */
 
 #include "assert.h" /* for ASSERT */
-#include "types.h" /* for int16 */
+#include "types.h" /* for int16, int32 */
 
 using splitbit = uint_fast64_t;
 
 #define R_BIN_SIZE int16(8)
 #define SL_BIN_SIZE int16(64)
 #define SL_MAX_BINS int16(32)
-/* 64*32 is about the largest size for which two SplitList objects reliably fit
- * on the stack (as required in TreeDist; supporting more leaves would mean
- * refactoring to run on the heap (and, trivially, converting int16 to int32
- * for split*bin implicit calculation in state[split][bin]?) */
-#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 32 * 64 = 2048
-#define SL_MAX_SPLITS (SL_MAX_TIPS - 3) /* no slower than a power of two */
+
+/* * Stack allocation limits (Legacy support for speed)
+ * Trees smaller than this will use stack arrays.
+ * Trees larger will trigger heap allocation.
+ */
+#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 2048
+#define SL_MAX_SPLITS (SL_MAX_TIPS - 3) 
 
 #define INLASTBIN(n, size) int16((size) - int16((size) - int16((n) % (size))) % (size))
 #define INSUBBIN(bin, offset)                                  \
@@ -72,42 +74,72 @@ namespace TreeTools {
 
   class SplitList {
   public:
-    int16 n_splits, n_bins;
-    int16 in_split[SL_MAX_SPLITS];
-    splitbit state[SL_MAX_SPLITS][SL_MAX_BINS];
+    int32 n_splits;
+    int16 n_bins;
+    int16* in_split;
+    splitbit** state;
+  
+  private:
+    /* * STACK STORAGE (Fast path for small trees)
+     * Used when n_splits <= SL_MAX_SPLITS and n_bins <= SL_MAX_BINS
+     */
+    int16 stack_in_split[SL_MAX_SPLITS];
+    splitbit stack_state[SL_MAX_SPLITS][SL_MAX_BINS];
+    splitbit* stack_rows[SL_MAX_SPLITS]; // Pointers to rows of stack_state
+    
+    /* * HEAP STORAGE (Large trees)
+     * Used when limits are exceeded.
+     */
+    std::vector<int16> heap_in_split;
+    std::vector<splitbit> heap_data;      // Flat storage for all bits
+    std::vector<splitbit*> heap_rows;     // Pointers into heap_data
+    
+  public:
     SplitList(const Rcpp::RawMatrix &x) {
-      if (double(x.rows()) > double(std::numeric_limits<int16>::max())) {
-        Rcpp::stop("This many splits cannot be supported. "
-                   "Please contact the TreeTools maintainer if "
-                   "you need to use more!");
-      }
-      if (double(x.cols()) > double(std::numeric_limits<int16>::max())) {
-        Rcpp::stop("This many leaves cannot be supported. "
-                     "Please contact the TreeTools maintainer if "
-                     "you need to use more!");
+      
+      const double n_rows = static_cast<double>(x.rows());
+      const double n_cols = static_cast<double>(x.cols());
+      
+      if (n_rows > static_cast<double>(std::numeric_limits<int32>::max())) {
+        Rcpp::stop("Too many splits (exceeds int32 limit).");
       }
       
-      n_splits = int16(x.rows());
+      n_splits = int32(x.rows());
       ASSERT(n_splits >= 0);
       
       const int16 n_input_bins = int16(x.cols());
-
       n_bins = int16(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
-
-      if (n_bins > SL_MAX_BINS) {
-        Rcpp::stop("This many leaves cannot be supported. "
-                   "Please contact the TreeTools maintainer if "
-                   "you need to use more!");
-      }
       
-      for (int16 split = 0; split < n_splits; ++split) {
-        in_split[split] = 0;
+      bool use_heap = (n_splits > SL_MAX_SPLITS) || (n_bins > SL_MAX_BINS);
+      
+      if (use_heap) {
+        heap_in_split.resize(n_splits, 0);
+        in_split = heap_in_split.data();
+        
+        size_t total_elements = static_cast<size_t>(n_splits) * 
+          static_cast<size_t>(n_bins);
+        heap_data.resize(total_elements); 
+        
+        heap_rows.resize(n_splits);
+        for (int32 i = 0; i < n_splits; ++i) {
+          heap_rows[i] = &heap_data[i * n_bins];
+        }
+        state = heap_rows.data();
+        
+      } else {
+        in_split = stack_in_split;
+        
+        for (int16 i = 0; i < n_splits; ++i) {
+          stack_rows[i] = stack_state[i];
+          in_split[i] = 0; // Initialize counts
+        }
+        state = stack_rows;
       }
       
       for (int16 bin = 0; bin < n_bins - 1; ++bin) {
         const int16 bin_offset = bin * input_bins_per_bin;
         
-        for (int16 split = 0; split < n_splits; ++split) {
+        for (int32 split = 0; split < n_splits; ++split) {
           splitbit combined = splitbit(x(split, bin_offset));
           
           for (int16 input_bin = 1; input_bin < input_bins_per_bin; ++input_bin) {
@@ -123,7 +155,7 @@ namespace TreeTools {
       const int16 last_bin = n_bins - 1;
       const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
       
-      for (int16 split = 0; split < n_splits; ++split) {
+      for (int32 split = 0; split < n_splits; ++split) {
         state[split][last_bin] = INSUBBIN(last_bin, 0);
         
         for (int16 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
@@ -133,6 +165,14 @@ namespace TreeTools {
         in_split[split] += count_bits(state[split][last_bin]);
       }
     }
+    
+    // Default destructor handles vector cleanup automatically.
+    ~SplitList() = default;
+    
+    // Disable copy/move to prevent pointer invalidation issues 
+    // (unless we explicitly implement deep copy logic later)
+    SplitList(const SplitList&) = delete;
+    SplitList& operator=(const SplitList&) = delete;
   };
 }
 
