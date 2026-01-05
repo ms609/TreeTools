@@ -40,31 +40,29 @@ namespace TreeTools {
   
 #if __cplusplus >= 202002L
 #include <bit> // C++20 header for std::popcount
-  
-  inline int16 count_bits(splitbit x) {
-    return static_cast<int16>(std::popcount(x));
+  inline int32 count_bits(splitbit x) {
+    return static_cast<int32>(std::popcount(x));
   }
-  
   // Option 2: Fallback for C++17 and older
 #else
 #if defined(__GNUC__) || defined(__clang__)
   // GCC and Clang support __builtin_popcountll for long long
-  inline int16 count_bits(splitbit x) {
-    return static_cast<int16>(__builtin_popcountll(x));
+  inline int32 count_bits(splitbit x) {
+    return static_cast<int32>(__builtin_popcountll(x));
   }
 #elif defined(_MSC_VER)
 #include <intrin.h>
-  inline int16 count_bits(splitbit x) {
-    return static_cast<int16>(__popcnt64(x));
+  inline int32 count_bits(splitbit x) {
+    return static_cast<int32>(__popcnt64(x));
   }
 #else
   // A slower, but safe and highly portable fallback for all other compilers
   // This is a last resort if no built-in is available.
-  inline int16_t count_bits(splitbit x) {
-    int16_t count = 0;
+  inline int32_t count_bits(splitbit x) {
+    int32_t count = 0;
     while (x != 0) {
       x &= (x - 1);
-      count++;
+      ++count;
     }
     return count;
   }
@@ -75,18 +73,18 @@ namespace TreeTools {
   class SplitList {
   public:
     int32 n_splits;
-    int16 n_bins;
-    int16* in_split;
+    int32 n_bins;
+    int32* in_split;
     splitbit** state;
   
   private:
     /* STACK STORAGE (Fast path for small trees) */
-    int16 stack_in_split[SL_MAX_SPLITS];
+    int32 stack_in_split[SL_MAX_SPLITS];
     splitbit stack_state[SL_MAX_SPLITS][SL_MAX_BINS];
     splitbit* stack_rows[SL_MAX_SPLITS];
     
     /* HEAP STORAGE (Large trees) */
-    std::vector<int16> heap_in_split;
+    std::vector<int32> heap_in_split;
     std::vector<splitbit> heap_data;      
     std::vector<splitbit*> heap_rows;     
     
@@ -103,9 +101,9 @@ namespace TreeTools {
       n_splits = int32(x.rows());
       ASSERT(n_splits >= 0);
       
-      const int16 n_input_bins = int16(x.cols());
+      const int32 n_input_bins = int32(x.cols());
       ASSERT(n_input_bins > 0);
-      n_bins = int16(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
+      n_bins = int32(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
       
       bool use_heap = (n_splits > SL_MAX_SPLITS) || (n_bins > SL_MAX_BINS);
       
@@ -126,7 +124,7 @@ namespace TreeTools {
       } else {
         in_split = stack_in_split;
         
-        for (int16 i = 0; i < n_splits; ++i) {
+        for (int32 i = 0; i < n_splits; ++i) {
           stack_rows[i] = stack_state[i];
           in_split[i] = 0;
         }
@@ -134,13 +132,13 @@ namespace TreeTools {
       }
       
       
-      for (int16 bin = 0; bin < n_bins - 1; ++bin) {
-        const int16 bin_offset = bin * input_bins_per_bin;
+      for (int32 bin = 0; bin < n_bins - 1; ++bin) {
+        const int32 bin_offset = bin * input_bins_per_bin;
         
         for (int32 split = 0; split < n_splits; ++split) {
           splitbit combined = splitbit(x(split, bin_offset));
           
-          for (int16 input_bin = 1; input_bin < input_bins_per_bin; ++input_bin) {
+          for (int32 input_bin = 1; input_bin < input_bins_per_bin; ++input_bin) {
             combined |= splitbit(x(split, bin_offset + input_bin)) <<
               (R_BIN_SIZE * input_bin);
           }
@@ -150,13 +148,13 @@ namespace TreeTools {
         }
       }
       
-      const int16 last_bin = n_bins - 1;
-      const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
+      const int32 last_bin = n_bins - 1;
+      const int32 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
       
       for (int32 split = 0; split < n_splits; ++split) {
         state[split][last_bin] = INSUBBIN(last_bin, 0);
         
-        for (int16 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
+        for (int32 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
           state[split][last_bin] += INBIN(input_bin, last_bin);
         }
         
