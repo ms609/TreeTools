@@ -19,8 +19,8 @@ inline void insert_ancestor(const int16 tip, const int16 *next_node,
 
 // [[Rcpp::export]]
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
-  if (double(nTip[0]) > double(std::numeric_limits<int16>::max())) {
-    Rcpp::stop("This many tips are not (yet) supported.");
+  if (double(nTip[0]) > 2048) {
+    Rcpp::stop("This many leaves are not (yet) supported.");
   }
   const int16 n_tip = int16(nTip[0]);
   if (splits.nrow() == 0) {

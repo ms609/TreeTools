@@ -158,7 +158,7 @@ test_that("as.Splits.Splits()", {
   splitsA <- as.Splits(ape::read.tree(text="((((a, b, c, c2), g), h), (d, (e, f)));"))
   splitsB <- as.Splits(ape::read.tree(text="(((((a, b), (c, c2)), h), g), (d, e, f));"))
   expectedSplits <- structure(matrix(as.raw(c(0x3f, 0x2f, 0x0f, 0x03, 0x0c, 0,
-                                              0, 0, 0, 0)), ncol = 2), nTip = 9,
+                                              0, 0, 0, 0)), ncol=2), nTip = 9,
                               tip.labels = TipLabels(splitsA), class="Splits")
   actualSplits <- as.Splits(splitsB, splitsA)
   expect_true(all(expectedSplits %in% actualSplits))
@@ -515,7 +515,7 @@ test_that("Split combination", {
 test_that("as.phylo.Splits() fails gracefully", {
   expect_error(
     as.phylo(as.Splits(BalancedTree(3000))),
-    "many leaves cannot be supported"
+    "many leaves are not .*supported"
   )
 })
 
