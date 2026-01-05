@@ -95,7 +95,7 @@ namespace TreeTools {
       
       /* Check limits */
       if (n_rows > static_cast<double>(std::numeric_limits<int32>::max())) {
-        Rcpp::stop("Too many splits (exceeds int32 limit).");
+        Rcpp::stop("Too many splits (exceeds int32 limit).");                   // #nocov
       }
       
       n_splits = int32(x.rows());

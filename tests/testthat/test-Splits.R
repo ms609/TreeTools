@@ -513,6 +513,8 @@ test_that("Split combination", {
 })
 
 test_that("as.phylo.Splits() fails gracefully", {
+  expect_no_error(as.Splits(BalancedTree(3000)))
+  
   expect_error(
     as.phylo(as.Splits(BalancedTree(3000))),
     "many leaves are not .*supported"
