@@ -514,7 +514,7 @@ test_that("Split combination", {
 
 test_that("as.phylo.Splits() supports large trees", {
   tree3000 <- BalancedTree(3000)
-  splits3000 <- as.Splits(tree3000)
+  expect_no_error(splits3000 <- as.Splits(tree3000))
   result <- as.phylo(splits3000)
   
   # Verify it's a valid phylo object
