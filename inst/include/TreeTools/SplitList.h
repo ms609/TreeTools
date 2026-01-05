@@ -80,12 +80,12 @@ namespace TreeTools {
     splitbit** state;
   
   private:
-    /* * STACK STORAGE (Fast path for small trees) */
+    /* STACK STORAGE (Fast path for small trees) */
     int16 stack_in_split[SL_MAX_SPLITS];
     splitbit stack_state[SL_MAX_SPLITS][SL_MAX_BINS];
-    splitbit* stack_rows[SL_MAX_SPLITS]; 
+    splitbit* stack_rows[SL_MAX_SPLITS];
     
-    /* * HEAP STORAGE (Large trees) */
+    /* HEAP STORAGE (Large trees) */
     std::vector<int16> heap_in_split;
     std::vector<splitbit> heap_data;      
     std::vector<splitbit*> heap_rows;     
@@ -101,22 +101,11 @@ namespace TreeTools {
       }
       
       n_splits = int32(x.rows());
-      
-      // Handle empty case safely
-      if (n_splits == 0) {
-        n_bins = 0;
-        in_split = nullptr; // or stack_in_split
-        state = nullptr;    // or stack_rows
-        return;
-      }
+      ASSERT(n_splits >= 0);
       
       const int16 n_input_bins = int16(x.cols());
-      
-      if (n_input_bins == 0) {
-        n_bins = 0;
-      } else {
-        n_bins = (n_input_bins + input_bins_per_bin - 1) / input_bins_per_bin;
-      }
+      ASSERT(n_input_bins > 0);
+      n_bins = int16(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
       
       bool use_heap = (n_splits > SL_MAX_SPLITS) || (n_bins > SL_MAX_BINS);
       
@@ -124,7 +113,8 @@ namespace TreeTools {
         heap_in_split.resize(n_splits, 0);
         in_split = heap_in_split.data();
         
-        size_t total_elements = static_cast<size_t>(n_splits) * static_cast<size_t>(n_bins);
+        size_t total_elements = static_cast<size_t>(n_splits) *
+          static_cast<size_t>(n_bins);
         heap_data.resize(total_elements); 
         
         heap_rows.resize(n_splits);
@@ -135,18 +125,15 @@ namespace TreeTools {
         
       } else {
         in_split = stack_in_split;
+        
         for (int16 i = 0; i < n_splits; ++i) {
           stack_rows[i] = stack_state[i];
-          in_split[i] = 0; 
+          in_split[i] = 0;
         }
         state = stack_rows;
       }
       
-      // If no bins (no tips/data), we are done
-      if (n_bins == 0) return;
       
-      // 1. Process full bins (if any)
-      // We iterate up to n_bins - 1. If n_bins is 1, this loop doesn't run.
       for (int16 bin = 0; bin < n_bins - 1; ++bin) {
         const int16 bin_offset = bin * input_bins_per_bin;
         
@@ -164,26 +151,23 @@ namespace TreeTools {
       }
       
       const int16 last_bin = n_bins - 1;
-      const int16 bin_offset = last_bin * input_bins_per_bin;
-      
-      const int16 items_in_last = n_input_bins - bin_offset;
+      const int16 raggedy_bins = INLASTBIN(n_input_bins, R_BIN_SIZE);
       
       for (int32 split = 0; split < n_splits; ++split) {
-        splitbit combined = splitbit(x(split, bin_offset));
+        state[split][last_bin] = INSUBBIN(last_bin, 0);
         
-        for (int16 i = 1; i < items_in_last; ++i) {
-          combined |= splitbit(x(split, bin_offset + i)) << (R_BIN_SIZE * i);
+        for (int16 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
+          state[split][last_bin] += INBIN(input_bin, last_bin);
         }
         
-        state[split][last_bin] = combined;
-        in_split[split] += count_bits(combined);
+        in_split[split] += count_bits(state[split][last_bin]);
       }
     }
     
-    // Default destructor handles vector cleanup automatically.
+    // Default destructor handles vector cleanup automatically
     ~SplitList() = default;
     
-    // Disable copy/move to prevent pointer invalidation issues 
+    // Disable copy/move to prevent pointer invalidation issues
     SplitList(const SplitList&) = delete;
     SplitList& operator=(const SplitList&) = delete;
   };
