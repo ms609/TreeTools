@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@
 <a href="mailto:martin.smith@durham.ac.uk" class="email">martin.smith@durham.ac.uk</a>
 </h4>
             
-            <h4 data-toc-skip class="date">2025-12-19</h4>
+            <h4 data-toc-skip class="date">2026-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/vignettes/load-trees.Rmd" class="external-link"><code>vignettes/load-trees.Rmd</code></a></small>
       <div class="d-none name"><code>load-trees.Rmd</code></div>
@@ -89,7 +89,7 @@ manual text entry:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">myTree</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"((A, B), ((C, D), (E, F)));"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">myTree</span><span class="op">)</span></span></code></pre></div>
-<p><img src="load-trees_files/figure-html/text-entry-1.png" class="r-plt" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="load-trees_files/figure-html/text-entry-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 <p>Beware common gotchas when entering text:</p>
 <ul>
 <li><p>Ensure that the tree string ends in a semi-colon.</p></li>
@@ -104,7 +104,7 @@ node: the resultant ‘invisible nodes’ can cause R to crash.</p></li>
 <code class="sourceCode R"><span><span class="va">badTree</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html" class="external-link">read.tree</a></span><span class="op">(</span>text <span class="op">=</span> <span class="st">"((A, B), (((C, D), ((E), F))));"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">badTree</span><span class="op">)</span></span>
 <span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">nodelabels</a></span><span class="op">(</span>bg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="load-trees_files/figure-html/double-bracket-1.png" class="r-plt" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="load-trees_files/figure-html/double-bracket-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 <p>The text is expected in Newick format, so can contain edge lengths -
 but edge lengths must be included for every edge of the tree, or they
 will be ignored.</p>
@@ -113,7 +113,7 @@ will be ignored.</p>
 <span>  text <span class="op">=</span> <span class="st">"((A:1, B:1):2, ((C:1, D:1):2, (E:1, F:1):2):4);"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">myTree</span><span class="op">)</span></span></code></pre></div>
-<p><img src="load-trees_files/figure-html/branch-lengths-1.png" class="r-plt" width="75%" style="display: block; margin: auto;"></p>
+<p><img src="load-trees_files/figure-html/branch-lengths-1.png" class="r-plt" alt="" width="75%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="from-a-file">From a file<a class="anchor" aria-label="anchor" href="#from-a-file"></a>

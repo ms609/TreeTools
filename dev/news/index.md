@@ -1,5 +1,9 @@
 # Changelog
 
+## TreeTools 2.0.0.9001 (development)
+
+- Remove hard limit on tree size in `SplitList`.
+
 ## TreeTools 2.0.0.9000 (development)
 
 - [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
