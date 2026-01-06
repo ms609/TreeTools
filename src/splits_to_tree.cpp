@@ -7,8 +7,8 @@ using namespace Rcpp;
 using namespace TreeTools;
 
 inline void insert_ancestor(const int16 tip, const int16 *next_node,
-                            std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS>& parent,
-                            std::array<int16, SL_MAX_TIPS>& patriarch) {
+                            int16* parent,
+                            int16* patriarch) {
   if (patriarch[tip]) {
     parent[patriarch[tip]] = *next_node;
   } else {
@@ -19,9 +19,6 @@ inline void insert_ancestor(const int16 tip, const int16 *next_node,
 
 // [[Rcpp::export]]
 IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
-  if (double(nTip[0]) > 2048) {
-    Rcpp::stop("This many leaves are not (yet) supported.");
-  }
   const int16 n_tip = int16(nTip[0]);
   if (splits.nrow() == 0) {
     IntegerMatrix ret(n_tip, 2);
@@ -32,12 +29,38 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
     return ret;
   }
   const SplitList x(splits);
-  alignas(64) std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS> parent{};
-  alignas(64) std::array<int16, SL_MAX_TIPS> patriarch{};
-
-  std::array<int16, SL_MAX_SPLITS> split_order;
-  std::iota(split_order.begin(), split_order.begin() + x.n_splits, 0);
-  std::sort(split_order.begin(), split_order.begin() + x.n_splits,
+  
+  // Decide whether to use stack or heap allocation based on tree size
+  const bool use_heap = (n_tip > SL_MAX_TIPS) || (x.n_splits > SL_MAX_SPLITS);
+  
+  // Stack allocation for small trees (fast path)
+  alignas(64) std::array<int16, SL_MAX_TIPS + SL_MAX_SPLITS> stack_parent{};
+  alignas(64) std::array<int16, SL_MAX_TIPS> stack_patriarch{};
+  
+  // Heap allocation for large trees
+  std::vector<int16> heap_parent;
+  std::vector<int16> heap_patriarch;
+  
+  // Pointers to active storage
+  int16* parent;
+  int16* patriarch;
+  
+  if (use_heap) {
+    const size_t parent_size = static_cast<size_t>(n_tip) + 
+                               static_cast<size_t>(x.n_splits);
+    heap_parent.resize(parent_size, 0);
+    heap_patriarch.resize(n_tip, 0);
+    parent = heap_parent.data();
+    patriarch = heap_patriarch.data();
+  } else {
+    parent = stack_parent.data();
+    patriarch = stack_patriarch.data();
+  }
+  
+  // Allocate split_order appropriately
+  std::vector<int16> split_order(x.n_splits);
+  std::iota(split_order.begin(), split_order.end(), 0);
+  std::sort(split_order.begin(), split_order.end(),
             [&in_split = x.in_split](int16 a, int16 b) {
               return in_split[a] > in_split[b];
             });
