@@ -43,7 +43,7 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   const uintx n_edge = edge.rows();
   if (n_edge + 1 >= NOT_TRIVIAL) {
     Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
-                 "Contact maintainer for advice");                   // # nocov
+               "Contact maintainer for advice");                                // # nocov
   }
   
   if (nTip[0] < 1) {

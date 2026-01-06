@@ -1,3 +1,6 @@
+# TreeTools 2.0.0.9001 (development) #
+- Remove hard limit on tree size in `SplitList`.
+
 # TreeTools 2.0.0.9000 (development) #
 - `MatrixToPhyDat()` gains `tipLabels` parameter.
 - Document return value for `J1Index()`.

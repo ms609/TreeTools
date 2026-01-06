@@ -512,11 +512,15 @@ test_that("Split combination", {
   #TODO: Fully test splits with large (> 8 tip) trees
 })
 
-test_that("as.phylo.Splits() fails gracefully", {
-  expect_error(
-    as.phylo(as.Splits(BalancedTree(3000))),
-    "many leaves cannot be supported"
-  )
+test_that("as.phylo.Splits() supports large trees", {
+  tree3000 <- BalancedTree(3000)
+  expect_no_error(splits3000 <- as.Splits(tree3000))
+  result <- as.phylo(splits3000)
+  
+  # Verify it's a valid phylo object
+  expect_s3_class(result, "phylo")
+  expect_equal(length(result$tip.label), 3000)
+  expect_equal(NTip(result), 3000)
 })
 
 test_that("as.phylo.Splits()", {
