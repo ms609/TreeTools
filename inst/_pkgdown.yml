@@ -1,5 +1,9 @@
 url: https://ms609.github.io/TreeTools
 
+home:
+  title: An R package for the efficient creation, modification and analysis of
+         phylogenetic trees.
+
 authors:
   Martin R. Smith:
     href: https://smithlabdurham.github.io/
