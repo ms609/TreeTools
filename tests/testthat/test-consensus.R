@@ -17,10 +17,17 @@ test_that("Consensus() errors", {
   expect_equal(Consensus(c(halfTree)), halfTree)
   expect_equal(Consensus(list(halfTree)), halfTree)
   
+  # Test that trees larger than heap limit fail gracefully
   expect_error(
-    Consensus(c(BalancedTree(33333), PectinateTree(33333))),
-    "too many leaves"
+    Consensus(c(BalancedTree(100001), PectinateTree(100001))),
+    "too many leaves.*100000"
   )
+  
+  # Test that large trees (above old stack limit) now work with heap allocation
+  # This would have segfaulted on arm64 with the old implementation
+  largeTree <- BalancedTree(33333)
+  consensus_large <- Consensus(c(largeTree, largeTree))
+  expect_equal(NTip(consensus_large), 33333)
 })
 
 test_that("Consensus()", {

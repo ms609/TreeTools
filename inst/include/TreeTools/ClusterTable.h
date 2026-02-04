@@ -36,7 +36,12 @@ const int_fast32_t CT_MAX_LEAVES = 16383;
 
 namespace TreeTools {
 
+  // Use stack allocation for trees up to this size for optimal performance
+  constexpr int_fast32_t ct_stack_threshold = 8192;
+  // Old hard limit, kept for backward compatibility with TreeDist 2.9.2
   constexpr int_fast32_t ct_max_leaves = 16383;
+  // New increased limit with heap allocation
+  constexpr int_fast32_t ct_max_leaves_heap = 100000;
   constexpr int_fast32_t ct_stack_size = 4;
   
   template <typename T>
@@ -49,6 +54,55 @@ namespace TreeTools {
       v.resize(n);
     }
   }
+  
+  // Dynamic bitset that uses stack allocation for small sizes, heap for large
+  class DynamicBitset {
+  private:
+    std::bitset<ct_stack_threshold + 1> stack_bits;
+    std::vector<bool> heap_bits;
+    bool use_heap;
+    std::size_t size_;
+    
+  public:
+    DynamicBitset() : use_heap(false), size_(0) {}
+    
+    void resize(std::size_t n) {
+      size_ = n;
+      if (n > ct_stack_threshold) {
+        use_heap = true;
+        heap_bits.resize(n, false);
+      } else {
+        use_heap = false;
+        stack_bits.reset();
+      }
+    }
+    
+    bool operator[](std::size_t idx) const {
+      if (use_heap) {
+        return heap_bits[idx];
+      } else {
+        return stack_bits[idx];
+      }
+    }
+    
+    void set(std::size_t idx, bool value = true) {
+      if (use_heap) {
+        heap_bits[idx] = value;
+      } else {
+        stack_bits[idx] = value;
+      }
+    }
+    
+    void reset() {
+      if (use_heap) {
+        std::fill(heap_bits.begin(), heap_bits.end(), false);
+      } else {
+        stack_bits.reset();
+      }
+    }
+    
+    std::size_t size() const { return size_; }
+  };
   
   class ClusterTable {
     
@@ -73,10 +127,9 @@ namespace TreeTools {
     int16* T_ptr = nullptr;
     std::vector<int16> visited_nth;
     std::vector<ClusterRow> x_rows;
-    // Using bitset; can obtain a ~1% speedup using vector of ULLs
-    // Retaining slower code as easier to read.
-    // See branch ct-xswitch for implementation
-    std::bitset<ct_max_leaves + 1> Xswitch;
+    // Dynamic bitset that uses stack allocation for small trees,
+    // heap allocation for large trees
+    DynamicBitset Xswitch;
     // Track number of set switches (excluding index 0)
     std::size_t xswitch_set_count = 0;
     
@@ -286,7 +339,7 @@ namespace TreeTools {
       // Only increment our counter on a 0 -> 1 transition
       const auto idx = static_cast<std::size_t>(*row);
       if (!Xswitch[idx]) {
-        Xswitch[idx] = true;
+        Xswitch.set(idx, true);
         ++xswitch_set_count;
       }
     }
@@ -294,7 +347,7 @@ namespace TreeTools {
     inline void SETSWX(std::size_t row) noexcept {
       // Only increment our counter on a 0 -> 1 transition
       if (!Xswitch[row]) {
-        Xswitch[row] = true;
+        Xswitch.set(row, true);
         ++xswitch_set_count;
       }
     }
@@ -384,11 +437,11 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > int(ct_max_leaves)) {
-      Rcpp::stop("Tree has too many leaves. "
-                 "Contact the 'TreeTools' maintainer.");
+    if (leaf_labels.length() > int(ct_max_leaves_heap)) {
+      Rcpp::stop("Tree has too many leaves (>", ct_max_leaves_heap, "). "
+                 "Contact the 'TreeTools' maintainer if you need to handle larger trees.");
     }
-    ASSERT(ct_max_leaves <= std::numeric_limits<int16>::max());
+    ASSERT(ct_max_leaves_heap <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "
@@ -441,6 +494,10 @@ namespace TreeTools {
     // BUILD Cluster table
     X_ROWS = n_leaves;
     x_rows = std::vector<ClusterRow>(X_ROWS);
+    
+    // Initialize Xswitch with appropriate size
+    // Uses stack allocation for small trees, heap for large ones
+    Xswitch.resize(n_leaves + 1);
 
     // This procedure constructs in X descriptions of the clusters in a
     // rooted tree described by the postorder sequence T with weights,

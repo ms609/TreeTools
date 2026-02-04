@@ -1,9 +1,17 @@
 test_that("ClusterTable fails gracefully", {
-  bigTree <- PectinateTree(2^14 + 1)
+  # Test that trees larger than the new heap limit fail gracefully
+  bigTree <- PectinateTree(100001)
   expect_error(
     as.ClusterTable(bigTree),
-    "Tree has too many leaves. Contact the .TreeTools. maintainer."
+    "Tree has too many leaves.*100000"
   )
+  
+  # Test that trees above the old stack threshold but below new limit work
+  # Use a medium-sized tree that would have failed with old limit
+  # but should work with heap allocation (e.g., 20000 leaves)
+  mediumTree <- PectinateTree(20000)
+  ct <- as.ClusterTable(mediumTree)
+  expect_equal(attr(ct, "nTip"), 20000)
 })
 
 test_that("ClusterTable class behaves", {
