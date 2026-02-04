@@ -163,14 +163,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // edge_to_num
-IntegerVector edge_to_num(IntegerVector parent, IntegerVector child, IntegerVector nTip);
+IntegerVector edge_to_num(const IntegerVector& parent, const IntegerVector& child, const IntegerVector& nTip);
 RcppExport SEXP _TreeTools_edge_to_num(SEXP parentSEXP, SEXP childSEXP, SEXP nTipSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< IntegerVector >::type parent(parentSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type child(childSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type nTip(nTipSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type nTip(nTipSEXP);
     rcpp_result_gen = Rcpp::wrap(edge_to_num(parent, child, nTip));
     return rcpp_result_gen;
 END_RCPP

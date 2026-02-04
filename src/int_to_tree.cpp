@@ -4,8 +4,10 @@
 #include "../inst/include/TreeTools.h"
 using namespace Rcpp;
 
-const intx MAX_TIP = 44, MAX_NODE = MAX_TIP + MAX_TIP - 1;
-const intx MB_MAX_TIP = 32768, MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
+constexpr intx MAX_TIP = 44;
+constexpr intx MAX_NODE = MAX_TIP + MAX_TIP - 1;
+constexpr intx MB_MAX_TIP = 32768;
+constexpr intx MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
@@ -113,54 +115,36 @@ intx maximum (const intx x, const intx y) {
   return (x > y) ? x : y;
 }
 
-// Parent and child must be in postorder, with tree rooted on tip 1.
-// [[Rcpp::export]]
-IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
-                   IntegerVector nTip) {
-  if (parent.size() != child.size()) {
-    Rcpp::stop("Parent and child must be the same length");
-  }
-  const intx
-    n_tip = nTip[0],
-    n_internal = n_tip - 1,
-    n_edge = parent.size(),
-    all_node = n_internal + n_tip,
-    r_to_c = 1
-  ;
-  if (n_tip < 4) {
-    return IntegerVector(1); // A length one, zero initialized vector
-  }
-  if (n_edge != n_tip + n_tip - 2) {
-    Rcpp::stop("nEdge must == nTip + nTip - 2");
-  }
-  if (all_node > MAX_NODE) {
-    Rcpp::stop("Too many nodes for mixed base representation");
-  }
-  if (n_tip >= MAX_TIP) {
-    Rcpp::stop("Too many leaves for mixed base representation");
-  }
-  intx smallest_below[MAX_NODE],
-       parent_of[MAX_NODE],
-       prime_id[MAX_NODE],
-       index[MAX_TIP]
-  ;
-  for (intx i = 0; i != all_node; i++) {
+inline IntegerVector calc_edge_to_num(
+    const IntegerVector& parent,
+    const IntegerVector& child,
+    const intx n_tip,
+    const intx& all_node,
+    const intx& n_edge) {
+  
+  constexpr intx r_to_c = 1;
+  
+  intx smallest_below[MAX_NODE];
+  intx parent_of[MAX_NODE];
+  intx prime_id[MAX_NODE];
+  intx index[MAX_TIP];
+  
+  for (intx i = 0; i < all_node; ++i) {
     smallest_below[i] = i;
     prime_id[i] = i;
   }
-
-  for (intx i = 0; i != n_edge - 2; i += 2) {
-    const intx
-      this_node = parent[i] - r_to_c,
-      left_child = child[i] - r_to_c,
-      right_child = child[i + 1] - r_to_c
-    ;
+  
+  for (intx i = 0; i < n_edge - 2; i += 2) {
+    const intx this_node = parent[i] - r_to_c;
+    const intx left_child = child[i] - r_to_c;
+    const intx right_child = child[i + 1] - r_to_c;
+    
     smallest_below[this_node] = minimum(smallest_below[right_child],
                                         smallest_below[left_child]);
     prime_id[this_node] = maximum(smallest_below[left_child],
-                              smallest_below[right_child]);
+                                  smallest_below[right_child]);
     parent_of[left_child] = parent_of[right_child] = this_node;
-
+    
     for (intx at = smallest_below[this_node];
          at != this_node;
          at = parent_of[at]) {
@@ -182,64 +166,69 @@ IntegerVector edge_to_num(IntegerVector parent, IntegerVector child,
     num += insertion_edge * multiplier;
     multiplier *= (i + i - 3);
   }
-
+  
   if (num >= INT_MAX) {
     return IntegerVector{int(num / INT_MAX), int(num % INT_MAX)};
   } else {
     return IntegerVector{int(num)};
   }
+  
 }
 
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
-IntegerVector edge_to_mixed_base(
-    const IntegerVector parent,
-    const IntegerVector child,
-    const IntegerVector nTip) {
+IntegerVector edge_to_num(
+    const IntegerVector& parent,
+    const IntegerVector& child,
+    const IntegerVector& nTip) {
   if (parent.size() != child.size()) {
     Rcpp::stop("Parent and child must be the same length");
   }
-  if (nTip.length() > 1) {
-    Rcpp::warning("`nTip` should be a single integer");
-  }
-  const intx
-    n_tip = nTip[0],
-    n_internal = n_tip - 1,
-    n_edge = parent.size(),
-    all_node = n_internal + n_tip,
-    r_to_c = 1
-  ;
+  const intx n_tip = nTip[0];
+  const intx n_internal = n_tip - 1;
+  const intx n_edge = parent.size();
+  const intx all_node = n_internal + n_tip;
   
   if (n_tip < 4) {
-    return IntegerVector(0);
+    return IntegerVector(1); // A length one, zero initialized vector
   }
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
-  if (all_node > MB_MAX_NODE) {
+  if (all_node > MAX_NODE) {
     Rcpp::stop("Too many nodes for mixed base representation");
   }
-  if (n_tip >= MB_MAX_TIP) {
+  if (n_tip >= MAX_TIP) {
     Rcpp::stop("Too many leaves for mixed base representation");
   }
-  intx
-    smallest_below[MB_MAX_NODE],
-    parent_of[MB_MAX_NODE],
-    prime_id[MB_MAX_NODE],
-    index[MB_MAX_TIP]
-  ;
+  return calc_edge_to_num(parent, child, n_tip, all_node, n_edge);
+}
+
+inline void calc_edge_to_mixed_base(
+    const IntegerVector& parent,
+    const IntegerVector& child,
+    const intx n_tip,
+    const intx all_node,
+    const intx n_edge,
+    IntegerVector& ret) {
+  
+  constexpr intx r_to_c = 1;
+  
+  intx smallest_below[MB_MAX_NODE];
+  intx parent_of[MB_MAX_NODE];
+  intx prime_id[MB_MAX_NODE];
+  intx index[MB_MAX_TIP];
   
   for (intx i = 0; i != all_node; i++) {
     smallest_below[i] = i;
     prime_id[i] = i;
   }
   
-  for (intx i = 0; i != n_edge - 2; i += 2) {
-    const intx
-      this_node = parent[i] - r_to_c,
-      left_child = child[i] - r_to_c,
-      right_child = child[i + 1] - r_to_c
-    ;
+  for (intx i = 0; i < n_edge - 2; i += 2) {
+    const intx this_node = parent[i] - r_to_c;
+    const intx left_child = child[i] - r_to_c;
+    const intx right_child = child[i + 1] - r_to_c;
+    
     smallest_below[this_node] = minimum(smallest_below[right_child],
                                         smallest_below[left_child]);
     prime_id[this_node] = maximum(smallest_below[left_child],
@@ -255,8 +244,7 @@ IntegerVector edge_to_mixed_base(
       }
     }
   }
-  IntegerVector ret(n_tip - 3);
-  for (intx i = 3; i != n_tip; i++) {
+  for (intx i = 3; i < n_tip; ++i) {
     intx insertion_edge = index[i];
     if (insertion_edge < n_tip) {
       --insertion_edge;
@@ -265,6 +253,39 @@ IntegerVector edge_to_mixed_base(
     }
     ret[n_tip - i - 1] = insertion_edge;
   }
+}
+
+// Parent and child must be in postorder, with tree rooted on tip 1.
+// [[Rcpp::export]]
+IntegerVector edge_to_mixed_base(
+    const IntegerVector parent,
+    const IntegerVector child,
+    const IntegerVector nTip) {
+  if (parent.size() != child.size()) {
+    Rcpp::stop("Parent and child must be the same length");
+  }
+  if (nTip.length() > 1) {
+    Rcpp::warning("`nTip` should be a single integer");
+  }
+  const intx n_tip = nTip[0];
+  const intx n_internal = n_tip - 1;
+  const intx n_edge = parent.size();
+  const intx all_node = n_internal + n_tip;
+  
+  if (n_tip < 4) {
+    return IntegerVector(0);
+  }
+  if (n_edge != n_tip + n_tip - 2) {
+    Rcpp::stop("nEdge must == nTip + nTip - 2");
+  }
+  if (all_node > MB_MAX_NODE) {
+    Rcpp::stop("Too many nodes for mixed base representation");
+  }
+  if (n_tip >= MB_MAX_TIP) {
+    Rcpp::stop("Too many leaves for mixed base representation");
+  }
+  IntegerVector ret(n_tip - 3);
+  calc_edge_to_mixed_base(parent, child, n_tip, all_node, n_edge, ret);
   return ret;
 }
 
