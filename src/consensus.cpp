@@ -66,6 +66,7 @@ RawMatrix consensus_tree_impl(
       
       do {
         if (CT_IS_LEAF(v)) {
+          ASSERT(Spos < S.size());
           CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
         } else {
           CT_POP(L, R, N, W_j);
@@ -82,6 +83,7 @@ RawMatrix consensus_tree_impl(
             w = w - W_j;
           }
           
+          ASSERT(Spos < S.size());
           CT_PUSH(L, R, N, W);
           
           ++j_pos;
