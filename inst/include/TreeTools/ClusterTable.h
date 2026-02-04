@@ -43,14 +43,16 @@ const int_fast32_t CT_MAX_LEAVES = 16383;
 namespace TreeTools {
 
   // Use stack allocation for trees up to this size for optimal performance
-  constexpr int_fast32_t ct_stack_threshold = 8192;
+  // Using 'const' instead of 'constexpr' to ensure external linkage for packages
+  // that depend on TreeTools (e.g., TreeDist). constexpr can cause ODR issues.
+  const int_fast32_t ct_stack_threshold = 8192;
   // Old hard limit, kept for backward compatibility with TreeDist 2.9.2
   // NOTE: This constant is deprecated - new code should use ct_max_leaves_heap
   // External packages may still reference this constant for compatibility
-  constexpr int_fast32_t ct_max_leaves = 16383;
+  const int_fast32_t ct_max_leaves = 16383;
   // New increased limit with heap allocation
-  constexpr int_fast32_t ct_max_leaves_heap = 100000;
-  constexpr int_fast32_t ct_stack_size = 4;
+  const int_fast32_t ct_max_leaves_heap = 100000;
+  const int_fast32_t ct_stack_size = 4;
   
   template <typename T>
   inline void resize_uninitialized(std::vector<T>& v, std::size_t n) {
