@@ -9,7 +9,6 @@ using namespace Rcpp;
 #include <vector> /* for vector */
 
 using TreeTools::ct_stack_size;
-using TreeTools::ct_max_leaves;
 using TreeTools::ct_stack_threshold;
 using TreeTools::ct_max_leaves_heap;
 
@@ -165,6 +164,7 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   } catch(const std::exception& e) {
     Rcpp::stop(e.what());
   }
-  // Should never reach here
+  // Should never reach here - all paths above return or throw
+  ASSERT(false && "Unreachable code in consensus_tree");
   return RawMatrix(0, 0);
 }

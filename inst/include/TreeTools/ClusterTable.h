@@ -40,6 +40,8 @@ namespace TreeTools {
   // Use stack allocation for trees up to this size for optimal performance
   constexpr int_fast32_t ct_stack_threshold = 8192;
   // Old hard limit, kept for backward compatibility with TreeDist 2.9.2
+  // NOTE: This constant is deprecated - new code should use ct_max_leaves_heap
+  // External packages may still reference this constant for compatibility
   constexpr int_fast32_t ct_max_leaves = 16383;
   // New increased limit with heap allocation
   constexpr int_fast32_t ct_max_leaves_heap = 100000;
