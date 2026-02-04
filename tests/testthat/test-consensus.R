@@ -23,8 +23,7 @@ test_that("Consensus() errors", {
     "too many leaves.*100000"
   )
   
-  # Test that large trees (above old stack limit) now work with heap allocation
-  # This would have segfaulted on arm64 with the old implementation
+  skip_on_cran() # Slow!
   largeTree <- BalancedTree(33333)
   consensus_large <- Consensus(c(largeTree, largeTree))
   expect_equal(NTip(consensus_large), 33333)
