@@ -443,14 +443,17 @@ namespace TreeTools {
     if (leaf_labels.length() > int(ct_max_leaves_heap)) {
       std::ostringstream msg;
       msg << "Tree has too many leaves (>" << ct_max_leaves_heap << "). "
-          << "Contact the 'TreeTools' maintainer if you need to handle larger trees.";
+          << "Contact the 'TreeTools' maintainer.";
       Rcpp::stop(msg.str());
     }
     ASSERT(ct_max_leaves_heap <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
-      Rcpp::stop("Tree has too many edges. "
-                 "Contact the 'TreeTools' maintainer.");
+      std::ostringstream msg;
+      msg << "Tree has too many edges (" << edge.nrow() << " > " << 
+        std::numeric_limits<int16>::max() << "). " << 
+          "Contact the 'TreeTools' maintainer.";
+      Rcpp::stop(msg.str());
     }
     n_edge = int16(edge.nrow());
     const int16 n_vertex = M() + N();
