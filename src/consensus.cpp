@@ -55,6 +55,7 @@ RawMatrix consensus_tree_impl(
     std::fill(split_count.begin(), split_count.end(), 1);
     
     for (int32 j = i + 1; j < n_trees; ++j) {
+      ASSERT(tables[i].N() == tables[j].N());
       
       tables[i].CLEAR();
       
@@ -66,15 +67,17 @@ RawMatrix consensus_tree_impl(
       
       do {
         if (CT_IS_LEAF(v)) {
-          ASSERT(Spos < S.size());
+          CT_ASSERT_CAN_PUSH();
           CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
         } else {
+          CT_ASSERT_CAN_POP();
           CT_POP(L, R, N, W_j);
           
           W = 1 + W_j;
           w = w - W_j;
           
           while (w) {
+            CT_ASSERT_CAN_POP();
             CT_POP(L_j, R_j, N_j, W_j);
             if (L_j < L) L = L_j;
             if (R_j > R) R = R_j;
@@ -83,7 +86,7 @@ RawMatrix consensus_tree_impl(
             w = w - W_j;
           }
           
-          ASSERT(Spos < S.size());
+          CT_ASSERT_CAN_PUSH();
           CT_PUSH(L, R, N, W);
           
           ++j_pos;

@@ -13,6 +13,11 @@
 #define UNINIT -999
 #define INF TreeTools::INTX_MAX
 
+#define CT_ASSERT_CAN_PUSH()                                   \
+  ASSERT(static_cast<size_t>(Spos + CT_STACK_SIZE) <= S.size())
+
+#define CT_ASSERT_CAN_POP() ASSERT(Spos >= CT_STACK_SIZE)
+
 #define CT_PUSH(a, b, c, d)                                      \
   S[Spos++] = (a);                                               \
   S[Spos++] = (b);                                               \
@@ -354,7 +359,7 @@ namespace TreeTools {
     }
 
     [[nodiscard]] inline bool GETSWX(int32* row) noexcept {
-      ASSERT(*row > 0 && *row <= static_cast<size_t>(X_ROWS));
+      ASSERT(*row > 0 && *row <= X_ROWS);
       return Xswitch[*row];
     }
 
