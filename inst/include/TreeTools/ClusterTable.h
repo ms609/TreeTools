@@ -4,6 +4,7 @@
 #include <array> /* for array */
 #include <bitset> /* for bitset */
 #include <vector> /* for vector */
+#include <sstream> /* for ostringstream */
 #include <Rcpp/Lightest>
 #include "assert.h" /* for ASSERT */
 #include "types.h" /* for int16 */
@@ -438,8 +439,10 @@ namespace TreeTools {
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
     if (leaf_labels.length() > int(ct_max_leaves_heap)) {
-      Rcpp::stop("Tree has too many leaves (>", ct_max_leaves_heap, "). "
-                 "Contact the 'TreeTools' maintainer if you need to handle larger trees.");
+      std::ostringstream msg;
+      msg << "Tree has too many leaves (>" << ct_max_leaves_heap << "). "
+          << "Contact the 'TreeTools' maintainer if you need to handle larger trees.";
+      Rcpp::stop(msg.str());
     }
     ASSERT(ct_max_leaves_heap <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N

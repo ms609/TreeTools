@@ -165,3 +165,6 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   } catch(const std::exception& e) {
     Rcpp::stop(e.what());
   }
+  // Should never reach here
+  return RawMatrix(0, 0);
+}
