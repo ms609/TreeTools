@@ -6,12 +6,8 @@ test_that("ClusterTable fails gracefully", {
   )
   
   mediumTree <- PectinateTree(20000)
-  expect_error(as.ClusterTable(mediumTree),
-               "too many edges.*32767")
-  
-  smallTree <- PectinateTree(12345)
-  ct <- as.ClusterTable(smallTree)
-  expect_equal(attr(ct, "nTip"), 12345)
+  ct <- as.ClusterTable(mediumTree)
+  expect_equal(attr(ct, "nTip"), 20000)
 })
 
 test_that("ClusterTable class behaves", {
