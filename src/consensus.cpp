@@ -20,10 +20,10 @@ RawMatrix consensus_tree_impl(
   const NumericVector& p,
   StackContainer& S
 ) {
-  int16 v = 0;
-  int16 w = 0;
-  int16 L, R, N, W;
-  int16 L_j, R_j, N_j, W_j;
+  int32 v = 0;
+  int32 w = 0;
+  int32 L, R, N, W;
+  int32 L_j, R_j, N_j, W_j;
   
   const int32 n_trees = trees.length();
   const int32 frac_thresh = int32(n_trees * p[0]) + 1;
@@ -61,7 +61,7 @@ RawMatrix consensus_tree_impl(
       tables[j].TRESET();
       tables[j].READT(&v, &w);
       
-      int16 j_pos = 0;
+      int32 j_pos = 0;
       int32 Spos = 0; // Empty the stack S. Used in CT_PUSH / CT_POP macros.
       
       do {
