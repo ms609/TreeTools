@@ -8,6 +8,9 @@ using namespace Rcpp;
 #include <array> /* for array */
 #include <vector> /* for vector */
 
+using TreeTools::ct_stack_size;
+using TreeTools::ct_max_leaves;
+
 // trees is a list of objects of class phylo, all with the same tip labels
 // (try RenumberTips(trees, trees[[1]]))
 // Per #168, unexpected behaviour if root position differs in non-preorder trees
@@ -34,7 +37,7 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   const int32 ntip_3  = n_tip - 3;
   const int32 nbin    = (n_tip + 7) / 8;  // bytes per row in packed output
   
-  std::array<int32, CT_STACK_SIZE * CT_MAX_LEAVES> S;
+  std::array<int32, ct_stack_size * ct_max_leaves> S;
   std::vector<int32> split_count(n_tip, 1);
   
   // Packed output: each row has nbin bytes
