@@ -76,7 +76,7 @@ namespace TreeTools {
     // Using bitset; can obtain a ~1% speedup using vector of ULLs
     // Retaining slower code as easier to read.
     // See branch ct-xswitch for implementation
-    std::bitset<CT_MAX_LEAVES + 1> Xswitch;
+    std::bitset<ct_max_leaves + 1> Xswitch;
     // Track number of set switches (excluding index 0)
     std::size_t xswitch_set_count = 0;
     
@@ -384,11 +384,11 @@ namespace TreeTools {
     // BEGIN
     n_internal = rooted["Nnode"]; // = M
     Rcpp::CharacterVector leaf_labels = rooted["tip.label"];
-    if (leaf_labels.length() > int(CT_MAX_LEAVES)) {
+    if (leaf_labels.length() > int(ct_max_leaves)) {
       Rcpp::stop("Tree has too many leaves. "
                  "Contact the 'TreeTools' maintainer.");
     }
-    ASSERT(CT_MAX_LEAVES <= std::numeric_limits<int16>::max());
+    ASSERT(ct_max_leaves <= std::numeric_limits<int16>::max());
     n_leaves = int16(leaf_labels.length()); // = N
     if (double(edge.nrow()) > double(std::numeric_limits<int16>::max())) {
       Rcpp::stop("Tree has too many edges. "
