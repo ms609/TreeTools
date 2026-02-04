@@ -151,7 +151,6 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
     TreeTools::ClusterTable temp_table(Rcpp::List(trees(0)));
     const int32 n_tip = temp_table.N();
     
-    // Use stack allocation for small trees, heap for large
     if (n_tip <= ct_stack_threshold) {
       // Small tree: use stack-allocated array
       std::array<int32, ct_stack_size * ct_stack_threshold> S;
@@ -164,7 +163,7 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   } catch(const std::exception& e) {
     Rcpp::stop(e.what());
   }
-  // Should never reach here - all paths above return or throw
+  
   ASSERT(false && "Unreachable code in consensus_tree");
   return RawMatrix(0, 0);
 }
