@@ -1,5 +1,5 @@
 # TreeTools 2.0.0.9004 (development) #
-- Support larger trees in ClusterTable objects
+- Support larger trees in `ClusterTable` objects.
   * Retires `CT_PUSH` and `CT_POP` macros.
 - Support larger trees in `Consensus()`.
   * Uses 32-bit integers, necessitating downstream changes to TreeDist.
