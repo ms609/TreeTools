@@ -30,31 +30,20 @@
   (b) = S[--Spos];                                               \
   (a) = S[--Spos]
 
-// Required by TreeDist 2.9.2
-// TODO Remove in later version, to prefer ct_stack_size
-#define CT_STACK_SIZE 4
-
 #define CT_IS_LEAF(a) (a) <= n_tip
-
-// Required by TreeDist 2.9.2
-// TODO Remove in later version, to prefer ct_max_leaves
-const int_fast32_t CT_MAX_LEAVES = 16383;
 
 namespace TreeTools {
 
   // Use stack allocation for trees up to this size for optimal performance
-  // Using 'inline constexpr' for C++17 to ensure:
-  // 1. Can be used as compile-time constants (required for template parameters)
-  // 2. Have external linkage (visible to packages like TreeDist)
-  // 3. No ODR violations (compiler ensures single definition)
   inline constexpr int_fast32_t ct_stack_threshold = 8192;
-  // Old hard limit, kept for backward compatibility with TreeDist 2.9.2
-  // NOTE: This constant is deprecated - new code should use ct_max_leaves_heap
-  // External packages may still reference this constant for compatibility
-  inline constexpr int_fast32_t ct_max_leaves = 16383;
   // New increased limit with heap allocation
   inline constexpr int_fast32_t ct_max_leaves_heap = 100000;
   inline constexpr int_fast32_t ct_stack_size = 4;
+
+  // Old hard limit, still used in TreeDist 2.12
+  // TODO: Update TreeDist to use use heap where necessary
+  // NOTE: This constant is deprecated - new code should use ct_max_leaves_heap
+  inline constexpr int_fast32_t ct_max_leaves = 16383;
   
   template <typename T>
   inline void resize_uninitialized(std::vector<T>& v, std::size_t n) {
@@ -149,12 +138,6 @@ namespace TreeTools {
       return v <= n_leaves;
     }
     
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer is_leaf(int32 v)
-    [[nodiscard]] inline bool is_leaf(const int32 *v) noexcept {
-      return *v <= n_leaves;
-    }
-
     [[nodiscard]] inline const int32 edges() noexcept {
       return n_edge;
     }
@@ -287,27 +270,6 @@ namespace TreeTools {
       return ret;
     }
 
-    
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer CLUSTONL(int32 L, R)
-    [[nodiscard]] inline bool CLUSTONL(int32* L, int32* R) noexcept {
-      return X_left(*L) == *L && X_right(*L) == *R;
-    }
-    
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer CLUSTONR(int32 L, R)
-    [[nodiscard]] inline bool CLUSTONR(int32* L, int32* R) noexcept {
-      return X_left(*R) == *L && X_right(*R) == *R;
-    }
-    
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer ISCLUST(int32 L, R)
-    [[nodiscard]] inline bool ISCLUST(int32* L, int32* R) noexcept {
-      // This function procedure returns value true if cluster <L,R> is in X;
-      // otherwise it returns value false
-      return CLUSTONL(*L, *R) || CLUSTONR(*L, *R);
-    }
-
     [[nodiscard]] inline bool CLUSTONL(int32 L, int32 R) noexcept {
       ASSERT(L > 0 && L <= X_ROWS);
       const ClusterRow &r = x_rows[L - 1];
@@ -340,19 +302,7 @@ namespace TreeTools {
       Xswitch.reset();
       xswitch_set_count = 0;
     }
-    
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer SETSWX(int32 row)
-    inline void SETSWX(int32* row) noexcept {
-      // Only increment our counter on a 0 -> 1 transition
-      const auto idx = static_cast<std::size_t>(*row);
-      ASSERT(idx > 0 && idx <= static_cast<size_t>(X_ROWS));
-      if (!Xswitch[idx]) {
-        Xswitch.set(idx, true);
-        ++xswitch_set_count;
-      }
-    }
-    
+        
     inline void SETSWX(std::size_t row) noexcept {
       // Only increment our counter on a 0 -> 1 transition
       ASSERT(row > 0 && row <= static_cast<size_t>(X_ROWS));
@@ -369,22 +319,6 @@ namespace TreeTools {
 
     [[nodiscard]] inline bool NOSWX(const std::size_t& n) noexcept {
       return xswitch_set_count == n;
-    }
-    
-    // Required by TreeDist 2.9.2
-    // TODO Remove in later version, to prefer SETSW(int32 L, R)
-    inline void SETSW(int32 *L, int32 *R) noexcept {
-      const int32 l = *L;
-      const int32 r = *R;
-      // If <L,R> is a cluster in X, 
-      // this procedure sets the cluster switch for <L,R>.
-      if (CLUSTONL(l, r)) {
-        ++n_shared;
-        SETSWX(l);
-      } else if (CLUSTONR(l, r)) {
-        ++n_shared;
-        SETSWX(r);
-      }
     }
     
     inline void SETSW(int32 L, int32 R) noexcept {

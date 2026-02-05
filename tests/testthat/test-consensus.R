@@ -23,7 +23,6 @@ test_that("Consensus() errors", {
     "too many leaves.*100000"
   )
   
-  skip_on_cran() # Slow!
   largeTree <- BalancedTree(33333)
   consensus_large <- Consensus(c(largeTree, largeTree))
   expect_equal(NTip(consensus_large), 33333)
@@ -70,6 +69,9 @@ test_that("Consensus() handles large sets of trees", {
               p = 0.5),
     oneTree
   )
+  
+  skip_on_cran() # Slow!
+  skip_if(!isTRUE(options("runSlowTests")))
   
   expect_true(all.equal(
     Consensus(manyTrees),
