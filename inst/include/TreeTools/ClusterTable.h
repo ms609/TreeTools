@@ -121,7 +121,7 @@ namespace TreeTools {
     int32 *internal_label_ptr = nullptr;
     std::vector<int32> leftmost_leaf;
     std::vector<int32> T;
-    int32* T_ptr = nullptr;
+    std::size_t T_idx = 0;
     std::vector<int32> visited_nth;
     std::vector<ClusterRow> x_rows;
     // Dynamic bitset that uses stack allocation for small trees,
@@ -147,10 +147,8 @@ namespace TreeTools {
     }
 
     inline void ENTER(int32 v, int32 w) noexcept {
-      *T_ptr = v;
-      ++T_ptr;
-      *T_ptr = w;
-      ++T_ptr;
+      T[T_idx++] = v;
+      T[T_idx++] = w;
     }
 
     [[nodiscard]] inline int32 N() noexcept {
@@ -164,16 +162,16 @@ namespace TreeTools {
     inline void TRESET() noexcept {
       // This procedure prepares T for an enumeration of its entries,
       // beginning with the first entry.
-      T_ptr = T.data();
+      T_idx = 0;
     }
 
     inline void READT(int32 *v, int32 *w) {
-      *v = *T_ptr++;
-      *w = *T_ptr++;
+      *v = T[T_idx++];
+      *w = T[T_idx++];
     }
 
     inline void NVERTEX(int32 *v, int32 *w) noexcept {
-      if (T_ptr != T.data() + Tlen) {
+      if (T_idx != static_cast<size_t>(Tlen)) {
         READT(v, w);
         v_j = *v;
       } else {
@@ -184,7 +182,7 @@ namespace TreeTools {
 
     inline void NVERTEX_short(int32 *v, int32 *w) noexcept {
       // Don't count all-tips or all-ingroup: vertices 0, ROOT, Ingp.
-      if (T_ptr != T.data() + Tlen_short) {
+      if (T_idx != static_cast<size_t>(Tlen_short)) {
         READT(v, w);
         // v_j = *v; // Unneeded unless we go on to call LEFTLEAF
       } else {
@@ -214,7 +212,7 @@ namespace TreeTools {
       // This function procedure returns as its value the internal label
       // assigned to leaf v
       // MS note: input = v; output = X[v, 3]
-      return internal_label_ptr[v];
+      return internal_label[v];
     }
 
     inline int32 DECODE(const int32 internal_relabeling) noexcept {
@@ -402,7 +400,7 @@ namespace TreeTools {
     Tlen = 2 * n_vertex;
     Tlen_short = Tlen - (2 * 3);
     T = std::vector<int32>(Tlen);
-    T_ptr = T.data();
+    T_idx = 0;
 
     resize_uninitialized(leftmost_leaf, n_vertex);
     resize_uninitialized(visited_nth, n_leaves);
