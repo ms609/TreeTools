@@ -166,7 +166,7 @@ print(length(result))  # Should be 100x100 matrix
 - `.lintr` - Code style configuration (follows Google R style guide)
 - `NEWS.md` - Version history (update for user-facing changes)
 - `tests/testthat.R` - Test runner entry point
-- `inst/_pkgdown.yml` - template for online documentation.
+- `_pkgdown.yml` - template for online documentation.
     (Check that new functions are registered here, ideally using `@family`)
 
 ## Common Tasks
