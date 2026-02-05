@@ -23,7 +23,6 @@ RawMatrix calc_consensus_tree(
   int32 v = 0;
   int32 w = 0;
   int32 L, R, N, W;
-  int32 L_j, R_j, N_j, W_j;
   
   const int32 n_trees = trees.length();
   const int32 frac_thresh = int32(n_trees * p[0]) + 1;
@@ -73,7 +72,7 @@ RawMatrix calc_consensus_tree(
       tables[j].READT(&v, &w);
       
       int32 j_pos = 0;
-      StackEntry* S_top = S_start; // Empty the stack S.
+      StackEntry* S_top = S_start; // Empty the stack S
       
       do {
         if (CT_IS_LEAF(v)) {
@@ -81,10 +80,9 @@ RawMatrix calc_consensus_tree(
           *S_top++ = {enc_v, enc_v, 1, 1};
         } else {
           const StackEntry& entry = *--S_top;
-          L = entry.L; R = entry.R; N = entry.N; W_j = entry.W;
-          
-          W = 1 + W_j;
-          w = w - W_j;
+          L = entry.L; R = entry.R; N = entry.N;           
+          W = 1 + entry.W;
+          w -= entry.W;
           while (w) {
             const StackEntry& next = *--S_top;         
             L = std::min(L, next.L); // Faster than ternary operator
