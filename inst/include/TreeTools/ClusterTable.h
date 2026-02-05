@@ -13,23 +13,6 @@
 #define UNINIT -999
 #define INF TreeTools::INTX_MAX
 
-#define CT_ASSERT_CAN_PUSH()                                   \
-  ASSERT(static_cast<size_t>(Spos + CT_STACK_SIZE) <= S.size())
-
-#define CT_ASSERT_CAN_POP() ASSERT(Spos >= CT_STACK_SIZE)
-
-#define CT_PUSH(a, b, c, d)                                      \
-  S[Spos++] = (a);                                               \
-  S[Spos++] = (b);                                               \
-  S[Spos++] = (c);                                               \
-  S[Spos++] = (d)
-
-#define CT_POP(a, b, c, d)                                       \
-  (d) = S[--Spos];                                               \
-  (c) = S[--Spos];                                               \
-  (b) = S[--Spos];                                               \
-  (a) = S[--Spos]
-
 #define CT_IS_LEAF(a) (a) <= n_tip
 
 namespace TreeTools {
@@ -38,12 +21,6 @@ namespace TreeTools {
   inline constexpr int_fast32_t ct_stack_threshold = 8192;
   // New increased limit with heap allocation
   inline constexpr int_fast32_t ct_max_leaves_heap = 100000;
-  inline constexpr int_fast32_t ct_stack_size = 4;
-
-  // Old hard limit, still used in TreeDist 2.12
-  // TODO: Update TreeDist to use use heap where necessary
-  // NOTE: This constant is deprecated - new code should use ct_max_leaves_heap
-  inline constexpr int_fast32_t ct_max_leaves = 16383;
   
   template <typename T>
   inline void resize_uninitialized(std::vector<T>& v, std::size_t n) {

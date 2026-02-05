@@ -6,16 +6,16 @@ using namespace Rcpp;
 
 #include <algorithm> /* for fill */
 #include <array> /* for array */
-#include <vector> /* for vector */
 
-using TreeTools::ct_stack_size;
 using TreeTools::ct_stack_threshold;
 using TreeTools::ct_max_leaves_heap;
+
+struct StackEntry { int32 L, R, N, W; };
 
 // Helper template function to perform consensus computation
 // Uses StackContainer for the S array (either std::array or std::vector)
 template<typename StackContainer>
-RawMatrix consensus_tree_impl(
+RawMatrix calc_consensus_tree(
   const List& trees,
   const NumericVector& p,
   StackContainer& S
@@ -23,7 +23,6 @@ RawMatrix consensus_tree_impl(
   int32 v = 0;
   int32 w = 0;
   int32 L, R, N, W;
-  int32 L_j, R_j, N_j, W_j;
   
   const int32 n_trees = trees.length();
   const int32 frac_thresh = int32(n_trees * p[0]) + 1;
@@ -39,11 +38,21 @@ RawMatrix consensus_tree_impl(
   const int32 ntip_3  = n_tip - 3;
   const int32 nbin    = (n_tip + 7) / 8;  // bytes per row in packed output
   
-  std::vector<int32> split_count(n_tip, 1);
+  int32* split_count;
+  std::array<int32, ct_stack_threshold> split_stack;
+  std::vector<int32> split_heap;
+  if (n_tip <= ct_stack_threshold) {
+    split_count = split_stack.data();
+  } else {
+    split_heap.resize(n_tip);
+    split_count = split_heap.data();
+  }
+
+  StackEntry *const S_start = S.data();
   
   // Packed output: each row has nbin bytes
   RawMatrix ret(ntip_3, nbin);
-  
+
   int32 i = 0;
   int32 splits_found = 0;
   
@@ -52,42 +61,38 @@ RawMatrix consensus_tree_impl(
       continue;
     }
     
-    std::fill(split_count.begin(), split_count.end(), 1);
-    
+    std::fill(split_count, split_count + n_tip, 1);
+
     for (int32 j = i + 1; j < n_trees; ++j) {
       ASSERT(tables[i].N() == tables[j].N());
-      
+
       tables[i].CLEAR();
-      
+
       tables[j].TRESET();
       tables[j].READT(&v, &w);
       
       int32 j_pos = 0;
-      int32 Spos = 0; // Empty the stack S. Used in CT_PUSH / CT_POP macros.
+      StackEntry* S_top = S_start; // Empty the stack S
       
       do {
         if (CT_IS_LEAF(v)) {
-          CT_ASSERT_CAN_PUSH();
-          CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
+          const auto enc_v = tables[i].ENCODE(v);
+          *S_top++ = {enc_v, enc_v, 1, 1};
         } else {
-          CT_ASSERT_CAN_POP();
-          CT_POP(L, R, N, W_j);
-          
-          W = 1 + W_j;
-          w = w - W_j;
-          
+          const StackEntry& entry = *--S_top;
+          L = entry.L; R = entry.R; N = entry.N;           
+          W = 1 + entry.W;
+          w -= entry.W;
           while (w) {
-            CT_ASSERT_CAN_POP();
-            CT_POP(L_j, R_j, N_j, W_j);
-            if (L_j < L) L = L_j;
-            if (R_j > R) R = R_j;
-            N = N + N_j;
-            W = W + W_j;
-            w = w - W_j;
+            const StackEntry& next = *--S_top;         
+            L = std::min(L, next.L); // Faster than ternary operator
+            R = std::max(R, next.R);
+            N += next.N;
+            W += next.W;
+            w -= next.W;
           }
           
-          CT_ASSERT_CAN_PUSH();
-          CT_PUSH(L, R, N, W);
+          *S_top++ = {L, R, N, W};
           
           ++j_pos;
           
@@ -133,14 +138,8 @@ RawMatrix consensus_tree_impl(
     }
   } while (i++ != n_trees - thresh); // All clades in p% consensus must occur in first q% of trees.
   
-  if (splits_found == 0) {
-    return RawMatrix(0, nbin);
-  } else if (splits_found < ntip_3) {
-    // Return only the rows we filled
-    return ret(Range(0, splits_found - 1), _);
-  } else {
-    return ret;
-  }
+  return (splits_found == 0) ? RawMatrix(0, nbin) : 
+         (splits_found < ntip_3) ? ret(Range(0, splits_found - 1), _) : ret;
 }
 
 // trees is a list of objects of class phylo, all with the same tip labels
@@ -158,12 +157,12 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
     
     if (n_tip <= ct_stack_threshold) {
       // Small tree: use stack-allocated array
-      std::array<int32, ct_stack_size * ct_stack_threshold> S;
-      return consensus_tree_impl(trees, p, S);
+      std::array<StackEntry, ct_stack_threshold> S;
+      return calc_consensus_tree(trees, p, S);
     } else {
       // Large tree: use heap-allocated vector
-      std::vector<int32> S(ct_stack_size * n_tip);
-      return consensus_tree_impl(trees, p, S);
+      std::vector<StackEntry> S(n_tip);
+      return calc_consensus_tree(trees, p, S);
     }
   } catch(const std::exception& e) {
     Rcpp::stop(e.what());
