@@ -6,7 +6,6 @@ using namespace Rcpp;
 
 #include <algorithm> /* for fill */
 #include <array> /* for array */
-#include <vector> /* for vector */
 
 using TreeTools::ct_stack_size;
 using TreeTools::ct_stack_threshold;
@@ -15,7 +14,7 @@ using TreeTools::ct_max_leaves_heap;
 // Helper template function to perform consensus computation
 // Uses StackContainer for the S array (either std::array or std::vector)
 template<typename StackContainer>
-RawMatrix consensus_tree_impl(
+RawMatrix calc_consensus_tree(
   const List& trees,
   const NumericVector& p,
   StackContainer& S
@@ -159,11 +158,11 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
     if (n_tip <= ct_stack_threshold) {
       // Small tree: use stack-allocated array
       std::array<int32, ct_stack_size * ct_stack_threshold> S;
-      return consensus_tree_impl(trees, p, S);
+      return calc_consensus_tree(trees, p, S);
     } else {
       // Large tree: use heap-allocated vector
       std::vector<int32> S(ct_stack_size * n_tip);
-      return consensus_tree_impl(trees, p, S);
+      return calc_consensus_tree(trees, p, S);
     }
   } catch(const std::exception& e) {
     Rcpp::stop(e.what());
