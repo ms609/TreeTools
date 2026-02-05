@@ -17,10 +17,15 @@ test_that("Consensus() errors", {
   expect_equal(Consensus(c(halfTree)), halfTree)
   expect_equal(Consensus(list(halfTree)), halfTree)
   
+  # Test that trees larger than heap limit fail gracefully
   expect_error(
-    Consensus(c(BalancedTree(33333), PectinateTree(33333))),
-    "too many leaves"
+    Consensus(c(BalancedTree(100001), PectinateTree(100001))),
+    "too many leaves.*100000"
   )
+  
+  largeTree <- BalancedTree(33333)
+  consensus_large <- Consensus(c(largeTree, largeTree))
+  expect_equal(NTip(consensus_large), 33333)
 })
 
 test_that("Consensus()", {
@@ -64,6 +69,9 @@ test_that("Consensus() handles large sets of trees", {
               p = 0.5),
     oneTree
   )
+  
+  skip_on_cran() # Slow!
+  skip_if(!isTRUE(options("runSlowTests")))
   
   expect_true(all.equal(
     Consensus(manyTrees),

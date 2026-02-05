@@ -9,19 +9,21 @@ using namespace Rcpp;
 #include <vector> /* for vector */
 
 using TreeTools::ct_stack_size;
-using TreeTools::ct_max_leaves;
+using TreeTools::ct_stack_threshold;
+using TreeTools::ct_max_leaves_heap;
 
-// trees is a list of objects of class phylo, all with the same tip labels
-// (try RenumberTips(trees, trees[[1]]))
-// Per #168, unexpected behaviour if root position differs in non-preorder trees
-// Further investigation could be beneficial; for now, suggest applying
-// the function to preorder trees only.
-// [[Rcpp::export]]
-RawMatrix consensus_tree(const List trees, const NumericVector p) {
-  int16 v = 0;
-  int16 w = 0;
-  int16 L, R, N, W;
-  int16 L_j, R_j, N_j, W_j;
+// Helper template function to perform consensus computation
+// Uses StackContainer for the S array (either std::array or std::vector)
+template<typename StackContainer>
+RawMatrix consensus_tree_impl(
+  const List& trees,
+  const NumericVector& p,
+  StackContainer& S
+) {
+  int32 v = 0;
+  int32 w = 0;
+  int32 L, R, N, W;
+  int32 L_j, R_j, N_j, W_j;
   
   const int32 n_trees = trees.length();
   const int32 frac_thresh = int32(n_trees * p[0]) + 1;
@@ -37,7 +39,6 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   const int32 ntip_3  = n_tip - 3;
   const int32 nbin    = (n_tip + 7) / 8;  // bytes per row in packed output
   
-  std::array<int32, ct_stack_size * ct_max_leaves> S;
   std::vector<int32> split_count(n_tip, 1);
   
   // Packed output: each row has nbin bytes
@@ -54,25 +55,29 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
     std::fill(split_count.begin(), split_count.end(), 1);
     
     for (int32 j = i + 1; j < n_trees; ++j) {
+      ASSERT(tables[i].N() == tables[j].N());
       
       tables[i].CLEAR();
       
       tables[j].TRESET();
       tables[j].READT(&v, &w);
       
-      int16 j_pos = 0;
+      int32 j_pos = 0;
       int32 Spos = 0; // Empty the stack S. Used in CT_PUSH / CT_POP macros.
       
       do {
         if (CT_IS_LEAF(v)) {
+          CT_ASSERT_CAN_PUSH();
           CT_PUSH(tables[i].ENCODE(v), tables[i].ENCODE(v), 1, 1);
         } else {
+          CT_ASSERT_CAN_POP();
           CT_POP(L, R, N, W_j);
           
           W = 1 + W_j;
           w = w - W_j;
           
           while (w) {
+            CT_ASSERT_CAN_POP();
             CT_POP(L_j, R_j, N_j, W_j);
             if (L_j < L) L = L_j;
             if (R_j > R) R = R_j;
@@ -81,17 +86,18 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
             w = w - W_j;
           }
           
+          CT_ASSERT_CAN_PUSH();
           CT_PUSH(L, R, N, W);
           
           ++j_pos;
           
           if (!tables[j].GETSWX(&j_pos)) {
             if (N == R - L + 1) { // L..R is contiguous, and must be tested
-              if (tables[i].CLUSTONL(&L, &R)) {
+              if (tables[i].CLUSTONL(L, R)) {
                 tables[j].SETSWX(j_pos);
                 ASSERT(L > 0);
                 ++split_count[L - 1];
-              } else if (tables[i].CLUSTONR(&L, &R)) {
+              } else if (tables[i].CLUSTONR(L, R)) {
                 tables[j].SETSWX(j_pos);
                 ASSERT(R > 0);
                 ++split_count[R - 1];
@@ -135,4 +141,34 @@ RawMatrix consensus_tree(const List trees, const NumericVector p) {
   } else {
     return ret;
   }
+}
+
+// trees is a list of objects of class phylo, all with the same tip labels
+// (try RenumberTips(trees, trees[[1]]))
+// Per #168, unexpected behaviour if root position differs in non-preorder trees
+// Further investigation could be beneficial; for now, suggest applying
+// the function to preorder trees only.
+// [[Rcpp::export]]
+RawMatrix consensus_tree(const List trees, const NumericVector p) {
+  // First, peek at the tree size to determine allocation strategy
+  // We'll create a temporary ClusterTable just to check the size
+  try {
+    TreeTools::ClusterTable temp_table(Rcpp::List(trees(0)));
+    const int32 n_tip = temp_table.N();
+    
+    if (n_tip <= ct_stack_threshold) {
+      // Small tree: use stack-allocated array
+      std::array<int32, ct_stack_size * ct_stack_threshold> S;
+      return consensus_tree_impl(trees, p, S);
+    } else {
+      // Large tree: use heap-allocated vector
+      std::vector<int32> S(ct_stack_size * n_tip);
+      return consensus_tree_impl(trees, p, S);
+    }
+  } catch(const std::exception& e) {
+    Rcpp::stop(e.what());
+  }
+  
+  ASSERT(false && "Unreachable code in consensus_tree");
+  return RawMatrix(0, 0);
 }
