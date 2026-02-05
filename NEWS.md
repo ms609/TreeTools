@@ -1,3 +1,7 @@
+# TreeTools 2.0.0.9002 (development) #
+- Support larger trees in `Consensus()`.
+  Uses int32, necessitating downstream changes to TreeDist.
+
 # TreeTools 2.0.0.9001 (development) #
 - Remove hard limit on tree size in `SplitList`.
 
