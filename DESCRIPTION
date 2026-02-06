@@ -45,7 +45,7 @@ Imports:
   methods,
   PlotTools,
   RCurl,
-  Rdpack (>= 2.3),
+  Rdpack (>= 2.6.5.9000),
   stringi,
 Suggests:
   spelling,
