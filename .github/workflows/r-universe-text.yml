@@ -1,0 +1,43 @@
+name: Test R-universe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - "Meta**"
+      - "memcheck**"
+      - "docs**"
+      - "**.git"
+      - "**.json"
+      - "**.md"
+      - "**.yaml"
+      - "**.yml"
+      - "!**R-CMD-check.yml"
+      - "**.R[dD]ata"
+      - "**.Rpro*"
+  pull_request:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - "Meta**"
+      - "memcheck**"
+      - "docs**"
+      - "**.git"
+      - "**.json"
+      - "**.md"
+      - "**.yaml"
+      - "**.yml"
+      - "!**R-CMD-check.yml"
+      - "**.R[dD]ata"
+      - "**.Rpro*"
+
+jobs:
+  build:
+    name: R-universe testing
+    uses: r-universe-org/workflows/.github/workflows/build.yml@v3
+    with:
+      universe: ${{ github.repository_owner }}
