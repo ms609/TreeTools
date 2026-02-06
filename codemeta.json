@@ -259,7 +259,7 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=Rdpack"
+      "sameAs": "https://github.com/GeoBosh/Rdpack"
     },
     "9": {
       "@type": "SoftwareApplication",
@@ -275,7 +275,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1798.405KB",
+  "fileSize": "1798.429KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
