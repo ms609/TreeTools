@@ -15,7 +15,7 @@ on:
       - "**.md"
       - "**.yaml"
       - "**.yml"
-      - "!**R-CMD-check.yml"
+      - "!**r-universe-text.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
   pull_request:
@@ -31,7 +31,7 @@ on:
       - "**.md"
       - "**.yaml"
       - "**.yml"
-      - "!**R-CMD-check.yml"
+      - "!**r-universe-text.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
 
