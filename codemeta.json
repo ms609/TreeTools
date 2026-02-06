@@ -252,7 +252,7 @@
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
-      "version": ">= 2.3",
+      "version": ">= 2.6.5.9000",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -275,7 +275,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1798.429KB",
+  "fileSize": "1798.436KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
