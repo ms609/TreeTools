@@ -25,7 +25,7 @@ Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
     @Manual{Smith2019,
       title = {TreeTools: create, modify and analyse phylogenetic trees},
       author = {Martin R. Smith},
-      note = {R package version 2.0.0.9004},
+      note = {R package version 2.0.0.9005},
       year = {2019},
       doi = {10.32614/CRAN.package.TreeTools},
       organization = {Comprehensive R Archive Network},
