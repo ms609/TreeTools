@@ -57,6 +57,7 @@ Suggests:
   TreeDist,
   TreeSearch,
   vdiffr (>= 1.0.0),
+Remotes: GeoBosh/Rdpack
 Config/Needs/benchmark: bench, TreeDist
 Config/Needs/check: rcmdcheck, testthat
 Config/Needs/coverage: covr
