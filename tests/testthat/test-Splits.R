@@ -549,6 +549,7 @@ test_that("PolarizeSplits()", {
   expect_error(PolarizeSplits(bal6, "ERROR"))
   expect_error(PolarizeSplits(bal6, 0))
   expect_error(PolarizeSplits(bal6, 7))
+  expect_equal(PolarizeSplits(bal6, 4), PolarizeSplits(bal6, 1:6 == 4))
 })
 
 test_that(".MaskSplits()", {

@@ -585,8 +585,8 @@ rev.Splits <- function(x) {
 #' Polarize splits on a single taxon
 #'
 #' @param x Object of class [`Splits`].
-#' @param pole Numeric or character identifying tip that should polarize each
-#' split.
+#' @param pole Numeric, character or logical vector identifying tip that will
+#' polarize each split.
 #'
 #' @return `PolarizeSplits()` returns a `Splits` object in which `pole` is
 #' represented by a zero bit
@@ -594,8 +594,10 @@ rev.Splits <- function(x) {
 #' @export
 PolarizeSplits <- function(x, pole = 1L) {
   nTip <- attr(x, "nTip")
-  if (!is.numeric(pole)) {
-    pole <- match(pole, attr(x, "tip.label"))
+  if (is.logical(pole)) {
+    pole <- which(pole)[[1]]
+  } else if (!is.numeric(pole)) {
+    pole <- match(pole, attr(x, "tip.label"))[[1]]
   }
   if (is.na(pole)) {
     stop("Could not find `pole` in labels of `x`")
@@ -608,7 +610,7 @@ PolarizeSplits <- function(x, pole = 1L) {
   }
 
   poleMask <- logical(8 * ceiling(nTip / 8))
-  poleMask[pole] <- T
+  poleMask[pole] <- TRUE
   poleMask <- packBits(poleMask)
   flip <- !apply(t(x) & poleMask, 2, function(x) any(as.logical(x)))
 

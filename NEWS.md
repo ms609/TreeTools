@@ -1,3 +1,7 @@
+# TreeTools 2.0.0.9006 (development) #
+- `FirstMatchingSplit()`...
+- Support logical `pole` in `PolarizeSplits()`.
+
 # TreeTools 2.0.0.9004 (development) #
 - Support larger trees in `ClusterTable` objects.
   * Retires `CT_PUSH` and `CT_POP` macros.
