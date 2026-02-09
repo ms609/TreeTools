@@ -138,30 +138,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// first_matching_split_pair
-IntegerVector first_matching_split_pair(const RawMatrix x, const RawMatrix table);
-RcppExport SEXP _TreeTools_first_matching_split_pair(SEXP xSEXP, SEXP tableSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const RawMatrix >::type table(tableSEXP);
-    rcpp_result_gen = Rcpp::wrap(first_matching_split_pair(x, table));
-    return rcpp_result_gen;
-END_RCPP
-}
-// first_matching_split_index
-int first_matching_split_index(const RawMatrix x, const RawMatrix table);
-RcppExport SEXP _TreeTools_first_matching_split_index(SEXP xSEXP, SEXP tableSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const RawMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< const RawMatrix >::type table(tableSEXP);
-    rcpp_result_gen = Rcpp::wrap(first_matching_split_index(x, table));
-    return rcpp_result_gen;
-END_RCPP
-}
 // num_to_parent
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip);
 RcppExport SEXP _TreeTools_num_to_parent(SEXP nSEXP, SEXP nTipSEXP) {
@@ -482,8 +458,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
     {"_TreeTools_descendant_edges_single", (DL_FUNC) &_TreeTools_descendant_edges_single, 5},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
-    {"_TreeTools_first_matching_split_pair", (DL_FUNC) &_TreeTools_first_matching_split_pair, 2},
-    {"_TreeTools_first_matching_split_index", (DL_FUNC) &_TreeTools_first_matching_split_index, 2},
     {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
     {"_TreeTools_random_parent", (DL_FUNC) &_TreeTools_random_parent, 2},
     {"_TreeTools_edge_to_num", (DL_FUNC) &_TreeTools_edge_to_num, 3},
