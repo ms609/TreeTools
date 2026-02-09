@@ -26,7 +26,7 @@ test_that("RenumberTree() with numeric tipOrder", {
   tr <- BalancedTree(6)
   order <- c(6, 5, 4, 2, 3, 1)
   expect_equal(RenumberTips(tr, order), RenumberTips(tr, TipLabels(order)))
-}
+})
 
 test_that("RenumberTree() handles polytomies", {
   tr <- ape::read.tree(text = "(a, (b, d, c));")
