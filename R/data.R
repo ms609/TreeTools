@@ -47,7 +47,7 @@
 
 #' @rdname TreeShape
 #' @format `unrootedKeys` is a list of length `r length(unrootedKeys)`; each
-#' entry is a vector of integers corresponding to they keys (not shape numbers)
+#' entry is a vector of integers corresponding to the keys (not shape numbers)
 #' of the different unrooted tree shapes with `nTip` leaves.
 "unrootedKeys"
 
