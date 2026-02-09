@@ -252,14 +252,14 @@
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
-      "version": ">= 2.6.5.9000",
+      "version": ">= 2.6.6",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://github.com/GeoBosh/Rdpack"
+      "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
     "9": {
       "@type": "SoftwareApplication",
@@ -275,7 +275,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1799.984KB",
+  "fileSize": "1799.955KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
