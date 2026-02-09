@@ -45,7 +45,7 @@ Imports:
   methods,
   PlotTools,
   RCurl,
-  Rdpack (>= 2.6.5.9000),
+  Rdpack (>= 2.6.6),
   stringi,
 Suggests:
   spelling,
@@ -57,7 +57,6 @@ Suggests:
   TreeDist,
   TreeSearch,
   vdiffr (>= 1.0.0),
-Remotes: GeoBosh/Rdpack
 Config/Needs/benchmark: bench, TreeDist
 Config/Needs/check: rcmdcheck, testthat
 Config/Needs/coverage: covr
