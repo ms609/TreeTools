@@ -583,8 +583,9 @@ TntOrder.NULL <- function(tree) NULL
 #'
 #' @template treeParam
 #' @param tipOrder A character vector containing the values of
-#'        `tree[["tip.label"]]` in the desired sort order, or an object
-#'        (perhaps of class `phylo` or `Splits`) with tip labels.
+#' `tree[["tip.label"]]` in the desired sort order,
+#' an object (perhaps of class `phylo` or `Splits`) with tip labels,
+#' or a numeric specifying the desired order.
 #'
 #' @return `RenumberTips()` returns `tree`, with the tips' internal
 #' representation numbered to match `tipOrder`.
@@ -604,7 +605,11 @@ RenumberTips <- function(tree, tipOrder) UseMethod("RenumberTips")
 #' @export
 RenumberTips.phylo <- function(tree, tipOrder) {
   startOrder <- tree[["tip.label"]]
-  newOrder <- TipLabels(tipOrder, single = TRUE)
+  newOrder <- if (is.numeric(tipOrder)) {
+    startOrder[tipOrder]
+  } else {
+    TipLabels(tipOrder, single = TRUE)
+  }
   if (!identical(startOrder, newOrder)) {
     if (length(startOrder) != length(newOrder)) {
       startOnly <- setdiff(startOrder, newOrder)
