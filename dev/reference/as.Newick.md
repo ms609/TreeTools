@@ -55,5 +55,5 @@ format.
 trees <- list(BalancedTree(1:8), PectinateTree(8:1))
 trees <- lapply(trees, RenumberTips, 1:8)
 as.Newick(trees)
-#> [1] "(((0,1),(2,3)),((4,5),(6,7)));" "(((((((0,1),2),3),4),5),6),7);"
+#> [1] "(((0,1),(2,3)),((4,5),(6,7)));" "(0,(1,(2,(3,(4,(5,(6,7)))))));"
 ```

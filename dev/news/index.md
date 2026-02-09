@@ -1,5 +1,13 @@
 # Changelog
 
+## TreeTools 2.0.0.9006 (development)
+
+- `FirstMatchingSplit()`…
+- Support logical `pole` in
+  [`PolarizeSplits()`](https://ms609.github.io/TreeTools/dev/reference/PolarizeSplits.md).
+- [`RenumberTree()`](https://ms609.github.io/TreeTools/dev/reference/Reorder.md)
+  supports numeric `tipOrder` input.
+
 ## TreeTools 2.0.0.9004 (development)
 
 - Support larger trees in `ClusterTable` objects.
