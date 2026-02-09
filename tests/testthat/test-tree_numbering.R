@@ -17,16 +17,11 @@ expect_postorder <- function(edge) {
 }
 
 test_that("RenumberTree() fails safely", {
-  expect_error(RenumberTree(1:3, 1:4))
-  expect_error(RenumberTree(1:3, 1:4, 5:6))
-  expect_error(RenumberTree(1:4, 1:4, 5:6))
+  expect_error(RenumberTree(1:3, 1:4), "Length.*must match")
+  expect_error(RenumberTree(1:3, 1:4, 5:6), "Length.*match")
+  expect_error(RenumberTree(1:4, 1:4, 5:6), "Length mismatch")
 })
 
-test_that("RenumberTree() with numeric tipOrder", {
-  tr <- BalancedTree(6)
-  order <- c(6, 5, 4, 2, 3, 1)
-  expect_equal(RenumberTips(tr, order), RenumberTips(tr, TipLabels(order)))
-})
 
 test_that("RenumberTree() handles polytomies", {
   tr <- ape::read.tree(text = "(a, (b, d, c));")
@@ -95,9 +90,17 @@ test_that("Replacement reorder functions work correctly", {
                RenumberEdges(edge[, 1], edge[, 2]))
 })
 
+test_that("RenumberTips() with numeric tipOrder", {
+  tr <- BalancedTree(6)
+  order <- c(6, 5, 4, 2, 3, 1)
+  expect_equal(RenumberTips(tr, order), RenumberTips(tr, TipLabels(order)))
+})
+
 test_that("RenumberTips() handles misspecification", {
   expect_error(RenumberTips(BalancedTree(8), paste0("t", 0:5)),
                "Missing in `tree`: t0.*Missing in `tipOrder`: t6, t7, t8")
+  expect_error(RenumberTips(BalancedTree(8), c(1, 1:8)),
+               "Tree labels t1 repeated in `tipOrder`")
 })
 
 test_that("RenumberTips() works correctly", {

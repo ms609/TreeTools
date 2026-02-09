@@ -611,6 +611,12 @@ RenumberTips.phylo <- function(tree, tipOrder) {
     TipLabels(tipOrder, single = TRUE)
   }
   if (!identical(startOrder, newOrder)) {
+    
+    if (any(duplicated(newOrder))) {
+      stop("Tree labels ", paste0(newOrder[duplicated(newOrder)], collapse = ", "),
+           " repeated in `tipOrder`")
+    }
+    
     if (length(startOrder) != length(newOrder)) {
       startOnly <- setdiff(startOrder, newOrder)
       newOnly <- setdiff(newOrder, startOrder)
