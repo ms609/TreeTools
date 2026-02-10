@@ -1,19 +1,14 @@
-# TreeTools 2.0.0.9007 (development) #
-- `FirstMatchingSplit()`...
+# TreeTools 2.1.0 (2026-02-10) #
+
 - Add method `RenumberTips.Splits()`.
+- `FirstMatchingSplit(x)` provides performant alternative to `match(x)[[1]]`.
 - Support logical `pole` in `PolarizeSplits()`.
 - `RenumberTree()` supports numeric `tipOrder` input.
-
-# TreeTools 2.0.0.9004 (development) #
 - Support larger trees in `ClusterTable` objects.
   * Retires `CT_PUSH` and `CT_POP` macros.
 - Support larger trees in `Consensus()`.
   * Uses 32-bit integers, necessitating downstream changes to TreeDist.
-
-# TreeTools 2.0.0.9001 (development) #
 - Remove hard limit on tree size in `SplitList`.
-
-# TreeTools 2.0.0.9000 (development) #
 - `MatrixToPhyDat()` gains `tipLabels` parameter.
 - Document return value for `J1Index()`.
 
