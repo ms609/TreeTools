@@ -3,6 +3,7 @@
 \name{RenumberTips}
 \alias{RenumberTips}
 \alias{RenumberTips.phylo}
+\alias{RenumberTips.Splits}
 \alias{RenumberTips.multiPhylo}
 \alias{RenumberTips.list}
 \alias{RenumberTips.NULL}
@@ -11,6 +12,8 @@
 RenumberTips(tree, tipOrder)
 
 \method{RenumberTips}{phylo}(tree, tipOrder)
+
+\method{RenumberTips}{Splits}(tree, tipOrder)
 
 \method{RenumberTips}{multiPhylo}(tree, tipOrder)
 
