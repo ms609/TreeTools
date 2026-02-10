@@ -232,9 +232,7 @@ FirstMatchingSplit <- function(x, table, nomatch,
   if (!inherits(x, "Splits")) {
     x <- as.Splits(x)
   }
-  if (!inherits(table, "Splits")) {
-    table <- as.Splits(table)
-  }
+  table <- as.Splits(table, x)
   ij <- first_matching_split_pair(x, table)
   
   if (!missing(nomatch)) {
