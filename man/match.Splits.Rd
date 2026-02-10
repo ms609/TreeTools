@@ -4,6 +4,7 @@
 \alias{match,Splits,Splits-method}
 \alias{match}
 \alias{\%in\%,Splits,Splits-method}
+\alias{FirstMatchingSplit}
 \title{Split matching}
 \usage{
 \S4method{match}{Splits,Splits}(x, table, nomatch = NA_integer_, incomparables = NULL)
@@ -11,18 +12,27 @@
 match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
 \S4method{\%in\%}{Splits,Splits}(x, table)
+
+FirstMatchingSplit(x, table, nomatch, return = c("x", "table", "both"))
 }
 \arguments{
-\item{x, table}{Object of class \code{Splits}.}
+\item{x, table}{Splits objects}
 
 \item{nomatch}{Integer value that will be used in place of \code{NA} in the case
 where no match is found.}
 
 \item{incomparables}{Ignored. (Included for consistency with generic.)}
+
+\item{return}{Which index to return: in \code{x}, in \code{table}, or both}
 }
 \value{
 \code{match()} returns an integer vector specifying the position in
 \code{table} that matches each element in \code{x}, or \code{nomatch} if no match is found.
+
+\code{FirstMatchingSplit()} returns an integer
+(or length-2 integer if return = "both") specifying the first split in \code{x}
+to have a match in \code{table}, and the index of that match.
+No match is denoted \code{0} by default.
 }
 \description{
 \code{match()} returns a vector of the positions of (first) matches of splits in
