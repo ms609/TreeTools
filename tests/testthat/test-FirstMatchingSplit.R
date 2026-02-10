@@ -21,5 +21,5 @@ test_that("FirstMatchingSplit() works", {
   # Check robustness to label order
   ren13 <- RenumberTips(pec13, TipLabels(13:1))[[-1]]
   # Split 1 is t1, t2, t3; not t11, t12, t13
-  expect_equal(FirstMatchingSplit(ren13, bal13), 2)
+  expect_equal(FirstMatchingSplit(ren13, bal13, return = "both"), c(2, 2))
 })
