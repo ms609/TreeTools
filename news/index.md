@@ -1,5 +1,26 @@
 # Changelog
 
+## TreeTools 2.1.0 (2026-02-10)
+
+- Add method
+  [`RenumberTips.Splits()`](https://ms609.github.io/TreeTools/reference/RenumberTips.md).
+- `FirstMatchingSplit(x)` provides performant alternative to
+  `match(x)[[1]]`.
+- Support logical `pole` in
+  [`PolarizeSplits()`](https://ms609.github.io/TreeTools/reference/PolarizeSplits.md).
+- [`RenumberTree()`](https://ms609.github.io/TreeTools/reference/Reorder.md)
+  supports numeric `tipOrder` input.
+- Support larger trees in `ClusterTable` objects.
+  - Retires `CT_PUSH` and `CT_POP` macros.
+- Support larger trees in
+  [`Consensus()`](https://ms609.github.io/TreeTools/reference/Consensus.md).
+  - Uses 32-bit integers, necessitating downstream changes to TreeDist.
+- Remove hard limit on tree size in `SplitList`.
+- [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md)
+  gains `tipLabels` parameter.
+- Document return value for
+  [`J1Index()`](https://ms609.github.io/TreeTools/reference/J1Index.md).
+
 ## TreeTools 2.0.0 (2025-09-23)
 
 CRAN release: 2025-09-23

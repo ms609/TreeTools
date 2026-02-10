@@ -415,6 +415,7 @@ Functions that manipulate bipartition splits.
 
 - [`match()`](https://ms609.github.io/TreeTools/reference/match.Splits.md)
   [`` `%in%`( ``*`<Splits>`*`,`*`<Splits>`*`)`](https://ms609.github.io/TreeTools/reference/match.Splits.md)
+  [`FirstMatchingSplit()`](https://ms609.github.io/TreeTools/reference/match.Splits.md)
   : Split matching
 
 - [`xor()`](https://ms609.github.io/TreeTools/reference/xor.md) :

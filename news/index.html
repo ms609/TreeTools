@@ -9,11 +9,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,25 @@
       <small>Source: <a href="https://github.com/ms609/TreeTools/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.0" id="treetools-210-2026-02-10">TreeTools 2.1.0 (2026-02-10)<a class="anchor" aria-label="anchor" href="#treetools-210-2026-02-10"></a></h2>
+<ul><li>Add method <code><a href="../reference/RenumberTips.html">RenumberTips.Splits()</a></code>.</li>
+<li>
+<code>FirstMatchingSplit(x)</code> provides performant alternative to <code>match(x)[[1]]</code>.</li>
+<li>Support logical <code>pole</code> in <code><a href="../reference/PolarizeSplits.html">PolarizeSplits()</a></code>.</li>
+<li>
+<code><a href="../reference/Reorder.html">RenumberTree()</a></code> supports numeric <code>tipOrder</code> input.</li>
+<li>Support larger trees in <code>ClusterTable</code> objects.
+<ul><li>Retires <code>CT_PUSH</code> and <code>CT_POP</code> macros.</li>
+</ul></li>
+<li>Support larger trees in <code><a href="../reference/Consensus.html">Consensus()</a></code>.
+<ul><li>Uses 32-bit integers, necessitating downstream changes to TreeDist.</li>
+</ul></li>
+<li>Remove hard limit on tree size in <code>SplitList</code>.</li>
+<li>
+<code><a href="../reference/MatrixToPhyDat.html">MatrixToPhyDat()</a></code> gains <code>tipLabels</code> parameter.</li>
+<li>Document return value for <code><a href="../reference/J1Index.html">J1Index()</a></code>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.0" id="treetools-200-2025-09-23">TreeTools 2.0.0 (2025-09-23)<a class="anchor" aria-label="anchor" href="#treetools-200-2025-09-23"></a></h2><p class="text-muted">CRAN release: 2025-09-23</p>
 <div class="section level3">
@@ -573,7 +592,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

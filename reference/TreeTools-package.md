@@ -30,8 +30,8 @@ Useful links:
 
 Other contributors:
 
-- Emmanuel Paradis ([ORCID](https://orcid.org/0000-0003-3092-2199))
-  \[copyright holder\]
+- Emmanuel Paradis ([ORCID](https://orcid.org/0000-0003-3092-2199)) (ape
+  library) \[copyright holder\]
 
 - Robert Noble ([ORCID](https://orcid.org/0000-0002-8057-4252))
-  \[copyright holder\]
+  (RUtreebalance) \[copyright holder\]

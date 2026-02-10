@@ -147,9 +147,9 @@ The `levels` parameter simply lists all the states that any character
 might take. `0:9` includes all the integer digits from 0 to 9. If you
 have inapplicable data in your matrix, you should list `-` as a separate
 level as it represents an additional state (as handled by the Morphy
-implementation of (Brazeau, Guillerme, & Smith, 2019)). If you have more
-complicated ambiguities, you may need to use a contrast matrix to decode
-your matrix.
+implementation of (Brazeau et al., 2019)). If you have more complicated
+ambiguities, you may need to use a contrast matrix to decode your
+matrix.
 
 A contrast matrix translates the tokens used in your dataset to the
 character states to which they correspond: for example decoding ‘A’ to
@@ -223,10 +223,8 @@ You might want to:
 
 Brazeau, M. D., Guillerme, T., & Smith, M. R. (2019). An algorithm for
 morphological phylogenetic analysis with inapplicable data. *Systematic
-Biology*, *68*, 619–631. doi:
-[10.1093/sysbio/syy083](https://doi.org/10.1093/sysbio/syy083)
+Biology*, *68*, 619–631. <https://doi.org/10.1093/sysbio/syy083>
 
 Faith, D. P., & Trueman, J. W. H. (2001). Towards an inclusive
 philosophy for phylogenetic inference. *Systematic Biology*, *50*(3),
-331–350. doi:
-[10.1080/10635150118627](https://doi.org/10.1080/10635150118627)
+331–350. <https://doi.org/10.1080/10635150118627>

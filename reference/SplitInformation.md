@@ -2,7 +2,7 @@
 
 Calculate the phylogenetic information content (*sensu* Steel and Penny
 2006 ) of a split, which reflects the probability that a uniformly
-selected random tree will contain# the split: a split that is consistent
+selected random tree will contain the split: a split that is consistent
 with a smaller number of trees will have a higher information content.
 
 ## Usage

@@ -32,7 +32,7 @@ NRootedShapes(nTip)
 ## Format
 
 `unrootedKeys` is a list of length 22; each entry is a vector of
-integers corresponding to they keys (not shape numbers) of the different
+integers corresponding to the keys (not shape numbers) of the different
 unrooted tree shapes with `nTip` leaves.
 
 ## Arguments

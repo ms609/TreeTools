@@ -53,7 +53,7 @@ treat all transformations as equally probable (/ surprising /
 informative); ordered characters fail this test, as larger changes are
 treated as less probable than smaller ones. On the other hand, ordered
 characters allow more opportunities for homology of different character
-states, and might thus be defended under the auspices of Hennig’s
+states, and might thus be defended under the auspices of Hennig's
 Auxiliary Principle (Wilkinson 1992) .
 
 For a case study of how ordering phylogenetic characters can affect

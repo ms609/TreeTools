@@ -17,7 +17,8 @@ PolarizeSplits(x, pole = 1L)
 
 - pole:
 
-  Numeric or character identifying tip that should polarize each split.
+  Numeric, character or logical vector identifying tip that will
+  polarize each split.
 
 ## Value
 

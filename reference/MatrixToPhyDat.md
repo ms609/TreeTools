@@ -6,7 +6,7 @@
 ## Usage
 
 ``` r
-MatrixToPhyDat(tokens)
+MatrixToPhyDat(tokens, tipLabels = rownames(tokens))
 
 PhyDatToMatrix(
   dataset,
@@ -27,6 +27,12 @@ PhyDatToMatrix(
   [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/reference/ReadCharacters.md).
   Row names should correspond to leaf labels; column names may
   optionally correspond to character labels.
+
+- tipLabels:
+
+  Optionally, an object providing labels for leaves, via
+  [`TipLabels()`](https://ms609.github.io/TreeTools/reference/TipLabels.md);
+  will override `rownames(tokens)`.
 
 - dataset:
 

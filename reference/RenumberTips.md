@@ -12,6 +12,9 @@ RenumberTips(tree, tipOrder)
 # S3 method for class 'phylo'
 RenumberTips(tree, tipOrder)
 
+# S3 method for class 'Splits'
+RenumberTips(tree, tipOrder)
+
 # S3 method for class 'multiPhylo'
 RenumberTips(tree, tipOrder)
 
@@ -31,8 +34,8 @@ RenumberTips(tree, tipOrder)
 - tipOrder:
 
   A character vector containing the values of `tree[["tip.label"]]` in
-  the desired sort order, or an object (perhaps of class `phylo` or
-  `Splits`) with tip labels.
+  the desired sort order, an object (perhaps of class `phylo` or
+  `Splits`) with tip labels, or a numeric specifying the desired order.
 
 ## Value
 
