@@ -218,3 +218,31 @@ setMethod("%in%",
           signature(x = "phylo", table = "phylo"),
           function(x, table) all.equal(x, table))
 
+#' @rdname match.Splits
+#' @param x,table Splits objects
+#' @param return Which index to return: in `x`, in `table`, or both
+#' @return `FirstMatchingSplit()` returns an integer
+#'  (or length-2 integer if `return = "both"`) specifying the first split in `x`
+#'  to have a match in `table` (`return = "x"`),
+#'  or the index of that match (`return = "table"`).
+#'  `nomatch` (default `0`) is returned in the absence of a match.
+#' @export
+FirstMatchingSplit <- function(x, table, nomatch,
+                               return = c("x", "table", "both")) {
+  if (!inherits(x, "Splits")) {
+    x <- as.Splits(x)
+  }
+  table <- as.Splits(table, x)
+  ij <- first_matching_split_pair(x, table)
+  
+  if (!missing(nomatch)) {
+    ij[ij == 0] <- nomatch
+  }
+  
+  # Return:
+  return <- match.arg(return)
+  switch(return,
+         x     = ij[[1L]],
+         table = ij[[2L]],
+         both  = ij)
+}

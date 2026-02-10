@@ -1,5 +1,6 @@
-# TreeTools 2.0.0.9006 (development) #
+# TreeTools 2.0.0.9007 (development) #
 - `FirstMatchingSplit()`...
+- Add method `RenumberTips.Splits()`.
 - Support logical `pole` in `PolarizeSplits()`.
 - `RenumberTree()` supports numeric `tipOrder` input.
 

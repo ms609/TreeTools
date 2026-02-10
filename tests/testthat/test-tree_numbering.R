@@ -107,17 +107,43 @@ test_that("RenumberTips() works correctly", {
   abcd <- letters[1:4]
   dcba <- letters[4:1]
   bal7b <- BalancedTree(dcba)
+  bsp7b <- as.Splits(bal7b)
   bal7f <- BalancedTree(abcd)
+  bsp7f <- as.Splits(bal7f)
   pec7f <- PectinateTree(abcd)
+  psp7f <- as.Splits(bal7f)
   pec7b <- PectinateTree(dcba)
+  psp7b <- as.Splits(bal7b)
 
   l7 <- list("bal7b" = bal7b, "bal7f" = bal7f, "pec7f" = pec7f)
   f7 <- list(bal7f, bal7f, pec7f)
   b7 <- list(bal7b, bal7b, pec7b)
   mp7 <- structure(l7, class = "multiPhylo")
 
-  expect_true(all.equal(f7, unname(RenumberTips(l7, abcd))))
-  expect_true(all.equal(b7, unname(RenumberTips(l7, dcba))))
+  expect_true(all.equal(unname(RenumberTips(l7, dcba)), b7))
+  expect_true(all.equal(unname(RenumberTips(l7, 4:1)), b7))
+  expect_true(all.equal(unname(RenumberTips(l7, abcd)), f7))
+  expect_true(all.equal(unname(RenumberTips(l7, 4:1)), f7))
+  
+  sl7 <- list("bsp7b" = bsp7b, "bsp7f" = bsp7f, "psp7f" = psp7f)
+  sf7 <- list(bsp7f, bsp7f, psp7f)
+  sb7 <- list(bsp7b, bsp7b, psp7b)
+  
+  expect_splits_same <- function(x, y) {
+    if (is.list(x)) {
+      for (i in seq_along(x)) {
+        expect_splits_same(x[[i]], y[[i]])
+      }
+    } else {
+      expect_equal(TipLabels(x), TipLabels(y))
+      expect_equal(PolarizeSplits(x, 1), PolarizeSplits(y, 1))
+    }
+  }
+  
+  expect_splits_same(RenumberTips(bsp7b, abcd), bsp7f)
+  expect_splits_same(RenumberTips(sl7, dcba), sb7)
+  expect_splits_same(RenumberTips(sl7, abcd), sf7)
+  
 
   expect_true(all.equal(structure(f7, class = "multiPhylo"),
                         unname(RenumberTips(mp7, abcd))))
