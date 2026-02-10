@@ -12,6 +12,9 @@ RenumberTips(tree, tipOrder)
 # S3 method for class 'phylo'
 RenumberTips(tree, tipOrder)
 
+# S3 method for class 'Splits'
+RenumberTips(tree, tipOrder)
+
 # S3 method for class 'multiPhylo'
 RenumberTips(tree, tipOrder)
 

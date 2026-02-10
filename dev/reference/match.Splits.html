@@ -21,7 +21,7 @@ split in its left operand."><meta name="robots" content="noindex"><!-- Global si
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9006</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.0.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,7 +69,9 @@ split in its left operand.</p>
 <span><span class="fu">match</span><span class="op">(</span><span class="va">x</span>, <span class="va">table</span>, nomatch <span class="op">=</span> <span class="cn">NA_integer_</span>, incomparables <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'Splits,Splits'</span></span>
-<span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">table</span></span></code></pre></div>
+<span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">table</span></span>
+<span></span>
+<span><span class="fu">FirstMatchingSplit</span><span class="op">(</span><span class="va">x</span>, <span class="va">table</span>, <span class="va">nomatch</span>, return <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"table"</span>, <span class="st">"both"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,7 +79,7 @@ split in its left operand.</p>
 
 
 <dl><dt id="arg-x-table">x, table<a class="anchor" aria-label="anchor" href="#arg-x-table"></a></dt>
-<dd><p>Object of class <code>Splits</code>.</p></dd>
+<dd><p>Splits objects</p></dd>
 
 
 <dt id="arg-nomatch">nomatch<a class="anchor" aria-label="anchor" href="#arg-nomatch"></a></dt>
@@ -88,11 +90,20 @@ where no match is found.</p></dd>
 <dt id="arg-incomparables">incomparables<a class="anchor" aria-label="anchor" href="#arg-incomparables"></a></dt>
 <dd><p>Ignored. (Included for consistency with generic.)</p></dd>
 
+
+<dt id="arg-return">return<a class="anchor" aria-label="anchor" href="#arg-return"></a></dt>
+<dd><p>Which index to return: in <code>x</code>, in <code>table</code>, or both</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>match()</code> returns an integer vector specifying the position in
 <code>table</code> that matches each element in <code>x</code>, or <code>nomatch</code> if no match is found.</p>
+<p><code>FirstMatchingSplit()</code> returns an integer
+(or length-2 integer if <code>return = "both"</code>) specifying the first split in <code>x</code>
+to have a match in <code>table</code> (<code>return = "x"</code>),
+or the index of that match (<code>return = "table"</code>).
+<code>nomatch</code> (default <code>0</code>) is returned in the absence of a match.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

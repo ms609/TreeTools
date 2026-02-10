@@ -16,13 +16,15 @@ match(x, table, nomatch = NA_integer_, incomparables = NULL)
 
 # S4 method for class 'Splits,Splits'
 x %in% table
+
+FirstMatchingSplit(x, table, nomatch, return = c("x", "table", "both"))
 ```
 
 ## Arguments
 
 - x, table:
 
-  Object of class `Splits`.
+  Splits objects
 
 - nomatch:
 
@@ -33,10 +35,20 @@ x %in% table
 
   Ignored. (Included for consistency with generic.)
 
+- return:
+
+  Which index to return: in `x`, in `table`, or both
+
 ## Value
 
 `match()` returns an integer vector specifying the position in `table`
 that matches each element in `x`, or `nomatch` if no match is found.
+
+`FirstMatchingSplit()` returns an integer (or length-2 integer if
+`return = "both"`) specifying the first split in `x` to have a match in
+`table` (`return = "x"`), or the index of that match
+(`return = "table"`). `nomatch` (default `0`) is returned in the absence
+of a match.
 
 ## See also
 

@@ -1,8 +1,10 @@
 # Changelog
 
-## TreeTools 2.0.0.9006 (development)
+## TreeTools 2.0.0.9007 (development)
 
-- `FirstMatchingSplit()`…
+- [`FirstMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/match.Splits.md)…
+- Add method
+  [`RenumberTips.Splits()`](https://ms609.github.io/TreeTools/dev/reference/RenumberTips.md).
 - Support logical `pole` in
   [`PolarizeSplits()`](https://ms609.github.io/TreeTools/dev/reference/PolarizeSplits.md).
 - [`RenumberTree()`](https://ms609.github.io/TreeTools/dev/reference/Reorder.md)
