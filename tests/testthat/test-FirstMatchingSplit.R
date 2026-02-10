@@ -1,15 +1,23 @@
 test_that("FirstMatchingSplit() fails gracefully", {
   bal13 <- BalancedTree(13)
   pec13 <- PectinateTree(13)
-  expect_error(FirstMatchingSplit(bal13, pec13),
+  expect_error(FirstMatchingSplit(bal13, raw(13)),
                "Splits")
 })
 
 test_that("FirstMatchingSplit() works", {
   bal13 <- as.Splits(BalancedTree(13))
   pec13 <- as.Splits(PectinateTree(13))
+  
+  expect_equal(
+    FirstMatchingSplit(BalancedTree(13), PectinateTree(13), return = "both"),
+    FirstMatchingSplit(bal13, pec13, return = "both")
+  )
+  
+  
   firstMatch <- which(bal13 %in% pec13)[[1]]
   expect_equal(FirstMatchingSplit(bal13, pec13), firstMatch)
+  
   expect_equal(
     FirstMatchingSplit(bal13, pec13, return = "both"),
     c(firstMatch, match(bal13[[firstMatch]], pec13))
