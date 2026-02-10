@@ -30,9 +30,10 @@ where no match is found.}
 \code{table} that matches each element in \code{x}, or \code{nomatch} if no match is found.
 
 \code{FirstMatchingSplit()} returns an integer
-(or length-2 integer if return = "both") specifying the first split in \code{x}
-to have a match in \code{table}, and the index of that match.
-No match is denoted \code{0} by default.
+(or length-2 integer if \code{return = "both"}) specifying the first split in \code{x}
+to have a match in \code{table} (\code{return = "x"}),
+or the index of that match (\code{return = "table"}).
+\code{nomatch} (default \code{0}) is returned in the absence of a match.
 }
 \description{
 \code{match()} returns a vector of the positions of (first) matches of splits in

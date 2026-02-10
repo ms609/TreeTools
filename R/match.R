@@ -222,17 +222,18 @@ setMethod("%in%",
 #' @param x,table Splits objects
 #' @param return Which index to return: in `x`, in `table`, or both
 #' @return `FirstMatchingSplit()` returns an integer
-#'  (or length-2 integer if return = "both") specifying the first split in `x`
-#'  to have a match in `table`, and the index of that match.
-#'  No match is denoted `0` by default.
+#'  (or length-2 integer if `return = "both"`) specifying the first split in `x`
+#'  to have a match in `table` (`return = "x"`),
+#'  or the index of that match (`return = "table"`).
+#'  `nomatch` (default `0`) is returned in the absence of a match.
 #' @export
 FirstMatchingSplit <- function(x, table, nomatch,
                                return = c("x", "table", "both")) {
   if (!inherits(x, "Splits")) {
-    stop("`x` must be a Splits object; try as.Splits(x)")
+    x <- as.Splits(x)
   }
   if (!inherits(table, "Splits")) {
-    stop("`table` must be a Splits object; try as.Splits(table)")
+    table <- as.Splits(table)
   }
   ij <- first_matching_split_pair(x, table)
   

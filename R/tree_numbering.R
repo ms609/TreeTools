@@ -652,6 +652,16 @@ RenumberTips.phylo <- function(tree, tipOrder) {
 
 #' @rdname RenumberTips
 #' @export
+RenumberTips.Splits <- function(tree, tipOrder) {
+  if (is.character(tipOrder)) {
+    as.Splits(tree, tipOrder)
+  } else if (is.numeric(tipOrder)) {
+    as.Splits(tree, TipLabels(tree)[tipOrder])
+  }
+}
+
+#' @rdname RenumberTips
+#' @export
 RenumberTips.multiPhylo <- function(tree, tipOrder) {
   at <- attributes(tree)
   labelled <- !is.null(at[["TipLabel"]])
