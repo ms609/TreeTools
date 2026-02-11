@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/ms609/TreeTools/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/ms609/TreeTools/blob/2.1.0/inst/CITATION)
 
 Smith (2019). TreeTools: create, modify and analyse phylogenetic trees.
 Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
