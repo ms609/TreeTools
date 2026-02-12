@@ -84,11 +84,11 @@ SingleTaxonTree <- function(label = "t1", lengths = NULL) {
   if (is.null(lengths)) {
     structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label,
                    Nnode = 1L),
-              class = "phylo")
+              class = "phylo", order = "preorder")
   } else {
     structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label,
                    Nnode = 1L, edge.length = lengths[[1]]),
-              class = "phylo")
+              class = "phylo", order = "preorder")
   }
 }
 
@@ -102,7 +102,7 @@ ZeroTaxonTree <- function() {
     # Order is consistent with ape::read.tree (but not ape::rtree...)
     edge = structure(numeric(0), dim = c(0L, 2L)),
     Nnode = 0, tip.label = character(0)
-  ), class = "phylo")
+  ), class = "phylo", order = "preorder")
 }
 
 #' Extract a subtree
