@@ -2,10 +2,19 @@
 % Please edit documentation in R/Information.R
 \name{SplitInformation}
 \alias{SplitInformation}
+\alias{SplitInformation.numeric}
+\alias{SplitInformation.Splits}
+\alias{SplitInformation.phylo}
 \alias{MultiSplitInformation}
 \title{Phylogenetic information content of splitting leaves into two partitions}
 \usage{
 SplitInformation(A, B = A[1])
+
+\method{SplitInformation}{numeric}(A, B = A[1])
+
+\method{SplitInformation}{Splits}(A, B)
+
+\method{SplitInformation}{phylo}(A, B)
 
 MultiSplitInformation(partitionSizes)
 }
