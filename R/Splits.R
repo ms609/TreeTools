@@ -315,6 +315,7 @@ as.logical.Splits <- function(x, tipLabels = attr(x, "tip.label"), ...) {
 print.Splits <- function(x, details = FALSE, ...) {
   nTip <- attr(x, "nTip")
   tipLabels <- attr(x, "tip.label")
+  count <- attr(x, "count")
   trivial <- TrivialSplits(x)
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
       if(any(trivial)) paste0("(", sum(trivial), " trivial)"),
@@ -324,9 +325,9 @@ print.Splits <- function(x, details = FALSE, ...) {
       } else {
         if (nTip) {
           if (nTip == 1) {
-            paste("tip,", tipLabels[1])
+            paste("tip,", tipLabels[[1]])
           } else {
-            paste("tips,", tipLabels[1], "..", tipLabels[nTip])
+            paste("tips,", tipLabels[[1]], "..", tipLabels[[nTip]])
           }
         } else {
           "tips"
@@ -347,13 +348,49 @@ print.Splits <- function(x, details = FALSE, ...) {
     }
     cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
         paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
-
-    for (i in seq_len(dim(x)[1])) {
+    
+    nSplits <- dim(x)[[1]]
+    splitCounts <- if (!is.null(count) && length(count) == nSplits) {
+      paste0("\UD7 ", count)
+    } else {
+      if (length(count) != nSplits) {
+        warning("\"count\" attribute does not match number of splits")
+      }
+      character()
+    }
+    
+    for (i in seq_len(nSplits)) {
       split <- x[i, , drop = FALSE]
       cat("\n", splitNames[i], "",
           paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
-                collapse = ""))
+                collapse = ""),
+          splitCounts[i])
     }
+  }
+}
+
+#' @family Splits operations
+#' @export
+sort.Splits <- function(x, decreasing = TRUE, ...) {
+  newOrder <- order(x, decreasing = decreasing, ...)
+  count <- attr(x, "count")
+  if (is.null(count)) {
+    x[[newOrder]]
+  } else {
+    structure(x[[newOrder]], count = count[newOrder])
+  }
+}
+
+# Underpins `order`
+#' @family Splits operations
+#' @export
+xtfrm.Splits <- function(x) {
+  count <- attr(x, "count")
+  newOrder <- xtfrm(as.integer(x))
+  if (is.null(count)) {
+    newOrder
+  } else {
+    order(count, newOrder)
   }
 }
 

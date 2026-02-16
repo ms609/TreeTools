@@ -14,8 +14,19 @@ test_that("Node supports calculated correctly", {
   expect_error(SplitFrequency(NULL, treeSample), "must bear identical")
   sameTips <- KeepTip(treeSample, TipLabels(treeSample$correct))
   sameSplits <- do.call(c, as.Splits(sameTips))
-  expect_equal(SplitFrequency(sameTips),
-    structure(sameSplits[[!duplicated(sameSplits)]],
+    
+  expect_split_counts <- function(object, expected) {
+    counted_splits <- function(x) {
+      count <- attr(x, "count")
+      newOrder <- order(order(x), count, decreasing = TRUE)
+      structure(x[[newOrder]], count = count[newOrder])
+    }
+    expect_equal(counted_splits(object), counted_splits(expected))
+  }
+  
+  expect_split_counts(
+    SplitFrequency(sameTips),
+    structure(PolarizeSplits(sameSplits[[!duplicated(sameSplits)]], 1),
               count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
   )
   
