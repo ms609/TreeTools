@@ -31,8 +31,9 @@
 #' @template MRS
 #' @family Splits operations
 #' @export
-SplitFrequency <- function(reference, forest) {
-  if (is.null(reference)) {
+SplitFrequency <- function(reference, forest = NULL) {
+  if (is.null(reference) || is.null(forest)) {
+    if (is.null(forest)) forest <- reference
     if (length(unique(lapply(lapply(forest, TipLabels), sort))) > 1) {
       stop("All trees must bear identical labels")
     }

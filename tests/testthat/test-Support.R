@@ -14,7 +14,7 @@ test_that("Node supports calculated correctly", {
   expect_error(SplitFrequency(NULL, treeSample), "must bear identical")
   sameTips <- KeepTip(treeSample, TipLabels(treeSample$correct))
   sameSplits <- do.call(c, as.Splits(sameTips))
-  expect_equal(SplitFrequency(NULL, sameTips),
+  expect_equal(SplitFrequency(sameTips),
     structure(sameSplits[[!duplicated(sameSplits)]],
               count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
   )
