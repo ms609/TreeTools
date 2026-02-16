@@ -1,29 +1,28 @@
 # Changelog
 
-## TreeTools 2.0.0.9007 (development)
+## TreeTools 2.1.0.9000 (2026-02-16)
 
-- [`FirstMatchingSplit()`](https://ms609.github.io/TreeTools/dev/reference/match.Splits.md)…
+- Add Splits and phylo methods for
+  [`SplitInformation()`](https://ms609.github.io/TreeTools/dev/reference/SplitInformation.md)
+
+## TreeTools 2.1.0 (2026-02-10)
+
+CRAN release: 2026-02-11
+
 - Add method
   [`RenumberTips.Splits()`](https://ms609.github.io/TreeTools/dev/reference/RenumberTips.md).
+- `FirstMatchingSplit(x)` provides performant alternative to
+  `match(x)[[1]]`.
 - Support logical `pole` in
   [`PolarizeSplits()`](https://ms609.github.io/TreeTools/dev/reference/PolarizeSplits.md).
 - [`RenumberTree()`](https://ms609.github.io/TreeTools/dev/reference/Reorder.md)
   supports numeric `tipOrder` input.
-
-## TreeTools 2.0.0.9004 (development)
-
 - Support larger trees in `ClusterTable` objects.
   - Retires `CT_PUSH` and `CT_POP` macros.
 - Support larger trees in
   [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md).
   - Uses 32-bit integers, necessitating downstream changes to TreeDist.
-
-## TreeTools 2.0.0.9001 (development)
-
 - Remove hard limit on tree size in `SplitList`.
-
-## TreeTools 2.0.0.9000 (development)
-
 - [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
   gains `tipLabels` parameter.
 - Document return value for
