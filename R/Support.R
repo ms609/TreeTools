@@ -22,6 +22,10 @@
 #' Note that the three nodes at the root of the tree correspond to a single
 #' split; see the example for how these might be plotted on a tree.
 #'
+#' If `reference` is `NULL`, then `SplitFrequency()` returns a list of splits 
+#' (in the order encountered in forest) with attribute `"count"` stating the
+#' number of times each split occurs in `forest`.
+#'
 #' @template exampleNodeSupport
 #'
 #' @template MRS
