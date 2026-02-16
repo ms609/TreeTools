@@ -37,6 +37,9 @@ SplitFrequency <- function(reference, forest = NULL) {
     if (length(unique(lapply(lapply(forest, TipLabels), sort))) > 1) {
       stop("All trees must bear identical labels")
     }
+    if (length(forest) == 0) {
+      return(structure(forest, count = integer()))
+    }
     tipLabels <- TipLabels(forest[[1]])
     forest <- RenumberTips(forest, tipLabels)
     forest <- Preorder(forest)
@@ -46,12 +49,8 @@ SplitFrequency <- function(reference, forest = NULL) {
     nTip <- length(tipLabels)
     nbin <- ncol(splits)
     if (nrow(splits) == 0) {
-      ret <- structure(splits,
-                       nTip = nTip,
-                       tip.label = tipLabels,
-                       class = "Splits")
-      attr(ret, "count") <- integer(0)
-      return(ret)
+      return(structure(splits, nTip = nTip, tip.label = tipLabels,
+                       count = integer(), class = "Splits"))
     }
     # The ClusterTable outputs clusters (clades); normalize so bit 0 (tip 1)
     # is not in the set (matching as.Splits convention)
