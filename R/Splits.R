@@ -346,25 +346,28 @@ print.Splits <- function(x, details = FALSE, ...) {
       splitNames <- character(length(x))
       nameLengths = 0L
     }
-    cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
+    if (any(splitNames)) {
+      cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
         paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
-    
-    nSplits <- dim(x)[[1]]
-    splitCounts <- if (!is.null(count)) {
-      if (length(count) != nSplits) {
-        warning("\"count\" attribute does not match number of splits")
+      
+      
+      nSplits <- dim(x)[[1]]
+      splitCounts <- if (!is.null(count)) {
+        if (length(count) != nSplits) {
+          warning("\"count\" attribute does not match number of splits")
+        }
+        paste0("\UD7 ", count)
+      } else {
+        rep("", nSplits)
       }
-      paste0("\UD7 ", count)
-    } else {
-      rep("", nSplits)
-    }
-    
-    for (i in seq_len(nSplits)) {
-      split <- x[i, , drop = FALSE]
-      cat("\n", splitNames[i], "",
-          paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
-                collapse = ""),
-          splitCounts[i])
+      
+      for (i in seq_len(nSplits)) {
+        split <- x[i, , drop = FALSE]
+        cat("\n", splitNames[i], "",
+            paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
+                  collapse = ""),
+            splitCounts[i])
+      }
     }
   }
 }
@@ -427,11 +430,14 @@ tail.Splits <- function(x, n = 6L, ...) {
 summary.Splits <- function(object, ...) {
   print(object, details = TRUE, ...)
   nTip <- attr(object, "nTip")
-  if (is.null(attr(object, "tip.label"))) {
+  tipLabels <- attr(object, "tip.label")
+  if (is.null(tipLabels)) {
     cat("\n\nTips not labelled.")
   } else {
-    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, "tip.label"),
-                     "\t", c(character(4L), "\n")[seq_len(min(nTip, 5L))]))
+    if (length(tipLabels) > 0) {
+      cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", tipLabels,
+                        "\t", c(character(4L), "\n")[seq_len(min(nTip, 5L))]))
+    }
   }
 }
 

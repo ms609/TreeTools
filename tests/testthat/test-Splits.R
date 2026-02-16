@@ -425,6 +425,16 @@ test_that("print.Splits()", {
                          details = TRUE)),
     c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
                   paste0(" ", num, "  ..** \UD7 2")))
+  
+  expect_equal(
+    capture.output(summary(as.Splits(SingleTaxonTree()))),
+    c("0 bipartition splits dividing 1 tip, t1", "", " Tip 1: t1\t")
+  )
+  
+  expect_equal(
+    capture.output(summary(as.Splits(ZeroTaxonTree()))),
+    c("0 bipartition splits dividing 0 tips")
+  )
 })
 
 test_that("head,tail.Splits()", {
