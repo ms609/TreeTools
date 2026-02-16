@@ -85,6 +85,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// split_frequencies
+List split_frequencies(const List trees);
+RcppExport SEXP _TreeTools_split_frequencies(SEXP treesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const List >::type trees(treesSEXP);
+    rcpp_result_gen = Rcpp::wrap(split_frequencies(trees));
+    return rcpp_result_gen;
+END_RCPP
+}
 // consensus_tree
 RawMatrix consensus_tree(const List trees, const NumericVector p);
 RcppExport SEXP _TreeTools_consensus_tree(SEXP treesSEXP, SEXP pSEXP) {
@@ -478,6 +489,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_ape_neworder_phylo", (DL_FUNC) &_TreeTools_ape_neworder_phylo, 5},
     {"_TreeTools_ape_neworder_pruningwise", (DL_FUNC) &_TreeTools_ape_neworder_pruningwise, 5},
     {"_TreeTools_as_newick", (DL_FUNC) &_TreeTools_as_newick, 1},
+    {"_TreeTools_split_frequencies", (DL_FUNC) &_TreeTools_split_frequencies, 1},
     {"_TreeTools_consensus_tree", (DL_FUNC) &_TreeTools_consensus_tree, 2},
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
     {"_TreeTools_descendant_edges_single", (DL_FUNC) &_TreeTools_descendant_edges_single, 5},
