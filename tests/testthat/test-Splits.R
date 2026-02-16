@@ -12,12 +12,12 @@ test_that("as.Splits()", {
                         "\n")[[1]],
                c("1 bipartition split dividing 4 tips, t1 .. t4",
                  "   1234",
-                 "   ..**", "",
+                 "   ..** ", "",
                  " Tip 1: t1\t Tip 2: t2\t Tip 3: t3\t Tip 4: t4\t"))
   logical80 <- c(rep(TRUE, 40), rep(FALSE, 16), rep(TRUE, 24))
   expect_equal(strsplit(capture_output(print(
     as.Splits(logical80), detail = TRUE)), "\n")[[1]][3],
-    paste0(c("   ", ifelse(logical80, "*", ".")), collapse = "")
+    paste0(c("   ", ifelse(logical80, "*", "."), " "), collapse = "")
   )
   expect_equal(as.logical(as.logical(as.Splits(logical80))), logical80)
   expect_equal(as.logical(as.Splits(c(A, A, B, B))),
@@ -416,10 +416,15 @@ test_that("print.Splits()", {
   expect_equal(
     capture.output(print(PolarizeSplits(sp4, 1), details = TRUE)),
     c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
-       paste0(" ", num, "  **..")))
+       paste0(" ", num, "  **.. ")))
   expect_equal(capture.output(print(PolarizeSplits(sp4, 4), details = TRUE)),
                c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
-                  paste0(" ", num, "  ..**")))
+                  paste0(" ", num, "  ..** ")))
+  expect_equal(
+    capture.output(print(structure(PolarizeSplits(sp4, 4), count = 2),
+                         details = TRUE)),
+    c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
+                  paste0(" ", num, "  ..** \UD7 2")))
 })
 
 test_that("head,tail.Splits()", {
