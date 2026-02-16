@@ -4,13 +4,14 @@
 \alias{SplitFrequency}
 \title{Frequency of splits}
 \usage{
-SplitFrequency(reference, forest)
+SplitFrequency(reference, forest = NULL)
 }
 \arguments{
-\item{reference}{A tree of class \code{phylo}, a \code{Splits} object.}
+\item{reference}{A tree of class \code{phylo}, a \code{Splits} object. If \code{NULL},
+the frequencies of all splits in \code{forest} will be returned.}
 
-\item{forest}{a list of trees of class \code{phylo}, or a \code{multiPhylo} object; or a
-\code{Splits} object. See
+\item{forest}{A list of trees of class \code{phylo}, or a \code{multiPhylo} object;
+or a \code{Splits} object. See
 \href{https://ms609.github.io/TreeTools/articles/load-trees.html}{vignette} for
 possible methods of loading trees into R.}
 }
@@ -21,6 +22,10 @@ If \code{reference} is a tree of class \code{phylo}, then the sequence will corr
 to the order of nodes (use \code{ape::nodelabels()} to view).
 Note that the three nodes at the root of the tree correspond to a single
 split; see the example for how these might be plotted on a tree.
+
+If \code{reference} is \code{NULL}, then \code{SplitFrequency()} returns a list of splits
+(in the order encountered in forest) with attribute \code{"count"} stating the
+number of times each split occurs in \code{forest}.
 }
 \description{
 \code{SplitFrequency()} provides a simple way to count the number of times that

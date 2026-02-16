@@ -8,9 +8,10 @@
 #' If multiple calculations are required, some time can be saved by using the
 #' constituent functions (see examples).
 #'
-#' @param reference A tree of class `phylo`, a `Splits` object.
-#' @param forest a list of trees of class `phylo`, or a `multiPhylo` object; or a
-#' `Splits` object. See
+#' @param reference A tree of class `phylo`, a `Splits` object. If `NULL`,
+#' the frequencies of all splits in `forest` will be returned.
+#' @param forest A list of trees of class `phylo`, or a `multiPhylo` object;
+#' or a `Splits` object. See
 #' [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html) for
 #' possible methods of loading trees into R.
 #'
@@ -21,29 +22,53 @@
 #' Note that the three nodes at the root of the tree correspond to a single
 #' split; see the example for how these might be plotted on a tree.
 #'
+#' If `reference` is `NULL`, then `SplitFrequency()` returns a list of splits 
+#' (in the order encountered in forest) with attribute `"count"` stating the
+#' number of times each split occurs in `forest`.
+#'
 #' @template exampleNodeSupport
 #'
 #' @template MRS
 #' @family Splits operations
 #' @export
-SplitFrequency <- function(reference, forest) {
-  referenceSplits <- as.Splits(reference)
-  refLabels <- attr(referenceSplits, "tip.label")
-  forest <- lapply(forest, KeepTip, refLabels)
-  forestSplits <- as.Splits(forest, tipLabels = refLabels)
-
-  logicals <- vapply(forestSplits,
-                     function(cf) referenceSplits %in% cf,
-                     logical(length(referenceSplits)))
-  ret <- if (is.null(dim(logicals))) {
-    sum(logicals)
+SplitFrequency <- function(reference, forest = NULL) {
+  if (is.null(reference) || is.null(forest)) {
+    if (is.null(forest)) forest <- reference
+    if (length(unique(lapply(lapply(forest, TipLabels), sort))) > 1) {
+      stop("All trees must bear identical labels")
+    }
+    forestSplits <- do.call(c, as.Splits(forest, tipLabels = TipLabels(forest[[1]])))
+    dup <- duplicated(forestSplits)
+    ret <- forestSplits[[!dup]]
+    logicals <- vapply(seq_along(forestSplits),
+                       function(cf) ret %in% forestSplits[[cf]],
+                       logical(sum(!dup)))
+    count <- if (is.null(dim(logicals))) {
+      sum(logicals)
+    } else {
+      rowSums(logicals)
+    }
+    attr(ret, "count") <- unname(count)
+    ret
   } else {
-    rowSums(logicals)
+    referenceSplits <- as.Splits(reference)
+    refLabels <- attr(referenceSplits, "tip.label")
+    forest <- lapply(forest, KeepTip, refLabels)
+    forestSplits <- as.Splits(forest, tipLabels = refLabels)
+  
+    logicals <- vapply(forestSplits,
+                       function(cf) referenceSplits %in% cf,
+                       logical(length(referenceSplits)))
+    ret <- if (is.null(dim(logicals))) {
+      sum(logicals)
+    } else {
+      rowSums(logicals)
+    }
+    names(ret) <- rownames(referenceSplits)
+  
+    # Return:
+    ret
   }
-  names(ret) <- rownames(referenceSplits)
-
-  # Return:
-  ret
 }
 
 #' Label splits
