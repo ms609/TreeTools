@@ -12,6 +12,14 @@ test_that("Trees matching splits calculated correctly", {
   expect_equal(log(315/10395)/-log(2), SplitInformation(3, 5))
 })
 
+test_that("SplitInformation() handles Splits", {
+  t6 <- BalancedTree(6)
+  expect_equal(SplitInformation(t6), SplitInformation(as.Splits(t6)))
+  expect_equal(SplitInformation(t6), c(`8` = SplitInformation(3, 3),
+                                       `9` = SplitInformation(2, 4),
+                                       `11` = SplitInformation(4, 2)))
+})
+
 test_that("UnrootedTreesMatchingSplit() correct", {
   expect_equal(NRooted(3) * NRooted(5), UnrootedTreesMatchingSplit(c(3, 5)))
   expect_equal(LnRooted(30) + LnRooted(50), LnUnrootedTreesMatchingSplit(30, 50))

@@ -170,7 +170,27 @@ CharacterInformation <- function(tokens) {
 #' @template MRS
 #' @export
 SplitInformation <- function(A, B = A[1]) {
+  UseMethod("SplitInformation")
+}
+
+#' @rdname SplitInformation
+#' @export
+SplitInformation.numeric <- function(A, B = A[1]) {
   -(Log2TreesMatchingSplit(A, B) - Log2Unrooted.int(A + B))
+}
+
+#' @rdname SplitInformation
+#' @export
+SplitInformation.Splits <- function(A, B) {
+  nTip <- NTip(A)
+  tis <- TipsInSplits(A)
+  Log2Unrooted.int(nTip) - Log2Rooted.int(tis) - Log2Rooted.int(nTip - tis)
+}
+
+#' @rdname SplitInformation
+#' @export
+SplitInformation.phylo <- function(A, B) {
+  SplitInformation(as.Splits(A))
 }
 
 #' @rdname SplitInformation

@@ -1,3 +1,8 @@
+# TreeTools 2.1.0.9000 (2026-02-16) #
+
+- Add Splits and phylo methods for `SplitInformation()`
+
+
 # TreeTools 2.1.0 (2026-02-10) #
 
 - Add method `RenumberTips.Splits()`.
@@ -11,6 +16,7 @@
 - Remove hard limit on tree size in `SplitList`.
 - `MatrixToPhyDat()` gains `tipLabels` parameter.
 - Document return value for `J1Index()`.
+
 
 # TreeTools 2.0.0 (2025-09-23) #
 
