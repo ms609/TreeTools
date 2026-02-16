@@ -19,6 +19,10 @@ test_that("Node supports calculated correctly", {
               count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
   )
   
+  monoSplit <- ape::read.tree(text = "((a, b, c, d), (e, f, g));")
+  expect_equal(SplitFrequency(list(monoSplit)),
+               structure(as.Splits(monoSplit), count = 1))
+  
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
   freq <- SplitFrequency(balanced, treeSample)

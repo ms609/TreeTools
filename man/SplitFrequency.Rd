@@ -4,14 +4,14 @@
 \alias{SplitFrequency}
 \title{Frequency of splits}
 \usage{
-SplitFrequency(reference, forest)
+SplitFrequency(reference, forest = NULL)
 }
 \arguments{
 \item{reference}{A tree of class \code{phylo}, a \code{Splits} object. If \code{NULL},
 the frequencies of all splits in \code{forest} will be returned.}
 
-\item{forest}{A list of trees of class \code{phylo}, or a \code{multiPhylo} object; or a
-\code{Splits} object. See
+\item{forest}{A list of trees of class \code{phylo}, or a \code{multiPhylo} object;
+or a \code{Splits} object. See
 \href{https://ms609.github.io/TreeTools/articles/load-trees.html}{vignette} for
 possible methods of loading trees into R.}
 }

@@ -10,8 +10,8 @@
 #'
 #' @param reference A tree of class `phylo`, a `Splits` object. If `NULL`,
 #' the frequencies of all splits in `forest` will be returned.
-#' @param forest A list of trees of class `phylo`, or a `multiPhylo` object; or a
-#' `Splits` object. See
+#' @param forest A list of trees of class `phylo`, or a `multiPhylo` object;
+#' or a `Splits` object. See
 #' [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html) for
 #' possible methods of loading trees into R.
 #'
