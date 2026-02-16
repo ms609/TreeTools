@@ -6,9 +6,19 @@ test_that("Node supports calculated correctly", {
     swapBC  = ape::read.tree(text = "((((((A,C),B),D),E),F),out);"),
     DbyA    = ape::read.tree(text = "((((((A,D),C),B),E),F,G),out);")
   )
-  expect_equal(c("10" = 4, "11" = 4, "12" = 4, "13" = 3),
-               SplitFrequency(treeSample$correct, treeSample))
-
+  expect_equal(
+    SplitFrequency(treeSample$correct, treeSample),
+    c("10" = 4, "11" = 4, "12" = 4, "13" = 3)
+   )
+  
+  expect_error(SplitFrequency(NULL, treeSample), "must bear identical")
+  sameTips <- KeepTip(treeSample, TipLabels(treeSample$correct))
+  sameSplits <- do.call(c, as.Splits(sameTips))
+  expect_equal(SplitFrequency(NULL, sameTips),
+    structure(sameSplits[[!duplicated(sameSplits)]],
+              count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
+  )
+  
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
   freq <- SplitFrequency(balanced, treeSample)
