@@ -346,7 +346,7 @@ print.Splits <- function(x, details = FALSE, ...) {
       splitNames <- character(length(x))
       nameLengths = 0L
     }
-    if (any(splitNames)) {
+    if (length(splitNames) > 0) {
       cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
         paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
       
@@ -627,7 +627,7 @@ rev.Splits <- function(x) {
 
 #' Polarize splits on a single taxon
 #'
-#' @param x Object of class [`Splits`].
+#' @param x Object that can be coerced into class [`Splits`].
 #' @param pole Numeric, character or logical vector identifying tip that will
 #' polarize each split.
 #'
@@ -636,6 +636,7 @@ rev.Splits <- function(x) {
 #' @family Splits operations
 #' @export
 PolarizeSplits <- function(x, pole = 1L) {
+  x <- as.Splits(x)
   nTip <- attr(x, "nTip")
   if (is.logical(pole)) {
     pole <- which(pole)[[1]]

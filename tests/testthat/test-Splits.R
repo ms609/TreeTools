@@ -377,6 +377,13 @@ test_that("match.Splits()", {
   expect_equal(c(4, 3, 999, 2, 1),
                match(as.Splits(tree1, tree2), col2, nomatch = 999))
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
+  
+  expect_equal(match(sort(as.Splits(tree1)),
+                     sort(as.Splits(tree2))), 5:1)
+  expect_equal(match(sort(as.Splits(tree1)),
+                     sort(as.Splits(tree2, tree1))), 5:1)
+  expect_equal(match(sort(PolarizeSplits(as.Splits(tree1), 1)),
+                     sort(PolarizeSplits(as.Splits(tree2, tree1), 1))), 1:5)
 })
 
 test_that("duplicated.Splits(internal)", {
@@ -425,6 +432,14 @@ test_that("print.Splits()", {
                          details = TRUE)),
     c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
                   paste0(" ", num, "  ..** \UD7 2")))
+  
+  expect_warning(expect_equal(
+    capture.output(print(
+      structure(PolarizeSplits(BalancedTree(5), 5), count = 2),
+      details = TRUE)),
+    c( "2 bipartition splits dividing 5 tips, t1 .. t5", "    12345",
+       " 7  ...** \UD7 2",
+       " 8  ..*** NA")))
   
   expect_equal(
     capture.output(summary(as.Splits(SingleTaxonTree()))),

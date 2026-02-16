@@ -7,7 +7,7 @@
 PolarizeSplits(x, pole = 1L)
 }
 \arguments{
-\item{x}{Object of class \code{\link{Splits}}.}
+\item{x}{Object that can be coerced into class \code{\link{Splits}}.}
 
 \item{pole}{Numeric, character or logical vector identifying tip that will
 polarize each split.}
