@@ -350,13 +350,13 @@ print.Splits <- function(x, details = FALSE, ...) {
         paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
     
     nSplits <- dim(x)[[1]]
-    splitCounts <- if (!is.null(count) && length(count) == nSplits) {
-      paste0("\UD7 ", count)
-    } else {
+    splitCounts <- if (!is.null(count)) {
       if (length(count) != nSplits) {
         warning("\"count\" attribute does not match number of splits")
       }
-      character()
+      paste0("\UD7 ", count)
+    } else {
+      rep("", nSplits)
     }
     
     for (i in seq_len(nSplits)) {
@@ -386,11 +386,11 @@ sort.Splits <- function(x, decreasing = TRUE, ...) {
 #' @export
 xtfrm.Splits <- function(x) {
   count <- attr(x, "count")
-  newOrder <- xtfrm(as.integer(x))
+  splitRanking <- as.integer(x)
   if (is.null(count)) {
-    newOrder
+    splitRanking
   } else {
-    order(count, newOrder)
+    count + (splitRanking / max(splitRanking))
   }
 }
 

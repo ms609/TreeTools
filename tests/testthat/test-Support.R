@@ -14,25 +14,19 @@ test_that("Node supports calculated correctly", {
   expect_error(SplitFrequency(NULL, treeSample), "must bear identical")
   sameTips <- KeepTip(treeSample, TipLabels(treeSample$correct))
   sameSplits <- do.call(c, as.Splits(sameTips))
-    
-  expect_split_counts <- function(object, expected) {
-    counted_splits <- function(x) {
-      count <- attr(x, "count")
-      newOrder <- order(order(x), count, decreasing = TRUE)
-      structure(x[[newOrder]], count = count[newOrder])
-    }
-    expect_equal(counted_splits(object), counted_splits(expected))
-  }
   
-  expect_split_counts(
-    SplitFrequency(sameTips),
-    structure(PolarizeSplits(sameSplits[[!duplicated(sameSplits)]], 1),
-              count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
+  expect_equal(
+    SplitFrequency(sameTips) |> 
+      PolarizeSplits(1) |> sort() |> unname(),
+    structure(sameSplits[[!duplicated(sameSplits)]],
+              count = c(4, 4, 4, 3, 1, 1, 1, 1, 1)) |>
+      PolarizeSplits(1) |> sort() |> unname()
   )
+  
   
   monoSplit <- ape::read.tree(text = "((a, b, c, d), (e, f, g));")
   expect_equal(SplitFrequency(list(monoSplit)),
-               structure(as.Splits(monoSplit), count = 1))
+               structure(unname(as.Splits(monoSplit)), count = 1))
   
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
