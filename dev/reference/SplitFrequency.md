@@ -8,18 +8,19 @@ majority consensus or bootstrap trees.
 ## Usage
 
 ``` r
-SplitFrequency(reference, forest)
+SplitFrequency(reference, forest = NULL)
 ```
 
 ## Arguments
 
 - reference:
 
-  A tree of class `phylo`, a `Splits` object.
+  A tree of class `phylo`, a `Splits` object. If `NULL`, the frequencies
+  of all splits in `forest` will be returned.
 
 - forest:
 
-  a list of trees of class `phylo`, or a `multiPhylo` object; or a
+  A list of trees of class `phylo`, or a `multiPhylo` object; or a
   `Splits` object. See
   [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html)
   for possible methods of loading trees into R.
@@ -32,6 +33,10 @@ then the sequence will correspond to the order of nodes (use
 [`ape::nodelabels()`](https://rdrr.io/pkg/ape/man/nodelabels.html) to
 view). Note that the three nodes at the root of the tree correspond to a
 single split; see the example for how these might be plotted on a tree.
+
+If `reference` is `NULL`, then `SplitFrequency()` returns a list of
+splits (in the order encountered in forest) with attribute `"count"`
+stating the number of times each split occurs in `forest`.
 
 ## Details
 

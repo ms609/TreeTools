@@ -60,7 +60,7 @@ or bootstrap trees.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, <span class="va">forest</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, forest <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,12 +68,13 @@ or bootstrap trees.</p>
 
 
 <dl><dt id="arg-reference">reference<a class="anchor" aria-label="anchor" href="#arg-reference"></a></dt>
-<dd><p>A tree of class <code>phylo</code>, a <code>Splits</code> object.</p></dd>
+<dd><p>A tree of class <code>phylo</code>, a <code>Splits</code> object. If <code>NULL</code>,
+the frequencies of all splits in <code>forest</code> will be returned.</p></dd>
 
 
 <dt id="arg-forest">forest<a class="anchor" aria-label="anchor" href="#arg-forest"></a></dt>
-<dd><p>a list of trees of class <code>phylo</code>, or a <code>multiPhylo</code> object; or a
-<code>Splits</code> object. See
+<dd><p>A list of trees of class <code>phylo</code>, or a <code>multiPhylo</code> object;
+or a <code>Splits</code> object. See
 <a href="https://ms609.github.io/TreeTools/articles/load-trees.html">vignette</a> for
 possible methods of loading trees into R.</p></dd>
 
@@ -86,6 +87,9 @@ If <code>reference</code> is a tree of class <code>phylo</code>, then the sequen
 to the order of nodes (use <code><a href="https://rdrr.io/pkg/ape/man/nodelabels.html" class="external-link">ape::nodelabels()</a></code> to view).
 Note that the three nodes at the root of the tree correspond to a single
 split; see the example for how these might be plotted on a tree.</p>
+<p>If <code>reference</code> is <code>NULL</code>, then <code>SplitFrequency()</code> returns a list of splits
+(in the order encountered in forest) with attribute <code>"count"</code> stating the
+number of times each split occurs in <code>forest</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

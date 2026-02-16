@@ -3,7 +3,8 @@
 ## TreeTools 2.1.0.9000 (2026-02-16)
 
 - Add Splits and phylo methods for
-  [`SplitInformation()`](https://ms609.github.io/TreeTools/dev/reference/SplitInformation.md)
+  [`SplitInformation()`](https://ms609.github.io/TreeTools/dev/reference/SplitInformation.md).
+- `SplitFrequency(reference = NULL)` returns frequency of all splits.
 
 ## TreeTools 2.1.0 (2026-02-10)
 
