@@ -14,14 +14,30 @@ test_that("Node supports calculated correctly", {
   expect_error(SplitFrequency(NULL, treeSample), "must bear identical")
   sameTips <- KeepTip(treeSample, TipLabels(treeSample$correct))
   sameSplits <- do.call(c, as.Splits(sameTips))
-  expect_equal(SplitFrequency(sameTips),
+  
+  expect_equal(
+    unname(sort(PolarizeSplits(pole = 1,
+    SplitFrequency(sameTips) 
+    ))),
+    unname(sort(PolarizeSplits(pole = 1,
     structure(sameSplits[[!duplicated(sameSplits)]],
               count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
+    )))
   )
   
+  
   monoSplit <- ape::read.tree(text = "((a, b, c, d), (e, f, g));")
-  expect_equal(SplitFrequency(list(monoSplit)),
-               structure(as.Splits(monoSplit), count = 1))
+  expect_equal(SplitFrequency(monoSplit),
+               structure(unname(as.Splits(monoSplit)), count = 1))
+  
+  expect_equal(SplitFrequency(SingleTaxonTree()),
+               structure(as.Splits(SingleTaxonTree()), count = integer()))
+  
+  expect_equal(SplitFrequency(as.Splits(monoSplit)[[FALSE]]),
+               structure(as.Splits(monoSplit)[[FALSE]], count = integer()))
+  
+  expect_equal(SplitFrequency(StarTree(67)),
+               structure(as.Splits(StarTree(67)), count = integer()))
   
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
@@ -29,6 +45,9 @@ test_that("Node supports calculated correctly", {
   expect_equal(freq,
                c("9" = 4, "10" = 4, "11" = 4, "12" = 4, "13" = 3)[names(freq)])
 
+  skip_if(!isTRUE(options("runSlowTests")))
+  expect_equal(SplitFrequency(c(PectinateTree(8200), PectinateTree(8200))),
+               structure(as.Splits(PectinateTree(8200)), count = rep(2, 8197)))
 })
 
 test_that("Node support colours consistent", {

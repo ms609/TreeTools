@@ -25,6 +25,10 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
+split_frequencies <- function(trees) {
+    .Call(`_TreeTools_split_frequencies`, trees)
+}
+
 consensus_tree <- function(trees, p) {
     .Call(`_TreeTools_consensus_tree`, trees, p)
 }

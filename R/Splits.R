@@ -315,6 +315,7 @@ as.logical.Splits <- function(x, tipLabels = attr(x, "tip.label"), ...) {
 print.Splits <- function(x, details = FALSE, ...) {
   nTip <- attr(x, "nTip")
   tipLabels <- attr(x, "tip.label")
+  count <- attr(x, "count")
   trivial <- TrivialSplits(x)
   cat(dim(x)[1], "bipartition", ifelse(dim(x)[1] == 1, "split", "splits"),
       if(any(trivial)) paste0("(", sum(trivial), " trivial)"),
@@ -324,9 +325,9 @@ print.Splits <- function(x, details = FALSE, ...) {
       } else {
         if (nTip) {
           if (nTip == 1) {
-            paste("tip,", tipLabels[1])
+            paste("tip,", tipLabels[[1]])
           } else {
-            paste("tips,", tipLabels[1], "..", tipLabels[nTip])
+            paste("tips,", tipLabels[[1]], "..", tipLabels[[nTip]])
           }
         } else {
           "tips"
@@ -345,15 +346,54 @@ print.Splits <- function(x, details = FALSE, ...) {
       splitNames <- character(length(x))
       nameLengths = 0L
     }
-    cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
+    if (length(splitNames) > 0) {
+      cat("\n ", paste0(rep.int(" ", max(nameLengths)), collapse = ""),
         paste0(rep_len(c(1:9, " "), nTip), collapse = ""))
-
-    for (i in seq_len(dim(x)[1])) {
-      split <- x[i, , drop = FALSE]
-      cat("\n", splitNames[i], "",
-          paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
-                collapse = ""))
+      
+      
+      nSplits <- dim(x)[[1]]
+      splitCounts <- if (!is.null(count)) {
+        if (length(count) != nSplits) {
+          warning("\"count\" attribute does not match number of splits")
+        }
+        paste0("\UD7 ", count)
+      } else {
+        rep("", nSplits)
+      }
+      
+      for (i in seq_len(nSplits)) {
+        split <- x[i, , drop = FALSE]
+        cat("\n", splitNames[i], "",
+            paste(ifelse(as.logical(rawToBits(split)[seq_len(nTip)]), "*", "."),
+                  collapse = ""),
+            splitCounts[i])
+      }
     }
+  }
+}
+
+#' @family Splits operations
+#' @export
+sort.Splits <- function(x, decreasing = TRUE, ...) {
+  newOrder <- order(x, decreasing = decreasing, ...)
+  count <- attr(x, "count")
+  if (is.null(count)) {
+    x[[newOrder]]
+  } else {
+    structure(x[[newOrder]], count = count[newOrder])
+  }
+}
+
+# Underpins `order`
+#' @family Splits operations
+#' @export
+xtfrm.Splits <- function(x) {
+  count <- attr(x, "count")
+  splitRanking <- as.integer(x)
+  if (is.null(count)) {
+    splitRanking
+  } else {
+    count + (splitRanking / max(splitRanking))
   }
 }
 
@@ -390,11 +430,14 @@ tail.Splits <- function(x, n = 6L, ...) {
 summary.Splits <- function(object, ...) {
   print(object, details = TRUE, ...)
   nTip <- attr(object, "nTip")
-  if (is.null(attr(object, "tip.label"))) {
+  tipLabels <- attr(object, "tip.label")
+  if (is.null(tipLabels)) {
     cat("\n\nTips not labelled.")
   } else {
-    cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", attr(object, "tip.label"),
-                     "\t", c(character(4L), "\n")[seq_len(min(nTip, 5L))]))
+    if (length(tipLabels) > 0) {
+      cat("\n\n", paste0("Tip ", seq_len(nTip), ": ", tipLabels,
+                        "\t", c(character(4L), "\n")[seq_len(min(nTip, 5L))]))
+    }
   }
 }
 
@@ -584,7 +627,7 @@ rev.Splits <- function(x) {
 
 #' Polarize splits on a single taxon
 #'
-#' @param x Object of class [`Splits`].
+#' @param x Object that can be coerced into class [`Splits`].
 #' @param pole Numeric, character or logical vector identifying tip that will
 #' polarize each split.
 #'
@@ -593,6 +636,7 @@ rev.Splits <- function(x) {
 #' @family Splits operations
 #' @export
 PolarizeSplits <- function(x, pole = 1L) {
+  x <- as.Splits(x)
   nTip <- attr(x, "nTip")
   if (is.logical(pole)) {
     pole <- which(pole)[[1]]

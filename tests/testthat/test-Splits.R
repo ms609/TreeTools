@@ -12,12 +12,12 @@ test_that("as.Splits()", {
                         "\n")[[1]],
                c("1 bipartition split dividing 4 tips, t1 .. t4",
                  "   1234",
-                 "   ..**", "",
+                 "   ..** ", "",
                  " Tip 1: t1\t Tip 2: t2\t Tip 3: t3\t Tip 4: t4\t"))
   logical80 <- c(rep(TRUE, 40), rep(FALSE, 16), rep(TRUE, 24))
   expect_equal(strsplit(capture_output(print(
     as.Splits(logical80), detail = TRUE)), "\n")[[1]][3],
-    paste0(c("   ", ifelse(logical80, "*", ".")), collapse = "")
+    paste0(c("   ", ifelse(logical80, "*", "."), " "), collapse = "")
   )
   expect_equal(as.logical(as.logical(as.Splits(logical80))), logical80)
   expect_equal(as.logical(as.Splits(c(A, A, B, B))),
@@ -377,6 +377,13 @@ test_that("match.Splits()", {
   expect_equal(c(4, 3, 999, 2, 1),
                match(as.Splits(tree1, tree2), col2, nomatch = 999))
   expect_equal(c(5, 4, 2, 1), match(col2, as.Splits(tree1, tree2)))
+  
+  expect_equal(match(sort(as.Splits(tree1)),
+                     sort(as.Splits(tree2))), 5:1)
+  expect_equal(match(sort(as.Splits(tree1)),
+                     sort(as.Splits(tree2, tree1))), 5:1)
+  expect_equal(match(sort(PolarizeSplits(as.Splits(tree1), 1)),
+                     sort(PolarizeSplits(as.Splits(tree2, tree1), 1))), 1:5)
 })
 
 test_that("duplicated.Splits(internal)", {
@@ -416,10 +423,33 @@ test_that("print.Splits()", {
   expect_equal(
     capture.output(print(PolarizeSplits(sp4, 1), details = TRUE)),
     c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
-       paste0(" ", num, "  **..")))
+       paste0(" ", num, "  **.. ")))
   expect_equal(capture.output(print(PolarizeSplits(sp4, 4), details = TRUE)),
                c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
-                  paste0(" ", num, "  ..**")))
+                  paste0(" ", num, "  ..** ")))
+  expect_equal(
+    capture.output(print(structure(PolarizeSplits(sp4, 4), count = 2),
+                         details = TRUE)),
+    c( "1 bipartition split dividing 4 tips, t1 .. t4", "    1234",
+                  paste0(" ", num, "  ..** \UD7 2")))
+  
+  expect_warning(expect_equal(
+    capture.output(print(
+      structure(PolarizeSplits(BalancedTree(5), 5), count = 2),
+      details = TRUE)),
+    c( "2 bipartition splits dividing 5 tips, t1 .. t5", "    12345",
+       " 7  ...** \UD7 2",
+       " 8  ..*** NA")))
+  
+  expect_equal(
+    capture.output(summary(as.Splits(SingleTaxonTree()))),
+    c("0 bipartition splits dividing 1 tip, t1", "", " Tip 1: t1\t")
+  )
+  
+  expect_equal(
+    capture.output(summary(as.Splits(ZeroTaxonTree()))),
+    c("0 bipartition splits dividing 0 tips")
+  )
 })
 
 test_that("head,tail.Splits()", {

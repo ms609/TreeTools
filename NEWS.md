@@ -1,6 +1,7 @@
 # TreeTools 2.1.0.9000 (2026-02-16) #
 
-- Add Splits and phylo methods for `SplitInformation()`.
+- `SplitInformation()` supports `Splits` and `phylo` objects.
+- `sort` and `order` support `Splits` objects.
 - `SplitFrequency(reference = NULL)` returns frequency of all splits.
 
 

@@ -34,21 +34,60 @@
 SplitFrequency <- function(reference, forest = NULL) {
   if (is.null(reference) || is.null(forest)) {
     if (is.null(forest)) forest <- reference
+    if (inherits(forest, "phylo")) forest <- list(forest)
     if (length(unique(lapply(lapply(forest, TipLabels), sort))) > 1) {
       stop("All trees must bear identical labels")
     }
-    forestSplits <- do.call(c, as.Splits(forest, tipLabels = TipLabels(forest[[1]])))
-    dup <- duplicated(forestSplits)
-    ret <- forestSplits[[!dup]]
-    logicals <- vapply(seq_along(forestSplits),
-                       function(cf) ret %in% forestSplits[[cf]],
-                       logical(sum(!dup)))
-    count <- if (is.null(dim(logicals))) {
-      sum(logicals)
-    } else {
-      rowSums(logicals)
+    if (length(forest) == 0) {
+      return(structure(forest, count = integer()))
     }
-    attr(ret, "count") <- unname(count)
+    tipLabels <- TipLabels(forest[[1]])
+    if (length(tipLabels) < 4) {
+      return(structure(matrix(raw()), nTip = length(tipLabels),
+                       tip.label = tipLabels, count = integer(),
+                       class = "Splits"))
+    }
+    forest <- RenumberTips(forest, tipLabels)
+    forest <- Preorder(forest)
+    result <- split_frequencies(forest)
+    splits <- result[["splits"]]
+    counts <- result[["counts"]]
+    nTip <- length(tipLabels)
+    nbin <- ncol(splits)
+    if (nrow(splits) == 0) { # Not been able to hit these lines - included just in case
+      return(structure(splits, nTip = nTip, tip.label = tipLabels,              # nocov
+                       count = integer(), class = "Splits"))                    # nocov
+    }
+    # The ClusterTable outputs clusters (clades); normalize so bit 0 (tip 1)
+    # is not in the set (matching as.Splits convention)
+    nTipMod <- nTip %% 8L
+    lastByteMask <- if (nTipMod == 0L) as.raw(0xff) else as.raw(bitwShiftL(1L, nTipMod) - 1L)
+    keep <- logical(nrow(splits))
+    for (i in seq_len(nrow(splits))) {
+      val <- splits[i, ]
+      # Count bits set (to filter trivial splits)
+      nBits <- sum(vapply(as.integer(val), function(b) sum(as.integer(intToBits(b))), integer(1)))
+      if (nBits < 2L || nBits > nTip - 2L) next # trivial split
+      # Normalize: if bit 0 is NOT set, complement to match as.Splits format
+      if (!as.logical(as.integer(val[1]) %% 2L)) {
+        for (j in seq_along(val)) {
+          splits[i, j] <- as.raw(bitwXor(as.integer(val[j]), 0xffL))
+        }
+        # Mask last byte
+        if (nTipMod > 0L) {
+          splits[i, nbin] <- as.raw(bitwAnd(as.integer(splits[i, nbin]),
+                                             as.integer(lastByteMask)))
+        }
+      }
+      keep[i] <- TRUE
+    }
+    splits <- splits[keep, , drop = FALSE]
+    counts <- counts[keep]
+    ret <- structure(splits,
+                     nTip = nTip,
+                     tip.label = tipLabels,
+                     class = "Splits")
+    attr(ret, "count") <- counts
     ret
   } else {
     referenceSplits <- as.Splits(reference)
