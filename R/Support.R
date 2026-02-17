@@ -34,6 +34,7 @@
 SplitFrequency <- function(reference, forest = NULL) {
   if (is.null(reference) || is.null(forest)) {
     if (is.null(forest)) forest <- reference
+    if (inherits(forest, "phylo")) forest <- list(forest)
     if (length(unique(lapply(lapply(forest, TipLabels), sort))) > 1) {
       stop("All trees must bear identical labels")
     }
@@ -41,6 +42,11 @@ SplitFrequency <- function(reference, forest = NULL) {
       return(structure(forest, count = integer()))
     }
     tipLabels <- TipLabels(forest[[1]])
+    if (length(tipLabels) < 4) {
+      return(structure(matrix(raw()), nTip = length(tipLabels),
+                       tip.label = tipLabels, count = integer(),
+                       class = "Splits"))
+    }
     forest <- RenumberTips(forest, tipLabels)
     forest <- Preorder(forest)
     result <- split_frequencies(forest)
@@ -48,9 +54,9 @@ SplitFrequency <- function(reference, forest = NULL) {
     counts <- result[["counts"]]
     nTip <- length(tipLabels)
     nbin <- ncol(splits)
-    if (nrow(splits) == 0) {
-      return(structure(splits, nTip = nTip, tip.label = tipLabels,
-                       count = integer(), class = "Splits"))
+    if (nrow(splits) == 0) { # Not been able to hit these lines - included just in case
+      return(structure(splits, nTip = nTip, tip.label = tipLabels,              # nocov
+                       count = integer(), class = "Splits"))                    # nocov
     }
     # The ClusterTable outputs clusters (clades); normalize so bit 0 (tip 1)
     # is not in the set (matching as.Splits convention)

@@ -27,12 +27,17 @@ test_that("Node supports calculated correctly", {
   
   
   monoSplit <- ape::read.tree(text = "((a, b, c, d), (e, f, g));")
-  expect_equal(SplitFrequency(list(monoSplit)),
+  expect_equal(SplitFrequency(monoSplit),
                structure(unname(as.Splits(monoSplit)), count = 1))
   
+  expect_equal(SplitFrequency(SingleTaxonTree()),
+               structure(as.Splits(SingleTaxonTree()), count = integer()))
   
   expect_equal(SplitFrequency(as.Splits(monoSplit)[[FALSE]]),
                structure(as.Splits(monoSplit)[[FALSE]], count = integer()))
+  
+  expect_equal(SplitFrequency(StarTree(67)),
+               structure(as.Splits(StarTree(67)), count = integer()))
   
   # Internal nodes on each side of root
   balanced <- ape::read.tree(text="((D, (E, (F, out))), (C, (A, B)));")
