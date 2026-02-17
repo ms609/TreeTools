@@ -45,6 +45,9 @@ test_that("Node supports calculated correctly", {
   expect_equal(freq,
                c("9" = 4, "10" = 4, "11" = 4, "12" = 4, "13" = 3)[names(freq)])
 
+  skip_if(!isTRUE(options("runSlowTests")))
+  expect_equal(SplitFrequency(c(PectinateTree(8200), PectinateTree(8200))),
+               structure(as.Splits(PectinateTree(8200)), count = rep(2, 8197)))
 })
 
 test_that("Node support colours consistent", {
