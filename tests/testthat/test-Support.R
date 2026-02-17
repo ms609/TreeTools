@@ -16,11 +16,13 @@ test_that("Node supports calculated correctly", {
   sameSplits <- do.call(c, as.Splits(sameTips))
   
   expect_equal(
-    SplitFrequency(sameTips) |> 
-      PolarizeSplits(1) |> sort() |> unname(),
+    unname(sort(PolarizeSplits(pole = 1,
+    SplitFrequency(sameTips) 
+    ))),
+    unname(sort(PolarizeSplits(pole = 1,
     structure(sameSplits[[!duplicated(sameSplits)]],
-              count = c(4, 4, 4, 3, 1, 1, 1, 1, 1)) |>
-      PolarizeSplits(1) |> sort() |> unname()
+              count = c(4, 4, 4, 3, 1, 1, 1, 1, 1))
+    )))
   )
   
   
