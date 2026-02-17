@@ -61,22 +61,22 @@ splits2 <- as.Splits(PectinateTree(8))
 summary(splits)
 #> 5 bipartition splits dividing 8 tips, t1 .. t8
 #>      12345678
-#>  10  ****....
-#>  11  **......
-#>  12  ..**....
-#>  14  ....**..
-#>  15  ......**
+#>  10  ****.... 
+#>  11  **...... 
+#>  12  ..**.... 
+#>  14  ....**.. 
+#>  15  ......** 
 #> 
 #>  Tip 1: t1    Tip 2: t2   Tip 3: t3   Tip 4: t4   Tip 5: t5  
 #>  Tip 6: t6    Tip 7: t7   Tip 8: t8  
 summary(splits2)
 #> 5 bipartition splits dividing 8 tips, t1 .. t8
 #>      12345678
-#>  11  ..******
-#>  12  ...*****
-#>  13  ....****
-#>  14  .....***
-#>  15  ......**
+#>  11  ..****** 
+#>  12  ...***** 
+#>  13  ....**** 
+#>  14  .....*** 
+#>  15  ......** 
 #> 
 #>  Tip 1: t1    Tip 2: t2   Tip 3: t3   Tip 4: t4   Tip 5: t5  
 #>  Tip 6: t6    Tip 7: t7   Tip 8: t8  

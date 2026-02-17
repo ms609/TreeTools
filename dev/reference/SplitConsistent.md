@@ -50,7 +50,7 @@ splits2 <- as.Splits(PectinateTree(8))
 summary(splits1[[4]])
 #> 1 bipartition split dividing 8 tips, t1 .. t8
 #>      12345678
-#>  14  ....**..
+#>  14  ....**.. 
 #> 
 #>  Tip 1: t1    Tip 2: t2   Tip 3: t3   Tip 4: t4   Tip 5: t5  
 #>  Tip 6: t6    Tip 7: t7   Tip 8: t8  

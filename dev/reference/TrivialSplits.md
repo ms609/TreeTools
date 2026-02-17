@@ -52,10 +52,10 @@ efgh <- Subsplit(splits, tips = letters[5:8], keepAll = TRUE)
 summary(efgh)
 #> 4 bipartition splits (3 trivial) dividing 4 tips, e .. h
 #>      1234
-#>  12  ****
-#>  15  .***
-#>  16  ..**
-#>  17  ...*
+#>  12  **** 
+#>  15  .*** 
+#>  16  ..** 
+#>  17  ...* 
 #> 
 #>  Tip 1: e     Tip 2: f    Tip 3: g    Tip 4: h   
 
@@ -65,7 +65,7 @@ TrivialSplits(efgh)
 summary(WithoutTrivialSplits(efgh))
 #> 1 bipartition split dividing 4 tips, e .. h
 #>      1234
-#>  16  ..**
+#>  16  ..** 
 #> 
 #>  Tip 1: e     Tip 2: f    Tip 3: g    Tip 4: h   
 ```

@@ -12,7 +12,7 @@ PolarizeSplits(x, pole = 1L)
 
 - x:
 
-  Object of class
+  Object that can be coerced into class
   [`Splits`](https://ms609.github.io/TreeTools/dev/reference/Splits.md).
 
 - pole:
