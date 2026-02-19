@@ -1,3 +1,7 @@
+# TreeTools 2.1.0.9001 (2026-02-19) #
+
+- `EdgeRatio()` reports the ratio of external:internal edges.
+
 # TreeTools 2.1.0.9000 (2026-02-16) #
 
 - `SplitInformation()` supports `Splits` and `phylo` objects.
