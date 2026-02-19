@@ -8,8 +8,8 @@
 #' @param x A tree of class \code{\link[ape:read.tree]{phylo}}.
 #' @returns `EdgeRatio()` returns a numeric specifying the ratio of external
 #' to internal edge length (> 1 means the length of a tree is predominantly
-#' in external edges), with atttributes `external`, `internal`, and `total`
-#' speficying the total length associated with edges of that nature.
+#' in external edges), with attributes `external`, `internal`, and `total`
+#' specifying the total length associated with edges of that nature.
 #' @template MRS
 #' @export
 EdgeRatio <- function(x) UseMethod("EdgeRatio")

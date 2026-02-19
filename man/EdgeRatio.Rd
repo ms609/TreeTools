@@ -15,8 +15,8 @@ EdgeRatio(x)
 \value{
 \code{EdgeRatio()} returns a numeric specifying the ratio of external
 to internal edge length (> 1 means the length of a tree is predominantly
-in external edges), with atttributes \code{external}, \code{internal}, and \code{total}
-speficying the total length associated with edges of that nature.
+in external edges), with attributes \code{external}, \code{internal}, and \code{total}
+specifying the total length associated with edges of that nature.
 }
 \description{
 Reports the ratio of tree length associated with external edges (i.e.
