@@ -1,9 +1,29 @@
-TreeTools underpins a hierarchy of packages, most notably TreeDist, TreeSearch
-and Rogue, all with the same maintainer; these draw in C++ headers and many
-exported R functions.
+TreeTools underpins a hierarchy of packages, all with the same maintainer;
+these draw in C++ headers and many exported R functions.
 
-Edge matrices are structured using ape's as.phylo; my Preorder ordering
-guarantees a particular arrangement of edges for any topologically identical
-tree.
+These are likely checked out locally in sister directories to this one.
 
-Splits objects are defined in `as.Splits()`.
+## Main stack:
+PlotTools
+TreeTools (foundation-level)
+TreeDist
+TreeSearch ("top of the stack")
+
+## Auxiliary packages:
+Quartet
+Rogue
+
+## Complementary packages:
+Ternary
+
+Each package contains CONTRIBUTING.md files that detail code style conventions.
+
+## Common data structures
+
+Trees are represented ape's as.phylo, with edges listed as a two-column matrix
+(parent node ID, child ID).
+My Preorder ordering guarantees a particular sequence of edges and numbering
+of internal nodes for any topologically identical tree.
+
+Splits objects are defined in `as.Splits()`, and denote split membership as
+binary 0/1 in an underlying `raw` object.
