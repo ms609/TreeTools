@@ -127,16 +127,20 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #' Number of trees
 #'
 #' These functions return the number of rooted or unrooted binary trees
-#' consistent with a given pattern of splits.
+#' consistent with a given pattern of splits, optionally returning only those
+#' with a specified number of cherries (two-leaf clades).
 #'
 #' Functions starting `N` return the number of rooted or unrooted trees.
 #' Replace this initial `N` with `Ln` for the natural logarithm of this number;
 #' or `Log2` for its base 2 logarithm.
 #'
-#' Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+#' Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools};
+#' \insertCite{Hendy1982;textual}{TreeTools}, Theorem 2; and
 #' \insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 #'
 #' @param tips Integer specifying the number of leaves.
+#' @param cherries Integer specifying the number of cherries.
+#' If not provided, trees with any number of cherries are returned.
 #' @param \dots Integer vector, or series of integers, listing the number of
 #' leaves in each split.
 #'
@@ -156,11 +160,34 @@ LogDoubleFactorial.int <- LnDoubleFactorial.int
 #'
 #' @family tree information functions
 #' @export
-NRooted     <- function(tips) DoubleFactorial(tips + tips - 3L) # addition faster than 2*
+NRooted     <- function(tips, cherries) {
+  if (missing(cherries)) {
+    DoubleFactorial(tips + tips - 3L) # addition faster than 2*
+  } else {
+    stop("Not yet implemented")
+  }
+}
 
 #' @describeIn NRooted Number of unrooted trees
 #' @export
-NUnrooted   <- function(tips) DoubleFactorial(tips + tips - 5L)
+NUnrooted   <- function(tips, cherries) {
+  if (missing(cherries)) {
+    DoubleFactorial(tips + tips - 5L)
+  } else {
+    if (tips < 4) {
+      if (tips %in% 2:3 && cherries == 1) 1 else 0
+    } else if (2 <= cherries && cherries <= (tips / 2)) {
+      factorial(tips) * factorial(tips - 4) / (
+        factorial(tips - cherries - cherries) *
+          factorial(cherries) *
+          factorial(cherries - 2) *
+          2 ^ (cherries + cherries - 2)
+      )
+    } else {
+      0
+    }
+  }
+}
 
 #' @describeIn NRooted Exact number of rooted trees as 64-bit integer
 #' (13 < `nTip` < 19)
@@ -176,7 +203,23 @@ NUnrooted64 <- function(tips) DoubleFactorial64(tips + tips - 5L)
 
 #' @describeIn NRooted  Log Number of unrooted trees
 #' @export
-LnUnrooted  <- function(tips) LnDoubleFactorial(tips + tips - 5L)
+LnUnrooted  <- function(tips, cherries) {
+  if (missing(cherries)) {
+    LnDoubleFactorial(tips + tips - 5L)
+  } else {
+    if (tips < 4) {
+      if (tips %in% 2:3 && cherries == 1) 0 else -Inf
+    } else if (2 <= cherries && cherries <= (tips / 2)) {
+      lfactorial(tips) + lfactorial(tips - 4) -
+        lfactorial(tips - cherries - cherries) -
+        lfactorial(cherries) -
+        lfactorial(cherries - 2) -
+        (cherries + cherries - 2) * log(2)
+    } else {
+      -Inf
+    }
+  }
+}
 
 #' @describeIn NRooted  Log Number of unrooted trees (as integer)
 #' @export
@@ -186,7 +229,23 @@ LnUnrooted.int <- function(tips) {
 
 #' @rdname NRooted
 #' @export
-Log2Unrooted  <- function(tips) Log2DoubleFactorial(tips + tips - 5L)
+Log2Unrooted  <- function(tips, cherries) {
+  if (missing(cherries)) {
+    Log2DoubleFactorial(tips + tips - 5L)
+  } else {
+    if (tips < 4) {
+      if (tips %in% 2:3 && cherries == 1) 0 else -Inf
+    } else if (2 <= cherries && cherries <= (tips / 2)) {
+      (lfactorial(tips) + lfactorial(tips - 4) -
+         lfactorial(tips - cherries - cherries) -
+         lfactorial(cherries) -
+         lfactorial(cherries - 2)) / log(2) -
+        (cherries + cherries - 2)
+    } else {
+      -Inf
+    }
+  }
+}
 
 #' @rdname NRooted
 #' @export

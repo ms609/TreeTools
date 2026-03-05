@@ -1,3 +1,8 @@
+# TreeTools 2.1.0.9002 (2026-03-05) #
+
+- `NUnrooted()`, `LnUnrooted()`, and `Log2Unrooted()` gain a `cherries`
+  parameter to count trees with a specified number of cherries.
+
 # TreeTools 2.1.0.9001 (2026-02-19) #
 
 - `EdgeRatio()` reports the ratio of external:internal edges.

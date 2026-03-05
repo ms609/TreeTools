@@ -21,6 +21,64 @@ test_that("Factorials are calculated correctly", {
   expect_error(DoubleFactorial(301))
 })
 
+test_that("NUnrooted handles cherries", {
+  c8 <- vapply(0:8, function(ch) NUnrooted(8, ch), double(1))
+  expect_equal(sum(c8), NUnrooted(8))
+
+  # Small-tree edge cases
+  expect_equal(NUnrooted(2, 1), 1)
+  expect_equal(NUnrooted(3, 1), 1)
+  expect_equal(NUnrooted(3, 0), 0)
+  expect_equal(NUnrooted(3, 2), 0)
+  expect_equal(NUnrooted(4, 1), 0) # cherries must be >= 2 for tips >= 4
+})
+
+test_that("LnUnrooted handles cherries", {
+  # Consistency with NUnrooted for valid (non-zero) cases
+  for (ch in 2:4) {
+    expect_equal(LnUnrooted(8, ch), log(NUnrooted(8, ch)))
+  }
+
+  # Zero-count cases return -Inf
+  expect_equal(LnUnrooted(8, 0), -Inf)
+  expect_equal(LnUnrooted(8, 1), -Inf)
+  expect_equal(LnUnrooted(8, 5), -Inf) # cherries > tips / 2
+
+  # Small-tree edge cases match NUnrooted
+  expect_equal(LnUnrooted(2, 1), 0)    # log(1) == 0
+  expect_equal(LnUnrooted(3, 1), 0)
+  expect_equal(LnUnrooted(3, 0), -Inf)
+  expect_equal(LnUnrooted(3, 2), -Inf)
+
+  # Sum over all cherry counts recovers total (in natural-log space)
+  ln_c8 <- vapply(0:8, function(ch) LnUnrooted(8, ch), double(1))
+  expect_equal(sum(exp(ln_c8)), NUnrooted(8))
+})
+
+test_that("Log2Unrooted handles cherries", {
+  # Consistency with NUnrooted
+  for (ch in 2:4) {
+    expect_equal(Log2Unrooted(8, ch), log2(NUnrooted(8, ch)))
+  }
+
+  # Zero-count cases return -Inf
+  expect_equal(Log2Unrooted(8, 0), -Inf)
+  expect_equal(Log2Unrooted(8, 1), -Inf)
+  expect_equal(Log2Unrooted(8, 5), -Inf)
+
+  # Small-tree edge cases
+  expect_equal(Log2Unrooted(2, 1), 0)
+  expect_equal(Log2Unrooted(3, 1), 0)
+  expect_equal(Log2Unrooted(3, 0), -Inf)
+
+  # Ln and Log2 are consistent with each other
+  expect_equal(Log2Unrooted(8, 3) * log(2), LnUnrooted(8, 3))
+
+  # Sum over all cherry counts recovers total
+  log2_c8 <- vapply(0:8, function(ch) Log2Unrooted(8, ch), double(1))
+  expect_equal(sum(2 ^ log2_c8), NUnrooted(8))
+})
+
 test_that("N consistent with splits calculated correctly", {
   Test <- function(nExpectation, ...) {
     expect_equal(nExpectation, NUnrootedSplits(...))

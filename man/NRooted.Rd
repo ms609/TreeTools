@@ -21,19 +21,19 @@
 \alias{NUnrootedMult}
 \title{Number of trees}
 \usage{
-NRooted(tips)
+NRooted(tips, cherries)
 
-NUnrooted(tips)
+NUnrooted(tips, cherries)
 
 NRooted64(tips)
 
 NUnrooted64(tips)
 
-LnUnrooted(tips)
+LnUnrooted(tips, cherries)
 
 LnUnrooted.int(tips)
 
-Log2Unrooted(tips)
+Log2Unrooted(tips, cherries)
 
 Log2Unrooted.int(tips)
 
@@ -60,19 +60,24 @@ NUnrootedMult(...)
 \arguments{
 \item{tips}{Integer specifying the number of leaves.}
 
+\item{cherries}{Integer specifying the number of cherries.
+If not provided, trees with any number of cherries are returned.}
+
 \item{\dots}{Integer vector, or series of integers, listing the number of
 leaves in each split.}
 }
 \description{
 These functions return the number of rooted or unrooted binary trees
-consistent with a given pattern of splits.
+consistent with a given pattern of splits, optionally returning only those
+with a specified number of cherries (two-leaf clades).
 }
 \details{
 Functions starting \code{N} return the number of rooted or unrooted trees.
 Replace this initial \code{N} with \code{Ln} for the natural logarithm of this number;
 or \code{Log2} for its base 2 logarithm.
 
-Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools} and
+Calculations follow \insertCite{CavalliSforza1967;textual}{TreeTools};
+\insertCite{Hendy1982;textual}{TreeTools}, Theorem 2; and
 \insertCite{Carter1990;textual}{TreeTools}, Theorem 2.
 }
 \section{Functions}{

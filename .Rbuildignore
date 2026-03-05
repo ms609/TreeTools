@@ -31,3 +31,5 @@ vignettes/.RData
 ^data-raw$
 ^pkgdown$
 ^revdep$
+^\.positai$
+^\.claude$
