@@ -1,3 +1,9 @@
+// These functions are defined in inst/include/TreeTools/ headers rather than 
+// .cpp files, because downstream packages call them.
+// Hence we need to define their wrappers manually here.
+// These are still picked up by compileAttributes(); the only maintenance cost
+// is that changes to the function signatures must be updated here too.
+
 #include "../inst/include/TreeTools.h"
 #include "../inst/include/TreeTools/root_tree.h"
 #include "../inst/include/TreeTools/keep_tip.h"
