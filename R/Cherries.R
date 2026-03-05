@@ -8,6 +8,11 @@
 #' @param nTip Number of leaves in tree.
 #' @return `Cherries()` returns an integer specifying the number of nodes whose
 #' children are both leaves.
+#' 
+#' Equations for the number of cherries expected under uniform and Yule tree
+#' models are derived by \insertCite{McKenzie2000;textual}{TreeTools}.
+#' 
+#' @references \insertAllCited{}
 #' @family tree properties
 #' @template MRS
 #' @export
