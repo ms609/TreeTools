@@ -107,14 +107,6 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
   return edge;
 }
 
-intx minimum (const intx x, const intx y) {
-  return (x < y) ? x : y;
-}
-
-intx maximum (const intx x, const intx y) {
-  return (x > y) ? x : y;
-}
-
 inline IntegerVector calc_edge_to_num(
     const IntegerVector& parent,
     const IntegerVector& child,
@@ -229,10 +221,10 @@ inline void calc_edge_to_mixed_base(
     const intx left_child = child[i] - r_to_c;
     const intx right_child = child[i + 1] - r_to_c;
     
-    smallest_below[this_node] = minimum(smallest_below[right_child],
-                                        smallest_below[left_child]);
-    prime_id[this_node] = maximum(smallest_below[left_child],
-                                  smallest_below[right_child]);
+    smallest_below[this_node] = std::min(smallest_below[right_child],
+                                         smallest_below[left_child]);
+    prime_id[this_node] = std::max(smallest_below[left_child],
+                                   smallest_below[right_child]);
     parent_of[left_child] = parent_of[right_child] = this_node;
     
     for (intx at = smallest_below[this_node];
