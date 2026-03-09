@@ -89,16 +89,16 @@
 #'
 #' = 10
 #'
-#' The `TreeNumber` class stores a 64-bit integer (via the `bit64` package).
-#' Because there are more than 2^64 distinct unrooted 20-leaf topologies,
-#' only trees with **at most 19 leaves** can be uniquely represented.
-#' Calling `as.TreeNumber()` on a larger tree will issue a warning and return
-#' a truncated value that does not uniquely identify the tree — do not use it
-#' for comparisons or indexing.
+#' `as.TreeNumber()` supports up to 51 leaves.
+#' For trees with at most 19 leaves, the number fits in a 64-bit integer and
+#' the `TreeNumber` is stored as an `integer64` (via the `bit64` package),
+#' enabling arithmetic and exact round-tripping via `as.MixedBase()`.
+#' For trees with 20–51 leaves, there are more than 2^64 distinct topologies,
+#' so the tree number is stored as a decimal character string instead.
 #'
-#' Package developers needing lossless tree numbers for up to 51 leaves can
-#' use the C++ header `TreeTools/tree_number.h` (via `LinkingTo: TreeTools`),
-#' which encodes tree numbers as a 256-bit integer (`tree_num_t`).
+#' Package developers can use the C++ header `TreeTools/tree_number.h`
+#' (via `LinkingTo: TreeTools`) for the underlying 256-bit encoding
+#' (`tree_num_t`) directly.
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of leaves in the tree.
@@ -110,8 +110,9 @@
 #' plot(tree)
 #' as.TreeNumber(tree)
 #'
-#' # 19 leaves is the largest tree uniquely representable as a TreeNumber:
-#' as.TreeNumber(BalancedTree(19))
+#' # Trees with 20–51 leaves are stored as decimal strings:
+#' as.TreeNumber(BalancedTree(19))  # integer64-backed
+#' as.TreeNumber(BalancedTree(51))  # character-backed
 #'
 #' # If > 9 digits, represent the tree number as a string.
 #' treeNumber <- as.TreeNumber("1234567890123", nTip = 14)
@@ -128,16 +129,90 @@
 
 #' @rdname TreeNumber
 #'
-#' @return `as.TreeNumber()` returns an object of class `TreeNumber`,
-#' which comprises a numeric vector, whose elements represent successive
-#' nine-digit chunks of the decimal integer corresponding to the tree topology
-#' (in big endian order).  The `TreeNumber` object has attributes
-#' `nTip` and `tip.label`.  If `x` is a list of trees or a `multiPhylo` object,
-#' then `as.TreeNumber()` returns a corresponding list of `TreeNumber` objects.
+#' @return `as.TreeNumber()` returns an object of class `TreeNumber` with
+#' attributes `nTip` and `tip.label`.
+#' For trees with at most 19 leaves the underlying storage is a single
+#' `integer64` value (class `c("TreeNumber", "integer64")`), enabling
+#' `integer64` arithmetic and exact round-tripping through `as.MixedBase()`.
+#' For trees with 20–51 leaves the number exceeds 2^64, so it is stored as a
+#' decimal character string (class `c("TreeNumber", "character")`).
+#' If `x` is a list of trees or a `multiPhylo` object,
+#' `as.TreeNumber()` returns a corresponding list of `TreeNumber` objects.
 #' @export
 as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 
+# Maximum tips for integer64-backed TreeNumber (64-bit integers exhausted at 20 leaves).
 .TT_MAX_TIP <- 19L
+# Maximum tips supported by tree_number.h (256-bit integer, matches TREE_NUM_MAX_TIP).
+.TT_MAX_TIP_FULL <- 51L
+
+# Multiply a decimal string by a small positive integer, add a small
+# non-negative integer, and return the result as a decimal string.
+# Safe for multiplier and addend up to INT_MAX (~2.1e9): all intermediate
+# values fit exactly in a 64-bit double (< 2^53).
+.str_mul_add <- function(str, multiplier, addend) {
+  m <- as.double(multiplier)
+  digits <- as.integer(strsplit(str, "")[[1L]])
+  n <- length(digits)
+  # result_digits[k] holds the k-th least-significant output digit.
+  result_digits <- integer(n + 12L)
+  carry <- as.double(addend)
+  for (k in seq_len(n)) {
+    val <- digits[[n + 1L - k]] * m + carry
+    result_digits[[k]] <- as.integer(val %% 10)
+    carry <- floor(val / 10)
+  }
+  k <- n + 1L
+  while (carry > 0) {
+    result_digits[[k]] <- as.integer(carry %% 10)
+    carry <- floor(carry / 10)
+    k <- k + 1L
+  }
+  paste0(rev(result_digits[seq_len(k - 1L)]), collapse = "")
+}
+
+# Convert an INT_MAX-packed integer vector to a decimal string via Horner's
+# method: result = chunks[1]; for each subsequent chunk c: result = result*INT_MAX + c.
+.chunks_to_decimal <- function(chunks) {
+  if (length(chunks) == 1L) return(as.character(chunks[[1L]]))
+  result <- as.character(chunks[[1L]])
+  for (i in seq_along(chunks)[-1L]) {
+    result <- .str_mul_add(result, 2147483647L, chunks[[i]])
+  }
+  result
+}
+
+# Divide a decimal string by a small positive integer using long division.
+# Returns list(quotient = character string, remainder = integer).
+.str_divmod <- function(str, divisor) {
+  divisor <- as.double(divisor)   # double avoids int32 overflow (max rem*10 ~ 2e10)
+  digits <- as.integer(strsplit(str, "")[[1L]])
+  quotient <- integer(length(digits))
+  rem <- 0
+  for (i in seq_along(digits)) {
+    cur <- rem * 10 + digits[[i]]
+    quotient[[i]] <- as.integer(cur %/% divisor)
+    rem <- cur %% divisor
+  }
+  q_str <- sub("^0+", "", paste0(quotient, collapse = ""))
+  if (nchar(q_str) == 0L) q_str <- "0"
+  list(quotient = q_str, remainder = as.integer(rem))
+}
+
+# Convert a decimal string to an INT_MAX-packed integer vector.
+# Inverse of .chunks_to_decimal(); used when converting character-backed
+# TreeNumbers back to the form expected by num_to_parent().
+.decimal_to_chunks <- function(str) {
+  if (!nzchar(str) || str == "0") return(0L)
+  chunks <- integer(0)
+  while (str != "0") {
+    dm <- .str_divmod(str, 2147483647L)
+    chunks <- c(dm$remainder, chunks)
+    str <- dm$quotient
+  }
+  if (length(chunks) == 0L) 0L else chunks
+}
+
 # Calculate with:
 # base <- cumprod(as.integer64(seq(1, by = 2, length.out = 16)))
 .TT_BASE <- as.integer64(c(
@@ -156,19 +231,23 @@ as.TreeNumber.phylo <- function(x, ...) {
   x <- RootTree(x, 1)
   edge <- x[["edge"]]
   nTip <- NTip(x)
-  if (nTip > .TT_MAX_TIP) {
-    warning("The `TreeNumber` class uses 64-bit integers, which are exhausted ",
-            "at 19 leaves (there are > 2^64 distinct 20-leaf topologies). ",
-            "The returned value is truncated and does not uniquely identify ",
-            "this tree. For lossless encoding up to 51 leaves in C++ code, ",
-            "see `?TreeTools::tree_number.h`.")
+  if (nTip > .TT_MAX_TIP_FULL) {
+    stop("`as.TreeNumber()` supports at most ", .TT_MAX_TIP_FULL, " leaves.")
   }
 
   edge <- Postorder(edge)
-  structure(.Int64(edge_to_num(edge[, 1], edge[, 2], nTip)),
-            nTip = nTip,
-            tip.label = TipLabels(x),
-            class = c("TreeNumber", "integer64"))
+  chunks <- edge_to_num(edge[, 1], edge[, 2], nTip)
+  if (nTip <= .TT_MAX_TIP) {
+    structure(.Int64(chunks),
+              nTip = nTip,
+              tip.label = TipLabels(x),
+              class = c("TreeNumber", "integer64"))
+  } else {
+    structure(.chunks_to_decimal(chunks),
+              nTip = nTip,
+              tip.label = TipLabels(x),
+              class = c("TreeNumber", "character"))
+  }
 }
 
 #' @rdname TreeNumber
@@ -180,10 +259,17 @@ as.TreeNumber.multiPhylo <- function(x, ...) {
 #' @rdname TreeNumber
 #' @export
 as.TreeNumber.character <- function(x, nTip, tipLabels = TipLabels(nTip), ...) {
-  structure(as.integer64(x),
-            nTip = nTip,
-            tip.label = tipLabels,
-            class = c("TreeNumber", "integer64"))
+  if (nTip <= .TT_MAX_TIP) {
+    structure(as.integer64(x),
+              nTip = nTip,
+              tip.label = tipLabels,
+              class = c("TreeNumber", "integer64"))
+  } else {
+    structure(x,
+              nTip = nTip,
+              tip.label = tipLabels,
+              class = c("TreeNumber", "character"))
+  }
 }
 
 #' @rdname TreeNumber
@@ -194,11 +280,11 @@ as.TreeNumber.TreeNumber <- function(x, ...) x
 #' @rdname TreeNumber
 as.TreeNumber.MixedBase <- function(x, ...) {
   if (NTip(x) > .TT_MAX_TIP) {
-    stop("The `TreeNumber` class uses 64-bit integers, which are exhausted ",
-         "at 19 leaves (there are > 2^64 distinct 20-leaf topologies). ",
-         "Trees with > 19 leaves cannot be uniquely encoded as a `TreeNumber`.")
+    stop("Converting a `MixedBase` to a `TreeNumber` requires `integer64` ",
+         "arithmetic and is only supported for trees with <= ", .TT_MAX_TIP,
+         " leaves. Use `as.phylo()` to convert larger `MixedBase` objects.")
   }
-  
+
   # Return:
   structure(sum(as.integer(x) * .TTBases(length(x))),
             nTip = NTip(x),
@@ -210,9 +296,14 @@ as.TreeNumber.MixedBase <- function(x, ...) {
 #' @export
 as.MixedBase.TreeNumber <- function(x, ...) {
   nTip <- NTip(x)
+  if (nTip > .TT_MAX_TIP) {
+    stop("Converting a `TreeNumber` to `MixedBase` requires `integer64` ",
+         "arithmetic and is only supported for trees with <= ", .TT_MAX_TIP,
+         " leaves. Use `as.MixedBase(as.phylo(x))` for larger trees.")
+  }
   outLength <- nTip - 3L
   baseLength <- min(outLength, length(.TT_BASE))
-  
+
   base <- .TTBases(baseLength)
   ret <- integer(baseLength)
   n <- as.integer64(x)
@@ -221,7 +312,7 @@ as.MixedBase.TreeNumber <- function(x, ...) {
     ret[i] <- as.integer(n %/% baseI)
     n <- n %% baseI
   }
-  
+
   # Return:
   structure(c(integer(outLength - baseLength), ret),
             nTip = NTip(x),
@@ -366,7 +457,12 @@ as.phylo.integer64 <- function(x, nTip = attr(x, "nTip"),
 as.phylo.TreeNumber <- function(x, nTip = attr(x, "nTip"),
                                  tipLabels = attr(x, "tip.label"), ...) {
   if (is.null(tipLabels)) tipLabels <- paste0("t", seq_len(nTip))
-  edge <- RenumberEdges(num_to_parent(.Int64.to.C(x), nTip),
+  chunks <- if (inherits(x, "integer64")) {
+    .Int64.to.C(x)
+  } else {
+    .decimal_to_chunks(as.character(x))
+  }
+  edge <- RenumberEdges(num_to_parent(chunks, nTip),
                         seq_len(nTip + nTip - 2L))
   .PreorderTree(
     edge = do.call(cbind, edge),
@@ -377,7 +473,16 @@ as.phylo.TreeNumber <- function(x, nTip = attr(x, "nTip"),
 
 #' @export
 as.integer64.TreeNumber <- function(x, ...) {
-  structure(x[1], class = "integer64")
+  if (inherits(x, "integer64")) {
+    structure(x[1], class = "integer64")
+  } else {
+    nTip <- attr(x, "nTip")
+    if (nTip > .TT_MAX_TIP) {
+      stop("Cannot convert a ", nTip, "-leaf TreeNumber to integer64: ",
+           "trees with > ", .TT_MAX_TIP, " leaves require more than 64 bits.")
+    }
+    as.integer64(as.character(x))
+  }
 }
 
 #' Is an object a `TreeNumber` object?
@@ -417,7 +522,11 @@ print.TreeNumber <- function(x, ...) {
 # x: Object of class `TreeNumber`
 #' @keywords internal
 .PrintedTreeNumber <- function(x) {
-  paste0(structure(x, class = "integer64"))
+  if (inherits(x, "integer64")) {
+    paste0(structure(x, class = "integer64"))
+  } else {
+    as.character(x)   # already a decimal string for character-backed TreeNumbers
+  }
 }
 
 #' @rdname TreeNumber

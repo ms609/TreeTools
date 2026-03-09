@@ -5,7 +5,11 @@
       "head *": "allow"
     },
     "edit": {
-      "*.cpp": "allow"
+      "*.cpp": "allow",
+      "*.R": "allow"
+    },
+    "executeCode": {
+      "*": "allow"
     }
   }
 }
