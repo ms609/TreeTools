@@ -89,9 +89,16 @@
 #'
 #' = 10
 #'
-#' Note that the hyperexponential nature of tree space means that there are &gt;
-#' 2^64 unique 20-leaf trees.  As a `TreeNumber` is a 64-bit integer,
-#' only trees with at most 19 leaves can be accommodated.
+#' The `TreeNumber` class stores a 64-bit integer (via the `bit64` package).
+#' Because there are more than 2^64 distinct unrooted 20-leaf topologies,
+#' only trees with **at most 19 leaves** can be uniquely represented.
+#' Calling `as.TreeNumber()` on a larger tree will issue a warning and return
+#' a truncated value that does not uniquely identify the tree — do not use it
+#' for comparisons or indexing.
+#'
+#' Package developers needing lossless tree numbers for up to 51 leaves can
+#' use the C++ header `TreeTools/tree_number.h` (via `LinkingTo: TreeTools`),
+#' which encodes tree numbers as a 256-bit integer (`tree_num_t`).
 #'
 #' @param x Integer identifying the tree (see details).
 #' @param nTip Integer specifying number of leaves in the tree.
@@ -103,7 +110,7 @@
 #' plot(tree)
 #' as.TreeNumber(tree)
 #'
-#' # Larger trees:
+#' # 19 leaves is the largest tree uniquely representable as a TreeNumber:
 #' as.TreeNumber(BalancedTree(19))
 #'
 #' # If > 9 digits, represent the tree number as a string.
@@ -150,8 +157,11 @@ as.TreeNumber.phylo <- function(x, ...) {
   edge <- x[["edge"]]
   nTip <- NTip(x)
   if (nTip > .TT_MAX_TIP) {
-    warning("Trees with > 19 leaves not uniquely identified ",
-            "by 64-bit TreeNumbers")
+    warning("The `TreeNumber` class uses 64-bit integers, which are exhausted ",
+            "at 19 leaves (there are > 2^64 distinct 20-leaf topologies). ",
+            "The returned value is truncated and does not uniquely identify ",
+            "this tree. For lossless encoding up to 51 leaves in C++ code, ",
+            "see `?TreeTools::tree_number.h`.")
   }
 
   edge <- Postorder(edge)
@@ -183,8 +193,10 @@ as.TreeNumber.TreeNumber <- function(x, ...) x
 #' @export
 #' @rdname TreeNumber
 as.TreeNumber.MixedBase <- function(x, ...) {
-  if (NTip(x) > .TT_MAX_TIP - 3L) {
-    stop("Trees with > 19 leaves not uniquely identified by 64-bit TreeNumbers")
+  if (NTip(x) > .TT_MAX_TIP) {
+    stop("The `TreeNumber` class uses 64-bit integers, which are exhausted ",
+         "at 19 leaves (there are > 2^64 distinct 20-leaf topologies). ",
+         "Trees with > 19 leaves cannot be uniquely encoded as a `TreeNumber`.")
   }
   
   # Return:
