@@ -144,6 +144,7 @@ test_that(".decimal_to_chunks() handles zero and empty input", {
   # Direct internal check: both "0" and "" return 0L immediately.
   expect_equal(.decimal_to_chunks("0"), 0L)
   expect_equal(.decimal_to_chunks(""), 0L)
+  expect_equal(.decimal_to_chunks(character()), 0L)
 
   # The else-branch is always taken when input is non-zero;
   # the `0L` branch is unreachable (while loop always appends >= 1 element).
