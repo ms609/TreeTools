@@ -203,14 +203,17 @@ as.TreeNumber <- function(x, ...) UseMethod("as.TreeNumber")
 # Inverse of .chunks_to_decimal(); used when converting character-backed
 # TreeNumbers back to the form expected by num_to_parent().
 .decimal_to_chunks <- function(str) {
-  if (!nzchar(str) || str == "0") return(0L)
-  chunks <- integer(0)
-  while (str != "0") {
-    dm <- .str_divmod(str, 2147483647L)
-    chunks <- c(dm$remainder, chunks)
-    str <- dm$quotient
+  if (length(str) == 0 || !nzchar(str) || str == "0") {
+    0L
+  } else {
+    chunks <- integer(0)
+    while (str != "0") {
+      dm <- .str_divmod(str, 2147483647L)
+      chunks <- c(dm$remainder, chunks)
+      str <- dm$quotient
+    }
+    chunks
   }
-  if (length(chunks) == 0L) 0L else chunks
 }
 
 # Calculate with:

@@ -122,3 +122,59 @@ test_that("is.TreeNumber()", {
   expect_equal(is.TreeNumber(as.integer64(5)), FALSE)
   expect_equal(is.TreeNumber(as.TreeNumber(BalancedTree(5))), TRUE)
 })
+
+test_that("tree_number.h add_small carry propagation", {
+  # The tree number 2^64 + 1 = "18446744073709551617" has packed chunks [4, 8, 5].
+  # Reconstructing it via packed_to_tree_num() calls add_small(5) after mul_small()
+  # leaves w[0] = 2^64 - 4, so w[0] + 5 overflows, triggering the carry-propagation
+  # loop (lines 86-88 of inst/include/TreeTools/tree_number.h).
+  # NUnrooted(20) > 2^64, so this is a valid 20-leaf tree number.
+  tn <- as.TreeNumber("18446744073709551617", nTip = 20L)
+  expect_true(inherits(tn, "character"))
+  expect_equal(tn, as.TreeNumber(as.phylo(tn, tipLabels = NULL)))
+})
+
+test_that(".decimal_to_chunks() handles zero and empty input", {
+  # Calling as.phylo() on a character-backed TreeNumber of "0" routes through
+  # .decimal_to_chunks("0"), hitting the early-return branch.
+  tn_zero <- as.TreeNumber("0", nTip = 20L)
+  expect_equal(as.phylo(tn_zero, tipLabels = NULL),
+               as.phylo(0L, nTip = 20L))
+
+  # Direct internal check: both "0" and "" return 0L immediately.
+  expect_equal(.decimal_to_chunks("0"), 0L)
+  expect_equal(.decimal_to_chunks(""), 0L)
+  expect_equal(.decimal_to_chunks(character()), 0L)
+
+  # The else-branch is always taken when input is non-zero;
+  # the `0L` branch is unreachable (while loop always appends >= 1 element).
+  expect_equal(.decimal_to_chunks("1"), 1L)
+})
+
+test_that("as.TreeNumber.character() creates character-backed result for nTip > .TT_MAX_TIP", {
+  tn <- as.TreeNumber("12345678901234", nTip = 25L)
+  expect_s3_class(tn, "TreeNumber")
+  expect_true(inherits(tn, "character"))
+  expect_false(inherits(tn, "integer64"))
+  expect_equal(attr(tn, "nTip"), 25L)
+})
+
+test_that("as.TreeNumber.MixedBase() errors for trees with > .TT_MAX_TIP leaves", {
+  mb <- as.MixedBase(BalancedTree(20))
+  expect_error(as.TreeNumber(mb), "MixedBase.*TreeNumber")
+  tn <- as.TreeNumber(BalancedTree(20))
+  expect_error(as.MixedBase(tn), "TreeNumber.*MixedBase")
+})
+
+test_that("as.integer64.TreeNumber() for character-backed TreeNumbers", {
+  # converting a large (nTip > 19) character-backed TreeNumber
+  # to integer64 is impossible; should error.
+  tn_large <- as.TreeNumber(BalancedTree(20))
+  expect_error(as.integer64(tn_large), "integer64")
+
+  # a character-backed TreeNumber with nTip <= 19 (atypical but valid
+  # as a manually-constructed object) can be converted exactly to integer64.
+  tn_small_char <- structure("10", nTip = 6L, tip.label = paste0("t", 1:6),
+                             class = c("TreeNumber", "character"))
+  expect_equal(as.integer64(tn_small_char), as.integer64(10))
+})
