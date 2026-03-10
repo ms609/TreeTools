@@ -1,0 +1,15 @@
+{
+  "permission": {
+    "bash": {
+      "ls *": "allow",
+      "head *": "allow"
+    },
+    "edit": {
+      "*.cpp": "allow",
+      "*.R": "allow"
+    },
+    "executeCode": {
+      "*": "allow"
+    }
+  }
+}

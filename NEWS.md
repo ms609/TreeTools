@@ -1,3 +1,16 @@
+# TreeTools 2.1.0.9003 (2026-03-09) #
+
+- `inst/include/TreeTools/tree_number.h` added to support downstream packages
+  (e.g. TBRDist) via `LinkingTo: TreeTools`. Provides 256-bit tree number
+  encoding/decoding supporting up to 51 leaves, extended from the 44-leaf
+  limit of the previous `uint64_t`-based implementation.
+- `as.TreeNumber()` now supports trees with up to 51 leaves (previously 19).
+  Trees with 20–51 leaves have more than 2^64 distinct topologies, so their
+  `TreeNumber` is stored as a decimal character string rather than `integer64`.
+  The 19-leaf limit for `integer64`-backed storage (and `as.MixedBase()`
+  round-trips) is unchanged.
+- `as.TreeNumber()` no longer warns for trees with 20–44 leaves.
+
 # TreeTools 2.1.0.9001 (2026-02-19) #
 
 - `EdgeRatio()` reports the ratio of external:internal edges.

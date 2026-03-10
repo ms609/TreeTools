@@ -23,7 +23,7 @@ test_that("as.phylo.numeric()", {
 test_that("as.TreeNumber() error handling", {
   expect_error(as.phylo(integer64(1), NULL, NULL))
   expect_error(as.TreeNumber(StarTree(5)))
-  expect_warning(as.TreeNumber(BalancedTree(20)))
+  expect_error(as.TreeNumber(BalancedTree(52)))  # > 51 leaves not supported
 })
 
 test_that("as.TreeNumber()", {
@@ -33,10 +33,10 @@ test_that("as.TreeNumber()", {
                capture.output(print(as.TreeNumber(as.phylo(105, 6)))))
   expect_equal("Phylogenetic tree number 105 of 6332659870762850625 ",
                capture.output(print(as.TreeNumber(as.phylo(105, 19))))[1])
-  expect_warning(
-    expect_equal("Phylogenetic tree number 105 of 2.216431e+20 ",
-                 capture.output(print(as.TreeNumber(as.phylo(105, 20))))[1])
-    )
+  # 20+ leaves: no warning, decimal string storage
+  expect_no_warning(as.TreeNumber(BalancedTree(20)))
+  expect_equal("Phylogenetic tree number 105 of 2.216431e+20 ",
+               capture.output(print(as.TreeNumber(as.phylo(105, 20))))[1])
   expect_equal(unlist(lapply(1:3, as.integer64)),
                unlist(as.TreeNumber(as.phylo(1:3, 6))))
 
@@ -57,6 +57,17 @@ test_that("as.TreeNumber()", {
                    as.integer64(as.TreeNumber(as.phylo(bigNumber - 1, 16))))
                
   expect_equal(as.TreeNumber(as.MixedBase(tn16)), tn16)
+
+  # Large trees: character-backed, round-trips correctly.
+  # as.phylo.TreeNumber returns Preorder(RootTree(x, 1)), so compare against that.
+  for (nTip in c(20L, 35L, 51L)) {
+    tree <- BalancedTree(nTip)
+    tn <- as.TreeNumber(tree)
+    expect_s3_class(tn, "TreeNumber")
+    expect_true(inherits(tn, "character"))
+    expect_false(inherits(tn, "integer64"))
+    expect_equal(Preorder(RootTree(tree, 1)), as.phylo(tn, tipLabels = NULL))
+  }
 })
 
 test_that("as.MixedBase()", {

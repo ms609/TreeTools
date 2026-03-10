@@ -1,13 +1,40 @@
 #include <Rcpp/Lighter> /* for is_na */
+#include <algorithm>    /* for std::reverse, std::min, std::max */
 #include <random>
-#include <stdexcept> /* for errors */
+#include <vector>
 #include "../inst/include/TreeTools.h"
+#include "../inst/include/TreeTools/tree_number.h"
 using namespace Rcpp;
 
-constexpr intx MAX_TIP = 44;
-constexpr intx MAX_NODE = MAX_TIP + MAX_TIP - 1;
 constexpr intx MB_MAX_TIP = 32768;
 constexpr intx MB_MAX_NODE = MB_MAX_TIP + MB_MAX_TIP - 1;
+
+// Build a tree_num_t from an INT_MAX-packed IntegerVector.
+// Encoding: tree_id = n[0] * INT_MAX^(k-1) + ... + n[k-1]  (most-significant first)
+inline TreeTools::tree_num_t packed_to_tree_num(const IntegerVector& n) {
+  TreeTools::tree_num_t result(static_cast<uint64_t>(n[0]));
+  for (int i = 1; i < n.length(); ++i) {
+    result.mul_small(static_cast<uint64_t>(INT_MAX));
+    result.add_small(static_cast<uint64_t>(n[i]));
+  }
+  return result;
+}
+
+// Convert a tree_num_t to an INT_MAX-packed IntegerVector.
+// Digits are stored most-significant first, matching packed_to_tree_num.
+inline IntegerVector tree_num_to_packed(TreeTools::tree_num_t num) {
+  const TreeTools::tree_num_t zero;
+  if (num == zero) {
+    return IntegerVector{0};
+  }
+  std::vector<int> digits;
+  while (!(num == zero)) {
+    digits.push_back(
+      static_cast<int>(num.divmod_small(static_cast<uint64_t>(INT_MAX))));
+  }
+  std::reverse(digits.begin(), digits.end());
+  return IntegerVector(digits.begin(), digits.end());
+}
 
 // [[Rcpp::export]]
 IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
@@ -23,42 +50,18 @@ IntegerVector num_to_parent(const IntegerVector n, const IntegerVector nTip) {
   if (nTip.length() > 1) {
     Rcpp::warning("`nTip` should be a single integer");
   }
-  const intx
-    n_tip = nTip[0],
-    root_node = n_tip + n_tip - 1,
-    c_to_r = 1,
-    prime = n_tip - 2
-  ;
-  uint64_t tree_id = n[0];
-  for (intx i = 1; i < n.length(); i++) {
-    tree_id *= INT_MAX;
-    tree_id += n[i];
+  const intx n_tip = nTip[0];
+  const intx n_edge = n_tip + n_tip - 2;
+
+  const TreeTools::tree_num_t tree_id = packed_to_tree_num(n);
+
+  std::vector<intx> buf(n_edge);
+  TreeTools::tree_number_to_parent(tree_id, n_tip, buf.data());
+
+  IntegerVector edge(n_edge);
+  for (intx i = 0; i < n_edge; ++i) {
+    edge[i] = static_cast<int>(buf[i]);
   }
-  intx base;
-
-  IntegerVector edge(n_tip + n_tip - 2);
-  edge(0) = root_node;
-  edge(1) = root_node;
-
-  for (intx i = 2; i != n_tip; i++) {
-    base = (i + i - 3);
-    const intx
-      i_prime = i + prime,
-      i_prime_r = i_prime + c_to_r
-    ;
-
-    intx where = (tree_id % base) + 1;
-    if (where >= i) {
-      where += prime + 2 - i;
-    }
-
-    edge(i_prime) = edge(where);
-    edge(i) = i_prime_r;
-    edge(where) = i_prime_r;
-
-    tree_id /= base;
-  }
-
   return edge;
 }
 
@@ -107,74 +110,6 @@ IntegerVector random_parent(const IntegerVector nTip, const IntegerVector seed) 
   return edge;
 }
 
-intx minimum (const intx x, const intx y) {
-  return (x < y) ? x : y;
-}
-
-intx maximum (const intx x, const intx y) {
-  return (x > y) ? x : y;
-}
-
-inline IntegerVector calc_edge_to_num(
-    const IntegerVector& parent,
-    const IntegerVector& child,
-    const intx n_tip,
-    const intx& all_node,
-    const intx& n_edge) {
-  
-  constexpr intx r_to_c = 1;
-  
-  intx smallest_below[MAX_NODE];
-  intx parent_of[MAX_NODE];
-  intx prime_id[MAX_NODE];
-  intx index[MAX_TIP];
-  
-  for (intx i = 0; i < all_node; ++i) {
-    smallest_below[i] = i;
-    prime_id[i] = i;
-  }
-  
-  for (intx i = 0; i < n_edge - 2; i += 2) {
-    const intx this_node = parent[i] - r_to_c;
-    const intx left_child = child[i] - r_to_c;
-    const intx right_child = child[i + 1] - r_to_c;
-    
-    smallest_below[this_node] = minimum(smallest_below[right_child],
-                                        smallest_below[left_child]);
-    prime_id[this_node] = maximum(smallest_below[left_child],
-                                  smallest_below[right_child]);
-    parent_of[left_child] = parent_of[right_child] = this_node;
-    
-    for (intx at = smallest_below[this_node];
-         at != this_node;
-         at = parent_of[at]) {
-      const intx prime_candidate = prime_id[at];
-      if (prime_candidate < prime_id[this_node]) {
-        index[prime_id[this_node]] = prime_id[at] + (at < n_tip ? 0 : n_tip);
-      }
-    }
-  }
-  uint64_t num = 0U;
-  uint64_t multiplier = 1U;
-  for (intx i = 3; i != n_tip; i++) {
-    intx insertion_edge = index[i];
-    if (insertion_edge < n_tip) {
-      --insertion_edge;
-    } else {
-      insertion_edge += i - (n_tip + 3);
-    }
-    num += insertion_edge * multiplier;
-    multiplier *= (i + i - 3);
-  }
-  
-  if (num >= INT_MAX) {
-    return IntegerVector{int(num / INT_MAX), int(num % INT_MAX)};
-  } else {
-    return IntegerVector{int(num)};
-  }
-  
-}
-
 // Parent and child must be in postorder, with tree rooted on tip 1.
 // [[Rcpp::export]]
 IntegerVector edge_to_num(
@@ -185,23 +120,26 @@ IntegerVector edge_to_num(
     Rcpp::stop("Parent and child must be the same length");
   }
   const intx n_tip = nTip[0];
-  const intx n_internal = n_tip - 1;
   const intx n_edge = parent.size();
-  const intx all_node = n_internal + n_tip;
-  
+
   if (n_tip < 4) {
     return IntegerVector(1); // A length one, zero initialized vector
   }
   if (n_edge != n_tip + n_tip - 2) {
     Rcpp::stop("nEdge must == nTip + nTip - 2");
   }
-  if (all_node > MAX_NODE) {
-    Rcpp::stop("Too many nodes for mixed base representation");
+  if (n_tip > TreeTools::TREE_NUM_MAX_TIP) {
+    Rcpp::stop("Too many leaves for tree number representation");
   }
-  if (n_tip >= MAX_TIP) {
-    Rcpp::stop("Too many leaves for mixed base representation");
+
+  std::vector<intx> par_arr(n_edge), chi_arr(n_edge);
+  for (intx i = 0; i < n_edge; ++i) {
+    par_arr[i] = parent[i];
+    chi_arr[i] = child[i];
   }
-  return calc_edge_to_num(parent, child, n_tip, all_node, n_edge);
+
+  return tree_num_to_packed(
+    TreeTools::edges_to_tree_number(par_arr.data(), chi_arr.data(), n_tip));
 }
 
 inline void calc_edge_to_mixed_base(
@@ -229,10 +167,10 @@ inline void calc_edge_to_mixed_base(
     const intx left_child = child[i] - r_to_c;
     const intx right_child = child[i + 1] - r_to_c;
     
-    smallest_below[this_node] = minimum(smallest_below[right_child],
-                                        smallest_below[left_child]);
-    prime_id[this_node] = maximum(smallest_below[left_child],
-                                  smallest_below[right_child]);
+    smallest_below[this_node] = std::min(smallest_below[right_child],
+                                         smallest_below[left_child]);
+    prime_id[this_node] = std::max(smallest_below[left_child],
+                                   smallest_below[right_child]);
     parent_of[left_child] = parent_of[right_child] = this_node;
     
     for (intx at = smallest_below[this_node];
