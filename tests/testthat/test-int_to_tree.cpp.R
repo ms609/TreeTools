@@ -15,6 +15,7 @@ test_that("Failures are graceful", {
   
   expect_error(edge_to_num(1:10, 1:11, 6), "Parent and child .* same length")
   expect_error(edge_to_num(1:10, 1:10, 5), "nEdge must == nTip . nTip - 2")
+  expect_error(edge_to_num(1:110, 1:110, 56), "Too many leaves")
   expect_error(edge_to_mixed_base(1:10, 1:11, 6),
                "Parent and child .* same length")
   expect_warning(expect_error(
