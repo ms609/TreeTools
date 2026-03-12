@@ -1,3 +1,7 @@
+# TreeTools 2.1.0.9004 (2026-03-12) #
+
+- Rewrite popcount calculation for more efficient `TipsInSplits()`.
+
 # TreeTools 2.1.0.9003 (2026-03-09) #
 
 - `inst/include/TreeTools/tree_number.h` added to support downstream packages
