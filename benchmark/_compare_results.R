@@ -50,12 +50,18 @@ for (pr_file in pr_files) {
       main_iqr)
     
     threshold_percent <- 6 #  Changes of ~5% are frequent
+    # Sub-millisecond benchmarks are dominated by system jitter on CI runners;
+    # require an absolute difference floor before flagging.
+    min_meaningful_diff <- 2e-4 # 0.2 ms (times are in seconds)
+    abs_diff <- abs(median_pr - median_main)
     
     is_faster <- matched &&
+      abs_diff > min_meaningful_diff &&
       median_pr < median_main - 2 * mad_main &&
       median_pr < noise_range[[1]]
     
     is_slower <- matched &&
+      abs_diff > min_meaningful_diff &&
       median_pr > median_main + 2 * mad_main &&
       median_pr > noise_range[[2]]
     
