@@ -38,26 +38,25 @@ namespace TreeTools {
     return T(1) << bit_pos;
   }
   
-#if __cplusplus >= 202002L
-#include <bit> // C++20 header for std::popcount
+// Hardware POPCNT: available on all x86-64 since 2008 (Nehalem / Barcelona).
+  // Inline asm emits the instruction directly, without requiring -mpopcnt.
+#if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__)
   inline int32 count_bits(splitbit x) {
-    return static_cast<int32>(std::popcount(x));
+    uint64_t result;
+    __asm__ ("popcnt %1, %0" : "=r" (result) : "r" (x));
+    return static_cast<int32>(result);
   }
-  // Option 2: Fallback for C++17 and older
-#else
-#if defined(__GNUC__) || defined(__clang__)
-  // GCC and Clang support __builtin_popcountll for long long
-  inline int32 count_bits(splitbit x) {
-    return static_cast<int32>(__builtin_popcountll(x));
-  }
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && defined(_M_X64)
 #include <intrin.h>
   inline int32 count_bits(splitbit x) {
     return static_cast<int32>(__popcnt64(x));
   }
+#elif defined(__GNUC__) || defined(__clang__)
+  // Non-x86 (ARM, etc.): builtin maps to efficient native instruction
+  inline int32 count_bits(splitbit x) {
+    return static_cast<int32>(__builtin_popcountll(x));
+  }
 #else
-  // A slower, but safe and highly portable fallback for all other compilers
-  // This is a last resort if no built-in is available.
   inline int32_t count_bits(splitbit x) {
     int32_t count = 0;
     while (x != 0) {
@@ -66,9 +65,7 @@ namespace TreeTools {
     }
     return count;
   }
-#endif // Compiler check for builtins
-  
-#endif // C++20 check
+#endif
 
   class SplitList {
   public:
