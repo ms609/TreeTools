@@ -22,6 +22,10 @@ Rcpp::IntegerVector tips_in_splits(Rcpp::RawMatrix splits) {
     const unsigned char* splits_i = splits.begin() + i; 
     for (int32 bin = 0; bin < n_bin; ++bin) {
       const unsigned char* in_bin = splits_i + bin * n_split;
+      // __builtin_popcount on 8-bit values; the inline asm POPCNT in
+      // count_bits (SplitList.h) handles 64-bit splitbit values.
+      // For 8-bit values, __builtin_popcount is fine — it's a tiny
+      // fraction of runtime and not worth inline asm.
       ret[i] += static_cast<int>(__builtin_popcount(*in_bin));
     }
   }
