@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ms609/TreeTools/",
   "issueTracker": "https://github.com/ms609/TreeTools/issues/",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "2.1.0.9003",
+  "version": "2.1.0.9004",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.5.2 (2025-10-31)",
+  "runtimePlatform": "R version 4.5.3 (2026-03-11)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -275,7 +275,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1838.723KB",
+  "fileSize": "1841.748KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
@@ -290,7 +290,7 @@
       ],
       "name": "TreeTools: create, modify and analyse phylogenetic trees",
       "identifier": "10.32614/CRAN.package.TreeTools",
-      "description": "R package version 2.1.0.9003",
+      "description": "R package version 2.1.0.9004",
       "@id": "https://doi.org/10.32614/CRAN.package.TreeTools",
       "sameAs": "https://doi.org/10.32614/CRAN.package.TreeTools"
     }
