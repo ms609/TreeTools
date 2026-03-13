@@ -59,6 +59,19 @@ test_that("Node support colours consistent", {
                c("oor", "1", "34", "67", "101"))
 })
 
+test_that("normalize_splits() covers all branches", {
+  # n_spare == 0 (nTip multiple of 8): complement without trailing-bit mask
+  trees16 <- c(PectinateTree(16), PectinateTree(16))
+  freq16 <- SplitFrequency(trees16)
+  expect_equal(length(freq16), NSplits(trees16[[1]]))
+  expect_true(all(attr(freq16, "count") == 2L))
+
+  # Trivial splits are filtered: a star tree produces no non-trivial splits
+  star <- c(StarTree(10), StarTree(10))
+  freq_star <- SplitFrequency(star)
+  expect_equal(length(freq_star), 0)
+})
+
 test_that("SplitFrequency() handles four-split trees", {
   trees <- AddTipEverywhere(BalancedTree(3))
   trees <- c(trees[1], trees)

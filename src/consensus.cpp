@@ -6,7 +6,8 @@ using namespace Rcpp;
 
 #include <algorithm> /* for fill */
 #include <array> /* for array */
-#include <map> /* for map */
+#include <string> /* for string (hash key) */
+#include <unordered_map> /* for unordered_map */
 
 using TreeTools::ct_stack_threshold;
 using TreeTools::ct_max_leaves_heap;
@@ -178,11 +179,14 @@ List calc_split_frequencies(
 
   StackEntry *const S_start = S.data();
   
-  // Use a map to store unique splits and their counts
-  // Key: split bit pattern; Value: index in output
-  std::map<std::vector<Rbyte>, int32> split_map;
+  // Hash map for O(1) amortized split deduplication
+  std::unordered_map<std::string, int32> split_map;
+  split_map.reserve(ntip_3 * 2);
   std::vector<std::vector<Rbyte>> split_patterns;
   std::vector<int32> counts;
+
+  // Reusable key buffer — avoids per-split heap allocation
+  std::string key(nbin, '\0');
 
   for (int32 i = 0; i < n_trees; ++i) {
     if (tables[i].NOSWX(ntip_3)) {
@@ -247,21 +251,21 @@ List calc_split_frequencies(
       const int32 end   = tables[i].X_right(k + 1);
       if (start == 0 && end == 0) continue; // No valid cluster at this position
       
-      // Build the bit pattern for this split
-      std::vector<Rbyte> pattern(nbin, 0);
+      // Build the bit pattern into the reusable key buffer
+      std::fill(key.begin(), key.end(), '\0');
       for (int32 j = start; j <= end; ++j) {
         const int32 leaf_idx = tables[i].DECODE(j) - 1; // 0-based
         const int32 byte_idx = leaf_idx >> 3;
         const int32 bit_idx  = leaf_idx & 7;
-        pattern[byte_idx] |= (Rbyte(1) << bit_idx);
+        key[byte_idx] |= static_cast<char>(1 << bit_idx);
       }
       
-      auto it = split_map.find(pattern);
+      auto it = split_map.find(key);
       if (it == split_map.end()) {
         // New split: record it with count from this reference tree
         const int32 idx = split_patterns.size();
-        split_map[pattern] = idx;
-        split_patterns.push_back(std::move(pattern));
+        split_map.emplace(key, idx);
+        split_patterns.emplace_back(key.begin(), key.end());
         counts.push_back(split_count[k]);
       }
       // If already found, the first reference tree that found it has the
