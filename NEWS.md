@@ -1,6 +1,7 @@
-# TreeTools 2.1.0.9004 (2026-03-12) #
+# TreeTools 2.1.0.9005 (2026-03-13) #
 
-- Rewrite popcount calculation for more efficient `TipsInSplits()`.
+- `SplitFrequency(reference = NULL)` split normalization moved to C++,
+  eliminating an R-level per-split loop.
 
 # TreeTools 2.1.0.9003 (2026-03-09) #
 

@@ -137,6 +137,10 @@ cpp_count_splits <- function(edge, nTip) {
     .Call(`_TreeTools_cpp_count_splits`, edge, nTip)
 }
 
+normalize_splits <- function(splits, n_tip) {
+    .Call(`_TreeTools_normalize_splits`, splits, n_tip)
+}
+
 splits_to_edge <- function(splits, nTip) {
     .Call(`_TreeTools_splits_to_edge`, splits, nTip)
 }

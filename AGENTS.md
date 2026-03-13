@@ -27,3 +27,10 @@ of internal nodes for any topologically identical tree.
 
 Splits objects are defined in `as.Splits()`, and denote split membership as
 binary 0/1 in an underlying `raw` object.
+
+## Workflow requirements
+
+- After completing each optimization or user-visible change, update `NEWS.md`
+  before moving on to the next task.
+- Increment the `.900X` dev version suffix in `DESCRIPTION` with each
+  `NEWS.md` update.

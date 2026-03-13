@@ -58,30 +58,10 @@ SplitFrequency <- function(reference, forest = NULL) {
       return(structure(splits, nTip = nTip, tip.label = tipLabels,              # nocov
                        count = integer(), class = "Splits"))                    # nocov
     }
-    # The ClusterTable outputs clusters (clades); normalize so bit 0 (tip 1)
-    # is not in the set (matching as.Splits convention)
-    nTipMod <- nTip %% 8L
-    lastByteMask <- if (nTipMod == 0L) as.raw(0xff) else as.raw(bitwShiftL(1L, nTipMod) - 1L)
-    keep <- logical(nrow(splits))
-    for (i in seq_len(nrow(splits))) {
-      val <- splits[i, ]
-      # Count bits set (to filter trivial splits)
-      nBits <- sum(vapply(as.integer(val), function(b) sum(as.integer(intToBits(b))), integer(1)))
-      if (nBits < 2L || nBits > nTip - 2L) next # trivial split
-      # Normalize: if bit 0 is NOT set, complement to match as.Splits format
-      if (!as.logical(as.integer(val[1]) %% 2L)) {
-        for (j in seq_along(val)) {
-          splits[i, j] <- as.raw(bitwXor(as.integer(val[j]), 0xffL))
-        }
-        # Mask last byte
-        if (nTipMod > 0L) {
-          splits[i, nbin] <- as.raw(bitwAnd(as.integer(splits[i, nbin]),
-                                             as.integer(lastByteMask)))
-        }
-      }
-      keep[i] <- TRUE
-    }
-    splits <- splits[keep, , drop = FALSE]
+    # Normalize splits: ensure bit 0 is set, filter trivial splits
+    normalized <- normalize_splits(splits, nTip)
+    keep <- normalized[["keep"]]
+    splits <- normalized[["splits"]][keep, , drop = FALSE]
     counts <- counts[keep]
     ret <- structure(splits,
                      nTip = nTip,

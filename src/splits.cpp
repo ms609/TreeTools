@@ -714,3 +714,48 @@ int cpp_count_splits(const Rcpp::IntegerMatrix& edge, const int nTip) {
   
   return (n_internal - n_singles) - 1 - (is_rooted ? 1 : 0);
 }
+
+// Normalize splits from ClusterTable output for as.Splits convention:
+// - Filter trivial splits (fewer than 2 or more than nTip-2 bits set)
+// - Ensure bit 0 is set (complement if not)
+// - Mask unused trailing bits in last byte
+// Returns a List with "splits" (RawMatrix) and "keep" (LogicalVector)
+// [[Rcpp::export]]
+Rcpp::List normalize_splits(Rcpp::RawMatrix splits, const int n_tip) {
+  const int n_split = splits.nrow();
+  const int n_bin = splits.ncol();
+  const int n_spare = n_tip % BIN_SIZE;
+  const Rbyte last_mask = n_spare == 0
+    ? Rbyte(0xff)
+    : static_cast<Rbyte>((1 << n_spare) - 1);
+
+  Rcpp::LogicalVector keep(n_split, false);
+
+  for (int i = 0; i < n_split; ++i) {
+    // Count bits set
+    int n_bits = 0;
+    for (int j = 0; j < n_bin; ++j) {
+      n_bits += __builtin_popcount(static_cast<unsigned>(splits(i, j)));
+    }
+
+    if (n_bits < 2 || n_bits > n_tip - 2) continue; // trivial
+
+    // Normalize: if bit 0 is NOT set, complement
+    if (!(splits(i, 0) & Rbyte(1))) {
+      for (int j = 0; j < n_bin; ++j) {
+        splits(i, j) = static_cast<Rbyte>(~splits(i, j));
+      }
+      // Mask trailing bits in last byte
+      if (n_spare > 0) {
+        splits(i, n_bin - 1) &= last_mask;
+      }
+    }
+
+    keep[i] = true;
+  }
+
+  return Rcpp::List::create(
+    Rcpp::Named("splits") = splits,
+    Rcpp::Named("keep") = keep
+  );
+}
