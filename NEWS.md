@@ -1,7 +1,8 @@
 # TreeTools 2.1.0.9005 (2026-03-13) #
 
-- `SplitFrequency(reference = NULL)` split normalization moved to C++,
-  eliminating an R-level per-split loop.
+- `SplitFrequency(reference = NULL)` performance improvements:
+  split normalization moved to C++; internal split deduplication uses
+  hash map instead of ordered map.
 
 # TreeTools 2.1.0.9003 (2026-03-09) #
 
