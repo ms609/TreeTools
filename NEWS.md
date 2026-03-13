@@ -1,10 +1,13 @@
 # TreeTools 2.1.0.9006 (2026-03-13) #
 
+- `NodeDepth()` for unrooted trees rewritten as O(n) two-pass C++ algorithm,
+  replacing iterative R while-loop.
+
+# TreeTools 2.1.0.9005 (2026-03-13) #
+
 - `SplitFrequency(reference = NULL)` performance improvements:
   split normalization moved to C++; internal split de-duplication uses
   hash map instead of ordered map.
-- `NodeDepth()` for unrooted trees rewritten as O(n) two-pass C++ algorithm,
-  replacing iterative R while-loop.
 
 # TreeTools 2.1.0.9003 (2026-03-09) #
 
