@@ -1,6 +1,8 @@
 #include <Rcpp/Lightest>
 #include <memory> // for make_unique
 #include <stdexcept> /* for errors */
+#include <string> /* for string (hash key) */
+#include <unordered_set> /* for unordered_set */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
 
@@ -197,44 +199,30 @@ LogicalVector duplicated_splits(const RawMatrix splits,
     }
   }
   
+  // Hash-based O(n) deduplication
   LogicalVector ret(n_split);
+  std::unordered_set<std::string> seen;
+  seen.reserve(n_split * 2);
+  std::string key(check_bins, '\0');
+
   if (fromLast[0]) {
-    for (intx it = n_split - 1; it--; ) {
-      const intx i = it + 1; // nothing to duplicate split(0, _)
-      if (ret[i]) {
-        continue;
+    // Scan from end; first seen (from end) is kept, earlier dupes are marked
+    for (intx i = n_split; i--; ) {
+      for (intx b = 0; b < check_bins; ++b) {
+        key[b] = static_cast<char>(compare(i, b));
       }
-      for (intx j = i; j--; ) {
-        // Rcout << " check split " << i << " (" << uintx(compare(i, 0)) <<
-        //   ") vs " << j << " (" << uintx(compare(j, 0)) << "): ";
-        for(intx bin = 0; compare(i, bin) == compare(j, bin); ) {
-          // Rcout << " [bin " << bin << "] ";
-          ++bin;
-          if (bin == check_bins) {
-            // Rcout << "Duplicate!";
-            ret[j] = true;
-            break;
-          }
-        }
-        // Rcout << "\n";
-        
+      if (!seen.insert(key).second) {
+        ret[i] = true;
       }
     }
   } else {
-    for (intx i = 0; i != n_split - 1; ++i) {
-      if (ret[i]) {
-        continue;
+    // Scan from start; first seen is kept, later dupes are marked
+    for (intx i = 0; i < n_split; ++i) {
+      for (intx b = 0; b < check_bins; ++b) {
+        key[b] = static_cast<char>(compare(i, b));
       }
-      for (intx j = i + 1; j != n_split; ++j) {
-        
-        for(intx bin = 0; compare(i, bin) == compare(j, bin); ) {
-          ++bin;
-          if (bin == check_bins) {
-            ret[j] = true;
-            break;
-          }
-        }
-        
+      if (!seen.insert(key).second) {
+        ret[i] = true;
       }
     }
   }
