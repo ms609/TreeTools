@@ -85,6 +85,10 @@ n_cherries_wrapper <- function(parent, child, nTip) {
     .Call(`_TreeTools_n_cherries_wrapper`, parent, child, nTip)
 }
 
+node_depth_unrooted <- function(parent, child, postorder, shortest) {
+    .Call(`_TreeTools_node_depth_unrooted`, parent, child, postorder, shortest)
+}
+
 path_lengths <- function(edge, weight, init_nas) {
     .Call(`_TreeTools_path_lengths`, edge, weight, init_nas)
 }
