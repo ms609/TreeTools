@@ -1,6 +1,6 @@
 # TreeTools 2.1.0.9007 (2026-03-13) #
 
-- `duplicated.Splits()` uses hash-based O(n) deduplication, replacing
+- `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
   O(n²) pairwise comparison.
 
 # TreeTools 2.1.0.9006 (2026-03-13) #
