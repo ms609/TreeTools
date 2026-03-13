@@ -1,9 +1,14 @@
 library("TreeTools")
 
 Benchmark <- function(..., min_iterations = NULL, min_time = NULL) {
-  args <- list(..., min_iterations = min_iterations %||% 3, time_unit = "us")
-  if (!is.null(min_time)) args[["min_time"]] <- min_time
-  result <- do.call(bench::mark, args)
+  # Pass ... directly to bench::mark to preserve non-standard evaluation;
+  # do.call() would evaluate expressions first, breaking expression capture.
+  result <- if (is.null(min_time)) {
+    bench::mark(..., min_iterations = min_iterations %||% 3, time_unit = "us")
+  } else {
+    bench::mark(..., min_iterations = min_iterations %||% 3,
+                min_time = min_time, time_unit = "us")
+  }
   if (interactive()) {
     print(result)
   } else {
