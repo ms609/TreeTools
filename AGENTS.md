@@ -35,3 +35,11 @@ binary 0/1 in an underlying `raw` object.
 - Increment the `.900X` dev version suffix in `DESCRIPTION` with each
   `NEWS.md` update.
 - Check that existing tests cover all new code. (The GHA test suite uses codecov.)
+
+## Optimization notes
+
+- `descendant_edges_single()`: the O(n_edge) linear scan per node looks
+  theoretically O(n²), but benchmarking (CSR index, vector-of-vectors)
+  showed the original is faster at all practical sizes (up to 50k tips)
+  due to cache-friendly sequential access over contiguous Rcpp memory.
+  Not worth optimizing.

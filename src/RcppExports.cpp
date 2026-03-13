@@ -271,6 +271,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// node_depth_unrooted
+IntegerVector node_depth_unrooted(const IntegerVector parent, const IntegerVector child, const IntegerVector postorder, const bool shortest);
+RcppExport SEXP _TreeTools_node_depth_unrooted(SEXP parentSEXP, SEXP childSEXP, SEXP postorderSEXP, SEXP shortestSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerVector >::type parent(parentSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type child(childSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type postorder(postorderSEXP);
+    Rcpp::traits::input_parameter< const bool >::type shortest(shortestSEXP);
+    rcpp_result_gen = Rcpp::wrap(node_depth_unrooted(parent, child, postorder, shortest));
+    return rcpp_result_gen;
+END_RCPP
+}
 // path_lengths
 NumericMatrix path_lengths(const IntegerMatrix edge, const DoubleVector weight, const LogicalVector init_nas);
 RcppExport SEXP _TreeTools_path_lengths(SEXP edgeSEXP, SEXP weightSEXP, SEXP init_nasSEXP) {
@@ -516,6 +530,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_kept_vertices", (DL_FUNC) &_TreeTools_kept_vertices, 2},
     {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
     {"_TreeTools_n_cherries_wrapper", (DL_FUNC) &_TreeTools_n_cherries_wrapper, 3},
+    {"_TreeTools_node_depth_unrooted", (DL_FUNC) &_TreeTools_node_depth_unrooted, 4},
     {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 3},
     {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
     {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},

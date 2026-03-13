@@ -79,81 +79,13 @@ NodeDepth.phylo <- function(x, shortest = FALSE, includeTips = TRUE) {
 
 #' @export
 NodeDepth.matrix <- function(x, shortest = FALSE, includeTips = TRUE) {
-
-
-  .NodeDepth.short <- function() {
-
-    depths <- c(leaf0s, vapply(minVertex:nVertex, function(node)
-      if (any(!is.na(leaf0s[child[parent == node]]))) 1L else NA_integer_
-      , 0L))
-    maxDepth <- 1L
-
-    while(any(is.na(depths))) {
-      for (node in rev(which(is.na(depths)))) {
-        incident <- c(depths[child[parent == node]],
-                      depths[parent[child == node]])
-        na <- is.na(incident)
-        nNa <- sum(na)
-        if (nNa == 0L) {
-          depths[node] <- min(incident) + 1L
-        } else if (nNa == 1L) {
-          aIncident <- incident[!na]
-          if (all(aIncident <= maxDepth)) {
-            depths[node] <- min(aIncident) + 1L
-          }
-        }
-      }
-      maxDepth <- maxDepth + 1L
-    }
-
-    #Return:
-    depths
-  }
-
-  .NodeDepth.long <- function() {
-
-    depths <- c(leaf0s, vapply(minVertex:nVertex, function(node)
-      if (any(is.na(leaf0s[child[parent == node]]))) NA_integer_ else 1L
-      , 0L))
-    maxDepth <- 1L
-
-    while(any(is.na(depths))) {
-      for (node in rev(which(is.na(depths)))) {
-        incident <- c(depths[child[parent == node]],
-                      depths[parent[child == node]])
-        na <- is.na(incident)
-        nNa <- sum(na)
-        if (nNa == 0L) {
-          depths[node] <- sort(incident, decreasing = TRUE)[2] + 1L
-        } else if (nNa == 1L) {
-          aIncident <- incident[!na]
-          if (all(aIncident <= maxDepth)) {
-            depths[node] <- max(aIncident) + 1L
-          }
-        }
-      }
-      maxDepth <- maxDepth + 1L
-    }
-
-    #Return:
-    depths
-  }
-
-
   parent <- x[, 1]
   child <- x[, 2]
-  minVertex <- min(parent)
-  nVertex <- max(parent)
-
-  nLeaf <- minVertex - 1L
-  nNode <- nVertex - nLeaf
-  leaf0s <- integer(nLeaf)
-
-  depths <- if (shortest) .NodeDepth.short() else .NodeDepth.long()
+  postorder <- PostorderOrder(x)
+  depths <- node_depth_unrooted(parent, child, postorder, shortest)
 
   # Return:
-  if (includeTips) depths else depths[minVertex:nVertex]
-
+  if (includeTips) depths else depths[(min(parent)):max(parent)]
 }
 
 .NodeDepth.rooted <- function(x, shortest = FALSE, includeTips = TRUE) {
