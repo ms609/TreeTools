@@ -24,8 +24,12 @@ for (pr_file in pr_files) {
   # Prepare a report
   report <- list()
   
+  # Use deparse1 for reliable expression-to-string conversion;
+  # as.character(unlist()) decomposes call objects into their components.
+  expr_names <- vapply(pr1[["expression"]], deparse1, "")
+  
   # Iterate over each function benchmarked
-  for (fn_name in unique(as.character(unlist(pr1[["expression"]])))) {
+  for (fn_name in unique(expr_names)) {
     pr1_times <-  as.numeric(pr1[["time"]][[1]])
     pr2_times <-  as.numeric(pr2[["time"]][[1]])
     pr_times <- if (rep_exists) c(pr1_times, pr2_times) else pr1_times
@@ -79,18 +83,21 @@ for (pr_file in pr_files) {
   # Create a markdown-formatted message
   has_significant_regression <- FALSE
   
-  for (fn_name in names(report)) {
-    res <- report[[fn_name]]
-    status <- if (res$matched) {
+  for (i in seq_along(report)) {
+    fn_name <- names(report)[[i]]
+    res <- report[[i]]
+    if (is.null(res) || is.null(res$matched)) next
+    
+    status <- if (isTRUE(res$matched)) {
       if (res$slower) {
-        if (abs(percentage_change) > threshold_percent) {
+        if (abs(res$change) > threshold_percent) {
           has_significant_regression <- TRUE
           "\U1F7E0 Slower \U1F641"
         } else {
           "\U1F7E3 ~same"
         }
       } else if (res$faster) {
-        if (abs(percentage_change) > threshold_percent) {
+        if (abs(res$change) > threshold_percent) {
           "\U1F7E2 Faster!"
         } else {
           "\U1F7E3 ~same"
@@ -111,14 +118,14 @@ for (pr_file in pr_files) {
       signif(res$median_pr   * 1e3, 3), ",  ",
       signif(res$median_cf   * 1e3, 3), " |\n"
     )
+    
+    cat(message)
+    output <- paste0(output, message)
   }
   
   if (has_significant_regression) {
     regressions <- TRUE
   }
-  
-  cat(message)
-  output <- paste0(output, message)
 }
 
 cat(paste0(output, "\nEOF"), file = Sys.getenv("GITHUB_OUTPUT"), append = TRUE)
