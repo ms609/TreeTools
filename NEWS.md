@@ -1,5 +1,10 @@
-# TreeTools 2.1.0.9006 (2026-03-13) #
+# TreeTools 2.1.0.9007 (2026-03-13) #
 
+- `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
+  O(n²) pairwise comparison.
+
+# TreeTools 2.1.0.9006 (2026-03-13) #
+  
 - `NodeDepth()` for unrooted trees rewritten as O(n) two-pass C++ algorithm,
   replacing iterative R while-loop.
 
