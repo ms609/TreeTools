@@ -1,3 +1,9 @@
+# TreeTools 2.1.0.9008 (2026-03-17) #
+
+- `PhyDatToMatrix()` no longer crashes on zero-character `phyDat` objects
+  (e.g. from a star tree); returns a 0-column matrix with correct row names.
+- `AddUnconstrained()` handles zero-character `phyDat` input gracefully.
+
 # TreeTools 2.1.0.9007 (2026-03-13) #
 
 - `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing

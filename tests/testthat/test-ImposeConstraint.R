@@ -1,3 +1,24 @@
+test_that("AddUnconstrained() handles zero-character phyDat", {
+  star <- ape::read.tree(text = "(a,b,c,d);")
+  empty_pd <- MatrixToPhyDat(t(as.matrix(star)))
+
+  # PhyDatToMatrix returns a correctly-dimensioned 0-column matrix
+  mat <- PhyDatToMatrix(empty_pd)
+  expect_equal(dim(mat), c(4L, 0L))
+  expect_equal(rownames(mat), c("a", "b", "c", "d"))
+
+  # AddUnconstrained returns 0-character phyDat with extra taxa
+  result <- AddUnconstrained(empty_pd, c("e", "f", "g"))
+  expect_s3_class(result, "phyDat")
+  expect_equal(names(result), c("a", "b", "c", "d", "e", "f", "g"))
+  expect_equal(attr(result, "nr"), 0L)
+
+  # asPhyDat = FALSE returns a 0-column matrix
+  result_mat <- AddUnconstrained(empty_pd, c("e", "f", "g"), asPhyDat = FALSE)
+  expect_equal(dim(result_mat), c(7L, 0L))
+  expect_equal(rownames(result_mat), c("a", "b", "c", "d", "e", "f", "g"))
+})
+
 test_that("AddUnconstrained() works", {
   tips <- letters[1:9]
   constraint <- StringToPhyDat("0000?1111 000111111 0000??110", tips, FALSE)

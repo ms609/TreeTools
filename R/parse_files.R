@@ -809,6 +809,10 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
   }
   
   at <- attributes(dataset)
+  if (at[["nr"]] == 0L) {
+    return(matrix(character(0), nrow = length(at[["names"]]), ncol = 0,
+                  dimnames = list(at[["names"]], NULL)))
+  }
   allLevels <- as.character(at[["allLevels"]])
   if (inappNA) {
     allLevels[allLevels == "-"] <- NA_character_
