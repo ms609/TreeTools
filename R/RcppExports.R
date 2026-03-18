@@ -93,6 +93,10 @@ path_lengths <- function(edge, weight, init_nas) {
     .Call(`_TreeTools_path_lengths`, edge, weight, init_nas)
 }
 
+renumber_tips_batch <- function(trees, perm, n_tip) {
+    .Call(`_TreeTools_renumber_tips_batch`, trees, perm, n_tip)
+}
+
 cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }

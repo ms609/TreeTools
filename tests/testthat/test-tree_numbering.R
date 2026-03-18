@@ -167,6 +167,29 @@ test_that("RenumberTips() works correctly", {
     
 })
 
+test_that("RenumberTips.multiPhylo() batch matches per-tree", {
+  set.seed(7429)
+  trees <- c(
+    replicate(50, RandomTree(12, root = TRUE), simplify = FALSE),
+    replicate(50, PectinateTree(12), simplify = FALSE)
+  )
+  class(trees) <- "multiPhylo"
+  target <- sort(TipLabels(trees[[1]]))
+
+  batch <- RenumberTips(trees, target)
+  per_tree <- structure(
+    lapply(trees, RenumberTips.phylo, target),
+    class = "multiPhylo"
+  )
+
+  for (i in seq_along(batch)) {
+    expect_equal(batch[[i]][["edge"]], per_tree[[i]][["edge"]],
+                 info = paste("tree", i))
+    expect_equal(batch[[i]][["tip.label"]], per_tree[[i]][["tip.label"]],
+                 info = paste("tree", i))
+  }
+})
+
 test_that("postorder_order() works", {
   edg7 <- BalancedTree(7)$edge
   expect_postorder(edg7[postorder_order(edg7), ])
