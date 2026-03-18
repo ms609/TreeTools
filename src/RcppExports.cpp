@@ -298,6 +298,20 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// renumber_tips_batch
+Rcpp::List renumber_tips_batch(Rcpp::List trees, const Rcpp::IntegerVector perm, int n_tip, const Rcpp::CharacterVector new_labels);
+RcppExport SEXP _TreeTools_renumber_tips_batch(SEXP treesSEXP, SEXP permSEXP, SEXP n_tipSEXP, SEXP new_labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type trees(treesSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::IntegerVector >::type perm(permSEXP);
+    Rcpp::traits::input_parameter< int >::type n_tip(n_tipSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::CharacterVector >::type new_labels(new_labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(renumber_tips_batch(trees, perm, n_tip, new_labels));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_edge_to_splits
 Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge, const Rcpp::IntegerVector& order, const Rcpp::IntegerVector& nTip);
 RcppExport SEXP _TreeTools_cpp_edge_to_splits(SEXP edgeSEXP, SEXP orderSEXP, SEXP nTipSEXP) {
@@ -532,6 +546,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_n_cherries_wrapper", (DL_FUNC) &_TreeTools_n_cherries_wrapper, 3},
     {"_TreeTools_node_depth_unrooted", (DL_FUNC) &_TreeTools_node_depth_unrooted, 4},
     {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 3},
+    {"_TreeTools_renumber_tips_batch", (DL_FUNC) &_TreeTools_renumber_tips_batch, 4},
     {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
     {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},
     {"_TreeTools_mask_splits", (DL_FUNC) &_TreeTools_mask_splits, 1},

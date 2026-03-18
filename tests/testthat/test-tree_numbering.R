@@ -167,6 +167,61 @@ test_that("RenumberTips() works correctly", {
     
 })
 
+test_that("RenumberTips.multiPhylo() covers edge cases", {
+  mp8 <- structure(
+    list(BalancedTree(8), PectinateTree(8)),
+    class = "multiPhylo"
+  )
+
+  # Numeric tipOrder
+  result <- RenumberTips(mp8, 8:1)
+  expect_equal(TipLabels(result[[1]]), paste0("t", 8:1))
+
+  # Early return when order matches
+  expect_identical(RenumberTips(mp8, TipLabels(mp8[[1]])), mp8)
+
+  # Duplicate error
+  expect_error(RenumberTips(mp8, rep("t1", 8)), "repeated")
+
+  # Length mismatch error
+  expect_error(RenumberTips(mp8, paste0("t", 0:5)),
+               "Missing in `tree`.*Missing in `tipOrder`")
+
+  # Missing label error
+  mp_shared <- structure(
+    list(BalancedTree(8), PectinateTree(8)),
+    TipLabel = paste0("t", 1:8),
+    class = "multiPhylo"
+  )
+  expect_error(
+    RenumberTips(mp_shared, c(paste0("t", 1:7), "t_unknown")),
+    "missing from `tipOrder`"
+  )
+})
+
+test_that("RenumberTips.multiPhylo() batch matches per-tree", {
+  set.seed(7429)
+  trees <- c(
+    replicate(50, RandomTree(12, root = TRUE), simplify = FALSE),
+    replicate(50, PectinateTree(12), simplify = FALSE)
+  )
+  class(trees) <- "multiPhylo"
+  target <- sort(TipLabels(trees[[1]]))
+
+  batch <- RenumberTips(trees, target)
+  per_tree <- structure(
+    lapply(trees, RenumberTips.phylo, target),
+    class = "multiPhylo"
+  )
+
+  for (i in seq_along(batch)) {
+    expect_equal(batch[[i]][["edge"]], per_tree[[i]][["edge"]],
+                 info = paste("tree", i))
+    expect_equal(batch[[i]][["tip.label"]], per_tree[[i]][["tip.label"]],
+                 info = paste("tree", i))
+  }
+})
+
 test_that("postorder_order() works", {
   edg7 <- BalancedTree(7)$edge
   expect_postorder(edg7[postorder_order(edg7), ])

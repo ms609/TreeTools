@@ -665,10 +665,48 @@ RenumberTips.Splits <- function(tree, tipOrder) {
 RenumberTips.multiPhylo <- function(tree, tipOrder) {
   at <- attributes(tree)
   labelled <- !is.null(at[["TipLabel"]])
-  tree <- lapply(tree, RenumberTips.phylo, tipOrder)
-  if (labelled) {
-    at[["TipLabel"]] <- TipLabels(tipOrder)
+
+  startOrder <- if (labelled) at[["TipLabel"]] else tree[[1L]][["tip.label"]]
+  newOrder <- if (is.numeric(tipOrder)) {
+    startOrder[tipOrder]
+  } else {
+    TipLabels(tipOrder, single = TRUE)
   }
+
+  if (identical(startOrder, newOrder)) return(tree)
+
+  if (any(duplicated(newOrder))) {
+    stop("Tree labels ",
+         paste0(newOrder[duplicated(newOrder)], collapse = ", "),
+         " repeated in `tipOrder`")
+  }
+
+  if (length(startOrder) != length(newOrder)) {
+    startOnly <- setdiff(startOrder, newOrder)
+    newOnly <- setdiff(newOrder, startOrder)
+    if (length(startOnly)) {
+      stop("Tree labels and tipOrder must match.",
+           if (length(newOnly)) "\n  Missing in `tree`: ",
+           paste0(newOnly, collapse = ", "),
+           if (length(startOnly)) "\n  Missing in `tipOrder`: ",
+           paste0(startOnly, collapse = ", ")
+      )
+    }
+    newOrder <- intersect(newOrder, startOrder)
+  }
+
+  nTip <- length(startOrder)
+  matchOrder <- match(startOrder, newOrder)
+  if (any(is.na(matchOrder))) {
+    stop("Tree labels ",
+         paste0(startOrder[is.na(matchOrder)], collapse = ", "),
+         " missing from `tipOrder`")
+  }
+
+  tree <- .Call(`_TreeTools_renumber_tips_batch`, tree, matchOrder, nTip,
+                newOrder)
+
+  if (labelled) at[["TipLabel"]] <- newOrder
   attributes(tree) <- at
   tree
 }

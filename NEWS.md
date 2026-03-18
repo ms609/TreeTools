@@ -25,6 +25,8 @@
   replacing iterative R while-loop.
 - `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
   O(n²) pairwise comparison.
+- `RenumberTips.multiPhylo()` applies tip permutation in a single C++ call,
+  avoiding per-tree overhead.
 
 ## Fixes
 

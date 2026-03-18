@@ -34,7 +34,9 @@ binary 0/1 in an underlying `raw` object.
   before moving on to the next task.
 - Increment the `.900X` dev version suffix in `DESCRIPTION` with each
   `NEWS.md` update.
-- Check that existing tests cover all new code. (The GHA test suite uses codecov.)
+- All new and changed code must have test coverage. The GHA test suite uses
+  codecov; uncovered lines will block the PR. Cover happy paths, error
+  branches, and edge cases (e.g. early returns).
 
 ## Optimization notes
 
