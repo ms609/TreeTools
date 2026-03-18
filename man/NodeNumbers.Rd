@@ -24,6 +24,7 @@ Numeric index of each node in a tree
 Other tree properties: 
 \code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
+\code{\link{EdgeRatio}()},
 \code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},

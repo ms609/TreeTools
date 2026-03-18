@@ -47,6 +47,7 @@ tree$tip.label[lb > threshold]
 Other tree properties: 
 \code{\link{Cherries}()},
 \code{\link{ConsensusWithout}()},
+\code{\link{EdgeRatio}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},
 \code{\link{NTip}()},

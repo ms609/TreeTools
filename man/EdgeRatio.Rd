@@ -24,7 +24,23 @@ edges whose child is a leaf) and internal edges.
 Where tree length is dominated by internal edges, variation between tips
 is dominantly controlled by phylogenetic history.
 }
+\seealso{
+Other tree properties: 
+\code{\link{Cherries}()},
+\code{\link{ConsensusWithout}()},
+\code{\link{LongBranch}()},
+\code{\link{MatchEdges}()},
+\code{\link{NSplits}()},
+\code{\link{NTip}()},
+\code{\link{NodeNumbers}()},
+\code{\link{PathLengths}()},
+\code{\link{SplitsInBinaryTree}()},
+\code{\link{TipLabels}()},
+\code{\link{TreeIsRooted}()},
+\code{\link{Treeness}()}
+}
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
 (\href{mailto:martin.smith@durham.ac.uk}{martin.smith@durham.ac.uk})
 }
+\concept{tree properties}

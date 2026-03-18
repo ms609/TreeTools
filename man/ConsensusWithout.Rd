@@ -81,6 +81,7 @@ Other tree manipulation:
 
 Other tree properties: 
 \code{\link{Cherries}()},
+\code{\link{EdgeRatio}()},
 \code{\link{LongBranch}()},
 \code{\link{MatchEdges}()},
 \code{\link{NSplits}()},

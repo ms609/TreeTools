@@ -11,6 +11,7 @@
 #' in external edges), with attributes `external`, `internal`, and `total`
 #' specifying the total length associated with edges of that nature.
 #' @template MRS
+#' @family tree properties
 #' @export
 EdgeRatio <- function(x) UseMethod("EdgeRatio")
   
