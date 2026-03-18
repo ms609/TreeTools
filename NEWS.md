@@ -1,53 +1,42 @@
-# TreeTools 2.1.0.9009 (2026-03-18) #
+# TreeTools 2.2.0 (2026-03-18) #
 
-- `RCurl` moved from Imports to Suggests; `ReadMrBayesTrees()` uses
-  `RCurl::url.exists()` when available, falling back to base R `url()` for
-  URL checks.
+## New functionality
 
-# TreeTools 2.1.0.9008 (2026-03-17) #
-
-- `PhyDatToMatrix()` no longer crashes on zero-character `phyDat` objects
-  (e.g. from a star tree); returns a 0-column matrix with correct row names.
-- `AddUnconstrained()` handles zero-character `phyDat` input gracefully.
-
-# TreeTools 2.1.0.9007 (2026-03-13) #
-
-- `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
-  O(n²) pairwise comparison.
-
-# TreeTools 2.1.0.9006 (2026-03-13) #
-  
-- `NodeDepth()` for unrooted trees rewritten as O(n) two-pass C++ algorithm,
-  replacing iterative R while-loop.
-
-# TreeTools 2.1.0.9005 (2026-03-13) #
-
-- `SplitFrequency(reference = NULL)` performance improvements:
-  split normalization moved to C++; internal split de-duplication uses
-  hash map instead of ordered map.
-
-# TreeTools 2.1.0.9003 (2026-03-09) #
-
-- `inst/include/TreeTools/tree_number.h` added to support downstream packages
-  (e.g. TBRDist) via `LinkingTo: TreeTools`. Provides 256-bit tree number
-  encoding/decoding supporting up to 51 leaves, extended from the 44-leaf
-  limit of the previous `uint64_t`-based implementation.
+- `EdgeRatio()` reports the ratio of external:internal edges.
+- `SplitInformation()` supports `Splits` and `phylo` objects.
+- `sort` and `order` support `Splits` objects.
+- `SplitFrequency(reference = NULL)` returns frequency of all splits.
 - `as.TreeNumber()` now supports trees with up to 51 leaves (previously 19).
   Trees with 20–51 leaves have more than 2^64 distinct topologies, so their
   `TreeNumber` is stored as a decimal character string rather than `integer64`.
   The 19-leaf limit for `integer64`-backed storage (and `as.MixedBase()`
   round-trips) is unchanged.
 - `as.TreeNumber()` no longer warns for trees with 20–44 leaves.
+- `inst/include/TreeTools/tree_number.h` added to support downstream packages
+  (e.g. TBRDist) via `LinkingTo: TreeTools`. Provides 256-bit tree number
+  encoding/decoding supporting up to 51 leaves, extended from the 44-leaf
+  limit of the previous `uint64_t`-based implementation.
 
-# TreeTools 2.1.0.9001 (2026-02-19) #
+## Performance
 
-- `EdgeRatio()` reports the ratio of external:internal edges.
+- `SplitFrequency(reference = NULL)`: split normalization moved to C++;
+  internal split de-duplication uses hash map instead of ordered map.
+- `NodeDepth()` for unrooted trees rewritten as O(n) two-pass C++ algorithm,
+  replacing iterative R while-loop.
+- `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
+  O(n²) pairwise comparison.
 
-# TreeTools 2.1.0.9000 (2026-02-16) #
+## Fixes
 
-- `SplitInformation()` supports `Splits` and `phylo` objects.
-- `sort` and `order` support `Splits` objects.
-- `SplitFrequency(reference = NULL)` returns frequency of all splits.
+- `PhyDatToMatrix()` no longer crashes on zero-character `phyDat` objects
+  (e.g. from a star tree); returns a 0-column matrix with correct row names.
+- `AddUnconstrained()` handles zero-character `phyDat` input gracefully.
+
+## Dependencies
+
+- `RCurl` moved from Imports to Suggests; `ReadMrBayesTrees()` uses
+  `RCurl::url.exists()` when available, falling back to base R `url()` for
+  URL checks.
 
 
 # TreeTools 2.1.0 (2026-02-10) #

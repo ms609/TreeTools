@@ -1,7 +1,7 @@
 ## Test environments
 
 * Local PC:
-  - Windows 10, R devel
+  - Windows 11, R devel
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu latest
@@ -19,4 +19,4 @@ There were no ERRORs or WARNINGs or NOTEs.
 ## Downstream dependencies
 
 Reverse dependencies have been checked using "revdepcheck" on
-[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/revdep.yml).
+[GitHub Actions](https://github.com/ms609/TreeTools/actions/workflows/R-CMD-check.yml).

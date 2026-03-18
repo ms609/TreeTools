@@ -28,7 +28,7 @@ release_questions <- function() {
 # Check valgrind results on Github Actions
 # revdepcheck::revdep_check()
 #
-# codemetar::write_codemeta()
+# codemeta::write_codemeta()
 #
 # tools::resaveRdaFiles("R", compress="auto") - is default bzip2 the optimal?
 # tools::checkRdaFiles("R") - set optimal compression in `data-raw`
