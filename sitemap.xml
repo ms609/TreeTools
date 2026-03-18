@@ -1,5 +1,6 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://ms609.github.io/TreeTools/404.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/AGENTS.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/CODE_OF_CONDUCT.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/CONTRIBUTING.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/articles/filesystem-navigation.html</loc></url>
@@ -31,6 +32,7 @@
 <url><loc>https://ms609.github.io/TreeTools/reference/DropTip.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/EdgeAncestry.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/EdgeDistances.html</loc></url>
+<url><loc>https://ms609.github.io/TreeTools/reference/EdgeRatio.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/EndSentence.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/ExtractTaxa.html</loc></url>
 <url><loc>https://ms609.github.io/TreeTools/reference/GenerateTree.html</loc></url>

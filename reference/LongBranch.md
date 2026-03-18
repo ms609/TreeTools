@@ -36,6 +36,7 @@ longest branches".
 Other tree properties:
 [`Cherries()`](https://ms609.github.io/TreeTools/reference/Cherries.md),
 [`ConsensusWithout()`](https://ms609.github.io/TreeTools/reference/ConsensusWithout.md),
+[`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md),
 [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
 [`NSplits()`](https://ms609.github.io/TreeTools/reference/NSplits.md),
 [`NTip()`](https://ms609.github.io/TreeTools/reference/NTip.md),
@@ -65,7 +66,7 @@ sd(lb)
 #> [1] 0.2335139
 evenLengths <- BalancedTree(8, lengths = jitter(rep(1, 14)))
 sd(LongBranch(evenLengths))
-#> [1] 0.001698709
+#> [1] 0.002947199
 
 # Upper quartile identifies taxa with longest branches
 threshold <- quantile(lb, 0.75)

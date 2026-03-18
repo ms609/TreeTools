@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,11 +41,54 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/2.1.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1.0" id="treetools-210-2026-02-10">TreeTools 2.1.0 (2026-02-10)<a class="anchor" aria-label="anchor" href="#treetools-210-2026-02-10"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.2.0" id="treetools-220-2026-03-18">TreeTools 2.2.0 (2026-03-18)<a class="anchor" aria-label="anchor" href="#treetools-220-2026-03-18"></a></h2>
+<div class="section level3">
+<h3 id="new-functionality-2-2-0">New functionality<a class="anchor" aria-label="anchor" href="#new-functionality-2-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/EdgeRatio.html">EdgeRatio()</a></code> reports the ratio of external:internal edges.</li>
+<li>
+<code><a href="../reference/SplitInformation.html">SplitInformation()</a></code> supports <code>Splits</code> and <code>phylo</code> objects.</li>
+<li>
+<code>sort</code> and <code>order</code> support <code>Splits</code> objects.</li>
+<li>
+<code>SplitFrequency(reference = NULL)</code> returns frequency of all splits.</li>
+<li>
+<code><a href="../reference/TreeNumber.html">as.TreeNumber()</a></code> now supports trees with up to 51 leaves (previously 19). Trees with 20–51 leaves have more than 2^64 distinct topologies, so their <code>TreeNumber</code> is stored as a decimal character string rather than <code>integer64</code>. The 19-leaf limit for <code>integer64</code>-backed storage (and <code><a href="../reference/TreeNumber.html">as.MixedBase()</a></code> round-trips) is unchanged.</li>
+<li>
+<code><a href="../reference/TreeNumber.html">as.TreeNumber()</a></code> no longer warns for trees with 20–44 leaves.</li>
+<li>
+<code>inst/include/TreeTools/tree_number.h</code> added to support downstream packages (e.g. TBRDist) via <code>LinkingTo: TreeTools</code>. Provides 256-bit tree number encoding/decoding supporting up to 51 leaves, extended from the 44-leaf limit of the previous <code>uint64_t</code>-based implementation.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="performance-2-2-0">Performance<a class="anchor" aria-label="anchor" href="#performance-2-2-0"></a></h3>
+<ul><li>
+<code>SplitFrequency(reference = NULL)</code>: split normalization moved to C++; internal split de-duplication uses hash map instead of ordered map.</li>
+<li>
+<code><a href="../reference/NodeDepth.html">NodeDepth()</a></code> for unrooted trees rewritten as O(n) two-pass C++ algorithm, replacing iterative R while-loop.</li>
+<li>
+<code>duplicated.Splits()</code> uses hash-based O(n) de-duplication, replacing O(n²) pairwise comparison.</li>
+<li>
+<code><a href="../reference/RenumberTips.html">RenumberTips.multiPhylo()</a></code> applies tip permutation in a single C++ call, avoiding per-tree overhead.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="fixes-2-2-0">Fixes<a class="anchor" aria-label="anchor" href="#fixes-2-2-0"></a></h3>
+<ul><li>
+<code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> no longer crashes on zero-character <code>phyDat</code> objects (e.g. from a star tree); returns a 0-column matrix with correct row names.</li>
+<li>
+<code><a href="../reference/ImposeConstraint.html">AddUnconstrained()</a></code> handles zero-character <code>phyDat</code> input gracefully.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="dependencies-2-2-0">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-2-2-0"></a></h3>
+<ul><li>
+<code>RCurl</code> moved from Imports to Suggests; <code><a href="../reference/ReadMrBayesTrees.html">ReadMrBayesTrees()</a></code> uses <code><a href="https://rdrr.io/pkg/RCurl/man/url.exists.html" class="external-link">RCurl::url.exists()</a></code> when available, falling back to base R <code><a href="https://rdrr.io/r/base/connections.html" class="external-link">url()</a></code> for URL checks.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.1.0" id="treetools-210-2026-02-10">TreeTools 2.1.0 (2026-02-10)<a class="anchor" aria-label="anchor" href="#treetools-210-2026-02-10"></a></h2><p class="text-muted">CRAN release: 2026-02-11</p>
 <ul><li>Add method <code><a href="../reference/RenumberTips.html">RenumberTips.Splits()</a></code>.</li>
 <li>
 <code>FirstMatchingSplit(x)</code> provides performant alternative to <code>match(x)[[1]]</code>.</li>

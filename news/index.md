@@ -1,6 +1,63 @@
 # Changelog
 
+## TreeTools 2.2.0 (2026-03-18)
+
+### New functionality
+
+- [`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md)
+  reports the ratio of external:internal edges.
+- [`SplitInformation()`](https://ms609.github.io/TreeTools/reference/SplitInformation.md)
+  supports `Splits` and `phylo` objects.
+- `sort` and `order` support `Splits` objects.
+- `SplitFrequency(reference = NULL)` returns frequency of all splits.
+- [`as.TreeNumber()`](https://ms609.github.io/TreeTools/reference/TreeNumber.md)
+  now supports trees with up to 51 leaves (previously 19). Trees with
+  20–51 leaves have more than 2^64 distinct topologies, so their
+  `TreeNumber` is stored as a decimal character string rather than
+  `integer64`. The 19-leaf limit for `integer64`-backed storage (and
+  [`as.MixedBase()`](https://ms609.github.io/TreeTools/reference/TreeNumber.md)
+  round-trips) is unchanged.
+- [`as.TreeNumber()`](https://ms609.github.io/TreeTools/reference/TreeNumber.md)
+  no longer warns for trees with 20–44 leaves.
+- `inst/include/TreeTools/tree_number.h` added to support downstream
+  packages (e.g. TBRDist) via `LinkingTo: TreeTools`. Provides 256-bit
+  tree number encoding/decoding supporting up to 51 leaves, extended
+  from the 44-leaf limit of the previous `uint64_t`-based
+  implementation.
+
+### Performance
+
+- `SplitFrequency(reference = NULL)`: split normalization moved to C++;
+  internal split de-duplication uses hash map instead of ordered map.
+- [`NodeDepth()`](https://ms609.github.io/TreeTools/reference/NodeDepth.md)
+  for unrooted trees rewritten as O(n) two-pass C++ algorithm, replacing
+  iterative R while-loop.
+- `duplicated.Splits()` uses hash-based O(n) de-duplication, replacing
+  O(n²) pairwise comparison.
+- [`RenumberTips.multiPhylo()`](https://ms609.github.io/TreeTools/reference/RenumberTips.md)
+  applies tip permutation in a single C++ call, avoiding per-tree
+  overhead.
+
+### Fixes
+
+- [`PhyDatToMatrix()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md)
+  no longer crashes on zero-character `phyDat` objects (e.g. from a star
+  tree); returns a 0-column matrix with correct row names.
+- [`AddUnconstrained()`](https://ms609.github.io/TreeTools/reference/ImposeConstraint.md)
+  handles zero-character `phyDat` input gracefully.
+
+### Dependencies
+
+- `RCurl` moved from Imports to Suggests;
+  [`ReadMrBayesTrees()`](https://ms609.github.io/TreeTools/reference/ReadMrBayesTrees.md)
+  uses
+  [`RCurl::url.exists()`](https://rdrr.io/pkg/RCurl/man/url.exists.html)
+  when available, falling back to base R
+  [`url()`](https://rdrr.io/r/base/connections.html) for URL checks.
+
 ## TreeTools 2.1.0 (2026-02-10)
+
+CRAN release: 2026-02-11
 
 - Add method
   [`RenumberTips.Splits()`](https://ms609.github.io/TreeTools/reference/RenumberTips.md).

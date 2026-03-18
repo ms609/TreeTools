@@ -151,10 +151,10 @@ plot(DropTip(unrooted, 4:5))
 summary(DropTip(as.Splits(tree), 4:5))
 #> 4 bipartition splits dividing 7 tips, t1 .. t9
 #>      1234567
-#>  12  ***....
-#>  13  **.....
-#>  16  ...**..
-#>  17  .....**
+#>  12  ***.... 
+#>  13  **..... 
+#>  16  ...**.. 
+#>  17  .....** 
 #> 
 #>  Tip 1: t1    Tip 2: t2   Tip 3: t3   Tip 4: t6   Tip 5: t7  
 #>  Tip 6: t8    Tip 7: t9  

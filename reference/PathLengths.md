@@ -41,6 +41,7 @@ the total length of that path.
 Other tree properties:
 [`Cherries()`](https://ms609.github.io/TreeTools/reference/Cherries.md),
 [`ConsensusWithout()`](https://ms609.github.io/TreeTools/reference/ConsensusWithout.md),
+[`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md),
 [`LongBranch()`](https://ms609.github.io/TreeTools/reference/LongBranch.md),
 [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
 [`NSplits()`](https://ms609.github.io/TreeTools/reference/NSplits.md),
@@ -66,29 +67,27 @@ nodelabels()
 tiplabels()
 
 PathLengths(tree)
-#>    start end    length
-#> 1      7   1 1.1269270
-#> 2      8   1 0.3082923
-#> 3      7   2 1.4682141
-#> 4      8   2 0.6495795
-#> 5      7   3 2.2470673
-#> 6      9   3 1.2937119
-#> 7     10   3 0.3399792
-#> 8      7   4 2.3350161
-#> 9      9   4 1.3816607
-#> 10    10   4 0.4279280
-#> 11    11   4 0.1654539
-#> 12     7   5 2.4917303
-#> 13     9   5 1.5383748
-#> 14    10   5 0.5846422
-#> 15    11   5 0.3221681
-#> 16     7   6 1.4634807
-#> 17     9   6 0.5101252
-#> 18     7   8 0.8186347
-#> 19     7   9 0.9533555
-#> 20     7  10 1.9070881
-#> 21     9  10 0.9537327
-#> 22     7  11 2.1695622
-#> 23     9  11 1.2162068
-#> 24    10  11 0.2624741
+#>    start end     length
+#> 1      7   1 1.41261280
+#> 2      8   1 0.92826328
+#> 3      9   1 0.75482094
+#> 4      7   2 1.11168735
+#> 5      8   2 0.62733782
+#> 6      9   2 0.45389549
+#> 7      7   3 0.99551931
+#> 8      8   3 0.51116978
+#> 9      7   4 1.03191525
+#> 10    10   4 0.82437014
+#> 11    11   4 0.59571200
+#> 12     7   5 1.01107545
+#> 13    10   5 0.80353034
+#> 14    11   5 0.57487220
+#> 15     7   6 0.28460949
+#> 16    10   6 0.07706438
+#> 17     7   8 0.48434952
+#> 18     7   9 0.65779186
+#> 19     8   9 0.17344233
+#> 20     7  10 0.20754511
+#> 21     7  11 0.43620326
+#> 22    10  11 0.22865814
 ```

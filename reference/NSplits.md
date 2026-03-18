@@ -53,6 +53,7 @@ the specified objects, or in a binary tree with `x` tips.
 Other tree properties:
 [`Cherries()`](https://ms609.github.io/TreeTools/reference/Cherries.md),
 [`ConsensusWithout()`](https://ms609.github.io/TreeTools/reference/ConsensusWithout.md),
+[`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md),
 [`LongBranch()`](https://ms609.github.io/TreeTools/reference/LongBranch.md),
 [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
 [`NTip()`](https://ms609.github.io/TreeTools/reference/NTip.md),

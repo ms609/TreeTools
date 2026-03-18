@@ -10,6 +10,15 @@ with a smaller number of trees will have a higher information content.
 ``` r
 SplitInformation(A, B = A[1])
 
+# S3 method for class 'numeric'
+SplitInformation(A, B = A[1])
+
+# S3 method for class 'Splits'
+SplitInformation(A, B)
+
+# S3 method for class 'phylo'
+SplitInformation(A, B)
+
 MultiSplitInformation(partitionSizes)
 ```
 

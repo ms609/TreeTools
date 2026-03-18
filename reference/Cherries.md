@@ -31,10 +31,21 @@ Cherries(tree, nTip)
 `Cherries()` returns an integer specifying the number of nodes whose
 children are both leaves.
 
+Equations for the number of cherries expected under uniform and Yule
+tree models are derived by McKenzie and Steel (2000) .
+
+## References
+
+McKenzie A, Steel M (2000). “Distributions of Cherries for Two Models of
+Trees.” *Mathematical Biosciences*, **164**(1), 81–92.
+[doi:10.1016/S0025-5564(99)00060-7](https://doi.org/10.1016/S0025-5564%2899%2900060-7)
+.
+
 ## See also
 
 Other tree properties:
 [`ConsensusWithout()`](https://ms609.github.io/TreeTools/reference/ConsensusWithout.md),
+[`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md),
 [`LongBranch()`](https://ms609.github.io/TreeTools/reference/LongBranch.md),
 [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
 [`NSplits()`](https://ms609.github.io/TreeTools/reference/NSplits.md),

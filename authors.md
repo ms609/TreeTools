@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/ms609/TreeTools/blob/2.1.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/ms609/TreeTools/blob/main/inst/CITATION)
 
 Smith (2019). TreeTools: create, modify and analyse phylogenetic trees.
 Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
@@ -25,7 +25,7 @@ Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
     @Manual{Smith2019,
       title = {TreeTools: create, modify and analyse phylogenetic trees},
       author = {Martin R. Smith},
-      note = {R package version 2.1.0},
+      note = {R package version 2.2.0},
       year = {2019},
       doi = {10.32614/CRAN.package.TreeTools},
       organization = {Comprehensive R Archive Network},

@@ -76,13 +76,15 @@ as.phylo(x, nTip = attr(x, "nTip"), tipLabels = attr(x, "tip.label"), ...)
 
 ## Value
 
-`as.TreeNumber()` returns an object of class `TreeNumber`, which
-comprises a numeric vector, whose elements represent successive
-nine-digit chunks of the decimal integer corresponding to the tree
-topology (in big endian order). The `TreeNumber` object has attributes
-`nTip` and `tip.label`. If `x` is a list of trees or a `multiPhylo`
-object, then `as.TreeNumber()` returns a corresponding list of
-`TreeNumber` objects.
+`as.TreeNumber()` returns an object of class `TreeNumber` with
+attributes `nTip` and `tip.label`. For trees with at most 19 leaves the
+underlying storage is a single `integer64` value (class
+`c("TreeNumber", "integer64")`), enabling `integer64` arithmetic and
+exact round-tripping through `as.MixedBase()`. For trees with 20–51
+leaves the number exceeds 2^64, so it is stored as a decimal character
+string (class `c("TreeNumber", "character")`). If `x` is a list of trees
+or a `multiPhylo` object, `as.TreeNumber()` returns a corresponding list
+of `TreeNumber` objects.
 
 `as.phylo.numeric()` returns a tree of class `phylo`.
 
@@ -161,9 +163,16 @@ tree with the mixed-base number 0021. We can convert this into decimal:
 
 = 10
 
-Note that the hyperexponential nature of tree space means that there are
-\> 2^64 unique 20-leaf trees. As a `TreeNumber` is a 64-bit integer,
-only trees with at most 19 leaves can be accommodated.
+`as.TreeNumber()` supports up to 51 leaves. For trees with at most 19
+leaves, the number fits in a 64-bit integer and the `TreeNumber` is
+stored as an `integer64` (via the `bit64` package), enabling arithmetic
+and exact round-tripping via `as.MixedBase()`. For trees with 20–51
+leaves, there are more than 2^64 distinct topologies, so the tree number
+is stored as a decimal character string instead.
+
+Package developers can use the C++ header `TreeTools/tree_number.h` (via
+`LinkingTo: TreeTools`) for the underlying 256-bit encoding
+(`tree_num_t`) directly.
 
 ## References
 
@@ -204,10 +213,13 @@ as.TreeNumber(tree)
 #> Phylogenetic tree number 10 of 105 
 #>  6 tips: t1 t2 t3 t4 t5 t6
 
-# Larger trees:
-as.TreeNumber(BalancedTree(19))
+# Trees with 20–51 leaves are stored as decimal strings:
+as.TreeNumber(BalancedTree(19))  # integer64-backed
 #> Phylogenetic tree number 3259279213732796827 of 6332659870762850625 
 #>  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19
+as.TreeNumber(BalancedTree(51))  # character-backed
+#> Phylogenetic tree number 27388803913187622481001283703331864424119472007335608662299812499724470715408 of 2.752921e+76 
+#>  51 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37 t38 t39 t40 t41 t42 t43 t44 t45 t46 t47 t48 t49 t50 t51
 
 # If > 9 digits, represent the tree number as a string.
 treeNumber <- as.TreeNumber("1234567890123", nTip = 14)

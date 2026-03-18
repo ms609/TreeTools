@@ -115,7 +115,7 @@ YuleTree(LETTERS[1:10])
 #> Phylogenetic tree with 10 tips and 9 internal nodes.
 #> 
 #> Tip labels:
-#>   A, D, E, J, G, I, ...
+#>   I, G, F, A, D, J, ...
 #> 
 #> Rooted; no branch length.
 

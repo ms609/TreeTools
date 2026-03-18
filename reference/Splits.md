@@ -100,9 +100,9 @@ splits <- as.Splits(BalancedTree(letters[1:6]))
 summary(splits)
 #> 3 bipartition splits dividing 6 tips, a .. f
 #>      123456
-#>  8   ***...
-#>  9   **....
-#>  11  ...**.
+#>  8   ***... 
+#>  9   **.... 
+#>  11  ...**. 
 #> 
 #>  Tip 1: a     Tip 2: b    Tip 3: c    Tip 4: d    Tip 5: e   
 #>  Tip 6: f    
@@ -112,9 +112,9 @@ TipsInSplits(splits)
 summary(!splits)
 #> 3 bipartition splits dividing 6 tips, a .. f
 #>      123456
-#>  8   ...***
-#>  9   ..****
-#>  11  ***..*
+#>  8   ...*** 
+#>  9   ..**** 
+#>  11  ***..* 
 #> 
 #>  Tip 1: a     Tip 2: b    Tip 3: c    Tip 4: d    Tip 5: e   
 #>  Tip 6: f    
@@ -130,10 +130,10 @@ length(unique(splits + !splits))
 summary(c(splits[[2:3]], !splits[[1:2]]))
 #> 4 bipartition splits dividing 6 tips, a .. f
 #>      123456
-#>  9   **....
-#>  11  ...**.
-#>  8   ...***
-#>  9   ..****
+#>  9   **.... 
+#>  11  ...**. 
+#>  8   ...*** 
+#>  9   ..**** 
 #> 
 #>  Tip 1: a     Tip 2: b    Tip 3: c    Tip 4: d    Tip 5: e   
 #>  Tip 6: f    
@@ -142,9 +142,9 @@ moreSplits <- as.Splits(PectinateTree(letters[6:1]), tipLabel = splits)
 print(moreSplits, details = TRUE)
 #> 3 bipartition splits dividing 6 tips, a .. f
 #>      123456
-#>  9   ****..
-#>  10  ***...
-#>  11  **....
+#>  9   ****.. 
+#>  10  ***... 
+#>  11  **.... 
 match(splits, moreSplits)
 #> [1]  2  3 NA
 moreSplits %in% splits

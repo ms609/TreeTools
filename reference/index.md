@@ -164,6 +164,9 @@ Functions describing properties of trees.
   [`MarkMissing()`](https://ms609.github.io/TreeTools/reference/ConsensusWithout.md)
   : Reduced consensus, omitting specified taxa
 
+- [`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md)
+  : Ratio of external:internal edge length
+
 - [`LongBranch()`](https://ms609.github.io/TreeTools/reference/LongBranch.md)
   : Identify taxa with long branches
 

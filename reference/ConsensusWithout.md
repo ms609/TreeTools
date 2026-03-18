@@ -76,6 +76,7 @@ Other tree manipulation:
 
 Other tree properties:
 [`Cherries()`](https://ms609.github.io/TreeTools/reference/Cherries.md),
+[`EdgeRatio()`](https://ms609.github.io/TreeTools/reference/EdgeRatio.md),
 [`LongBranch()`](https://ms609.github.io/TreeTools/reference/LongBranch.md),
 [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
 [`NSplits()`](https://ms609.github.io/TreeTools/reference/NSplits.md),

@@ -19,7 +19,7 @@ Li et al. (1996)
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ Li et al. (1996)
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Unique integer indices for bifurcating tree topologies</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/2.1.0/R/TreeNumber.R" class="external-link"><code>R/TreeNumber.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/TreeNumber.R" class="external-link"><code>R/TreeNumber.R</code></a></small>
       <div class="d-none name"><code>TreeNumber.Rd</code></div>
     </div>
 
@@ -130,12 +130,15 @@ in a tree, perhaps obtained using <code><a href="TipLabels.html">TipLabels()</a>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>as.TreeNumber()</code> returns an object of class <code>TreeNumber</code>,
-which comprises a numeric vector, whose elements represent successive
-nine-digit chunks of the decimal integer corresponding to the tree topology
-(in big endian order).  The <code>TreeNumber</code> object has attributes
-<code>nTip</code> and <code>tip.label</code>.  If <code>x</code> is a list of trees or a <code>multiPhylo</code> object,
-then <code>as.TreeNumber()</code> returns a corresponding list of <code>TreeNumber</code> objects.</p>
+    <p><code>as.TreeNumber()</code> returns an object of class <code>TreeNumber</code> with
+attributes <code>nTip</code> and <code>tip.label</code>.
+For trees with at most 19 leaves the underlying storage is a single
+<code>integer64</code> value (class <code>c("TreeNumber", "integer64")</code>), enabling
+<code>integer64</code> arithmetic and exact round-tripping through <code>as.MixedBase()</code>.
+For trees with 20–51 leaves the number exceeds 2^64, so it is stored as a
+decimal character string (class <code>c("TreeNumber", "character")</code>).
+If <code>x</code> is a list of trees or a <code>multiPhylo</code> object,
+<code>as.TreeNumber()</code> returns a corresponding list of <code>TreeNumber</code> objects.</p>
 <p><code>as.phylo.numeric()</code> returns a tree of class <code>phylo</code>.</p>
     </div>
     <div class="section level2">
@@ -193,9 +196,15 @@ with the mixed-base number 0021.  We can convert this into decimal:</p>
 <p>3 × (1 × 3) +</p>
 <p>1 × (1)</p>
 <p>= 10</p>
-<p>Note that the hyperexponential nature of tree space means that there are &gt;
-2^64 unique 20-leaf trees.  As a <code>TreeNumber</code> is a 64-bit integer,
-only trees with at most 19 leaves can be accommodated.</p>
+<p><code>as.TreeNumber()</code> supports up to 51 leaves.
+For trees with at most 19 leaves, the number fits in a 64-bit integer and
+the <code>TreeNumber</code> is stored as an <code>integer64</code> (via the <code>bit64</code> package),
+enabling arithmetic and exact round-tripping via <code>as.MixedBase()</code>.
+For trees with 20–51 leaves, there are more than 2^64 distinct topologies,
+so the tree number is stored as a decimal character string instead.</p>
+<p>Package developers can use the C++ header <code>TreeTools/tree_number.h</code>
+(via <code>LinkingTo: TreeTools</code>) for the underlying 256-bit encoding
+(<code>tree_num_t</code>) directly.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -234,10 +243,13 @@ ISBN 978-3-540-61332-9, <a href="https://doi.org/10.1007/3-540-61332-3_168" clas
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree number 10 of 105 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  6 tips: t1 t2 t3 t4 t5 t6</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Larger trees:</span></span></span>
-<span class="r-in"><span><span class="fu">as.TreeNumber</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">19</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Trees with 20–51 leaves are stored as decimal strings:</span></span></span>
+<span class="r-in"><span><span class="fu">as.TreeNumber</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">19</span><span class="op">)</span><span class="op">)</span>  <span class="co"># integer64-backed</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree number 3259279213732796827 of 6332659870762850625 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19</span>
+<span class="r-in"><span><span class="fu">as.TreeNumber</span><span class="op">(</span><span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">51</span><span class="op">)</span><span class="op">)</span>  <span class="co"># character-backed</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree number 27388803913187622481001283703331864424119472007335608662299812499724470715408 of 2.752921e+76 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37 t38 t39 t40 t41 t42 t43 t44 t45 t46 t47 t48 t49 t50 t51</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If &gt; 9 digits, represent the tree number as a string.</span></span></span>
 <span class="r-in"><span><span class="va">treeNumber</span> <span class="op">&lt;-</span> <span class="fu">as.TreeNumber</span><span class="op">(</span><span class="st">"1234567890123"</span>, nTip <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></span>
