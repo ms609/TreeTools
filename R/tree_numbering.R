@@ -703,15 +703,8 @@ RenumberTips.multiPhylo <- function(tree, tipOrder) {
          " missing from `tipOrder`")
   }
 
-  new_edges <- .Call(`_TreeTools_renumber_tips_batch`, tree, matchOrder, nTip)
-
-  for (i in seq_along(tree)) {
-    tree[[i]][["edge"]] <- new_edges[[i]]
-    if (!labelled) tree[[i]][["tip.label"]] <- newOrder
-    if (identical(attr(tree[[i]], "order"), "preorder")) {
-      attr(tree[[i]], "order") <- "cladewise"
-    }
-  }
+  tree <- .Call(`_TreeTools_renumber_tips_batch`, tree, matchOrder, nTip,
+                newOrder)
 
   if (labelled) at[["TipLabel"]] <- newOrder
   attributes(tree) <- at
