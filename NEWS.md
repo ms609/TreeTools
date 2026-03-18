@@ -1,3 +1,9 @@
+# TreeTools 2.1.0.9009 (2026-03-18) #
+
+- `RCurl` moved from Imports to Suggests; `ReadMrBayesTrees()` uses
+  `RCurl::url.exists()` when available, falling back to base R `url()` for
+  URL reachability checks (enables shinylive deployment).
+
 # TreeTools 2.1.0.9008 (2026-03-17) #
 
 - `PhyDatToMatrix()` no longer crashes on zero-character `phyDat` objects

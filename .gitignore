@@ -27,3 +27,4 @@ vignettes/*_cache*
 *.bak
 /*-benchmark-results
 *.bench.Rds
+.positai

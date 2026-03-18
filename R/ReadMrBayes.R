@@ -34,7 +34,6 @@
 #'   plot(Consensus(trees, p = 0.5))
 #' }
 #' @family tree import functions
-#' @importFrom RCurl url.exists
 #' @template MRS
 #' @export
 ReadMrBayesTrees <- function(filepath, n = NULL, burninFrac = NULL) {
@@ -48,14 +47,25 @@ ReadMrBayesTrees <- function(filepath, n = NULL, burninFrac = NULL) {
   }
   runFmt <- paste0(filepath, ".run%s.t")
   run1 <- sprintf(runFmt, 1)
+  url_exists <- function(url) {
+    if (requireNamespace("RCurl", quietly = TRUE)) {
+      RCurl::url.exists(url)
+    } else {
+      tryCatch({
+        con <- url(url, open = "r")
+        close(con)
+        TRUE
+      }, error = function(e) FALSE)
+    }
+  }
   treeFiles <- if (file.exists(run1)) {
     list.files(dirname(filepath),
                paste0(basename(filepath), "\\.run\\d+\\.t"),
                full.names = TRUE)
-  } else if (url.exists(run1)) {
+  } else if (url_exists(run1)) {
     i <- 2
     repeat{
-      if (!url.exists(sprintf(runFmt, i))) break
+      if (!url_exists(sprintf(runFmt, i))) break
       i <- i + 1
     }
     sprintf(runFmt, seq_len(i - 1))
