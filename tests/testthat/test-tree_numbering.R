@@ -167,6 +167,38 @@ test_that("RenumberTips() works correctly", {
     
 })
 
+test_that("RenumberTips.multiPhylo() covers edge cases", {
+  mp8 <- structure(
+    list(BalancedTree(8), PectinateTree(8)),
+    class = "multiPhylo"
+  )
+
+  # Numeric tipOrder
+  result <- RenumberTips(mp8, 8:1)
+  expect_equal(TipLabels(result[[1]]), paste0("t", 8:1))
+
+  # Early return when order matches
+  expect_identical(RenumberTips(mp8, TipLabels(mp8[[1]])), mp8)
+
+  # Duplicate error
+  expect_error(RenumberTips(mp8, rep("t1", 8)), "repeated")
+
+  # Length mismatch error
+  expect_error(RenumberTips(mp8, paste0("t", 0:5)),
+               "Missing in `tree`.*Missing in `tipOrder`")
+
+  # Missing label error
+  mp_shared <- structure(
+    list(BalancedTree(8), PectinateTree(8)),
+    TipLabel = paste0("t", 1:8),
+    class = "multiPhylo"
+  )
+  expect_error(
+    RenumberTips(mp_shared, c(paste0("t", 1:7), "t_unknown")),
+    "missing from `tipOrder`"
+  )
+})
+
 test_that("RenumberTips.multiPhylo() batch matches per-tree", {
   set.seed(7429)
   trees <- c(
