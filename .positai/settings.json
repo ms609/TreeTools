@@ -10,6 +10,9 @@
     },
     "executeCode": {
       "*": "allow"
+    },
+    "external_directory": {
+      "C:/Users/pjjg18/GitHub/actions/pkgdown/*": "allow"
     }
   },
   "model": {
