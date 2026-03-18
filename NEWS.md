@@ -2,7 +2,7 @@
 
 - `RCurl` moved from Imports to Suggests; `ReadMrBayesTrees()` uses
   `RCurl::url.exists()` when available, falling back to base R `url()` for
-  URL reachability checks (enables shinylive deployment).
+  URL checks.
 
 # TreeTools 2.1.0.9008 (2026-03-17) #
 
