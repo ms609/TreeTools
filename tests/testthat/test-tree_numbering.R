@@ -177,8 +177,10 @@ test_that("RenumberTips.multiPhylo() covers edge cases", {
   result <- RenumberTips(mp8, 8:1)
   expect_equal(TipLabels(result[[1]]), paste0("t", 8:1))
 
-  # Early return when order matches
-  expect_identical(RenumberTips(mp8, TipLabels(mp8[[1]])), mp8)
+  # No-op when order already matches (unlabelled: per-tree fallback)
+  result_noop <- RenumberTips(mp8, TipLabels(mp8[[1]]))
+  expect_equal(result_noop[[1]][["edge"]], mp8[[1]][["edge"]])
+  expect_equal(result_noop[[2]][["edge"]], mp8[[2]][["edge"]])
 
   # Duplicate error
   expect_error(RenumberTips(mp8, rep("t1", 8)), "repeated")
@@ -197,6 +199,38 @@ test_that("RenumberTips.multiPhylo() covers edge cases", {
     RenumberTips(mp_shared, c(paste0("t", 1:7), "t_unknown")),
     "missing from `tipOrder`"
   )
+})
+
+test_that("RenumberTips.multiPhylo() materializes tip.label", {
+  # TipLabel-labelled multiPhylo: individual trees should gain tip.label
+  # even when the order already matches (needed by RoguePlot and others
+  # that later remove TipLabel)
+  labs <- paste0("t", 1:6)
+  mp_labelled <- structure(
+    list(BalancedTree(6), PectinateTree(6)),
+    TipLabel = labs,
+    class = "multiPhylo"
+  )
+  result <- RenumberTips(mp_labelled, labs)
+  attr(result, "TipLabel") <- NULL
+  # After removing TipLabel, individual trees should still have tip.label
+  expect_equal(result[[1]][["tip.label"]], labs)
+  expect_equal(result[[2]][["tip.label"]], labs)
+})
+
+test_that("RenumberTips.multiPhylo() handles unlabelled different orderings", {
+  # Trees with different tip orderings in an unlabelled multiPhylo
+  tree_abc <- read.tree(text = "(a, (b, c));")
+  tree_cab <- read.tree(text = "(c, (a, b));")
+  mp_mixed <- structure(list(tree_abc, tree_cab), class = "multiPhylo")
+
+  result <- RenumberTips(mp_mixed, c("a", "b", "c"))
+  per_tree <- lapply(mp_mixed, RenumberTips, c("a", "b", "c"))
+
+  expect_equal(result[[1]][["edge"]], per_tree[[1]][["edge"]])
+  expect_equal(result[[2]][["edge"]], per_tree[[2]][["edge"]])
+  expect_equal(result[[1]][["tip.label"]], c("a", "b", "c"))
+  expect_equal(result[[2]][["tip.label"]], c("a", "b", "c"))
 })
 
 test_that("RenumberTips.multiPhylo() batch matches per-tree", {
