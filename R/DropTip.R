@@ -281,7 +281,11 @@ DropTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (all(vapply(tree, inherits, logical(1), "phylo"))) {
     DropTip.multiPhylo(tree, tip, preorder, check)
   } else {
-    NextMethod()
+    stop("Expected a list of `phylo` objects, but not all elements inherit ",
+         "from \"phylo\".\n  Classes found: ",
+         paste(unique(vapply(tree, function(x) paste(class(x), collapse = "/"),
+                             character(1))),
+               collapse = ", "))
   }
 }
 
@@ -291,7 +295,11 @@ KeepTip.list <- function(tree, tip, preorder = TRUE, check = TRUE) {
   if (all(vapply(tree, inherits, logical(1), "phylo"))) {
     KeepTip.multiPhylo(tree, tip, preorder, check)
   } else {
-    NextMethod()
+    stop("Expected a list of `phylo` objects, but not all elements inherit ",
+         "from \"phylo\".\n  Classes found: ",
+         paste(unique(vapply(tree, function(x) paste(class(x), collapse = "/"),
+                             character(1))),
+               collapse = ", "))
   }
 }
 

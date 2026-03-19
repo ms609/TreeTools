@@ -250,3 +250,9 @@ test_that("KeepTipPreorder()/Postorder()", {
   expect_equal(KeepTipPostorder(post, !logical(9)),
                post)
 })
+
+test_that("DropTip.list / KeepTip.list error on non-phylo elements", {
+  bad_list <- list(list(a = 1), list(b = 2))
+  expect_error(DropTip(bad_list, "x"), "not all elements inherit")
+  expect_error(KeepTip(bad_list, "x"), "not all elements inherit")
+})

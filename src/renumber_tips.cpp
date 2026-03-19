@@ -2,8 +2,9 @@
 using namespace Rcpp;
 
 // Apply a precomputed tip permutation to every tree in batch.
-// Returns a plain list of modified phylo objects (shallow-cloned, with new
+// Returns a list of modified phylo objects (cloned, with new
 // edge matrices, updated tip.label, and "preorder" downgraded to "cladewise").
+// Preserves the class attribute (typically "phylo") on each element.
 // [[Rcpp::export]]
 Rcpp::List renumber_tips_batch(
     Rcpp::List trees,
@@ -15,10 +16,11 @@ Rcpp::List renumber_tips_batch(
   Rcpp::List result(n_trees);
 
   for (int i = 0; i < n_trees; ++i) {
-    // Shallow-clone the phylo list so other components are shared
-    Rcpp::List tree_i = Rcpp::clone(
-      Rcpp::as<Rcpp::List>(trees[i])
-    );
+    SEXP orig = trees[i];
+    SEXP orig_class = Rf_getAttrib(orig, R_ClassSymbol);
+
+    // Clone the phylo list (as<List> may strip class; restored below)
+    Rcpp::List tree_i = Rcpp::clone(Rcpp::as<Rcpp::List>(orig));
 
     // Clone and permute the edge matrix
     Rcpp::IntegerMatrix edge = Rcpp::clone(
@@ -42,6 +44,12 @@ Rcpp::List renumber_tips_batch(
       if (ord[0] == "preorder") {
         tree_i.attr("order") = Rcpp::CharacterVector::create("cladewise");
       }
+    }
+
+    // Restore class last, after all modifications, to ensure it sticks.
+    // Use Rf_setAttrib on the underlying SEXP to bypass Rcpp wrappers.
+    if (orig_class != R_NilValue) {
+      Rf_setAttrib(Rcpp::wrap(tree_i), R_ClassSymbol, orig_class);
     }
 
     result[i] = tree_i;

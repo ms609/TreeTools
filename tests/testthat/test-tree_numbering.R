@@ -218,6 +218,19 @@ test_that("RenumberTips.multiPhylo() materializes tip.label", {
   expect_equal(result[[2]][["tip.label"]], labs)
 })
 
+test_that("RenumberTips.multiPhylo() preserves phylo class on elements", {
+  labs <- paste0("t", 1:6)
+  mp <- structure(
+    list(BalancedTree(6), PectinateTree(6)),
+    TipLabel = labs,
+    class = "multiPhylo"
+  )
+  result <- RenumberTips(mp, rev(labs))
+  # Each element should retain class "phylo", not be downgraded to "list"
+  expect_s3_class(.subset2(result, 1), "phylo")
+  expect_s3_class(.subset2(result, 2), "phylo")
+})
+
 test_that("RenumberTips.multiPhylo() handles unlabelled different orderings", {
   # Trees with different tip orderings in an unlabelled multiPhylo
   tree_abc <- read.tree(text = "(a, (b, c));")
