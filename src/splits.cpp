@@ -31,37 +31,15 @@ inline void check_16_bit(double x) {
   }
 }
 
+// Core edge-to-splits computation; assumes validated inputs with n_tip >= 1.
 // Edges must be listed in 'strict' postorder, i.e. two-by-two
-// [[Rcpp::export]]
-Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
-                                   const Rcpp::IntegerVector& order,
-                                   const Rcpp::IntegerVector& nTip) {
-  
-  // Check input is valid
-  if (edge.cols() != 2) {
-    Rcpp::stop("Edge matrix must contain two columns");
-  }
-  
+static Rcpp::RawMatrix edge_to_splits_impl(
+    const Rcpp::IntegerMatrix& edge,
+    const Rcpp::IntegerVector& order,
+    const uintx n_tip
+) {
   const uintx n_edge = edge.rows();
-  if (n_edge + 1 >= NOT_TRIVIAL) {
-    Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
-               "Contact maintainer for advice");                                // # nocov
-  }
-  
-  if (nTip[0] < 1) {
-    if (nTip[0] == 0) {
-      return RawMatrix(0, 0);
-    } else {
-      Rcpp::stop("Tree must contain non-negative number of tips.");
-    }
-  }
-  
-  if (n_edge != static_cast<uintx>(order.length())) {
-    Rcpp::stop("Length of `order` must equal number of edges");
-  }
-  
   const uintx n_node = n_edge + 1;
-  const uintx n_tip = nTip[0];
   const uintx n_bin = ((n_tip - 1) / BIN_SIZE) + 1;
   
   if (n_edge == n_tip || n_tip < 4) {
@@ -137,6 +115,85 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   }
   
   rownames(ret) = names;
+  return ret;
+}
+
+// [[Rcpp::export]]
+Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
+                                   const Rcpp::IntegerVector& order,
+                                   const Rcpp::IntegerVector& nTip) {
+  
+  // Check input is valid
+  if (edge.cols() != 2) {
+    Rcpp::stop("Edge matrix must contain two columns");
+  }
+  
+  const uintx n_edge = edge.rows();
+  if (n_edge + 1 >= NOT_TRIVIAL) {
+    Rcpp::stop("Too many edges in tree for edge_to_splits: "                    // # nocov
+               "Contact maintainer for advice");                                // # nocov
+  }
+  
+  if (nTip[0] < 1) {
+    if (nTip[0] == 0) {
+      return RawMatrix(0, 0);
+    } else {
+      Rcpp::stop("Tree must contain non-negative number of tips.");
+    }
+  }
+  
+  if (n_edge != static_cast<uintx>(order.length())) {
+    Rcpp::stop("Length of `order` must equal number of edges");
+  }
+  
+  return edge_to_splits_impl(edge, order, static_cast<uintx>(nTip[0]));
+}
+
+// Batch version: single C++ call for N trees sharing the same tip count.
+// [[Rcpp::export]]
+Rcpp::List cpp_edge_to_splits_batch(
+    const Rcpp::List& edge_list,
+    const Rcpp::List& order_list,
+    const int n_tip
+) {
+  const int n_tree = edge_list.size();
+  if (n_tree != order_list.size()) {
+    Rcpp::stop("`edge_list` and `order_list` must have the same length");
+  }
+  if (n_tip < 1) {
+    if (n_tip == 0) {
+      Rcpp::List ret(n_tree);
+      for (int i = 0; i < n_tree; ++i) {
+        ret[i] = RawMatrix(0, 0);
+      }
+      return ret;
+    } else {
+      Rcpp::stop("Tree must contain non-negative number of tips.");
+    }
+  }
+  
+  Rcpp::List ret(n_tree);
+  const uintx nt = static_cast<uintx>(n_tip);
+  
+  for (int i = 0; i < n_tree; ++i) {
+    const IntegerMatrix edge = edge_list[i];
+    const IntegerVector order = order_list[i];
+    
+    if (edge.cols() != 2) {
+      Rcpp::stop("Edge matrix %d must contain two columns", i + 1);
+    }
+    const uintx n_edge = edge.rows();
+    if (n_edge + 1 >= NOT_TRIVIAL) {
+      Rcpp::stop("Too many edges in tree %d for edge_to_splits", i + 1);   // # nocov
+    }
+    if (n_edge != static_cast<uintx>(order.length())) {
+      Rcpp::stop("Length of `order` must equal number of edges in tree %d",
+                  i + 1);
+    }
+    
+    ret[i] = edge_to_splits_impl(edge, order, nt);
+  }
+  
   return ret;
 }
 

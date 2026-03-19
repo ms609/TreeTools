@@ -1,3 +1,11 @@
+# TreeTools 2.2.0.9001 #
+
+## Performance
+
+- `as.Splits.multiPhylo()` uses a batch C++ path (`cpp_edge_to_splits_batch`)
+  when all trees share the same tip label order, eliminating per-tree R→C++
+  overhead.
+
 # TreeTools 2.2.0 (2026-03-18) #
 
 ## New functionality

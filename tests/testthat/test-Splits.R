@@ -151,6 +151,27 @@ test_that("as.Splits.multiPhylo()", {
 
   expect_equal(as.Splits(randomTrees[[1]]),
                as.Splits(randomTrees)[[1]])
+  
+  # Batch path: uniform labels, asSplits = FALSE
+  rawResults <- as.Splits(randomTrees, asSplits = FALSE)
+  for (i in seq_along(randomTrees)) {
+    expect_equal(rawResults[[i]],
+                 as.Splits(randomTrees[[i]], asSplits = FALSE))
+  }
+  
+  # Preorder trees also hit the batch path
+  preorderTrees <- lapply(randomTrees, Preorder)
+  class(preorderTrees) <- "multiPhylo"
+  expect_equal(as.Splits(preorderTrees)[[3]],
+               as.Splits(preorderTrees[[3]]))
+  
+  # Fallback: trees with different tip label order require renumbering
+  relabelled <- randomTrees
+  relabelled[[1]] <- RenumberTips(relabelled[[1]], rev(seq_len(11L)))
+  fallbackResults <- as.Splits(relabelled)
+  expect_equal(as.Splits(relabelled[[2]],
+                          tipLabels = unique(unlist(TipLabels(relabelled)))),
+               fallbackResults[[2]])
 })
 
 test_that("as.Splits.Splits()", {

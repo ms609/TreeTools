@@ -325,6 +325,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// cpp_edge_to_splits_batch
+Rcpp::List cpp_edge_to_splits_batch(const Rcpp::List& edge_list, const Rcpp::List& order_list, const int n_tip);
+RcppExport SEXP _TreeTools_cpp_edge_to_splits_batch(SEXP edge_listSEXP, SEXP order_listSEXP, SEXP n_tipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type edge_list(edge_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type order_list(order_listSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_tip(n_tipSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_edge_to_splits_batch(edge_list, order_list, n_tip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // duplicated_splits
 LogicalVector duplicated_splits(const RawMatrix splits, const LogicalVector fromLast);
 RcppExport SEXP _TreeTools_duplicated_splits(SEXP splitsSEXP, SEXP fromLastSEXP) {
@@ -548,6 +561,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_path_lengths", (DL_FUNC) &_TreeTools_path_lengths, 3},
     {"_TreeTools_renumber_tips_batch", (DL_FUNC) &_TreeTools_renumber_tips_batch, 4},
     {"_TreeTools_cpp_edge_to_splits", (DL_FUNC) &_TreeTools_cpp_edge_to_splits, 3},
+    {"_TreeTools_cpp_edge_to_splits_batch", (DL_FUNC) &_TreeTools_cpp_edge_to_splits_batch, 3},
     {"_TreeTools_duplicated_splits", (DL_FUNC) &_TreeTools_duplicated_splits, 2},
     {"_TreeTools_mask_splits", (DL_FUNC) &_TreeTools_mask_splits, 1},
     {"_TreeTools_not_splits", (DL_FUNC) &_TreeTools_not_splits, 1},
