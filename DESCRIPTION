@@ -1,6 +1,6 @@
 Package: TreeTools
 Title: Create, Modify and Analyse Phylogenetic Trees
-Version: 2.2.0
+Version: 2.2.0.9001
 Authors@R: c(
   person("Martin R.", 'Smith', role = c("aut", "cre", "cph"), 
          email = "martin.smith@durham.ac.uk",
@@ -45,7 +45,6 @@ Imports:
   methods,
   PlotTools,
   Rdpack (>= 2.6.6),
-  stringi,
 Suggests:
   RCurl,
   spelling,

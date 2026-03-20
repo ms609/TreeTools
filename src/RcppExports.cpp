@@ -149,6 +149,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// splits_to_char
+CharacterVector splits_to_char(const LogicalMatrix membership, const CharacterVector labels);
+RcppExport SEXP _TreeTools_splits_to_char(SEXP membershipSEXP, SEXP labelsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const LogicalMatrix >::type membership(membershipSEXP);
+    Rcpp::traits::input_parameter< const CharacterVector >::type labels(labelsSEXP);
+    rcpp_result_gen = Rcpp::wrap(splits_to_char(membership, labels));
+    return rcpp_result_gen;
+END_RCPP
+}
 // first_matching_split_pair
 IntegerVector first_matching_split_pair(const RawMatrix x, const RawMatrix table);
 RcppExport SEXP _TreeTools_first_matching_split_pair(SEXP xSEXP, SEXP tableSEXP) {
@@ -534,6 +546,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_descendant_edges", (DL_FUNC) &_TreeTools_descendant_edges, 3},
     {"_TreeTools_descendant_edges_single", (DL_FUNC) &_TreeTools_descendant_edges_single, 5},
     {"_TreeTools_descendant_tips", (DL_FUNC) &_TreeTools_descendant_tips, 3},
+    {"_TreeTools_splits_to_char", (DL_FUNC) &_TreeTools_splits_to_char, 2},
     {"_TreeTools_first_matching_split_pair", (DL_FUNC) &_TreeTools_first_matching_split_pair, 2},
     {"_TreeTools_first_matching_split_index", (DL_FUNC) &_TreeTools_first_matching_split_index, 2},
     {"_TreeTools_num_to_parent", (DL_FUNC) &_TreeTools_num_to_parent, 2},
