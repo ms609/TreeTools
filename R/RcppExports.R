@@ -45,6 +45,10 @@ descendant_tips <- function(parent, child, postorder) {
     .Call(`_TreeTools_descendant_tips`, parent, child, postorder)
 }
 
+splits_to_char <- function(membership, labels) {
+    .Call(`_TreeTools_splits_to_char`, membership, labels)
+}
+
 first_matching_split_pair <- function(x, table) {
     .Call(`_TreeTools_first_matching_split_pair`, x, table)
 }

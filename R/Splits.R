@@ -452,17 +452,16 @@ names.Splits <- function(x) rownames(x)
 
 
 #' @family Splits operations
-#' @importFrom stringi stri_paste
 #' @export
 as.character.Splits <- function(x, ...) {
   tipLabels <- attr(x, "tip.label")
-  nTip <- attr(x, "nTip")
-
-  apply(as.logical(x), 1L, function(inSplit) {
-    stri_paste(stri_paste(tipLabels[inSplit], collapse = " "), " | ",
-               stri_paste(tipLabels[!inSplit], collapse = " "))
-  })
-
+  if (is.null(tipLabels)) {
+    tipLabels <- paste0("t", seq_len(attr(x, "nTip")))
+  }
+  logx <- as.logical(x)
+  ret <- splits_to_char(logx, tipLabels)
+  names(ret) <- rownames(logx)
+  ret
 }
 
 #' @family Splits operations

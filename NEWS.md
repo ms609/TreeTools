@@ -1,3 +1,15 @@
+# TreeTools 2.2.0.9001 #
+
+## New functionality
+
+- `Paste0()` provides a fast Rcpp-backed drop-in for `paste0()` / `stri_paste()`
+  with `NA` propagation. Exported for use by downstream packages.
+
+## Performance
+
+- Drop `stringi` dependency.
+- `as.character.Splits()` reimplemented in C++; ~3× faster on 200-tip trees.
+
 # TreeTools 2.2.0 (2026-03-18) #
 
 ## New functionality
