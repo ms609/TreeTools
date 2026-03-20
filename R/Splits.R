@@ -119,40 +119,7 @@ edge_to_splits <- function(edge, edgeOrder, tipLabels = NULL, asSplits = TRUE,
 #' @export
 as.Splits.multiPhylo <- function(x, tipLabels = unique(unlist(TipLabels(x))),
                                   asSplits = TRUE, ...) {
-  nTip <- length(tipLabels)
-  
-  # Batch path: single C++ call when all trees share the same tip label order
-  treeLabels <- TipLabels(x)
-  allMatch <- all(vapply(treeLabels, identical, logical(1), tipLabels))
-  
-  if (allMatch && length(x) > 0L) {
-    edges <- lapply(x, `[[`, "edge")
-    # cpp_edge_to_splits_batch expects 0-based order indices
-    orders <- lapply(x, function(tr) {
-      edge <- tr[["edge"]]
-      nEdge <- nrow(edge)
-      ord <- attr(tr, "order")[[1]]
-      if (length(ord) == 0) {
-        postorder_order(edge) - 1L
-      } else {
-        switch(ord,
-               "preorder" = rev(seq_len(nEdge)) - 1L,
-               "postorder" = seq_len(nEdge) - 1L,
-               postorder_order(edge) - 1L)
-      }
-    })
-    rawList <- cpp_edge_to_splits_batch(edges, orders, nTip)
-    
-    if (asSplits) {
-      lapply(rawList, function(sp) {
-        structure(sp, nTip = nTip, tip.label = tipLabels, class = "Splits")
-      })
-    } else {
-      rawList
-    }
-  } else {
-    lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
-  }
+  lapply(x, as.Splits.phylo, tipLabels = tipLabels, asSplits = asSplits)
 }
 
 #' @rdname Splits

@@ -101,10 +101,6 @@ cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
 
-cpp_edge_to_splits_batch <- function(edge_list, order_list, n_tip) {
-    .Call(`_TreeTools_cpp_edge_to_splits_batch`, edge_list, order_list, n_tip)
-}
-
 duplicated_splits <- function(splits, fromLast) {
     .Call(`_TreeTools_duplicated_splits`, splits, fromLast)
 }
