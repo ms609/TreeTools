@@ -266,6 +266,12 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
         stop("STATELABELS block missing closing semicolon;")
       }
       stateLines <- lines[stateStart:stateEnd]
+      # MorphoBank sometimes uses a standalone ';' to close the block rather
+      # than terminating the last character entry with ';' directly. Exclude
+      # it so it isn't counted as a character terminator.
+      if (stateLines[length(stateLines)] == ";") {
+        stateLines <- stateLines[-length(stateLines)]
+      }
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
       if (length(stateStarts) != length(stateEnds)) {
