@@ -1,4 +1,5 @@
 #include <Rcpp/Lightest>
+#include <Rcpp/Interrupt.h> /* for Rcpp::checkUserInterrupt() */
 using namespace Rcpp;
 
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
@@ -6,6 +7,7 @@ using namespace Rcpp;
 
 #include <algorithm> /* for fill */
 #include <array> /* for array */
+#include <chrono> /* for steady_clock (interrupt timing) */
 #include <string> /* for string (hash key) */
 #include <unordered_map> /* for unordered_map */
 
@@ -57,8 +59,18 @@ RawMatrix calc_consensus_tree(
 
   int32 i = 0;
   int32 splits_found = 0;
+  auto lastInterrupt = std::chrono::steady_clock::now();
   
   do {
+    // ~1 s user-interrupt check
+    {
+      const auto now = std::chrono::steady_clock::now();
+      if (std::chrono::duration_cast<std::chrono::seconds>(
+            now - lastInterrupt).count() >= 1) {
+        lastInterrupt = now;
+        Rcpp::checkUserInterrupt();
+      }
+    }
     if (tables[i].NOSWX(ntip_3)) {
       continue;
     }
@@ -187,8 +199,18 @@ List calc_split_frequencies(
 
   // Reusable key buffer — avoids per-split heap allocation
   std::string key(nbin, '\0');
+  auto lastInterrupt = std::chrono::steady_clock::now();
 
   for (int32 i = 0; i < n_trees; ++i) {
+    // ~1 s user-interrupt check
+    {
+      const auto now = std::chrono::steady_clock::now();
+      if (std::chrono::duration_cast<std::chrono::seconds>(
+            now - lastInterrupt).count() >= 1) {
+        lastInterrupt = now;
+        Rcpp::checkUserInterrupt();
+      }
+    }
     if (tables[i].NOSWX(ntip_3)) {
       continue;
     }

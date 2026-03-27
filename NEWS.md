@@ -1,9 +1,14 @@
-# TreeTools 2.2.0.9001 #
+# TreeTools 2.2.0.9002 #
 
 ## New functionality
 
 - `Paste0()` provides a fast Rcpp-backed drop-in for `paste0()` / `stri_paste()`
   with `NA` propagation. Exported for use by downstream packages.
+
+## Usability
+
+- `Consensus()` and `SplitFrequency()` now respond to user interrupts during
+  long-running computations.
 
 ## Performance
 
