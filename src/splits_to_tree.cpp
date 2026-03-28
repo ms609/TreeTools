@@ -31,11 +31,13 @@ IntegerMatrix splits_to_edge(const RawMatrix splits, const IntegerVector nTip) {
   const SplitList x(splits);
   
   // Decide whether to use stack or heap allocation based on tree size
-  const bool use_heap = (n_tip > SL_MAX_TIPS) || (x.n_splits > SL_MAX_SPLITS);
+  // Use stack arrays for small trees, heap for large
+  constexpr int32 stack_tip_lim = SL_BIN_SIZE * SL_STACK_BINS;
+  const bool use_heap = (n_tip > stack_tip_lim) || (x.n_splits > SL_STACK_SPLITS);
   
   // Stack allocation for small trees (fast path)
-  alignas(64) std::array<int32, SL_MAX_TIPS + SL_MAX_SPLITS> stack_parent{};
-  alignas(64) std::array<int32, SL_MAX_TIPS> stack_patriarch{};
+  alignas(64) std::array<int32, stack_tip_lim + SL_STACK_SPLITS> stack_parent{};
+  alignas(64) std::array<int32, stack_tip_lim> stack_patriarch{};
   
   // Heap allocation for large trees
   std::vector<int32> heap_parent;
