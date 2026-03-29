@@ -527,6 +527,7 @@ BEGIN_RCPP
 END_RCPP
 }
 
+RcppExport SEXP _TreeTools_is_valid_preorder(SEXP, SEXP, SEXP);
 RcppExport SEXP _TreeTools_keep_tip(SEXP, SEXP);
 RcppExport SEXP _TreeTools_postorder_order(SEXP);
 RcppExport SEXP _TreeTools_preorder_edges_and_nodes(SEXP, SEXP);
@@ -577,6 +578,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_tips_in_splits", (DL_FUNC) &_TreeTools_tips_in_splits, 1},
     {"_TreeTools_edge_to_rooted_shape", (DL_FUNC) &_TreeTools_edge_to_rooted_shape, 3},
     {"_TreeTools_rooted_shape_to_edge", (DL_FUNC) &_TreeTools_rooted_shape_to_edge, 2},
+    {"_TreeTools_is_valid_preorder",        (DL_FUNC) &_TreeTools_is_valid_preorder,        3},
     {"_TreeTools_keep_tip",                 (DL_FUNC) &_TreeTools_keep_tip,                 2},
     {"_TreeTools_postorder_order",          (DL_FUNC) &_TreeTools_postorder_order,          1},
     {"_TreeTools_preorder_edges_and_nodes", (DL_FUNC) &_TreeTools_preorder_edges_and_nodes, 2},

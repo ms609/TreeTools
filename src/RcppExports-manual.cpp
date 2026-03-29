@@ -70,6 +70,19 @@ RcppExport SEXP _TreeTools_root_binary(SEXP edgeSEXP, SEXP outgroupSEXP) {
   return rcpp_result_gen;
   END_RCPP
 }
+// is_valid_preorder
+RcppExport SEXP _TreeTools_is_valid_preorder(SEXP parentSEXP,
+                                              SEXP childSEXP,
+                                              SEXP nTipSEXP) {
+  BEGIN_RCPP
+  Rcpp::RObject rcpp_result_gen;
+  Rcpp::traits::input_parameter< const IntegerVector& >::type parent(parentSEXP);
+  Rcpp::traits::input_parameter< const IntegerVector& >::type child(childSEXP);
+  Rcpp::traits::input_parameter< int >::type n_tip(nTipSEXP);
+  rcpp_result_gen = Rcpp::wrap(TreeTools::is_valid_preorder(parent, child, n_tip));
+  return rcpp_result_gen;
+  END_RCPP
+}
 // root_on_node
 RcppExport SEXP _TreeTools_root_on_node(SEXP phySEXP, SEXP outgroupSEXP) {
   BEGIN_RCPP

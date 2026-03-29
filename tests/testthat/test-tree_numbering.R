@@ -439,3 +439,33 @@ test_that("Malformed trees don't cause crashes", {
   expect_postorder(reordered)
 })
 
+test_that("is_valid_preorder() detects valid and invalid orderings", {
+  tree <- Preorder(BalancedTree(8))
+  edge <- tree[["edge"]]
+  nTip <- NTip(tree)
+
+  expect_true(is_valid_preorder(edge[, 1], edge[, 2], nTip))
+
+  # Swap two edges so a child appears before its parent
+  bad_edge <- edge
+  bad_edge[c(2, 3), ] <- bad_edge[c(3, 2), ]
+  expect_false(is_valid_preorder(bad_edge[, 1], bad_edge[, 2], nTip))
+})
+
+test_that("Preorder() catches false preorder attribute", {
+  tree <- Preorder(BalancedTree(6))
+  good_edge <- tree[["edge"]]
+
+  # Corrupt the edge ordering while keeping the attribute
+  bad_tree <- tree
+  bad_tree[["edge"]][c(2, 3), ] <- bad_tree[["edge"]][c(3, 2), ]
+  expect_equal(attr(bad_tree, "order"), "preorder")
+
+  # Preorder() should detect the corruption and reorder
+
+  fixed <- Preorder(bad_tree)
+  expect_true(is_valid_preorder(
+    fixed[["edge"]][, 1], fixed[["edge"]][, 2], NTip(fixed)
+  ))
+})
+
