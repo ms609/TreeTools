@@ -13,14 +13,18 @@ using splitbit = uint_fast64_t;
 
 #define R_BIN_SIZE int16(8)
 #define SL_BIN_SIZE int16(64)
-#define SL_MAX_BINS int16(32)
+#define SL_MAX_BINS int16(512)
 
-/* * Stack allocation limits (Legacy support for speed)
- * Trees smaller than this will use stack arrays.
- * Trees larger will trigger heap allocation.
- */
-#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 2048
+#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 32768
 #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) 
+
+/* Stack allocation thresholds.
+ * Trees with n_splits <= SL_STACK_SPLITS AND n_bins <= SL_STACK_BINS
+ * use fast stack arrays; larger trees fall back to heap allocation.
+ * Kept at the pre-v1.16 values to avoid bloating SplitList objects.
+ */
+#define SL_STACK_BINS int16(32)
+#define SL_STACK_SPLITS int16(SL_BIN_SIZE * SL_STACK_BINS - 3) // 2045
 
 #define INLASTBIN(n, size) int16((size) - int16((size) - int16((n) % (size))) % (size))
 #define INSUBBIN(bin, offset)                                  \
@@ -75,10 +79,10 @@ namespace TreeTools {
     splitbit** state;
   
   private:
-    /* STACK STORAGE (Fast path for small trees) */
-    int32 stack_in_split[SL_MAX_SPLITS];
-    splitbit stack_state[SL_MAX_SPLITS][SL_MAX_BINS];
-    splitbit* stack_rows[SL_MAX_SPLITS];
+    /* STACK STORAGE (Fast path for small trees ≤ SL_STACK_SPLITS splits) */
+    int32 stack_in_split[SL_STACK_SPLITS];
+    splitbit stack_state[SL_STACK_SPLITS][SL_STACK_BINS];
+    splitbit* stack_rows[SL_STACK_SPLITS];
     
     /* HEAP STORAGE (Large trees) */
     std::vector<int32> heap_in_split;
@@ -102,7 +106,7 @@ namespace TreeTools {
       ASSERT(n_input_bins > 0);
       n_bins = int32(n_input_bins + R_BIN_SIZE - 1) / input_bins_per_bin;
       
-      bool use_heap = (n_splits > SL_MAX_SPLITS) || (n_bins > SL_MAX_BINS);
+      bool use_heap = (n_splits > SL_STACK_SPLITS) || (n_bins > SL_STACK_BINS);
       
       if (use_heap) {
         heap_in_split.resize(n_splits, 0);
