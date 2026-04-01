@@ -13,9 +13,10 @@ using splitbit = uint_fast64_t;
 
 #define R_BIN_SIZE int16(8)
 #define SL_BIN_SIZE int16(64)
-#define SL_MAX_BINS int16(512)
+#define SL_MAX_BINS int16(511)
 
-#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 32768
+// Keep SL_MAX_TIPS + 2 within int16 range (32767) for downstream packages
+#define SL_MAX_TIPS (SL_BIN_SIZE * SL_MAX_BINS) // 32704
 #define SL_MAX_SPLITS (SL_MAX_TIPS - 3) 
 
 /* Stack allocation thresholds.
