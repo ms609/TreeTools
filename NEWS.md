@@ -1,9 +1,11 @@
-# TreeTools 2.2.0.9002 #
+# TreeTools 2.2.0.9003 #
 
 ## New functionality
 
 - `Paste0()` provides a fast Rcpp-backed drop-in for `paste0()` / `stri_paste()`
   with `NA` propagation. Exported for use by downstream packages.
+- `Preorder()` now validates edge order for trees with a "preorder" order attribute.
+- Split lists support 32768 leaves.
 
 ## Usability
 

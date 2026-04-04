@@ -439,11 +439,12 @@ Preorder <- function(tree, topologyOnly = FALSE) UseMethod("Preorder")
 #' @export
 Preorder.phylo <- function(tree, topologyOnly = FALSE) {
   startOrder <- attr(tree, "order")
-  if (length(startOrder) && startOrder == "preorder") {
-    # length(x) is twice as fast as !is.null(x)
-    tree
+  edge <- tree[["edge"]]
+  if (length(startOrder) && # length(x) is twice as fast as !is.null(x)
+    startOrder == "preorder" && 
+    is_valid_preorder(edge[, 1], edge[, 2], length(tree[["tip.label"]]))) {
+      tree
   } else {
-    edge <- tree[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
     if (topologyOnly) {
