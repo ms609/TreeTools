@@ -213,7 +213,7 @@ as.TreeNumber(tree)
 #> Phylogenetic tree number 10 of 105 
 #>  6 tips: t1 t2 t3 t4 t5 t6
 
-# Trees with 20–51 leaves are stored as decimal strings:
+# Trees with 20--51 leaves are stored as decimal strings:
 as.TreeNumber(BalancedTree(19))  # integer64-backed
 #> Phylogenetic tree number 3259279213732796827 of 6332659870762850625 
 #>  19 tips: t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19
