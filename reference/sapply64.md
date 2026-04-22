@@ -76,7 +76,7 @@ For details of the underlying functions, see
 
 ## See also
 
-[`integer64()`](https://rdrr.io/pkg/bit64/man/bit64-package.html)
+[`integer64()`](https://bit64.r-lib.org/reference/bit64-package.html)
 
 Other utility functions:
 [`ClusterTable`](https://ms609.github.io/TreeTools/reference/ClusterTable.md),

@@ -30,7 +30,7 @@ match the info here.
 - Install TreeTools dependencies:
 
   ``` bash
-  sudo R -e "install.packages(c('ape', 'bit64', 'lifecycle', 'fastmatch', 'RCurl', 'Rdpack', 'stringi', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"
+  sudo R -e "install.packages(c('ape', 'bit64', 'lifecycle', 'fastmatch', 'RCurl', 'Rdpack', 'PlotTools'), repos='https://cran.r-project.org/', dependencies=TRUE)"
   ```
 
 ### Building and Checking

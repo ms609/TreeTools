@@ -1,6 +1,25 @@
 # Changelog
 
+## TreeTools 2.3.0 (2026-04-22)
+
+### Performance
+
+- Drop `stringi` dependency.
+- `as.character.Splits()` re-implemented in C++; ~3× faster on 200-tip
+  trees.
+
+### Usability
+
+- [`Consensus()`](https://ms609.github.io/TreeTools/reference/Consensus.md)
+  and
+  [`SplitFrequency()`](https://ms609.github.io/TreeTools/reference/SplitFrequency.md)
+  now respond to user interrupts during long-running computations.
+- `SL_MAX_TIPS` compile-time constant increased to 32704, allowing
+  support for larger trees.
+
 ## TreeTools 2.2.0 (2026-03-18)
+
+CRAN release: 2026-03-20
 
 ### New functionality
 

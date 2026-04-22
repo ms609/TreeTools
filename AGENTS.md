@@ -1,5 +1,11 @@
 # NA
 
+> **Before starting work in this directory, read
+> [`../AGENTS.md`](https://ms609.github.io/AGENTS.md)** for multi-agent
+> coordination rules, build/test infrastructure, GHA workflows, and
+> worktree discipline. That file is the authoritative reference for all
+> cross-package agent operations.
+
 TreeTools underpins a hierarchy of packages, all with the same
 maintainer; these draw in C++ headers and many exported R functions.
 
