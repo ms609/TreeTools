@@ -171,6 +171,7 @@ jobs:
           mkdir -p ~/.R
           echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
           echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
+          echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
           
       - name: Install vdiffr dependencies (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
