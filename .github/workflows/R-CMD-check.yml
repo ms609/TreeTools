@@ -165,13 +165,22 @@ jobs:
           libharfbuzz-dev \
           libfribidi-dev
           
-      - name: Force C++17 (R 4.0)
-        if: matrix.config.r == '4.0' && runner.os == 'Linux'
+      - name: Force C++17 and Large Memory Model (Linux)
+        if: runner.os == 'Linux' && (matrix.config.r == '4.0' || matrix.config.r == 'devel')
         run: |
           mkdir -p ~/.R
-          echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
-          echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
+          echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
+          echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
+          echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
+          echo "CXX17FLAGS += -mcmodel=large" >> ~/.R/Makevars
           echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
+
+          # Maintain R 4.0 specific standard overrides
+          if [[ "${{ matrix.config.r }}" == "4.0" ]]; then
+            echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
+            echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
+          fi
+        shell: bash
           
       - name: Install vdiffr dependencies (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
