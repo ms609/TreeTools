@@ -1,19 +1,17 @@
-# TreeTools 2.2.0.9002 #
+# TreeTools 2.3.0 (2026-04-22) #
 
-## New functionality
+## Performance
 
-- `Paste0()` provides a fast Rcpp-backed drop-in for `paste0()` / `stri_paste()`
-  with `NA` propagation. Exported for use by downstream packages.
+- Drop `stringi` dependency.
+- `as.character.Splits()` re-implemented in C++; ~3× faster on 200-tip trees.
 
 ## Usability
 
 - `Consensus()` and `SplitFrequency()` now respond to user interrupts during
   long-running computations.
+- `SL_MAX_TIPS` compile-time constant increased to 32704, allowing support
+  for larger trees.
 
-## Performance
-
-- Drop `stringi` dependency.
-- `as.character.Splits()` reimplemented in C++; ~3× faster on 200-tip trees.
 
 # TreeTools 2.2.0 (2026-03-18) #
 
