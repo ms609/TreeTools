@@ -59,7 +59,7 @@ Suggests:
 Config/Needs/benchmark: bench, TreeDist
 Config/Needs/check: rcmdcheck, testthat
 Config/Needs/coverage: covr
-Config/Needs/memcheck: devtools
+Config/Needs/memcheck: pkgdown, testthat
 Config/Needs/metadata: codemeta
 Config/Needs/revdeps: revdepcheck
 Config/Needs/website: pkgdown
