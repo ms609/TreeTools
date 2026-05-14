@@ -93,7 +93,21 @@ RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
   # If root is simply a logical T/F, then root our tree randomly - or don't!
   if (is.logical(root)) {
     if (root) {
-      tree <- root_on_node(tree, sample.int(nTips + nodes, 1))
+      # Root uniformly on a random edge of the underlying unrooted tree.
+      # The unrooted tree has 2*nTips - 3 edges; sampling a random node
+      # (as root_on_node did previously) gives a non-uniform distribution
+      # over rooted binary trees.
+      unrooted <- UnrootTree(tree)
+      e <- unrooted[["edge"]]
+      i <- sample.int(nrow(e), 1L)
+      child <- e[i, 2L]
+      if (child <= nTips) {
+        tree <- Preorder(ape::root(unrooted, outgroup = child,
+                                   resolve.root = TRUE))
+      } else {
+        tree <- Preorder(ape::root(unrooted, node = child,
+                                   resolve.root = TRUE))
+      }
     } else {
       tree <- UnrootTree(tree)
     }

@@ -43,3 +43,24 @@ test_that("Random trees drawn from uniform distribution", {
   expect_false(is.rooted(RandomTree(6, root = FALSE)))
   expect_true(is.rooted(RandomTree(6, root = TRUE)))
 })
+
+test_that("RandomTree(root = TRUE) samples uniformly from rooted binary trees", {
+  # There are (2n-3)!! labelled rooted binary trees on n tips:
+  #   n=4: 15 trees; n=5: 105 trees.
+  # Prior to fix, root_on_node sampled nodes (not edges), giving only 3 distinct
+  # topologies at n=4.  Regression test: chi-sq GoF against uniform.
+  nReps <- 1e4
+  canon <- function(tr) paste(ape::write.tree(Preorder(tr)))
+
+  set.seed(1)
+  trees4 <- lapply(rep(4L, nReps), RandomTree, root = TRUE)
+  counts4 <- table(vapply(trees4, canon, character(1L)))
+  expect_gt(length(counts4), 10L)   # all 15 topologies reachable
+  expect_gt(chisq.test(counts4)$p.value, 0.001)
+
+  set.seed(2)
+  trees5 <- lapply(rep(5L, nReps), RandomTree, root = TRUE)
+  counts5 <- table(vapply(trees5, canon, character(1L)))
+  expect_gt(length(counts5), 50L)   # well above 0 of 105 topologies reachable
+  expect_gt(chisq.test(counts5)$p.value, 0.001)
+})
