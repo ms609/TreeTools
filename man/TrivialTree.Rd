@@ -33,28 +33,28 @@ plot(SingleTaxonTree("root") + BalancedTree(4))
 ZeroTaxonTree()
 }
 \seealso{
-Other tree manipulation: 
-\code{\link{AddTip}()},
-\code{\link{CollapseNode}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{DropTip}()},
-\code{\link{ImposeConstraint}()},
-\code{\link{KeptPaths}()},
-\code{\link{KeptVerts}()},
-\code{\link{LeafLabelInterchange}()},
-\code{\link{MakeTreeBinary}()},
-\code{\link{Renumber}()},
-\code{\link{RenumberTips}()},
-\code{\link{RenumberTree}()},
-\code{\link{RootTree}()},
-\code{\link{SortTree}()},
-\code{\link{Subtree}()},
-\code{\link{TipTimedTree}()}
+Other tree manipulation:
+\code{\link[=AddTip]{AddTip()}},
+\code{\link[=CollapseNode]{CollapseNode()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=DropTip]{DropTip()}},
+\code{\link[=ImposeConstraint]{ImposeConstraint()}},
+\code{\link[=KeptPaths]{KeptPaths()}},
+\code{\link[=KeptVerts]{KeptVerts()}},
+\code{\link[=LeafLabelInterchange]{LeafLabelInterchange()}},
+\code{\link[=MakeTreeBinary]{MakeTreeBinary()}},
+\code{\link[=Renumber]{Renumber()}},
+\code{\link[=RenumberTips]{RenumberTips()}},
+\code{\link[=RenumberTree]{RenumberTree()}},
+\code{\link[=RootTree]{RootTree()}},
+\code{\link[=SortTree]{SortTree()}},
+\code{\link[=Subtree]{Subtree()}},
+\code{\link[=TipTimedTree]{TipTimedTree()}}
 
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
 \code{\link{GenerateTree}},
-\code{\link{NJTree}()},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TreeNumber}}
 }
 \concept{tree generation functions}

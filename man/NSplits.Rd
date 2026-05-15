@@ -52,31 +52,31 @@ NSplits(PectinateTree(8))
 NSplits(as.Splits(BalancedTree(8)))
 }
 \seealso{
-Other tree properties: 
-\code{\link{Cherries}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{EdgeRatio}()},
-\code{\link{LongBranch}()},
-\code{\link{MatchEdges}()},
-\code{\link{NTip}()},
-\code{\link{NodeNumbers}()},
-\code{\link{PathLengths}()},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()},
-\code{\link{Treeness}()}
+Other tree properties:
+\code{\link[=Cherries]{Cherries()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=EdgeRatio]{EdgeRatio()}},
+\code{\link[=LongBranch]{LongBranch()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=NodeNumbers]{NodeNumbers()}},
+\code{\link[=PathLengths]{PathLengths()}},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TreeIsRooted]{TreeIsRooted()}},
+\code{\link[=Treeness]{Treeness()}}
 
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NTip}()},
-\code{\link{PolarizeSplits}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
 \code{\link{match,Splits,Splits-method}},
-\code{\link{xor}()}
+\code{\link[=xor]{xor()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

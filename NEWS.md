@@ -1,9 +1,9 @@
 # TreeTools 2.3.0.9001 (development) #
 
-## New functions
+## New features
 
-- `ReadXgroup()` parses the `xgroup` character-partition block of a TNT file,
-  returning a named integer vector mapping each character to its partition.
+- `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
+  `xgroup` partition block is present, replacing the standalone `ReadXgroup()`.
 
 # TreeTools 2.3.0 (2026-04-22) #
 

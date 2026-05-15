@@ -34,15 +34,15 @@ Consensus(as.phylo(0:2, 8))
 \code{TreeDist::ConsensusInfo()} calculates the information content of a consensus
 tree.
 
-Other consensus tree functions: 
-\code{\link{ConsensusWithout}()},
-\code{\link{RoguePlot}()}
+Other consensus tree functions:
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=RoguePlot]{RoguePlot()}}
 
-Other tree characterization functions: 
-\code{\link{CladisticInfo}()},
-\code{\link{J1Index}()},
+Other tree characterization functions:
+\code{\link[=CladisticInfo]{CladisticInfo()}},
+\code{\link[=J1Index]{J1Index()}},
 \code{\link{Stemwardness}},
-\code{\link{TotalCopheneticIndex}()}
+\code{\link[=TotalCopheneticIndex]{TotalCopheneticIndex()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

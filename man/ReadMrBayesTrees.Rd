@@ -45,8 +45,8 @@ computed using the Bayesian inference software \href{https://nbisweden.github.io
 }
 }
 \seealso{
-Other tree import functions: 
-\code{\link{ReadTntTree}()}
+Other tree import functions:
+\code{\link[=ReadTntTree]{ReadTntTree()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

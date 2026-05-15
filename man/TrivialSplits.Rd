@@ -36,10 +36,10 @@ TrivialSplits(efgh)
 summary(WithoutTrivialSplits(efgh))
 }
 \seealso{
-Other split manipulation functions: 
-\code{\link{DropTip}()},
-\code{\link{SplitConsistent}()},
-\code{\link{Subsplit}()}
+Other split manipulation functions:
+\code{\link[=DropTip]{DropTip()}},
+\code{\link[=SplitConsistent]{SplitConsistent()}},
+\code{\link[=Subsplit]{Subsplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

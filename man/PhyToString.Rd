@@ -94,10 +94,10 @@ PhyToString(phyDat, concatenate = FALSE)
 
 }
 \seealso{
-Other phylogenetic matrix conversion functions: 
-\code{\link{Decompose}()},
-\code{\link{MatrixToPhyDat}()},
-\code{\link{Reweight}()}
+Other phylogenetic matrix conversion functions:
+\code{\link[=Decompose]{Decompose()}},
+\code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}},
+\code{\link[=Reweight]{Reweight()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

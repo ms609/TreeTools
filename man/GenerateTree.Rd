@@ -81,9 +81,9 @@ plot(StarTree(LETTERS[1:10]))
 \insertAllCited()
 }
 \seealso{
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
-\code{\link{NJTree}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TreeNumber}},
 \code{\link{TrivialTree}}
 }

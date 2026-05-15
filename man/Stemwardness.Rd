@@ -86,11 +86,11 @@ RootNodeDist(RootTree(pec8, "t3"), "t3")
 \insertAllCited{}
 }
 \seealso{
-Other tree characterization functions: 
-\code{\link{CladisticInfo}()},
-\code{\link{Consensus}()},
-\code{\link{J1Index}()},
-\code{\link{TotalCopheneticIndex}()}
+Other tree characterization functions:
+\code{\link[=CladisticInfo]{CladisticInfo()}},
+\code{\link[=Consensus]{Consensus()}},
+\code{\link[=J1Index]{J1Index()}},
+\code{\link[=TotalCopheneticIndex]{TotalCopheneticIndex()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

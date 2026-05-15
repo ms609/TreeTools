@@ -23,11 +23,11 @@ RightmostCharacter("Hello, World!")
 
 }
 \seealso{
-Other string parsing functions: 
-\code{\link{EndSentence}()},
-\code{\link{MatchStrings}()},
-\code{\link{MorphoBankDecode}()},
-\code{\link{Unquote}()}
+Other string parsing functions:
+\code{\link[=EndSentence]{EndSentence()}},
+\code{\link[=MatchStrings]{MatchStrings()}},
+\code{\link[=MorphoBankDecode]{MorphoBankDecode()}},
+\code{\link[=Unquote]{Unquote()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

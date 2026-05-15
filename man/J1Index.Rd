@@ -83,11 +83,11 @@ J1Index(sym_tree2)
 \insertAllCited{}
 }
 \seealso{
-Other tree characterization functions: 
-\code{\link{CladisticInfo}()},
-\code{\link{Consensus}()},
+Other tree characterization functions:
+\code{\link[=CladisticInfo]{CladisticInfo()}},
+\code{\link[=Consensus]{Consensus()}},
 \code{\link{Stemwardness}},
-\code{\link{TotalCopheneticIndex}()}
+\code{\link[=TotalCopheneticIndex]{TotalCopheneticIndex()}}
 }
 \author{
 Rob Noble, adapted by Martin R. Smith

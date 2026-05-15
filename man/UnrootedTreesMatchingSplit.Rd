@@ -35,11 +35,11 @@ UnrootedTreesMatchingSplit(3, 2, 1, 2)
 \insertAllCited{}
 }
 \seealso{
-Other split information functions: 
-\code{\link{CharacterInformation}()},
-\code{\link{SplitInformation}()},
-\code{\link{SplitMatchProbability}()},
-\code{\link{TreesMatchingSplit}()}
+Other split information functions:
+\code{\link[=CharacterInformation]{CharacterInformation()}},
+\code{\link[=SplitInformation]{SplitInformation()}},
+\code{\link[=SplitMatchProbability]{SplitMatchProbability()}},
+\code{\link[=TreesMatchingSplit]{TreesMatchingSplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
