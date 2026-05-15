@@ -54,6 +54,14 @@ test_that("ReadTntCharacters() bare & continuation", {
   expect_equal(result["taxon_a", ], c("0", "0", "0", "1"))
 })
 
+test_that("ReadTntCharacters() taxon name on own line", {
+  mltFile <- TestFile("tnt-multiline-taxa.tnt")
+  result <- ReadTntCharacters(mltFile)
+  expect_equal(dim(result), c(3L, 8L))
+  expect_equal(rownames(result), c("Hypochilus", "Filistata", "Thaida"))
+  expect_equal(result["Hypochilus", ], c("0", "0", "1", "1", "0", "1", "0", "0"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

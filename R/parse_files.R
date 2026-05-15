@@ -61,8 +61,13 @@ ApeTime <- function(filepath, format = "double") {
 ExtractTaxa <- function(matrixLines, character_num = NULL,
                          continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
+  # Also recognise taxon-name-only lines (name without data on the same line,
+  # used e.g. in TNT files where data runs across multiple lines per taxon)
+  nameOnly.pattern <- "^[A-Za-z][^\\s]*$"
 
   taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
+  nameOnlyLines <- grepl(nameOnly.pattern, matrixLines, perl = TRUE)
+  taxonLines <- taxonLines | nameOnlyLines
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
   previousTaxon <- vapply(which(!taxonLines), function(x) {
@@ -76,6 +81,7 @@ ExtractTaxa <- function(matrixLines, character_num = NULL,
   uniqueTaxa <- unique(taxa)
 
   tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
+  tokens[nameOnlyLines] <- ""  # name-only lines carry no character data
   if (continuous) {
     tokens <- strsplit(tokens, "\\s+")
     lengths <- lengths(tokens)
