@@ -77,6 +77,9 @@ ExtractTaxa <- function(matrixLines, character_num = NULL,
 
   taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl = TRUE)
   taxa <- gsub(" ", "_", taxa, fixed=TRUE)
+  # Strip TNT @taxonomy classification suffixes (e.g. Name_@Family_Genus)
+  taxa <- sub("@\\S*$", "", taxa, perl = TRUE)
+  taxa <- sub("_+$", "", taxa, perl = TRUE)  # remove trailing underscores
   taxa[!taxonLines] <- taxa[previousTaxon]
   uniqueTaxa <- unique(taxa)
 

@@ -69,6 +69,12 @@ test_that("ReadTntCharacters() xread mid-line", {
   expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
 })
 
+test_that("ReadTntCharacters() strips @taxonomy from taxon names", {
+  ttFile <- TestFile("tnt-taxon-taxonomy.tnt")
+  result <- ReadTntCharacters(ttFile)
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
