@@ -39,6 +39,42 @@ test_that("ReadTntCharacter()", {
   expect_equal(ReadTntAsPhyDat(testFile), expectedPhyDat)
 })
 
+test_that("ReadTntCharacters() multi-line comment", {
+  mlcFile <- TestFile("tnt-multiline-comment.tnt")
+  result <- ReadTntCharacters(mlcFile)
+  expect_equal(dim(result), c(4L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c", "taxon_d"))
+})
+
+test_that("ReadTntCharacters() bare & continuation", {
+  ampFile <- TestFile("tnt-amp-continuation.tnt")
+  result <- ReadTntCharacters(ampFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+  expect_equal(result["taxon_a", ], c("0", "0", "0", "1"))
+})
+
+test_that("ReadTntCharacters() taxon name on own line", {
+  mltFile <- TestFile("tnt-multiline-taxa.tnt")
+  result <- ReadTntCharacters(mltFile)
+  expect_equal(dim(result), c(3L, 8L))
+  expect_equal(rownames(result), c("Hypochilus", "Filistata", "Thaida"))
+  expect_equal(result["Hypochilus", ], c("0", "0", "1", "1", "0", "1", "0", "0"))
+})
+
+test_that("ReadTntCharacters() xread mid-line", {
+  mxFile <- TestFile("tnt-midline-xread.tnt")
+  result <- ReadTntCharacters(mxFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
+test_that("ReadTntCharacters() strips @taxonomy from taxon names", {
+  ttFile <- TestFile("tnt-taxon-taxonomy.tnt")
+  result <- ReadTntCharacters(ttFile)
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

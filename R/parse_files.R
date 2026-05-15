@@ -61,8 +61,13 @@ ApeTime <- function(filepath, format = "double") {
 ExtractTaxa <- function(matrixLines, character_num = NULL,
                          continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
+  # Also recognise taxon-name-only lines (name without data on the same line,
+  # used e.g. in TNT files where data runs across multiple lines per taxon)
+  nameOnly.pattern <- "^[A-Za-z][^\\s]*$"
 
   taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
+  nameOnlyLines <- grepl(nameOnly.pattern, matrixLines, perl = TRUE)
+  taxonLines <- taxonLines | nameOnlyLines
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
   previousTaxon <- vapply(which(!taxonLines), function(x) {
@@ -72,10 +77,14 @@ ExtractTaxa <- function(matrixLines, character_num = NULL,
 
   taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl = TRUE)
   taxa <- gsub(" ", "_", taxa, fixed=TRUE)
+  # Strip TNT @taxonomy classification suffixes (e.g. Name_@Family_Genus)
+  taxa <- sub("@\\S*$", "", taxa, perl = TRUE)
+  taxa <- sub("_+$", "", taxa, perl = TRUE)  # remove trailing underscores
   taxa[!taxonLines] <- taxa[previousTaxon]
   uniqueTaxa <- unique(taxa)
 
   tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
+  tokens[nameOnlyLines] <- ""  # name-only lines carry no character data
   if (continuous) {
     tokens <- strsplit(tokens, "\\s+")
     lengths <- lengths(tokens)
@@ -366,6 +375,13 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   closeComment <- multilineComments[seq_len(nmlc) * 2L]
   lines[openComment] <- gsub("'.*", "", lines[openComment])
   lines[closeComment] <- gsub(".*'", "", lines[closeComment])
+  if (nmlc > 0) {
+    for (i in seq_len(nmlc)) {
+      innerStart <- openComment[i] + 1L
+      innerEnd <- closeComment[i] - 1L
+      if (innerStart <= innerEnd) lines[innerStart:innerEnd] <- ""
+    }
+  }
 
   lines <- trimws(lines)
   lines <- lines[lines != ""]
@@ -373,7 +389,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   semicolons <- grep(";", lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep("^XREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
+  xread <- grep("\\bXREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
   if (length(xread) < 1) return(NULL)
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
@@ -381,6 +397,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
             "Returning first block only.")
     xread <- xread[1]
   }
+  # If xread appears mid-line (e.g. after other TNT directives separated by ;),
+  # strip everything before the xread keyword so dimension parsing works.
+  lines[xread] <- sub("^.*\\bxread\\b", "xread", lines[xread],
+                       ignore.case = TRUE, perl = TRUE)
 
   xreadEnd <- semicolons[semicolons > xread][1]
   if (lines[xreadEnd] == ";") {
@@ -397,6 +417,8 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
                               attr(dimHit, "match.length")[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
 
+  bareAmpLines <- grep("^&\\s*$", matrixLines, perl = TRUE)
+  if (length(bareAmpLines)) matrixLines <- matrixLines[-bareAmpLines]
   ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
   if (is.null(type)) {
     if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
