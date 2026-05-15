@@ -1,0 +1,10 @@
+xread
+4 3
+&
+taxon_a 0
+&
+taxon_a 001
+taxon_b 010
+taxon_c 111
+;
+proc /;

@@ -46,6 +46,14 @@ test_that("ReadTntCharacters() multi-line comment", {
   expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c", "taxon_d"))
 })
 
+test_that("ReadTntCharacters() bare & continuation", {
+  ampFile <- TestFile("tnt-amp-continuation.tnt")
+  result <- ReadTntCharacters(ampFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+  expect_equal(result["taxon_a", ], c("0", "0", "0", "1"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

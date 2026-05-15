@@ -404,6 +404,8 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
                               attr(dimHit, "match.length")[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
 
+  bareAmpLines <- grep("^&\\s*$", matrixLines, perl = TRUE)
+  if (length(bareAmpLines)) matrixLines <- matrixLines[-bareAmpLines]
   ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
   if (is.null(type)) {
     if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
