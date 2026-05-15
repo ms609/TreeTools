@@ -39,6 +39,13 @@ test_that("ReadTntCharacter()", {
   expect_equal(ReadTntAsPhyDat(testFile), expectedPhyDat)
 })
 
+test_that("ReadTntCharacters() multi-line comment", {
+  mlcFile <- TestFile("tnt-multiline-comment.tnt")
+  result <- ReadTntCharacters(mlcFile)
+  expect_equal(dim(result), c(4L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c", "taxon_d"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

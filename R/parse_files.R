@@ -366,6 +366,13 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   closeComment <- multilineComments[seq_len(nmlc) * 2L]
   lines[openComment] <- gsub("'.*", "", lines[openComment])
   lines[closeComment] <- gsub(".*'", "", lines[closeComment])
+  if (nmlc > 0) {
+    for (i in seq_len(nmlc)) {
+      innerStart <- openComment[i] + 1L
+      innerEnd <- closeComment[i] - 1L
+      if (innerStart <= innerEnd) lines[innerStart:innerEnd] <- ""
+    }
+  }
 
   lines <- trimws(lines)
   lines <- lines[lines != ""]
