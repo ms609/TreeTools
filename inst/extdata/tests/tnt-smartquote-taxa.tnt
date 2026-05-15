@@ -1,0 +1,12 @@
+xread
+8 6
+taxon_a 01010101
+taxon_b 11001100
+‘‘Genus’’species_alpha
+00110011
+‘‘Genus’’species_beta
+10100101
+taxon_e 01100110
+taxon_f 11110000
+;
+proc /;

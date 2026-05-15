@@ -75,6 +75,16 @@ test_that("ReadTntCharacters() strips @taxonomy from taxon names", {
   expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
 })
 
+test_that("ReadTntCharacters() handles smart-quote taxon names", {
+  sqFile <- TestFile("tnt-smartquote-taxa.tnt")
+  expect_no_warning(result <- ReadTntCharacters(sqFile))
+  expect_equal(dim(result), c(6L, 8L))
+  rn <- rownames(result)
+  expect_true(any(grepl("‘", rn)))   # at least one smart-quoted name present
+  expect_equal(result["taxon_a", ], c("0", "1", "0", "1", "0", "1", "0", "1"))
+  expect_equal(result["taxon_b", ], c("1", "1", "0", "0", "1", "1", "0", "0"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

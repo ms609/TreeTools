@@ -63,7 +63,7 @@ ExtractTaxa <- function(matrixLines, character_num = NULL,
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
   # Also recognise taxon-name-only lines (name without data on the same line,
   # used e.g. in TNT files where data runs across multiple lines per taxon)
-  nameOnly.pattern <- "^[A-Za-z][^\\s]*$"
+  nameOnly.pattern <- "^[\\p{L}\\p{Pi}\\p{Pf}][^\\s]*$"
 
   taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
   nameOnlyLines <- grepl(nameOnly.pattern, matrixLines, perl = TRUE)
