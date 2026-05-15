@@ -4,6 +4,7 @@
 \alias{ReadCharacters}
 \alias{ReadTntCharacters}
 \alias{ReadTNTCharacters}
+\alias{ReadXgroup}
 \alias{ReadNotes}
 \alias{ReadAsPhyDat}
 \alias{ReadTntAsPhyDat}
@@ -26,6 +27,8 @@ ReadTNTCharacters(
   type = NULL,
   encoding = "UTF8"
 )
+
+ReadXgroup(filepath, encoding = "UTF8")
 
 ReadNotes(filepath, encoding = "UTF8")
 
@@ -70,6 +73,9 @@ function call was unsuccessful.
 
 \code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a \code{phyDat} object.
 
+\code{ReadXgroup()} returns a named integer vector of length equal to the
+number of characters in the matrix, or \code{NULL} if no \code{xread} block is found.
+
 \code{ReadNotes()} returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:
 \enumerate{
@@ -105,6 +111,17 @@ the highlighted option in the "Encoding" menu) following the example below.
 }
 \section{Functions}{
 \itemize{
+\item \code{ReadXgroup()}: Read the \code{xgroup} character-partition block
+\insertCite{Goloboff2008}{TreeTools} of a TNT file, returning a named integer
+vector that maps each character (1-indexed in R; TNT uses 0-indexing) to a
+partition.
+
+Range notation \code{A.B} in TNT denotes characters A to B inclusive (0-indexed);
+a trailing dot with no second index (\code{A.}) means character A to the last
+character in the matrix.  Characters not covered by any range receive \code{NA}.
+Names of the returned vector are the partition labels supplied in
+parentheses after the partition id, or the numeric id if no label is given.
+
 \item \code{PhyDat()}: A convenient wrapper for \pkg{phangorn}'s
 \code{phyDat()}, which converts a \strong{list} of morphological characters into a
 \code{phyDat} object.

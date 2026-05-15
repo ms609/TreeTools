@@ -112,6 +112,37 @@ test_that("TntTextToTree()", {
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
 })
 
+test_that("ReadXgroup() parses partition blocks", {
+  xg <- ReadXgroup(TestFile("tnt-xgroup.tnt"))
+  # tnt-xgroup.tnt: 6 chars; xgroup =0 (ANTERIOR) 0.2 ; xgroup =1 (POSTERIOR) 3.
+  expect_true(is.integer(xg))
+  expect_length(xg, 6L)
+  expect_equal(unname(xg), c(0L, 0L, 0L, 1L, 1L, 1L))
+  expect_equal(unname(names(xg)),
+               c("ANTERIOR", "ANTERIOR", "ANTERIOR",
+                 "POSTERIOR", "POSTERIOR", "POSTERIOR"))
+})
+
+test_that("ReadXgroup() returns NULL when no xread block", {
+  tmp <- tempfile(fileext = ".tnt")
+  on.exit(unlink(tmp), add = TRUE)
+  writeLines("proc/;", tmp)
+  expect_null(ReadXgroup(tmp))
+})
+
+test_that("ReadXgroup() returns all-NA when xread present but no xgroup", {
+  xg <- ReadXgroup(TestFile("tnt-matrix.tnt"))
+  expect_true(is.integer(xg))
+  expect_true(all(is.na(xg)))
+  expect_length(xg, 95L)  # tnt-matrix.tnt: 95 characters
+})
+
+test_that(".ExpandTntRange() handles A.B, A. and A.A", {
+  expect_equal(TreeTools:::.ExpandTntRange("1.3", 10L), c(2L, 3L, 4L))
+  expect_equal(TreeTools:::.ExpandTntRange("3.",  5L), c(4L, 5L))
+  expect_equal(TreeTools:::.ExpandTntRange("2.2", 10L), 3L)
+})
+
 test_that("ReadTntTree() NULL return", {
   expect_null(ReadTntTree(TestFile("ape-tree.nex")))
 })
