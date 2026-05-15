@@ -437,6 +437,26 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
             function(x) seq.int(from = x[1], to = x[2])))]
   }
 
+  # Some TNT files pack multiple taxa on one physical line (e.g. dromaeodat.tnt).
+  # Split such lines at boundaries between character data and the next taxon name.
+  # Boundary: a data character (digit, ?, -, ], }) immediately followed by a taxon
+  # name (letter, then eventually @). No whitespace separator between them.
+  multiTaxon <- grep(
+    "(?<=[?0-9\\-\\]\\}])[A-Za-z][^\t ]*@",
+    matrixLines, perl = TRUE
+  )
+  if (length(multiTaxon)) {
+    splitLines <- strsplit(
+      matrixLines[multiTaxon],
+      "(?<=[?0-9\\-\\]\\}])(?=[A-Za-z][^\t ]*@)",
+      perl = TRUE
+    )
+    matrixLines <- c(
+      matrixLines[-multiTaxon],
+      unlist(splitLines)
+    )
+  }
+
   tokens <- ExtractTaxa(matrixLines, character_num)
   if (nrow(tokens) != nTip) {
     warning("Extracted ", nrow(tokens), " taxa, but TNT file specifies ", nTip, # nocov
