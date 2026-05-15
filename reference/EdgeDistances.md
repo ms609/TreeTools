@@ -48,6 +48,7 @@ Other tree navigation:
 ## Examples
 
 ``` r
+
 tree <- BalancedTree(5)
 plot(tree)
 ape::edgelabels()

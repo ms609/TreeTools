@@ -9,6 +9,7 @@ A straightforward, if cumbersome, way to enter trees into R is by manual
 text entry:
 
 ``` r
+
 myTree <- ape::read.tree(text = "((A, B), ((C, D), (E, F)));")
 plot(myTree)
 ```
@@ -29,6 +30,7 @@ Beware common gotchas when entering text:
   the resultant ‘invisible nodes’ can cause R to crash.
 
 ``` r
+
 badTree <- ape::read.tree(text = "((A, B), (((C, D), ((E), F))));")
 plot(badTree)
 ape::nodelabels(bg = c(3, 3, 2, 2, 3, 3, 2))
@@ -41,6 +43,7 @@ edge lengths must be included for every edge of the tree, or they will
 be ignored.
 
 ``` r
+
 myTree <- ape::read.tree(
   text = "((A:1, B:1):2, ((C:1, D:1):2, (E:1, F:1):2):4);"
 )
@@ -59,6 +62,7 @@ file](https://ms609.github.io/TreeTools/articles/filesystem-navigation.md).
 You can load trees from a nexus file using:
 
 ``` r
+
 filename <- "my_file_name.nex"
 ape::read.nexus(filename)
 ```
@@ -70,6 +74,7 @@ option `force.multiPhylo = TRUE`. This can be useful when an unknown
 number of trees are to be processed in bulk, for example by
 
 ``` r
+
 lapply(ape::read.nexus(filename, force.multiPhylo = TRUE), ape::consensus)
 ```
 

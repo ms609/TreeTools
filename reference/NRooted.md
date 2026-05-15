@@ -96,7 +96,7 @@ Discrete Mathematics*, **3**(1), 38–47.
   
 Cavalli-Sforza LL, Edwards AWF (1967). “Phylogenetic analysis: models
 and estimation procedures.” *Evolution*, **21**(3), 550–570. ISSN
-00143820,
+00143820.
 [doi:10.1111/j.1558-5646.1967.tb03411.x](https://doi.org/10.1111/j.1558-5646.1967.tb03411.x)
 .
 

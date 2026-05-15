@@ -33,6 +33,7 @@ unweighted trees (i.e. those without edge lengths).
 Install and load the library from CRAN as follows:
 
 ``` r
+
 install.packages("TreeTools")
 library("TreeTools")
 ```
@@ -40,6 +41,7 @@ library("TreeTools")
 Install the very latest version, which may be under development, with:
 
 ``` r
+
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github("ms609/TreeTools")
 ```

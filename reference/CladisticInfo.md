@@ -69,7 +69,7 @@ Phylogeny, and Genomics*, 163–178. Oxford University Press, Oxford.
 Thorley JL, Wilkinson M, Charleston M (1998). “The information content
 of consensus trees.” In Rizzi A, Vichi M, Bock H (eds.), *Advances in
 Data Science and Classification*, 91–98. Springer, Berlin. ISBN
-978-3-540-64641-9,
+978-3-540-64641-9.
 [doi:10.1007/978-3-642-72253-0](https://doi.org/10.1007/978-3-642-72253-0)
 .
 

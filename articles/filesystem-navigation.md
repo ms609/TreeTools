@@ -6,6 +6,7 @@ careful to use forward slashes (`/`, not `\`, which you’ll get if you
 copy file paths in Windows).
 
 ``` r
+
 filename <- "C:/nexus/matrix.nex"
 ```
 
@@ -27,6 +28,7 @@ By setting the directory that your files are in as the working
 directory, you only need to specify the filename:
 
 ``` r
+
 setwd("C:/nexus/") # You only need to do this once
 filename <- "matrix.nex"
 # Do something with this file

@@ -103,12 +103,14 @@ added.
 
 We start with a two-leaf tree, and treat 0 as the origin of the tree.
 
+
     0 ---- 1
 
 We add leaf 2 by breaking an edge and inserting a node (numbered
 `2 + nTip - 1`). In this example, we'll work up to a six-leaf tree; this
 node will be numbered 2 + 6 - 1 = 7. There is only one edge on which
 leaf 2 can be added. Let's add node 7 and leaf 2:
+
 
     0 ---- 7 ---- 1
            |
@@ -124,6 +126,7 @@ Option 1: the edge leading to 2;
 Option 2: the edge leading to 7.
 
 If we select option 1, we produce:
+
 
     0 ---- 7 ---- 1
            |
@@ -179,7 +182,7 @@ Package developers can use the C++ header `TreeTools/tree_number.h` (via
 Li M, Tromp J, Zhang L (1996). “Some notes on the nearest neighbour
 interchange distance.” In Goos G, Hartmanis J, Leeuwen J, Cai J, Wong CK
 (eds.), *Computing and Combinatorics*, volume 1090, 343–351. Springer,
-Berlin, Heidelberg. ISBN 978-3-540-61332-9,
+Berlin, Heidelberg. ISBN 978-3-540-61332-9.
 [doi:10.1007/3-540-61332-3_168](https://doi.org/10.1007/3-540-61332-3_168)
 .
 

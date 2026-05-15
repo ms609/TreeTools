@@ -18,6 +18,7 @@ using the ‘[readxl](https://readxl.tidyverse.org/)’ package. First
 you’ll have to install it:
 
 ``` r
+
 install.packages("readxl") # You only need to do this once
 ```
 
@@ -28,6 +29,7 @@ Then you can read the data from the Excel file by telling R which sheet,
 rows and columns contain your data:
 
 ``` r
+
 library("readxl")
 raw_data <- as.matrix(read_excel(
   filename,
@@ -51,6 +53,7 @@ You may need to adjust the R commands to match the particular format of
 your input file.
 
 ``` r
+
 raw_data <- read.table(
   filename,            # Path to your input file
   sep = ",",           # What character separates columns?
@@ -66,6 +69,7 @@ raw_data <- read.table(
 TreeTools contains an inbuilt Nexus parser:
 
 ``` r
+
 raw_data <- ReadCharacters(filename)
 # Or, to go straight to PhyDat format:
 as_phydat <- ReadAsPhyDat(filename)
@@ -82,6 +86,7 @@ and I’ll try to fix it.
 In the meantime, alternative Nexus parsers are available: try
 
 ``` r
+
 raw_data <- ape::read.nexus.data(filename)
 ```
 
@@ -104,6 +109,7 @@ know](https://github.com/ms609/TreeTools/issues/new?title=Unsupported+TNT+file&b
 and I’ll try to fix it.
 
 ``` r
+
 raw_data <- ReadTntCharacters(filename)
 # Or, to go straight to PhyDat format:
 my_data <- ReadTntAsPhyDat(filename)
@@ -118,12 +124,14 @@ skip this step – you’re already there.
 Otherwise, you can try
 
 ``` r
+
 my_data <- PhyDat(raw_data)
 ```
 
 or if that doesn’t work,
 
 ``` r
+
 my_data <- MatrixToPhyDat(raw_data)
 ```
 
@@ -136,6 +144,7 @@ know](https://github.com/ms609/TreeTools/issues/new?title=data+to+PhyDat+convers
 Failing that, you can enlist the help of the ‘phangorn’ package:
 
 ``` r
+
 install.packages("phangorn")
 library("phangorn")
 my_data <- phyDat(raw_data, type = "USER", levels = c(0:9, "-"))
@@ -158,6 +167,7 @@ phangorn package, accessible by typing ‘?phangorn’ in the R prompt and
 navigating to index \> package vignettes.
 
 ``` r
+
 contrast.matrix <- matrix(data = c(
 # 0 1 -  # Each column corresponds to a character-state
   1, 0, 0, # Each row corresponds to a token, here 0, denoting the 
@@ -190,6 +200,7 @@ contrast.matrix
 If you need to use a contrast matrix, convert the data using
 
 ``` r
+
 my.phyDat <- phyDat(my.data, type = "USER", contrast = contrast.matrix)
 ```
 
@@ -201,6 +212,7 @@ other contexts (e.g. via the
 interface), you could save your processed data in Nexus format:
 
 ``` r
+
 ape::write.nexus.data(my.phyDat, "my_data.nex", format = "standard")
 ```
 
