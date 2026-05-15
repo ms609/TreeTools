@@ -62,6 +62,13 @@ test_that("ReadTntCharacters() taxon name on own line", {
   expect_equal(result["Hypochilus", ], c("0", "0", "1", "1", "0", "1", "0", "0"))
 })
 
+test_that("ReadTntCharacters() xread mid-line", {
+  mxFile <- TestFile("tnt-midline-xread.tnt")
+  result <- ReadTntCharacters(mxFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))

@@ -386,7 +386,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   semicolons <- grep(";", lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep("^XREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
+  xread <- grep("\\bXREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
   if (length(xread) < 1) return(NULL)
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
@@ -394,6 +394,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
             "Returning first block only.")
     xread <- xread[1]
   }
+  # If xread appears mid-line (e.g. after other TNT directives separated by ;),
+  # strip everything before the xread keyword so dimension parsing works.
+  lines[xread] <- sub("^.*\\bxread\\b", "xread", lines[xread],
+                       ignore.case = TRUE, perl = TRUE)
 
   xreadEnd <- semicolons[semicolons > xread][1]
   if (lines[xreadEnd] == ";") {
