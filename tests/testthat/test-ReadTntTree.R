@@ -96,6 +96,17 @@ test_that("ReadTntCharacters() reads Windows-1252 encoded smart-quote names", {
   expect_true(any(grepl("‘|’", rownames(result))))
 })
 
+test_that("ReadTntCharacters() splits multiple taxa packed on one line", {
+  # tnt-multitaxon-line.tnt has 6 taxa but only 3 physical data lines;
+  # two lines each contain 2 or 3 taxa concatenated without a separator.
+  mtFile <- TestFile("tnt-multitaxon-line.tnt")
+  expect_no_warning(result <- ReadTntCharacters(mtFile))
+  expect_equal(nrow(result), 6L)
+  expect_equal(sort(rownames(result)),
+               sort(c("taxon_a", "taxon_b", "taxon_c",
+                      "taxon_d", "taxon_e", "taxon_f")))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
