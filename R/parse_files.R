@@ -462,6 +462,113 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 #' @export
 ReadTNTCharacters <- ReadTntCharacters
 
+
+#' @describeIn ReadCharacters Read the `xgroup` character-partition block
+#' \insertCite{Goloboff2008}{TreeTools} of a TNT file, returning a named integer
+#' vector that maps each character (1-indexed in R; TNT uses 0-indexing) to a
+#' partition.
+#'
+#' Range notation `A.B` in TNT denotes characters A to B inclusive (0-indexed);
+#' a trailing dot with no second index (`A.`) means character A to the last
+#' character in the matrix.  Characters not covered by any range receive `NA`.
+#' Names of the returned vector are the partition labels supplied in
+#' parentheses after the partition id, or the numeric id if no label is given.
+#'
+#' @return `ReadXgroup()` returns a named integer vector of length equal to the
+#'   number of characters in the matrix, or `NULL` if no `xread` block is found.
+#' @export
+ReadXgroup <- function(filepath, encoding = "UTF8") {
+  lines <- .UTFLines(filepath, encoding)
+  tntComment.pattern <- "'[^']*'"
+  lines <- gsub(tntComment.pattern, "", lines, perl = TRUE)
+  lines <- trimws(lines)
+  lines <- lines[lines != ""]
+
+  nChar <- .TntNChar(lines)
+  if (is.null(nChar)) {
+    return(NULL)
+  }
+
+  # Return:
+  .ParseXgroupLines(lines, nChar)
+}
+
+#' @keywords internal
+.TntNChar <- function(lines) {
+  xread <- grep("^xread\\b", lines, ignore.case = TRUE, perl = TRUE)[1]
+  if (is.na(xread)) {
+    return(NULL)
+  }
+  # The xread dimension line carries two integers: nChar nTaxa.
+  # Scan forward; ignore any line that begins with a comment quote.
+  for (i in seq.int(xread + 1L, length(lines))) {
+    m <- regmatches(lines[i], gregexpr("\\d+", lines[i]))[[1]]
+    if (length(m) == 2L) {
+      return(as.integer(m[1]))
+    }
+    if (length(m) > 0L && !startsWith(lines[i], "'")) {
+      break
+    }
+  }
+  NULL                                                                       # nocov
+}
+
+#' @keywords internal
+.ParseXgroupLines <- function(lines, nChar) {
+  xgLines <- grep("^xgroup\\s*=", lines, ignore.case = TRUE, perl = TRUE)
+  if (length(xgLines) == 0L) {
+    return(rep(NA_integer_, nChar))
+  }
+
+  out <- rep(NA_integer_, nChar)
+  names(out) <- seq_len(nChar)
+
+  for (idx in xgLines) {
+    parsed <- .ParseOneXgroup(lines[idx], nChar)
+    out[parsed[["chars"]]] <- parsed[["id"]]
+    names(out)[parsed[["chars"]]] <- parsed[["label"]]
+  }
+
+  # Return:
+  out
+}
+
+#' @keywords internal
+.ParseOneXgroup <- function(line, nChar) {
+  idM <- regmatches(line, regexec("xgroup\\s*=\\s*(\\d+)", line,
+                                  ignore.case = TRUE, perl = TRUE))[[1]]
+  id <- as.integer(idM[2])
+
+  labelM <- regmatches(line, regexec("\\(([^)]+)\\)", line, perl = TRUE))[[1]]
+  label <- if (length(labelM) > 1L) trimws(labelM[2]) else as.character(id)
+
+  # Range tokens follow the optional label; if no label, follow the partition id
+  afterLabel <- sub(".*\\)\\s*", "", line)
+  if (!nzchar(afterLabel)) {
+    afterLabel <- sub("xgroup\\s*=\\s*\\d+\\s*", "", line,
+                      ignore.case = TRUE, perl = TRUE)
+  }
+  tokens <- regmatches(afterLabel,
+                       gregexpr("\\d+\\.\\d*", afterLabel, perl = TRUE))[[1]]
+
+  list(id    = id,
+       label = label,
+       chars = unlist(lapply(tokens, .ExpandTntRange, nChar = nChar)))
+}
+
+#' @keywords internal
+.ExpandTntRange <- function(token, nChar) {
+  parts <- strsplit(token, ".", fixed = TRUE)[[1]]
+  # TNT is 0-indexed; convert to 1-indexed
+  from <- as.integer(parts[1]) + 1L
+  to <- if (length(parts) > 1L && nzchar(parts[2])) {
+    as.integer(parts[2]) + 1L
+  } else {
+    nChar
+  }
+  seq.int(from, to)
+}
+
 .UTFLines <- function(filepath, encoding) {
   if (!file.exists(filepath)) {
     stop("File '", filepath, "' not found.")
