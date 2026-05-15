@@ -28,6 +28,11 @@ Useful links:
 **Maintainer**: Martin R. Smith <martin.smith@durham.ac.uk>
 ([ORCID](https://orcid.org/0000-0001-5660-1727)) \[copyright holder\]
 
+Authors:
+
+- Martin R. Smith <martin.smith@durham.ac.uk>
+  ([ORCID](https://orcid.org/0000-0001-5660-1727)) \[copyright holder\]
+
 Other contributors:
 
 - Emmanuel Paradis ([ORCID](https://orcid.org/0000-0003-3092-2199)) (ape

@@ -265,7 +265,6 @@ Functions to parse or write files.
 - [`ReadCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   [`ReadTNTCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
-  [`ReadXgroup()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   [`ReadNotes()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   [`ReadAsPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   [`ReadTntAsPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)

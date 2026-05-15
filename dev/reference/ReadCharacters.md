@@ -22,8 +22,6 @@ ReadTNTCharacters(
   encoding = "UTF8"
 )
 
-ReadXgroup(filepath, encoding = "UTF8")
-
 ReadNotes(filepath, encoding = "UTF8")
 
 ReadAsPhyDat(...)
@@ -80,9 +78,15 @@ explaining why the function call was unsuccessful.
 
 `ReadAsPhyDat()` and `ReadTntAsPhyDat()` return a `phyDat` object.
 
-`ReadXgroup()` returns a named integer vector of length equal to the
-number of characters in the matrix, or `NULL` if no `xread` block is
-found.
+`ReadTntCharacters()` and `ReadTNTCharacters()` return a matrix as
+described above for `ReadCharacters()`. When the TNT file contains an
+`xgroup` partition block (Goloboff et al. 2008) , the returned matrix
+carries an `"xgroup"` attribute: a factor of length `ncol(matrix)` whose
+levels are the partition labels (the parenthetical label, e.g.\\
+`"ANTERIOR"`, or the numeric id as a string when no label is given).
+Characters not assigned to any partition are `NA`. The attribute is
+absent (not an all-`NA` vector) when no `xgroup` block is found in the
+file.
 
 `ReadNotes()` returns a list in which each entry corresponds to a single
 character, and itself contains a list of with two elements:
@@ -118,17 +122,6 @@ the highlighted option in the "Encoding" menu) following the example
 below.
 
 ## Functions
-
-- `ReadXgroup()`: Read the `xgroup` character-partition block (Goloboff
-  et al. 2008) of a TNT file, returning a named integer vector that maps
-  each character (1-indexed in R; TNT uses 0-indexing) to a partition.
-
-  Range notation `A.B` in TNT denotes characters A to B inclusive
-  (0-indexed); a trailing dot with no second index (`A.`) means
-  character A to the last character in the matrix. Characters not
-  covered by any range receive `NA`. Names of the returned vector are
-  the partition labels supplied in parentheses after the partition id,
-  or the numeric id if no label is given.
 
 - `PhyDat()`: A convenient wrapper for phangorn's `phyDat()`, which
   converts a **list** of morphological characters into a `phyDat`
@@ -221,4 +214,10 @@ continuous
 #> A_taxon   1.111 1.000 1.330 1.444 1.555 1.666
 #> B_alienus 2.111 2.222 2.333    NA 2.550 2.666
 #> C_andinus 3.111 3.222 3.333 3.444 3.555 3.666
+tntFile <- paste0(system.file(package = "TreeTools"),
+                  "/extdata/tests/tnt-xgroup.tnt")
+mat <- ReadTntCharacters(tntFile)
+attr(mat, "xgroup")
+#> [1] ANTERIOR  ANTERIOR  ANTERIOR  POSTERIOR POSTERIOR POSTERIOR
+#> Levels: ANTERIOR POSTERIOR
 ```

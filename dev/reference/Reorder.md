@@ -278,9 +278,6 @@ Other tree manipulation:
 Other C wrappers:
 [`Neworder`](https://ms609.github.io/TreeTools/dev/reference/Neworder.md)
 
-Other C wrappers:
-[`Neworder`](https://ms609.github.io/TreeTools/dev/reference/Neworder.md)
-
 ## Author
 
 `Preorder()` and `Postorder()`: Martin R. Smith.
