@@ -85,6 +85,17 @@ test_that("ReadTntCharacters() handles smart-quote taxon names", {
   expect_equal(result["taxon_b", ], c("1", "1", "0", "0", "1", "1", "0", "0"))
 })
 
+test_that("ReadTntCharacters() reads Windows-1252 encoded smart-quote names", {
+  # tnt-cp1252-taxa.tnt is Windows-1252 encoded and contains taxon names
+  # with bytes 0x91/0x92 (cp1252 curly quotes, not valid UTF-8).
+  cpFile <- TestFile("tnt-cp1252-taxa.tnt")
+  expect_message(result <- ReadTntCharacters(cpFile), "trying cp1252")
+  expect_equal(nrow(result), 4L)
+  expect_equal(rownames(result)[1L], "taxon_a")
+  # Names with smart quotes should be present (bytes 0x91/0x92 decoded as cp1252)
+  expect_true(any(grepl("‘|’", rownames(result))))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
