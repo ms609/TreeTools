@@ -75,6 +75,27 @@ test_that(".ExpandTntRange() handles A.B, A. and A.A", {
   expect_equal(TreeTools:::.ExpandTntRange("2.2", 10L), 3L)
 })
 
+test_that("ReadXgroup() handles xgroup lines without parenthetical label", {
+  tmp <- tempfile(fileext = ".tnt")
+  on.exit(unlink(tmp), add = TRUE)
+  writeLines(c("xread", "6 4",
+               "TaxonA 010101", "TaxonB 010101",
+               "TaxonC 101010", "TaxonD 101010", ";",
+               "xgroup =0 0.2 ;",
+               "xgroup =1 3. ;", ";", "proc/;"), tmp)
+  xg <- ReadXgroup(tmp)
+  expect_length(xg, 6L)
+  expect_equal(unname(xg), c(0L, 0L, 0L, 1L, 1L, 1L))
+  expect_equal(unname(names(xg)), c("0", "0", "0", "1", "1", "1"))
+})
+
+test_that(".TntNChar() returns NULL for malformed dimension line", {
+  tmp <- tempfile(fileext = ".tnt")
+  on.exit(unlink(tmp), add = TRUE)
+  writeLines(c("xread", "6", ";", "proc/;"), tmp)
+  expect_null(ReadXgroup(tmp))
+})
+
 test_that("ReadTntTree() NULL return", {
   expect_null(ReadTntTree(TestFile("ape-tree.nex")))
 })
