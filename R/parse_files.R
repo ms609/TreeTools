@@ -498,7 +498,7 @@ ReadTNTCharacters <- ReadTntCharacters
       if (substr(e[["message"]], 0, 39) == 
           "invalid input found on input connection") {
         newEnc <- if (toupper(encoding) %in% c("UTF-8", "UTF8")) {
-          "latin1"
+          "cp1252"
         } else {
           "UTF8"
         }
