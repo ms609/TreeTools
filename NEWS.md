@@ -5,7 +5,7 @@
 - `NexusTokensToInteger()` converts character data to integers,
   mapping uncertain tokens to `NA`.
 - `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
-  `xgroup` partition block is present, replacing the standalone `ReadXgroup()`.
+  `xgroup` partition block is present, replacing the stand-alone `ReadXgroup()`.
 
 ## Fixes
 
@@ -19,8 +19,7 @@
 
 - `ReadTntCharacters()` now handles multi-line comments, bare `&` continuations,
   `@taxonomy` suffixes, name-only taxon lines, mid-line `xread`, smart-quote
-  names (Windows-1252), and packed multi-taxon lines; all 13 Goloboff (2019)
-  corpus files parse cleanly.
+  names (Windows-1252), and packed multi-taxon lines.
 
 ## Performance
 
