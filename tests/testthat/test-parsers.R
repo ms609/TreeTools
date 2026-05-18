@@ -77,6 +77,18 @@ BEGIN CHARACTERS;
   expect_equal(unname(readMulti["Taxon_B", 2]), "{01}")
   expect_equal(unname(readMulti["Taxon_A", 6]), "1")
   expect_equal(unname(readMulti["Taxon_B", 6]), "0")
+
+  # Round-trip the ReadCharacters() matrix through NexusTokensToInteger().
+  intMat <- NexusTokensToInteger(read)
+  expect_equal(dim(intMat), c(3L, 5L))
+  expect_equal(unname(intMat["Taxon_A", 1]), 0L)
+  expect_equal(unname(intMat["Taxon_A", 2]), NA_integer_) # polymorphism -> ?
+  expect_equal(unname(intMat["Taxon_B", 2]), NA_integer_) # uncertainty -> ?
+  expect_equal(unname(intMat["Taxon_A", 4]), NA_integer_) # ?
+  expect_equal(unname(intMat["Taxon_A", 5]), NA_integer_) # -
+  expect_equal(unname(intMat["Taxon_C", 5]), 0L)
+  expect_equal(unname(NexusTokensToInteger(read, "first")["Taxon_A", 2]), 1L)
+  expect_equal(unname(NexusTokensToInteger(read, "last")["Taxon_A", 2]), 2L)
 })
 
 test_that("NexusTokensToInteger() converts token matrix to integer", {
@@ -108,6 +120,44 @@ test_that("NexusTokensToInteger() converts token matrix to integer", {
   expect_equal(unname(NexusTokensToInteger(tokens2)["T1", "C1"]), NA_integer_)
   expect_equal(unname(NexusTokensToInteger(tokens2, "first")["T1", "C1"]), 0L)
   expect_equal(unname(NexusTokensToInteger(tokens2, "last")["T1", "C1"]), 1L)
+
+  # Named vector input (no dim attribute).
+  vec <- c(a = "0", b = "(12)", c = "?", d = "1")
+  vecOut <- NexusTokensToInteger(vec)
+  expect_null(dim(vecOut))
+  expect_equal(names(vecOut), c("a", "b", "c", "d"))
+  expect_equal(unname(vecOut), c(0L, NA_integer_, NA_integer_, 1L))
+  expect_equal(unname(NexusTokensToInteger(vec, "first")), c(0L, 1L, NA_integer_, 1L))
+  expect_equal(unname(NexusTokensToInteger(vec, "last")), c(0L, 2L, NA_integer_, 1L))
+
+  # No-digit polymorphism token: must not crash, must yield NA in every mode.
+  noDigit <- matrix(c("(AB)", "0"), nrow = 1L,
+                    dimnames = list("T", c("C1", "C2")))
+  expect_silent(NexusTokensToInteger(noDigit))
+  expect_equal(unname(NexusTokensToInteger(noDigit)["T", "C1"]), NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "first")["T", "C1"]),
+               NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "last")["T", "C1"]),
+               NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "first")["T", "C2"]), 0L)
+
+  # state.labels and other matrix attributes round-trip through the result.
+  tokens3 <- matrix(c("0", "(12)", "1"), nrow = 1L,
+                    dimnames = list("Tax", c("C1", "C2", "C3")))
+  attr(tokens3, "state.labels") <- list(c("absent", "present"),
+                                        c("a", "b", "c"),
+                                        c("absent", "present"))
+  out3 <- NexusTokensToInteger(tokens3)
+  expect_equal(attr(out3, "state.labels"), attr(tokens3, "state.labels"))
+
+  # phyDat input routes through PhyDatToMatrix(ambigNA = TRUE, inappNA = TRUE).
+  phy <- MatrixToPhyDat(matrix(c("0", "(12)", "1", "?", "-"),
+                               nrow = 1L,
+                               dimnames = list("Tax", paste0("C", 1:5))))
+  viaPhy <- NexusTokensToInteger(phy)
+  viaMat <- NexusTokensToInteger(PhyDatToMatrix(phy, ambigNA = TRUE,
+                                                inappNA = TRUE))
+  expect_equal(unname(viaPhy), unname(viaMat))
 })
 
 test_that("NexusTokens() fails gracefully", {

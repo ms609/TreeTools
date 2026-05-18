@@ -1,3 +1,16 @@
+# TreeTools 2.3.0.9000 (development) #
+
+## New functionality
+
+- `NexusTokensToInteger()` converts character data to integers,
+  mapping uncertain tokens to `NA`.
+
+## Fixes
+
+- `NexusTokens()` once again handles polymorphism tokens with internal
+  whitespace (e.g. `(1 2)`, `{0 1}`).
+
+
 # TreeTools 2.3.0 (2026-04-22) #
 
 ## Performance
