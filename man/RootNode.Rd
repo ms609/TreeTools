@@ -31,19 +31,19 @@ Test whether a tree is rooted: \code{\link[=TreeIsRooted]{TreeIsRooted()}}
 
 \code{phangorn::getRoot()}
 
-Other tree navigation: 
-\code{\link{AncestorEdge}()},
-\code{\link{CladeSizes}()},
-\code{\link{DescendantEdges}()},
-\code{\link{EdgeAncestry}()},
-\code{\link{EdgeDistances}()},
-\code{\link{ListAncestors}()},
-\code{\link{MRCA}()},
-\code{\link{MatchEdges}()},
-\code{\link{NDescendants}()},
-\code{\link{NodeDepth}()},
-\code{\link{NodeNumbers}()},
-\code{\link{NodeOrder}()}
+Other tree navigation:
+\code{\link[=AncestorEdge]{AncestorEdge()}},
+\code{\link[=CladeSizes]{CladeSizes()}},
+\code{\link[=DescendantEdges]{DescendantEdges()}},
+\code{\link[=EdgeAncestry]{EdgeAncestry()}},
+\code{\link[=EdgeDistances]{EdgeDistances()}},
+\code{\link[=ListAncestors]{ListAncestors()}},
+\code{\link[=MRCA]{MRCA()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NDescendants]{NDescendants()}},
+\code{\link[=NodeDepth]{NodeDepth()}},
+\code{\link[=NodeNumbers]{NodeNumbers()}},
+\code{\link[=NodeOrder]{NodeOrder()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

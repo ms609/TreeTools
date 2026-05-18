@@ -30,11 +30,11 @@ evaluate the degree of homoplasy within a dataset.
 \insertAllCited{}
 }
 \seealso{
-Other split information functions: 
-\code{\link{SplitInformation}()},
-\code{\link{SplitMatchProbability}()},
-\code{\link{TreesMatchingSplit}()},
-\code{\link{UnrootedTreesMatchingSplit}()}
+Other split information functions:
+\code{\link[=SplitInformation]{SplitInformation()}},
+\code{\link[=SplitMatchProbability]{SplitMatchProbability()}},
+\code{\link[=TreesMatchingSplit]{TreesMatchingSplit()}},
+\code{\link[=UnrootedTreesMatchingSplit]{UnrootedTreesMatchingSplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

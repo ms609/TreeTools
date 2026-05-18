@@ -198,15 +198,15 @@ as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
 Describe the shape of a tree topology, independent of leaf labels:
 \code{\link[=TreeShape]{TreeShape()}}
 
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
 \code{\link{GenerateTree}},
-\code{\link{NJTree}()},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TrivialTree}}
 
-Other 'TreeNumber' utilities: 
-\code{\link{is.TreeNumber}()},
-\code{\link{print.TreeNumber}()}
+Other 'TreeNumber' utilities:
+\code{\link[=is.TreeNumber]{is.TreeNumber()}},
+\code{\link[=print.TreeNumber]{print.TreeNumber()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

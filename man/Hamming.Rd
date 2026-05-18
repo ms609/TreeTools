@@ -59,17 +59,17 @@ Used to construct neighbour joining trees in \code{\link[=NJTree]{NJTree()}}.
 \code{dist.hamming()} in the \pkg{phangorn} package provides an alternative
 implementation.
 
-Other utility functions: 
+Other utility functions:
 \code{\link{ClusterTable}},
 \code{\link{ClusterTable-methods}},
-\code{\link{MSTEdges}()},
-\code{\link{SampleOne}()},
-\code{\link{TipTimedTree}()},
-\code{\link{UnshiftTree}()},
-\code{\link{as.multiPhylo}()},
+\code{\link[=MSTEdges]{MSTEdges()}},
+\code{\link[=SampleOne]{SampleOne()}},
+\code{\link[=TipTimedTree]{TipTimedTree()}},
+\code{\link[=UnshiftTree]{UnshiftTree()}},
+\code{\link[=as.multiPhylo]{as.multiPhylo()}},
 \code{\link{match,phylo,phylo-method}},
-\code{\link{sapply64}()},
-\code{\link{sort.multiPhylo}()}
+\code{\link[=sapply64]{sapply64()}},
+\code{\link[=sort.multiPhylo]{sort.multiPhylo()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

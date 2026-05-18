@@ -21,33 +21,33 @@ Numeric index of each node in a tree
 \code{NodeNumbers()} returns a sequence corresponding to the nodes in a tree
 }
 \seealso{
-Other tree properties: 
-\code{\link{Cherries}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{EdgeRatio}()},
-\code{\link{LongBranch}()},
-\code{\link{MatchEdges}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{PathLengths}()},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()},
-\code{\link{Treeness}()}
+Other tree properties:
+\code{\link[=Cherries]{Cherries()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=EdgeRatio]{EdgeRatio()}},
+\code{\link[=LongBranch]{LongBranch()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PathLengths]{PathLengths()}},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TreeIsRooted]{TreeIsRooted()}},
+\code{\link[=Treeness]{Treeness()}}
 
-Other tree navigation: 
-\code{\link{AncestorEdge}()},
-\code{\link{CladeSizes}()},
-\code{\link{DescendantEdges}()},
-\code{\link{EdgeAncestry}()},
-\code{\link{EdgeDistances}()},
-\code{\link{ListAncestors}()},
-\code{\link{MRCA}()},
-\code{\link{MatchEdges}()},
-\code{\link{NDescendants}()},
-\code{\link{NodeDepth}()},
-\code{\link{NodeOrder}()},
-\code{\link{RootNode}()}
+Other tree navigation:
+\code{\link[=AncestorEdge]{AncestorEdge()}},
+\code{\link[=CladeSizes]{CladeSizes()}},
+\code{\link[=DescendantEdges]{DescendantEdges()}},
+\code{\link[=EdgeAncestry]{EdgeAncestry()}},
+\code{\link[=EdgeDistances]{EdgeDistances()}},
+\code{\link[=ListAncestors]{ListAncestors()}},
+\code{\link[=MRCA]{MRCA()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NDescendants]{NDescendants()}},
+\code{\link[=NodeDepth]{NodeDepth()}},
+\code{\link[=NodeOrder]{NodeOrder()}},
+\code{\link[=RootNode]{RootNode()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

@@ -20,11 +20,11 @@ Remove quotation marks from a string
 Unquote("'Hello World'")
 }
 \seealso{
-Other string parsing functions: 
-\code{\link{EndSentence}()},
-\code{\link{MatchStrings}()},
-\code{\link{MorphoBankDecode}()},
-\code{\link{RightmostCharacter}()}
+Other string parsing functions:
+\code{\link[=EndSentence]{EndSentence()}},
+\code{\link[=MatchStrings]{MatchStrings()}},
+\code{\link[=MorphoBankDecode]{MorphoBankDecode()}},
+\code{\link[=RightmostCharacter]{RightmostCharacter()}}
 }
 \author{
 Martin R. Smith

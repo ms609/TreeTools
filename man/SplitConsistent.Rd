@@ -33,10 +33,10 @@ SplitConsistent(splits1[[4]], splits2)
 SplitConflicts(splits1[[4]], list(splits1, splits2))
 }
 \seealso{
-Other split manipulation functions: 
-\code{\link{DropTip}()},
-\code{\link{Subsplit}()},
-\code{\link{TrivialSplits}()}
+Other split manipulation functions:
+\code{\link[=DropTip]{DropTip()}},
+\code{\link[=Subsplit]{Subsplit()}},
+\code{\link[=TrivialSplits]{TrivialSplits()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

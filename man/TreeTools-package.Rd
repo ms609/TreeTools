@@ -30,6 +30,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
 
+Authors:
+\itemize{
+  \item Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
+}
+
 Other contributors:
 \itemize{
   \item Emmanuel Paradis (\href{https://orcid.org/0000-0003-3092-2199}{ORCID}) (ape library) [copyright holder]

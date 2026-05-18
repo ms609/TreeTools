@@ -109,9 +109,9 @@ PlotTools::SpectrumLegend(
 \insertAllCited{}
 }
 \seealso{
-Other consensus tree functions: 
-\code{\link{Consensus}()},
-\code{\link{ConsensusWithout}()}
+Other consensus tree functions:
+\code{\link[=Consensus]{Consensus()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

@@ -38,19 +38,19 @@ tiplabels()
 PathLengths(tree)
 }
 \seealso{
-Other tree properties: 
-\code{\link{Cherries}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{EdgeRatio}()},
-\code{\link{LongBranch}()},
-\code{\link{MatchEdges}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{NodeNumbers}()},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()},
-\code{\link{Treeness}()}
+Other tree properties:
+\code{\link[=Cherries]{Cherries()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=EdgeRatio]{EdgeRatio()}},
+\code{\link[=LongBranch]{LongBranch()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=NodeNumbers]{NodeNumbers()}},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TreeIsRooted]{TreeIsRooted()}},
+\code{\link[=Treeness]{Treeness()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}
