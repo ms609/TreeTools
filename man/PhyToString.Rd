@@ -97,6 +97,7 @@ PhyToString(phyDat, concatenate = FALSE)
 Other phylogenetic matrix conversion functions:
 \code{\link[=Decompose]{Decompose()}},
 \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}},
+\code{\link[=NexusTokensToInteger]{NexusTokensToInteger()}},
 \code{\link[=Reweight]{Reweight()}}
 }
 \author{
