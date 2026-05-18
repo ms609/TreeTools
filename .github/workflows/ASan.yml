@@ -44,7 +44,11 @@ jobs:
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/noble/latest
       USING_ASAN: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      ASAN_OPTIONS: detect_container_overflow=1:verify_asan_link_order=0
+      # detect_leaks=0 matches CRAN's gcc-ASAN setup; LSan otherwise
+      # reports noisy leaks from third-party libraries (libcrypto,
+      # libxml2) and even from the sed binary that test discovery
+      # shells out to. We rely on valgrind for leak coverage.
+      ASAN_OPTIONS: detect_container_overflow=1:verify_asan_link_order=0:detect_leaks=0
 
     steps:
       - uses: actions/checkout@v6
