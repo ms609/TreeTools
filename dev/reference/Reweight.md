@@ -77,6 +77,7 @@ Letters*, **15**(2), 20180632.
 Other phylogenetic matrix conversion functions:
 [`Decompose()`](https://ms609.github.io/TreeTools/dev/reference/Decompose.md),
 [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md),
+[`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/dev/reference/NexusTokensToInteger.md),
 [`StringToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
 
 ## Author

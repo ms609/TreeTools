@@ -1,12 +1,20 @@
 # Changelog
 
-## TreeTools 2.3.0.9001 (development)
+## TreeTools 2.3.0.9002 (development)
 
 ### New features
 
+- [`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/dev/reference/NexusTokensToInteger.md)
+  converts character data to integers, mapping uncertain tokens to `NA`.
 - [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   attaches an `xgroup` attribute (factor) when a TNT `xgroup` partition
-  block is present, replacing the standalone `ReadXgroup()`.
+  block is present, replacing the stand-alone `ReadXgroup()`.
+
+### Fixes
+
+- [`NexusTokens()`](https://ms609.github.io/TreeTools/dev/reference/ExtractTaxa.md)
+  once again handles polymorphism tokens with internal whitespace
+  (e.g. `(1 2)`, `{0 1}`).
 
 ## TreeTools 2.3.0 (2026-04-22)
 
@@ -17,8 +25,7 @@ CRAN release: 2026-04-23
 - [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   now handles multi-line comments, bare `&` continuations, `@taxonomy`
   suffixes, name-only taxon lines, mid-line `xread`, smart-quote names
-  (Windows-1252), and packed multi-taxon lines; all 13 Goloboff (2019)
-  corpus files parse cleanly.
+  (Windows-1252), and packed multi-taxon lines.
 
 ### Performance
 

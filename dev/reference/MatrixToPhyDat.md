@@ -67,6 +67,7 @@ character states within a `phyDat` object.
 
 Other phylogenetic matrix conversion functions:
 [`Decompose()`](https://ms609.github.io/TreeTools/dev/reference/Decompose.md),
+[`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/dev/reference/NexusTokensToInteger.md),
 [`Reweight()`](https://ms609.github.io/TreeTools/dev/reference/Reweight.md),
 [`StringToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
 

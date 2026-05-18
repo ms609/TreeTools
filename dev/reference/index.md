@@ -229,6 +229,9 @@ Functions for modifying and evaluating datasets.
 
   Convert between matrices and `phyDat` objects
 
+- [`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/dev/reference/NexusTokensToInteger.md)
+  : Convert Nexus token matrix to integer
+
 - [`StringToPhyDat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
   [`StringToPhydat()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
   [`PhyToString()`](https://ms609.github.io/TreeTools/dev/reference/PhyToString.md)
