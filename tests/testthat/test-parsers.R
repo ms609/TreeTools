@@ -32,6 +32,84 @@ test_that("Nexus file can be parsed", {
   expect_equal(3L, unique(as.integer(read[3, ])))
 })
 
+test_that("ReadCharacters handles Cingulata-style polymorphism with internal whitespace", {
+  nexusContent <- "#NEXUS
+BEGIN CHARACTERS;
+  DIMENSIONS NCHAR=5;
+  FORMAT DATATYPE=STANDARD MISSING=? GAP=-;
+  MATRIX
+    Taxon_A  0(1 2)1?-
+    Taxon_B  1{0 1}0?-
+    Taxon_C  01010
+  ;"
+
+  tf <- tempfile(fileext = ".nex")
+  on.exit(unlink(tf))
+  writeLines(nexusContent, tf)
+  read <- ReadCharacters(tf)
+
+  expect_equal(dim(read), c(3L, 5L))
+  expect_equal(unname(read["Taxon_A", 2]), "(12)")
+  expect_equal(unname(read["Taxon_B", 2]), "{01}")
+  expect_equal(unname(read["Taxon_A", 4]), "?")
+  expect_equal(unname(read["Taxon_A", 5]), "-")
+  expect_equal(unname(read["Taxon_C", 1]), "0")
+
+  # Continuation lines: data for a taxon split across multiple lines
+  nexusMulti <- "#NEXUS
+BEGIN CHARACTERS;
+  DIMENSIONS NCHAR=6;
+  FORMAT DATATYPE=STANDARD MISSING=? GAP=-;
+  MATRIX
+    Taxon_A  0(1 2)1
+              ?-1
+    Taxon_B  1{0 1}0
+              ?-0
+  ;"
+
+  tf2 <- tempfile(fileext = ".nex")
+  on.exit(unlink(tf2), add = TRUE)
+  writeLines(nexusMulti, tf2)
+  readMulti <- ReadCharacters(tf2)
+
+  expect_equal(dim(readMulti), c(2L, 6L))
+  expect_equal(unname(readMulti["Taxon_A", 2]), "(12)")
+  expect_equal(unname(readMulti["Taxon_B", 2]), "{01}")
+  expect_equal(unname(readMulti["Taxon_A", 6]), "1")
+  expect_equal(unname(readMulti["Taxon_B", 6]), "0")
+})
+
+test_that("NexusTokensToInteger() converts token matrix to integer", {
+  tokens <- matrix(c("0", "(12)", "1", "?", "-"),
+                   nrow = 1L,
+                   dimnames = list("Tax", paste0("C", 1:5)))
+
+  # Default: polymorphisms and ambiguities become NA
+  result <- NexusTokensToInteger(tokens)
+  expect_equal(dim(result), c(1L, 5L))
+  expect_equal(dimnames(result), list("Tax", paste0("C", 1:5)))
+  expect_equal(unname(result["Tax", "C1"]), 0L)
+  expect_equal(unname(result["Tax", "C2"]), NA_integer_)
+  expect_equal(unname(result["Tax", "C3"]), 1L)
+  expect_equal(unname(result["Tax", "C4"]), NA_integer_)
+  expect_equal(unname(result["Tax", "C5"]), NA_integer_)
+
+  # polymorphism = "first": take first digit inside brackets
+  result_f <- NexusTokensToInteger(tokens, polymorphism = "first")
+  expect_equal(unname(result_f["Tax", "C2"]), 1L)
+  expect_equal(unname(result_f["Tax", "C4"]), NA_integer_)
+
+  # polymorphism = "last": take last digit inside brackets
+  result_l <- NexusTokensToInteger(tokens, polymorphism = "last")
+  expect_equal(unname(result_l["Tax", "C2"]), 2L)
+
+  # Braces form {01}
+  tokens2 <- matrix(c("{01}", "0"), nrow = 1L, dimnames = list("T1", c("C1", "C2")))
+  expect_equal(unname(NexusTokensToInteger(tokens2)["T1", "C1"]), NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(tokens2, "first")["T1", "C1"]), 0L)
+  expect_equal(unname(NexusTokensToInteger(tokens2, "last")["T1", "C1"]), 1L)
+})
+
 test_that("NexusTokens() fails gracefully", {
   expect_error(NexusTokens("0123012301230123", integer(0)))
   expect_equal("Character number must be between 1 and 16.",

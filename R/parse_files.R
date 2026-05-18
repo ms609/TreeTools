@@ -884,6 +884,58 @@ PhyDat <- function(dataset) {
   MatrixToPhyDat(mat)
 }
 
+#' Convert Nexus token matrix to integer
+#'
+#' `NexusTokensToInteger()` converts the character matrix returned by
+#' [`ReadCharacters()`] to an integer matrix, mapping polymorphic,
+#' ambiguous (`?`), and inapplicable (`-`) tokens to `NA_integer_` or to the
+#' first/last state listed in the polymorphism, depending on `polymorphism`.
+#'
+#' @param tokens Character matrix as returned by [`ReadCharacters()`], or a
+#' character vector.
+#' @param polymorphism Character string specifying how to handle polymorphic
+#' tokens such as `"(01)"` or `"{12}"`:
+#' \describe{
+#'   \item{`"NA"` (default)}{Map to `NA_integer_`.}
+#'   \item{`"first"`}{Use the first state digit inside the brackets.}
+#'   \item{`"last"`}{Use the last state digit inside the brackets.}
+#' }
+#' Tokens `"?"` and `"-"` always map to `NA_integer_`.
+#'
+#' @return An integer matrix (or vector) with the same dimensions and
+#' `dimnames` as `tokens`.
+#'
+#' @examples
+#' tokens <- matrix(c("0", "(12)", "1", "?", "-"),
+#'                  nrow = 1,
+#'                  dimnames = list("Taxon_A", paste0("C", 1:5)))
+#' NexusTokensToInteger(tokens)
+#' NexusTokensToInteger(tokens, polymorphism = "first")
+#'
+#' @family phylogenetic matrix conversion functions
+#' @template MRS
+#' @export
+NexusTokensToInteger <- function(tokens,
+                                 polymorphism = c("NA", "first", "last")) {
+  polymorphism <- match.arg(polymorphism)
+  at <- attributes(tokens)
+
+  x <- as.character(tokens)
+  result <- suppressWarnings(as.integer(x))
+
+  ambig <- is.na(result) & !is.na(x) & x != "?" & x != "-"
+  if (polymorphism != "NA" && any(ambig)) {
+    digits <- regmatches(x[ambig],
+                         regexpr(if (polymorphism == "first") "\\d" else "\\d(?=[^\\d]*$)",
+                                 x[ambig], perl = TRUE))
+    result[ambig] <- suppressWarnings(as.integer(digits))
+  }
+
+  attributes(result) <- at
+  result
+}
+
+
 #' Rightmost character of string
 #'
 #' `RightmostCharacter()` is a convenience function that returns the final
