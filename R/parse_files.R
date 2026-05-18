@@ -1011,6 +1011,75 @@ PhyDat <- function(dataset) {
   MatrixToPhyDat(mat)
 }
 
+#' Convert Nexus token matrix to integer
+#'
+#' `NexusTokensToInteger()` converts the character matrix returned by
+#' [`ReadCharacters()`] to an integer matrix, mapping polymorphic,
+#' ambiguous (`?`), and inapplicable (`-`) tokens to `NA_integer_` or to the
+#' first/last state listed in the polymorphism, depending on `polymorphism`.
+#'
+#' Only digit states `0`..`9` are recognised; non-digit symbols (and any
+#' token whose interior contains no digits) become `NA_integer_`.
+#' Polymorphism extraction (`polymorphism = "first"`/`"last"`) likewise
+#' considers digits only.
+#'
+#' If `tokens` is a `phyDat` object it is first converted via
+#' [`PhyDatToMatrix()`] with `ambigNA = TRUE, inappNA = TRUE`, so that
+#' fully-ambiguous and inapplicable rows become `NA_integer_` and only
+#' true partial polymorphisms are subject to the `polymorphism` rule.
+#'
+#' @param tokens Character matrix as returned by [`ReadCharacters()`], a
+#' character vector as returned by [`NexusTokens()`], or a `phyDat` object.
+#' @param polymorphism Character string specifying how to handle polymorphic
+#' tokens such as `"(01)"` or `"{12}"`:
+#' \describe{
+#'   \item{`"?"` (default)}{Treat as the NEXUS missing-data token: map to
+#'     `NA_integer_`.}
+#'   \item{`"first"`}{Use the first state digit inside the brackets.}
+#'   \item{`"last"`}{Use the last state digit inside the brackets.}
+#' }
+#' Tokens `"?"` and `"-"` always map to `NA_integer_` regardless of
+#' `polymorphism`.
+#'
+#' @return An integer matrix (or vector) with the same dimensions and
+#' `dimnames` as `tokens`.
+#'
+#' @examples
+#' tokens <- matrix(c("0", "(12)", "1", "?", "-"),
+#'                  nrow = 1,
+#'                  dimnames = list("Taxon_A", paste0("C", 1:5)))
+#' NexusTokensToInteger(tokens)
+#' NexusTokensToInteger(tokens, polymorphism = "first")
+#'
+#' @family phylogenetic matrix conversion functions
+#' @template MRS
+#' @export
+NexusTokensToInteger <- function(tokens,
+                                 polymorphism = c("?", "first", "last")) {
+  polymorphism <- match.arg(polymorphism)
+  if (inherits(tokens, "phyDat")) {
+    tokens <- PhyDatToMatrix(tokens, ambigNA = TRUE, inappNA = TRUE)
+  }
+  at <- attributes(tokens)
+
+  x <- as.character(tokens)
+  result <- suppressWarnings(as.integer(x))
+
+  ambig <- is.na(result) & !is.na(x) & x != "?" & x != "-"
+  if (polymorphism != "?" && any(ambig)) {
+    pattern <- if (polymorphism == "first") "\\d" else "\\d(?=[^\\d]*$)"
+    m <- regexpr(pattern, x[ambig], perl = TRUE)
+    matched <- regmatches(x[ambig], m)
+    digits <- rep(NA_character_, sum(ambig))
+    digits[m != -1L] <- matched
+    result[ambig] <- suppressWarnings(as.integer(digits))
+  }
+
+  attributes(result) <- at
+  result
+}
+
+
 #' Rightmost character of string
 #'
 #' `RightmostCharacter()` is a convenience function that returns the final

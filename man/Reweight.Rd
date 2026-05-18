@@ -69,6 +69,7 @@ Reweight(dat, c("3" = 0, "2" = 2))
 Other phylogenetic matrix conversion functions:
 \code{\link[=Decompose]{Decompose()}},
 \code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}},
+\code{\link[=NexusTokensToInteger]{NexusTokensToInteger()}},
 \code{\link[=StringToPhyDat]{StringToPhyDat()}}
 }
 \author{
