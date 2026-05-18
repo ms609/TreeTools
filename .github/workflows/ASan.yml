@@ -49,12 +49,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Lower ASLR entropy for ASan
-        # Ubuntu-24.04 runners ship a kernel with vm.mmap_rnd_bits=32,
-        # which collides with ASan's shadow memory layout and aborts
-        # with "Shadow memory range interleaves with an existing memory
-        # mapping" (google/sanitizers#856, llvm/llvm-project#85780).
-        run: sudo sysctl -w vm.mmap_rnd_bits=28
+      - name: Disable kernel ASLR
+        # Ubuntu-24.04 runners ship a kernel whose default
+        # ELF_ET_DYN_BASE plus high mmap_rnd_bits places PIE binaries
+        # in addresses that collide with ASan's shadow memory layout,
+        # aborting with "Shadow memory range interleaves with an
+        # existing memory mapping" (google/sanitizers#856,
+        # llvm/llvm-project#85780). Lowering mmap_rnd_bits alone
+        # is not sufficient on this kernel; turn off randomize_va_space
+        # for the whole VM so ASan's shadow allocation is stable.
+        run: |
+          sudo sysctl -w vm.mmap_rnd_bits=28
+          sudo sysctl -w kernel.randomize_va_space=0
 
       - name: Initialize ASan configuration
         run: |
