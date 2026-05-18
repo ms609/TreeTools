@@ -49,6 +49,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Lower ASLR entropy for ASan
+        # Ubuntu-24.04 runners ship a kernel with vm.mmap_rnd_bits=32,
+        # which collides with ASan's shadow memory layout and aborts
+        # with "Shadow memory range interleaves with an existing memory
+        # mapping" (google/sanitizers#856, llvm/llvm-project#85780).
+        run: sudo sysctl -w vm.mmap_rnd_bits=28
+
       - name: Initialize ASan configuration
         run: |
           export LD_PRELOAD=$(gcc -print-file-name=libasan.so)
