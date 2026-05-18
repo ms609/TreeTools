@@ -1,4 +1,5 @@
 # Address Sanitizer: Replicate CRAN's gcc-ASAN 'Additional Test'
+# Uses the r-hub gcc-asan container (R-devel built with ASAN/UBSAN).
 on:
   workflow_dispatch:
   push:
@@ -26,7 +27,9 @@ name: gcc-ASAN
 
 jobs:
   mem-check:
-    runs-on: ubuntu-24.04 # Update RSPM when increasing
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/r-hub/containers/gcc-asan:latest
 
     name: AddressSanitizer ${{ matrix.config.test }}
 
@@ -39,61 +42,9 @@ jobs:
           - {test: 'vignettes'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      _R_CHECK_FORCE_SUGGESTS_: false
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/noble/latest
-      USING_ASAN: true
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      # detect_leaks=0 matches CRAN's gcc-ASAN setup; LSan otherwise
-      # reports noisy leaks from third-party libraries (libcrypto,
-      # libxml2) and even from the sed binary that test discovery
-      # shells out to. We rely on valgrind for leak coverage.
-      ASAN_OPTIONS: detect_container_overflow=1:verify_asan_link_order=0:detect_leaks=0
 
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Lower ASLR entropy for ASan
-        # Defence-in-depth alongside the LD_PRELOAD step below:
-        # ubuntu-24.04 runners ship a high vm.mmap_rnd_bits that can
-        # interact poorly with ASan's shadow memory layout
-        # (google/sanitizers#856, llvm/llvm-project#85780).
-        run: sudo sysctl -w vm.mmap_rnd_bits=28
-
-      - name: Initialize ASan configuration
-        run: |
-          echo "PKG_CFLAGS = -g -O0 -fsanitize=address -fno-omit-frame-pointer" > src/Makevars
-          echo "PKG_CXXFLAGS = -g -O0 -fsanitize=address -fno-omit-frame-pointer" >> src/Makevars
-
-          mkdir ~/.R
-          echo "LDFLAGS = -g -O0 -fsanitize=address -fno-omit-frame-pointer" >> ~/.R/Makevars
-
-      - uses: r-lib/actions/setup-r@v2
+      - uses: ms609/actions/asan@main
         with:
-          r-version: release # CRAN uses devel, but takes ages to load deps.
-
-      - name: Set up R dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          dependencies: "'soft'"
-          needs: |
-            memcheck
-
-      - name: Install package
-        run: |
-          cd ..
-          R CMD build --no-build-vignettes --no-manual --no-resave-data TreeTools
-          R CMD INSTALL TreeTools*.tar.gz
-          cd TreeTools
-
-      - name: ASAN - memcheck ${{ matrix.config.test }}
-        # LD_PRELOAD libasan.so so the sanitizer initialises at R
-        # process startup, before R's heap and any package loaded by
-        # the test script can occupy the address range ASan needs for
-        # its shadow region. Without this, libasan is loaded only when
-        # R dlopen()s an instrumented package's .so, which works for
-        # the small examples/vignettes scripts but aborts for the
-        # tests subjob once testthat's dependency stack is in memory.
-        run: |
-          LD_PRELOAD=$(gcc -print-file-name=libasan.so) \
-            Rscript memcheck/${{ matrix.config.test }}.R
+          test: ${{ matrix.config.test }}
