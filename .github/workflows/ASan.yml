@@ -49,23 +49,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Disable kernel ASLR
-        # Ubuntu-24.04 runners ship a kernel whose default
-        # ELF_ET_DYN_BASE plus high mmap_rnd_bits places PIE binaries
-        # in addresses that collide with ASan's shadow memory layout,
-        # aborting with "Shadow memory range interleaves with an
-        # existing memory mapping" (google/sanitizers#856,
-        # llvm/llvm-project#85780). Lowering mmap_rnd_bits alone
-        # is not sufficient on this kernel; turn off randomize_va_space
-        # for the whole VM so ASan's shadow allocation is stable.
-        run: |
-          sudo sysctl -w vm.mmap_rnd_bits=28
-          sudo sysctl -w kernel.randomize_va_space=0
+      - name: Lower ASLR entropy for ASan
+        # Defence-in-depth alongside the LD_PRELOAD step below:
+        # ubuntu-24.04 runners ship a high vm.mmap_rnd_bits that can
+        # interact poorly with ASan's shadow memory layout
+        # (google/sanitizers#856, llvm/llvm-project#85780).
+        run: sudo sysctl -w vm.mmap_rnd_bits=28
 
       - name: Initialize ASan configuration
         run: |
-          export LD_PRELOAD=$(gcc -print-file-name=libasan.so)
-
           echo "PKG_CFLAGS = -g -O0 -fsanitize=address -fno-omit-frame-pointer" > src/Makevars
           echo "PKG_CXXFLAGS = -g -O0 -fsanitize=address -fno-omit-frame-pointer" >> src/Makevars
 
@@ -91,5 +83,13 @@ jobs:
           cd TreeTools
 
       - name: ASAN - memcheck ${{ matrix.config.test }}
+        # LD_PRELOAD libasan.so so the sanitizer initialises at R
+        # process startup, before R's heap and any package loaded by
+        # the test script can occupy the address range ASan needs for
+        # its shadow region. Without this, libasan is loaded only when
+        # R dlopen()s an instrumented package's .so, which works for
+        # the small examples/vignettes scripts but aborts for the
+        # tests subjob once testthat's dependency stack is in memory.
         run: |
-          Rscript memcheck/${{ matrix.config.test }}.R
+          LD_PRELOAD=$(gcc -print-file-name=libasan.so) \
+            Rscript memcheck/${{ matrix.config.test }}.R
