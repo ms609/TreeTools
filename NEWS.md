@@ -1,9 +1,11 @@
-# TreeTools 2.3.0.9000 (development) #
+# TreeTools 2.3.0.9002 (development) #
 
-## New functionality
+## New features
 
 - `NexusTokensToInteger()` converts character data to integers,
   mapping uncertain tokens to `NA`.
+- `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
+  `xgroup` partition block is present, replacing the standalone `ReadXgroup()`.
 
 ## Fixes
 
@@ -12,6 +14,13 @@
 
 
 # TreeTools 2.3.0 (2026-04-22) #
+
+## Bug fixes
+
+- `ReadTntCharacters()` now handles multi-line comments, bare `&` continuations,
+  `@taxonomy` suffixes, name-only taxon lines, mid-line `xread`, smart-quote
+  names (Windows-1252), and packed multi-taxon lines; all 13 Goloboff (2019)
+  corpus files parse cleanly.
 
 ## Performance
 

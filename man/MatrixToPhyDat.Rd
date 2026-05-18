@@ -68,7 +68,6 @@ head(PhyDatToMatrix(Lobo.phy)[, 91:93])
 \seealso{
 Other phylogenetic matrix conversion functions:
 \code{\link[=Decompose]{Decompose()}},
-\code{\link[=NexusTokensToInteger]{NexusTokensToInteger()}},
 \code{\link[=Reweight]{Reweight()}},
 \code{\link[=StringToPhyDat]{StringToPhyDat()}}
 }

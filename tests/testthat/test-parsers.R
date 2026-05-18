@@ -289,8 +289,8 @@ test_that("ReadNotes() handles misspecified encoding", {
   expect_message(
     expect_equal(ReadNotes(system.file("extdata/tests/encoding.nex",
                                      package = "TreeTools"))[[1]][[2]],
-                 setNames("\u0080ncoding.", "Two")),
-    "trying latin1 .*encoding")
+                 setNames("\u20acncoding.", "Two")),
+    "trying cp1252 .*encoding")
 })
 
 test_that("ReadCharacters() reads CHARSTATELABELS", {

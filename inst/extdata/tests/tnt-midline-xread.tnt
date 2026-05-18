@@ -1,0 +1,6 @@
+piwe=; mxr 100 ; nstates 8 ; xread 4 3
+taxon_a 0001
+taxon_b 0110
+taxon_c 1111
+;
+proc /;

@@ -61,8 +61,13 @@ ApeTime <- function(filepath, format = "double") {
 ExtractTaxa <- function(matrixLines, character_num = NULL,
                          continuous = FALSE) {
   taxonLine.pattern <- "('([^']+)'|\"([^\"+])\"|(\\S+))\\s+(.+)$"
+  # Also recognise taxon-name-only lines (name without data on the same line,
+  # used e.g. in TNT files where data runs across multiple lines per taxon)
+  nameOnly.pattern <- "^[\\p{L}\\p{Pi}\\p{Pf}][^\\s]*$"
 
   taxonLines <- regexpr(taxonLine.pattern, matrixLines, perl = TRUE) > -1
+  nameOnlyLines <- grepl(nameOnly.pattern, matrixLines, perl = TRUE)
+  taxonLines <- taxonLines | nameOnlyLines
   # If a line does not start with a taxon name, join it to the preceding line
   taxonLineNumber <- which(taxonLines)
   previousTaxon <- vapply(which(!taxonLines), function(x) {
@@ -72,10 +77,14 @@ ExtractTaxa <- function(matrixLines, character_num = NULL,
 
   taxa <- sub(taxonLine.pattern, "\\2\\3\\4", matrixLines, perl = TRUE)
   taxa <- gsub(" ", "_", taxa, fixed=TRUE)
+  # Strip TNT @taxonomy classification suffixes (e.g. Name_@Family_Genus)
+  taxa <- sub("@\\S*$", "", taxa, perl = TRUE)
+  taxa <- sub("_+$", "", taxa, perl = TRUE)  # remove trailing underscores
   taxa[!taxonLines] <- taxa[previousTaxon]
   uniqueTaxa <- unique(taxa)
 
   tokens <- sub(taxonLine.pattern, "\\5", matrixLines, perl = TRUE)
+  tokens[nameOnlyLines] <- ""  # name-only lines carry no character data
   if (continuous) {
     tokens <- strsplit(tokens, "\\s+")
     lengths <- lengths(tokens)
@@ -353,6 +362,20 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
 
 
 #' @rdname ReadCharacters
+#' @return `ReadTntCharacters()` and `ReadTNTCharacters()` return a matrix
+#' as described above for `ReadCharacters()`.  When the TNT file contains an
+#' `xgroup` partition block \insertCite{Goloboff2008}{TreeTools}, the returned
+#' matrix carries an `"xgroup"` attribute: a factor of length `ncol(matrix)`
+#' whose levels are the partition labels (the parenthetical label, e.g.\
+#' `"ANTERIOR"`, or the numeric id as a string when no label is given).
+#' Characters not assigned to any partition are `NA`.  The attribute is absent
+#' (not an all-`NA` vector) when no `xgroup` block is found in the file.
+#'
+#' @examples
+#' tntFile <- paste0(system.file(package = "TreeTools"),
+#'                   "/extdata/tests/tnt-xgroup.tnt")
+#' mat <- ReadTntCharacters(tntFile)
+#' attr(mat, "xgroup")
 #' @export
 ReadTntCharacters <- function(filepath, character_num = NULL,
                                type = NULL, encoding = "UTF8") {
@@ -366,6 +389,13 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   closeComment <- multilineComments[seq_len(nmlc) * 2L]
   lines[openComment] <- gsub("'.*", "", lines[openComment])
   lines[closeComment] <- gsub(".*'", "", lines[closeComment])
+  if (nmlc > 0) {
+    for (i in seq_len(nmlc)) {
+      innerStart <- openComment[i] + 1L
+      innerEnd <- closeComment[i] - 1L
+      if (innerStart <= innerEnd) lines[innerStart:innerEnd] <- ""
+    }
+  }
 
   lines <- trimws(lines)
   lines <- lines[lines != ""]
@@ -373,7 +403,7 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
   semicolons <- grep(";", lines, fixed = TRUE)
   upperLines <- toupper(lines)
 
-  xread <- grep("^XREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
+  xread <- grep("\\bXREAD\\b", lines, ignore.case = TRUE, perl = TRUE)
   if (length(xread) < 1) return(NULL)
   if (length(xread) > 1) {
     message("Multiple character blocks not yet supported;",
@@ -381,6 +411,10 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
             "Returning first block only.")
     xread <- xread[1]
   }
+  # If xread appears mid-line (e.g. after other TNT directives separated by ;),
+  # strip everything before the xread keyword so dimension parsing works.
+  lines[xread] <- sub("^.*\\bxread\\b", "xread", lines[xread],
+                       ignore.case = TRUE, perl = TRUE)
 
   xreadEnd <- semicolons[semicolons > xread][1]
   if (lines[xreadEnd] == ";") {
@@ -397,6 +431,8 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
                               attr(dimHit, "match.length")[3] - 1L))
   matrixLines <- xreadLines[-seq_len(xDimLine)]
 
+  bareAmpLines <- grep("^&\\s*$", matrixLines, perl = TRUE)
+  if (length(bareAmpLines)) matrixLines <- matrixLines[-bareAmpLines]
   ctypeLines <- grep("^&\\[[\\w\\s]+\\]$", matrixLines, perl = TRUE)
   if (is.null(type)) {
     if (length(ctypeLines)) matrixLines <- matrixLines[-ctypeLines]
@@ -413,6 +449,26 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
     matrixLines <- matrixLines[unlist(
       apply(blockSpan[unlist(blocks), , drop = FALSE],  1,
             function(x) seq.int(from = x[1], to = x[2])))]
+  }
+
+  # Some TNT files pack multiple taxa on one physical line (e.g. dromaeodat.tnt).
+  # Split such lines at boundaries between character data and the next taxon name.
+  # Boundary: a data character (digit, ?, -, ], }) immediately followed by a taxon
+  # name (letter, then eventually @). No whitespace separator between them.
+  multiTaxon <- grep(
+    "(?<=[?0-9\\-\\]\\}])[A-Za-z][^\t ]*@",
+    matrixLines, perl = TRUE
+  )
+  if (length(multiTaxon)) {
+    splitLines <- strsplit(
+      matrixLines[multiTaxon],
+      "(?<=[?0-9\\-\\]\\}])(?=[A-Za-z][^\t ]*@)",
+      perl = TRUE
+    )
+    matrixLines <- c(
+      matrixLines[-multiTaxon],
+      unlist(splitLines)
+    )
   }
 
   tokens <- ExtractTaxa(matrixLines, character_num)
@@ -454,6 +510,14 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
       return(list("Multiple cnames entries in TNT file."))
   }
 
+  # Attach xgroup attribute if the file contains an xgroup partition block.
+  # Search only within lines following the xread block (up to the next proc/ or
+  # end of file) so multi-block files scope correctly.
+  xgroupAttr <- .ParseXgroupLines(lines[xread:length(lines)], nChar)
+  if (!is.null(xgroupAttr)) {
+    attr(tokens, "xgroup") <- xgroupAttr
+  }
+
   # Return:
   tokens
 }
@@ -461,6 +525,69 @@ ReadTntCharacters <- function(filepath, character_num = NULL,
 #' @rdname ReadCharacters
 #' @export
 ReadTNTCharacters <- ReadTntCharacters
+
+
+#' @keywords internal
+.ParseXgroupLines <- function(lines, nChar) {
+  xgLines <- grep("^xgroup\\s*=", lines, ignore.case = TRUE, perl = TRUE)
+  if (length(xgLines) == 0L) {
+    return(NULL)
+  }
+
+  labels <- character(nChar)
+  labels[] <- NA_character_
+
+  # Collect labels in encounter order to build factor levels correctly
+  levelsSeen <- character(0)
+
+  for (idx in xgLines) {
+    parsed <- .ParseOneXgroup(lines[idx], nChar)
+    lbl <- parsed[["label"]]
+    labels[parsed[["chars"]]] <- lbl
+    if (!lbl %in% levelsSeen) {
+      levelsSeen <- c(levelsSeen, lbl)
+    }
+  }
+
+  # Return:
+  factor(labels, levels = levelsSeen)
+}
+
+#' @keywords internal
+.ParseOneXgroup <- function(line, nChar) {
+  idM <- regmatches(line, regexec("xgroup\\s*=\\s*(\\d+)", line,
+                                  ignore.case = TRUE, perl = TRUE))[[1]]
+  id <- as.integer(idM[2])
+
+  labelM <- regmatches(line, regexec("\\(([^)]+)\\)", line, perl = TRUE))[[1]]
+  label <- if (length(labelM) > 1L) trimws(labelM[2]) else as.character(id)
+
+  # Range tokens follow the optional label; if no label, follow the partition id
+  afterLabel <- sub(".*\\)\\s*", "", line)
+  if (!nzchar(afterLabel)) {
+    afterLabel <- sub("xgroup\\s*=\\s*\\d+\\s*", "", line,
+                      ignore.case = TRUE, perl = TRUE)
+  }
+  tokens <- regmatches(afterLabel,
+                       gregexpr("\\d+\\.\\d*", afterLabel, perl = TRUE))[[1]]
+
+  list(id    = id,
+       label = label,
+       chars = unlist(lapply(tokens, .ExpandTntRange, nChar = nChar)))
+}
+
+#' @keywords internal
+.ExpandTntRange <- function(token, nChar) {
+  parts <- strsplit(token, ".", fixed = TRUE)[[1]]
+  # TNT is 0-indexed; convert to 1-indexed
+  from <- as.integer(parts[1]) + 1L
+  to <- if (length(parts) > 1L && nzchar(parts[2])) {
+    as.integer(parts[2]) + 1L
+  } else {
+    nChar
+  }
+  seq.int(from, to)
+}
 
 .UTFLines <- function(filepath, encoding) {
   if (!file.exists(filepath)) {
@@ -476,7 +603,7 @@ ReadTNTCharacters <- ReadTntCharacters
       if (substr(e[["message"]], 0, 39) == 
           "invalid input found on input connection") {
         newEnc <- if (toupper(encoding) %in% c("UTF-8", "UTF8")) {
-          "latin1"
+          "cp1252"
         } else {
           "UTF8"
         }
