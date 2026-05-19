@@ -54,6 +54,7 @@ Other tree navigation:
 \code{\link[=NDescendants]{NDescendants()}},
 \code{\link[=NodeNumbers]{NodeNumbers()}},
 \code{\link[=NodeOrder]{NodeOrder()}},
+\code{\link[=PaintTree]{PaintTree()}},
 \code{\link[=RootNode]{RootNode()}}
 }
 \author{

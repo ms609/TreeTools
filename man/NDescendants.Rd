@@ -25,6 +25,9 @@ nodelabels(NDescendants(tree))
 
 }
 \seealso{
+\code{\link[=CladeSizes]{CladeSizes()}} for the count of descendant leaves (rather than direct
+children) at each node.
+
 Other tree navigation:
 \code{\link[=AncestorEdge]{AncestorEdge()}},
 \code{\link[=CladeSizes]{CladeSizes()}},
@@ -37,6 +40,7 @@ Other tree navigation:
 \code{\link[=NodeDepth]{NodeDepth()}},
 \code{\link[=NodeNumbers]{NodeNumbers()}},
 \code{\link[=NodeOrder]{NodeOrder()}},
+\code{\link[=PaintTree]{PaintTree()}},
 \code{\link[=RootNode]{RootNode()}}
 }
 \author{

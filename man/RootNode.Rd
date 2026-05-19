@@ -43,7 +43,8 @@ Other tree navigation:
 \code{\link[=NDescendants]{NDescendants()}},
 \code{\link[=NodeDepth]{NodeDepth()}},
 \code{\link[=NodeNumbers]{NodeNumbers()}},
-\code{\link[=NodeOrder]{NodeOrder()}}
+\code{\link[=NodeOrder]{NodeOrder()}},
+\code{\link[=PaintTree]{PaintTree()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

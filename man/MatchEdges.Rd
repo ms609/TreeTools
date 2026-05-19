@@ -45,6 +45,7 @@ Other tree navigation:
 \code{\link[=NodeDepth]{NodeDepth()}},
 \code{\link[=NodeNumbers]{NodeNumbers()}},
 \code{\link[=NodeOrder]{NodeOrder()}},
+\code{\link[=PaintTree]{PaintTree()}},
 \code{\link[=RootNode]{RootNode()}}
 
 Other tree properties:
