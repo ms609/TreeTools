@@ -22,6 +22,10 @@ descendants (leaves or internal nodes) for each node in a tree.
 
 ## See also
 
+[`CladeSizes()`](https://ms609.github.io/TreeTools/dev/reference/CladeSizes.md)
+for the count of descendant leaves (rather than direct children) at each
+node.
+
 Other tree navigation:
 [`AncestorEdge()`](https://ms609.github.io/TreeTools/dev/reference/AncestorEdge.md),
 [`CladeSizes()`](https://ms609.github.io/TreeTools/dev/reference/CladeSizes.md),
@@ -34,6 +38,7 @@ Other tree navigation:
 [`NodeDepth()`](https://ms609.github.io/TreeTools/dev/reference/NodeDepth.md),
 [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md),
 [`NodeOrder()`](https://ms609.github.io/TreeTools/dev/reference/NodeOrder.md),
+[`PaintTree()`](https://ms609.github.io/TreeTools/dev/reference/PaintTree.md),
 [`RootNode()`](https://ms609.github.io/TreeTools/dev/reference/RootNode.md)
 
 ## Author

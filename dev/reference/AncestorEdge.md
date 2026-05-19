@@ -46,6 +46,7 @@ Other tree navigation:
 [`NodeDepth()`](https://ms609.github.io/TreeTools/dev/reference/NodeDepth.md),
 [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md),
 [`NodeOrder()`](https://ms609.github.io/TreeTools/dev/reference/NodeOrder.md),
+[`PaintTree()`](https://ms609.github.io/TreeTools/dev/reference/PaintTree.md),
 [`RootNode()`](https://ms609.github.io/TreeTools/dev/reference/RootNode.md)
 
 ## Examples

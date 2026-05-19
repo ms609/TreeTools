@@ -41,7 +41,8 @@ Other tree navigation:
 [`NDescendants()`](https://ms609.github.io/TreeTools/dev/reference/NDescendants.md),
 [`NodeDepth()`](https://ms609.github.io/TreeTools/dev/reference/NodeDepth.md),
 [`NodeNumbers()`](https://ms609.github.io/TreeTools/dev/reference/NodeNumbers.md),
-[`NodeOrder()`](https://ms609.github.io/TreeTools/dev/reference/NodeOrder.md)
+[`NodeOrder()`](https://ms609.github.io/TreeTools/dev/reference/NodeOrder.md),
+[`PaintTree()`](https://ms609.github.io/TreeTools/dev/reference/PaintTree.md)
 
 ## Author
 
