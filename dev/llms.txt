@@ -298,7 +298,7 @@ Functions for modifying and evaluating datasets.
   Convert between strings and `phyDat` objects
 
 - [`Reweight()`](https://ms609.github.io/TreeTools/dev/reference/Reweight.md)
-  : Reweight phylogenetic characters
+  : Re-weight phylogenetic characters
 
 - [`ArtificialExtinction()`](https://ms609.github.io/TreeTools/dev/reference/ArtificialExtinction.md)
   [`ArtEx()`](https://ms609.github.io/TreeTools/dev/reference/ArtificialExtinction.md)
