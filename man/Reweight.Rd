@@ -2,7 +2,7 @@
 % Please edit documentation in R/Reweight.R
 \name{Reweight}
 \alias{Reweight}
-\title{Reweight phylogenetic characters}
+\title{Re-weight phylogenetic characters}
 \usage{
 Reweight(dataset, weights)
 }
