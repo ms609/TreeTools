@@ -80,6 +80,28 @@ test_that("Consensus() handles large sets of trees", {
   ))
 })
 
+test_that("Consensus() exact and hashed counts agree", {
+  # The hashed (default) and exact (opt-in) split counts must yield identical
+  # consensus trees; this also guards the shared counting core.
+  skip_if_not_installed("ape")
+  set.seed(1)
+  forests <- list(
+    balPec = list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)],
+    starlike = list(ape::read.tree(text = "((a, b), (c, d));"),
+                    ape::read.tree(text = "((a, c), (b, d));")),
+    tie = c(rep(list(BalancedTree(8)), 2L), rep(list(PectinateTree(8)), 2L)),
+    rand12 = lapply(1:7, function(i) ape::rtree(12, br = NULL)),
+    rand9  = lapply(1:20, function(i) ape::rtree(9, br = NULL))
+  )
+  for (f in forests) {
+    for (p in c(0.5, 2 / 3, 1)) {
+      hashed <- Consensus(f, p = p)
+      exact  <- Consensus(f, p = p, exact = TRUE)
+      expect_true(isTRUE(all.equal(RootTree(hashed, 1), RootTree(exact, 1))))
+    }
+  }
+})
+
 test_that("Consensus() handles non-preorder trees", {
   trees <- ape::read.nexus(test_path("testdata", "nonPreCons.nex"))
   expect_equal(Consensus(trees)$Nnode, 3)

@@ -4,7 +4,7 @@
 \alias{Consensus}
 \title{Construct consensus trees}
 \usage{
-Consensus(trees, p = 1, check.labels = TRUE)
+Consensus(trees, p = 1, check.labels = TRUE, exact = FALSE)
 }
 \arguments{
 \item{trees}{List of trees, optionally of class \code{multiPhylo}.}
@@ -15,6 +15,12 @@ default) gives the strict consensus.}
 
 \item{check.labels}{Logical specifying whether to check that all trees have
 identical labels.  Defaults to \code{TRUE}, which is slower.}
+
+\item{exact}{Logical; if \code{TRUE}, majority/threshold consensus uses a slower
+but guaranteed-exact split count instead of the default 128-bit hashing
+(whose results are exact unless a hash collision conflates two distinct
+splits, which is vanishingly unlikely).  Ignored when \code{p = 1}, which is
+always exact.}
 }
 \value{
 \code{Consensus()} returns an object of class \code{phylo}, rooted as in the
@@ -22,7 +28,18 @@ first entry of \code{trees}.
 }
 \description{
 \code{Consensus()} calculates the consensus of a set of trees, using the
-algorithm of \insertCite{Day1985}{TreeTools}.
+cluster-table approach of \insertCite{Day1985}{TreeTools}.
+}
+\details{
+The strict consensus (\code{p = 1}) compares the clusters of the first tree
+against every other tree in linear time.  The majority-rule and threshold
+consensus (\verb{0.5 <= p < 1}) instead count the frequency of every split across
+all trees in a single pass and retain those occurring in a proportion \code{p} or
+more of trees; this runs in time linear in the number of trees, after
+\insertCite{Jansson2016}{TreeTools} (implementation informed by the
+\acronym{FACT} package of Jansson, Shen and Sung).  By default the count uses
+a 128-bit hash, whose results are exact with overwhelming probability; set
+\code{exact = TRUE} for a slower but guaranteed-exact count.
 }
 \examples{
 Consensus(as.phylo(0:2, 8))

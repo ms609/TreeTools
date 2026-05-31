@@ -1,5 +1,14 @@
 # TreeTools 2.3.0.9002 (development) #
 
+## Performance
+
+- `Consensus()` computes majority-rule and threshold consensus trees in time
+  linear in the number of trees (previously quadratic), after
+  Jansson, Shen & Sung (2016); implementation informed by their `FACT` package.
+  `SplitFrequency()` inherits the same single-pass speed-up.  Both default to a
+  128-bit hashing count (exact with overwhelming probability); pass
+  `exact = TRUE` for a slower, guaranteed-exact count.
+
 ## New features
 
 - `NexusTokensToInteger()` converts character data to integers,

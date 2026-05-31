@@ -25,12 +25,12 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
-split_frequencies <- function(trees) {
-    .Call(`_TreeTools_split_frequencies`, trees)
+split_frequencies <- function(trees, exact = FALSE) {
+    .Call(`_TreeTools_split_frequencies`, trees, exact)
 }
 
-consensus_tree <- function(trees, p) {
-    .Call(`_TreeTools_consensus_tree`, trees, p)
+consensus_tree <- function(trees, p, exact = FALSE) {
+    .Call(`_TreeTools_consensus_tree`, trees, p, exact)
 }
 
 descendant_edges <- function(parent, child, postorder) {

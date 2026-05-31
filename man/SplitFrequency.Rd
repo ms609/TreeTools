@@ -4,7 +4,7 @@
 \alias{SplitFrequency}
 \title{Frequency of splits}
 \usage{
-SplitFrequency(reference, forest = NULL)
+SplitFrequency(reference, forest = NULL, exact = FALSE)
 }
 \arguments{
 \item{reference}{A tree of class \code{phylo}, a \code{Splits} object. If \code{NULL},
@@ -14,6 +14,14 @@ the frequencies of all splits in \code{forest} will be returned.}
 or a \code{Splits} object. See
 \href{https://ms609.github.io/TreeTools/articles/load-trees.html}{vignette} for
 possible methods of loading trees into R.}
+
+\item{exact}{Logical specifying whether to use the slower but guaranteed
+exact algorithm when counting the frequencies of \emph{all} splits (i.e. when
+\code{reference = NULL}).  The default (\code{FALSE}) uses a faster hashing approach
+whose results are exact with overwhelming probability (a 128-bit hash
+collision, which would conflate two distinct splits, is vanishingly
+unlikely); set \code{exact = TRUE} if certainty is required.  Ignored when
+\code{reference} is a tree or \code{Splits} object.}
 }
 \value{
 \code{SplitFrequency()} returns the number of trees in \code{forest} that

@@ -50,6 +50,21 @@ test_that("Node supports calculated correctly", {
                structure(as.Splits(PectinateTree(8200)), count = rep(2, 8197)))
 })
 
+test_that("SplitFrequency() exact and hashed counts agree", {
+  skip_if_not_installed("ape")
+  set.seed(2)
+  freqKey <- function(sf) sort(paste(as.character(sf), attr(sf, "count")))
+  forests <- list(
+    c(PectinateTree(16), PectinateTree(16)),
+    lapply(1:10, function(i) ape::rtree(13, br = NULL)),
+    lapply(1:30, function(i) ape::rtree(8, br = NULL))
+  )
+  for (f in forests) {
+    expect_equal(freqKey(SplitFrequency(f)),
+                 freqKey(SplitFrequency(f, exact = TRUE)))
+  }
+})
+
 test_that("Node support colours consistent", {
   expect_equal(SupportColour(NA), "red")
   expect_equal(SupportColour(1:2, show1 = FALSE), c("#ffffff00", "red"))
