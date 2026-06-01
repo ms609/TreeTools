@@ -27,8 +27,8 @@ always exact.}
 first entry of \code{trees}.
 }
 \description{
-\code{Consensus()} calculates the consensus of a set of trees, using the
-cluster-table approach of \insertCite{Day1985}{TreeTools}.
+\code{Consensus()} calculates the majority-rule or strict consensus of a set of
+trees, using the cluster-table approach of \insertCite{Day1985}{TreeTools}.
 }
 \details{
 The strict consensus (\code{p = 1}) compares the clusters of the first tree
@@ -36,8 +36,7 @@ against every other tree in linear time.  The majority-rule and threshold
 consensus (\verb{0.5 <= p < 1}) instead count the frequency of every split across
 all trees in a single pass and retain those occurring in a proportion \code{p} or
 more of trees; this runs in time linear in the number of trees, after
-\insertCite{Jansson2016}{TreeTools} (implementation informed by the
-\acronym{FACT} package of Jansson, Shen and Sung).  By default the count uses
+\insertCite{Jansson2016}{TreeTools}.  By default the count uses
 a 128-bit hash, whose results are exact with overwhelming probability; set
 \code{exact = TRUE} for a slower but guaranteed-exact count.
 }
@@ -48,8 +47,14 @@ Consensus(as.phylo(0:2, 8))
 \insertAllCited{}
 }
 \seealso{
-\code{TreeDist::ConsensusInfo()} calculates the information content of a consensus
+\itemize{
+\item \href{https://CRAN.R-project.org/package=ConsTree}{\pkg{ConsTree}} implements
+other consensus tree algorithms.
+\item \href{https://CRAN.R-project.org/package=Rogue}{\pkg{Rogue}} increases the
+resolution of consensus trees by dropping wildcard taxa.
+\item \code{TreeDist::ConsensusInfo()} calculates the information content of a consensus
 tree.
+}
 
 Other consensus tree functions:
 \code{\link[=ConsensusWithout]{ConsensusWithout()}},
