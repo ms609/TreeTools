@@ -14,6 +14,13 @@
 #' or a `Splits` object. See
 #' [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html) for
 #' possible methods of loading trees into R.
+#' @param exact Logical specifying whether to use the slower but guaranteed
+#' exact algorithm when counting the frequencies of _all_ splits (i.e. when
+#' `reference = NULL`).  The default (`FALSE`) uses a faster hashing approach
+#' whose results are exact with overwhelming probability (a 128-bit hash
+#' collision, which would conflate two distinct splits, is vanishingly
+#' unlikely); set `exact = TRUE` if certainty is required.  Ignored when
+#' `reference` is a tree or `Splits` object.
 #'
 #' @return `SplitFrequency()` returns the number of trees in `forest` that
 #' contain each split in `reference`.
@@ -31,7 +38,7 @@
 #' @template MRS
 #' @family Splits operations
 #' @export
-SplitFrequency <- function(reference, forest = NULL) {
+SplitFrequency <- function(reference, forest = NULL, exact = FALSE) {
   if (is.null(reference) || is.null(forest)) {
     if (is.null(forest)) forest <- reference
     if (inherits(forest, "phylo")) forest <- list(forest)
@@ -49,7 +56,7 @@ SplitFrequency <- function(reference, forest = NULL) {
     }
     forest <- RenumberTips(forest, tipLabels)
     forest <- Preorder(forest)
-    result <- split_frequencies(forest)
+    result <- split_frequencies(forest, exact = isTRUE(exact))
     splits <- result[["splits"]]
     counts <- result[["counts"]]
     nTip <- length(tipLabels)

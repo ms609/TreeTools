@@ -10,6 +10,13 @@
 - `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
   `xgroup` partition block is present, replacing the stand-alone `ReadXgroup()`.
 
+## Performance
+
+- `Consensus()` computes majority-rule and threshold consensus trees in time
+  linear in the number of trees (previously quadratic), after
+  Jansson, Shen & Sung (2016); implementation informed by their `FACT` package.
+  `SplitFrequency()` inherits the same single-pass speed-up.
+
 ## Fixes
 
 - `NexusTokens()` once again handles polymorphism tokens with internal

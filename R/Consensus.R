@@ -1,7 +1,17 @@
 #' Construct consensus trees
 #'
 #' `Consensus()` calculates the consensus of a set of trees, using the
-#' algorithm of \insertCite{Day1985}{TreeTools}.
+#' cluster-table approach of \insertCite{Day1985}{TreeTools}.
+#'
+#' The strict consensus (`p = 1`) compares the clusters of the first tree
+#' against every other tree in linear time.  The majority-rule and threshold
+#' consensus (`0.5 <= p < 1`) instead count the frequency of every split across
+#' all trees in a single pass and retain those occurring in a proportion `p` or
+#' more of trees; this runs in time linear in the number of trees, after
+#' \insertCite{Jansson2016}{TreeTools} (implementation informed by the
+#' \acronym{FACT} package of Jansson, Shen and Sung).  By default the count uses
+#' a 128-bit hash, whose results are exact with overwhelming probability; set
+#' `exact = TRUE` for a slower but guaranteed-exact count.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
 #' @param p Proportion of trees that must contain a split for it to be reported
@@ -9,6 +19,11 @@
 #' default) gives the strict consensus.
 #' @param check.labels Logical specifying whether to check that all trees have
 #' identical labels.  Defaults to `TRUE`, which is slower.
+#' @param exact Logical; if `TRUE`, majority/threshold consensus uses a slower
+#' but guaranteed-exact split count instead of the default 128-bit hashing
+#' (whose results are exact unless a hash collision conflates two distinct
+#' splits, which is vanishingly unlikely).  Ignored when `p = 1`, which is
+#' always exact.
 #'
 #' @return `Consensus()` returns an object of class `phylo`, rooted as in the
 #' first entry of `trees`.
@@ -23,7 +38,7 @@
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function(trees, p = 1, check.labels = TRUE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE, exact = FALSE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -69,7 +84,7 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
 
   # Return:
   RootTree(.PreorderTree(
-    edge = splits_to_edge(consensus_tree(trees, p), nTip),
+    edge = splits_to_edge(consensus_tree(trees, p, exact = isTRUE(exact)), nTip),
     tip.label = TipLabels(trees[[1]])
   ), root)
 }
