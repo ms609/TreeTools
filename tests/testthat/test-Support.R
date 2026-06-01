@@ -51,13 +51,12 @@ test_that("Node supports calculated correctly", {
 })
 
 test_that("SplitFrequency() exact and hashed counts agree", {
-  skip_if_not_installed("ape")
   set.seed(2)
   freqKey <- function(sf) sort(paste(as.character(sf), attr(sf, "count")))
   forests <- list(
     c(PectinateTree(16), PectinateTree(16)),
-    lapply(1:10, function(i) ape::rtree(13, br = NULL)),
-    lapply(1:30, function(i) ape::rtree(8, br = NULL))
+    lapply(1:10, function(i) RandomTree(13, root = TRUE)),
+    lapply(1:30, function(i) RandomTree(8, root = TRUE))
   )
   for (f in forests) {
     expect_equal(freqKey(SplitFrequency(f)),
