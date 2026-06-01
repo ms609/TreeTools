@@ -88,7 +88,8 @@ polytomies.</p></dd>
 
 
 <dt id="arg-lengths">lengths<a class="anchor" aria-label="anchor" href="#arg-lengths"></a></dt>
-<dd><p>a numeric vector specifying the edge lengths of the tree.</p></dd>
+<dd><p>Numeric vector of edge lengths, or a function called with the
+number of edges as its argument (e.g. <code>lengths = runif</code>).</p></dd>
 
 
 <dt id="arg-addinturn">addInTurn<a class="anchor" aria-label="anchor" href="#arg-addinturn"></a></dt>
@@ -159,12 +160,21 @@ i.e. adding leaves in turn adjacent to a randomly-chosen existing leaf.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; no branch length.</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">RandomTree</span><span class="op">(</span><span class="fl">8</span>, lengths <span class="op">=</span> <span class="va">runif</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 8 tips and 6 internal nodes.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   t1, t2, t3, t4, t5, t6, ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; includes branch length(s).</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">YuleTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 10 tips and 9 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   I, G, F, A, D, J, ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   H, B, E, I, F, A, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rooted; no branch length.</span>
 <span class="r-in"><span></span></span>

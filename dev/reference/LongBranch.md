@@ -66,7 +66,7 @@ sd(lb)
 #> [1] 0.2335139
 evenLengths <- BalancedTree(8, lengths = jitter(rep(1, 14)))
 sd(LongBranch(evenLengths))
-#> [1] 0.002947199
+#> [1] 0.002781269
 
 # Upper quartile identifies taxa with longest branches
 threshold <- quantile(lb, 0.75)

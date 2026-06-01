@@ -48,12 +48,10 @@
 <h2 class="pkg-version" data-toc-text="2.3.0.9002" id="treetools-2309002-development">TreeTools 2.3.0.9002 (development)<a class="anchor" aria-label="anchor" href="#treetools-2309002-development"></a></h2>
 <div class="section level3">
 <h3 id="new-features-2-3-0-9002">New features<a class="anchor" aria-label="anchor" href="#new-features-2-3-0-9002"></a></h3>
-<ul><li>
-<code><a href="../reference/NexusTokensToInteger.html">NexusTokensToInteger()</a></code> converts character data to integers, mapping uncertain tokens to <code>NA</code>.</li>
-<li>
-<code><a href="../reference/PaintTree.html">PaintTree()</a></code> assigns colours to every edge, leaf, and internal node such that sister clades occupy adjacent hue bands proportional to their tip counts, with saturation growing from zero at the root to one at every tip.</li>
-<li>
-<code><a href="../reference/ReadCharacters.html">ReadTntCharacters()</a></code> attaches an <code>xgroup</code> attribute (factor) when a TNT <code>xgroup</code> partition block is present, replacing the stand-alone <code>ReadXgroup()</code>.</li>
+<ul><li><p><code><a href="../reference/GenerateTree.html">RandomTree()</a></code>, <code><a href="../reference/GenerateTree.html">YuleTree()</a></code>, <code><a href="../reference/GenerateTree.html">PectinateTree()</a></code>, <code><a href="../reference/GenerateTree.html">BalancedTree()</a></code>, <code><a href="../reference/GenerateTree.html">StarTree()</a></code>, and <code><a href="../reference/TrivialTree.html">SingleTaxonTree()</a></code> accept a function as <code>lengths</code>; the function is called with the number of edges as its sole argument (e.g. <code>RandomTree(8, lengths = runif)</code>).</p></li>
+<li><p><code><a href="../reference/NexusTokensToInteger.html">NexusTokensToInteger()</a></code> converts character data to integers, mapping uncertain tokens to <code>NA</code>.</p></li>
+<li><p><code><a href="../reference/PaintTree.html">PaintTree()</a></code> assigns colours to every edge, leaf, and internal node such that sister clades occupy adjacent hue bands proportional to their tip counts, with saturation growing from zero at the root to one at every tip.</p></li>
+<li><p><code><a href="../reference/ReadCharacters.html">ReadTntCharacters()</a></code> attaches an <code>xgroup</code> attribute (factor) when a TNT <code>xgroup</code> partition block is present, replacing the stand-alone <code>ReadXgroup()</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-2-3-0-9002">Performance<a class="anchor" aria-label="anchor" href="#performance-2-3-0-9002"></a></h3>

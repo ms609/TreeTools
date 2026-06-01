@@ -4,13 +4,25 @@
 
 ### New features
 
+- [`RandomTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md),
+  [`YuleTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md),
+  [`PectinateTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md),
+  [`BalancedTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md),
+  [`StarTree()`](https://ms609.github.io/TreeTools/dev/reference/GenerateTree.md),
+  and
+  [`SingleTaxonTree()`](https://ms609.github.io/TreeTools/dev/reference/TrivialTree.md)
+  accept a function as `lengths`; the function is called with the number
+  of edges as its sole argument (e.g. `RandomTree(8, lengths = runif)`).
+
 - [`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/dev/reference/NexusTokensToInteger.md)
   converts character data to integers, mapping uncertain tokens to `NA`.
+
 - [`PaintTree()`](https://ms609.github.io/TreeTools/dev/reference/PaintTree.md)
   assigns colours to every edge, leaf, and internal node such that
   sister clades occupy adjacent hue bands proportional to their tip
   counts, with saturation growing from zero at the root to one at every
   tip.
+
 - [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
   attaches an `xgroup` attribute (factor) when a TNT `xgroup` partition
   block is present, replacing the stand-alone `ReadXgroup()`.

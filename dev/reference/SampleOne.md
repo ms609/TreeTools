@@ -49,5 +49,5 @@ Other utility functions:
 SampleOne(9:10)
 #> [1] 10
 SampleOne(letters[1:4])
-#> [1] "b"
+#> [1] "a"
 ```

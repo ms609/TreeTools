@@ -38,7 +38,8 @@ StarTree(tips, lengths = NULL)
 
 - lengths:
 
-  a numeric vector specifying the edge lengths of the tree.
+  Numeric vector of edge lengths, or a function called with the number
+  of edges as its argument (e.g. `lengths = runif`).
 
 - addInTurn:
 
@@ -110,12 +111,21 @@ RandomTree(Lobo.phy)
 #> 
 #> Unrooted; no branch length.
 
+RandomTree(8, lengths = runif)
+#> 
+#> Phylogenetic tree with 8 tips and 6 internal nodes.
+#> 
+#> Tip labels:
+#>   t1, t2, t3, t4, t5, t6, ...
+#> 
+#> Unrooted; includes branch length(s).
+
 YuleTree(LETTERS[1:10])
 #> 
 #> Phylogenetic tree with 10 tips and 9 internal nodes.
 #> 
 #> Tip labels:
-#>   I, G, F, A, D, J, ...
+#>   H, B, E, I, F, A, ...
 #> 
 #> Rooted; no branch length.
 
