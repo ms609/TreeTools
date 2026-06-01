@@ -64,7 +64,8 @@ Renumber <- function(tree) {
 #' `ZeroTaxonTree()` creates an empty `phylo` object with zero leaves or edges.
 #'
 #' @param label a character vector specifying the label of the tip.
-#' @param lengths a numeric vector specifying the edge lengths of the tree.
+#' @param lengths Numeric vector of edge lengths, or a function called with the
+#' number of edges as its argument (e.g. `lengths = runif`).
 #' @return `SingleTaxonTree()` returns a \code{phylo} object containing a single
 #' tip with the specified label.
 #'
@@ -81,15 +82,12 @@ NULL
 #' @rdname TrivialTree
 #' @export
 SingleTaxonTree <- function(label = "t1", lengths = NULL) {
-  if (is.null(lengths)) {
-    structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label,
-                   Nnode = 1L),
-              class = "phylo", order = "preorder")
-  } else {
-    structure(list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label,
-                   Nnode = 1L, edge.length = lengths[[1]]),
-              class = "phylo", order = "preorder")
+  tr <- list(edge = matrix(c(2L, 1L), 1, 2), tip.label = label, Nnode = 1L)
+  if (!is.null(lengths)) {
+    tr[["edge.length"]] <- .EdgeLengths(lengths, 1L)[[1L]]
   }
+  # Return:
+  structure(tr, class = "phylo", order = "preorder")
 }
 
 #' @rdname TrivialTree

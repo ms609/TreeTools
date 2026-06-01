@@ -2,6 +2,11 @@
 
 ## New features
 
+- `RandomTree()`, `YuleTree()`, `PectinateTree()`, `BalancedTree()`,
+  `StarTree()`, and `SingleTaxonTree()` accept a function as `lengths`;
+  the function is called with the number of edges as its sole argument
+  (e.g. `RandomTree(8, lengths = runif)`).
+
 - `NexusTokensToInteger()` converts character data to integers,
   mapping uncertain tokens to `NA`.
 - `PaintTree()` assigns colours to every edge, leaf, and internal node such

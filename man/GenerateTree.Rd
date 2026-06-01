@@ -32,7 +32,8 @@ or \code{FALSE} to return an unrooted tree.}
 \code{tips - 1}, generates a binary tree; setting a lower value will induce
 polytomies.}
 
-\item{lengths}{a numeric vector specifying the edge lengths of the tree.}
+\item{lengths}{Numeric vector of edge lengths, or a function called with the
+number of edges as its argument (e.g. \code{lengths = runif}).}
 
 \item{addInTurn}{Logical specifying whether to add leaves in the order of
 \code{tips}.  If \code{FALSE}, leaves will be added in a random order.}
@@ -68,6 +69,8 @@ RandomTree(LETTERS[1:10])
 
 data("Lobo")
 RandomTree(Lobo.phy)
+
+RandomTree(8, lengths = runif)
 
 YuleTree(LETTERS[1:10])
 
