@@ -27,6 +27,9 @@
   attaches an `xgroup` attribute (factor) when a TNT `xgroup` partition
   block is present, replacing the stand-alone `ReadXgroup()`.
 
+- `...Tree(lengths = )` now supports functions
+  (e.g. `RandomTree(lengths = runif)`).
+
 ### Performance
 
 - [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)

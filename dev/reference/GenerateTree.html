@@ -88,8 +88,8 @@ polytomies.</p></dd>
 
 
 <dt id="arg-lengths">lengths<a class="anchor" aria-label="anchor" href="#arg-lengths"></a></dt>
-<dd><p>Numeric vector of edge lengths, or a function called with the
-number of edges as its argument (e.g. <code>lengths = runif</code>).</p></dd>
+<dd><p>Numeric vector of edge lengths, or a function that returns
+such a vector when passed the number of edges as its argument (e.g. <code>runif</code>).</p></dd>
 
 
 <dt id="arg-addinturn">addInTurn<a class="anchor" aria-label="anchor" href="#arg-addinturn"></a></dt>
@@ -141,50 +141,35 @@ i.e. adding leaves in turn adjacent to a randomly-chosen existing leaf.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 10 tips and 8 internal nodes.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   A, B, C, D, E, F, ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; no branch length.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Set random seed for reproducibility</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate a tree from a phylogenetic dataset</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"Lobo"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">Lobo.phy</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">Lobo.phy</span>, lengths <span class="op">=</span> <span class="va">runif</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 48 tips and 46 internal nodes.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; no branch length.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">RandomTree</span><span class="op">(</span><span class="fl">8</span>, lengths <span class="op">=</span> <span class="va">runif</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 8 tips and 6 internal nodes.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   t1, t2, t3, t4, t5, t6, ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Unrooted; includes branch length(s).</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">YuleTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Phylogenetic tree with 10 tips and 9 internal nodes.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tip labels:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   H, B, E, I, F, A, ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Rooted; no branch length.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">PectinateTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Generate trees on letters A-J</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">RandomTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, root <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="GenerateTree-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">BalancedTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">YuleTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="GenerateTree-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">StarTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">PectinateTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="GenerateTree-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">BalancedTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, lengths <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">18</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="GenerateTree-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu">StarTree</span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="GenerateTree-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

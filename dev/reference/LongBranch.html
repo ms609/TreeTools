@@ -126,7 +126,7 @@ the taxa with the longest branches".</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.2335139</span>
 <span class="r-in"><span><span class="va">evenLengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="GenerateTree.html">BalancedTree</a></span><span class="op">(</span><span class="fl">8</span>, lengths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html" class="external-link">jitter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">14</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="fu">LongBranch</span><span class="op">(</span><span class="va">evenLengths</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002781269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.002874881</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Upper quartile identifies taxa with longest branches</span></span></span>
 <span class="r-in"><span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">lb</span>, <span class="fl">0.75</span><span class="op">)</span></span></span>
