@@ -13,7 +13,8 @@ ZeroTaxonTree()
 \arguments{
 \item{label}{a character vector specifying the label of the tip.}
 
-\item{lengths}{a numeric vector specifying the edge lengths of the tree.}
+\item{lengths}{Numeric vector of edge lengths, or a function called with the
+number of edges as its argument (e.g. \code{lengths = runif}).}
 }
 \value{
 \code{SingleTaxonTree()} returns a \code{phylo} object containing a single

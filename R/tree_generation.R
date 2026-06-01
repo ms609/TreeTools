@@ -18,6 +18,10 @@
 #' @name GenerateTree
 NULL
 
+.EdgeLengths <- function(lengths, nEdge) {
+  if (is.function(lengths)) lengths(nEdge) else rep(lengths, length.out = nEdge)
+}
+
 #' @rdname GenerateTree
 #'
 #' @param root Character or integer specifying tip to use as root;
@@ -40,6 +44,8 @@ NULL
 #'
 #' data("Lobo")
 #' RandomTree(Lobo.phy)
+#'
+#' RandomTree(8, lengths = runif)
 #'
 #' @export
 RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
@@ -107,9 +113,9 @@ RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
   }
   
   if (!is.null(lengths)) {
-    tree[["edge.length"]] <- rep(lengths, length.out = dim(tree[["edge"]])[[1]])
+    tree[["edge.length"]] <- .EdgeLengths(lengths, dim(tree[["edge"]])[[1]])
   }
-  
+
   # Return:
   tree
 }
@@ -153,9 +159,9 @@ YuleTree <- function(tips, addInTurn = FALSE, root = TRUE, lengths = NULL) {
   }
   
   if (!is.null(lengths)) {
-    tree[["edge.length"]] <- rep(lengths, length.out = dim(tree[["edge"]])[[1]])
+    tree[["edge.length"]] <- .EdgeLengths(lengths, dim(tree[["edge"]])[[1]])
   }
-  
+
   # Return:
   tree
 }
@@ -211,7 +217,7 @@ PectinateTree <- function(tips, lengths = NULL) {
         tip.label = tips
       )
     if (!is.null(lengths) && nTip > 1) {
-      tr[["edge.length"]] <- rep(lengths, length.out = 2 * (nTip - 1))
+      tr[["edge.length"]] <- .EdgeLengths(lengths, 2L * (nTip - 1L))
     }
     structure(tr, order = "cladewise", class = "phylo")
   }
@@ -242,7 +248,7 @@ BalancedTree <- function(tips, lengths = NULL) {
                Nnode = nTip - 1L,
                tip.label = as.character(tips))
     if (!is.null(lengths)) {
-      tr[["edge.length"]] <- rep(lengths, length.out = 2 * (nTip - 1))
+      tr[["edge.length"]] <- .EdgeLengths(lengths, 2L * (nTip - 1L))
     }
     # Return:
     structure(tr, order = "preorder", class = "phylo")
@@ -284,19 +290,13 @@ StarTree <- function(tips, lengths = NULL) {
   parent <- rep.int(nTip + 1L, nTip)
   child <- seq_len(nTip)
 
-  tr <- if (is.null(lengths)) {
-    list(
-      edge = matrix(c(parent, child), ncol = 2L),
-      Nnode = 1L,
-      tip.label = tips
-    )
-  } else {
-    list(
-      edge = matrix(c(parent, child), ncol = 2L),
-      Nnode = 1L,
-      tip.label = tips,
-      edge.length =  rep(lengths, length.out = nTip)
-    )
+  tr <- list(
+    edge = matrix(c(parent, child), ncol = 2L),
+    Nnode = 1L,
+    tip.label = tips
+  )
+  if (!is.null(lengths)) {
+    tr[["edge.length"]] <- .EdgeLengths(lengths, nTip)
   }
   structure(tr, order = "cladewise", class = "phylo")
 }
