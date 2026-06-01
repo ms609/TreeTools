@@ -15,6 +15,15 @@
   attaches an `xgroup` attribute (factor) when a TNT `xgroup` partition
   block is present, replacing the stand-alone `ReadXgroup()`.
 
+### Performance
+
+- [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
+  computes majority-rule and threshold consensus trees in time linear in
+  the number of trees (previously quadratic), after Jansson, Shen & Sung
+  (2016); implementation informed by their `FACT` package.
+  [`SplitFrequency()`](https://ms609.github.io/TreeTools/dev/reference/SplitFrequency.md)
+  inherits the same single-pass speed-up.
+
 ### Fixes
 
 - [`NexusTokens()`](https://ms609.github.io/TreeTools/dev/reference/ExtractTaxa.md)
