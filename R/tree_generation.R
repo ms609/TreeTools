@@ -40,12 +40,15 @@ NULL
 #' basal position.  Otherwise, the tree will be rooted on `root`.
 #'
 #' @examples
-#' RandomTree(LETTERS[1:10])
-#'
+#' # Set random seed for reproducibility
+#' set.seed(10)
+#' 
+#' # Generate a tree from a phylogenetic dataset
 #' data("Lobo")
-#' RandomTree(Lobo.phy)
+#' RandomTree(Lobo.phy, lengths = runif)
 #'
-#' RandomTree(8, lengths = runif)
+#' # Generate trees on letters A-J
+#' plot(RandomTree(LETTERS[1:10], root = TRUE))
 #'
 #' @export
 RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
@@ -128,7 +131,7 @@ RandomTree <- function(tips, root = FALSE, nodes, lengths = NULL) {
 #' \insertCite{Steel2001}{TreeTools},
 #' i.e. adding leaves in turn adjacent to a randomly-chosen existing leaf.
 #' @examples
-#' YuleTree(LETTERS[1:10])
+#' plot(YuleTree(LETTERS[1:10]))
 #'
 #' @export
 YuleTree <- function(tips, addInTurn = FALSE, root = TRUE, lengths = NULL) {
@@ -230,7 +233,8 @@ PectinateTree <- function(tips, lengths = NULL) {
 #' @return `BalancedTree()` returns a balanced (symmetrical) tree, in preorder.
 #'
 #' @examples
-#' plot(BalancedTree(LETTERS[1:10]))
+#' plot(BalancedTree(LETTERS[1:10], lengths = 1:18))
+#' 
 #' @export
 BalancedTree <- function(tips, lengths = NULL) {
   tips <- TipLabels(tips)

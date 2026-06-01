@@ -14,6 +14,8 @@
   counts, with saturation growing from zero at the root to one at every tip.
 - `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
   `xgroup` partition block is present, replacing the stand-alone `ReadXgroup()`.
+- `...Tree(lengths = )` now supports functions
+  (e.g. `RandomTree(lengths = runif)`).
 
 ## Performance
 

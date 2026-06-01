@@ -64,8 +64,8 @@ Renumber <- function(tree) {
 #' `ZeroTaxonTree()` creates an empty `phylo` object with zero leaves or edges.
 #'
 #' @param label a character vector specifying the label of the tip.
-#' @param lengths Numeric vector of edge lengths, or a function called with the
-#' number of edges as its argument (e.g. `lengths = runif`).
+#' @param lengths Numeric vector of edge lengths, or a function that returns
+#' such a vector when passed the number of edges as its argument (e.g. `runif`).
 #' @return `SingleTaxonTree()` returns a \code{phylo} object containing a single
 #' tip with the specified label.
 #'
