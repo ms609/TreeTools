@@ -106,6 +106,85 @@ test_that("Consensus() handles non-preorder trees", {
   trees <- ape::read.nexus(test_path("testdata", "nonPreCons.nex"))
   expect_equal(Consensus(trees)$Nnode, 3)
   expect_equal(Consensus(trees), Preorder(trees[[1]]))
+
+  # Consensus() now preorders only trees[[1]] (consensus_tree() preorders each
+  # tree internally, #168 fixed 2026-06). Feeding genuinely edge-shuffled trees
+  # must give the same result as preordering the whole forest first.
+  shuffle <- function(t) {
+    t2 <- RootTree(t, sample(NTip(t), 1L))
+    e  <- t2$edge
+    t2$edge <- e[sample(nrow(e)), , drop = FALSE]
+    attr(t2, "order") <- NULL
+    t2
+  }
+  set.seed(3L)
+  base <- ape::rtree(10L, br = NULL)
+  forest <- RenumberTips(
+    lapply(1:6, function(i) ape::rtree(10L, br = NULL, tip.label = base$tip.label)),
+    base)
+  nonpre <- lapply(forest, shuffle)
+  for (p in c(0.5, 2 / 3, 1)) {
+    expect_equal(Consensus(nonpre, p = p, check.labels = FALSE),
+                 Consensus(Preorder(nonpre), p = p, check.labels = FALSE))
+  }
+})
+
+test_that("consensus_tree() is robust to non-preorder input", {
+  # Regression for #168 / root_on_node bug: ClusterTable used to return
+  # wrong splits or segfault when input edges were not in preorder.
+  # Non-preorder is now handled internally; results must equal the preordered run.
+
+  # fixture: cladewise (non-preorder), differing roots
+  raw <- lapply(ape::read.nexus(test_path("testdata", "nonPreCons.nex")),
+                identity)  # plain list so each phylo carries its own tip.label
+  tr4 <- lapply(raw, function(t) RenumberTips(t, raw[[1]]))
+  pre4 <- Preorder(tr4)
+  expect_equal(TreeTools:::consensus_tree(tr4,  1, FALSE),
+               TreeTools:::consensus_tree(pre4, 1, FALSE))
+  expect_equal(nrow(TreeTools:::consensus_tree(tr4, 1, FALSE)), 1L)
+
+  # edge-shuffled trees: random root + permuted edge rows
+  set.seed(1L)
+  base <- ape::rtree(8L, br = NULL)
+  shuffle <- function(t) {
+    t2 <- RootTree(t, sample(NTip(t), 1L))
+    e  <- t2$edge
+    t2$edge <- e[sample(nrow(e)), , drop = FALSE]
+    attr(t2, "order") <- NULL
+    t2
+  }
+  tr8 <- RenumberTips(lapply(seq_len(4L), function(i) shuffle(base)), base)
+  pre8 <- Preorder(tr8)
+
+  expect_equal(TreeTools:::consensus_tree(tr8, 1,   FALSE),
+               TreeTools:::consensus_tree(pre8, 1,   FALSE))
+  expect_equal(TreeTools:::consensus_tree(tr8, 0.5, TRUE),
+               TreeTools:::consensus_tree(pre8, 0.5, TRUE))
+  expect_equal(TreeTools:::consensus_tree(tr8, 0.5, FALSE),
+               TreeTools:::consensus_tree(pre8, 0.5, FALSE))
+})
+
+test_that("split_frequencies() is robust to non-preorder input", {
+  # Same ClusterTable hazard as consensus_tree() — both paths (hashed/exact).
+  set.seed(2L)
+  base <- ape::rtree(8L, br = NULL)
+  shuffle <- function(t) {
+    t2 <- RootTree(t, sample(NTip(t), 1L))
+    e  <- t2$edge
+    t2$edge <- e[sample(nrow(e)), , drop = FALSE]
+    attr(t2, "order") <- NULL
+    t2
+  }
+  tr <- RenumberTips(lapply(seq_len(4L), function(i) shuffle(base)), base)
+  pre <- Preorder(tr)
+
+  sf_non  <- TreeTools:::split_frequencies(tr,  exact = FALSE)
+  sf_pre  <- TreeTools:::split_frequencies(pre, exact = FALSE)
+  sfx_non <- TreeTools:::split_frequencies(tr,  exact = TRUE)
+  sfx_pre <- TreeTools:::split_frequencies(pre, exact = TRUE)
+
+  expect_equal(sort(sf_non$counts),  sort(sf_pre$counts))
+  expect_equal(sort(sfx_non$counts), sort(sfx_pre$counts))
 })
 
 test_that("ConsensusWithout() is robust", {

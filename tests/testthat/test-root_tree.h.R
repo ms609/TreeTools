@@ -4,8 +4,8 @@ test_that("Memory leak not encountered", {
   # Example from TreeDist::ClusterTable
   tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");
   tree2 <- ape::read.tree(text = "(A, (B, (D, (C, E))));");
-  # as.ClusterTable(tree1) calls:
-  expect_equal(tree1, root_on_node(tree1, 1))
+  # as.ClusterTable(tree1) calls: result must be a preordered form of tree1
+  expect_equal(Preorder(tree1), root_on_node(tree1, 1))
 
   # Check for memory leaks...
   root_on_node(RenumberTips(Preorder(tree2), LETTERS[1:5]), 1)[]
@@ -16,9 +16,35 @@ test_that("Memory leak not encountered", {
 })
 
 test_that("Big trees don't fail", {
-  # 2^14 + 1 is too big for int16
+  # 2^14 + 1 is too big for int16; result must be preordered
   expect_equal(root_on_node(PectinateTree(2^14 + 1), 1),
-               PectinateTree(2^14 + 1))
+               Preorder(PectinateTree(2^14 + 1)))
+})
+
+test_that("root_on_node() always returns preorder (#168)", {
+  # Regression: root_on_node() must return PREORDER edges even on its fast path
+  # (outgroup already a direct child of the root).  It previously returned the
+  # input unchanged there, leaking non-preorder edges into ClusterTable and
+  # causing dropped splits / segfaults in consensus_tree() (#168).
+  # The earlier already-preorder fixtures don't exercise this: their edge matrix
+  # equals Preorder()'s regardless, so they only catch the `order` attribute.
+  # We need a tree that is genuinely non-preorder AND has leaf 1 at the root.
+  base <- ape::read.tree(text = "(A, (B, (C, (D, E))));") # leaf 1 (A) at root
+  nonpre <- base
+  nonpre[["edge"]] <- base[["edge"]][c(5, 1, 8, 2, 6, 3, 7, 4), , drop = FALSE]
+  attr(nonpre, "order") <- NULL
+
+  # Sanity: input is genuinely non-preorder, but leaf 1 is still a root child
+  expect_false(identical(nonpre[["edge"]], Preorder(nonpre)[["edge"]]))
+  rootNode <- NTip(nonpre) + 1L
+  expect_true(any(nonpre[["edge"]][, 1] == rootNode &
+                    nonpre[["edge"]][, 2] == 1L))
+
+  rooted <- root_on_node(nonpre, 1)
+  # Fix: edges are reordered to preorder (would equal nonpre's edges pre-fix)
+  expect_identical(rooted[["edge"]], Preorder(nonpre)[["edge"]])
+  expect_equal(attr(rooted, "order"), "preorder")
+  expect_equal(rooted, Preorder(nonpre))
 })
 
 test_that("Small trees are rootable", {

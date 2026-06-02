@@ -80,9 +80,13 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, hash = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  trees <- Preorder(trees) # Per #168; could be dispensed with with further
-                           # investigation of consensus_tree
-  tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()
+  # consensus_tree() preorders each tree internally via ClusterTable /
+  # root_on_node (#168 fixed 2026-06), so the trees we hand it need not be in
+  # preorder. We only preorder trees[[1]], which DescendantEdges() requires
+  # below. Preorder() reorders edges and renumbers internal nodes but does NOT
+  # renumber leaves, so tree1's tip numbering still matches the shared numbering
+  # (from RenumberTips above) that consensus_tree() uses to encode splits.
+  tree1 <- Preorder(trees[[1]]) # Preorder needed for DescendantEdges()
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
   root <- root[root <= NTip(tree1)]
@@ -90,7 +94,7 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, hash = TRUE) {
   # Return:
   RootTree(.PreorderTree(
     edge = splits_to_edge(consensus_tree(trees, p, exact = !isTRUE(hash)), nTip),
-    tip.label = TipLabels(trees[[1]])
+    tip.label = TipLabels(tree1)
   ), root)
 }
 

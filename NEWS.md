@@ -1,3 +1,10 @@
+# TreeTools 2.4.0.9000 (development) #
+
+## Performance 
+
+- Guarantee preorder return from `root_on_node()` to simplify `Consensus()`
+  internal pre-processing
+
 # TreeTools 2.4.0 (2026-06-02) #
 
 ## New features

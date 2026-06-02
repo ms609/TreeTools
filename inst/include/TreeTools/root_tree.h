@@ -87,10 +87,18 @@ namespace TreeTools {
     return preorder_edges_and_nodes(ret(Rcpp::_, 0), ret(Rcpp::_, 1));
   }
 
-  // #TODO Write test cases
-  // NB: If specifying internal node by number, note that node numbers will
-  // change if tree is not already in preorder.
-  // NB: root_node must == n_tip + 1
+  // Input `phy` may be in ANY valid edge order: it is preordered internally
+  // (preorder_edges_and_nodes), so callers need not preorder first.
+  // The result is ALWAYS returned in preorder, on every path including the
+  // already-rooted-on-outgroup fast path. ClusterTable and other consumers rely
+  // on this: their backward edge loop treats the result as a postorder sequence
+  // (= reversed preorder), so a non-preorder return would silently corrupt them
+  // (#168). Preordering here is free anyway -- the preorder is computed above
+  // regardless of which return path is taken.
+  // NB: node numbers are reassigned by the preorder, so a node specified by
+  // number refers to the input numbering, not the output's.
+  // NB: input must follow the phylo convention root_node == n_tip + 1.
+  // Tests in tests/testthat/test-root_tree.h.R.
   //
   //  [[Rcpp::export]]
   inline Rcpp::List root_on_node(const Rcpp::List phy, const int outgroup) {
@@ -158,7 +166,13 @@ namespace TreeTools {
       
       if (edge(root_edges[0], 1) == outgroup ||
           edge(root_edges[1], 1) == outgroup) {
-        return phy;
+        // outgroup is already a direct child of the root; tree structure is
+        // unchanged but we must return the canonically preordered form so
+        // ClusterTable's backward edge loop sees a valid postorder sequence.
+        ret["edge"] = edge;
+        if (weighted) ret["edge.length"] = weight;
+        ret.attr("order") = "preorder";
+        return ret;
       }
       
       Rcpp::IntegerVector new_parent = edge(Rcpp::_, 0);
