@@ -46,7 +46,7 @@ for (n_tip in c(4, 5, 6, 8, 13, 20, 50)) {
     class(forest) <- "multiPhylo"
     for (p in ps) {
       hashed <- split_set(TreeTools:::consensus_tree(forest, p), n_tip)
-      exact  <- split_set(TreeTools:::consensus_tree(forest, p, exact = TRUE), n_tip)
+      exact  <- split_set(TreeTools:::consensus_tree(forest, p, hash = FALSE), n_tip)
       check(identical(hashed, exact),
             sprintf("consensus hashed!=exact n=%d k=%d p=%.3g", n_tip, k, p))
     }
@@ -74,7 +74,7 @@ for (nm in names(adversarial)) {
   n_tip <- NTip(forest[[1]])
   for (p in ps) {
     hashed <- split_set(TreeTools:::consensus_tree(forest, p), n_tip)
-    exact  <- split_set(TreeTools:::consensus_tree(forest, p, exact = TRUE), n_tip)
+    exact  <- split_set(TreeTools:::consensus_tree(forest, p, hash = FALSE), n_tip)
     check(identical(hashed, exact), sprintf("%s p=%.3g: hashed!=exact", nm, p))
   }
 }
@@ -85,8 +85,8 @@ for (n_tip in c(4, 6, 8, 13, 30)) {
   for (k in c(1, 2, 5, 12, 40)) {
     forest <- lapply(seq_len(k), function(i) ape::rtree(n_tip, br = NULL))
     class(forest) <- "multiPhylo"
-    sh <- SplitFrequency(forest, exact = FALSE)
-    se <- SplitFrequency(forest, exact = TRUE)
+    se <- SplitFrequency(forest, hash = FALSE)
+    sh <- SplitFrequency(forest, hash = TRUE)
     # Compare as (split -> count) maps, order-independent
     key <- function(s) {
       if (length(s) == 0) return(character(0))
