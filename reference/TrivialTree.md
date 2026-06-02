@@ -20,7 +20,8 @@ ZeroTaxonTree()
 
 - lengths:
 
-  a numeric vector specifying the edge lengths of the tree.
+  Numeric vector of edge lengths, or a function that returns such a
+  vector when passed the number of edges as its argument (e.g. `runif`).
 
 ## Value
 

@@ -68,7 +68,7 @@ Renumber(tree)
 #> Phylogenetic tree with 10 tips and 8 internal nodes.
 #> 
 #> Tip labels:
-#>   f, j, g, h, b, c, ...
+#>   d, j, g, h, i, b, ...
 #> 
 #> Unrooted; no branch length.
 ```

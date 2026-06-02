@@ -1,4 +1,4 @@
-# Reweight phylogenetic characters
+# Re-weight phylogenetic characters
 
 `Reweight()` allows the weights of specific characters in phylogenetic
 datasets to be arbitrarily adjusted.
@@ -77,6 +77,7 @@ Letters*, **15**(2), 20180632.
 Other phylogenetic matrix conversion functions:
 [`Decompose()`](https://ms609.github.io/TreeTools/reference/Decompose.md),
 [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md),
+[`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/reference/NexusTokensToInteger.md),
 [`StringToPhyDat()`](https://ms609.github.io/TreeTools/reference/PhyToString.md)
 
 ## Author

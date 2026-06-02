@@ -38,7 +38,8 @@ StarTree(tips, lengths = NULL)
 
 - lengths:
 
-  a numeric vector specifying the edge lengths of the tree.
+  Numeric vector of edge lengths, or a function that returns such a
+  vector when passed the number of edges as its argument (e.g. `runif`).
 
 - addInTurn:
 
@@ -91,38 +92,32 @@ Other tree generation functions:
 ## Examples
 
 ``` r
-RandomTree(LETTERS[1:10])
-#> 
-#> Phylogenetic tree with 10 tips and 8 internal nodes.
-#> 
-#> Tip labels:
-#>   A, B, C, D, E, F, ...
-#> 
-#> Unrooted; no branch length.
+# Set random seed for reproducibility
+set.seed(10)
 
+# Generate a tree from a phylogenetic dataset
 data("Lobo")
-RandomTree(Lobo.phy)
+RandomTree(Lobo.phy, lengths = runif)
 #> 
 #> Phylogenetic tree with 48 tips and 46 internal nodes.
 #> 
 #> Tip labels:
 #>   Tubiluchus_Priapulida, Cricocosmia, Aysheaia, Siberion, Onychodictyon_ferox, Onychodictyon_gracilis, ...
 #> 
-#> Unrooted; no branch length.
+#> Unrooted; includes branch length(s).
 
-YuleTree(LETTERS[1:10])
-#> 
-#> Phylogenetic tree with 10 tips and 9 internal nodes.
-#> 
-#> Tip labels:
-#>   I, G, F, A, D, J, ...
-#> 
-#> Rooted; no branch length.
+# Generate trees on letters A-J
+plot(RandomTree(LETTERS[1:10], root = TRUE))
+
+
+plot(YuleTree(LETTERS[1:10]))
+
 
 plot(PectinateTree(LETTERS[1:10]))
 
 
-plot(BalancedTree(LETTERS[1:10]))
+plot(BalancedTree(LETTERS[1:10], lengths = 1:18))
+
 
 plot(StarTree(LETTERS[1:10]))
 

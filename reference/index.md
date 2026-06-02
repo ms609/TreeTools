@@ -92,6 +92,9 @@ Functions to navigate phylogenetic trees.
 - [`NodeOrder()`](https://ms609.github.io/TreeTools/reference/NodeOrder.md)
   : Number of edges incident to each node in a tree
 
+- [`PaintTree()`](https://ms609.github.io/TreeTools/reference/PaintTree.md)
+  : Colour a tree by topology
+
 - [`RootNode()`](https://ms609.github.io/TreeTools/reference/RootNode.md)
   : Which node is a tree's root?
 
@@ -229,6 +232,9 @@ Functions for modifying and evaluating datasets.
 
   Convert between matrices and `phyDat` objects
 
+- [`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/reference/NexusTokensToInteger.md)
+  : Convert Nexus token matrix to integer
+
 - [`StringToPhyDat()`](https://ms609.github.io/TreeTools/reference/PhyToString.md)
   [`StringToPhydat()`](https://ms609.github.io/TreeTools/reference/PhyToString.md)
   [`PhyToString()`](https://ms609.github.io/TreeTools/reference/PhyToString.md)
@@ -239,7 +245,7 @@ Functions for modifying and evaluating datasets.
   Convert between strings and `phyDat` objects
 
 - [`Reweight()`](https://ms609.github.io/TreeTools/reference/Reweight.md)
-  : Reweight phylogenetic characters
+  : Re-weight phylogenetic characters
 
 - [`ArtificialExtinction()`](https://ms609.github.io/TreeTools/reference/ArtificialExtinction.md)
   [`ArtEx()`](https://ms609.github.io/TreeTools/reference/ArtificialExtinction.md)

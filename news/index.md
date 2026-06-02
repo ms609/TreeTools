@@ -1,5 +1,44 @@
 # Changelog
 
+## TreeTools 2.4.0 (2026-06-02)
+
+### New features
+
+- [`RandomTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
+  [`YuleTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
+  [`PectinateTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
+  [`BalancedTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
+  [`StarTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
+  and
+  [`SingleTaxonTree()`](https://ms609.github.io/TreeTools/reference/TrivialTree.md)
+  allow `lengths` to accept a function that generates edge lengths
+  (e.g. `RandomTree(8, lengths = runif)`).
+- [`PaintTree()`](https://ms609.github.io/TreeTools/reference/PaintTree.md)
+  assigns colours to every edge, leaf, and internal node such that
+  sister clades occupy adjacent hue bands proportional to their tip
+  counts, with saturation growing from zero at the root to one at every
+  tip.
+- [`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/reference/NexusTokensToInteger.md)
+  converts character data to integers, mapping uncertain tokens to `NA`.
+- [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/reference/ReadCharacters.md)
+  attaches an `xgroup` attribute (factor) when a TNT `xgroup` partition
+  block is present.
+
+### Performance
+
+- [`Consensus()`](https://ms609.github.io/TreeTools/reference/Consensus.md)
+  computes majority-rule and threshold consensus trees in time linear in
+  the number of trees (previously quadratic), after Jansson, Shen & Sung
+  (2016); implementation informed by their `FACT` package.
+  [`SplitFrequency()`](https://ms609.github.io/TreeTools/reference/SplitFrequency.md)
+  inherits the same single-pass speed-up.
+
+### Fixes
+
+- [`NexusTokens()`](https://ms609.github.io/TreeTools/reference/ExtractTaxa.md)
+  once again handles polymorphism tokens with internal whitespace
+  (e.g. `(1 2)`, `{0 1}`).
+
 ## TreeTools 2.3.0 (2026-04-22)
 
 CRAN release: 2026-04-23
@@ -9,8 +48,7 @@ CRAN release: 2026-04-23
 - [`ReadTntCharacters()`](https://ms609.github.io/TreeTools/reference/ReadCharacters.md)
   now handles multi-line comments, bare `&` continuations, `@taxonomy`
   suffixes, name-only taxon lines, mid-line `xread`, smart-quote names
-  (Windows-1252), and packed multi-taxon lines; all 13 Goloboff (2019)
-  corpus files parse cleanly.
+  (Windows-1252), and packed multi-taxon lines.
 
 ### Performance
 

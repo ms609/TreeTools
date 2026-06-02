@@ -71,20 +71,7 @@ Other tree navigation:
 [`NodeDepth()`](https://ms609.github.io/TreeTools/reference/NodeDepth.md),
 [`NodeNumbers()`](https://ms609.github.io/TreeTools/reference/NodeNumbers.md),
 [`NodeOrder()`](https://ms609.github.io/TreeTools/reference/NodeOrder.md),
-[`RootNode()`](https://ms609.github.io/TreeTools/reference/RootNode.md)
-
-Other tree navigation:
-[`AncestorEdge()`](https://ms609.github.io/TreeTools/reference/AncestorEdge.md),
-[`CladeSizes()`](https://ms609.github.io/TreeTools/reference/CladeSizes.md),
-[`DescendantEdges()`](https://ms609.github.io/TreeTools/reference/DescendantEdges.md),
-[`EdgeAncestry()`](https://ms609.github.io/TreeTools/reference/EdgeAncestry.md),
-[`EdgeDistances()`](https://ms609.github.io/TreeTools/reference/EdgeDistances.md),
-[`MRCA()`](https://ms609.github.io/TreeTools/reference/MRCA.md),
-[`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md),
-[`NDescendants()`](https://ms609.github.io/TreeTools/reference/NDescendants.md),
-[`NodeDepth()`](https://ms609.github.io/TreeTools/reference/NodeDepth.md),
-[`NodeNumbers()`](https://ms609.github.io/TreeTools/reference/NodeNumbers.md),
-[`NodeOrder()`](https://ms609.github.io/TreeTools/reference/NodeOrder.md),
+[`PaintTree()`](https://ms609.github.io/TreeTools/reference/PaintTree.md),
 [`RootNode()`](https://ms609.github.io/TreeTools/reference/RootNode.md)
 
 ## Author

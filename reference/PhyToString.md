@@ -101,6 +101,7 @@ of the phylogenetic character state for each taxon in turn.
 Other phylogenetic matrix conversion functions:
 [`Decompose()`](https://ms609.github.io/TreeTools/reference/Decompose.md),
 [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md),
+[`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/reference/NexusTokensToInteger.md),
 [`Reweight()`](https://ms609.github.io/TreeTools/reference/Reweight.md)
 
 ## Author

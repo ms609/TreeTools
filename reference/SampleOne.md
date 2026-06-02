@@ -47,7 +47,7 @@ Other utility functions:
 
 ``` r
 SampleOne(9:10)
-#> [1] 10
+#> [1] 9
 SampleOne(letters[1:4])
-#> [1] "b"
+#> [1] "a"
 ```

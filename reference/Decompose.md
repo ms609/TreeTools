@@ -87,6 +87,7 @@ Wilkinson M (1992). “Ordered versus Unordered Characters.” *Cladistics*,
 
 Other phylogenetic matrix conversion functions:
 [`MatrixToPhyDat()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md),
+[`NexusTokensToInteger()`](https://ms609.github.io/TreeTools/reference/NexusTokensToInteger.md),
 [`Reweight()`](https://ms609.github.io/TreeTools/reference/Reweight.md),
 [`StringToPhyDat()`](https://ms609.github.io/TreeTools/reference/PhyToString.md)
 
