@@ -60,7 +60,7 @@ test_that("SplitFrequency() exact and hashed counts agree", {
   )
   for (f in forests) {
     expect_equal(freqKey(SplitFrequency(f)),
-                 freqKey(SplitFrequency(f, exact = TRUE)))
+                 freqKey(SplitFrequency(f, hash = FALSE)))
   }
 })
 

@@ -29,12 +29,14 @@
 #' @examples
 #' Consensus(as.phylo(0:2, 8))
 #' @seealso
-#' * [\pkg{ConsTree}](https://CRAN.R-project.org/package=ConsTree) implements
-#'  other consensus tree algorithms.
-#' * [\pkg{Rogue}](https://CRAN.R-project.org/package=Rogue) increases the
-#'  resolution of consensus trees by dropping wildcard taxa.
-#' * `TreeDist::ConsensusInfo()` calculates the information content of a consensus
-#' tree.
+#' * [\pkg{ConsTree}](https://constree.github.io/) implements
+#' other consensus tree algorithms.
+#' 
+#' * [\pkg{Rogue}](https://ms609.github.io/Rogue/) increases the resolution of
+#' consensus trees by dropping wildcard taxa.
+#' 
+#' * `TreeDist::ConsensusInfo()` calculates the information content of a
+#' consensus tree.
 #' @template MRS
 #' @family consensus tree functions
 #' @family tree characterization functions

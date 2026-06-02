@@ -4,7 +4,7 @@
 \alias{Consensus}
 \title{Construct consensus trees}
 \usage{
-Consensus(trees, p = 1, check.labels = TRUE, exact = FALSE)
+Consensus(trees, p = 1, check.labels = TRUE, hash = TRUE)
 }
 \arguments{
 \item{trees}{List of trees, optionally of class \code{multiPhylo}.}
@@ -16,11 +16,11 @@ default) gives the strict consensus.}
 \item{check.labels}{Logical specifying whether to check that all trees have
 identical labels.  Defaults to \code{TRUE}, which is slower.}
 
-\item{exact}{Logical; if \code{TRUE}, majority/threshold consensus uses a slower
-but guaranteed-exact split count instead of the default 128-bit hashing
-(whose results are exact unless a hash collision conflates two distinct
-splits, which is vanishingly unlikely).  Ignored when \code{p = 1}, which is
-always exact.}
+\item{hash}{Logical; if \code{TRUE} (default), majority/threshold consensus
+counts splits using 128-bit hashing, which is exact with overwhelming
+probability (a collision conflating two distinct splits is vanishingly
+unlikely).  Set \code{hash = FALSE} for a slower but guaranteed-exact count.
+Ignored when \code{p = 1}, which is always exact.}
 }
 \value{
 \code{Consensus()} returns an object of class \code{phylo}, rooted as in the
@@ -38,7 +38,7 @@ all trees in a single pass and retain those occurring in a proportion \code{p} o
 more of trees; this runs in time linear in the number of trees, after
 \insertCite{Jansson2016}{TreeTools}.  By default the count uses
 a 128-bit hash, whose results are exact with overwhelming probability; set
-\code{exact = TRUE} for a slower but guaranteed-exact count.
+\code{hash = FALSE} for a slower but guaranteed-exact count.
 }
 \examples{
 Consensus(as.phylo(0:2, 8))
@@ -48,12 +48,12 @@ Consensus(as.phylo(0:2, 8))
 }
 \seealso{
 \itemize{
-\item \href{https://CRAN.R-project.org/package=ConsTree}{\pkg{ConsTree}} implements
+\item \href{https://constree.github.io/}{\pkg{ConsTree}} implements
 other consensus tree algorithms.
-\item \href{https://CRAN.R-project.org/package=Rogue}{\pkg{Rogue}} increases the
-resolution of consensus trees by dropping wildcard taxa.
-\item \code{TreeDist::ConsensusInfo()} calculates the information content of a consensus
-tree.
+\item \href{https://ms609.github.io/Rogue/}{\pkg{Rogue}} increases the resolution of
+consensus trees by dropping wildcard taxa.
+\item \code{TreeDist::ConsensusInfo()} calculates the information content of a
+consensus tree.
 }
 
 Other consensus tree functions:
