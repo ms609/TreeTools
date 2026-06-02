@@ -8,7 +8,7 @@ majority consensus or bootstrap trees.
 ## Usage
 
 ``` r
-SplitFrequency(reference, forest = NULL, exact = FALSE)
+SplitFrequency(reference, forest = NULL, hash = TRUE)
 ```
 
 ## Arguments
@@ -25,15 +25,14 @@ SplitFrequency(reference, forest = NULL, exact = FALSE)
   [vignette](https://ms609.github.io/TreeTools/articles/load-trees.html)
   for possible methods of loading trees into R.
 
-- exact:
+- hash:
 
-  Logical specifying whether to use the slower but guaranteed exact
-  algorithm when counting the frequencies of *all* splits (i.e. when
-  `reference = NULL`). The default (`FALSE`) uses a faster hashing
-  approach whose results are exact with overwhelming probability (a
-  128-bit hash collision, which would conflate two distinct splits, is
-  vanishingly unlikely); set `exact = TRUE` if certainty is required.
-  Ignored when `reference` is a tree or `Splits` object.
+  Logical; if `TRUE` (default), counts the frequencies of *all* splits
+  (i.e. when `reference = NULL`) using a faster 128-bit hashing approach
+  whose results are exact with overwhelming probability (a hash
+  collision conflating two distinct splits is vanishingly unlikely). Set
+  `hash = FALSE` for a slower but guaranteed-exact count. Ignored when
+  `reference` is a tree or `Splits` object.
 
 ## Value
 

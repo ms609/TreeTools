@@ -6,7 +6,7 @@ of trees, using the cluster-table approach of (Day 1985) .
 ## Usage
 
 ``` r
-Consensus(trees, p = 1, check.labels = TRUE, exact = FALSE)
+Consensus(trees, p = 1, check.labels = TRUE, hash = TRUE)
 ```
 
 ## Arguments
@@ -26,13 +26,13 @@ Consensus(trees, p = 1, check.labels = TRUE, exact = FALSE)
   Logical specifying whether to check that all trees have identical
   labels. Defaults to `TRUE`, which is slower.
 
-- exact:
+- hash:
 
-  Logical; if `TRUE`, majority/threshold consensus uses a slower but
-  guaranteed-exact split count instead of the default 128-bit hashing
-  (whose results are exact unless a hash collision conflates two
-  distinct splits, which is vanishingly unlikely). Ignored when `p = 1`,
-  which is always exact.
+  Logical; if `TRUE` (default), majority/threshold consensus counts
+  splits using 128-bit hashing, which is exact with overwhelming
+  probability (a collision conflating two distinct splits is vanishingly
+  unlikely). Set `hash = FALSE` for a slower but guaranteed-exact count.
+  Ignored when `p = 1`, which is always exact.
 
 ## Value
 
@@ -48,7 +48,7 @@ across all trees in a single pass and retain those occurring in a
 proportion `p` or more of trees; this runs in time linear in the number
 of trees, after (Jansson et al. 2016) . By default the count uses a
 128-bit hash, whose results are exact with overwhelming probability; set
-`exact = TRUE` for a slower but guaranteed-exact count.
+`hash = FALSE` for a slower but guaranteed-exact count.
 
 ## References
 
@@ -62,11 +62,11 @@ consensus trees.” *Journal of the ACM*, **63**(3), 28:1–28:24.
 
 ## See also
 
-- [ConsTree](https://CRAN.R-project.org/package=ConsTree) implements
-  other consensus tree algorithms.
+- [ConsTree](https://constree.github.io/) implements other consensus
+  tree algorithms.
 
-- [Rogue](https://CRAN.R-project.org/package=Rogue) increases the
-  resolution of consensus trees by dropping wildcard taxa.
+- [Rogue](https://ms609.github.io/Rogue/) increases the resolution of
+  consensus trees by dropping wildcard taxa.
 
 - [`TreeDist::ConsensusInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
   calculates the information content of a consensus tree.

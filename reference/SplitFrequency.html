@@ -60,7 +60,7 @@ or bootstrap trees.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, forest <span class="op">=</span> <span class="cn">NULL</span>, exact <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">SplitFrequency</span><span class="op">(</span><span class="va">reference</span>, forest <span class="op">=</span> <span class="cn">NULL</span>, hash <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,13 +79,12 @@ or a <code>Splits</code> object. See
 possible methods of loading trees into R.</p></dd>
 
 
-<dt id="arg-exact">exact<a class="anchor" aria-label="anchor" href="#arg-exact"></a></dt>
-<dd><p>Logical specifying whether to use the slower but guaranteed
-exact algorithm when counting the frequencies of <em>all</em> splits (i.e. when
-<code>reference = NULL</code>).  The default (<code>FALSE</code>) uses a faster hashing approach
-whose results are exact with overwhelming probability (a 128-bit hash
-collision, which would conflate two distinct splits, is vanishingly
-unlikely); set <code>exact = TRUE</code> if certainty is required.  Ignored when
+<dt id="arg-hash">hash<a class="anchor" aria-label="anchor" href="#arg-hash"></a></dt>
+<dd><p>Logical; if <code>TRUE</code> (default), counts the frequencies of <em>all</em>
+splits (i.e. when <code>reference = NULL</code>) using a faster 128-bit hashing
+approach whose results are exact with overwhelming probability (a hash
+collision conflating two distinct splits is vanishingly unlikely).  Set
+<code>hash = FALSE</code> for a slower but guaranteed-exact count.  Ignored when
 <code>reference</code> is a tree or <code>Splits</code> object.</p></dd>
 
 </dl></div>

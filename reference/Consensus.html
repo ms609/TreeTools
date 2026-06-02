@@ -57,7 +57,7 @@ trees, using the cluster-table approach of (Day 1985)
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Consensus</span><span class="op">(</span><span class="va">trees</span>, p <span class="op">=</span> <span class="fl">1</span>, check.labels <span class="op">=</span> <span class="cn">TRUE</span>, exact <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Consensus</span><span class="op">(</span><span class="va">trees</span>, p <span class="op">=</span> <span class="fl">1</span>, check.labels <span class="op">=</span> <span class="cn">TRUE</span>, hash <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -79,12 +79,12 @@ default) gives the strict consensus.</p></dd>
 identical labels.  Defaults to <code>TRUE</code>, which is slower.</p></dd>
 
 
-<dt id="arg-exact">exact<a class="anchor" aria-label="anchor" href="#arg-exact"></a></dt>
-<dd><p>Logical; if <code>TRUE</code>, majority/threshold consensus uses a slower
-but guaranteed-exact split count instead of the default 128-bit hashing
-(whose results are exact unless a hash collision conflates two distinct
-splits, which is vanishingly unlikely).  Ignored when <code>p = 1</code>, which is
-always exact.</p></dd>
+<dt id="arg-hash">hash<a class="anchor" aria-label="anchor" href="#arg-hash"></a></dt>
+<dd><p>Logical; if <code>TRUE</code> (default), majority/threshold consensus
+counts splits using 128-bit hashing, which is exact with overwhelming
+probability (a collision conflating two distinct splits is vanishingly
+unlikely).  Set <code>hash = FALSE</code> for a slower but guaranteed-exact count.
+Ignored when <code>p = 1</code>, which is always exact.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -102,7 +102,7 @@ more of trees; this runs in time linear in the number of trees, after
 (Jansson et al. 2016)
 .  By default the count uses
 a 128-bit hash, whose results are exact with overwhelming probability; set
-<code>exact = TRUE</code> for a slower but guaranteed-exact count.</p>
+<code>hash = FALSE</code> for a slower but guaranteed-exact count.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -119,12 +119,12 @@ a 128-bit hash, whose results are exact with overwhelming probability; set
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><a href="https://CRAN.R-project.org/package=ConsTree" class="external-link"><span class="pkg">ConsTree</span></a> implements
+<ul><li><p><a href="https://constree.github.io/" class="external-link"><span class="pkg">ConsTree</span></a> implements
 other consensus tree algorithms.</p></li>
-<li><p><a href="https://CRAN.R-project.org/package=Rogue" class="external-link"><span class="pkg">Rogue</span></a> increases the
-resolution of consensus trees by dropping wildcard taxa.</p></li>
-<li><p><code><a href="https://ms609.github.io/TreeDist/reference/TreeInfo.html" class="external-link">TreeDist::ConsensusInfo()</a></code> calculates the information content of a consensus
-tree.</p></li>
+<li><p><a href="https://ms609.github.io/Rogue/" class="external-link"><span class="pkg">Rogue</span></a> increases the resolution of
+consensus trees by dropping wildcard taxa.</p></li>
+<li><p><code><a href="https://ms609.github.io/TreeDist/reference/TreeInfo.html" class="external-link">TreeDist::ConsensusInfo()</a></code> calculates the information content of a
+consensus tree.</p></li>
 </ul><p>Other consensus tree functions:
 <code><a href="ConsensusWithout.html">ConsensusWithout()</a></code>,
 <code><a href="RoguePlot.html">RoguePlot()</a></code></p>
