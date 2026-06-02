@@ -2,6 +2,8 @@
 
 ## TreeTools 2.4.0 (2026-06-02)
 
+CRAN release: 2026-06-02
+
 ### New features
 
 - [`RandomTree()`](https://ms609.github.io/TreeTools/reference/GenerateTree.md),
