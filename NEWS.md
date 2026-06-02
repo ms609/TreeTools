@@ -1,21 +1,18 @@
-# TreeTools 2.3.0.9002 (development) #
+# TreeTools 2.4.0 (2026-06-02) #
 
 ## New features
 
 - `RandomTree()`, `YuleTree()`, `PectinateTree()`, `BalancedTree()`,
-  `StarTree()`, and `SingleTaxonTree()` accept a function as `lengths`;
-  the function is called with the number of edges as its sole argument
-  (e.g. `RandomTree(8, lengths = runif)`).
-
-- `NexusTokensToInteger()` converts character data to integers,
-  mapping uncertain tokens to `NA`.
+  `StarTree()`, and `SingleTaxonTree()` allow `lengths` to accept a function
+  that generates edge lengths (e.g. `RandomTree(8, lengths = runif)`).
 - `PaintTree()` assigns colours to every edge, leaf, and internal node such
   that sister clades occupy adjacent hue bands proportional to their tip
   counts, with saturation growing from zero at the root to one at every tip.
+- `NexusTokensToInteger()` converts character data to integers,
+  mapping uncertain tokens to `NA`.
 - `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
-  `xgroup` partition block is present, replacing the stand-alone `ReadXgroup()`.
-- `...Tree(lengths = )` now supports functions
-  (e.g. `RandomTree(lengths = runif)`).
+  `xgroup` partition block is present.
+
 
 ## Performance
 
