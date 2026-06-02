@@ -96,7 +96,7 @@ test_that("Consensus() exact and hashed counts agree", {
   for (f in forests) {
     for (p in c(0.5, 2 / 3, 1)) {
       hashed <- Consensus(f, p = p)
-      exact  <- Consensus(f, p = p, exact = TRUE)
+      exact  <- Consensus(f, p = p, hash = FALSE)
       expect_true(isTRUE(all.equal(RootTree(hashed, 1), RootTree(exact, 1))))
     }
   }
