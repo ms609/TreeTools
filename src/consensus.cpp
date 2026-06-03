@@ -8,6 +8,7 @@ using namespace Rcpp;
 #include <algorithm> /* for fill */
 #include <array> /* for array */
 #include <chrono> /* for steady_clock (interrupt timing) */
+#include <cmath> /* for ceil, round, fabs (threshold) */
 #include <cstdint> /* for uint64_t (split hashing) */
 #include <string> /* for string (hash key) */
 #include <unordered_map> /* for unordered_map */
@@ -18,6 +19,26 @@ using TreeTools::ct_max_leaves_heap;
 using TreeTools::ClusterTable;
 
 struct StackEntry { int32 L, R, N, W; };
+
+// A distinct split's "witness": tree index t and the [L, R] encode-range that
+// the split spans in THAT tree's own ClusterTable encoding (where every cluster
+// is contiguous). The split's leaf set is reconstructed on demand as
+// {tables[t].DECODE(j) : L <= j <= R}. Lets the hashed counter defer building
+// the packed bit pattern until thresholding, so non-surviving splits (the bulk,
+// on low-concordance input) are never materialised.
+struct SplitWitness { int32 t, L, R; };
+
+// Reconstruct a split's packed bit pattern from its witness into row `dst`
+// (nbin bytes, pre-zeroed by caller). tables is non-const (DECODE mutates none
+// of the observable state but is not const-qualified).
+inline void materialise_witness(std::vector<ClusterTable>& tables,
+                                const SplitWitness& w, Rbyte* const dst) {
+  ClusterTable& tab = tables[w.t];
+  for (int32 j = w.L; j <= w.R; ++j) {
+    const int32 leaf_idx = tab.DECODE(j) - 1; // 0-based original leaf id
+    dst[leaf_idx >> 3] |= static_cast<Rbyte>(1 << (leaf_idx & 7));
+  }
+}
 
 // Throttled (~1 s) user-interrupt check.
 inline void throttled_interrupt(
@@ -123,8 +144,7 @@ void count_splits_exact(std::vector<ClusterTable>& tables, const int32 n_tip,
 // for the majority/threshold consensus.  Non-dependent name in the template
 // below, so it must be declared first.
 void count_splits_hashed(std::vector<ClusterTable>& tables, const int32 n_tip,
-                         const int32 nbin,
-                         std::vector<std::vector<Rbyte>>& split_patterns,
+                         std::vector<SplitWitness>& witnesses,
                          std::vector<int32>& counts);
 
 // ---------------------------------------------------------------------------
@@ -145,8 +165,23 @@ RawMatrix calc_consensus_tree(
   StackContainer& S
 ) {
   const int32 n_trees = trees.length();
-  const int32 frac_thresh = int32(n_trees * p[0]) + 1;
-  const int32 thresh = frac_thresh > n_trees ? n_trees : frac_thresh;
+  // Retain a split iff it occurs in a proportion `p` or more of trees, i.e.
+  // count >= ceil(p * n_trees) -- the documented semantics, matching
+  // ape::consensus().  A small relative tolerance snaps p * n_trees back to an
+  // exact integer when floating-point rounding nudges it (e.g. 3 * (2/3) is not
+  // exactly 2), so a split in exactly p * n trees is kept, not dropped by an
+  // off-by-one.  The majority threshold p = 0.5 is strict (count > n_trees / 2):
+  // two conflicting splits each in exactly half the trees must not both survive,
+  // else the retained splits would not be pairwise compatible.
+  const double pn = double(n_trees) * p[0];
+  const double pn_round = std::round(pn);
+  const int32 ceil_pn =
+    (std::fabs(pn - pn_round) < 1e-9 * (pn > 1.0 ? pn : 1.0))
+      ? int32(pn_round)
+      : int32(std::ceil(pn));
+  const int32 strict_floor = n_trees / 2 + 1;          // floor(n / 2) + 1
+  const int32 want = ceil_pn > strict_floor ? ceil_pn : strict_floor;
+  const int32 thresh = want > n_trees ? n_trees : want;
 
   std::vector<ClusterTable> tables;
   tables.reserve(n_trees);
@@ -209,21 +244,35 @@ RawMatrix calc_consensus_tree(
         if (splits_found == ntip_3) return ret;
       }
     }
-  } else {
-    // ---- Majority / threshold: count then threshold -----------------------
+  } else if (exact) {
+    // ---- Majority / threshold, deterministic: count then threshold --------
     std::vector<std::vector<Rbyte>> split_patterns;
     std::vector<int32> counts;
-    if (exact) {
-      count_splits_exact(tables, n_tip, nbin, S, split_patterns, counts);
-    } else {
-      count_splits_hashed(tables, n_tip, nbin, split_patterns, counts);
-    }
-
+    count_splits_exact(tables, n_tip, nbin, S, split_patterns, counts);
     const int32 n_distinct = int32(split_patterns.size());
     for (int32 i = 0; i < n_distinct; ++i) {
       if (counts[i] >= thresh) {
         for (int32 c = 0; c < nbin; ++c) {
           ret(splits_found, c) = split_patterns[i][c];
+        }
+        ++splits_found;
+        if (splits_found == ntip_3) return ret;
+      }
+    }
+  } else {
+    // ---- Majority / threshold, hashed: count, then materialise ONLY the
+    //      splits that reach the threshold (the rest are never built). --------
+    std::vector<SplitWitness> witnesses;
+    std::vector<int32> counts;
+    count_splits_hashed(tables, n_tip, witnesses, counts);
+    const int32 n_distinct = int32(witnesses.size());
+    std::vector<Rbyte> row(nbin);
+    for (int32 i = 0; i < n_distinct; ++i) {
+      if (counts[i] >= thresh) {
+        std::fill(row.begin(), row.end(), Rbyte(0));
+        materialise_witness(tables, witnesses[i], row.data());
+        for (int32 c = 0; c < nbin; ++c) {
+          ret(splits_found, c) = row[c];
         }
         ++splits_found;
         if (splits_found == ntip_3) return ret;
@@ -241,8 +290,10 @@ RawMatrix calc_consensus_tree(
 // A single O(kn) pass: each non-trivial cluster is identified by a 128-bit
 // subtree hash = the (order-independent) sum of its leaves' fixed splitmix64
 // hashes, so the same split in different trees hashes identically without an
-// O(cluster size) key.  Counts accumulate directly; the bit pattern is
-// materialised only the first time a split is seen.  Exactness is therefore
+// O(cluster size) key.  Counts accumulate directly; materialisation of the
+// packed bit pattern is DEFERRED — each distinct split keeps only a witness
+// (tree + encode-range), so the bulk of splits that never reach the consensus
+// threshold are never materialised (the dominant cost at high n).  Exactness is
 // probabilistic (a 128-bit collision, ~1e-30, would conflate two splits).
 inline uint64_t splitmix64(uint64_t x) {
   x += 0x9e3779b97f4a7c15ULL;
@@ -265,8 +316,7 @@ struct Hash128Hasher {
 };
 
 void count_splits_hashed(std::vector<ClusterTable>& tables, const int32 n_tip,
-                         const int32 nbin,
-                         std::vector<std::vector<Rbyte>>& split_patterns,
+                         std::vector<SplitWitness>& witnesses,
                          std::vector<int32>& counts) {
   const int32 n_trees = int32(tables.size());
   const int32 ntip_3 = n_tip - 3;
@@ -324,13 +374,10 @@ void count_splits_hashed(std::vector<ClusterTable>& tables, const int32 n_tip,
         const Hash128 hkey{hlo, hhi};
         auto it = split_map.find(hkey);
         if (it == split_map.end()) {
-          split_map.emplace(hkey, int32(split_patterns.size()));
-          std::vector<Rbyte> pattern(nbin, 0);
-          for (int32 j = L; j <= R; ++j) {
-            const int32 leaf_idx = tree.DECODE(j) - 1;
-            pattern[leaf_idx >> 3] |= (Rbyte(1) << (leaf_idx & 7));
-          }
-          split_patterns.push_back(std::move(pattern));
+          split_map.emplace(hkey, int32(witnesses.size()));
+          // Defer materialisation: record where this split lives (tree t,
+          // encode-range [L, R]) and rebuild the pattern later only if needed.
+          witnesses.push_back({t, L, R});
           counts.push_back(1);
         } else {
           ++counts[it->second];
@@ -356,6 +403,27 @@ inline List frequencies_list(
   return List::create(Named("splits") = ret, Named("counts") = count_vec);
 }
 
+// As frequencies_list, but materialising each split's pattern from its witness
+// (split_frequencies needs every distinct split, so all are built — same total
+// work as eager, just deferred, with less peak memory: no vector-of-patterns).
+inline List frequencies_list_from_witnesses(
+    std::vector<ClusterTable>& tables,
+    const std::vector<SplitWitness>& witnesses,
+    const std::vector<int32>& counts, const int32 nbin) {
+  const int32 splits_found = int32(witnesses.size());
+  RawMatrix ret(splits_found, nbin);
+  std::vector<Rbyte> row(nbin);
+  for (int32 r = 0; r < splits_found; ++r) {
+    std::fill(row.begin(), row.end(), Rbyte(0));
+    materialise_witness(tables, witnesses[r], row.data());
+    for (int32 c = 0; c < nbin; ++c) {
+      ret(r, c) = row[c];
+    }
+  }
+  IntegerVector count_vec(counts.begin(), counts.end());
+  return List::create(Named("splits") = ret, Named("counts") = count_vec);
+}
+
 List calc_split_frequencies_hashed(const List& trees, const int32 n_tip) {
   const int32 n_trees = trees.length();
   std::vector<ClusterTable> tables;
@@ -364,10 +432,10 @@ List calc_split_frequencies_hashed(const List& trees, const int32 n_tip) {
     tables.emplace_back(ClusterTable(Rcpp::List(trees(i))));
   }
   const int32 nbin = (n_tip + 7) / 8;
-  std::vector<std::vector<Rbyte>> split_patterns;
+  std::vector<SplitWitness> witnesses;
   std::vector<int32> counts;
-  count_splits_hashed(tables, n_tip, nbin, split_patterns, counts);
-  return frequencies_list(split_patterns, counts, nbin);
+  count_splits_hashed(tables, n_tip, witnesses, counts);
+  return frequencies_list_from_witnesses(tables, witnesses, counts, nbin);
 }
 
 // Exact split frequencies: the same single-pass count, returned in full.

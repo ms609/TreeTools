@@ -17,12 +17,17 @@ test_that("Consensus() errors", {
   expect_equal(Consensus(c(halfTree)), halfTree)
   expect_equal(Consensus(list(halfTree)), halfTree)
   
+  # Building 100k-leaf trees and a 33k-tip consensus dominates valgrind runtime
+  # (~30x slowdown) but exercises no memory path the smaller cases above miss;
+  # full scale still runs in uninstrumented CI.
+  skip_if(Sys.getenv("TESTING_MEMCHECK") != "")
+
   # Test that trees larger than heap limit fail gracefully
   expect_error(
     Consensus(c(BalancedTree(100001), PectinateTree(100001))),
     "too many leaves.*100000"
   )
-  
+
   largeTree <- BalancedTree(33333)
   consensus_large <- Consensus(c(largeTree, largeTree))
   expect_equal(NTip(consensus_large), 33333)
@@ -47,6 +52,24 @@ test_that("Consensus()", {
   ApeTest(trees, 0.5)
   expect_equal(Consensus(trees, 0.999), Consensus(trees, 1))
 
+  # Even-n exact tie: two conflicting splits each in exactly 50% of trees.
+  # Strict majority keeps a split only when count > n / 2 (thresh =
+  # floor(n / 2) + 1), so both conflicting splits are dropped and the consensus
+  # is unresolved there -- always a valid tree.  The "exact == hashed" test
+  # below exercises this fixture too, but only against the other internal
+  # counter; pin it to an independent oracle (ape) here.
+  tie <- c(rep(list(BalancedTree(8)), 2L), rep(list(PectinateTree(8)), 2L))
+  tie <- RenumberTips(tie, tie[[1]])
+  ApeTest(tie, 0.5)
+
+  # p > 0.5 boundary: a split in exactly p * n trees is retained ("p or more"),
+  # matching ape.  Clade {t1, t2} occurs in 2 of 3 trees (= 2/3 exactly).
+  thirds <- lapply(c("(((t1, t2), t3), t4, t5, t6);",
+                     "(((t1, t2), t3), t4, t5, t6);",
+                     "((t1, (t2, t3)), t4, t5, t6);"),
+                   function(x) ape::read.tree(text = x))
+  ApeTest(thirds, 2 / 3)
+
   ApeTest(as.phylo(0:2, 8))
   ApeTest(as.phylo(0:250, 8))
   ApeTest(as.phylo(0:250, 80))
@@ -56,7 +79,44 @@ test_that("Consensus()", {
   expect_equal(Consensus(trees), Preorder(StarTree(letters[1:4])))
 })
 
+test_that("Consensus() ignores edge lengths, node labels, and TipLabel", {
+  base <- list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)]
+  base <- structure(RenumberTips(base, base[[1]]), class = "multiPhylo")
+  withEL <- structure(lapply(base, function(t) {
+    t[["edge.length"]] <- seq_len(nrow(t[["edge"]])); t
+  }), class = "multiPhylo")
+  withNL <- structure(lapply(base, function(t) {
+    t[["node.label"]] <- paste0("n", seq_len(t[["Nnode"]])); t
+  }), class = "multiPhylo")
+  labelled <- ape::.compressTipLabel(base)
+  expect_true(is.null(.subset2(labelled, 1)[["tip.label"]]))  # genuinely labelled
+
+  for (p in c(0.5, 2 / 3, 1)) for (check in c(TRUE, FALSE)) {
+    ref <- Consensus(base, p, check.labels = check)
+    expect_equal(Consensus(withEL, p, check.labels = check), ref)
+    expect_equal(Consensus(withNL, p, check.labels = check), ref)
+    expect_equal(Consensus(labelled, p, check.labels = check), ref)
+  }
+  # Result carries no inherited metadata.
+  out <- Consensus(withEL, 0.5)
+  expect_null(out[["edge.length"]])
+  expect_null(out[["node.label"]])
+
+  # Differing tree sizes exercise the KeepTip repeat-loop; metadata must not
+  # change its (warned) result either.
+  mixed <- list(BalancedTree(8), PectinateTree(8), DropTip(BalancedTree(8), 1:2))
+  mixedEL <- lapply(mixed, function(t) {
+    t[["edge.length"]] <- seq_len(nrow(t[["edge"]])); t
+  })
+  expect_equal(suppressWarnings(Consensus(mixedEL, 0.5)),
+               suppressWarnings(Consensus(mixed, 0.5)))
+})
+
 test_that("Consensus() handles large sets of trees", {
+  # 33k+ trees (past int16_max) is prohibitively slow under valgrind for no
+  # extra memory coverage: the hashed counter is exercised by the smaller
+  # forests above. Runs at full scale in uninstrumented CI.
+  skip_if(Sys.getenv("TESTING_MEMCHECK") != "")
   oneTree <- as.phylo(0, 13)
   expect_equal(
     Consensus(lapply(1:33000, function(x) oneTree)),

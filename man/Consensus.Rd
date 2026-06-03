@@ -9,9 +9,10 @@ Consensus(trees, p = 1, check.labels = TRUE, hash = TRUE)
 \arguments{
 \item{trees}{List of trees, optionally of class \code{multiPhylo}.}
 
-\item{p}{Proportion of trees that must contain a split for it to be reported
-in the consensus.  \code{p = 0.5} gives the majority-rule consensus; \code{p = 1} (the
-default) gives the strict consensus.}
+\item{p}{A number from 0.5 to 1 giving the proportion of trees that must
+contain a split for it to be reported in the consensus: from \code{p = 0.5} (more
+than half the trees; the majority-rule consensus) to \code{p = 1} (every tree; the
+strict consensus, the default).}
 
 \item{check.labels}{Logical specifying whether to check that all trees have
 identical labels.  Defaults to \code{TRUE}, which is slower.}
@@ -35,10 +36,13 @@ The strict consensus (\code{p = 1}) compares the clusters of the first tree
 against every other tree in linear time.  The majority-rule and threshold
 consensus (\verb{0.5 <= p < 1}) instead count the frequency of every split across
 all trees in a single pass and retain those occurring in a proportion \code{p} or
-more of trees; this runs in time linear in the number of trees, after
-\insertCite{Jansson2016}{TreeTools}.  By default the count uses
-a 128-bit hash, whose results are exact with overwhelming probability; set
-\code{hash = FALSE} for a slower but guaranteed-exact count.
+more of trees (i.e. in at least \code{ceiling(p * length(trees))} trees); this
+runs in time linear in the number of trees, after
+\insertCite{Jansson2016}{TreeTools}.  The majority threshold \code{p = 0.5} is
+strict: a split is retained only if it occurs in \emph{more} than half the trees,
+so that two conflicting splits can never both be reported.  By default the
+count uses a 128-bit hash, whose results are exact with overwhelming
+probability; set \code{hash = FALSE} for a slower but guaranteed-exact count.
 }
 \examples{
 Consensus(as.phylo(0:2, 8))

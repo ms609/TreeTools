@@ -177,7 +177,7 @@ test_that("RenumberTips.multiPhylo() covers edge cases", {
   result <- RenumberTips(mp8, 8:1)
   expect_equal(TipLabels(result[[1]]), paste0("t", 8:1))
 
-  # No-op when order already matches (unlabelled: per-tree fallback)
+  # No-op when order already matches (unlabelled: C++ pass-through, unchanged)
   result_noop <- RenumberTips(mp8, TipLabels(mp8[[1]]))
   expect_equal(result_noop[[1]][["edge"]], mp8[[1]][["edge"]])
   expect_equal(result_noop[[2]][["edge"]], mp8[[2]][["edge"]])
@@ -199,6 +199,29 @@ test_that("RenumberTips.multiPhylo() covers edge cases", {
     RenumberTips(mp_shared, c(paste0("t", 1:7), "t_unknown")),
     "missing from `tipOrder`"
   )
+})
+
+test_that("RenumberTips() unlabelled C++ path matches the per-tree path", {
+  # The unlabelled multiPhylo / list fast path (renumber_tips_to in C++) must
+  # produce results IDENTICAL to applying RenumberTips.phylo per tree, across
+  # mixed tip orderings (incl. trees already in target order -> pass-through).
+  set.seed(91)
+  canon <- paste0("t", 1:12)
+  forest <- c(
+    list(BalancedTree(canon), PectinateTree(canon)),          # already in order
+    lapply(1:6, function(i) ape::rtree(12, br = NULL))         # random orders
+  )
+  for (target in list(canon, rev(canon))) {
+    ref <- lapply(forest, function(tr) RenumberTips(tr, target)) # per-tree R path
+    mp  <- RenumberTips(structure(forest, class = "multiPhylo"), target)
+    ls  <- RenumberTips(forest, target)                          # list method
+    for (i in seq_along(forest)) {
+      expect_identical(mp[[i]][["edge"]], ref[[i]][["edge"]])
+      expect_identical(mp[[i]][["tip.label"]], ref[[i]][["tip.label"]])
+      expect_identical(attr(mp[[i]], "order"), attr(ref[[i]], "order"))
+      expect_identical(ls[[i]][["edge"]], ref[[i]][["edge"]])
+    }
+  }
 })
 
 test_that("RenumberTips.multiPhylo() materializes tip.label", {
