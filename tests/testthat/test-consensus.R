@@ -83,6 +83,15 @@ test_that("Consensus() ignores edge lengths, node labels, and TipLabel", {
   out <- Consensus(withEL, 0.5)
   expect_null(out[["edge.length"]])
   expect_null(out[["node.label"]])
+
+  # Differing tree sizes exercise the KeepTip repeat-loop; metadata must not
+  # change its (warned) result either.
+  mixed <- list(BalancedTree(8), PectinateTree(8), DropTip(BalancedTree(8), 1:2))
+  mixedEL <- lapply(mixed, function(t) {
+    t[["edge.length"]] <- seq_len(nrow(t[["edge"]])); t
+  })
+  expect_equal(suppressWarnings(Consensus(mixedEL, 0.5)),
+               suppressWarnings(Consensus(mixed, 0.5)))
 })
 
 test_that("Consensus() handles large sets of trees", {
