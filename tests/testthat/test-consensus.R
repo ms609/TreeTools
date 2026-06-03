@@ -67,11 +67,6 @@ test_that("Consensus()", {
 })
 
 test_that("Consensus() ignores edge lengths, node labels, and TipLabel", {
-  # Consensus() no longer strips edge.length / node.label up front (it coerces
-  # with c() instead); the core reads only edge + tip.label and the result is
-  # rebuilt from scratch, so metadata must not change the answer, and a
-  # *labelled* multiPhylo (shared TipLabel attr, per-tree labels dropped) must
-  # be handled via c()'s materialisation even when check.labels = FALSE.
   base <- list(BalancedTree(8), PectinateTree(8))[c(1, 1, 1, 1, 2, 2, 2)]
   base <- structure(RenumberTips(base, base[[1]]), class = "multiPhylo")
   withEL <- structure(lapply(base, function(t) {
