@@ -4,6 +4,10 @@
 
 - Guarantee preorder return from `root_on_node()` to simplify `Consensus()`
   internal pre-processing
+- `Consensus()` and `SplitFrequency()` defer materialising a split's bit pattern
+  until it is needed, so splits that never reach the consensus threshold are no
+  longer built. Identical results; up to ~13× faster for large trees (greatest
+  gains for tall trees / many tips), with no change at small sizes.
 
 # TreeTools 2.4.0 (2026-06-02) #
 
