@@ -47,6 +47,16 @@ test_that("Consensus()", {
   ApeTest(trees, 0.5)
   expect_equal(Consensus(trees, 0.999), Consensus(trees, 1))
 
+  # Even-n exact tie: two conflicting splits each in exactly 50% of trees.
+  # Strict majority keeps a split only when count > n / 2 (thresh =
+  # floor(n / 2) + 1), so both conflicting splits are dropped and the consensus
+  # is unresolved there -- always a valid tree.  The "exact == hashed" test
+  # below exercises this fixture too, but only against the other internal
+  # counter; pin it to an independent oracle (ape) here.
+  tie <- c(rep(list(BalancedTree(8)), 2L), rep(list(PectinateTree(8)), 2L))
+  tie <- RenumberTips(tie, tie[[1]])
+  ApeTest(tie, 0.5)
+
   ApeTest(as.phylo(0:2, 8))
   ApeTest(as.phylo(0:250, 8))
   ApeTest(as.phylo(0:250, 80))

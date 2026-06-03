@@ -32,6 +32,32 @@ user, not yet added): a high-k unlabelled forest with **shuffled** tip order
 (real relabel → C-002), and a tall **low-concordance `p < 1`** forest (→ C-001).
 C-004 does move the small cells (strip was 19–29% of them).
 
+## Threshold semantics at `p > 0.5` — open question for maintainer (2026-06-03)
+
+Prompted by "how are p = 0.5 ties resolved?". Two distinct findings (repro:
+`drivers/tie-check.R`):
+
+- **p = 0.5 ties are handled correctly.** `thresh = floor(n·p) + 1`, so a split
+  in exactly n/2 trees (`count = n/2 < thresh`) is **dropped**. Two conflicting
+  50% splits are both dropped ⇒ valid tree. Provably correct (any two retained
+  splits each occur in > n/2 trees ⇒ counts sum > n ⇒ co-occur ⇒ compatible) and
+  **matches `ape::consensus`** (which bumps `p <- 0.5000001` to the same effect).
+  Now pinned by `ApeTest(tie, 0.5)` in test-Consensus.R (the even-n tie fixture
+  was previously only in the hashed==exact test — internal counters only, no
+  oracle).
+
+- **p > 0.5 is off-by-one *stricter* than the docstring and `ape`.** The
+  docstring promises "a proportion `p` or more"; `ape` keeps `count >= p·n`
+  (`bs >= p * ntree`). TreeTools keeps `count >= floor(n·p) + 1`, i.e. *strictly
+  more than* `floor(n·p)`. These **diverge only when `n·p` computes to an exact
+  integer k**: ape keeps `count = k`, TreeTools requires `count >= k+1`. E.g.
+  n=3, p=2/3: a clade in exactly 2 of 3 trees is kept by ape, dropped by
+  TreeTools. Both choices are safe (valid tree) and both are FP-fragile at the
+  boundary. **Convention + doc-consistency decision is the maintainer's:** either
+  align the code to "p or more" (a tolerance-aware integer threshold, *not* a
+  copy of ape's fragile `>=`), or correct the docstring to "more than `p`".
+  Not pre-built. No code/threshold change made.
+
 ## Jansson decision (tracking)
 
 Open question: does deterministic Jansson (Maj_Rule_Plus, O(kn)) beat OPTIMISED
