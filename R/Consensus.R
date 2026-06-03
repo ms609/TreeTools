@@ -54,12 +54,16 @@ Consensus <- function(trees, p = 1, check.labels = TRUE, hash = TRUE) {
     stop("Expecting `trees` to be a list.")
   }
   
-  # Remove irrelevant metadata so we don't waste time processing it
-  trees <- lapply(c(trees), function(tr) {
-    tr[["edge.length"]] <- NULL
-    tr[["node.label"]] <- NULL
-    tr
-  })
+  # Coerce to a plain list of standalone trees.  c() materialises a labelled
+  # multiPhylo's shared tip labels onto each tree (the C++ core reads each
+  # tree's own `tip.label`), exactly as the previous strip-lapply did.  We
+  # deliberately do NOT strip `edge.length` / `node.label`: the consensus core
+  # reads only `edge` + `tip.label`, and the output tree is rebuilt from
+  # scratch, so neither field can affect the result.  The old per-tree
+  # `tr[["edge.length"]] <- NULL` forced a copy of every tree for no gain;
+  # bare c() is ~7x cheaper on metadata-free forests (the common case) and
+  # output-identical (verified: dev/profiling/drivers/c004-equiv.R, 108 cells).
+  trees <- c(trees)
   
   repeat {
     nTip <- NTip(trees)

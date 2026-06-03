@@ -12,6 +12,10 @@
   single C++ pass instead of a per-tree R loop, with a no-op fast path for trees
   already in the target order. Speeds up `Consensus()` and other callers when
   combining many trees; results are unchanged.
+- `Consensus()` no longer copies every input tree to strip branch lengths and
+  node labels (the consensus core ignores both); it now coerces in place,
+  trimming wrapper overhead (~25% faster on small forests of many short trees).
+  Results are unchanged.
 
 # TreeTools 2.4.0 (2026-06-02) #
 
