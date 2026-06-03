@@ -601,6 +601,25 @@ TntOrder.NULL <- function(tree) NULL
 #' @export
 RenumberTips <- function(tree, tipOrder) UseMethod("RenumberTips")
 
+# Fast path shared by the unlabelled multiPhylo and list methods: relabel an
+# entire forest to a single target order in one C++ call, instead of dispatching
+# RenumberTips.phylo per tree in R. Returns the relabelled list, or NULL to
+# signal that the caller should fall back to the per-tree R path (the C++ helper
+# declines anything it would not handle identically: see renumber_tips_to()).
+.RenumberForestToC <- function(tree, tipOrder) {
+  if (is.numeric(tipOrder)) {
+    # Numeric tipOrder indexes each tree's OWN labels, so the target differs per
+    # tree; only the R path handles that.
+    return(NULL)
+  }
+  newOrder <- TipLabels(tipOrder, single = TRUE)
+  if (anyDuplicated(newOrder)) {
+    # Let RenumberTips.phylo raise its "repeated in tipOrder" error.
+    return(NULL)
+  }
+  renumber_tips_to(tree, newOrder)
+}
+
 #' @rdname RenumberTips
 #' @export
 RenumberTips.phylo <- function(tree, tipOrder) {
@@ -667,9 +686,16 @@ RenumberTips.multiPhylo <- function(tree, tipOrder) {
   labelled <- !is.null(at[["TipLabel"]])
 
   if (!labelled) {
-    # Unlabelled: each tree may have different tip orderings,
-    # so must process individually
-    tree <- lapply(tree, RenumberTips.phylo, tipOrder)
+    # Unlabelled: each tree may have its own tip ordering. Relabel the whole
+    # forest in one C++ pass; fall back to the per-tree R path for inputs the
+    # fast path declines (numeric tipOrder, differing label sets, non-phylo
+    # elements, ...).
+    relabelled <- .RenumberForestToC(tree, tipOrder)
+    tree <- if (is.null(relabelled)) {
+      lapply(tree, RenumberTips.phylo, tipOrder)
+    } else {
+      relabelled
+    }
     attributes(tree) <- at
     return(tree)
   }
@@ -726,7 +752,8 @@ RenumberTips.multiPhylo <- function(tree, tipOrder) {
 #' @rdname RenumberTips
 #' @export
 RenumberTips.list <- function(tree, tipOrder) {
-  lapply(tree, RenumberTips, tipOrder)
+  relabelled <- .RenumberForestToC(tree, tipOrder)
+  if (is.null(relabelled)) lapply(tree, RenumberTips, tipOrder) else relabelled
 }
 
 #' @rdname RenumberTips

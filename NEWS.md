@@ -8,6 +8,10 @@
   until it is needed, so splits that never reach the consensus threshold are no
   longer built. Identical results; up to ~13× faster for large trees (greatest
   gains for tall trees / many tips), with no change at small sizes.
+- `RenumberTips()` relabels an unlabelled `multiPhylo` or `list` of trees in a
+  single C++ pass instead of a per-tree R loop, with a no-op fast path for trees
+  already in the target order. Speeds up `Consensus()` and other callers when
+  combining many trees; results are unchanged.
 
 # TreeTools 2.4.0 (2026-06-02) #
 

@@ -101,6 +101,10 @@ renumber_tips_batch <- function(trees, perm, n_tip, new_labels) {
     .Call(`_TreeTools_renumber_tips_batch`, trees, perm, n_tip, new_labels)
 }
 
+renumber_tips_to <- function(trees, target) {
+    .Call(`_TreeTools_renumber_tips_to`, trees, target)
+}
+
 cpp_edge_to_splits <- function(edge, order, nTip) {
     .Call(`_TreeTools_cpp_edge_to_splits`, edge, order, nTip)
 }
