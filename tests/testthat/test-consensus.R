@@ -57,6 +57,14 @@ test_that("Consensus()", {
   tie <- RenumberTips(tie, tie[[1]])
   ApeTest(tie, 0.5)
 
+  # p > 0.5 boundary: a split in exactly p * n trees is retained ("p or more"),
+  # matching ape.  Clade {t1, t2} occurs in 2 of 3 trees (= 2/3 exactly).
+  thirds <- lapply(c("(((t1, t2), t3), t4, t5, t6);",
+                     "(((t1, t2), t3), t4, t5, t6);",
+                     "((t1, (t2, t3)), t4, t5, t6);"),
+                   function(x) ape::read.tree(text = x))
+  ApeTest(thirds, 2 / 3)
+
   ApeTest(as.phylo(0:2, 8))
   ApeTest(as.phylo(0:250, 8))
   ApeTest(as.phylo(0:250, 80))

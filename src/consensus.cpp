@@ -8,6 +8,7 @@ using namespace Rcpp;
 #include <algorithm> /* for fill */
 #include <array> /* for array */
 #include <chrono> /* for steady_clock (interrupt timing) */
+#include <cmath> /* for ceil, round, fabs (threshold) */
 #include <cstdint> /* for uint64_t (split hashing) */
 #include <string> /* for string (hash key) */
 #include <unordered_map> /* for unordered_map */
@@ -164,8 +165,23 @@ RawMatrix calc_consensus_tree(
   StackContainer& S
 ) {
   const int32 n_trees = trees.length();
-  const int32 frac_thresh = int32(n_trees * p[0]) + 1;
-  const int32 thresh = frac_thresh > n_trees ? n_trees : frac_thresh;
+  // Retain a split iff it occurs in a proportion `p` or more of trees, i.e.
+  // count >= ceil(p * n_trees) -- the documented semantics, matching
+  // ape::consensus().  A small relative tolerance snaps p * n_trees back to an
+  // exact integer when floating-point rounding nudges it (e.g. 3 * (2/3) is not
+  // exactly 2), so a split in exactly p * n trees is kept, not dropped by an
+  // off-by-one.  The majority threshold p = 0.5 is strict (count > n_trees / 2):
+  // two conflicting splits each in exactly half the trees must not both survive,
+  // else the retained splits would not be pairwise compatible.
+  const double pn = double(n_trees) * p[0];
+  const double pn_round = std::round(pn);
+  const int32 ceil_pn =
+    (std::fabs(pn - pn_round) < 1e-9 * (pn > 1.0 ? pn : 1.0))
+      ? int32(pn_round)
+      : int32(std::ceil(pn));
+  const int32 strict_floor = n_trees / 2 + 1;          // floor(n / 2) + 1
+  const int32 want = ceil_pn > strict_floor ? ceil_pn : strict_floor;
+  const int32 thresh = want > n_trees ? n_trees : want;
 
   std::vector<ClusterTable> tables;
   tables.reserve(n_trees);

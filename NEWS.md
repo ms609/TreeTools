@@ -1,5 +1,14 @@
 # TreeTools 2.4.0.9000 (development) #
 
+## Bug fixes
+
+- `Consensus(trees, p)` now retains a split present in exactly a proportion `p`
+  of trees (i.e. in `ceiling(p * length(trees))` trees) for `p > 0.5`, matching
+  the documentation and `ape::consensus()`; previously such a split was dropped
+  at exact thresholds (e.g. a split in 2 of 3 trees with `p = 2/3`). The
+  majority threshold `p = 0.5` is unchanged (a split must occur in more than
+  half the trees).
+
 ## Performance 
 
 - Guarantee preorder return from `root_on_node()` to simplify `Consensus()`

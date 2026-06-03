@@ -46,17 +46,17 @@ Prompted by "how are p = 0.5 ties resolved?". Two distinct findings (repro:
   was previously only in the hashed==exact test — internal counters only, no
   oracle).
 
-- **p > 0.5 is off-by-one *stricter* than the docstring and `ape`.** The
-  docstring promises "a proportion `p` or more"; `ape` keeps `count >= p·n`
-  (`bs >= p * ntree`). TreeTools keeps `count >= floor(n·p) + 1`, i.e. *strictly
-  more than* `floor(n·p)`. These **diverge only when `n·p` computes to an exact
-  integer k**: ape keeps `count = k`, TreeTools requires `count >= k+1`. E.g.
-  n=3, p=2/3: a clade in exactly 2 of 3 trees is kept by ape, dropped by
-  TreeTools. Both choices are safe (valid tree) and both are FP-fragile at the
-  boundary. **Convention + doc-consistency decision is the maintainer's:** either
-  align the code to "p or more" (a tolerance-aware integer threshold, *not* a
-  copy of ape's fragile `>=`), or correct the docstring to "more than `p`".
-  Not pre-built. No code/threshold change made.
+- **p > 0.5 was off-by-one *stricter* than the docstring and `ape` — FIXED.**
+  The docstring promises "a proportion `p` or more"; `ape` keeps `count >= p·n`.
+  The old code kept `count >= floor(n·p) + 1`, diverging when `n·p` is an exact
+  integer k (ape keeps `count = k`; old code required `count >= k+1`; e.g. n=3,
+  p=2/3 dropped a clade in 2 of 3 trees). **Maintainer chose: align code to
+  "p or more".** consensus.cpp now uses `thresh = max(floor(n/2)+1, ceil(p·n))`
+  with a relative tolerance (`1e-9·pn`) snapping `p·n` to an exact integer
+  through FP noise — robust where ape's raw `>=` is fragile. p = 0.5 unchanged
+  (strict majority, via the `floor(n/2)+1` floor). Pinned by `ApeTest(thirds,
+  2/3)` (n=3 boundary). Docstring + NEWS updated. Gate 590 PASS / 0 ape
+  disagreements; full suite 4195 PASS.
 
 ## Jansson decision (tracking)
 
