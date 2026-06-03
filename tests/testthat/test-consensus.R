@@ -17,12 +17,17 @@ test_that("Consensus() errors", {
   expect_equal(Consensus(c(halfTree)), halfTree)
   expect_equal(Consensus(list(halfTree)), halfTree)
   
+  # Building 100k-leaf trees and a 33k-tip consensus dominates valgrind runtime
+  # (~30x slowdown) but exercises no memory path the smaller cases above miss;
+  # full scale still runs in uninstrumented CI.
+  skip_if(Sys.getenv("TESTING_MEMCHECK") != "")
+
   # Test that trees larger than heap limit fail gracefully
   expect_error(
     Consensus(c(BalancedTree(100001), PectinateTree(100001))),
     "too many leaves.*100000"
   )
-  
+
   largeTree <- BalancedTree(33333)
   consensus_large <- Consensus(c(largeTree, largeTree))
   expect_equal(NTip(consensus_large), 33333)
@@ -108,6 +113,10 @@ test_that("Consensus() ignores edge lengths, node labels, and TipLabel", {
 })
 
 test_that("Consensus() handles large sets of trees", {
+  # 33k+ trees (past int16_max) is prohibitively slow under valgrind for no
+  # extra memory coverage: the hashed counter is exercised by the smaller
+  # forests above. Runs at full scale in uninstrumented CI.
+  skip_if(Sys.getenv("TESTING_MEMCHECK") != "")
   oneTree <- as.phylo(0, 13)
   expect_equal(
     Consensus(lapply(1:33000, function(x) oneTree)),
