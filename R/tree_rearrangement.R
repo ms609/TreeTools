@@ -214,7 +214,6 @@ RootOnNode <- function(tree, node, resolveRoot = FALSE) {
   UseMethod("RootOnNode", tree)
 }
 
-#' @importFrom fastmatch %fin%
 #' @export
 RootOnNode.phylo <- function(tree, node, resolveRoot = FALSE) {
   edge <- tree[["edge"]]
@@ -417,7 +416,6 @@ UnrootTree.NULL <- function(tree) NULL
 CollapseNode <- function(tree, nodes) UseMethod("CollapseNode")
 
 #' @rdname CollapseNode
-#' @importFrom fastmatch %fin%
 #' @export
 CollapseNode.phylo <- function(tree, nodes) {
   if (length(nodes) == 0) return(tree)

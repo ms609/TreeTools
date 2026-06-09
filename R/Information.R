@@ -64,7 +64,6 @@ Log2TreesMatchingSplit <- function(A, B = A[2]) {
 #' @references \insertAllCited{}
 #' @family split information functions
 #' @template MRS
-#' @importFrom fastmatch %fin%
 #' @export
 CharacterInformation <- function(tokens) {
   tokenCounts <- table(tokens)

@@ -8,6 +8,9 @@
 #' [\pkg{phytools}](https://cran.r-project.org/package=phytools),
 #' aiming for efficient and robust implementations of functions, typically
 #' applied to unweighted trees (i.e. those without edge lengths).
+#' 
+#' The performance of some functions is improved if \pkg{fastmatch} is 
+#' available: `install.packages("fastmatch")`
 #'
 #' Full documentation is available [online](https://ms609.github.io/TreeTools/).
 #'

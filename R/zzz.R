@@ -1,3 +1,19 @@
+.onLoad <- function(libname, pkgname) {
+  # Resolve the fast-matching backend once, avoiding per-call dispatch overhead.
+  # fastmatch is Suggested rather than Imported because it cannot compile to
+  # WebAssembly (see R/fastmatch.R). When it is available -- and not disabled via
+  # options(TreeTools.fastmatch = FALSE), used to exercise the fallback path in
+  # tests -- rebind the internal `.FastMatch` and `%fin%` to fastmatch's own
+  # functions, so calls reach them with no wrapper. Otherwise the base
+  # equivalents from R/fastmatch.R remain in force.
+  if (isTRUE(getOption("TreeTools.fastmatch", TRUE)) &&
+      requireNamespace("fastmatch", quietly = TRUE)) {
+    ns <- asNamespace(pkgname)
+    assign(".FastMatch", fastmatch::fmatch, envir = ns)
+    assign("%fin%", fastmatch::`%fin%`, envir = ns)
+  }
+}
+
 .onUnload <- function(libpath) {
   library.dynam.unload("TreeTools", libpath)
 }

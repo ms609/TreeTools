@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.6.0 (2026-04-24)",
+  "runtimePlatform": "R Under development (unstable) (2026-06-02 r90096 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -61,6 +61,19 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "fastmatch",
+      "name": "fastmatch",
+      "version": ">= 1.1.3",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=fastmatch"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "RCurl",
@@ -220,23 +233,10 @@
     },
     "4": {
       "@type": "SoftwareApplication",
-      "identifier": "fastmatch",
-      "name": "fastmatch",
-      "version": ">= 1.1.3",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=fastmatch"
-    },
-    "5": {
-      "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "PlotTools",
       "name": "PlotTools",
@@ -248,7 +248,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=PlotTools"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "Rdpack",
       "name": "Rdpack",
@@ -263,7 +263,7 @@
     },
     "SystemRequirements": "C++17"
   },
-  "fileSize": "1928.893KB",
+  "fileSize": "1952.055KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",

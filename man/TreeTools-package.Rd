@@ -16,6 +16,9 @@ aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 }
 \details{
+The performance of some functions is improved if \pkg{fastmatch} is
+available: \code{install.packages("fastmatch")}
+
 Full documentation is available \href{https://ms609.github.io/TreeTools/}{online}.
 }
 \seealso{

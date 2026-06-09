@@ -82,7 +82,6 @@ TotalCopheneticIndex <- function(x) UseMethod("TotalCopheneticIndex")
 #' @export
 TotalCopheneticIndex.NULL <- function(x) NULL
 
-#' @importFrom fastmatch %fin%
 #' @export
 TotalCopheneticIndex.phylo <- function(x) {
   nTip   <- NTip(x)

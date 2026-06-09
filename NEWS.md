@@ -26,6 +26,10 @@
   trimming wrapper overhead (~25% faster on small forests of many short trees).
   Results are unchanged.
 
+## Dependencies
+
+- `fastmatch` moved from Imports to Suggests.
+
 # TreeTools 2.4.0 (2026-06-02) #
 
 ## New features

@@ -52,7 +52,6 @@ ArtificialExtinction <- function(dataset, subject, template,
 }
 
 #' @rdname ArtificialExtinction
-#' @importFrom fastmatch %fin%
 #' @export
 ArtificialExtinction.matrix <- function(dataset, subject, template,
                                          replaceAmbiguous = "ambig",

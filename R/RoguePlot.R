@@ -61,7 +61,6 @@
 #'   cex = 0.4
 #' )
 #' @template MRS
-#' @importFrom fastmatch fmatch %fin%
 #' @importFrom graphics par
 #' @importFrom grDevices colorRamp colorRampPalette rgb
 #' @importFrom PlotTools SpectrumLegend
@@ -103,7 +102,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   }
   
   if (is.character(tip)) {
-    tip <- fmatch(tip, tipLabels)
+    tip <- .FastMatch(tip, tipLabels)
   }
   
   keptTips <- c(tipLabels[-tip], dummyRoot)
@@ -127,9 +126,9 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
     edge <- AddTip(tr, 0, dummyRoot)[["edge"]]
     parent <- edge[, 1]
     child <- edge[, 2]
-    rogueEdge <- fmatch(tip, child)
+    rogueEdge <- .FastMatch(tip, child)
     rogueParent <- parent[[rogueEdge]]
-    beside <- fmatch(rogueParent, child) # edge above parent of rogue tip
+    beside <- .FastMatch(rogueParent, child) # edge above parent of rogue tip
     splitTips <- allTips
     stopifnot(!is.na(beside))
     edgeInSplit <- DescendantEdges(parent = parent, child = child,
