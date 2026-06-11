@@ -67,8 +67,7 @@ for general use.</p>
 <dl><dt id="arg-phy">phy<a class="anchor" aria-label="anchor" href="#arg-phy"></a></dt>
 <dd><p>Minimally, a named list with entries <code>edge</code> and <code>Nnode</code>, in the
 format of equivalent entries in a tree of class <code>phylo</code>. <code>edge.length</code> will
-also be considered if supplied. The root node must be numbered <code>n_tip + 1</code>,
-per the <code>phylo</code> convention.</p></dd>
+also be considered if supplied. The root node must be numbered <code>n_tip + 1</code>.</p></dd>
 
 
 <dt id="arg-outgroup">outgroup<a class="anchor" aria-label="anchor" href="#arg-outgroup"></a></dt>
@@ -79,13 +78,11 @@ outgroup.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>root_on_node()</code> returns <code>phy</code> rooted on the specified node, in
-preorder.</p>
+preorder, with nodes renumbered accordingly.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p><code>phy</code> may be supplied in any valid edge order; it is preordered internally,
-so there is no need to call <code><a href="Reorder.html">Preorder()</a></code> first.  The returned tree is
-always in preorder, with node numbers reassigned accordingly.</p>
+    <p><code>phy</code> may be supplied in any valid edge order.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
