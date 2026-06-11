@@ -4,7 +4,7 @@ test_that("Memory leak not encountered", {
   # Example from TreeDist::ClusterTable
   tree1 <- ape::read.tree(text = "(A, (B, (C, (D, E))));");
   tree2 <- ape::read.tree(text = "(A, (B, (D, (C, E))));");
-  # as.ClusterTable(tree1) calls: result must be a preordered form of tree1
+  # as.ClusterTable(tree1) calls: result must be tree1 in preorder
   expect_equal(Preorder(tree1), root_on_node(tree1, 1))
 
   # Check for memory leaks...
@@ -16,7 +16,7 @@ test_that("Memory leak not encountered", {
 })
 
 test_that("Big trees don't fail", {
-  # 2^14 + 1 is too big for int16; result must be preordered
+  # 2^14 + 1 is too big for int16; result must be in preorder
   expect_equal(root_on_node(PectinateTree(2^14 + 1), 1),
                Preorder(PectinateTree(2^14 + 1)))
 })
