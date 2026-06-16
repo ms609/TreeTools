@@ -11,6 +11,8 @@
   previously such a split was dropped at exact thresholds (e.g. a split
   in 2 of 3 trees with `p = 2/3`). The majority threshold `p = 0.5` is
   unchanged (a split must occur in more than half the trees).
+- `ReeadCharacters()` no longer warns on a `STATELABELS` block with a
+  terminal semicolon.
 
 ### Performance
 
@@ -18,25 +20,19 @@
   [`root_on_node()`](https://ms609.github.io/TreeTools/dev/reference/root_on_node.md)
   to simplify
   [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
-  internal pre-processing
+  internal pre-processing.
 - [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
   and
   [`SplitFrequency()`](https://ms609.github.io/TreeTools/dev/reference/SplitFrequency.md)
   defer materialising a split’s bit pattern until it is needed, so
   splits that never reach the consensus threshold are no longer built.
-  Identical results; up to ~13× faster for large trees (greatest gains
-  for tall trees / many tips), with no change at small sizes.
 - [`RenumberTips()`](https://ms609.github.io/TreeTools/dev/reference/RenumberTips.md)
   relabels an unlabelled `multiPhylo` or `list` of trees in a single C++
   pass instead of a per-tree R loop, with a no-op fast path for trees
-  already in the target order. Speeds up
-  [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
-  and other callers when combining many trees; results are unchanged.
+  already in the target order.
 - [`Consensus()`](https://ms609.github.io/TreeTools/dev/reference/Consensus.md)
   no longer copies every input tree to strip branch lengths and node
-  labels (the consensus core ignores both); it now coerces in place,
-  trimming wrapper overhead (~25% faster on small forests of many short
-  trees). Results are unchanged.
+  labels; it now coerces in place.
 
 ### Dependencies
 

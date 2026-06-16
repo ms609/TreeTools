@@ -50,16 +50,18 @@
 <h3 id="bug-fixes-2-4-0-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-4-0-9000"></a></h3>
 <ul><li>
 <code>Consensus(trees, p)</code> now retains a split present in exactly a proportion <code>p</code> of trees (i.e. in <code>ceiling(p * length(trees))</code> trees) for <code>p &gt; 0.5</code>, matching the documentation and <code><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">ape::consensus()</a></code>; previously such a split was dropped at exact thresholds (e.g. a split in 2 of 3 trees with <code>p = 2/3</code>). The majority threshold <code>p = 0.5</code> is unchanged (a split must occur in more than half the trees).</li>
+<li>
+<code>ReeadCharacters()</code> no longer warns on a <code>STATELABELS</code> block with a terminal semicolon.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-2-4-0-9000">Performance<a class="anchor" aria-label="anchor" href="#performance-2-4-0-9000"></a></h3>
-<ul><li>Guarantee preorder return from <code><a href="../reference/root_on_node.html">root_on_node()</a></code> to simplify <code><a href="../reference/Consensus.html">Consensus()</a></code> internal pre-processing</li>
+<ul><li>Guarantee preorder return from <code><a href="../reference/root_on_node.html">root_on_node()</a></code> to simplify <code><a href="../reference/Consensus.html">Consensus()</a></code> internal pre-processing.</li>
 <li>
-<code><a href="../reference/Consensus.html">Consensus()</a></code> and <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> defer materialising a split’s bit pattern until it is needed, so splits that never reach the consensus threshold are no longer built. Identical results; up to ~13× faster for large trees (greatest gains for tall trees / many tips), with no change at small sizes.</li>
+<code><a href="../reference/Consensus.html">Consensus()</a></code> and <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> defer materialising a split’s bit pattern until it is needed, so splits that never reach the consensus threshold are no longer built.</li>
 <li>
-<code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> relabels an unlabelled <code>multiPhylo</code> or <code>list</code> of trees in a single C++ pass instead of a per-tree R loop, with a no-op fast path for trees already in the target order. Speeds up <code><a href="../reference/Consensus.html">Consensus()</a></code> and other callers when combining many trees; results are unchanged.</li>
+<code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> relabels an unlabelled <code>multiPhylo</code> or <code>list</code> of trees in a single C++ pass instead of a per-tree R loop, with a no-op fast path for trees already in the target order.</li>
 <li>
-<code><a href="../reference/Consensus.html">Consensus()</a></code> no longer copies every input tree to strip branch lengths and node labels (the consensus core ignores both); it now coerces in place, trimming wrapper overhead (~25% faster on small forests of many short trees). Results are unchanged.</li>
+<code><a href="../reference/Consensus.html">Consensus()</a></code> no longer copies every input tree to strip branch lengths and node labels; it now coerces in place.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="dependencies-2-4-0-9000">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-2-4-0-9000"></a></h3>
