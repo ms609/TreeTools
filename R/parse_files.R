@@ -283,6 +283,13 @@ ReadCharacters <- function(filepath, character_num = NULL, encoding = "UTF8") {
       }
       stateStarts <- grep("^\\d+", stateLines)
       stateEnds <- grep("[,;]$", stateLines)
+      # When the closing ';' of the block also serves as the terminator of the
+      # last character entry (e.g. Wills 2012), stripping it above leaves the
+      # last entry without an explicit comma/semicolon. Treat end-of-block as
+      # an implicit terminator so the last entry is still parsed correctly.
+      if (length(stateStarts) == length(stateEnds) + 1L) {
+        stateEnds <- c(stateEnds, length(stateLines) + 1L)
+      }
       if (length(stateStarts) != length(stateEnds)) {
         warning("Could not parse character states; does each end with a ' or ;?.")
       } else {

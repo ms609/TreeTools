@@ -321,6 +321,16 @@ test_that("ReadCharacters() reads CHARSTATELABELS", {
 
 })
 
+test_that("ReadCharacters() handles STATELABELS with terminal semicolon", {
+  # Last STATELABELS entry terminated by block ';' rather than a comma
+  labels <- expect_no_warning(
+    ReadCharacters(system.file("extdata/tests/statelabels-semicolon.nex",
+                               package = "TreeTools"))
+  )
+  expect_equal(attr(labels, "state.labels"),
+               list(c("state zero", "state one"), c("absent", "present")))
+})
+
 test_that("MorphoBankDecode() decodes", {
   expect_equal("' -- x  \n 1--2", MorphoBankDecode("'' - x^n 1-2"))
 })
