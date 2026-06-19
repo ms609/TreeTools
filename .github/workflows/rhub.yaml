@@ -26,7 +26,7 @@ on:
 jobs:
 
   setup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     outputs:
       containers: ${{ steps.rhub-setup.outputs.containers }}
       platforms: ${{ steps.rhub-setup.outputs.platforms }}
