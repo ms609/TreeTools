@@ -27,7 +27,7 @@ name: gcc-ASAN
 
 jobs:
   mem-check:
-    runs-on: ubuntu-26.04-arm
+    runs-on: ubuntu-latest
     container:
       image: ghcr.io/r-hub/containers/gcc-asan:latest
 
