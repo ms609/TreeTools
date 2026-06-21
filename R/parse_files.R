@@ -970,6 +970,15 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
         paste0(levels[x], collapse = sep)
       }),
       parentheses[2])
+    # Canonicalize single-state cells to their level symbol, so a degenerate
+    # token whose alternatives collapse to one state (e.g. a "(0,0)"
+    # polymorphism, read verbatim from a Nexus file) is emitted as that state
+    # rather than the original string -- which would otherwise leak an illegal
+    # separator (e.g. the ",") into the output and break downstream parsers
+    # such as TNT.
+    singleState <- nTokens == 1L & !is.na(allLevels)
+    allLevels[singleState] <-
+      levels[max.col(cont[singleState, , drop = FALSE], ties.method = "first")]
   }
   matrix(allLevels[unlist(dataset, recursive = FALSE, use.names = FALSE)],
          ncol = at[["nr"]], byrow = TRUE, dimnames = list(at[["names"]], NULL)

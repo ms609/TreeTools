@@ -10,6 +10,11 @@
   half the trees).
 - `ReeadCharacters()` no longer warns on a `STATELABELS` block with a terminal
   semicolon.
+- `PhyDatToMatrix()` now resolves a degenerate polymorphism whose alternatives
+  collapse to a single state (e.g. a `(0,0)` token read from a Nexus file) to
+  that state, rather than emitting the original token verbatim. This stops an
+  illegal separator (e.g. `,`) from leaking into `WriteTntCharacters()` output
+  and being rejected by TNT.
 
 ## Performance 
 

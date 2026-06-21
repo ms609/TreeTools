@@ -207,6 +207,32 @@ test_that("PhyDatToMatrix() with ambigs", {
     c("<1/2>", "<0/1>", NA_character_, "?"))
 })
 
+test_that("PhyDatToMatrix() resolves degenerate single-state tokens", {
+  # A polymorphism whose alternatives collapse to a single state (e.g. "(0,0)",
+  # read verbatim from a Nexus file) must be emitted as that state, not the
+  # original token -- otherwise a separator such as "," leaks into the output
+  # and breaks downstream parsers like TNT.
+  mat <- matrix(c("0", "(0,1)", "(0,0)", "{1,1}",
+                  "1", "2",     "1",     "0"),
+                nrow = 2, byrow = TRUE, dimnames = list(c("t1", "t2"), NULL))
+  phy <- MatrixToPhyDat(mat)
+
+  brk <- PhyDatToMatrix(phy, parentheses = "[]")
+  expect_equal(unname(brk["t1", ]), c("0", "[01]", "0", "1"))
+  expect_false(any(grepl(",", brk, fixed = TRUE)))
+
+  # NA-handling is unaffected; degenerate token still resolves.
+  withGap <- MatrixToPhyDat(matrix(c("-", "(0,0)", "1", "0"), nrow = 2,
+                                   byrow = TRUE,
+                                   dimnames = list(c("t1", "t2"), NULL)))
+  expect_equal(
+    unname(PhyDatToMatrix(withGap, parentheses = "[]", inappNA = TRUE)["t1", ]),
+    c(NA, "0"))
+
+  # The reported failure: WriteTntCharacters() must not emit a "," token.
+  expect_false(any(grepl(",", WriteTntCharacters(phy), fixed = TRUE)))
+})
+
 test_that("Modified phyDat objects can be converted", {
   # Obtained by subsetting, i.e. dataset <- biggerDataset[1:4]
   dataset <- structure(list(a = c(1L, 1L, 1L, 1L), c = c(2L, 1L, 1L, 2L),
