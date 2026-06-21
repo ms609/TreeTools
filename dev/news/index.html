@@ -52,6 +52,8 @@
 <code>Consensus(trees, p)</code> now retains a split present in exactly a proportion <code>p</code> of trees (i.e. in <code>ceiling(p * length(trees))</code> trees) for <code>p &gt; 0.5</code>, matching the documentation and <code><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">ape::consensus()</a></code>; previously such a split was dropped at exact thresholds (e.g. a split in 2 of 3 trees with <code>p = 2/3</code>). The majority threshold <code>p = 0.5</code> is unchanged (a split must occur in more than half the trees).</li>
 <li>
 <code>ReeadCharacters()</code> no longer warns on a <code>STATELABELS</code> block with a terminal semicolon.</li>
+<li>
+<code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> now resolves a degenerate polymorphism whose alternatives collapse to a single state (e.g. a <code>(0,0)</code> token read from a Nexus file) to that state, rather than emitting the original token verbatim. This stops an illegal separator (e.g. <code>,</code>) from leaking into <code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters()</a></code> output and being rejected by TNT.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="performance-2-4-0-9000">Performance<a class="anchor" aria-label="anchor" href="#performance-2-4-0-9000"></a></h3>

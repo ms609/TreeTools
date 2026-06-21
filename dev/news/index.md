@@ -13,6 +13,13 @@
   unchanged (a split must occur in more than half the trees).
 - `ReeadCharacters()` no longer warns on a `STATELABELS` block with a
   terminal semicolon.
+- [`PhyDatToMatrix()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
+  now resolves a degenerate polymorphism whose alternatives collapse to
+  a single state (e.g. a `(0,0)` token read from a Nexus file) to that
+  state, rather than emitting the original token verbatim. This stops an
+  illegal separator (e.g. `,`) from leaking into
+  [`WriteTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/WriteTntCharacters.md)
+  output and being rejected by TNT.
 
 ### Performance
 
