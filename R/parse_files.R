@@ -963,6 +963,7 @@ PhyDatToMatrix <- function(dataset, ambigNA = FALSE, inappNA = ambigNA,
     cont <- at[["contrast"]]
     nTokens <- rowSums(cont)
     levels <- colnames(cont)
+    if (is.null(levels)) levels <- at[["levels"]]
     partAmbig <- nTokens != 1L & nTokens < dim(cont)[2]
     allLevels[partAmbig] <- paste0(
       parentheses[1],
