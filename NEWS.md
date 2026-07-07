@@ -1,4 +1,4 @@
-# TreeTools 2.4.0.9000 (development) #
+# TreeTools 2.4.0.9001 (development) #
 
 ## Bug fixes
 
@@ -8,13 +8,14 @@
   at exact thresholds (e.g. a split in 2 of 3 trees with `p = 2/3`). The
   majority threshold `p = 0.5` is unchanged (a split must occur in more than
   half the trees).
-- `ReeadCharacters()` no longer warns on a `STATELABELS` block with a terminal
+- `ReadCharacters()` no longer warns on a `STATELABELS` block with a terminal
   semicolon.
 - `PhyDatToMatrix()` now resolves a degenerate polymorphism whose alternatives
   collapse to a single state (e.g. a `(0,0)` token read from a Nexus file) to
   that state, rather than emitting the original token verbatim. This stops an
   illegal separator (e.g. `,`) from leaking into `WriteTntCharacters()` output
   and being rejected by TNT.
+- `RenumberTips()` no longer fails on trees with no `"order"` attribute.
 
 ## Performance 
 

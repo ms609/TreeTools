@@ -88,6 +88,11 @@ test_that("Replacement reorder functions work correctly", {
   expect_equal(star$edge, RenumberTree(edge[, 1], edge[, 2]))
   expect_equal(list(star$edge[, 1], star$edge[, 2]),
                RenumberEdges(edge[, 1], edge[, 2]))
+  
+  attr(star, "order") <- "preorder"
+  expect_equal(attr(RenumberTips(star, letters[1:4]), "order"), "cladewise")
+  attr(star, "order") <- NULL
+  expect_null(attr(RenumberTips(star, letters[1:4]), "order"))
 })
 
 test_that("RenumberTips() with numeric tipOrder", {
