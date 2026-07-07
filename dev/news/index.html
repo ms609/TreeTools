@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.4.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">2.4.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,18 +45,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.4.0.9000" id="treetools-2409000-development">TreeTools 2.4.0.9000 (development)<a class="anchor" aria-label="anchor" href="#treetools-2409000-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.4.0.9001" id="treetools-2409001-development">TreeTools 2.4.0.9001 (development)<a class="anchor" aria-label="anchor" href="#treetools-2409001-development"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-2-4-0-9000">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-4-0-9000"></a></h3>
+<h3 id="bug-fixes-2-4-0-9001">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-4-0-9001"></a></h3>
 <ul><li>
 <code>Consensus(trees, p)</code> now retains a split present in exactly a proportion <code>p</code> of trees (i.e. in <code>ceiling(p * length(trees))</code> trees) for <code>p &gt; 0.5</code>, matching the documentation and <code><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">ape::consensus()</a></code>; previously such a split was dropped at exact thresholds (e.g. a split in 2 of 3 trees with <code>p = 2/3</code>). The majority threshold <code>p = 0.5</code> is unchanged (a split must occur in more than half the trees).</li>
 <li>
-<code>ReeadCharacters()</code> no longer warns on a <code>STATELABELS</code> block with a terminal semicolon.</li>
+<code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code> no longer warns on a <code>STATELABELS</code> block with a terminal semicolon.</li>
 <li>
 <code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> now resolves a degenerate polymorphism whose alternatives collapse to a single state (e.g. a <code>(0,0)</code> token read from a Nexus file) to that state, rather than emitting the original token verbatim. This stops an illegal separator (e.g. <code>,</code>) from leaking into <code><a href="../reference/WriteTntCharacters.html">WriteTntCharacters()</a></code> output and being rejected by TNT.</li>
+<li>
+<code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> no longer fails on trees with no <code>"order"</code> attribute.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="performance-2-4-0-9000">Performance<a class="anchor" aria-label="anchor" href="#performance-2-4-0-9000"></a></h3>
+<h3 id="performance-2-4-0-9001">Performance<a class="anchor" aria-label="anchor" href="#performance-2-4-0-9001"></a></h3>
 <ul><li>Guarantee preorder return from <code><a href="../reference/root_on_node.html">root_on_node()</a></code> to simplify <code><a href="../reference/Consensus.html">Consensus()</a></code> internal pre-processing.</li>
 <li>
 <code><a href="../reference/Consensus.html">Consensus()</a></code> and <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code> defer materialising a split’s bit pattern until it is needed, so splits that never reach the consensus threshold are no longer built.</li>
@@ -66,7 +68,7 @@
 <code><a href="../reference/Consensus.html">Consensus()</a></code> no longer copies every input tree to strip branch lengths and node labels; it now coerces in place.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="dependencies-2-4-0-9000">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-2-4-0-9000"></a></h3>
+<h3 id="dependencies-2-4-0-9001">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-2-4-0-9001"></a></h3>
 <ul><li>
 <code>fastmatch</code> moved from Imports to Suggests.</li>
 </ul></div>

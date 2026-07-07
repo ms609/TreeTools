@@ -1,6 +1,6 @@
 # Changelog
 
-## TreeTools 2.4.0.9000 (development)
+## TreeTools 2.4.0.9001 (development)
 
 ### Bug fixes
 
@@ -11,8 +11,8 @@
   previously such a split was dropped at exact thresholds (e.g. a split
   in 2 of 3 trees with `p = 2/3`). The majority threshold `p = 0.5` is
   unchanged (a split must occur in more than half the trees).
-- `ReeadCharacters()` no longer warns on a `STATELABELS` block with a
-  terminal semicolon.
+- [`ReadCharacters()`](https://ms609.github.io/TreeTools/dev/reference/ReadCharacters.md)
+  no longer warns on a `STATELABELS` block with a terminal semicolon.
 - [`PhyDatToMatrix()`](https://ms609.github.io/TreeTools/dev/reference/MatrixToPhyDat.md)
   now resolves a degenerate polymorphism whose alternatives collapse to
   a single state (e.g. a `(0,0)` token read from a Nexus file) to that
@@ -20,6 +20,8 @@
   illegal separator (e.g. `,`) from leaking into
   [`WriteTntCharacters()`](https://ms609.github.io/TreeTools/dev/reference/WriteTntCharacters.md)
   output and being rejected by TNT.
+- [`RenumberTips()`](https://ms609.github.io/TreeTools/dev/reference/RenumberTips.md)
+  no longer fails on trees with no `"order"` attribute.
 
 ### Performance
 
