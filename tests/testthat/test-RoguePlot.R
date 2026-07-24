@@ -75,6 +75,20 @@ test_that("RoguePlot(sort = TRUE)", {
   expect_equal(sorted$atNode, unsorted$atNode)
 })
 
+test_that("RoguePlot() errors cleanly if cons loses its preorder attribute", {
+  trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
+                read.tree(text = "(a, (b, (c, ((d, e), rogue))));"))
+  local_mocked_bindings(
+    Preorder = function(tree, ...) {
+      attr(tree, "order") <- NULL
+      tree
+    },
+    .package = "TreeTools"
+  )
+  expect_error(RoguePlot(trees, tip = "rogue", plot = FALSE),
+               "preorder")
+})
+
 test_that("polytomy id", {
   trees <- list(read.tree(text = "(a,(((b,(c,d)),e),rogue));"),
                 read.tree(text = "(a,((((c,d),e),rogue),b));"),
