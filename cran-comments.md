@@ -5,7 +5,7 @@
 
 * [GitHub Actions](https://github.com/ms609/TreeTools/actions)
   - Ubuntu latest
-    - R 3.6, 4.0
+    - R 4.0
     - R release (tests, examples & vignettes run with valgrind)
     - R devel
   - Mac OS X latest, R release
