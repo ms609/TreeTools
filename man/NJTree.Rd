@@ -28,8 +28,8 @@ NJTree(Lobo.phy)
 
 }
 \seealso{
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
 \code{\link{GenerateTree}},
 \code{\link{TreeNumber}},
 \code{\link{TrivialTree}}

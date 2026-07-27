@@ -11,9 +11,9 @@ on:
 
 jobs:
   update-csl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       
       - name: Download latest CSL file
         run: |

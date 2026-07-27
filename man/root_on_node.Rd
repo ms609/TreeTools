@@ -9,18 +9,22 @@ root_on_node(phy, outgroup)
 \arguments{
 \item{phy}{Minimally, a named list with entries \code{edge} and \code{Nnode}, in the
 format of equivalent entries in a tree of class \code{phylo}. \code{edge.length} will
-also be considered if supplied.}
+also be considered if supplied. The root node must be numbered \code{n_tip + 1}.}
 
 \item{outgroup}{Integer specifying index of leaf or node to set as the
 outgroup.}
 }
 \value{
-\code{root_on_node()} returns \code{phy} rooted on the specified node.
+\code{root_on_node()} returns \code{phy} rooted on the specified node, in
+preorder, with nodes renumbered accordingly.
 }
 \description{
 Direct entry point to \code{root_on_node()}; recommended for expert use only.
 \code{RootTree()} checks that input is properly formatted and is recommended
 for general use.
+}
+\details{
+\code{phy} may be supplied in any valid edge order.
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

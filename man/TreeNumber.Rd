@@ -69,7 +69,7 @@ attributes \code{nTip} and \code{tip.label}.
 For trees with at most 19 leaves the underlying storage is a single
 \code{integer64} value (class \code{c("TreeNumber", "integer64")}), enabling
 \code{integer64} arithmetic and exact round-tripping through \code{as.MixedBase()}.
-For trees with 20–51 leaves the number exceeds 2^64, so it is stored as a
+For trees with 20--51 leaves the number exceeds 2^64, so it is stored as a
 decimal character string (class \code{c("TreeNumber", "character")}).
 If \code{x} is a list of trees or a \code{multiPhylo} object,
 \code{as.TreeNumber()} returns a corresponding list of \code{TreeNumber} objects.
@@ -169,7 +169,7 @@ with the mixed-base number 0021.  We can convert this into decimal:
 For trees with at most 19 leaves, the number fits in a 64-bit integer and
 the \code{TreeNumber} is stored as an \code{integer64} (via the \code{bit64} package),
 enabling arithmetic and exact round-tripping via \code{as.MixedBase()}.
-For trees with 20–51 leaves, there are more than 2^64 distinct topologies,
+For trees with 20--51 leaves, there are more than 2^64 distinct topologies,
 so the tree number is stored as a decimal character string instead.
 
 Package developers can use the C++ header \code{TreeTools/tree_number.h}
@@ -181,7 +181,7 @@ tree <- as.phylo(10, nTip = 6)
 plot(tree)
 as.TreeNumber(tree)
 
-# Trees with 20–51 leaves are stored as decimal strings:
+# Trees with 20--51 leaves are stored as decimal strings:
 as.TreeNumber(BalancedTree(19))  # integer64-backed
 as.TreeNumber(BalancedTree(51))  # character-backed
 
@@ -198,15 +198,15 @@ as.phylo(0:2, nTip = 6, tipLabels = letters[1:6])
 Describe the shape of a tree topology, independent of leaf labels:
 \code{\link[=TreeShape]{TreeShape()}}
 
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
 \code{\link{GenerateTree}},
-\code{\link{NJTree}()},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TrivialTree}}
 
-Other 'TreeNumber' utilities: 
-\code{\link{is.TreeNumber}()},
-\code{\link{print.TreeNumber}()}
+Other 'TreeNumber' utilities:
+\code{\link[=is.TreeNumber]{is.TreeNumber()}},
+\code{\link[=print.TreeNumber]{print.TreeNumber()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

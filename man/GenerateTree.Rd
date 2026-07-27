@@ -32,7 +32,8 @@ or \code{FALSE} to return an unrooted tree.}
 \code{tips - 1}, generates a binary tree; setting a lower value will induce
 polytomies.}
 
-\item{lengths}{a numeric vector specifying the edge lengths of the tree.}
+\item{lengths}{Numeric vector of edge lengths, or a function that returns
+such a vector when passed the number of edges as its argument (e.g. \code{runif}).}
 
 \item{addInTurn}{Logical specifying whether to add leaves in the order of
 \code{tips}.  If \code{FALSE}, leaves will be added in a random order.}
@@ -64,16 +65,22 @@ i.e. adding leaves in turn adjacent to a randomly-chosen existing leaf.
 generate trees with the specified shapes and leaf labels.
 }
 \examples{
-RandomTree(LETTERS[1:10])
+# Set random seed for reproducibility
+set.seed(10)
 
+# Generate a tree from a phylogenetic dataset
 data("Lobo")
-RandomTree(Lobo.phy)
+RandomTree(Lobo.phy, lengths = runif)
 
-YuleTree(LETTERS[1:10])
+# Generate trees on letters A-J
+plot(RandomTree(LETTERS[1:10], root = TRUE))
+
+plot(YuleTree(LETTERS[1:10]))
 
 plot(PectinateTree(LETTERS[1:10]))
 
-plot(BalancedTree(LETTERS[1:10]))
+plot(BalancedTree(LETTERS[1:10], lengths = 1:18))
+
 plot(StarTree(LETTERS[1:10]))
 
 }
@@ -81,9 +88,9 @@ plot(StarTree(LETTERS[1:10]))
 \insertAllCited()
 }
 \seealso{
-Other tree generation functions: 
-\code{\link{ConstrainedNJ}()},
-\code{\link{NJTree}()},
+Other tree generation functions:
+\code{\link[=ConstrainedNJ]{ConstrainedNJ()}},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TreeNumber}},
 \code{\link{TrivialTree}}
 }

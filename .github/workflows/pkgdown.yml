@@ -19,7 +19,10 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
+
+    permissions:
+      contents: write
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}

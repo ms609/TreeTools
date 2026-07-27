@@ -20,16 +20,16 @@ represented by a zero bit
 Polarize splits on a single taxon
 }
 \seealso{
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
 \code{\link{match,Splits,Splits-method}},
-\code{\link{xor}()}
+\code{\link[=xor]{xor()}}
 }
 \concept{Splits operations}

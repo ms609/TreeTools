@@ -18,8 +18,8 @@ and the logarithms of double factorials up to 50 000!!.
 301!! is too large to store as an integer; use \code{logDoubleFactorials} instead.
 }
 \seealso{
-Other double factorials: 
-\code{\link{DoubleFactorial}()},
+Other double factorials:
+\code{\link[=DoubleFactorial]{DoubleFactorial()}},
 \code{\link{logDoubleFactorials}}
 }
 \concept{double factorials}

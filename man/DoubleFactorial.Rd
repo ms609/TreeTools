@@ -55,7 +55,7 @@ exp(LnDoubleFactorial.int (8)) # log(2 * 4 * 6 * 8)
 DoubleFactorial64(31)
 }
 \seealso{
-Other double factorials: 
+Other double factorials:
 \code{\link{doubleFactorials}},
 \code{\link{logDoubleFactorials}}
 }

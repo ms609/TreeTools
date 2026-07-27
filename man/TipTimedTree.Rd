@@ -36,34 +36,34 @@ tree <- BalancedTree(6)
 plot(TipTimedTree(tree, tipAge = 1:6, minEdge = 2))
 }
 \seealso{
-Other utility functions: 
+Other utility functions:
 \code{\link{ClusterTable}},
 \code{\link{ClusterTable-methods}},
-\code{\link{Hamming}()},
-\code{\link{MSTEdges}()},
-\code{\link{SampleOne}()},
-\code{\link{UnshiftTree}()},
-\code{\link{as.multiPhylo}()},
+\code{\link[=Hamming]{Hamming()}},
+\code{\link[=MSTEdges]{MSTEdges()}},
+\code{\link[=SampleOne]{SampleOne()}},
+\code{\link[=UnshiftTree]{UnshiftTree()}},
+\code{\link[=as.multiPhylo]{as.multiPhylo()}},
 \code{\link{match,phylo,phylo-method}},
-\code{\link{sapply64}()},
-\code{\link{sort.multiPhylo}()}
+\code{\link[=sapply64]{sapply64()}},
+\code{\link[=sort.multiPhylo]{sort.multiPhylo()}}
 
-Other tree manipulation: 
-\code{\link{AddTip}()},
-\code{\link{CollapseNode}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{DropTip}()},
-\code{\link{ImposeConstraint}()},
-\code{\link{KeptPaths}()},
-\code{\link{KeptVerts}()},
-\code{\link{LeafLabelInterchange}()},
-\code{\link{MakeTreeBinary}()},
-\code{\link{Renumber}()},
-\code{\link{RenumberTips}()},
-\code{\link{RenumberTree}()},
-\code{\link{RootTree}()},
-\code{\link{SortTree}()},
-\code{\link{Subtree}()},
+Other tree manipulation:
+\code{\link[=AddTip]{AddTip()}},
+\code{\link[=CollapseNode]{CollapseNode()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=DropTip]{DropTip()}},
+\code{\link[=ImposeConstraint]{ImposeConstraint()}},
+\code{\link[=KeptPaths]{KeptPaths()}},
+\code{\link[=KeptVerts]{KeptVerts()}},
+\code{\link[=LeafLabelInterchange]{LeafLabelInterchange()}},
+\code{\link[=MakeTreeBinary]{MakeTreeBinary()}},
+\code{\link[=Renumber]{Renumber()}},
+\code{\link[=RenumberTips]{RenumberTips()}},
+\code{\link[=RenumberTree]{RenumberTree()}},
+\code{\link[=RootTree]{RootTree()}},
+\code{\link[=SortTree]{SortTree()}},
+\code{\link[=Subtree]{Subtree()}},
 \code{\link{TrivialTree}}
 }
 \concept{tree manipulation}

@@ -1,0 +1,16 @@
+nstates num 4;
+xread
+'Example matrix for AutoPart tests'
+6 6
+TaxonA 001011
+TaxonB 011011
+TaxonC 110001
+TaxonD 100100
+TaxonE 0?0100
+TaxonF 1-0010
+;
+ccode - 0.5;
+xgroup =0 (ANTERIOR) 0.2 ;
+xgroup =1 (POSTERIOR) 3. ;
+;
+proc/;

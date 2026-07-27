@@ -114,8 +114,8 @@ TNTText2Tree("(A (B (C (D E ))));")
 
 }
 \seealso{
-Other tree import functions: 
-\code{\link{ReadMrBayesTrees}()}
+Other tree import functions:
+\code{\link[=ReadMrBayesTrees]{ReadMrBayesTrees()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

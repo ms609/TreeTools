@@ -1,29 +1,53 @@
 #' Construct consensus trees
 #'
-#' `Consensus()` calculates the consensus of a set of trees, using the
-#' algorithm of \insertCite{Day1985}{TreeTools}.
+#' `Consensus()` calculates the majority-rule or strict consensus of a set of
+#' trees, using the cluster-table approach of \insertCite{Day1985}{TreeTools}.
+#'
+#' The strict consensus (`p = 1`) compares the clusters of the first tree
+#' against every other tree in linear time.  The majority-rule and threshold
+#' consensus (`0.5 <= p < 1`) instead count the frequency of every split across
+#' all trees in a single pass and retain those occurring in a proportion `p` or
+#' more of trees (i.e. in at least `ceiling(p * length(trees))` trees); this
+#' runs in time linear in the number of trees, after
+#' \insertCite{Jansson2016}{TreeTools}.  The majority threshold `p = 0.5` is
+#' strict: a split is retained only if it occurs in *more* than half the trees,
+#' so that two conflicting splits can never both be reported.  By default the
+#' count uses a 128-bit hash, whose results are exact with overwhelming
+#' probability; set `hash = FALSE` for a slower but guaranteed-exact count.
 #'
 #' @param trees List of trees, optionally of class `multiPhylo`.
-#' @param p Proportion of trees that must contain a split for it to be reported
-#' in the consensus.  `p = 0.5` gives the majority-rule consensus; `p = 1` (the
-#' default) gives the strict consensus.
+#' @param p A number from 0.5 to 1 giving the proportion of trees that must
+#' contain a split for it to be reported in the consensus: from `p = 0.5` (more
+#' than half the trees; the majority-rule consensus) to `p = 1` (every tree; the
+#' strict consensus, the default).
 #' @param check.labels Logical specifying whether to check that all trees have
 #' identical labels.  Defaults to `TRUE`, which is slower.
+#' @param hash Logical; if `TRUE` (default), majority/threshold consensus
+#' counts splits using 128-bit hashing, which is exact with overwhelming
+#' probability (a collision conflating two distinct splits is vanishingly
+#' unlikely).  Set `hash = FALSE` for a slower but guaranteed-exact count.
+#' Ignored when `p = 1`, which is always exact.
 #'
 #' @return `Consensus()` returns an object of class `phylo`, rooted as in the
 #' first entry of `trees`.
 #' @examples
 #' Consensus(as.phylo(0:2, 8))
 #' @seealso
-#' `TreeDist::ConsensusInfo()` calculates the information content of a consensus
-#' tree.
+#' * [\pkg{ConsTree}](https://constree.github.io/) implements
+#' other consensus tree algorithms.
+#' 
+#' * [\pkg{Rogue}](https://ms609.github.io/Rogue/) increases the resolution of
+#' consensus trees by dropping wildcard taxa.
+#' 
+#' * `TreeDist::ConsensusInfo()` calculates the information content of a
+#' consensus tree.
 #' @template MRS
 #' @family consensus tree functions
 #' @family tree characterization functions
 #' @references
 #' \insertAllCited{}
 #' @export
-Consensus <- function(trees, p = 1, check.labels = TRUE) {
+Consensus <- function(trees, p = 1, check.labels = TRUE, hash = TRUE) {
   if (length(trees) == 1L) {
     return(trees[[1]])
   }
@@ -34,12 +58,8 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
     stop("Expecting `trees` to be a list.")
   }
   
-  # Remove irrelevant metadata so we don't waste time processing it
-  trees <- lapply(c(trees), function(tr) {
-    tr[["edge.length"]] <- NULL
-    tr[["node.label"]] <- NULL
-    tr
-  })
+  # c() materialises a labelled multiPhylo's shared tip labels onto each tree.
+  trees <- c(trees)
   
   repeat {
     nTip <- NTip(trees)
@@ -60,17 +80,21 @@ Consensus <- function(trees, p = 1, check.labels = TRUE) {
   if (p < 0.5 || p > 1) {
     stop("`p` must be between 0.5 and 1.")
   }
-  trees <- Preorder(trees) # Per #168; could be dispensed with with further
-                           # investigation of consensus_tree
-  tree1 <- trees[[1]] # Must be in Preorder for DescendantEdges()
+  # consensus_tree() preorders each tree internally via ClusterTable /
+  # root_on_node (#168 fixed 2026-06), so the trees we hand it need not be in
+  # preorder. We only preorder trees[[1]], which DescendantEdges() requires
+  # below. Preorder() reorders edges and renumbers internal nodes but does NOT
+  # renumber leaves, so tree1's tip numbering still matches the shared numbering
+  # (from RenumberTips above) that consensus_tree() uses to encode splits.
+  tree1 <- Preorder(trees[[1]]) # Preorder needed for DescendantEdges()
   edg <- tree1[["edge"]]
   root <- edg[DescendantEdges(edg[, 1], edg[, 2], edge = 1), 2]
   root <- root[root <= NTip(tree1)]
 
   # Return:
   RootTree(.PreorderTree(
-    edge = splits_to_edge(consensus_tree(trees, p), nTip),
-    tip.label = TipLabels(trees[[1]])
+    edge = splits_to_edge(consensus_tree(trees, p, exact = !isTRUE(hash)), nTip),
+    tip.label = TipLabels(tree1)
   ), root)
 }
 

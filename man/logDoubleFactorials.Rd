@@ -15,8 +15,8 @@ logDoubleFactorials
 double factorials up to 50 000!!.
 }
 \seealso{
-Other double factorials: 
-\code{\link{DoubleFactorial}()},
+Other double factorials:
+\code{\link[=DoubleFactorial]{DoubleFactorial()}},
 \code{\link{doubleFactorials}}
 }
 \concept{double factorials}

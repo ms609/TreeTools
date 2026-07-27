@@ -1,0 +1,5 @@
+xread 5 6
+taxon_a@clade_A	01010taxon_b@clade_B	10101
+taxon_c@clade_C	00111
+taxon_d@clade_A	11000taxon_e@clade_B	01110taxon_f@clade_C	11110
+;

@@ -14,7 +14,7 @@ on:
 jobs:
   # The job MUST be called `copilot-setup-steps` or it will not be picked up by Copilot.
   copilot-setup-steps:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     # Set the permissions to the lowest permissions possible needed for your steps.
     # Copilot will be given its own token for its operations.
@@ -39,7 +39,7 @@ jobs:
     # If you do not check out your code, Copilot will do this for you.
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up R
         uses: r-lib/actions/setup-r@v2

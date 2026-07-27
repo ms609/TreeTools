@@ -25,12 +25,12 @@ as_newick <- function(edge) {
     .Call(`_TreeTools_as_newick`, edge)
 }
 
-split_frequencies <- function(trees) {
-    .Call(`_TreeTools_split_frequencies`, trees)
+split_frequencies <- function(trees, exact = FALSE) {
+    .Call(`_TreeTools_split_frequencies`, trees, exact)
 }
 
-consensus_tree <- function(trees, p) {
-    .Call(`_TreeTools_consensus_tree`, trees, p)
+consensus_tree <- function(trees, p, exact = FALSE) {
+    .Call(`_TreeTools_consensus_tree`, trees, p, exact)
 }
 
 descendant_edges <- function(parent, child, postorder) {
@@ -99,6 +99,10 @@ path_lengths <- function(edge, weight, init_nas) {
 
 renumber_tips_batch <- function(trees, perm, n_tip, new_labels) {
     .Call(`_TreeTools_renumber_tips_batch`, trees, perm, n_tip, new_labels)
+}
+
+renumber_tips_to <- function(trees, target) {
+    .Call(`_TreeTools_renumber_tips_to`, trees, target)
 }
 
 cpp_edge_to_splits <- function(edge, order, nTip) {

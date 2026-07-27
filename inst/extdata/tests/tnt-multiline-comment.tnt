@@ -1,0 +1,13 @@
+xread
+'Multi-line comment with semicolons
+piwe =10 ;
+xpiwe = ;
+option_x (*0.80 < 5 /10 ;
+'
+4 4
+taxon_a 0001
+taxon_b 0110
+taxon_c 1010
+taxon_d 1101
+;
+proc /;

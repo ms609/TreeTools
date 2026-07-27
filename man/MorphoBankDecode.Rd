@@ -17,11 +17,11 @@ reformatted.
 Converts strings from MorphoBank notes into a Latex-compatible format.
 }
 \seealso{
-Other string parsing functions: 
-\code{\link{EndSentence}()},
-\code{\link{MatchStrings}()},
-\code{\link{RightmostCharacter}()},
-\code{\link{Unquote}()}
+Other string parsing functions:
+\code{\link[=EndSentence]{EndSentence()}},
+\code{\link[=MatchStrings]{MatchStrings()}},
+\code{\link[=RightmostCharacter]{RightmostCharacter()}},
+\code{\link[=Unquote]{Unquote()}}
 }
 \author{
 Martin R. Smith

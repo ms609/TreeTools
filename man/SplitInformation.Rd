@@ -115,11 +115,11 @@ Sum the phylogenetic information content of splits within a tree:
 Sum the clustering information content of splits within a tree:
 \href{https://ms609.github.io/TreeDist/reference/TreeInfo.html}{\code{TreeDist::ClusteringInfo()}}
 
-Other split information functions: 
-\code{\link{CharacterInformation}()},
-\code{\link{SplitMatchProbability}()},
-\code{\link{TreesMatchingSplit}()},
-\code{\link{UnrootedTreesMatchingSplit}()}
+Other split information functions:
+\code{\link[=CharacterInformation]{CharacterInformation()}},
+\code{\link[=SplitMatchProbability]{SplitMatchProbability()}},
+\code{\link[=TreesMatchingSplit]{TreesMatchingSplit()}},
+\code{\link[=UnrootedTreesMatchingSplit]{UnrootedTreesMatchingSplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

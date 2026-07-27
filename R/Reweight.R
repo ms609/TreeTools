@@ -1,4 +1,4 @@
-#' Reweight phylogenetic characters
+#' Re-weight phylogenetic characters
 #' 
 #' `Reweight()` allows the weights of specific characters in phylogenetic
 #' datasets to be arbitrarily adjusted.

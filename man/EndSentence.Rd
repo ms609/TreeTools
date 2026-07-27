@@ -20,11 +20,11 @@ Add full stop to end of a sentence
 EndSentence("Hello World") # "Hello World."
 }
 \seealso{
-Other string parsing functions: 
-\code{\link{MatchStrings}()},
-\code{\link{MorphoBankDecode}()},
-\code{\link{RightmostCharacter}()},
-\code{\link{Unquote}()}
+Other string parsing functions:
+\code{\link[=MatchStrings]{MatchStrings()}},
+\code{\link[=MorphoBankDecode]{MorphoBankDecode()}},
+\code{\link[=RightmostCharacter]{RightmostCharacter()}},
+\code{\link[=Unquote]{Unquote()}}
 }
 \author{
 Martin R. Smith

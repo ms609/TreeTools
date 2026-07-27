@@ -54,15 +54,15 @@ counting the number of edges resolved \insertCite{Page1992}{TreeTools}.
 \insertAllCited{}
 }
 \seealso{
-Other tree information functions: 
-\code{\link{NRooted}()},
-\code{\link{TreesMatchingTree}()}
+Other tree information functions:
+\code{\link[=NRooted]{NRooted()}},
+\code{\link[=TreesMatchingTree]{TreesMatchingTree()}}
 
-Other tree characterization functions: 
-\code{\link{Consensus}()},
-\code{\link{J1Index}()},
+Other tree characterization functions:
+\code{\link[=Consensus]{Consensus()}},
+\code{\link[=J1Index]{J1Index()}},
 \code{\link{Stemwardness}},
-\code{\link{TotalCopheneticIndex}()}
+\code{\link[=TotalCopheneticIndex]{TotalCopheneticIndex()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

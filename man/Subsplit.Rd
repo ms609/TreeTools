@@ -36,10 +36,10 @@ summary(Subsplit(splits, tips = letters[5:8], keepAll = FALSE))
 \seealso{
 \code{\link[=KeepTip]{KeepTip()}} is a less flexible but faster equivalent.
 
-Other split manipulation functions: 
-\code{\link{DropTip}()},
-\code{\link{SplitConsistent}()},
-\code{\link{TrivialSplits}()}
+Other split manipulation functions:
+\code{\link[=DropTip]{DropTip()}},
+\code{\link[=SplitConsistent]{SplitConsistent()}},
+\code{\link[=TrivialSplits]{TrivialSplits()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

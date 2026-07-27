@@ -70,6 +70,15 @@ function call was unsuccessful.
 
 \code{ReadAsPhyDat()} and \code{ReadTntAsPhyDat()} return a \code{phyDat} object.
 
+\code{ReadTntCharacters()} and \code{ReadTNTCharacters()} return a matrix
+as described above for \code{ReadCharacters()}.  When the TNT file contains an
+\code{xgroup} partition block \insertCite{Goloboff2008}{TreeTools}, the returned
+matrix carries an \code{"xgroup"} attribute: a factor of length \code{ncol(matrix)}
+whose levels are the partition labels (the parenthetical label, e.g.\
+\code{"ANTERIOR"}, or the numeric id as a string when no label is given).
+Characters not assigned to any partition are \code{NA}.  The attribute is absent
+(not an all-\code{NA} vector) when no \code{xgroup} block is found in the file.
+
 \code{ReadNotes()} returns a list in which each entry corresponds to a
 single character, and itself contains a list of with two elements:
 \enumerate{
@@ -128,6 +137,10 @@ at <- attributes(continuous)
 continuous <- suppressWarnings(as.numeric(continuous))
 attributes(continuous) <- at
 continuous
+tntFile <- paste0(system.file(package = "TreeTools"),
+                  "/extdata/tests/tnt-xgroup.tnt")
+mat <- ReadTntCharacters(tntFile)
+attr(mat, "xgroup")
 }
 \references{
 \insertAllCited{}

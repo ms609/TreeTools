@@ -38,12 +38,14 @@ test_that("BalancedTree(lengths)", {
   expect_equal(BalancedTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
   expect_equal(BalancedTree(2, lengths = 2)$edge.length, c(2, 2))
   expect_equal(BalancedTree(3, lengths = 1:3)$edge.length, c(1:3, 1))
+  expect_equal(BalancedTree(3, lengths = seq_len)$edge.length, 1:4)
 })
 test_that("PectinateTree(lengths)", {
   expect_equal(PectinateTree(0, lengths = 1), ZeroTaxonTree())
   expect_equal(PectinateTree(1, lengths = 2), SingleTaxonTree("t1", lengths = 2))
   expect_equal(PectinateTree(2, lengths = 2)$edge.length, c(2, 2))
   expect_equal(PectinateTree(3, lengths = 1:3)$edge.length, c(1:3, 1))
+  expect_equal(PectinateTree(3, lengths = seq_len)$edge.length, 1:4)
 })
 
 test_that("StarTree() works", {
@@ -52,6 +54,7 @@ test_that("StarTree() works", {
   expect_true(is.integer(StarTree(8)$edge))
   expect_null(StarTree(8L)[["edge.length"]])
   expect_equal(StarTree(8L, 8:1)[["edge.length"]], 8:1)
+  expect_equal(StarTree(4L, seq_len)[["edge.length"]], 1:4)
 })
 
 test_that("Random trees are generated correctly", {
@@ -100,6 +103,8 @@ test_that("RandomTree(lengths)", {
   expect_equal(RandomTree(3, lengths = 1:3, root = FALSE)$edge.length, 1:3)
   expect_equal(RandomTree(3, lengths = 1:3, root = TRUE)$edge.length, c(1:3, 1))
   expect_equal(RandomTree(5, nodes = 2, lengths = 1:3)$edge.length, c(1:3, 1:3))
+  expect_equal(RandomTree(3, lengths = seq_len, root = FALSE)$edge.length, 1:3)
+  expect_equal(RandomTree(3, lengths = seq_len, root = TRUE)$edge.length, 1:4)
 })
 
 test_that("Small random trees are generated", {
@@ -147,6 +152,12 @@ test_that("YuleTree(lengths)", {
   expect_equal(YuleTree(3, lengths = 2)$edge.length, rep(2, 4))
   expect_equal(YuleTree(3, lengths = 1:3, root = FALSE)$edge.length, 1:3)
   expect_equal(YuleTree(3, lengths = 1:3, root = TRUE)$edge.length, c(1:3, 1))
+  expect_equal(YuleTree(3, lengths = seq_len, addInTurn = TRUE)$edge.length, 1:4)
+})
+
+test_that("SingleTaxonTree(lengths)", {
+  expect_equal(SingleTaxonTree("t1", lengths = 2)$edge.length, 2)
+  expect_equal(SingleTaxonTree("t1", lengths = seq_len)$edge.length, 1)
 })
 
 test_that("Hamming() works", {

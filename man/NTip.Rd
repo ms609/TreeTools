@@ -40,31 +40,31 @@ objects of class \code{Splits} and \code{list}, and edge matrices
 (equivalent to \code{tree$edge}).
 }
 \seealso{
-Other tree properties: 
-\code{\link{Cherries}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{EdgeRatio}()},
-\code{\link{LongBranch}()},
-\code{\link{MatchEdges}()},
-\code{\link{NSplits}()},
-\code{\link{NodeNumbers}()},
-\code{\link{PathLengths}()},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TreeIsRooted}()},
-\code{\link{Treeness}()}
+Other tree properties:
+\code{\link[=Cherries]{Cherries()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=EdgeRatio]{EdgeRatio()}},
+\code{\link[=LongBranch]{LongBranch()}},
+\code{\link[=MatchEdges]{MatchEdges()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NodeNumbers]{NodeNumbers()}},
+\code{\link[=PathLengths]{PathLengths()}},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TreeIsRooted]{TreeIsRooted()}},
+\code{\link[=Treeness]{Treeness()}}
 
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{PolarizeSplits}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
 \code{\link{match,Splits,Splits-method}},
-\code{\link{xor}()}
+\code{\link[=xor]{xor()}}
 }
 \concept{Splits operations}
 \concept{tree properties}

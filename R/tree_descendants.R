@@ -129,6 +129,9 @@ DescendantTips <- function(parent, child, edge = NULL,
 #' plot(tree)
 #' nodelabels(NDescendants(tree))
 #'
+#' @seealso
+#' [`CladeSizes()`] for the count of descendant leaves (rather than direct
+#' children) at each node.
 #' @template MRS
 #' @family tree navigation
 #' @export

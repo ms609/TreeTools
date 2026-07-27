@@ -32,6 +32,134 @@ test_that("Nexus file can be parsed", {
   expect_equal(3L, unique(as.integer(read[3, ])))
 })
 
+test_that("ReadCharacters handles Cingulata-style polymorphism with internal whitespace", {
+  nexusContent <- "#NEXUS
+BEGIN CHARACTERS;
+  DIMENSIONS NCHAR=5;
+  FORMAT DATATYPE=STANDARD MISSING=? GAP=-;
+  MATRIX
+    Taxon_A  0(1 2)1?-
+    Taxon_B  1{0 1}0?-
+    Taxon_C  01010
+  ;"
+
+  tf <- tempfile(fileext = ".nex")
+  on.exit(unlink(tf))
+  writeLines(nexusContent, tf)
+  read <- ReadCharacters(tf)
+
+  expect_equal(dim(read), c(3L, 5L))
+  expect_equal(unname(read["Taxon_A", 2]), "(12)")
+  expect_equal(unname(read["Taxon_B", 2]), "{01}")
+  expect_equal(unname(read["Taxon_A", 4]), "?")
+  expect_equal(unname(read["Taxon_A", 5]), "-")
+  expect_equal(unname(read["Taxon_C", 1]), "0")
+
+  # Continuation lines: data for a taxon split across multiple lines
+  nexusMulti <- "#NEXUS
+BEGIN CHARACTERS;
+  DIMENSIONS NCHAR=6;
+  FORMAT DATATYPE=STANDARD MISSING=? GAP=-;
+  MATRIX
+    Taxon_A  0(1 2)1
+              ?-1
+    Taxon_B  1{0 1}0
+              ?-0
+  ;"
+
+  tf2 <- tempfile(fileext = ".nex")
+  on.exit(unlink(tf2), add = TRUE)
+  writeLines(nexusMulti, tf2)
+  readMulti <- ReadCharacters(tf2)
+
+  expect_equal(dim(readMulti), c(2L, 6L))
+  expect_equal(unname(readMulti["Taxon_A", 2]), "(12)")
+  expect_equal(unname(readMulti["Taxon_B", 2]), "{01}")
+  expect_equal(unname(readMulti["Taxon_A", 6]), "1")
+  expect_equal(unname(readMulti["Taxon_B", 6]), "0")
+
+  # Round-trip the ReadCharacters() matrix through NexusTokensToInteger().
+  intMat <- NexusTokensToInteger(read)
+  expect_equal(dim(intMat), c(3L, 5L))
+  expect_equal(unname(intMat["Taxon_A", 1]), 0L)
+  expect_equal(unname(intMat["Taxon_A", 2]), NA_integer_) # polymorphism -> ?
+  expect_equal(unname(intMat["Taxon_B", 2]), NA_integer_) # uncertainty -> ?
+  expect_equal(unname(intMat["Taxon_A", 4]), NA_integer_) # ?
+  expect_equal(unname(intMat["Taxon_A", 5]), NA_integer_) # -
+  expect_equal(unname(intMat["Taxon_C", 5]), 0L)
+  expect_equal(unname(NexusTokensToInteger(read, "first")["Taxon_A", 2]), 1L)
+  expect_equal(unname(NexusTokensToInteger(read, "last")["Taxon_A", 2]), 2L)
+})
+
+test_that("NexusTokensToInteger() converts token matrix to integer", {
+  tokens <- matrix(c("0", "(12)", "1", "?", "-"),
+                   nrow = 1L,
+                   dimnames = list("Tax", paste0("C", 1:5)))
+
+  # Default: polymorphisms and ambiguities become NA
+  result <- NexusTokensToInteger(tokens)
+  expect_equal(dim(result), c(1L, 5L))
+  expect_equal(dimnames(result), list("Tax", paste0("C", 1:5)))
+  expect_equal(unname(result["Tax", "C1"]), 0L)
+  expect_equal(unname(result["Tax", "C2"]), NA_integer_)
+  expect_equal(unname(result["Tax", "C3"]), 1L)
+  expect_equal(unname(result["Tax", "C4"]), NA_integer_)
+  expect_equal(unname(result["Tax", "C5"]), NA_integer_)
+
+  # polymorphism = "first": take first digit inside brackets
+  result_f <- NexusTokensToInteger(tokens, polymorphism = "first")
+  expect_equal(unname(result_f["Tax", "C2"]), 1L)
+  expect_equal(unname(result_f["Tax", "C4"]), NA_integer_)
+
+  # polymorphism = "last": take last digit inside brackets
+  result_l <- NexusTokensToInteger(tokens, polymorphism = "last")
+  expect_equal(unname(result_l["Tax", "C2"]), 2L)
+
+  # Braces form {01}
+  tokens2 <- matrix(c("{01}", "0"), nrow = 1L, dimnames = list("T1", c("C1", "C2")))
+  expect_equal(unname(NexusTokensToInteger(tokens2)["T1", "C1"]), NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(tokens2, "first")["T1", "C1"]), 0L)
+  expect_equal(unname(NexusTokensToInteger(tokens2, "last")["T1", "C1"]), 1L)
+
+  # Named vector input (no dim attribute).
+  vec <- c(a = "0", b = "(12)", c = "?", d = "1")
+  vecOut <- NexusTokensToInteger(vec)
+  expect_null(dim(vecOut))
+  expect_equal(names(vecOut), c("a", "b", "c", "d"))
+  expect_equal(unname(vecOut), c(0L, NA_integer_, NA_integer_, 1L))
+  expect_equal(unname(NexusTokensToInteger(vec, "first")), c(0L, 1L, NA_integer_, 1L))
+  expect_equal(unname(NexusTokensToInteger(vec, "last")), c(0L, 2L, NA_integer_, 1L))
+
+  # No-digit polymorphism token: must not crash, must yield NA in every mode.
+  noDigit <- matrix(c("(AB)", "0"), nrow = 1L,
+                    dimnames = list("T", c("C1", "C2")))
+  expect_silent(NexusTokensToInteger(noDigit))
+  expect_equal(unname(NexusTokensToInteger(noDigit)["T", "C1"]), NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "first")["T", "C1"]),
+               NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "last")["T", "C1"]),
+               NA_integer_)
+  expect_equal(unname(NexusTokensToInteger(noDigit, "first")["T", "C2"]), 0L)
+
+  # state.labels and other matrix attributes round-trip through the result.
+  tokens3 <- matrix(c("0", "(12)", "1"), nrow = 1L,
+                    dimnames = list("Tax", c("C1", "C2", "C3")))
+  attr(tokens3, "state.labels") <- list(c("absent", "present"),
+                                        c("a", "b", "c"),
+                                        c("absent", "present"))
+  out3 <- NexusTokensToInteger(tokens3)
+  expect_equal(attr(out3, "state.labels"), attr(tokens3, "state.labels"))
+
+  # phyDat input routes through PhyDatToMatrix(ambigNA = TRUE, inappNA = TRUE).
+  phy <- MatrixToPhyDat(matrix(c("0", "(12)", "1", "?", "-"),
+                               nrow = 1L,
+                               dimnames = list("Tax", paste0("C", 1:5))))
+  viaPhy <- NexusTokensToInteger(phy)
+  viaMat <- NexusTokensToInteger(PhyDatToMatrix(phy, ambigNA = TRUE,
+                                                inappNA = TRUE))
+  expect_equal(unname(viaPhy), unname(viaMat))
+})
+
 test_that("NexusTokens() fails gracefully", {
   expect_error(NexusTokens("0123012301230123", integer(0)))
   expect_equal("Character number must be between 1 and 16.",
@@ -77,6 +205,32 @@ test_that("PhyDatToMatrix() with ambigs", {
                    sep = "/"
     )[3, 5:8],
     c("<1/2>", "<0/1>", NA_character_, "?"))
+})
+
+test_that("PhyDatToMatrix() resolves degenerate single-state tokens", {
+  # A polymorphism whose alternatives collapse to a single state (e.g. "(0,0)",
+  # read verbatim from a Nexus file) must be emitted as that state, not the
+  # original token -- otherwise a separator such as "," leaks into the output
+  # and breaks downstream parsers like TNT.
+  mat <- matrix(c("0", "(0,1)", "(0,0)", "{1,1}",
+                  "1", "2",     "1",     "0"),
+                nrow = 2, byrow = TRUE, dimnames = list(c("t1", "t2"), NULL))
+  phy <- MatrixToPhyDat(mat)
+
+  brk <- PhyDatToMatrix(phy, parentheses = "[]")
+  expect_equal(unname(brk["t1", ]), c("0", "[01]", "0", "1"))
+  expect_false(any(grepl(",", brk, fixed = TRUE)))
+
+  # NA-handling is unaffected; degenerate token still resolves.
+  withGap <- MatrixToPhyDat(matrix(c("-", "(0,0)", "1", "0"), nrow = 2,
+                                   byrow = TRUE,
+                                   dimnames = list(c("t1", "t2"), NULL)))
+  expect_equal(
+    unname(PhyDatToMatrix(withGap, parentheses = "[]", inappNA = TRUE)["t1", ]),
+    c(NA, "0"))
+
+  # The reported failure: WriteTntCharacters() must not emit a "," token.
+  expect_false(any(grepl(",", WriteTntCharacters(phy), fixed = TRUE)))
 })
 
 test_that("Modified phyDat objects can be converted", {
@@ -161,8 +315,8 @@ test_that("ReadNotes() handles misspecified encoding", {
   expect_message(
     expect_equal(ReadNotes(system.file("extdata/tests/encoding.nex",
                                      package = "TreeTools"))[[1]][[2]],
-                 setNames("\u0080ncoding.", "Two")),
-    "trying latin1 .*encoding")
+                 setNames("\u20acncoding.", "Two")),
+    "trying cp1252 .*encoding")
 })
 
 test_that("ReadCharacters() reads CHARSTATELABELS", {
@@ -191,6 +345,16 @@ test_that("ReadCharacters() reads CHARSTATELABELS", {
   expect_equal(attr(labels3, "state.labels"),
                attr(labels, "state.labels")[3])
 
+})
+
+test_that("ReadCharacters() handles STATELABELS with terminal semicolon", {
+  # Last STATELABELS entry terminated by block ';' rather than a comma
+  labels <- expect_no_warning(
+    ReadCharacters(system.file("extdata/tests/statelabels-semicolon.nex",
+                               package = "TreeTools"))
+  )
+  expect_equal(attr(labels, "state.labels"),
+               list(c("state zero", "state one"), c("absent", "present")))
 })
 
 test_that("MorphoBankDecode() decodes", {

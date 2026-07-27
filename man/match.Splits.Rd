@@ -52,17 +52,17 @@ match(splits1, splits2)
 Corresponding base functions are documented in
 \code{\link[base:match]{match()}}.
 
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{PolarizeSplits}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
-\code{\link{xor}()}
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
+\code{\link[=xor]{xor()}}
 }
 \concept{Splits operations}
 \keyword{methods}

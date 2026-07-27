@@ -1,0 +1,6 @@
+xread 5 4
+taxon_a 01010
+‘‘taxon_b’’ 10101
+taxon_c 00111
+‘taxon_d’ 11000
+;

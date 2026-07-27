@@ -1,21 +1,91 @@
-# TreeTools 2.2.0.9003 #
+# TreeTools 2.4.0.9001 (development) #
 
-## New functionality
+## Bug fixes
 
-- `Paste0()` provides a fast Rcpp-backed drop-in for `paste0()` / `stri_paste()`
-  with `NA` propagation. Exported for use by downstream packages.
+- `Consensus(trees, p)` now retains a split present in exactly a proportion `p`
+  of trees (i.e. in `ceiling(p * length(trees))` trees) for `p > 0.5`, matching
+  the documentation and `ape::consensus()`; previously such a split was dropped
+  at exact thresholds (e.g. a split in 2 of 3 trees with `p = 2/3`). The
+  majority threshold `p = 0.5` is unchanged (a split must occur in more than
+  half the trees).
+- `ReadCharacters()` no longer warns on a `STATELABELS` block with a terminal
+  semicolon.
+- `PhyDatToMatrix()` now resolves a degenerate polymorphism whose alternatives
+  collapse to a single state (e.g. a `(0,0)` token read from a Nexus file) to
+  that state, rather than emitting the original token verbatim. This stops an
+  illegal separator (e.g. `,`) from leaking into `WriteTntCharacters()` output
+  and being rejected by TNT.
+- `RenumberTips()` no longer fails on trees with no `"order"` attribute.
 - `Preorder()` now validates edge order for trees with a "preorder" order attribute.
-- Split lists support 32768 leaves.
+
+## Performance 
+
+- Guarantee preorder return from `root_on_node()` to simplify `Consensus()`
+  internal pre-processing.
+- `Consensus()` and `SplitFrequency()` defer materialising a split's bit pattern
+  until it is needed, so splits that never reach the consensus threshold are no
+  longer built.
+- `RenumberTips()` relabels an unlabelled `multiPhylo` or `list` of trees in a
+  single C++ pass instead of a per-tree R loop, with a no-op fast path for trees
+  already in the target order.
+- `Consensus()` no longer copies every input tree to strip branch lengths and
+  node labels; it now coerces in place.
+
+## Dependencies
+
+- Discontinue testing against R3.6.
+- `fastmatch` moved from Imports to Suggests.
+
+
+# TreeTools 2.4.0 (2026-06-02) #
+
+## New features
+
+- `RandomTree()`, `YuleTree()`, `PectinateTree()`, `BalancedTree()`,
+  `StarTree()`, and `SingleTaxonTree()` allow `lengths` to accept a function
+  that generates edge lengths (e.g. `RandomTree(8, lengths = runif)`).
+- `PaintTree()` assigns colours to every edge, leaf, and internal node such
+  that sister clades occupy adjacent hue bands proportional to their tip
+  counts, with saturation growing from zero at the root to one at every tip.
+- `NexusTokensToInteger()` converts character data to integers,
+  mapping uncertain tokens to `NA`.
+- `ReadTntCharacters()` attaches an `xgroup` attribute (factor) when a TNT
+  `xgroup` partition block is present.
+
+
+## Performance
+
+- `Consensus()` computes majority-rule and threshold consensus trees in time
+  linear in the number of trees (previously quadratic), after
+  Jansson, Shen & Sung (2016); implementation informed by their `FACT` package.
+  `SplitFrequency()` inherits the same single-pass speed-up.
+
+## Fixes
+
+- `NexusTokens()` once again handles polymorphism tokens with internal
+  whitespace (e.g. `(1 2)`, `{0 1}`).
+
+
+# TreeTools 2.3.0 (2026-04-22) #
+
+## Bug fixes
+
+- `ReadTntCharacters()` now handles multi-line comments, bare `&` continuations,
+  `@taxonomy` suffixes, name-only taxon lines, mid-line `xread`, smart-quote
+  names (Windows-1252), and packed multi-taxon lines.
+
+## Performance
+
+- Drop `stringi` dependency.
+- `as.character.Splits()` re-implemented in C++; ~3× faster on 200-tip trees.
 
 ## Usability
 
 - `Consensus()` and `SplitFrequency()` now respond to user interrupts during
   long-running computations.
+- `SL_MAX_TIPS` compile-time constant increased to 32704, allowing support
+  for larger trees.
 
-## Performance
-
-- Drop `stringi` dependency.
-- `as.character.Splits()` reimplemented in C++; ~3× faster on 200-tip trees.
 
 # TreeTools 2.2.0 (2026-03-18) #
 

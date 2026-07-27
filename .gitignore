@@ -28,3 +28,11 @@ vignettes/*_cache*
 /*-benchmark-results
 *.bench.Rds
 .positai
+
+# /profile skill artefacts (large; rebuilt each round)
+dev/profiling/.vtune-lib-*/
+dev/profiling/.libpath.txt
+dev/profiling/result_*/
+dev/profiling/drivers/*-profvis.html
+dev/profiling/*.csv
+dev/profiling/*.rds

@@ -81,10 +81,10 @@ TCIContext(5L) # Context for a tree with 5 leaves.
 provides an alternative implementation of this index and its predecessors.
 }
 
-Other tree characterization functions: 
-\code{\link{CladisticInfo}()},
-\code{\link{Consensus}()},
-\code{\link{J1Index}()},
+Other tree characterization functions:
+\code{\link[=CladisticInfo]{CladisticInfo()}},
+\code{\link[=Consensus]{Consensus()}},
+\code{\link[=J1Index]{J1Index()}},
 \code{\link{Stemwardness}}
 }
 \author{

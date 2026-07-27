@@ -35,6 +35,11 @@ install.packages("TreeTools")
 library("TreeTools")
 ```
 
+The performance of some functions is improved if **fastmatch** is available:
+```r
+install.packages("fastmatch")
+```
+
 Install the very latest version, which may be under development, with:
 ```r
 if (!require("devtools")) install.packages("devtools")

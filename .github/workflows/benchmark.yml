@@ -5,6 +5,12 @@ on:
   pull_request:
     paths-ignore:
       - "Meta**"
+      - "AGENT**"
+      - "codemeta.json"
+      - "cran-comments.md"
+      - ".covr**"
+      - ".git**"
+      - ".lint**"
       - "memcheck**"
       - "docs**"
       - "**.git"
@@ -12,13 +18,13 @@ on:
       - "**.md"
       - "**.yaml"
       - "**.yml"
-      - "!**benchmark.yml"
+      - "!**R-CMD-check.yml"
       - "**.R[dD]ata"
       - "**.Rpro*"
 
 jobs:
   benchmark:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -33,12 +39,12 @@ jobs:
       
     steps:
       - name: Checkout PR branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: pr
           
       - name: Checkout target branch
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.base.ref || 'master' }}
           path: main
@@ -87,14 +93,14 @@ jobs:
         
       - name: Upload PR benchmark results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: pr-benchmark-results
           path: pr/pr-benchmark-results/*.bench.Rds
             
       - name: Upload main benchmark results
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: main-benchmark-results
           path: pr/main-benchmark-results/*.bench.Rds

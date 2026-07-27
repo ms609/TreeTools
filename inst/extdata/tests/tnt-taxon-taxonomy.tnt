@@ -1,0 +1,7 @@
+taxname +100 ; taxonomy=; xread
+4 3
+taxon_a_@Family_Genus 0001
+taxon_b_@Family_Genus 0110
+taxon_c_@OtherFamily 1010
+;
+proc /;

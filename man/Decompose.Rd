@@ -71,10 +71,11 @@ NumberOfChars(decomposed) # 116 characters in decomposed
 \insertAllCited{}
 }
 \seealso{
-Other phylogenetic matrix conversion functions: 
-\code{\link{MatrixToPhyDat}()},
-\code{\link{Reweight}()},
-\code{\link{StringToPhyDat}()}
+Other phylogenetic matrix conversion functions:
+\code{\link[=MatrixToPhyDat]{MatrixToPhyDat()}},
+\code{\link[=NexusTokensToInteger]{NexusTokensToInteger()}},
+\code{\link[=Reweight]{Reweight()}},
+\code{\link[=StringToPhyDat]{StringToPhyDat()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

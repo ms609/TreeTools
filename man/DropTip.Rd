@@ -109,28 +109,28 @@ plot(DropTip(unrooted, 4:5))
 summary(DropTip(as.Splits(tree), 4:5))
 }
 \seealso{
-Other tree manipulation: 
-\code{\link{AddTip}()},
-\code{\link{CollapseNode}()},
-\code{\link{ConsensusWithout}()},
-\code{\link{ImposeConstraint}()},
-\code{\link{KeptPaths}()},
-\code{\link{KeptVerts}()},
-\code{\link{LeafLabelInterchange}()},
-\code{\link{MakeTreeBinary}()},
-\code{\link{Renumber}()},
-\code{\link{RenumberTips}()},
-\code{\link{RenumberTree}()},
-\code{\link{RootTree}()},
-\code{\link{SortTree}()},
-\code{\link{Subtree}()},
-\code{\link{TipTimedTree}()},
+Other tree manipulation:
+\code{\link[=AddTip]{AddTip()}},
+\code{\link[=CollapseNode]{CollapseNode()}},
+\code{\link[=ConsensusWithout]{ConsensusWithout()}},
+\code{\link[=ImposeConstraint]{ImposeConstraint()}},
+\code{\link[=KeptPaths]{KeptPaths()}},
+\code{\link[=KeptVerts]{KeptVerts()}},
+\code{\link[=LeafLabelInterchange]{LeafLabelInterchange()}},
+\code{\link[=MakeTreeBinary]{MakeTreeBinary()}},
+\code{\link[=Renumber]{Renumber()}},
+\code{\link[=RenumberTips]{RenumberTips()}},
+\code{\link[=RenumberTree]{RenumberTree()}},
+\code{\link[=RootTree]{RootTree()}},
+\code{\link[=SortTree]{SortTree()}},
+\code{\link[=Subtree]{Subtree()}},
+\code{\link[=TipTimedTree]{TipTimedTree()}},
 \code{\link{TrivialTree}}
 
-Other split manipulation functions: 
-\code{\link{SplitConsistent}()},
-\code{\link{Subsplit}()},
-\code{\link{TrivialSplits}()}
+Other split manipulation functions:
+\code{\link[=SplitConsistent]{SplitConsistent()}},
+\code{\link[=Subsplit]{Subsplit()}},
+\code{\link[=TrivialSplits]{TrivialSplits()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

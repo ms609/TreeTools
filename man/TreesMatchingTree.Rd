@@ -38,9 +38,9 @@ rootedTree <- AddTip(partiallyResolvedTree, where = 0)
 TreesMatchingTree(partiallyResolvedTree)
 }
 \seealso{
-Other tree information functions: 
-\code{\link{CladisticInfo}()},
-\code{\link{NRooted}()}
+Other tree information functions:
+\code{\link[=CladisticInfo]{CladisticInfo()}},
+\code{\link[=NRooted]{NRooted()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

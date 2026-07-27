@@ -16,6 +16,9 @@ aiming for efficient and robust implementations of functions, typically
 applied to unweighted trees (i.e. those without edge lengths).
 }
 \details{
+The performance of some functions is improved if \pkg{fastmatch} is
+available: \code{install.packages("fastmatch")}
+
 Full documentation is available \href{https://ms609.github.io/TreeTools/}{online}.
 }
 \seealso{
@@ -29,6 +32,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
+
+Authors:
+\itemize{
+  \item Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [copyright holder]
+}
 
 Other contributors:
 \itemize{

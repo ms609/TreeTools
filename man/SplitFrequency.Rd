@@ -4,7 +4,7 @@
 \alias{SplitFrequency}
 \title{Frequency of splits}
 \usage{
-SplitFrequency(reference, forest = NULL)
+SplitFrequency(reference, forest = NULL, hash = TRUE)
 }
 \arguments{
 \item{reference}{A tree of class \code{phylo}, a \code{Splits} object. If \code{NULL},
@@ -14,6 +14,13 @@ the frequencies of all splits in \code{forest} will be returned.}
 or a \code{Splits} object. See
 \href{https://ms609.github.io/TreeTools/articles/load-trees.html}{vignette} for
 possible methods of loading trees into R.}
+
+\item{hash}{Logical; if \code{TRUE} (default), counts the frequencies of \emph{all}
+splits (i.e. when \code{reference = NULL}) using a faster 128-bit hashing
+approach whose results are exact with overwhelming probability (a hash
+collision conflating two distinct splits is vanishingly unlikely).  Set
+\code{hash = FALSE} for a slower but guaranteed-exact count.  Ignored when
+\code{reference} is a tree or \code{Splits} object.}
 }
 \value{
 \code{SplitFrequency()} returns the number of trees in \code{forest} that
@@ -64,17 +71,17 @@ LabelSplits(cons, splitFreqs, unit = "\%",
 
 }
 \seealso{
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{PolarizeSplits}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
 \code{\link{match,Splits,Splits-method}},
-\code{\link{xor}()}
+\code{\link[=xor]{xor()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

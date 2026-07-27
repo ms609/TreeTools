@@ -41,9 +41,9 @@ constraint <- MatrixToPhyDat(
 plot(ConstrainedNJ(dataset, constraint))
 }
 \seealso{
-Other tree generation functions: 
+Other tree generation functions:
 \code{\link{GenerateTree}},
-\code{\link{NJTree}()},
+\code{\link[=NJTree]{NJTree()}},
 \code{\link{TreeNumber}},
 \code{\link{TrivialTree}}
 }

@@ -51,8 +51,8 @@ tree[["edge"]] <- tree[["edge"]][pruningwise, ]
 
 }
 \seealso{
-Other C wrappers: 
-\code{\link{RenumberTree}()}
+Other C wrappers:
+\code{\link[=RenumberTree]{RenumberTree()}}
 }
 \author{
 \itemize{

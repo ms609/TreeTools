@@ -39,9 +39,115 @@ test_that("ReadTntCharacter()", {
   expect_equal(ReadTntAsPhyDat(testFile), expectedPhyDat)
 })
 
+test_that("ReadTntCharacters() multi-line comment", {
+  mlcFile <- TestFile("tnt-multiline-comment.tnt")
+  result <- ReadTntCharacters(mlcFile)
+  expect_equal(dim(result), c(4L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c", "taxon_d"))
+})
+
+test_that("ReadTntCharacters() bare & continuation", {
+  ampFile <- TestFile("tnt-amp-continuation.tnt")
+  result <- ReadTntCharacters(ampFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+  expect_equal(result["taxon_a", ], c("0", "0", "0", "1"))
+})
+
+test_that("ReadTntCharacters() taxon name on own line", {
+  mltFile <- TestFile("tnt-multiline-taxa.tnt")
+  result <- ReadTntCharacters(mltFile)
+  expect_equal(dim(result), c(3L, 8L))
+  expect_equal(rownames(result), c("Hypochilus", "Filistata", "Thaida"))
+  expect_equal(result["Hypochilus", ], c("0", "0", "1", "1", "0", "1", "0", "0"))
+})
+
+test_that("ReadTntCharacters() xread mid-line", {
+  mxFile <- TestFile("tnt-midline-xread.tnt")
+  result <- ReadTntCharacters(mxFile)
+  expect_equal(dim(result), c(3L, 4L))
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
+test_that("ReadTntCharacters() strips @taxonomy from taxon names", {
+  ttFile <- TestFile("tnt-taxon-taxonomy.tnt")
+  result <- ReadTntCharacters(ttFile)
+  expect_equal(rownames(result), c("taxon_a", "taxon_b", "taxon_c"))
+})
+
+test_that("ReadTntCharacters() handles smart-quote taxon names", {
+  sqFile <- TestFile("tnt-smartquote-taxa.tnt")
+  expect_no_warning(result <- ReadTntCharacters(sqFile))
+  expect_equal(dim(result), c(6L, 8L))
+  rn <- rownames(result)
+  expect_true(any(grepl("‘", rn)))   # at least one smart-quoted name present
+  expect_equal(result["taxon_a", ], c("0", "1", "0", "1", "0", "1", "0", "1"))
+  expect_equal(result["taxon_b", ], c("1", "1", "0", "0", "1", "1", "0", "0"))
+})
+
+test_that("ReadTntCharacters() reads Windows-1252 encoded smart-quote names", {
+  # tnt-cp1252-taxa.tnt is Windows-1252 encoded and contains taxon names
+  # with bytes 0x91/0x92 (cp1252 curly quotes, not valid UTF-8).
+  cpFile <- TestFile("tnt-cp1252-taxa.tnt")
+  expect_message(result <- ReadTntCharacters(cpFile), "trying cp1252")
+  expect_equal(nrow(result), 4L)
+  expect_equal(rownames(result)[1L], "taxon_a")
+  # Names with smart quotes should be present (bytes 0x91/0x92 decoded as cp1252)
+  expect_true(any(grepl("‘|’", rownames(result))))
+})
+
+test_that("ReadTntCharacters() splits multiple taxa packed on one line", {
+  # tnt-multitaxon-line.tnt has 6 taxa but only 3 physical data lines;
+  # two lines each contain 2 or 3 taxa concatenated without a separator.
+  mtFile <- TestFile("tnt-multitaxon-line.tnt")
+  expect_no_warning(result <- ReadTntCharacters(mtFile))
+  expect_equal(nrow(result), 6L)
+  expect_equal(sort(rownames(result)),
+               sort(c("taxon_a", "taxon_b", "taxon_c",
+                      "taxon_d", "taxon_e", "taxon_f")))
+})
+
 test_that("TntTextToTree()", {
   expect_equal(TNTText2Tree("(A (B (C (D E ))));"),
                ape::read.tree(text = "(A, (B, (C, (D, E))));"))
+})
+
+test_that("ReadTntCharacters() attaches xgroup factor attribute", {
+  mat <- ReadTntCharacters(TestFile("tnt-xgroup.tnt"))
+  xg <- attr(mat, "xgroup")
+  # tnt-xgroup.tnt: 6 chars; xgroup =0 (ANTERIOR) 0.2 ; xgroup =1 (POSTERIOR) 3.
+  expect_true(is.factor(xg))
+  expect_length(xg, 6L)
+  expect_equal(levels(xg), c("ANTERIOR", "POSTERIOR"))
+  expect_equal(as.character(xg),
+               c("ANTERIOR", "ANTERIOR", "ANTERIOR",
+                 "POSTERIOR", "POSTERIOR", "POSTERIOR"))
+})
+
+test_that("ReadTntCharacters() xgroup attribute absent when no xgroup block", {
+  mat <- ReadTntCharacters(TestFile("tnt-matrix.tnt"))
+  expect_null(attr(mat, "xgroup"))
+})
+
+test_that("ReadTntCharacters() xgroup without parenthetical label uses numeric id", {
+  tmp <- tempfile(fileext = ".tnt")
+  on.exit(unlink(tmp), add = TRUE)
+  writeLines(c("xread", "6 4",
+               "TaxonA 010101", "TaxonB 010101",
+               "TaxonC 101010", "TaxonD 101010", ";",
+               "xgroup =0 0.2 ;",
+               "xgroup =1 3. ;", ";", "proc/;"), tmp)
+  xg <- attr(ReadTntCharacters(tmp), "xgroup")
+  expect_true(is.factor(xg))
+  expect_length(xg, 6L)
+  expect_equal(levels(xg), c("0", "1"))
+  expect_equal(as.character(xg), c("0", "0", "0", "1", "1", "1"))
+})
+
+test_that(".ExpandTntRange() handles A.B, A. and A.A", {
+  expect_equal(TreeTools:::.ExpandTntRange("1.3", 10L), c(2L, 3L, 4L))
+  expect_equal(TreeTools:::.ExpandTntRange("3.",  5L), c(4L, 5L))
+  expect_equal(TreeTools:::.ExpandTntRange("2.2", 10L), 3L)
 })
 
 test_that("ReadTntTree() NULL return", {

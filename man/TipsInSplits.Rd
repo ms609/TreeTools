@@ -57,16 +57,16 @@ LabelSplits(tree, TipsInSplits(splits), unit = " tips", frame = "none",
 
 }
 \seealso{
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{PolarizeSplits}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
 \code{\link{match,Splits,Splits-method}},
-\code{\link{xor}()}
+\code{\link[=xor]{xor()}}
 }
 \concept{Splits operations}

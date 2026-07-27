@@ -33,11 +33,11 @@ Log2TreesMatchingSplit(5, 6)
 
 }
 \seealso{
-Other split information functions: 
-\code{\link{CharacterInformation}()},
-\code{\link{SplitInformation}()},
-\code{\link{SplitMatchProbability}()},
-\code{\link{UnrootedTreesMatchingSplit}()}
+Other split information functions:
+\code{\link[=CharacterInformation]{CharacterInformation()}},
+\code{\link[=SplitInformation]{SplitInformation()}},
+\code{\link[=SplitMatchProbability]{SplitMatchProbability()}},
+\code{\link[=UnrootedTreesMatchingSplit]{UnrootedTreesMatchingSplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

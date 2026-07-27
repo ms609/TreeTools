@@ -34,12 +34,15 @@ root_binary <- function(edge, outgroup) {
 #' Direct entry point to `root_on_node()`; recommended for expert use only.
 #' `RootTree()` checks that input is properly formatted and is recommended
 #' for general use.
+#'
+#' `phy` may be supplied in any valid edge order.
 #' @param phy Minimally, a named list with entries `edge` and `Nnode`, in the
 #' format of equivalent entries in a tree of class `phylo`. `edge.length` will
-#' also be considered if supplied.
+#' also be considered if supplied. The root node must be numbered `n_tip + 1`.
 #' @param outgroup Integer specifying index of leaf or node to set as the
 #' outgroup.
-#' @returns `root_on_node()` returns `phy` rooted on the specified node.
+#' @returns `root_on_node()` returns `phy` rooted on the specified node, in
+#' preorder, with nodes renumbered accordingly.
 #' 
 #' @template MRS
 #' @export

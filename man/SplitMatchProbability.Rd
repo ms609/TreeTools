@@ -34,11 +34,11 @@ SplitMatchProbability(split1, split2)
 LnSplitMatchProbability(split1, split2)
 }
 \seealso{
-Other split information functions: 
-\code{\link{CharacterInformation}()},
-\code{\link{SplitInformation}()},
-\code{\link{TreesMatchingSplit}()},
-\code{\link{UnrootedTreesMatchingSplit}()}
+Other split information functions:
+\code{\link[=CharacterInformation]{CharacterInformation()}},
+\code{\link[=SplitInformation]{SplitInformation()}},
+\code{\link[=TreesMatchingSplit]{TreesMatchingSplit()}},
+\code{\link[=UnrootedTreesMatchingSplit]{UnrootedTreesMatchingSplit()}}
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

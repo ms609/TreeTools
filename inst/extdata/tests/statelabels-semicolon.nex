@@ -1,0 +1,29 @@
+#NEXUS
+BEGIN TAXA;
+  DIMENSIONS NTAX=2;
+  TAXLABELS
+    TaxonA TaxonB
+  ;
+END;
+
+BEGIN CHARACTERS;
+  DIMENSIONS NCHAR=2;
+  FORMAT DATATYPE=STANDARD MISSING=? GAP=-;
+  CHARLABELS
+    'First character'
+    'Second character'
+  ;
+  STATELABELS
+  1
+  "state zero"
+  "state one"
+  ,
+  2
+  "absent"
+  "present"
+  ;
+  MATRIX
+  TaxonA 01
+  TaxonB 10
+  ;
+END;

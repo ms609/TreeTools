@@ -16,16 +16,16 @@ xor(x, y)
 Exclusive OR operation
 }
 \seealso{
-Other Splits operations: 
-\code{\link{LabelSplits}()},
-\code{\link{NSplits}()},
-\code{\link{NTip}()},
-\code{\link{PolarizeSplits}()},
-\code{\link{SplitFrequency}()},
+Other Splits operations:
+\code{\link[=LabelSplits]{LabelSplits()}},
+\code{\link[=NSplits]{NSplits()}},
+\code{\link[=NTip]{NTip()}},
+\code{\link[=PolarizeSplits]{PolarizeSplits()}},
+\code{\link[=SplitFrequency]{SplitFrequency()}},
 \code{\link{Splits}},
-\code{\link{SplitsInBinaryTree}()},
-\code{\link{TipLabels}()},
-\code{\link{TipsInSplits}()},
+\code{\link[=SplitsInBinaryTree]{SplitsInBinaryTree()}},
+\code{\link[=TipLabels]{TipLabels()}},
+\code{\link[=TipsInSplits]{TipsInSplits()}},
 \code{\link{match,Splits,Splits-method}}
 }
 \concept{Splits operations}

@@ -196,7 +196,6 @@ NodeOrder.matrix <- function(x, includeAncestor = TRUE, internalOnly = FALSE) {
 #' EdgeDistances(tree)
 #'
 #' @family tree navigation
-#' @importFrom fastmatch %fin%
 #' @template MRS
 #' @export
 EdgeDistances <- function(tree) {
