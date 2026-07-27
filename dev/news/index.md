@@ -45,6 +45,7 @@
 
 ### Dependencies
 
+- Discontinue testing against R3.6.
 - `fastmatch` moved from Imports to Suggests.
 
 ## TreeTools 2.4.0 (2026-06-02)
