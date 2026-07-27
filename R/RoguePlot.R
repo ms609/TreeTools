@@ -207,7 +207,7 @@ RoguePlot <- function(trees, tip, p = 1, plot = TRUE,
   if (isTRUE(sort)) {
     cons <- DropTip(cons, dummyRoot, preorder = FALSE, check = FALSE)
   } else {
-    stopifnot(attr(cons, "order") == "preorder")
+    stopifnot(identical(attr(cons, "order"), "preorder"))
     # We promise to return `cons` in preorder
     cons <- DropTip(cons, dummyRoot, preorder = TRUE, check = FALSE)
   }
