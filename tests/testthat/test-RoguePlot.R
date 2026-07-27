@@ -76,6 +76,7 @@ test_that("RoguePlot(sort = TRUE)", {
 })
 
 test_that("RoguePlot() errors cleanly if cons loses its preorder attribute", {
+  skip_if_not_installed("testthat", "3.1.7") # for local_mocked_bindings()
   trees <- list(read.tree(text = "(a, (b, (c, (rogue, (d, e)))));"),
                 read.tree(text = "(a, (b, (c, ((d, e), rogue))));"))
   local_mocked_bindings(
