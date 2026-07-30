@@ -1,7 +1,7 @@
 nasty <- structure(list(edge = structure(
   c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
     5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-  .Dim = c(12, 2)),
+  dim = c(12, 2)),
   Nnode = 5L,
   tip.label = letters[1:8]),
   class = "phylo") # Danger: Do not plot!
@@ -19,38 +19,38 @@ test_that("RootOnNode() works", {
 
   tree <- structure(list(edge = structure(c(6L, 9L, 9L, 7L, 7L, 8L, 8L,
                                             6L, 9L, 2L, 7L, 3L, 8L, 4L, 5L, 1L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "cladewise")
   
   exp8 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 6L, 9L, 9L, 7L,
                                             8L, 1L, 2L, 3L, 9L, 4L, 5L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   exp7 <- structure(list(edge = structure(c(6L, 7L, 7L, 6L, 8L, 8L, 9L, 9L, 7L,
                                             1L, 2L, 8L, 3L, 9L, 4L, 5L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   exp5 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L,
                                             8L, 9L, 1L, 2L, 3L, 4L, 5L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   exp4 <- structure(list(edge = structure(c(6L, 7L, 8L, 9L, 9L, 8L, 7L, 6L, 7L,
                                             8L, 9L, 1L, 2L, 3L, 5L, 4L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   exp3 <- structure(list(edge = structure(c(6L, 7L, 8L, 8L, 7L, 9L, 9L, 6L, 7L,
                                             8L, 1L, 2L, 9L, 4L, 5L, 3L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   exp2 <- structure(list(edge = structure(c(6L, 7L, 7L, 8L, 8L, 9L, 9L, 6L, 7L,
                                             1L, 8L, 3L, 9L, 4L, 5L, 2L),
-                                          .Dim = c(8L, 2L)),
+                                          dim = c(8L, 2L)),
                          tip.label = c("t3", "t4", "t1", "t2", "t5"),
                          Nnode = 4L), class = "phylo", order = "preorder")
   #t2 <- Preorder(t2)
@@ -68,12 +68,12 @@ test_that("RootOnNode() works", {
 
   expb6_8 <- structure(list(edge = structure(c(8, 8, 10, 10, 9, 9, rep(7, 3),
                                                1:2, 4:6, 10, 3, 8:9),
-                                             .Dim = c(9L, 2L)),
+                                             dim = c(9L, 2L)),
                             tip.label = paste0("t", 1:6), Nnode = 4L),
                        class = "phylo", order = "preorder")
   expp6_8 <- structure(list(edge = structure(c(7, rep(7:10, each = 2), 1:2, 8,
                                                3, 9, 4, 10, 5:6),
-                                             .Dim = c(9L, 2L)),
+                                             dim = c(9L, 2L)),
                             tip.label = paste0("t", 1:6), Nnode = 4L),
                        class = "phylo", order = "preorder")
 
@@ -222,7 +222,7 @@ test_that("RootTree() works", {
 
   tree <- structure(list(edge = structure(c(7L, 8L, 8L, 7L, 7L, 9L, 9L, 10L,
                                             10L, 8L, 1L, 6L, 2L, 9L, 3L, 10L,
-                                            4L, 5L), .Dim = c(9L, 2L)),
+                                            4L, 5L), dim = c(9L, 2L)),
                          Nnode = 4L, tip.label = letters[1:6]),
                     class = "phylo", order = "preorder")
   expect_equal(RootTree(tree, 1:5), RootTree(tree, 6))

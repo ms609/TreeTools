@@ -239,10 +239,10 @@ test_that("Modified phyDat objects can be converted", {
                             d = c(2L, 1L, 2L, 1L), e = c(2L, 2L, 2L, 2L)),
                        weight = c(3L, 3L, 0L, 0L), nr = 4L, nc = 2L,
                        index = c(2L, 1L, 1L, 1L, 2L, 2L),
-                       .Label = c("0", "1"), allLevels = c("0", "1"),
+                       levels = c("0", "1"), allLevels = c("0", "1"),
                        type = "USER",
-                       contrast = structure(c(1, 0, 0, 1), .Dim = c(2L, 2L),
-                                            .Dimnames = list(NULL, c("0", "1"))),
+                       contrast = structure(c(1, 0, 0, 1), dim = c(2L, 2L),
+                                            dimnames = list(NULL, c("0", "1"))),
                        class = "phyDat")
   expect_equal(c(4, 6), dim(PhyDatToMatrix(dataset)))
 })

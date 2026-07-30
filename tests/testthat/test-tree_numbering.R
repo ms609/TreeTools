@@ -1,6 +1,6 @@
 nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
                          5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-                       .Dim = c(12, 2))
+                       dim = c(12, 2))
 nasty <- structure(list(edge = nastyEdge, Nnode = 5L, tip.label = letters[1:8]),
                    class = "phylo")
 
@@ -36,7 +36,7 @@ test_that("RenumberTree() handles polytomies", {
 
   edge <- structure(c(6L, 7L, 5L, 7L, 6L, 5L,
                       2L, 5L, 3L, 6L, 1L, 4L),
-                    .Dim = c(6L, 2L))
+                    dim = c(6L, 2L))
 
   # Must be in preorder; i.e. each node in left subtree before each node in
   # right subtree for each subtree
@@ -47,7 +47,7 @@ test_that("RenumberTree() handles polytomies", {
   # These rules ensure a unique representation for any tree.
   expectation <- structure(c(5L, 6L, 6L, 5L, 7L, 7L,
                              6L, 1L, 2L, 7L, 3L, 4L),
-                           .Dim = c(6L, 2L))
+                           dim = c(6L, 2L))
   expect_equal(RenumberTree(edge[, 1], edge[, 2]),
                expectation)
 
@@ -306,7 +306,7 @@ test_that("postorder_order() works", {
   
   nastyEdge <- structure(c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
                            5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-                         .Dim = c(12, 2))
+                         dim = c(12, 2))
   expect_postorder(nastyEdge[postorder_order(nastyEdge), ])
   
   poly <- ape::read.tree(text = "((a, b, c), (d, (e, f)));")$edge
@@ -423,7 +423,7 @@ test_that("Malformed trees don't cause crashes", {
   nasty <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
       5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-    .Dim = c(12, 2)),
+    dim = c(12, 2)),
     Nnode = 5L,
     tip.label = letters[1:8]),
     class = "phylo") # Danger: Do not plot!

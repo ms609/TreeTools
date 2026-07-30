@@ -59,7 +59,7 @@ test_that("as.Splits()", {
 
   notPreorder <- structure(list(
     edge = structure(c(6L, 9L, 8L, 7L, 7L, 8L, 9L, 6L,
-                       9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L), .Dim = c(8L, 2L)),
+                       9L, 8L, 7L, 2L, 3L, 5L, 4L, 1L), dim = c(8L, 2L)),
     Nnode = 4L, tip.label = 1:5), class = "phylo", order = "cladewise")
   expect_equal(c("7" = packBits(c(A, B, B, A, A, rep(FALSE, 3))),
                  "8" = packBits(c(A, B, B, A, B, rep(FALSE, 3)))),
@@ -84,17 +84,17 @@ test_that("as.Splits()", {
 test_that("as.Splits.phylo()", {
   rootedStar <- structure(list(edge = structure(c(7L, 8L, 8L, 8L, 8L, 8L, 7L,
                                                   8L, 1L, 2L, 3L, 4L, 5L, 6L),
-                                                .Dim = c(7L, 2L)), Nnode = 2L,
+                                                dim = c(7L, 2L)), Nnode = 2L,
                                tip.label = letters[1:6]), class = "phylo")
 
   rootedStar2 <- structure(list(edge = structure(c(8L, 8L, 8L, 8L, 8L, 7L, 7L,
                                                    1L, 2L, 3L, 4L, 5L, 6L, 8L),
-                                                .Dim = c(7L, 2L)), Nnode = 2L,
+                                                dim = c(7L, 2L)), Nnode = 2L,
                                tip.label = letters[1:6]), class = "phylo")
   nasty <- structure(list(edge = structure( # Danger: Do not plot!
     c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
       5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-    .Dim = c(12, 2)), Nnode = 5L, tip.label = letters[1:8]), class = "phylo")
+    dim = c(12, 2)), Nnode = 5L, tip.label = letters[1:8]), class = "phylo")
 
 
   expect_equal(c(0L, 1L), dim(as.Splits(rootedStar)))
@@ -297,21 +297,21 @@ test_that("!.Splits() errors", {
 
 test_that("xor, |, &.Splits()", {
   splits <- structure(as.raw(c(0x07, 0x03, 0x18, 0xe0, 0x60, 0x80)),
-                      .Dim = c(3L, 2L), nTip = 9L, class = "Splits")
+                      dim = c(3L, 2L), nTip = 9L, class = "Splits")
   expect_equal(splits & splits, splits)
   expect_equal(splits | splits, splits)
   expect_equal(xor(splits, splits),
                structure(matrix(raw(6), 3, 2), nTip = 9, class = "Splits"))
   
-  mask <- structure(as.raw(c(0x0f, 0x00)), .Dim = c(1L, 2L), nTip = 9L,
+  mask <- structure(as.raw(c(0x0f, 0x00)), dim = c(1L, 2L), nTip = 9L,
                     class = "Splits")
   mask <- c(mask, mask, mask)
   expect_equal(t(splits[] & mask[]),
                structure(as.raw(c(0x07, 0x00, 0x03, 0x00, 0x08, 0x00)),
-                         .Dim = c(2L, 3L)))
+                         dim = c(2L, 3L)))
   expect_equal(splits & mask,
                structure(as.raw(c(0x07, 0x03, 0x08, 0x00, 0x00, 0x00)),
-                         .Dim = c(3L, 2L), nTip = 9L, class = "Splits"))
+                         dim = c(3L, 2L), nTip = 9L, class = "Splits"))
   expect_equal(splits | mask, 
                structure(unclass(splits) | unclass(mask),
                          nTip = 9L, class = "Splits"))

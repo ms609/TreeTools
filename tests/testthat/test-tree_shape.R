@@ -29,7 +29,7 @@ test_that("Nasty node order not fatal", {
   nastyBinary <- structure(list(edge = structure(
     c(9, 12, 10, 13, 11, 10, 11, 14, 15, 13, 12, 9, 14, 15,
       5, 10, 15, 14,  3, 13,  9,  4, 11,  7,  8, 6,  2,  1),
-    .Dim = c(14, 2)),
+    dim = c(14, 2)),
     Nnode = 7L,
     tip.label = letters[1:8]),
     class = "phylo") # Danger: Do not plot!

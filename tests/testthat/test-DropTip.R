@@ -1,7 +1,7 @@
 nasty <- structure(list(edge = structure(
   c(9, 12, 10, 13, 11, 10, 11, 13, 10, 13, 12, 9,
     5, 10,  1,  2,  3, 13,  9,  4, 11,  7,  8, 6),
-  .Dim = c(12, 2)),
+  dim = c(12, 2)),
   Nnode = 5L,
   tip.label = letters[1:8]),
   class = "phylo") # Danger: Do not plot!
@@ -186,9 +186,9 @@ test_that("DropTip.Splits()", {
                DropTip(s9, 8:9))
   
   expect_equal(thin_splits(s9, !logical(9)),
-                           structure(raw(0), .Dim = c(0L, 0L)))
+                           structure(raw(0), dim = c(0L, 0L)))
   expect_equal(thin_splits(s19, 1:19 %in% 2:19),
-               structure(raw(0), .Dim = c(0L, 1L)))
+               structure(raw(0), dim = c(0L, 1L)))
   expect_equal(thin_splits(s9, logical(9)), s9, ignore_attr = TRUE)
   
   expect_equal(DropTip(s9, TipLabels(s9)), as.Splits(ZeroTaxonTree()))
