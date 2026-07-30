@@ -1,5 +1,13 @@
 # Changelog
 
+## TreeTools 2.4.0.9002 (development)
+
+### Code quality
+
+- Tests updated to use modern R special names: `.Dim` → `dim`,
+  `.Dimnames` → `dimnames`, `.Label` → `levels` in
+  [`structure()`](https://rdrr.io/r/base/structure.html) calls.
+
 ## TreeTools 2.4.0.9001 (development)
 
 ### Bug fixes
