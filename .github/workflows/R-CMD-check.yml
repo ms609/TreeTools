@@ -166,11 +166,19 @@ jobs:
         if: runner.os == 'Linux' && (matrix.config.r == '4.0' || matrix.config.r == 'devel')
         run: |
           mkdir -p ~/.R
-          echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
-          echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
-          echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
-          echo "CXX17FLAGS += -mcmodel=large" >> ~/.R/Makevars
-          echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
+
+          # ~/.R/Makevars applies to *every* package compiled on the runner,
+          # dependencies included.  aarch64 gcc implements no large code model
+          # compatible with -fPIC ("sorry, unimplemented: code model 'large'
+          # with '-fPIC'"), so asking for one there breaks the build of any
+          # package compiled from source.  Restrict the request to x86_64.
+          if [[ "$(uname -m)" == "x86_64" ]]; then
+            echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX17FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
+          fi
 
           # Maintain R 4.0 specific standard overrides
           if [[ "${{ matrix.config.r }}" == "4.0" ]]; then
