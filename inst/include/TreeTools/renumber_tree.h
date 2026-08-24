@@ -341,6 +341,28 @@ inline std::pair<Rcpp::IntegerMatrix, Rcpp::NumericVector> preorder_weighted_pai
   return preorder_weighted_impl(parent, child, weights);
 }
 
+// O(nEdge) check: in valid preorder, every edge's parent must already
+// have been "introduced" (appeared as a child of an earlier edge, or
+// be the root).
+// [[Rcpp::export]]
+inline bool is_valid_preorder(const Rcpp::IntegerVector& parent,
+                              const Rcpp::IntegerVector& child,
+                              int n_tip) {
+  const int32 n_edge = parent.length();
+  if (child.length() != n_edge) return false;
+  const int32 root = n_tip + 1;
+  const int32 max_node = n_edge + 2; // safe upper bound
+  std::vector<bool> introduced(max_node, false);
+  introduced[root] = true;
+  for (int32 i = 0; i < n_edge; ++i) {
+    if (parent[i] < 1 || parent[i] >= max_node) return false;
+    if (!introduced[parent[i]]) return false;
+    if (child[i] < 1 || child[i] >= max_node) return false;
+    introduced[child[i]] = true;
+  }
+  return true;
+}
+
 
   
   template <typename T, std::size_t StackSize>

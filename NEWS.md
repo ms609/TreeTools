@@ -23,6 +23,7 @@
   illegal separator (e.g. `,`) from leaking into `WriteTntCharacters()` output
   and being rejected by TNT.
 - `RenumberTips()` no longer fails on trees with no `"order"` attribute.
+- `Preorder()` now validates edge order for trees with a "preorder" order attribute.
 
 ## Performance 
 
@@ -41,6 +42,7 @@
 
 - Discontinue testing against R3.6.
 - `fastmatch` moved from Imports to Suggests.
+
 
 # TreeTools 2.4.0 (2026-06-02) #
 
