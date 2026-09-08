@@ -32,7 +32,7 @@ KeptVerts <- function(tree, keptTips, tipLabels = TipLabels(tree)) {
 #' @export
 KeptVerts.phylo <- function(tree, keptTips, tipLabels = TipLabels(tree)) {
   order <- attr(tree, "order")
-  if (is.null(order) || order != "preorder") {
+  if (length(order) == 0 || order != "preorder") {
     stop("`tree` must be in preorder; try `Preorder(tree)`")
   }
   KeptVerts(tree[["edge"]], keptTips, tipLabels = tipLabels)

@@ -130,7 +130,8 @@ ZeroTaxonTree <- function() {
 #' @family tree manipulation
 #' @export
 Subtree <- function(tree, node) {
-  if (is.null(treeOrder <- attr(tree, "order")) || treeOrder != "preorder") {
+  treeOrder <- attr(tree, "order")
+  if (length(treeOrder) == 0 || treeOrder != "preorder") {
     stop("Tree must be in preorder")
   }
   tipLabel <- tree[["tip.label"]]
