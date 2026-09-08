@@ -480,38 +480,52 @@ exportMethods(match)
 exportMethods(xor)
 importFrom(PlotTools,SpectrumLegend)
 importFrom(Rdpack,reprompt)
-importFrom(ape,all.equal.phylo)
-importFrom(ape,as.phylo)
-importFrom(ape,cophenetic.phylo)
-importFrom(ape,edgelabels)
-importFrom(ape,is.rooted)
-importFrom(ape,multi2di)
-importFrom(ape,nj)
-importFrom(ape,read.nexus)
-importFrom(ape,read.tree)
-importFrom(ape,write.tree)
-importFrom(bit64,as.integer64)
-importFrom(bit64,integer64)
-importFrom(grDevices,col2rgb)
-importFrom(grDevices,colorRamp)
-importFrom(grDevices,colorRampPalette)
-importFrom(grDevices,hcl)
-importFrom(grDevices,rgb)
-importFrom(graphics,legend)
-importFrom(graphics,lines)
-importFrom(graphics,par)
-importFrom(methods,new)
-importFrom(methods,setClass)
-importFrom(methods,setMethod)
-importFrom(methods,setOldClass)
-importFrom(stats,as.dist)
-importFrom(stats,cophenetic)
-importFrom(stats,median)
-importFrom(stats,na.omit)
-importFrom(stats,runif)
-importFrom(stats,setNames)
-importFrom(utils,combn)
-importFrom(utils,globalVariables)
-importFrom(utils,head)
-importFrom(utils,tail)
+importFrom(ape,
+  all.equal.phylo,
+  as.phylo,
+  cophenetic.phylo,
+  edgelabels,
+  is.rooted,
+  multi2di,
+  nj,
+  read.nexus,
+  read.tree,
+  write.tree
+)
+importFrom(bit64,
+  as.integer64,
+  integer64
+)
+importFrom(grDevices,
+  col2rgb,
+  colorRamp,
+  colorRampPalette,
+  hcl,
+  rgb
+)
+importFrom(graphics,
+  legend,
+  lines,
+  par
+)
+importFrom(methods,
+  new,
+  setClass,
+  setMethod,
+  setOldClass
+)
+importFrom(stats,
+  as.dist,
+  cophenetic,
+  median,
+  na.omit,
+  runif,
+  setNames
+)
+importFrom(utils,
+  combn,
+  globalVariables,
+  head,
+  tail
+)
 useDynLib(TreeTools, .registration = TRUE)
