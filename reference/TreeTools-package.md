@@ -10,6 +10,9 @@ unweighted trees (i.e. those without edge lengths).
 
 ## Details
 
+The performance of some functions is improved if fastmatch is available:
+`install.packages("fastmatch")`
+
 Full documentation is available
 [online](https://ms609.github.io/TreeTools/).
 

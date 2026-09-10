@@ -17,7 +17,7 @@ trees, using the cluster-table approach of (Day 1985)
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@ trees, using the cluster-table approach of (Day 1985)
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Construct consensus trees</h1>
-      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/2.4.0/R/Consensus.R" class="external-link"><code>R/Consensus.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ms609/TreeTools/blob/main/R/Consensus.R" class="external-link"><code>R/Consensus.R</code></a></small>
       <div class="d-none name"><code>Consensus.Rd</code></div>
     </div>
 
@@ -69,9 +69,10 @@ trees, using the cluster-table approach of (Day 1985)
 
 
 <dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
-<dd><p>Proportion of trees that must contain a split for it to be reported
-in the consensus.  <code>p = 0.5</code> gives the majority-rule consensus; <code>p = 1</code> (the
-default) gives the strict consensus.</p></dd>
+<dd><p>A number from 0.5 to 1 giving the proportion of trees that must
+contain a split for it to be reported in the consensus: from <code>p = 0.5</code> (more
+than half the trees; the majority-rule consensus) to <code>p = 1</code> (every tree; the
+strict consensus, the default).</p></dd>
 
 
 <dt id="arg-check-labels">check.labels<a class="anchor" aria-label="anchor" href="#arg-check-labels"></a></dt>
@@ -98,11 +99,14 @@ first entry of <code>trees</code>.</p>
 against every other tree in linear time.  The majority-rule and threshold
 consensus (<code>0.5 &lt;= p &lt; 1</code>) instead count the frequency of every split across
 all trees in a single pass and retain those occurring in a proportion <code>p</code> or
-more of trees; this runs in time linear in the number of trees, after
+more of trees (i.e. in at least <code>ceiling(p * length(trees))</code> trees); this
+runs in time linear in the number of trees, after
 (Jansson et al. 2016)
-.  By default the count uses
-a 128-bit hash, whose results are exact with overwhelming probability; set
-<code>hash = FALSE</code> for a slower but guaranteed-exact count.</p>
+.  The majority threshold <code>p = 0.5</code> is
+strict: a split is retained only if it occurs in <em>more</em> than half the trees,
+so that two conflicting splits can never both be reported.  By default the
+count uses a 128-bit hash, whose results are exact with overwhelming
+probability; set <code>hash = FALSE</code> for a slower but guaranteed-exact count.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -161,7 +165,7 @@ consensus tree.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -17,7 +17,8 @@ root_on_node(phy, outgroup)
 
   Minimally, a named list with entries `edge` and `Nnode`, in the format
   of equivalent entries in a tree of class `phylo`. `edge.length` will
-  also be considered if supplied.
+  also be considered if supplied. The root node must be numbered
+  `n_tip + 1`.
 
 - outgroup:
 
@@ -25,7 +26,12 @@ root_on_node(phy, outgroup)
 
 ## Value
 
-`root_on_node()` returns `phy` rooted on the specified node.
+`root_on_node()` returns `phy` rooted on the specified node, in
+preorder, with nodes renumbered accordingly.
+
+## Details
+
+`phy` may be supplied in any valid edge order.
 
 ## Author
 

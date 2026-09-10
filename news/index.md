@@ -1,5 +1,36 @@
 # Changelog
 
+## TreeTools 2.4.1 (2026-09-11)
+
+### Bug fixes
+
+- `Consensus(trees, p)` now retains a split present in exactly `p` of
+  trees when `p > 0.5`, as documented (and matching
+  [`ape::consensus()`](https://rdrr.io/pkg/ape/man/consensus.html)).
+- [`ReadCharacters()`](https://ms609.github.io/TreeTools/reference/ReadCharacters.md)
+  no longer warns on a `STATELABELS` block with a terminal semicolon.
+- [`PhyDatToMatrix()`](https://ms609.github.io/TreeTools/reference/MatrixToPhyDat.md)
+  resolves single-state degenerate polymorphisms (e.g. `(0,0)`) to that
+  state.
+- [`RenumberTips()`](https://ms609.github.io/TreeTools/reference/RenumberTips.md)
+  no longer fails on trees with no `"order"` attribute.
+
+### Code quality
+
+- Guarantee preorder return from
+  [`root_on_node()`](https://ms609.github.io/TreeTools/reference/root_on_node.md).
+- Improve performance of
+  [`RenumberTips()`](https://ms609.github.io/TreeTools/reference/RenumberTips.md),
+  [`Consensus()`](https://ms609.github.io/TreeTools/reference/Consensus.md)
+  and
+  [`SplitFrequency()`](https://ms609.github.io/TreeTools/reference/SplitFrequency.md).
+- Tests updated to use modern R special names.
+
+### Dependencies
+
+- Discontinue testing against R3.6.
+- `fastmatch` moved from Imports to Suggests.
+
 ## TreeTools 2.4.0 (2026-06-02)
 
 CRAN release: 2026-06-02

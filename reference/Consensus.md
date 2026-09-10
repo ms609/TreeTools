@@ -17,9 +17,10 @@ Consensus(trees, p = 1, check.labels = TRUE, hash = TRUE)
 
 - p:
 
-  Proportion of trees that must contain a split for it to be reported in
-  the consensus. `p = 0.5` gives the majority-rule consensus; `p = 1`
-  (the default) gives the strict consensus.
+  A number from 0.5 to 1 giving the proportion of trees that must
+  contain a split for it to be reported in the consensus: from `p = 0.5`
+  (more than half the trees; the majority-rule consensus) to `p = 1`
+  (every tree; the strict consensus, the default).
 
 - check.labels:
 
@@ -45,10 +46,14 @@ The strict consensus (`p = 1`) compares the clusters of the first tree
 against every other tree in linear time. The majority-rule and threshold
 consensus (`0.5 <= p < 1`) instead count the frequency of every split
 across all trees in a single pass and retain those occurring in a
-proportion `p` or more of trees; this runs in time linear in the number
-of trees, after (Jansson et al. 2016) . By default the count uses a
-128-bit hash, whose results are exact with overwhelming probability; set
-`hash = FALSE` for a slower but guaranteed-exact count.
+proportion `p` or more of trees (i.e. in at least
+`ceiling(p * length(trees))` trees); this runs in time linear in the
+number of trees, after (Jansson et al. 2016) . The majority threshold
+`p = 0.5` is strict: a split is retained only if it occurs in *more*
+than half the trees, so that two conflicting splits can never both be
+reported. By default the count uses a 128-bit hash, whose results are
+exact with overwhelming probability; set `hash = FALSE` for a slower but
+guaranteed-exact count.
 
 ## References
 

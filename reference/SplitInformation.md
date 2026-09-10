@@ -101,10 +101,10 @@ Phylogeny, and Genomics*, 163–178. Oxford University Press, Oxford.
 ## See also
 
 Sum the phylogenetic information content of splits within a tree:
-[[`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
+[`TreeDist::SplitwiseInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
 
 Sum the clustering information content of splits within a tree:
-[[`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
+[`TreeDist::ClusteringInfo()`](https://ms609.github.io/TreeDist/reference/TreeInfo.html)
 
 Other split information functions:
 [`CharacterInformation()`](https://ms609.github.io/TreeTools/reference/CharacterInformation.md),

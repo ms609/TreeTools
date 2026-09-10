@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">TreeTools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">2.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,9 +41,35 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/2.4.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/ms609/TreeTools/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.4.1" id="treetools-241-2026-09-11">TreeTools 2.4.1 (2026-09-11)<a class="anchor" aria-label="anchor" href="#treetools-241-2026-09-11"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-4-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-4-1"></a></h3>
+<ul><li>
+<code>Consensus(trees, p)</code> now retains a split present in exactly <code>p</code> of trees when <code>p &gt; 0.5</code>, as documented (and matching <code><a href="https://rdrr.io/pkg/ape/man/consensus.html" class="external-link">ape::consensus()</a></code>).</li>
+<li>
+<code><a href="../reference/ReadCharacters.html">ReadCharacters()</a></code> no longer warns on a <code>STATELABELS</code> block with a terminal semicolon.</li>
+<li>
+<code><a href="../reference/MatrixToPhyDat.html">PhyDatToMatrix()</a></code> resolves single-state degenerate polymorphisms (e.g. <code>(0,0)</code>) to that state.</li>
+<li>
+<code><a href="../reference/RenumberTips.html">RenumberTips()</a></code> no longer fails on trees with no <code>"order"</code> attribute.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="code-quality-2-4-1">Code quality<a class="anchor" aria-label="anchor" href="#code-quality-2-4-1"></a></h3>
+<ul><li>Guarantee preorder return from <code><a href="../reference/root_on_node.html">root_on_node()</a></code>.</li>
+<li>Improve performance of <code><a href="../reference/RenumberTips.html">RenumberTips()</a></code>, <code><a href="../reference/Consensus.html">Consensus()</a></code> and <code><a href="../reference/SplitFrequency.html">SplitFrequency()</a></code>.</li>
+<li>Tests updated to use modern R special names.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="dependencies-2-4-1">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-2-4-1"></a></h3>
+<ul><li>Discontinue testing against R3.6.</li>
+<li>
+<code>fastmatch</code> moved from Imports to Suggests.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.4.0" id="treetools-240-2026-06-02">TreeTools 2.4.0 (2026-06-02)<a class="anchor" aria-label="anchor" href="#treetools-240-2026-06-02"></a></h2><p class="text-muted">CRAN release: 2026-06-02</p>
 <div class="section level3">
@@ -680,7 +706,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
