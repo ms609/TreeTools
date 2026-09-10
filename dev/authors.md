@@ -20,7 +20,8 @@ Source:
 [`inst/CITATION`](https://github.com/ms609/TreeTools/blob/main/inst/CITATION)
 
 Smith (2019). TreeTools: create, modify and analyse phylogenetic trees.
-Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
+Comprehensive R Archive Network, Vienna. doi:
+10.32614/CRAN.package.TreeTools
 
     @Manual{Smith2019,
       title = {TreeTools: create, modify and analyse phylogenetic trees},
@@ -29,4 +30,5 @@ Comprehensive R Archive Network. doi: 10.32614/CRAN.package.TreeTools
       year = {2019},
       doi = {10.32614/CRAN.package.TreeTools},
       organization = {Comprehensive R Archive Network},
+      address = {Vienna},
     }
