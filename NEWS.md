@@ -1,46 +1,26 @@
-# TreeTools 2.4.0.9002 (development) #
-
-## Code quality
-
-- Tests updated to use modern R special names: `.Dim` → `dim`,
-  `.Dimnames` → `dimnames`, `.Label` → `levels` in `structure()` calls.
-
-# TreeTools 2.4.0.9001 (development) #
+# TreeTools 2.4.1 (2026-09-11)
 
 ## Bug fixes
 
-- `Consensus(trees, p)` now retains a split present in exactly a proportion `p`
-  of trees (i.e. in `ceiling(p * length(trees))` trees) for `p > 0.5`, matching
-  the documentation and `ape::consensus()`; previously such a split was dropped
-  at exact thresholds (e.g. a split in 2 of 3 trees with `p = 2/3`). The
-  majority threshold `p = 0.5` is unchanged (a split must occur in more than
-  half the trees).
+- `Consensus(trees, p)` now retains a split present in exactly `p` of trees
+  when `p > 0.5`, as documented (and matching `ape::consensus()`).
 - `ReadCharacters()` no longer warns on a `STATELABELS` block with a terminal
   semicolon.
-- `PhyDatToMatrix()` now resolves a degenerate polymorphism whose alternatives
-  collapse to a single state (e.g. a `(0,0)` token read from a Nexus file) to
-  that state, rather than emitting the original token verbatim. This stops an
-  illegal separator (e.g. `,`) from leaking into `WriteTntCharacters()` output
-  and being rejected by TNT.
+- `PhyDatToMatrix()` resolves single-state degenerate polymorphisms (e.g.
+  `(0,0)`) to that state.
 - `RenumberTips()` no longer fails on trees with no `"order"` attribute.
 
-## Performance 
+## Code quality
 
-- Guarantee preorder return from `root_on_node()` to simplify `Consensus()`
-  internal pre-processing.
-- `Consensus()` and `SplitFrequency()` defer materialising a split's bit pattern
-  until it is needed, so splits that never reach the consensus threshold are no
-  longer built.
-- `RenumberTips()` relabels an unlabelled `multiPhylo` or `list` of trees in a
-  single C++ pass instead of a per-tree R loop, with a no-op fast path for trees
-  already in the target order.
-- `Consensus()` no longer copies every input tree to strip branch lengths and
-  node labels; it now coerces in place.
+- Guarantee preorder return from `root_on_node()`.
+- Improve performance of `RenumberTips()`, `Consensus()` and `SplitFrequency()`.
+- Tests updated to use modern R special names.
 
 ## Dependencies
 
 - Discontinue testing against R3.6.
 - `fastmatch` moved from Imports to Suggests.
+
 
 # TreeTools 2.4.0 (2026-06-02) #
 
