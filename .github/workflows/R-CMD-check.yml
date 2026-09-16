@@ -80,7 +80,7 @@ jobs:
 
     steps:
       - id: codemeta
-        uses: ms609/actions/update-codemeta@main
+        uses: ms609/actions/update-codemeta@update-codemeta-forks
         with:
           client-id: ${{ vars.CODEMETA_APP_ID }}
           private-key: ${{ secrets.CODEMETA_APP_KEY }}
