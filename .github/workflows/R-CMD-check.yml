@@ -47,10 +47,55 @@ on:
 
 name: R-CMD-check
 
+# NB: there is deliberately NO workflow-level `concurrency`. Workflow-level
+# cancel-in-progress would kill the whole run (sense-check included) on every
+# new push. Instead, each EXPENSIVE job carries its own per-leg concurrency
+# group so superseded work is cancelled, while the cheap `sense-check` job has
+# no concurrency and therefore always runs to completion -- giving a per-commit
+# "did this build?" signal even under rapid iteration.
+
+# Waves:
+#   codemeta    -> PRs only, ~15 s; pushes a stale codemeta.json to the PR
+#                  branch and holds back later waves.
+#   sense-check -> ubuntu arm release (cheapest), never cancelled. Fast signal.
+#                  Skipped only when codemeta pushed (the fresh run covers the
+#                  new head).
+#   core        -> Windows (+codecov) / R 4.0 / R devel; only if sense-check passed.
+#   revdepcheck -> reverse-dependency checks; also only if sense-check passed.
+#   full        -> macOS x2 backstop; only once core is green.
 jobs:
-  check-release:
-    runs-on: ubuntu-24.04
-    name: ubuntu-24.04 (release)
+  # ---------------------------------------------------------------------------
+  # Wave 0 (PRs only): is codemeta.json current? If stale, pushes the
+  # regenerated file to the PR branch (as the codemeta-writer App, so the push
+  # starts a fresh run) and fails. See ms609/actions/update-codemeta.
+  # ---------------------------------------------------------------------------
+  codemeta:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 5  # healthy run is ~15 s
+    permissions:
+      contents: read
+    outputs:
+      pushed: ${{ steps.codemeta.outputs.pushed }}
+
+    steps:
+      - id: codemeta
+        uses: ms609/actions/update-codemeta@main
+        with:
+          client-id: ${{ vars.CODEMETA_APP_ID }}
+          private-key: ${{ secrets.CODEMETA_APP_KEY }}
+
+  # ---------------------------------------------------------------------------
+  # Wave 1: cheapest leg as a fail-fast sense-check. No concurrency group, so a
+  # rapid follow-up push does NOT cancel it -- each commit gets its own signal.
+  # Waits ~15 s for codemeta, and skips if codemeta pushed an update: the
+  # fresh run checks the new head. Still runs if codemeta failed otherwise.
+  # ---------------------------------------------------------------------------
+  sense-check:
+    needs: codemeta
+    if: ${{ !cancelled() && needs.codemeta.outputs.pushed != 'true' }}
+    runs-on: ubuntu-24.04-arm
+    name: sense-check (ubuntu-24.04-arm, release)
 
     env:
       _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
@@ -59,6 +104,8 @@ jobs:
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
       R_REMOTES_STANDALONE: true
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_REALLY_FORCE_SYMBOLS: true # Until R4.3
+      _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
       RSPM: "https://packagemanager.posit.co/cran/__linux__/noble/latest"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,17 +117,19 @@ jobs:
         run: |
           old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
           if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
-            new_version="${old_version}.8888"
-            if [[ "$RUNNER_OS" == "macOS" ]]; then
-              sed -i "" "s/Version: .*/Version: ${new_version}/" DESCRIPTION
-            else
-              sed -i "s/Version: .*/Version: ${new_version}/" DESCRIPTION
-            fi
+            new_version="${old_version}.9999"
+            sed -i "s/Version: .*/Version: ${new_version}/" DESCRIPTION
           fi
         shell: bash
-        
+
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+
+      - name: Install apt packages
+        run: |
+          sudo apt-get install texlive-latex-base texlive-fonts-recommended
 
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
@@ -88,24 +137,58 @@ jobs:
           cache-version: 2-${{ runner.arch }}
           needs: |
             check
+          extra-packages: |
+            TreeDist
+            TreeSearch
+            vdiffr
+            phangorn
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
 
+      - name: Notify on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            });
 
-  check-all:
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              state: 'open'
+            });
+
+  # ---------------------------------------------------------------------------
+  # Wave 2: Windows (+codecov), R 4.0, R devel. Runs only if the sense-check
+  # passed and codemeta.json is current (or not checked, outside PRs).
+  # Per-leg concurrency so a superseding push cancels in-flight legs.
+  # ---------------------------------------------------------------------------
+  core:
+    needs: [sense-check, codemeta]
+    if: >-
+      !cancelled() && needs.sense-check.result == 'success' &&
+      contains(fromJSON('["success", "skipped"]'), needs.codemeta.result)
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    concurrency:
+      group: ${{ github.workflow }}-core-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ github.ref }}
+      cancel-in-progress: true
 
     strategy:
       fail-fast: false
       matrix:
         config:
           - {os: windows-latest, r: "release"}
-          - {os: macos-15-intel, r: "release"} # Until Intel architecture retired 2027-11
-          - {os: macOS-latest, r: "release"}
           - {os: ubuntu-24.04, r: "4.0", rspm: "https://packagemanager.posit.co/cran/2022-10-11"}
-          - {os: ubuntu-24.04-arm, r: "release", rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
           - {os: ubuntu-24.04-arm, r: "devel", rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
 
     env:
@@ -130,20 +213,16 @@ jobs:
           old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
           if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
             new_version="${old_version}.9999"
-            if [[ "$RUNNER_OS" == "macOS" ]]; then
-              sed -i "" "s/Version: .*/Version: ${new_version}/" DESCRIPTION
-            else
-              sed -i "s/Version: .*/Version: ${new_version}/" DESCRIPTION
-            fi
+            sed -i "s/Version: .*/Version: ${new_version}/" DESCRIPTION
           fi
           echo "Current package version is now: $(grep "Version:" DESCRIPTION | awk '{print $2}')"
         shell: bash
-        
+
       - name: Set up R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
-        
+
       - name: Install apt packages
         if: runner.os == 'Linux'
         run: |
@@ -161,7 +240,7 @@ jobs:
           libxml2-dev \
           libharfbuzz-dev \
           libfribidi-dev
-          
+
       - name: Force C++17 and Large Memory Model (Linux)
         if: runner.os == 'Linux' && (matrix.config.r == '4.0' || matrix.config.r == 'devel')
         run: |
@@ -186,7 +265,7 @@ jobs:
             echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
           fi
         shell: bash
-          
+
       - name: Install vdiffr dependencies (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
         run: |
@@ -209,7 +288,7 @@ jobs:
             coverage
 
       - name: Set up R dependencies (Non-Windows)
-        if: ${{runner.os != 'Windows' && matrix.config.r >= '4.0' }}
+        if: runner.os != 'Windows'
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: |
@@ -228,7 +307,7 @@ jobs:
         run: |
           covr::codecov()
         shell: Rscript {0}
-        
+
       - name: Notify on failure
         if: failure() && github.event_name == 'schedule'
         uses: actions/github-script@v7
@@ -241,7 +320,7 @@ jobs:
               issue_number: 170,
               body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
             });
-      
+
             await github.rest.issues.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -249,11 +328,103 @@ jobs:
               state: 'open'
             });
 
-  rev-dep-check:
-    runs-on: ubuntu-latest
-    needs: check-release
+  # ---------------------------------------------------------------------------
+  # Wave 3 (backstop): the expensive macOS legs. Only runs once the core wave is
+  # green, which in practice is "about to merge". macOS is ~10x runner-minutes,
+  # so keeping it off every push is the big save.
+  # ---------------------------------------------------------------------------
+  full:
+    needs: core
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
-    name: revdepcheck
+    concurrency:
+      group: ${{ github.workflow }}-full-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macOS-latest, r: "release"}
+          - {os: macos-15-intel, r: "release"} # Until Intel architecture retired 2027-11
+
+    env:
+      _R_CHECK_CRAN_INCOMING_: ${{ github.event_name == 'pull_request' }}
+      _R_CHECK_FORCE_SUGGESTS_: false # CRAN settings
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      _R_CHECK_THINGS_IN_CHECK_DIR_: false
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_REALLY_FORCE_SYMBOLS: true # Until R4.3
+      _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v6
+
+      - name: Temporarily bump package version
+        run: |
+          old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
+          if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
+            new_version="${old_version}.9999"
+            sed -i "" "s/Version: .*/Version: ${new_version}/" DESCRIPTION
+          fi
+        shell: bash
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: |
+            check
+          extra-packages: |
+            TreeDist
+            TreeSearch
+            vdiffr
+            phangorn
+
+      - name: Check package
+        uses: r-lib/actions/check-r-package@v2
+
+      - name: Notify on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              state: 'open'
+            });
+
+  # ---------------------------------------------------------------------------
+  # Reverse dependencies: unlocked by the sense-check, as before (it was gated
+  # on the ubuntu release leg), so it runs alongside core.
+  # ---------------------------------------------------------------------------
+  rev-dep-check:
+    needs: sense-check
+    if: ${{ !cancelled() && needs.sense-check.result == 'success' }}
+    runs-on: ubuntu-latest
+    name: revdepcheck (${{ matrix.config.deps }})
+
+    concurrency:
+      group: ${{ github.workflow }}-revdep-${{ matrix.config.deps }}-${{ github.ref }}
+      cancel-in-progress: true
 
     strategy:
       fail-fast: false
@@ -271,7 +442,6 @@ jobs:
       _R_CHECK_THINGS_IN_CHECK_DIR_: false
       R_REMOTES_STANDALONE: true
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
