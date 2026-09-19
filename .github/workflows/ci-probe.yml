@@ -1,8 +1,10 @@
 # TEMPORARY -- delete once #281 has its answer.
 #
-# Three blocks in R-CMD-check.yml exist only for TreeTools' ubuntu R 4.0 leg,
-# and may be vestigial. Each leg below drops exactly one of them; `none` is the
-# control. A green leg means that block can go.
+# Round 2. Round 1 (one block each, against a `none` control) cleared mcmodel
+# and vdiffr, but `syslibs` died BUILDING the patched vdiffr, so it never
+# reached check and we learnt nothing about the libraries themselves. vdiffr is
+# droppable, so the question is whether they go together. This leg is the
+# proposed end state: all three gone at once.
 #
 #   syslibs  -- libgsl-dev, libpng-dev, ... (are they still absent from the image?)
 #   mcmodel  -- -mcmodel=large (does the object still overflow the small model?)
@@ -27,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        drop: [none, syslibs, mcmodel, vdiffr]
+        drop: ['mcmodel,syslibs,vdiffr']
 
     env:
       _R_CHECK_CRAN_INCOMING_: false
@@ -60,7 +62,7 @@ jobs:
         run: sudo apt-get install texlive-latex-base texlive-fonts-recommended
 
       - name: Install system dependencies (R 4.0)
-        if: matrix.drop != 'syslibs'
+        if: ${{ !contains(matrix.drop, 'syslibs') }}
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -70,7 +72,7 @@ jobs:
       - name: Force C++17 and Large Memory Model
         run: |
           mkdir -p ~/.R
-          if [[ "${{ matrix.drop }}" != "mcmodel" ]]; then
+          if [[ "${{ matrix.drop }}" != *mcmodel* ]]; then
             echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
             echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
             echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
@@ -84,12 +86,12 @@ jobs:
         shell: bash
 
       - name: Install vdiffr dependencies (R 4.0)
-        if: matrix.drop != 'vdiffr'
+        if: ${{ !contains(matrix.drop, 'vdiffr') }}
         run: |
           Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','testthat','xml2','cpp11'), repos = 'https://packagemanager.posit.co/cran/2022-10-11')"
 
       - name: Install vdiffr patched (R 4.0)
-        if: matrix.drop != 'vdiffr'
+        if: ${{ !contains(matrix.drop, 'vdiffr') }}
         run: |
           git clone --branch v1.0.4 https://github.com/r-lib/vdiffr.git vdiffr-src
           sed -i '1i#include <cstdint>' vdiffr-src/src/devSVG.cpp
