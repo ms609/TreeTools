@@ -1,0 +1,100 @@
+# TEMPORARY -- delete once #281 has its answer.
+#
+# Three blocks in R-CMD-check.yml exist only for TreeTools' ubuntu R 4.0 leg,
+# and may be vestigial. Each leg below drops exactly one of them; `none` is the
+# control. A green leg means that block can go.
+#
+#   syslibs  -- libgsl-dev, libpng-dev, ... (are they still absent from the image?)
+#   mcmodel  -- -mcmodel=large (does the object still overflow the small model?)
+#   vdiffr   -- the hand-patched vdiffr v1.0.4 build (does the CRAN one resolve?)
+name: ci-probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    name: drop ${{ matrix.drop }}
+    continue-on-error: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        drop: [none, syslibs, mcmodel, vdiffr]
+
+    env:
+      _R_CHECK_CRAN_INCOMING_: false
+      _R_CHECK_FORCE_SUGGESTS_: false
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      _R_CHECK_THINGS_IN_CHECK_DIR_: false
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      R_REALLY_FORCE_SYMBOLS: true
+      _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
+      RSPM: "https://packagemanager.posit.co/cran/2022-10-11"
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Temporarily bump package version
+        run: |
+          old_version=$(grep "Version:" DESCRIPTION | awk '{print $2}')
+          if [[ $(echo "$old_version" | tr -cd '.' | wc -c) -eq 2 ]]; then
+            sed -i "s/Version: .*/Version: ${old_version}.9999/" DESCRIPTION
+          fi
+        shell: bash
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.0"
+
+      - name: Install apt packages
+        run: sudo apt-get install texlive-latex-base texlive-fonts-recommended
+
+      - name: Install system dependencies (R 4.0)
+        if: matrix.drop != 'syslibs'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+          libgsl-dev libpng-dev libfreetype6-dev libjpeg-dev \
+          libxml2-dev libharfbuzz-dev libfribidi-dev
+
+      - name: Force C++17 and Large Memory Model
+        run: |
+          mkdir -p ~/.R
+          if [[ "${{ matrix.drop }}" != "mcmodel" ]]; then
+            echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "CXX17FLAGS += -mcmodel=large" >> ~/.R/Makevars
+            echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
+          fi
+          # Never dropped: TreeTools declares SystemRequirements: C++17, which
+          # R 4.0 does not select on its own.
+          echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
+          echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
+        shell: bash
+
+      - name: Install vdiffr dependencies (R 4.0)
+        if: matrix.drop != 'vdiffr'
+        run: |
+          Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','testthat','xml2','cpp11'), repos = 'https://packagemanager.posit.co/cran/2022-10-11')"
+
+      - name: Install vdiffr patched (R 4.0)
+        if: matrix.drop != 'vdiffr'
+        run: |
+          git clone --branch v1.0.4 https://github.com/r-lib/vdiffr.git vdiffr-src
+          sed -i '1i#include <cstdint>' vdiffr-src/src/devSVG.cpp
+          R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
+          rm -rf vdiffr-src
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: check
+          extra-packages: TreeDist=?ignore-before-r=4.0.0 TreeSearch=?ignore-before-r=4.1.0 vdiffr=?ignore-before-r=4.1.0 phangorn=?ignore-before-r=4.1.0
+
+      - name: Check package
+        uses: r-lib/actions/check-r-package@v2

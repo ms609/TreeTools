@@ -183,7 +183,12 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: "release"}
-          - {os: ubuntu-24.04, r: "4.0", rspm: "https://packagemanager.posit.co/cran/2022-10-11"}
+          # `ignore` entries are EXCLUSIONS, not additions: pak drops the named
+          # package from the solve when R is older than the threshold. Without
+          # them the leg dies on `phangorn: Needs R >= 4.1.0` -- pak takes the
+          # newest version satisfying DESCRIPTION and will not fall back.
+          - {os: ubuntu-24.04, r: "4.0", rspm: "https://packagemanager.posit.co/cran/2022-10-11",
+             ignore: "TreeDist=?ignore-before-r=4.0.0 TreeSearch=?ignore-before-r=4.1.0 vdiffr=?ignore-before-r=4.1.0 phangorn=?ignore-before-r=4.1.0"}
           - {os: ubuntu-24.04-arm, r: "devel", rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
 
     env:
@@ -280,6 +285,9 @@ jobs:
           needs: |
             check
             ${{ runner.os == 'Windows' && 'coverage' || '' }}
+          # One-line expression, not a block scalar: a block scalar renders a
+          # bare newline when `ignore` is unset, which pak parses as a ref "".
+          extra-packages: ${{ matrix.config.ignore }}
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
