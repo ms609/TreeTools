@@ -228,56 +228,14 @@ jobs:
         run: |
           sudo apt-get install texlive-latex-base texlive-fonts-recommended
 
-      - name: Install system dependencies (R 4.0)
+      - name: Select C++17 (R 4.0)
         if: matrix.config.r == '4.0' && runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-          libgsl-dev \
-          libpng-dev \
-          libfreetype6-dev \
-          libjpeg-dev \
-          libxml2-dev \
-          libharfbuzz-dev \
-          libfribidi-dev
-
-      - name: Force C++17 and Large Memory Model (Linux)
-        if: runner.os == 'Linux' && (matrix.config.r == '4.0' || matrix.config.r == 'devel')
         run: |
           mkdir -p ~/.R
-
-          # ~/.R/Makevars applies to *every* package compiled on the runner,
-          # dependencies included.  aarch64 gcc implements no large code model
-          # compatible with -fPIC ("sorry, unimplemented: code model 'large'
-          # with '-fPIC'"), so asking for one there breaks the build of any
-          # package compiled from source.  Restrict the request to x86_64.
-          if [[ "$(uname -m)" == "x86_64" ]]; then
-            echo "CXXFLAGS += -mcmodel=large" >> ~/.R/Makevars
-            echo "CXX11FLAGS += -mcmodel=large" >> ~/.R/Makevars
-            echo "CXX14FLAGS += -mcmodel=large" >> ~/.R/Makevars
-            echo "CXX17FLAGS += -mcmodel=large" >> ~/.R/Makevars
-            echo "PKG_LIBS += -mcmodel=large" >> ~/.R/Makevars
-          fi
-
-          # Maintain R 4.0 specific standard overrides
-          if [[ "${{ matrix.config.r }}" == "4.0" ]]; then
-            echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
-            echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
-          fi
+          # R 4.0 does not honour SystemRequirements: C++17 on its own.
+          echo "CXX14STD = -std=gnu++17" >> ~/.R/Makevars
+          echo "CXX17STD = -std=gnu++17" >> ~/.R/Makevars
         shell: bash
-
-      - name: Install vdiffr dependencies (R 4.0)
-        if: matrix.config.r == '4.0' && runner.os == 'Linux'
-        run: |
-          Rscript -e "install.packages(c('diffobj','glue','htmltools','lifecycle','rlang','testthat','xml2','cpp11'), repos = 'https://packagemanager.posit.co/cran/2022-10-11')"
-
-      - name: Install vdiffr patched (R 4.0)
-        if: matrix.config.r == '4.0' && runner.os == 'Linux'
-        run: |
-          git clone --branch v1.0.4 https://github.com/r-lib/vdiffr.git vdiffr-src
-          sed -i '1i#include <cstdint>' vdiffr-src/src/devSVG.cpp
-          R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
-          rm -rf vdiffr-src
 
       - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
