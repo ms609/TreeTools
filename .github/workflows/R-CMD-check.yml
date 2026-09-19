@@ -137,11 +137,6 @@ jobs:
           cache-version: 2-${{ runner.arch }}
           needs: |
             check
-          extra-packages: |
-            TreeDist
-            TreeSearch
-            vdiffr
-            phangorn
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
@@ -279,25 +274,12 @@ jobs:
           R CMD INSTALL --preclean --no-multiarch --with-keep.source vdiffr-src
           rm -rf vdiffr-src
 
-      - name: Set up R dependencies (Windows)
-        if: runner.os == 'Windows'
+      - name: Set up R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           needs: |
             check
-            coverage
-
-      - name: Set up R dependencies (Non-Windows)
-        if: runner.os != 'Windows'
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          needs: |
-            check
-          extra-packages: |
-            TreeDist=?ignore-before-r=4.0.0
-            TreeSearch=?ignore-before-r=4.1.0
-            vdiffr=?ignore-before-r=4.1.0
-            phangorn=?ignore-before-r=4.1.0
+            ${{ runner.os == 'Windows' && 'coverage' || '' }}
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
@@ -383,11 +365,6 @@ jobs:
         with:
           needs: |
             check
-          extra-packages: |
-            TreeDist
-            TreeSearch
-            vdiffr
-            phangorn
 
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
