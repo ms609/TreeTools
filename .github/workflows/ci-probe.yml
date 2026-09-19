@@ -11,6 +11,12 @@ name: ci-probe
 
 on:
   workflow_dispatch:
+  # workflow_dispatch alone is unreachable here: the Actions API only
+  # resolves a workflow that exists on the DEFAULT branch. Self-triggering
+  # on its own path runs it from the PR branch instead.
+  push:
+    branches: [ci/sense-check]
+    paths: ['.github/workflows/ci-probe.yml']
 
 jobs:
   probe:
