@@ -49,7 +49,7 @@ jobs:
       - name: Checkout target branch
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.pull_request.base.ref || 'master' }}
+          ref: ${{ github.event.pull_request.base.ref || 'main' }}
           path: main
 
       - name: Set up R
@@ -58,8 +58,22 @@ jobs:
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          working-directory: pr
           dependencies: '"hard"'
           needs: benchmark
+
+      # TreeDist, a benchmark need, pulls in the released TreeTools, and
+      # benchmark-step refuses to run over an installed copy of the package it
+      # benchmarks. It installs each branch itself, then rebuilds TreeDist
+      # against it.
+      - name: Remove released TreeTools
+        run: |
+          for (lib in .libPaths()) {
+            if (dir.exists(file.path(lib, "TreeTools"))) {
+              remove.packages("TreeTools", lib)
+            }
+          }
+        shell: Rscript {0}
           
       - name: Benchmark PR
         uses: ms609/actions/benchmark-step@main
