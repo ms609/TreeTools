@@ -157,6 +157,10 @@ normalize_splits <- function(splits, n_tip) {
     .Call(`_TreeTools_normalize_splits`, splits, n_tip)
 }
 
+cpp_topology_hash <- function(edge, nTip) {
+    .Call(`_TreeTools_cpp_topology_hash`, edge, nTip)
+}
+
 splits_to_edge <- function(splits, nTip) {
     .Call(`_TreeTools_splits_to_edge`, splits, nTip)
 }

@@ -1,3 +1,13 @@
+# TreeTools 2.4.1.9000 (development) #
+
+## C++ API
+
+- New header `TreeTools/edge_to_splits.h` exposes `tips_below()`, the
+  allocation-free edge-to-split pass behind `as.Splits()`, and
+  `topology_hash()`, a fingerprint of an unrooted topology that ignores root
+  position, edge order and node numbering.
+- `as.Splits.phylo()` is marginally faster on large trees.
+
 # TreeTools 2.4.1 (2026-09-11)
 
 ## Bug fixes
