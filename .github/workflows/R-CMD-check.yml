@@ -71,7 +71,7 @@ jobs:
   # ---------------------------------------------------------------------------
   codemeta:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     timeout-minutes: 5  # healthy run is ~15 s
     permissions:
       contents: read
@@ -94,8 +94,8 @@ jobs:
   sense-check:
     needs: codemeta
     if: ${{ !cancelled() && needs.codemeta.outputs.pushed != 'true' }}
-    runs-on: ubuntu-24.04-arm
-    name: sense-check (ubuntu-24.04-arm, release)
+    runs-on: ubuntu-26.04-arm
+    name: sense-check (ubuntu-26.04-arm, release)
 
     env:
       _R_CHECK_CRAN_INCOMING_: true # Seemingly not set by --as-cran
@@ -106,7 +106,6 @@ jobs:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       R_REALLY_FORCE_SYMBOLS: true # Until R4.3
       _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false
-      RSPM: "https://packagemanager.posit.co/cran/__linux__/noble/latest"
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -126,6 +125,7 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: release
+          use-public-rspm: true
 
       - name: Install apt packages
         run: |
@@ -187,9 +187,10 @@ jobs:
           # package from the solve when R is older than the threshold. Without
           # them the leg dies on `phangorn: Needs R >= 4.1.0` -- pak takes the
           # newest version satisfying DESCRIPTION and will not fall back.
+          # R 4.0 stays on 24.04: its 2022 source snapshot predates 26.04's toolchain.
           - {os: ubuntu-24.04, r: "4.0", rspm: "https://packagemanager.posit.co/cran/2022-10-11",
              ignore: "TreeDist=?ignore-before-r=4.0.0 TreeSearch=?ignore-before-r=4.1.0 vdiffr=?ignore-before-r=4.1.0 phangorn=?ignore-before-r=4.1.0"}
-          - {os: ubuntu-24.04-arm, r: "devel", rspm: "https://packagemanager.posit.co/cran/__linux__/noble/latest"}
+          - {os: ubuntu-26.04-arm, r: "devel"}
 
     env:
       _R_CHECK_CRAN_INCOMING_: ${{ github.event_name == 'pull_request' }}
@@ -222,6 +223,8 @@ jobs:
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+          # P3M for the runner's codename, unless the leg pins a snapshot
+          use-public-rspm: ${{ !matrix.config.rspm }}
 
       - name: Install apt packages
         if: runner.os == 'Linux'
@@ -362,7 +365,7 @@ jobs:
   rev-dep-check:
     needs: sense-check
     if: ${{ !cancelled() && needs.sense-check.result == 'success' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     name: revdepcheck (${{ matrix.config.deps }})
 
     concurrency:
