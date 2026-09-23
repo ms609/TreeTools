@@ -260,9 +260,8 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=Rdpack"
     },
-    "SystemRequirements": "C++17"
-  },
-  "fileSize": "1959.72KB",
+    "C++17"
+  ],
   "citation": [
     {
       "@type": "SoftwareSourceCode",
