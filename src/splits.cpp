@@ -5,6 +5,7 @@
 #include <unordered_set> /* for unordered_set */
 #include "../inst/include/TreeTools/assert.h" /* for ASSERT */
 #include "../inst/include/TreeTools.h"
+#include "../inst/include/TreeTools/edge_to_splits.h"
 
 using namespace Rcpp;
 
@@ -72,39 +73,24 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
     Rcpp::stop("Not enough edges in tree for edge_to_splits.");
   }
   
-  std::vector<uintx> splits(n_node * n_bin, 0);
-  
-  auto split = [&](uintx i, uintx j) -> uintx& {
-    return splits[i * n_bin + j];
-  };
-  
-  // Tip initialization
-  for (uintx i = 0; i < n_tip; ++i) {
-    split(i, i / BIN_SIZE) = power_of_two(i % BIN_SIZE);
-  }
+  std::vector<uint8_t> splits(n_node * n_bin, 0);
+  const int* parent = edge.begin();
+  const int* child = parent + n_edge;
+  TreeTools::tips_below(parent, child, n_edge, n_tip, n_bin,
+                        [&order](uintx i) { return uintx(order[i]); },
+                        splits.data());
   
   const int order_root = order[n_edge - 1];
-  const uintx root_node = edge(order_root, 0);
-  uintx root_child = edge(order_root, 1);
+  const uintx root_node = parent[order_root];
+  uintx root_child = child[order_root];
   int32 root_children = 1;
-  
-  for (uintx i = 0; i != n_edge - 1; ++i) { // Omit last edge
+  for (uintx i = 0; i != n_edge - 1; ++i) {
     const int order_i = order[i];
-    const uintx parent = edge(order_i, 0);
-    const uintx child  = edge(order_i, 1);
-    
-    if (parent == root_node) {
+    if (uintx(parent[order_i]) == root_node) {
       ++root_children;
-      if (child > n_tip) {
-        root_child = child;
+      if (uintx(child[order_i]) > n_tip) {
+        root_child = child[order_i];
       }
-    }
-    
-    uintx* parent_split = &splits[(parent - 1) * n_bin];
-    const uintx* child_split = &splits[(child - 1) * n_bin];
-    
-    for (uintx j = 0; j < n_bin; ++j) {
-      parent_split[j] |= child_split[j];
     }
   }
   
@@ -126,13 +112,13 @@ Rcpp::RawMatrix cpp_edge_to_splits(const Rcpp::IntegerMatrix& edge,
   }
   
   Rbyte* __restrict__ ret_data = RAW(ret);
-  const uintx* __restrict__ splits_data = splits.data();
+  const uint8_t* __restrict__ splits_data = splits.data();
   
   for (uintx j = 0; j < n_bin; ++j) {
     Rbyte* __restrict__ dest_col = ret_data + j * n_return;
     
     for (uintx r = 0; r < n_return; ++r) {
-      dest_col[r] = static_cast<Rbyte>(splits_data[valid_rows[r] * n_bin + j]);
+      dest_col[r] = splits_data[valid_rows[r] * n_bin + j];
     }
   }
   
@@ -746,4 +732,11 @@ Rcpp::List normalize_splits(Rcpp::RawMatrix splits, const int n_tip) {
     Rcpp::Named("splits") = splits,
     Rcpp::Named("keep") = keep
   );
+}
+
+// [[Rcpp::export]]
+double cpp_topology_hash(const Rcpp::IntegerMatrix& edge, const int nTip) {
+  const int* parent = edge.begin();
+  return double(TreeTools::topology_hash(parent, parent + edge.nrow(),
+                                         edge.nrow(), nTip) >> 11);
 }
