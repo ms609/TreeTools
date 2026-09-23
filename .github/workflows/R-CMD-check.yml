@@ -391,6 +391,6 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: ms609/actions/revdepcheck@main
+      - uses: ms609/actions/revdepcheck@claude/project-thread-lcggbh  # TEMP: testing sysreqs; restore @main
         with:
           deps: ${{ matrix.config.deps }}
