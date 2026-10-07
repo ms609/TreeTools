@@ -19,6 +19,7 @@
 - `PhyDatToMatrix()` resolves single-state degenerate polymorphisms (e.g.
   `(0,0)`) to that state.
 - `RenumberTips()` no longer fails on trees with no `"order"` attribute.
+- `Preorder()` now validates edge order for trees with a "preorder" order attribute.
 
 ## Code quality
 
