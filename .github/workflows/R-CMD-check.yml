@@ -60,9 +60,10 @@ name: R-CMD-check
 #   sense-check -> ubuntu arm release (cheapest), never cancelled. Fast signal.
 #                  Skipped only when codemeta pushed (the fresh run covers the
 #                  new head).
-#   core        -> Windows (+codecov) / R 4.0 / R devel; only if sense-check passed.
+#   core        -> Windows / R 4.0 / R devel; only if sense-check passed.
+#   coverage    -> covr on arm (cheapest); alongside core.
 #   revdepcheck -> reverse-dependency checks; also only if sense-check passed.
-#   full        -> macOS x2 backstop; only once core is green.
+#   full        -> macOS x2 backstop; only once core and coverage are green.
 jobs:
   # ---------------------------------------------------------------------------
   # Wave 0 (PRs only): is codemeta.json current? If stale, pushes the
@@ -162,7 +163,7 @@ jobs:
             });
 
   # ---------------------------------------------------------------------------
-  # Wave 2: Windows (+codecov), R 4.0, R devel. Runs only if the sense-check
+  # Wave 2: Windows, R 4.0, R devel. Runs only if the sense-check
   # passed and codemeta.json is current (or not checked, outside PRs).
   # Per-leg concurrency so a superseding push cancels in-flight legs.
   # ---------------------------------------------------------------------------
@@ -202,7 +203,6 @@ jobs:
       R_REALLY_FORCE_SYMBOLS: true # Until R4.3
       _R_CHECK_CRAN_INCOMING_USE_ASPELL_: false # Set to true when can figure how to install aspell on Windows
       RSPM: ${{ matrix.config.rspm }}
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -245,7 +245,6 @@ jobs:
         with:
           needs: |
             check
-            ${{ runner.os == 'Windows' && 'coverage' || '' }}
           # One-line expression, not a block scalar: a block scalar renders a
           # bare newline when `ignore` is unset, which pak parses as a ref "".
           extra-packages: ${{ matrix.config.ignore }}
@@ -253,10 +252,74 @@ jobs:
       - name: Check package
         uses: r-lib/actions/check-r-package@v2
 
+      - name: Notify on failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              body: 'Scheduled workflow has failed: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            });
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 170,
+              state: 'open'
+            });
+
+  # ---------------------------------------------------------------------------
+  # Wave 2, alongside core: code coverage on the cheapest runner. covr compiles
+  # its own instrumented build and runs the whole suite, so it is a job of its
+  # own rather than a step after some leg's R CMD check.
+  # ---------------------------------------------------------------------------
+  coverage:
+    needs: [sense-check, codemeta]
+    if: >-
+      !cancelled() && needs.sense-check.result == 'success' &&
+      contains(fromJSON('["success", "skipped"]'), needs.codemeta.result)
+    runs-on: ubuntu-26.04-arm
+    name: coverage (ubuntu-26.04-arm, release)
+
+    concurrency:
+      group: ${{ github.workflow }}-coverage-${{ github.ref }}
+      cancel-in-progress: true
+
+    env:
+      R_COMPILE_AND_INSTALL_PACKAGES: 'never'
+      R_REMOTES_STANDALONE: true
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v6
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: Set up R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          cache-version: 1-${{ runner.arch }}
+          needs: |
+            coverage
+
       - name: Code coverage
-        if: runner.os == 'Windows'
+        # quiet = FALSE streams the instrumented test run to the job log, so a
+        # test that fails only under covr shows its failure, not a temp path.
         run: |
-          covr::codecov()
+          cov <- covr::package_coverage(quiet = FALSE)
+          print(cov)
+          covr::codecov(coverage = cov)
         shell: Rscript {0}
 
       - name: Notify on failure
@@ -280,12 +343,12 @@ jobs:
             });
 
   # ---------------------------------------------------------------------------
-  # Wave 3 (backstop): the expensive macOS legs. Only runs once the core wave is
-  # green, which in practice is "about to merge". macOS is ~10x runner-minutes,
-  # so keeping it off every push is the big save.
+  # Wave 3 (backstop): the expensive macOS legs. Only runs once the core wave
+  # and coverage are green, which in practice is "about to merge". macOS is
+  # ~10x runner-minutes, so keeping it off every push is the big save.
   # ---------------------------------------------------------------------------
   full:
-    needs: core
+    needs: [core, coverage]
     runs-on: ${{ matrix.config.os }}
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 
