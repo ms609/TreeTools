@@ -43,23 +43,19 @@ namespace TreeTools {
     return T(1) << bit_pos;
   }
   
-// Hardware POPCNT: available on all x86-64 since 2008 (Nehalem / Barcelona).
-  // Inline asm emits the instruction directly, without requiring -mpopcnt.
-#if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__)
+#if defined(__GNUC__) || defined(__clang__)
+  // Portable: on x86-64 this is a short bit-counting sequence (POPCNT is not
+  // part of baseline x86-64, so the compiler won't emit it here); on other
+  // architectures it maps to the native instruction. Hot loops over many
+  // words should go through count_in_split() below, which uses POPCNT on
+  // x86-64 CPUs that have it.
   inline int32 count_bits(splitbit x) {
-    uint64_t result;
-    __asm__ ("popcnt %1, %0" : "=r" (result) : "r" (x));
-    return static_cast<int32>(result);
+    return static_cast<int32>(__builtin_popcountll(x));
   }
 #elif defined(_MSC_VER) && defined(_M_X64)
 #include <intrin.h>
   inline int32 count_bits(splitbit x) {
     return static_cast<int32>(__popcnt64(x));
-  }
-#elif defined(__GNUC__) || defined(__clang__)
-  // Non-x86 (ARM, etc.): builtin maps to efficient native instruction
-  inline int32 count_bits(splitbit x) {
-    return static_cast<int32>(__builtin_popcountll(x));
   }
 #else
   inline int32_t count_bits(splitbit x) {
@@ -69,6 +65,75 @@ namespace TreeTools {
       ++count;
     }
     return count;
+  }
+#endif
+
+  // Sums the bits set in each split of a packed state. Written once; on
+  // x86-64 it is compiled twice below, with and without POPCNT enabled.
+  // always_inline makes the compiler translate the body in the context of
+  // whichever wrapper calls it, so count_bits() becomes the POPCNT
+  // instruction inside count_in_split_hw().
+#if defined(__GNUC__) || defined(__clang__)
+  __attribute__((always_inline))
+#endif
+  inline void count_in_split_generic(splitbit** state, int32* in_split,
+                                     int32 n_splits, int32 n_bins) {
+    for (int32 split = 0; split < n_splits; ++split) {
+      int32 n = 0;
+      for (int32 bin = 0; bin < n_bins; ++bin) {
+        n += count_bits(state[split][bin]);
+      }
+      in_split[split] = n;
+    }
+  }
+
+#if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__)
+  // POPCNT belongs to x86-64-v2, not to baseline x86-64, so CPUs without it
+  // (notably virtual CPUs with a generic model such as QEMU's qemu64) fault
+  // with SIGILL if the instruction is executed. The target attribute lets the
+  // compiler use it in this one function; a runtime CPUID check decides
+  // whether that function may be called.
+
+  // Compiled with POPCNT enabled: the popcounts inside become the single
+  // POPCNT instruction. Only call this when the CPU has been checked to
+  // support it.
+  __attribute__((target("popcnt")))
+  inline void count_in_split_hw(splitbit** state, int32* in_split,
+                                int32 n_splits, int32 n_bins) {
+    count_in_split_generic(state, in_split, n_splits, n_bins);
+  }
+
+  // Compiled for baseline x86-64: the same body, portable on any CPU.
+  inline void count_in_split_sw(splitbit** state, int32* in_split,
+                                int32 n_splits, int32 n_bins) {
+    count_in_split_generic(state, in_split, n_splits, n_bins);
+  }
+
+  // Runtime check of the CPUID feature flag. __builtin_cpu_init() is cheap
+  // and makes the check safe regardless of when it is first called.
+  inline bool cpu_has_popcnt() {
+    __builtin_cpu_init();
+    return __builtin_cpu_supports("popcnt");
+  }
+
+  // Evaluated once, when the shared object that includes this header is
+  // loaded. A namespace-scope inline variable (C++17) avoids the per-call
+  // guard that a function-local static would need.
+  inline const bool has_popcnt = cpu_has_popcnt();
+
+  // Dispatch once per call, not once per word.
+  inline void count_in_split(splitbit** state, int32* in_split,
+                             int32 n_splits, int32 n_bins) {
+    if (has_popcnt) {
+      count_in_split_hw(state, in_split, n_splits, n_bins);
+    } else {
+      count_in_split_sw(state, in_split, n_splits, n_bins);
+    }
+  }
+#else
+  inline void count_in_split(splitbit** state, int32* in_split,
+                             int32 n_splits, int32 n_bins) {
+    count_in_split_generic(state, in_split, n_splits, n_bins);
   }
 #endif
 
@@ -146,7 +211,6 @@ namespace TreeTools {
           }
           
           state[split][bin] = combined;
-          in_split[split] += count_bits(combined);
         }
       }
       
@@ -159,9 +223,9 @@ namespace TreeTools {
         for (int32 input_bin = 1; input_bin < raggedy_bins; ++input_bin) {
           state[split][last_bin] += INBIN(input_bin, last_bin);
         }
-        
-        in_split[split] += count_bits(state[split][last_bin]);
       }
+      
+      count_in_split(state, in_split, n_splits, n_bins);
     }
     
     // Default destructor handles vector cleanup automatically
