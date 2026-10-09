@@ -2,6 +2,10 @@
 
 ## C++ API
 
+- `count_bits()` in `SplitList.h` checks at runtime that the CPU supports
+  POPCNT before using it, instead of executing the instruction
+  unconditionally, which crashed R with "illegal operation" on x86-64 CPUs
+  without it (e.g. virtual machines with a generic CPU model) (#287).
 - New header `TreeTools/edge_to_splits.h` exposes `tips_below()`, the
   allocation-free edge-to-split pass behind `as.Splits()`, and
   `topology_hash()`, a fingerprint of an unrooted topology that ignores root

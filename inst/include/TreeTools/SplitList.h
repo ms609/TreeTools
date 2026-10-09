@@ -43,13 +43,39 @@ namespace TreeTools {
     return T(1) << bit_pos;
   }
   
-// Hardware POPCNT: available on all x86-64 since 2008 (Nehalem / Barcelona).
-  // Inline asm emits the instruction directly, without requiring -mpopcnt.
 #if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__)
+  // POPCNT is not part of baseline x86-64 (it belongs to x86-64-v2), so the
+  // compiler will only emit the instruction for code it has been told may use
+  // it, and CPUs without it -- notably virtual CPUs with a generic model such
+  // as QEMU's qemu64 -- fault with SIGILL if it is executed anyway. The two
+  // functions below call the same builtin; what differs is the target the
+  // compiler assumes when it translates each one.
+
+  // Compiled with POPCNT enabled: __builtin_popcountll becomes the single
+  // POPCNT instruction. Only call this when the CPU has been checked to
+  // support it.
+  __attribute__((target("popcnt")))
+  inline int32 count_bits_hw(splitbit x) {
+    return static_cast<int32>(__builtin_popcountll(x));
+  }
+
+  // Compiled for baseline x86-64: the same builtin becomes a portable
+  // bit-counting sequence (or a libgcc call) that runs on any CPU.
+  inline int32 count_bits_sw(splitbit x) {
+    return static_cast<int32>(__builtin_popcountll(x));
+  }
+
+  // Runtime check of the CPUID feature flag. __builtin_cpu_init() is cheap
+  // and makes the check safe regardless of when it is first called.
+  inline bool cpu_has_popcnt() {
+    __builtin_cpu_init();
+    return __builtin_cpu_supports("popcnt");
+  }
+
+  // Dispatch once per process, then take the fast path on CPUs that have it.
   inline int32 count_bits(splitbit x) {
-    uint64_t result;
-    __asm__ ("popcnt %1, %0" : "=r" (result) : "r" (x));
-    return static_cast<int32>(result);
+    static const bool has_popcnt = cpu_has_popcnt();
+    return has_popcnt ? count_bits_hw(x) : count_bits_sw(x);
   }
 #elif defined(_MSC_VER) && defined(_M_X64)
 #include <intrin.h>
