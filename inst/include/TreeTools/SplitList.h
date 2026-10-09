@@ -72,9 +72,14 @@ namespace TreeTools {
     return __builtin_cpu_supports("popcnt");
   }
 
-  // Dispatch once per process, then take the fast path on CPUs that have it.
+  // Evaluated once, when the shared object that includes this header is
+  // loaded. A namespace-scope inline variable (C++17) avoids the per-call
+  // guard that a function-local static would need.
+  inline const bool has_popcnt = cpu_has_popcnt();
+
+  // Take the fast path on CPUs that have the instruction. The branch is on a
+  // constant, so it is predicted after the first call.
   inline int32 count_bits(splitbit x) {
-    static const bool has_popcnt = cpu_has_popcnt();
     return has_popcnt ? count_bits_hw(x) : count_bits_sw(x);
   }
 #elif defined(_MSC_VER) && defined(_M_X64)
