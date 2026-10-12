@@ -2,6 +2,14 @@
 
 ## C++ API
 
+- `SplitList.h` no longer executes the x86 POPCNT instruction on CPUs that
+  lack it, which crashed R with "illegal operation" on x86-64 machines without
+  it, e.g. virtual machines with a generic CPU model (#287, @kevinushey).
+  `count_bits()` now checks a CPUID flag, evaluated at load time, before using
+  the instruction. Hot loops should instead call `dispatch_popcount()` with a
+  kernel templated on `PopcountHW` / `PopcountSW`: this checks once per call
+  and runs as fast as before. `TREETOOLS_POPCOUNT_DISPATCH` is defined so that
+  downstream packages can test for this API.
 - New header `TreeTools/edge_to_splits.h` exposes `tips_below()`, the
   allocation-free edge-to-split pass behind `as.Splits()`, and
   `topology_hash()`, a fingerprint of an unrooted topology that ignores root
