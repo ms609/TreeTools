@@ -43,99 +43,113 @@ namespace TreeTools {
     return T(1) << bit_pos;
   }
   
+  // Population count -------------------------------------------------------
+  //
+  // POPCNT belongs to x86-64-v2, not to baseline x86-64: executing it on a
+  // CPU without it (e.g. QEMU's default qemu64 model) raises SIGILL (#287).
+  // On x86-64 the instruction is therefore used only after a CPUID check.
+  //
+  // - count_bits(x): drop-in, safe everywhere; one well-predicted branch on a
+  //   load-time flag per call.
+  // - dispatch_popcount(f): for hot loops. Calls f(PopcountHW{}) or
+  //   f(PopcountSW{}) once; a kernel templated on the policy and calling
+  //   Pop::count(x) runs exactly as fast as unconditional POPCNT, e.g.
+  //
+  //     template <typename Pop> double kernel(...) { ... Pop::count(x) ... }
+  //     return TreeTools::dispatch_popcount([&](auto pop) {
+  //       return kernel<decltype(pop)>(...);
+  //     });
+  //
+  // TREETOOLS_POPCOUNT_DISPATCH lets downstream code test for this API.
+#define TREETOOLS_POPCOUNT_DISPATCH 1
+
+  inline int32 popcount_sw(splitbit x) noexcept {
 #if defined(__GNUC__) || defined(__clang__)
-  // Portable: on x86-64 this is a short bit-counting sequence (POPCNT is not
-  // part of baseline x86-64, so the compiler won't emit it here); on other
-  // architectures it maps to the native instruction. Hot loops over many
-  // words should go through count_in_split() below, which uses POPCNT on
-  // x86-64 CPUs that have it.
-  inline int32 count_bits(splitbit x) {
     return static_cast<int32>(__builtin_popcountll(x));
-  }
-#elif defined(_MSC_VER) && defined(_M_X64)
-#include <intrin.h>
-  inline int32 count_bits(splitbit x) {
-    return static_cast<int32>(__popcnt64(x));
-  }
 #else
-  inline int32_t count_bits(splitbit x) {
-    int32_t count = 0;
+    int32 count = 0;
     while (x != 0) {
       x &= (x - 1);
       ++count;
     }
     return count;
-  }
 #endif
-
-  // Sums the bits set in each split of a packed state. Written once; on
-  // x86-64 it is compiled twice below, with and without POPCNT enabled.
-  // always_inline makes the compiler translate the body in the context of
-  // whichever wrapper calls it, so count_bits() becomes the POPCNT
-  // instruction inside count_in_split_hw().
-#if defined(__GNUC__) || defined(__clang__)
-  __attribute__((always_inline))
-#endif
-  inline void count_in_split_generic(splitbit** state, int32* in_split,
-                                     int32 n_splits, int32 n_bins) {
-    for (int32 split = 0; split < n_splits; ++split) {
-      int32 n = 0;
-      for (int32 bin = 0; bin < n_bins; ++bin) {
-        n += count_bits(state[split][bin]);
-      }
-      in_split[split] = n;
-    }
   }
 
-#if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__)
-  // POPCNT belongs to x86-64-v2, not to baseline x86-64, so CPUs without it
-  // (notably virtual CPUs with a generic model such as QEMU's qemu64) fault
-  // with SIGILL if the instruction is executed. The target attribute lets the
-  // compiler use it in this one function; a runtime CPUID check decides
-  // whether that function may be called.
-
-  // Compiled with POPCNT enabled: the popcounts inside become the single
-  // POPCNT instruction. Only call this when the CPU has been checked to
-  // support it.
-  __attribute__((target("popcnt")))
-  inline void count_in_split_hw(splitbit** state, int32* in_split,
-                                int32 n_splits, int32 n_bins) {
-    count_in_split_generic(state, in_split, n_splits, n_bins);
-  }
-
-  // Compiled for baseline x86-64: the same body, portable on any CPU.
-  inline void count_in_split_sw(splitbit** state, int32* in_split,
-                                int32 n_splits, int32 n_bins) {
-    count_in_split_generic(state, in_split, n_splits, n_bins);
-  }
-
-  // Runtime check of the CPUID feature flag. __builtin_cpu_init() is cheap
-  // and makes the check safe regardless of when it is first called.
-  inline bool cpu_has_popcnt() {
+#if (defined(__GNUC__) || defined(__clang__)) && defined(__x86_64__) && \
+    !defined(__POPCNT__)
+  inline bool cpu_has_popcnt() noexcept {
     __builtin_cpu_init();
     return __builtin_cpu_supports("popcnt");
   }
 
   // Evaluated once, when the shared object that includes this header is
-  // loaded. A namespace-scope inline variable (C++17) avoids the per-call
-  // guard that a function-local static would need.
+  // loaded. Anything that runs before dynamic initialization reads false and
+  // takes the portable path, so the instruction is never reached unchecked.
   inline const bool has_popcnt = cpu_has_popcnt();
 
-  // Dispatch once per call, not once per word.
-  inline void count_in_split(splitbit** state, int32* in_split,
-                             int32 n_splits, int32 n_bins) {
-    if (has_popcnt) {
-      count_in_split_hw(state, in_split, n_splits, n_bins);
-    } else {
-      count_in_split_sw(state, in_split, n_splits, n_bins);
-    }
+  // Executes POPCNT unconditionally: call only where has_popcnt is true.
+  // volatile stops the compiler hoisting the instruction above that check.
+  inline int32 popcount_hw(splitbit x) noexcept {
+    uint64_t result;
+    __asm__ __volatile__ ("popcnt %1, %0" : "=r" (result) : "r" (x));
+    return static_cast<int32>(result);
+  }
+#elif defined(_MSC_VER) && defined(_M_X64)
+#include <intrin.h>
+  // Not used by R; unchanged from previous versions.
+  inline constexpr bool has_popcnt = true;
+  inline int32 popcount_hw(splitbit x) noexcept {
+    return static_cast<int32>(__popcnt64(x));
   }
 #else
+  // Non-x86 (the builtin maps to the native instruction), or x86-64 built
+  // with -mpopcnt / -march=x86-64-v2 or later (it compiles to POPCNT).
+  inline constexpr bool has_popcnt = true;
+  inline int32 popcount_hw(splitbit x) noexcept { return popcount_sw(x); }
+#endif
+
+  inline int32 count_bits(splitbit x) noexcept {
+#if defined(__GNUC__) || defined(__clang__)
+    if (__builtin_expect(has_popcnt, 1)) return popcount_hw(x);
+#else
+    if (has_popcnt) return popcount_hw(x);
+#endif
+    return popcount_sw(x);
+  }
+
+  struct PopcountHW {
+    static int32 count(splitbit x) noexcept { return popcount_hw(x); }
+  };
+  struct PopcountSW {
+    static int32 count(splitbit x) noexcept { return popcount_sw(x); }
+  };
+
+  template <typename F>
+  inline decltype(auto) dispatch_popcount(F&& f) {
+    if (has_popcnt) return f(PopcountHW{});
+    return f(PopcountSW{});
+  }
+
+  // Sums the bits set in each split of a packed state.
+  template <typename Pop>
+  inline void count_in_split_impl(splitbit** state, int32* in_split,
+                                  int32 n_splits, int32 n_bins) {
+    for (int32 split = 0; split < n_splits; ++split) {
+      int32 n = 0;
+      for (int32 bin = 0; bin < n_bins; ++bin) {
+        n += Pop::count(state[split][bin]);
+      }
+      in_split[split] = n;
+    }
+  }
+
   inline void count_in_split(splitbit** state, int32* in_split,
                              int32 n_splits, int32 n_bins) {
-    count_in_split_generic(state, in_split, n_splits, n_bins);
+    dispatch_popcount([&](auto pop) {
+      count_in_split_impl<decltype(pop)>(state, in_split, n_splits, n_bins);
+    });
   }
-#endif
 
   class SplitList {
   public:
