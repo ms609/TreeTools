@@ -186,9 +186,20 @@ jobs:
             // Create new comment with identifier
             const newCommentBody = benchmarkIdentifier + '\n' + process.env.BENCHMARK_MESSAGE;
 
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: newCommentBody
-            });
+            // Always publish to the job summary, so the report survives when
+            // commenting is impossible (fork PRs get a read-only token).
+            await core.summary.addRaw(process.env.BENCHMARK_MESSAGE).write();
+
+            try {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: newCommentBody
+              });
+            } catch (error) {
+              core.warning(
+                `Could not post benchmark comment (fork PR?): ${error.message}. ` +
+                'See the job summary for the report.'
+              );
+            }
