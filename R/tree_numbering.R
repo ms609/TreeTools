@@ -296,9 +296,9 @@ Postorder.phylo <- function(tree, force = FALSE) {
           (length(treeSuborder) == 0 ||
            treeSuborder != "TreeTools"))) {
     weight <- tree[["edge.length"]]
-    edge <- tree[["edge"]]
-    parent <- edge[, 1]
-    child <- edge[, 2]
+    oldEdge <- tree[["edge"]]
+    parent <- oldEdge[, 1]
+    child <- oldEdge[, 2]
     if (!is.null(weight)) {
       rnt <- RenumberTree(parent, child, weight)
       edge <- rnt[[1]]
@@ -311,6 +311,12 @@ Postorder.phylo <- function(tree, force = FALSE) {
                         method = "radix")
     }
     tree[["edge"]] <- edge[newOrder, , drop = FALSE]
+    nodeLabels <- tree[["node.label"]]
+    if (length(nodeLabels)) {
+      tree[["node.label"]] <- nodeLabels[
+        node_label_order(edge, oldEdge, length(tree[["tip.label"]]))
+      ]
+    }
     attr(tree, "order") <- "postorder"
     attr(tree, "suborder") <- "TreeTools"
   }
@@ -465,7 +471,10 @@ Preorder.phylo <- function(tree, topologyOnly = FALSE) {
       }
       nodeLabels <- tree[["node.label"]]
       if (length(nodeLabels)) {
-        tree[["node.label"]] <- .UpdateNodeLabel.numeric(edge, tree, nodeLabels)
+        # Move each label to the renumbered node subtending the same clade
+        tree[["node.label"]] <- nodeLabels[
+          node_label_order(tree[["edge"]], edge, length(tree[["tip.label"]]))
+        ]
       }
     }
     attr(tree, "order") <- "preorder"
@@ -545,6 +554,11 @@ TntOrder.phylo <- function(tree) {
     }
     stopifnot(all(newNo > 0)) # TODO remove once fully tested
     tree[["edge"]][] <- newNo[edge]
+    nodeLabels <- tree[["node.label"]]
+    if (length(nodeLabels)) {
+      nodeLabels[newNo[-seq_len(nTip)] - nTip] <- nodeLabels
+      tree[["node.label"]] <- nodeLabels
+    }
     attr(tree, "order") <- "tnt"
     attr(tree, "suborder") <- NULL
     

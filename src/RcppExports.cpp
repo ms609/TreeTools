@@ -261,6 +261,33 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// match_clades
+IntegerVector match_clades(const IntegerMatrix x_edge, const IntegerMatrix t_edge, const IntegerVector tip_match, const bool edges);
+RcppExport SEXP _TreeTools_match_clades(SEXP x_edgeSEXP, SEXP t_edgeSEXP, SEXP tip_matchSEXP, SEXP edgesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type x_edge(x_edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type t_edge(t_edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector >::type tip_match(tip_matchSEXP);
+    Rcpp::traits::input_parameter< const bool >::type edges(edgesSEXP);
+    rcpp_result_gen = Rcpp::wrap(match_clades(x_edge, t_edge, tip_match, edges));
+    return rcpp_result_gen;
+END_RCPP
+}
+// node_label_order
+IntegerVector node_label_order(const IntegerMatrix new_edge, const IntegerMatrix old_edge, const int n_tip);
+RcppExport SEXP _TreeTools_node_label_order(SEXP new_edgeSEXP, SEXP old_edgeSEXP, SEXP n_tipSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type new_edge(new_edgeSEXP);
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type old_edge(old_edgeSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_tip(n_tipSEXP);
+    rcpp_result_gen = Rcpp::wrap(node_label_order(new_edge, old_edge, n_tip));
+    return rcpp_result_gen;
+END_RCPP
+}
 // minimum_spanning_tree
 IntegerMatrix minimum_spanning_tree(const IntegerVector order);
 RcppExport SEXP _TreeTools_minimum_spanning_tree(SEXP orderSEXP) {
@@ -581,6 +608,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_TreeTools_edge_to_mixed_base", (DL_FUNC) &_TreeTools_edge_to_mixed_base, 3},
     {"_TreeTools_mixed_base_to_parent", (DL_FUNC) &_TreeTools_mixed_base_to_parent, 2},
     {"_TreeTools_kept_vertices", (DL_FUNC) &_TreeTools_kept_vertices, 2},
+    {"_TreeTools_match_clades", (DL_FUNC) &_TreeTools_match_clades, 4},
+    {"_TreeTools_node_label_order", (DL_FUNC) &_TreeTools_node_label_order, 3},
     {"_TreeTools_minimum_spanning_tree", (DL_FUNC) &_TreeTools_minimum_spanning_tree, 1},
     {"_TreeTools_n_cherries_wrapper", (DL_FUNC) &_TreeTools_n_cherries_wrapper, 3},
     {"_TreeTools_node_depth_unrooted", (DL_FUNC) &_TreeTools_node_depth_unrooted, 4},
