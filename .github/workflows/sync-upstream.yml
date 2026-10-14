@@ -1,8 +1,14 @@
 name: Sync from upstream
 
-# Propagates human commits on ms609/TreeTools main into this fork's main.
-# On conflict the merge is left for an agent: an issue is filed listing the
-# conflicted paths, and resolving it is the first task of the next session.
+# Propagates commits on ms609/TreeTools main into this fork's main.
+#
+# Pushes as the codemeta-writer App: unlike GITHUB_TOKEN, its token may push
+# commits that change files under .github/workflows/, and its pushes start
+# the usual CI runs on main.  The App needs Contents and Workflows (write).
+#
+# Any failure files a `chore` issue, which the next successful run closes.
+# A merge conflict is left for an agent: the issue lists the conflicted
+# paths, and resolving it is the first task of the next session.
 #
 # NOTE: scheduled workflows are disabled after 60 days of repository
 # inactivity. Re-arm with a manual `workflow_dispatch` run.
@@ -13,21 +19,37 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 concurrency:
   group: sync-upstream
   cancel-in-progress: false
 
+env:
+  CONFLICT_TITLE: "Resolve upstream sync conflict into `main`"
+  FAILURE_TITLE: "Upstream sync failed"
+
 jobs:
   sync:
+    # This file is shared with ms609/TreeTools, where there is nothing to sync.
+    if: github.repository == 'agent-issues/TreeTools'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Mint app token
+        id: app
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.CODEMETA_APP_ID }}
+          private-key: ${{ secrets.CODEMETA_APP_KEY }}
+          permission-contents: write
+          permission-workflows: write
+
+      - uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
+          token: ${{ steps.app.outputs.token }}
 
       - name: Identify as the agent account
         run: |
@@ -56,10 +78,11 @@ jobs:
       - name: File a conflict issue
         if: steps.merge.outputs.state == 'conflict'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          TITLE="Resolve upstream sync conflict into \`main\`"
-          if gh issue list --state open --search "$TITLE in:title" --json number --jq 'length' | grep -qv '^0$'; then
+          if gh issue list -R "$GITHUB_REPOSITORY" --state open \
+               --search "\"$CONFLICT_TITLE\" in:title" --json number \
+               --jq 'length' | grep -qv '^0$'; then
             echo "An open sync-conflict issue already exists; not filing a duplicate."
             exit 0
           fi
@@ -79,4 +102,46 @@ jobs:
             echo
             echo "\`DESCRIPTION\` and \`NEWS.md\` conflict routinely — take both sides."
           } > /tmp/body.md
-          gh issue create --title "$TITLE" --body-file /tmp/body.md --label chore
+          gh issue create -R "$GITHUB_REPOSITORY" --title "$CONFLICT_TITLE" \
+            --body-file /tmp/body.md --label chore
+
+      - name: Close resolved failure issues
+        if: success() && steps.merge.outputs.state != 'conflict'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue list -R "$GITHUB_REPOSITORY" --state open \
+            --search "\"$FAILURE_TITLE\" in:title" --json number --jq '.[].number' |
+            while read -r n; do
+              gh issue close -R "$GITHUB_REPOSITORY" "$n" \
+                --comment "Sync succeeded in $RUN_URL."
+            done
+
+      - name: File a failure issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if gh issue list -R "$GITHUB_REPOSITORY" --state open \
+               --search "\"$FAILURE_TITLE\" in:title" --json number \
+               --jq 'length' | grep -qv '^0$'; then
+            echo "An open sync-failure issue already exists; not filing a duplicate."
+            exit 0
+          fi
+          {
+            echo "The upstream sync failed: $RUN_URL"
+            echo
+            echo "Read the failing step's log. Known causes:"
+            echo
+            echo "- **Push refused** (\`refusing to allow a GitHub App to create or update workflow\`):"
+            echo "  the codemeta-writer App lacks *Workflows: write*, or the agent-issues"
+            echo "  installation has not accepted the new permission."
+            echo "- **Token step failed**: \`CODEMETA_APP_KEY\` or \`vars.CODEMETA_APP_ID\` is"
+            echo "  missing or revoked (keys: https://github.com/settings/apps/codemeta-writer/key_pairs)."
+            echo
+            echo "Once fixed, re-run *Sync from upstream* from the Actions tab; a successful run closes this issue."
+          } > /tmp/body.md
+          gh issue create -R "$GITHUB_REPOSITORY" --title "$FAILURE_TITLE" \
+            --body-file /tmp/body.md --label chore
