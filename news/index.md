@@ -1,6 +1,38 @@
 # Changelog
 
+## TreeTools 2.5.0 (2026-10-16)
+
+### New features
+
+- [`Preorder()`](https://ms609.github.io/TreeTools/reference/Reorder.md),
+  [`Postorder()`](https://ms609.github.io/TreeTools/reference/Reorder.md)
+  and
+  [`TntOrder()`](https://ms609.github.io/TreeTools/reference/Reorder.md)
+  now support node labels.
+- [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md)
+  now respects `nomatch`.
+
+### Performance
+
+- [`MatchNodes()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md)
+  and
+  [`MatchEdges()`](https://ms609.github.io/TreeTools/reference/MatchEdges.md)
+  run in linear time, using a cluster table in place of a tip-by-edge
+  matrix ([\#161](https://github.com/ms609/TreeTools/issues/161)).
+
+### C++ API
+
+- Avoid crash in `SplitList.h` on CPUs that lack x86 POPCNT instruction
+  ([\#287](https://github.com/ms609/TreeTools/issues/287),
+  [@kevinushey](https://github.com/kevinushey)).
+- New header `TreeTools/edge_to_splits.h` exposes `tips_below()` and
+  `topology_hash()`.
+- [`as.Splits.phylo()`](https://ms609.github.io/TreeTools/reference/Splits.md)
+  is marginally faster on large trees.
+
 ## TreeTools 2.4.1 (2026-09-11)
+
+CRAN release: 2026-09-10
 
 ### Bug fixes
 

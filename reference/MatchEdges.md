@@ -31,11 +31,28 @@ MatchNodes(x, table, nomatch = NA_integer_, tips = FALSE)
   Logical specifying whether to return matches for tips; unless `TRUE`,
   only the matches for internal nodes will be returned.
 
+## Value
+
+`MatchNodes()` returns an integer vector giving, for each internal node
+of `x` (and, if `tips = TRUE`, each tip, listed first), the number of
+the node in `table` that subtends the same clade, or `nomatch` if no
+node corresponds.
+
+`MatchEdges()` returns an integer vector giving, for each edge of `x`,
+the index of the edge in `table` that subtends the same clade, or
+`nomatch`. Where several nodes or edges of `table` denote the same clade
+(because of nodes with a single child), the first is returned.
+
 ## Details
 
-The current implementation is potentially inefficient. Please contact
-the maintainer to request a more efficient implementation if this
-function is proving a bottleneck.
+`MatchNodes()` treats clades as identical only if they contain exactly
+the same tips. `MatchEdges()` disregards tips of `table` that are absent
+from `x`.
+
+## References
+
+There are no references for Rd macro `\insertAllCites` on this help
+page.
 
 ## See also
 
@@ -78,4 +95,6 @@ Other tree properties:
 ``` r
 MatchNodes(BalancedTree(8), RootTree(BalancedTree(8)))
 #> [1]  9 10 11 12 13 14 15
+MatchEdges(BalancedTree(8), RootTree(BalancedTree(8)))
+#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14
 ```
