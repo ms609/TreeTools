@@ -20,17 +20,32 @@ where no match is found.}
 \item{tips}{Logical specifying whether to return matches for tips;
 unless \code{TRUE}, only the matches for internal nodes will be returned.}
 }
+\value{
+\code{MatchNodes()} returns an integer vector giving, for each internal
+node of \code{x} (and, if \code{tips = TRUE}, each tip, listed first), the number of
+the node in \code{table} that subtends the same clade, or \code{nomatch} if no node
+corresponds.
+
+\code{MatchEdges()} returns an integer vector giving, for each edge of \code{x},
+the index of the edge in \code{table} that subtends the same clade, or \code{nomatch}.
+Where several nodes or edges of \code{table} denote the same clade (because of
+nodes with a single child), the first is returned.
+}
 \description{
 \code{MatchNodes()} and \code{MatchEdges()} matches nodes or edges in one tree to
 entries in the second that denote a clade with identical tip labels.
 }
 \details{
-The current implementation is potentially inefficient.
-Please contact the maintainer to request a more efficient implementation if
-this function is proving a bottleneck.
+\code{MatchNodes()} treats clades as identical only if they contain exactly the
+same tips.
+\code{MatchEdges()} disregards tips of \code{table} that are absent from \code{x}.
 }
 \examples{
 MatchNodes(BalancedTree(8), RootTree(BalancedTree(8)))
+MatchEdges(BalancedTree(8), RootTree(BalancedTree(8)))
+}
+\references{
+\insertAllCited{}
 }
 \seealso{
 Other tree navigation:

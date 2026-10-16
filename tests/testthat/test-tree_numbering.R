@@ -416,6 +416,33 @@ test_that("Reorder methods retain node labels", {
   expect_equal(Preorder(Postorder(bal7))[["node.label"]], startLabels)
 })
 
+test_that("Reorder methods move node labels with their nodes", {
+  # Label each node by its clade, then check labels after renumbering
+  .CladeLabels <- function(tr) {
+    parts <- ape::prop.part(tr)
+    vapply(parts, function(x) paste(sort(attr(parts, "labels")[x]),
+                                    collapse = " "), "")
+  }
+  set.seed(161)
+  tree <- RandomTree(12, root = TRUE)
+  # Number internal nodes in an order other than preorder
+  nTip <- NTip(tree)
+  nodeOrder <- c(seq_len(nTip + 1), nTip + 1 + sample(tree[["Nnode"]] - 1))
+  tree[["edge"]][] <- nodeOrder[tree[["edge"]]]
+  attr(tree, "order") <- NULL
+  tree[["node.label"]] <- .CladeLabels(tree)
+  noLengths <- tree
+  noLengths[["edge.length"]] <- NULL
+  
+  for (tr in list(tree, noLengths)) {
+    for (Method in list(Preorder, Postorder, TntOrder, Cladewise,
+                        ApePostorder, Pruningwise)) {
+      reordered <- Method(tr)
+      expect_equal(reordered[["node.label"]], .CladeLabels(reordered))
+    }
+  }
+})
+
 test_that("Malformed trees don't cause crashes", {
   treeDoubleNode <- read.tree(text = "((((((1,2)),3),4),5),6);")
   treePolytomy   <- read.tree(text = "((((1,2,3),4),5),6);")

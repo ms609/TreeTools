@@ -73,3 +73,104 @@ test_that(".UpdateNodeLabel() works", {
                c(NA, .Node(5:7), rep(NA, 3)))
   
 })
+
+test_that("MatchNodes() handles differing tip sets", {
+  tree <- BalancedTree(8)
+  # Clades must contain exactly the same tips
+  sub <- DropTip(tree, "t8")
+  expect_equal(MatchNodes(sub, tree), c(NA, 10:12, NA, 14))
+  expect_equal(MatchNodes(tree, sub), c(NA, 9:11, NA, 13, NA))
+  # ... but MatchEdges() disregards tips of `table` absent from `x`
+  expect_equal(MatchEdges(sub, tree), 1:12)
+  expect_equal(MatchEdges(tree, sub, nomatch = 0L),
+               c(1:7, 0, 9:11, 0, 12, 0))
+  
+  # Tip order is immaterial
+  shuffled <- RenumberTips(tree, rev(TipLabels(tree)))
+  expect_equal(MatchNodes(tree, shuffled, tips = TRUE), c(8:1, 9:15))
+})
+
+test_that("MatchNodes() handles nodes with a single child", {
+  # Unary nodes above clade (t1, t2), above tip t3 and at the root
+  tree <- read.tree(text = "((((t1, t2)), (t3)), t4);")
+  ref <- read.tree(text = "(((t1, t2), t3), t4);")
+  expect_equal(MatchNodes(ref, tree), c(5, 6, 7))
+  expect_equal(MatchNodes(tree, ref), c(5, 6, 7, 7, 3))
+  expect_equal(MatchNodes(tree, ref, tips = TRUE),
+               c(1:4, 5, 6, 7, 7, 3))
+  # First matching edge is reported
+  expect_equal(MatchEdges(ref, tree), c(1, 2, 4, 5, 6, 8))
+  rootUnary <- read.tree(text = "((((t1, t2), t3), t4));")
+  expect_equal(MatchNodes(rootUnary, ref), c(5, 5, 6, 7))
+  expect_equal(MatchNodes(ref, rootUnary), c(6, 7, 8))
+})
+
+test_that("MatchNodes() matches a brute-force reference", {
+  # Key each clade by its sorted tip labels
+  .Keys <- function(tr, keep = tr[["tip.label"]]) {
+    edge <- tr[["edge"]]
+    desc <- DescendantTips(edge[, 1], edge[, 2])
+    apply(desc, 1, function(x) {
+      paste(sort(intersect(tr[["tip.label"]][x], keep)), collapse = "\r")
+    })
+  }
+  .RefNodes <- function(x, table) {
+    nodeX <- c(x[["edge"]][, 2], NTip(x) + 1L)
+    keyX <- c(.Keys(x), paste(sort(TipLabels(x)), collapse = "\r"))
+    nodeT <- c(table[["edge"]][, 2], NTip(table) + 1L)
+    keyT <- c(.Keys(table), paste(sort(TipLabels(table)), collapse = "\r"))
+    nodeT[match(keyX, keyT)][order(nodeX)]
+  }
+  .RefEdges <- function(x, table) {
+    match(.Keys(x), .Keys(table, keep = TipLabels(x)))
+  }
+  
+  set.seed(161)
+  for (i in 1:40) {
+    x <- RandomTree(sample(4:30, 1), root = runif(1) < 0.5)
+    table <- switch(sample(4, 1),
+                    RandomTree(TipLabels(x), root = TRUE),
+                    RootTree(x, sample(TipLabels(x), 1)),
+                    CollapseNode(x, NTip(x) + 2),
+                    DropTip(x, sample(TipLabels(x), 2)))
+    table <- RenumberTips(table, sample(TipLabels(table)))
+    expect_equal(MatchNodes(x, table, tips = TRUE), .RefNodes(x, table))
+    expect_equal(MatchEdges(x, table), .RefEdges(x, table))
+  }
+})
+
+test_that("MatchNodes() matches unlabelled tips by number", {
+  bal8 <- BalancedTree(8)
+  expect_equal(MatchNodes(bal8[["edge"]], bal8), 9:15)
+  expect_equal(MatchNodes(bal8, bal8[["edge"]], tips = TRUE), 1:15)
+  expect_equal(MatchNodes(bal8[["edge"]], RootTree(bal8, 1)[["edge"]]),
+               MatchNodes(bal8, RootTree(bal8, 1)))
+  expect_equal(MatchEdges(bal8[["edge"]], bal8), 1:14)
+})
+
+test_that("MatchNodes() rejects duplicated tip labels", {
+  dup <- BalancedTree(c("a", "b", "c", "c"))
+  bal4 <- BalancedTree(c("a", "b", "c", "d"))
+  expect_error(MatchNodes(dup, bal4), "unique")
+  expect_error(MatchNodes(bal4, dup), "unique")
+  expect_error(MatchEdges(dup, bal4), "unique")
+  
+  # Internal relabelling matches by tip number, so is unaffected
+  tree <- CollapseNode(BalancedTree(8), 10)
+  tree[["tip.label"]][2] <- tree[["tip.label"]][1]
+  tree[["node.label"]] <- paste0("n", seq_len(tree[["Nnode"]]))
+  binary <- MakeTreeBinary(tree)
+  expect_equal(sum(!is.na(binary[["node.label"]])), tree[["Nnode"]])
+})
+
+test_that("MatchNodes() rejects malformed trees", {
+  bal4 <- BalancedTree(4)
+  twoParents <- bal4
+  twoParents[["edge"]][2, 2] <- twoParents[["edge"]][1, 2]
+  expect_error(MatchNodes(bal4, twoParents), "two parents")
+  expect_error(MatchNodes(twoParents, bal4), "two parents")
+  expect_error(match_clades(matrix(1:3, 1), bal4[["edge"]], 1:4, FALSE),
+               "two columns")
+  expect_error(match_clades(bal4[["edge"]] - 1L, bal4[["edge"]], 1:4, FALSE),
+               "positive")
+})

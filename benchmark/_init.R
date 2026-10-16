@@ -1,19 +1,35 @@
 library("TreeTools")
 
-Benchmark <- function(..., min_iterations = NULL, min_time = NULL) {
-  # Pass ... directly to bench::mark to preserve non-standard evaluation;
-  # do.call() would evaluate expressions first, breaking expression capture.
+Benchmark <- function(..., times = 1L, min_iterations = NULL, min_time = NULL) {
+  # Capture expressions unevaluated, preserving non-standard evaluation.
+  env <- parent.frame()
+  exprs <- as.list(substitute(list(...)))[-1]
+  labels <- vapply(exprs, deparse1, "")
+  if (times > 1L) {
+    # Each timed call should take several ms, so that CI's 0.2 ms floor
+    # (benchmark/_compare_results.R) still exposes a change of a few percent.
+    # Repeat fast calls `times` times in a function that is byte-compiled
+    # once: a bare `for` loop is JIT-compiled at every evaluation, adding ~2 ms.
+    labels <- paste(times, "*", labels)
+    exprs <- lapply(exprs, function(e) {
+      f <- compiler::cmpfun(eval(call("function", NULL, bquote(
+        for (.i in seq_len(.(as.integer(times)))) .(e))), env))
+      as.call(list(f))
+    })
+  }
+  names(exprs) <- labels
   result <- if (is.null(min_time)) {
-    bench::mark(..., min_iterations = min_iterations %||% 3, time_unit = "us")
+    bench::mark(exprs = exprs, env = env,
+                min_iterations = min_iterations %||% 3, time_unit = "us")
   } else {
-    bench::mark(..., min_iterations = min_iterations %||% 3,
+    bench::mark(exprs = exprs, env = env, min_iterations = min_iterations %||% 3,
                 min_time = min_time, time_unit = "us")
   }
   if (interactive()) {
     print(result)
   } else {
     fileroot <- gsub("[\"']", "",
-                     gsub("[\\(\\):, /]", "_", as.character(result$expression)))
+                     gsub("[\\(\\):, /*]", "_", labels))
     .FileName <- function(fileRoot, i) {
       paste0(c(fileroot, i, "bench.Rds"), collapse = ".")
     }

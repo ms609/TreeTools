@@ -81,6 +81,14 @@ kept_vertices <- function(edge, kept) {
     .Call(`_TreeTools_kept_vertices`, edge, kept)
 }
 
+match_clades <- function(x_edge, t_edge, tip_match, edges) {
+    .Call(`_TreeTools_match_clades`, x_edge, t_edge, tip_match, edges)
+}
+
+node_label_order <- function(new_edge, old_edge, n_tip) {
+    .Call(`_TreeTools_node_label_order`, new_edge, old_edge, n_tip)
+}
+
 minimum_spanning_tree <- function(order) {
     .Call(`_TreeTools_minimum_spanning_tree`, order)
 }
