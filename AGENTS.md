@@ -64,10 +64,27 @@ issue on merge into it.
 - **If an open `chore` issue titled "Resolve upstream sync conflict" exists,
   resolve it before anything else.** It lists the conflicted paths. `DESCRIPTION`
   and `NEWS.md` conflict routinely; keep both sides.
+- An open `chore` issue titled "Upstream sync failed" means the sync could not
+  run or push (it lists the known causes). Tell the maintainer; it needs
+  their GitHub settings, not a code change. The next successful run closes it.
 - Scheduled workflows stop after 60 days without repo activity. If the last
   sync run is old, start it manually from the Actions tab.
 - In GitHub's **Sync fork** menu, never choose *Discard commits*. It deletes
   the fork's agent work.
+- Nothing is fork-only: agent files (this file, `dev/`, `sync-upstream.yml`)
+  travel to `ms609/TreeTools` with everything else. Keep them out of the
+  package build (`.Rbuildignore`) and guard fork-only jobs with
+  `if: github.repository == 'agent-issues/TreeTools'`.
+
+## Releasing to `ms609/TreeTools`
+
+The maintainer opens a PR on `ms609/TreeTools` with base `main` and head
+`agent-issues/TreeTools:main`. This PR is the final review point: edits (for
+example, trimming `NEWS.md`) are ordinary commits to the fork's `main`, and the
+PR updates as they land. It is merged with **Create a merge commit** — never
+squash or rebase, which would break the shared history and the next sync. The
+next sync then fast-forwards the fork's `main`. Agents do not open or merge
+this PR.
 
 ## Local checkout
 
