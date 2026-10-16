@@ -1,18 +1,14 @@
-# TreeTools 2.4.1.9000 (development) #
+# TreeTools 2.5.0 (2026-10-16) #
 
-## Bug fixes
+## New features
 
-- `Preorder()`, `Postorder()` and `TntOrder()` now keep each node label with
-  its node.  Previously, labels were attached to the wrong nodes whenever the
-  input tree's internal nodes were not already numbered in preorder.
+- `Preorder()`, `Postorder()` and `TntOrder()` now support node labels.
 - `MatchEdges()` now respects `nomatch`.
 
 ## Performance
 
 - `MatchNodes()` and `MatchEdges()` run in linear time, using a cluster table
-  in place of a tip-by-edge matrix (#161).  `Preorder()` on trees with node
-  labels is correspondingly faster: around 100 times on 45-tip trees, with
-  larger gains on larger trees.
+  in place of a tip-by-edge matrix (#161).
 
 ## C++ API
 
@@ -21,6 +17,7 @@
 - New header `TreeTools/edge_to_splits.h` exposes `tips_below()` and
   `topology_hash()`.
 - `as.Splits.phylo()` is marginally faster on large trees.
+
 
 # TreeTools 2.4.1 (2026-09-11)
 
