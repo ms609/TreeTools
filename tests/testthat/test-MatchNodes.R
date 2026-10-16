@@ -105,7 +105,26 @@ test_that("MatchNodes() handles nodes with a single child", {
   expect_equal(MatchNodes(ref, rootUnary), c(6, 7, 8))
 })
 
-test_that("MatchNodes() matches reference implementation", {
+test_that("MatchNodes() matches a brute-force reference", {
+  # Key each clade by its sorted tip labels
+  .Keys <- function(tr, keep = tr[["tip.label"]]) {
+    edge <- tr[["edge"]]
+    desc <- DescendantTips(edge[, 1], edge[, 2])
+    apply(desc, 1, function(x) {
+      paste(sort(intersect(tr[["tip.label"]][x], keep)), collapse = "\r")
+    })
+  }
+  .RefNodes <- function(x, table) {
+    nodeX <- c(x[["edge"]][, 2], NTip(x) + 1L)
+    keyX <- c(.Keys(x), paste(sort(TipLabels(x)), collapse = "\r"))
+    nodeT <- c(table[["edge"]][, 2], NTip(table) + 1L)
+    keyT <- c(.Keys(table), paste(sort(TipLabels(table)), collapse = "\r"))
+    nodeT[match(keyX, keyT)][order(nodeX)]
+  }
+  .RefEdges <- function(x, table) {
+    match(.Keys(x), .Keys(table, keep = TipLabels(x)))
+  }
+  
   set.seed(161)
   for (i in 1:40) {
     x <- RandomTree(sample(4:30, 1), root = runif(1) < 0.5)
@@ -115,28 +134,33 @@ test_that("MatchNodes() matches reference implementation", {
                     CollapseNode(x, NTip(x) + 2),
                     DropTip(x, sample(TipLabels(x), 2)))
     table <- RenumberTips(table, sample(TipLabels(table)))
-    expect_equal(
-      MatchNodes(x, table, tips = TRUE),
-      .MatchNodesR(x[["edge"]], table[["edge"]], TipLabels(x),
-                   TipLabels(table), tips = TRUE)
-    )
-    expect_equal(
-      MatchEdges(x, table),
-      .MatchEdgesR(x[["edge"]], table[["edge"]], TipLabels(x),
-                   TipLabels(table))
-    )
+    expect_equal(MatchNodes(x, table, tips = TRUE), .RefNodes(x, table))
+    expect_equal(MatchEdges(x, table), .RefEdges(x, table))
   }
 })
 
-test_that("MatchNodes() falls back for duplicated labels", {
+test_that("MatchNodes() matches unlabelled tips by number", {
+  bal8 <- BalancedTree(8)
+  expect_equal(MatchNodes(bal8[["edge"]], bal8), 9:15)
+  expect_equal(MatchNodes(bal8, bal8[["edge"]], tips = TRUE), 1:15)
+  expect_equal(MatchNodes(bal8[["edge"]], RootTree(bal8, 1)[["edge"]]),
+               MatchNodes(bal8, RootTree(bal8, 1)))
+  expect_equal(MatchEdges(bal8[["edge"]], bal8), 1:14)
+})
+
+test_that("MatchNodes() rejects duplicated tip labels", {
   dup <- BalancedTree(c("a", "b", "c", "c"))
   bal4 <- BalancedTree(c("a", "b", "c", "d"))
-  expect_equal(MatchNodes(dup, bal4),
-               .MatchNodesR(dup[["edge"]], bal4[["edge"]],
-                            TipLabels(dup), TipLabels(bal4)))
-  expect_equal(MatchEdges(dup, bal4),
-               .MatchEdgesR(dup[["edge"]], bal4[["edge"]],
-                            TipLabels(dup), TipLabels(bal4)))
+  expect_error(MatchNodes(dup, bal4), "unique")
+  expect_error(MatchNodes(bal4, dup), "unique")
+  expect_error(MatchEdges(dup, bal4), "unique")
+  
+  # Internal relabelling matches by tip number, so is unaffected
+  tree <- CollapseNode(BalancedTree(8), 10)
+  tree[["tip.label"]][2] <- tree[["tip.label"]][1]
+  tree[["node.label"]] <- paste0("n", seq_len(tree[["Nnode"]]))
+  binary <- MakeTreeBinary(tree)
+  expect_equal(sum(!is.na(binary[["node.label"]])), tree[["Nnode"]])
 })
 
 test_that("MatchNodes() rejects malformed trees", {

@@ -38,8 +38,8 @@ entries in the second that denote a clade with identical tip labels.
 Clades are compared using the cluster table of
 \insertCite{Day1985;textual}{TreeTools}, which takes time linear in the
 number of tips.
-Tips are matched by label; \code{MatchEdges()} matches tips by number if
-neither tree has tip labels.
+Tips are matched by label if both trees have tip labels, and otherwise by
+number.  Tip labels must be unique.
 
 \code{MatchNodes()} treats clades as identical only if they contain exactly the
 same tips, so a node of \code{x} that subtends a tip absent from \code{table} has no

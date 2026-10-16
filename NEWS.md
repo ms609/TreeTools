@@ -6,6 +6,8 @@
   its node.  Previously, labels were attached to the wrong nodes whenever the
   input tree's internal nodes were not already numbered in preorder.
 - `MatchEdges()` now respects `nomatch`.
+- `MatchNodes()` and `MatchEdges()` match tips by number unless both trees
+  have tip labels, and signal an error if tip labels are duplicated.
 
 ## Performance
 
