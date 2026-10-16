@@ -9,11 +9,32 @@ output <- paste0(
 
 regressions <- FALSE
 
+# Benchmark() names each expression; fall back to the deparsed call
+.Labels <- function(result) {
+  nm <- names(result[["expression"]])
+  if (length(nm) && all(nzchar(nm))) nm else
+    vapply(result[["expression"]], deparse1, "")
+}
+
 for (pr_file in pr_files) {
   file_name <- basename(pr_file)
   replicate_file <- file.path("pr2-benchmark-results", file_name)
   main_file <- file.path("main-benchmark-results", file_name)
-  if (!file.exists(main_file)) next;
+  if (!file.exists(main_file)) {
+    # No counterpart on the target branch: report PR timings only
+    pr1 <- readRDS(pr_file)
+    pr2 <- if (file.exists(replicate_file)) readRDS(replicate_file) else pr1
+    for (j in seq_along(pr1[["expression"]])) {
+      message <- paste0(
+        "| `", .Labels(pr1)[[j]], "` | \U1F195 New | | ",
+        signif(median(as.numeric(pr1[["time"]][[j]])) * 1e3, 3), ",  ",
+        signif(median(as.numeric(pr2[["time"]][[j]])) * 1e3, 3), " |\n"
+      )
+      cat(message)
+      output <- paste0(output, message)
+    }
+    next
+  }
   
   # Load the results
   rep_exists <- file.exists(replicate_file)
@@ -26,7 +47,7 @@ for (pr_file in pr_files) {
   
   # Use deparse1 for reliable expression-to-string conversion;
   # as.character(unlist()) decomposes call objects into their components.
-  expr_names <- vapply(pr1[["expression"]], deparse1, "")
+  expr_names <- .Labels(pr1)
   
   # Iterate over each function benchmarked
   for (fn_name in unique(expr_names)) {

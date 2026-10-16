@@ -6,12 +6,12 @@ forest1k.888 <- as.phylo(0:1000, 888)
 forestMaj <- c(as.phylo(rep(c(0, 1e9), c(15, 50)), 100),
                structure(lapply(rep(100, 50), BalancedTree), class = "multiPhylo"))
 
-Benchmark(Consensus(forest21.260))
-Benchmark(Consensus(forest21.260, 0.5, FALSE))
-Benchmark(Consensus(forest201.80, check = FALSE))
+Benchmark(Consensus(forest21.260), times = 10)
+Benchmark(Consensus(forest21.260, 0.5, FALSE), times = 10)
+Benchmark(Consensus(forest201.80, check = FALSE), times = 5)
 Benchmark(Consensus(forest1k.888, check = FALSE))
 
-Benchmark(Consensus(forestMaj, 0.5, FALSE))
+Benchmark(Consensus(forestMaj, 0.5, FALSE), times = 5)
 
 
 # library("TreeDist")

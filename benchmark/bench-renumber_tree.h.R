@@ -21,27 +21,27 @@ NodeNumber <- function(edge) {
 bal40 <- BalancedTree(40)$edge
 dbal40 <- Disorder(bal40)
 nbal40 <- NodeNumber(dbal40)
-Benchmark(TreeTools:::postorder_order(bal40))
-Benchmark(TreeTools:::postorder_order(dbal40))
-Benchmark(TreeTools:::postorder_order(nbal40))
+Benchmark(TreeTools:::postorder_order(bal40), times = 10000)
+Benchmark(TreeTools:::postorder_order(dbal40), times = 10000)
+Benchmark(TreeTools:::postorder_order(nbal40), times = 5000)
 
 bal40k <- BalancedTree(40000)$edge
 dbal40k <- Disorder(bal40k)
 nbal40k <- NodeNumber(dbal40k)
-Benchmark(TreeTools:::postorder_order(bal40k))
-Benchmark(TreeTools:::postorder_order(dbal40k))
-Benchmark(TreeTools:::postorder_order(nbal40k))
+Benchmark(TreeTools:::postorder_order(bal40k), times = 50)
+Benchmark(TreeTools:::postorder_order(dbal40k), times = 10)
+Benchmark(TreeTools:::postorder_order(nbal40k), times = 10)
 
 pec40 <- PectinateTree(40)$edge
 dpec40 <- Disorder(pec40)
 npec40 <- NodeNumber(dpec40)
-Benchmark(TreeTools:::postorder_order(pec40))
-Benchmark(TreeTools:::postorder_order(dpec40))
-Benchmark(TreeTools:::postorder_order(npec40))
+Benchmark(TreeTools:::postorder_order(pec40), times = 10000)
+Benchmark(TreeTools:::postorder_order(dpec40), times = 5000)
+Benchmark(TreeTools:::postorder_order(npec40), times = 5000)
 pec40k <- PectinateTree(40000)$edge
 dpec40k <- Disorder(pec40k)
 npec40k <- NodeNumber(dpec40k)
-Benchmark(TreeTools:::postorder_order(pec40k))
+Benchmark(TreeTools:::postorder_order(pec40k), times = 50)
 Benchmark(TreeTools:::postorder_order(dpec40k))
 Benchmark(TreeTools:::postorder_order(npec40k))
 
@@ -49,7 +49,7 @@ r80 <- RandomTree(80, root = TRUE)
 rnd80 <- r80$edge
 drnd80 <- Disorder(rnd80)
 nrnd80 <- NodeNumber(drnd80)
-Benchmark(TreeTools:::postorder_order(rnd80))
-Benchmark(TreeTools:::postorder_order(drnd80))
-Benchmark(TreeTools:::postorder_order(nrnd80))
+Benchmark(TreeTools:::postorder_order(rnd80), times = 5000)
+Benchmark(TreeTools:::postorder_order(drnd80), times = 5000)
+Benchmark(TreeTools:::postorder_order(nrnd80), times = 5000)
 

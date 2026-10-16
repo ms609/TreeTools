@@ -11,16 +11,16 @@ if (!file.exists("benchmark/tr80.rds")) {
 tr80 <- readRDS("benchmark/tr80.rds")
 tr2000 <- readRDS("benchmark/tr2000.rds")
 
-Benchmark(RootTree(tr80, "t3")) # low
-Benchmark(RootTree(tr80, "t30")) # high
-Benchmark(RootTree(tr80, c("t3", "t36"))) # current
-Benchmark(RootTree(tr2000, 5))
+Benchmark(RootTree(tr80, "t3"), times = 500) # low
+Benchmark(RootTree(tr80, "t30"), times = 500) # high
+Benchmark(RootTree(tr80, c("t3", "t36")), times = 200) # current
+Benchmark(RootTree(tr2000, 5), times = 50)
 
 unlen80 <- tr80
 unlen80$edge.length <- NULL
 unlen2k <- tr2000
 unlen2k$edge.length <- NULL
-Benchmark(RootTree(unlen80, "t3")) # low
-Benchmark(RootTree(unlen80, "t30")) # high
-Benchmark(RootTree(unlen80, c("t3", "t36"))) # current
-Benchmark(RootTree(unlen2k, 5))
+Benchmark(RootTree(unlen80, "t3"), times = 500) # low
+Benchmark(RootTree(unlen80, "t30"), times = 500) # high
+Benchmark(RootTree(unlen80, c("t3", "t36")), times = 200) # current
+Benchmark(RootTree(unlen2k, 5), times = 50)
