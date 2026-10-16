@@ -42,6 +42,7 @@ same tips.
 }
 \examples{
 MatchNodes(BalancedTree(8), RootTree(BalancedTree(8)))
+MatchEdges(BalancedTree(8), RootTree(BalancedTree(8)))
 }
 \references{
 \insertAllCited{}
