@@ -70,8 +70,11 @@ for (pr_file in pr_files) {
     q <- 0.2
     main_iqr <- quantile(main_times, c(q, 1 - q))
     interrun_var <- median(pr1_times) - median(pr2_times)
+    # Two PR runs of identical code differ by up to ~10% on CI runners, so a
+    # change must exceed twice their gap to count; an A/A run (identical code
+    # on both sides) flagged 3 of 47 calls at 1x, none at 2x.
     noise_range <- range(
-      median(main_times) + c(1, -1) * interrun_var,
+      median(main_times) + c(2, -2) * interrun_var,
       main_iqr)
     
     threshold_percent <- 6 #  Changes of ~5% are frequent
