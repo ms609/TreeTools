@@ -25,6 +25,7 @@ unless \code{TRUE}, only the matches for internal nodes will be returned.}
 node of \code{x} (and, if \code{tips = TRUE}, each tip, listed first), the number of
 the node in \code{table} that subtends the same clade, or \code{nomatch} if no node
 corresponds.
+
 \code{MatchEdges()} returns an integer vector giving, for each edge of \code{x},
 the index of the edge in \code{table} that subtends the same clade, or \code{nomatch}.
 Where several nodes or edges of \code{table} denote the same clade (because of
@@ -35,15 +36,8 @@ nodes with a single child), the first is returned.
 entries in the second that denote a clade with identical tip labels.
 }
 \details{
-Clades are compared using the cluster table of
-\insertCite{Day1985;textual}{TreeTools}, which takes time linear in the
-number of tips.
-Tips are matched by label; \code{MatchEdges()} matches tips by number if
-neither tree has tip labels.
-
 \code{MatchNodes()} treats clades as identical only if they contain exactly the
-same tips, so a node of \code{x} that subtends a tip absent from \code{table} has no
-match.
+same tips.
 \code{MatchEdges()} disregards tips of \code{table} that are absent from \code{x}.
 }
 \examples{
