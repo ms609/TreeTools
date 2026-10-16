@@ -3,15 +3,8 @@
 #' `MatchNodes()` and `MatchEdges()` matches nodes or edges in one tree to
 #' entries in the second that denote a clade with identical tip labels.
 #' 
-#' Clades are compared using the cluster table of
-#' \insertCite{Day1985;textual}{TreeTools}, which takes time linear in the
-#' number of tips.
-#' Tips are matched by label if both trees have tip labels, and otherwise by
-#' number.  Tip labels must be unique.
-#' 
 #' `MatchNodes()` treats clades as identical only if they contain exactly the
-#' same tips, so a node of `x` that subtends a tip absent from `table` has no
-#' match.
+#' same tips.
 #' `MatchEdges()` disregards tips of `table` that are absent from `x`.
 #' 
 #' @param x Tree whose nodes are to be matched.
@@ -22,13 +15,14 @@
 #' node of `x` (and, if `tips = TRUE`, each tip, listed first), the number of
 #' the node in `table` that subtends the same clade, or `nomatch` if no node
 #' corresponds.
+#' 
 #' `MatchEdges()` returns an integer vector giving, for each edge of `x`,
 #' the index of the edge in `table` that subtends the same clade, or `nomatch`.
 #' Where several nodes or edges of `table` denote the same clade (because of
 #' nodes with a single child), the first is returned.
 #' @examples
 #' MatchNodes(BalancedTree(8), RootTree(BalancedTree(8)))
-#' @references \insertAllCited{}
+#' MatchEdges(BalancedTree(8), RootTree(BalancedTree(8)))
 #' @inheritParams match
 #' @template MRS
 #' @family tree navigation
