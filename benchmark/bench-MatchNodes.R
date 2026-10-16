@@ -13,9 +13,9 @@ tr2000 <- readRDS("benchmark/tr2000.rds")
 
 rooted80 <- RootTree(tr80, 1)
 rooted2k <- RootTree(tr2000, 1)
-Benchmark(MatchNodes(tr80, rooted80))
-Benchmark(MatchNodes(tr2000, rooted2k))
-Benchmark(MatchEdges(tr80, rooted80))
+Benchmark(MatchNodes(tr80, rooted80), times = 500)
+Benchmark(MatchNodes(tr2000, rooted2k), times = 50)
+Benchmark(MatchEdges(tr80, rooted80), times = 500)
 
 # Preorder() must relocate node labels when nodes are not numbered in preorder
 .Scramble <- function(tr) {
@@ -28,5 +28,5 @@ Benchmark(MatchEdges(tr80, rooted80))
 }
 labelled80 <- .Scramble(tr80)
 labelled2k <- .Scramble(tr2000)
-Benchmark(Preorder(labelled80))
-Benchmark(Preorder(labelled2k))
+Benchmark(Preorder(labelled80), times = 500)
+Benchmark(Preorder(labelled2k), times = 50)
